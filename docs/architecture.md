@@ -39,7 +39,7 @@ O AIOS-FULLSTACK é um framework modular e extensível para desenvolvimento ági
 aios-fullstack/
 ├── README.md
 ├── package.json
-├── bmad-core/
+├── aios-core/
 │   ├── core-config.yaml
 │   ├── agent-teams/
 │   ├── agents/
@@ -61,7 +61,7 @@ aios-fullstack/
 
 ### Componentes Chave (Módulos)
 
-*   **Núcleo (****`bmad-core/`****):** O coração do framework, contendo as definições para todos os `agents`, `tasks`, `workflows`, `templates`, e `checklists` que compõem a lógica do sistema.
+*   **Núcleo (****`aios-core/`****):** O coração do framework, contendo as definições para todos os `agents`, `tasks`, `workflows`, `templates`, e `checklists` que compõem a lógica do sistema.
 *   **Comum (****`common/`****):** Abriga tasks e utilitários reutilizáveis que são compartilhados por múltiplos componentes do núcleo.
 *   **Ferramentas (****`tools/`****):** Contém os scripts operacionais, incluindo o `installer` CLI interativo e o `web-builder` para compilar os pacotes para plataformas web.
 *   **Pacotes de Expansão (****`expansion-packs/`****):** Diretório que contém módulos para estender a funcionalidade do BMAD-METHOD para domínios específicos, como desenvolvimento de jogos ou DevOps.
