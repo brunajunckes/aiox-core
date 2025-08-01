@@ -150,9 +150,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build all packages
-        run: npm run build:packages
-
       - name: Test workspace integration
         run: |
           # Test that workspace can be required
@@ -214,9 +211,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build packages
-        run: npm run build:packages
 
       - name: Run performance analysis
         run: |
