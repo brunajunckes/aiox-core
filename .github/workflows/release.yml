@@ -88,15 +88,19 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version.outputs.tag }}
-          release_name: AIOS-FullStack ${{ steps.version.outputs.tag }}
-          body_path: CHANGELOG.md
-          draft: false
-          prerelease: false
+        run: |
+          # Create the release using GitHub CLI
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "AIOS-FullStack ${{ steps.version.outputs.tag }}" \
+            --notes-file CHANGELOG.md \
+            --verify-tag || true
+          
+          # Get release info for outputs
+          RELEASE_INFO=$(gh api repos/${{ github.repository }}/releases/tags/${{ steps.version.outputs.tag }})
+          echo "id=$(echo "$RELEASE_INFO" | jq -r '.id')" >> $GITHUB_OUTPUT
+          echo "upload_url=$(echo "$RELEASE_INFO" | jq -r '.upload_url')" >> $GITHUB_OUTPUT
 
   build-and-upload:
     needs: create-release
@@ -133,24 +137,20 @@ jobs:
             -x "node_modules/*" ".git/*" "tests/*" "*.log" ".github/*"
 
       - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./aios-fullstack-*.tar.gz
-          asset_name: aios-fullstack-${{ github.ref_name }}.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Source Code
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./aios-fullstack-*-source.zip
-          asset_name: aios-fullstack-${{ github.ref_name }}-source.zip
-          asset_content_type: application/zip
+        run: |
+          VERSION=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          
+          # Upload tar.gz file
+          gh release upload "${{ github.ref_name }}" \
+            "aios-fullstack-${VERSION}.tar.gz" \
+            --clobber
+          
+          # Upload source zip file
+          gh release upload "${{ github.ref_name }}" \
+            "aios-fullstack-${VERSION}-source.zip" \
+            --clobber
 
   trigger-npm-publish:
     needs: [create-release, build-and-upload]
