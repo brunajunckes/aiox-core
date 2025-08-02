@@ -8,7 +8,7 @@
 
 AI-Powered Self-Modifying Development Framework. Foundations in Agentic Agile Driven Development, delivering breakthrough capabilities for AI-driven development and beyond. Transform any domain with specialized AI expertise: software development, entertainment, creative writing, business strategy to personal wellness just to name a few.
 
-**[Subscribe to AIOS Team on YouTube](https://www.youtube.com/@BMadCode?sub_confirmation=1)**
+**[Subscribe to AIOS Team on YouTube](https://www.youtube.com/@AIOSFullstack?sub_confirmation=1)**
 
 **[Join our Discord Community](https://discord.gg/gk8jAdXWmj)** - A growing community for AI enthusiasts! Get help, share ideas, explore AI agents & frameworks, collaborate on tech projects, enjoy hobbies, and help each other succeed. Whether you're stuck on AIOS, building your own agents, or just want to chat about the latest in AI - we're here for you! **Some mobile and VPN may have issue joining the discord, this is a discord issue - if the invite does not work, try from your own internet or another network, or non-VPN.**
 

@@ -28,7 +28,6 @@ Thumbs.db
 # IDE and editor configs
 .windsurf/
 .trae/
-.bmad*/.cursor/
 
 # AI assistant files
 CLAUDE.md
@@ -37,8 +36,6 @@ CLAUDE.md
 .gemini
 
 # Project-specific
-.bmad-core
 .aios-core
-.bmad-creator-tools
 test-project-install/*
 sample-project/*

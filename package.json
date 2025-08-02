@@ -7,9 +7,7 @@
   "types": "index.d.ts",
   "bin": {
     "aios": "tools/aios-npx-wrapper.js",
-    "aios-fullstack": "tools/aios-npx-wrapper.js",
-    "bmad-method": "tools/aios-npx-wrapper.js",
-    "bmad": "tools/aios-npx-wrapper.js"
+    "aios-fullstack": "tools/aios-npx-wrapper.js"
   },
   "workspaces": [
     "aios-core",
@@ -41,7 +39,6 @@
     "list:agents": "node tools/cli.js list:agents",
     "validate": "node tools/cli.js validate",
     "install:aios": "node tools/installer/bin/aios.js install",
-    "install:bmad": "node tools/installer/bin/aios.js install",
     "setup:github": "node tools/setup-github-cli.js",
     "setup": "npm run setup:github && npm run install:aios",
     "format": "prettier --write \"**/*.md\"",
@@ -85,11 +82,10 @@
     "development",
     "methodology",
     "agents",
-    "bmad",
     "aios",
     "fullstack"
   ],
-  "author": "Brian (BMad) Madison",
+  "author": "AIOS Fullstack Team",
   "license": "MIT",
   "repository": {
     "type": "git",
