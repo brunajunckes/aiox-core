@@ -1,83 +1,49 @@
-# Migration Guide
+# AIOS-FULLSTACK Upgrade Guide
 
-This guide helps you migrate from previous versions of AIOS-FULLSTACK or from the legacy BMAD-METHOD framework.
+This guide helps you upgrade between versions of AIOS-FULLSTACK.
 
 ## Table of Contents
 
 1. [Version Compatibility](#version-compatibility)
-2. [Pre-Migration Checklist](#pre-migration-checklist)
-3. [Migration Paths](#migration-paths)
-4. [Backup Procedures](#backup-procedures)
-5. [Step-by-Step Migration](#step-by-step-migration)
-6. [Data Migration](#data-migration)
-7. [Configuration Updates](#configuration-updates)
-8. [Breaking Changes](#breaking-changes)
-9. [Post-Migration Tasks](#post-migration-tasks)
-10. [Rollback Procedures](#rollback-procedures)
+2. [Pre-Upgrade Checklist](#pre-upgrade-checklist)
+3. [Backup Procedures](#backup-procedures)
+4. [Upgrade Process](#upgrade-process)
+5. [Post-Upgrade Verification](#post-upgrade-verification)
+6. [Rollback Procedures](#rollback-procedures)
+7. [Troubleshooting](#troubleshooting)
 
 ## Version Compatibility
 
-### Supported Migration Paths
+### Current Version
 
-| From Version | To Version | Migration Type | Difficulty |
-|--------------|------------|----------------|------------|
-| BMAD-METHOD 0.x | AIOS 1.0 | Major | High |
-| AIOS 0.9.x | AIOS 1.0 | Minor | Low |
-| AIOS 1.0-beta | AIOS 1.0 | Patch | Minimal |
+**AIOS-FULLSTACK v4.4.0** (Current Stable Release)
 
-### Version Requirements
+### Upgrade Paths
 
-- Node.js: 14.0.0 or higher (recommend 18.x)
-- npm: 6.0.0 or higher
-- Git: 2.0.0 or higher
+| From Version | To Version | Upgrade Type | Difficulty |
+|--------------|------------|--------------|------------|
+| v4.3.x | v4.4.0 | Minor | Low |
+| v4.0-4.2 | v4.4.0 | Minor | Medium |
+| v3.x | v4.4.0 | Major | High |
 
-## Pre-Migration Checklist
+### System Requirements
 
-Before starting migration, ensure you have:
+- **Node.js**: 20.0.0 or higher (recommended)
+- **npm**: 10.0.0 or higher
+- **Git**: 2.0.0 or higher
+- **Disk Space**: 100MB minimum free space
 
-- [ ] Full backup of current project
-- [ ] Documented all custom configurations
+## Pre-Upgrade Checklist
+
+Before upgrading, ensure you have:
+
+- [ ] Backed up your entire project
+- [ ] Documented custom configurations
 - [ ] Listed all active agents and workflows
-- [ ] Exported memory layer data
-- [ ] Noted API keys and credentials
-- [ ] Tested in development environment
-- [ ] Scheduled maintenance window
-- [ ] Informed team members
-
-## Migration Paths
-
-### From BMAD-METHOD to AIOS-FULLSTACK 1.0
-
-This is a major migration involving significant changes:
-
-1. **Framework Rebranding**
-   - All references to BMAD-METHOD updated
-   - New package namespace: `@aios-fullstack/*`
-   - Updated documentation and commands
-
-2. **New Components**
-   - LlamaIndex memory layer
-   - Meta-agent capabilities
-   - Enhanced self-modification
-
-3. **Directory Structure Changes**
-   ```
-   OLD: bmad-method/
-   NEW: aios-fullstack/
-   ```
-
-### From AIOS 0.9.x to 1.0
-
-Minor migration with mostly additive changes:
-
-1. **New Features**
-   - NPX installation support
-   - Enhanced meta-agent commands
-   - Improved memory layer
-
-2. **Configuration Updates**
-   - New config format
-   - Additional options
+- [ ] Exported any critical data
+- [ ] Tested the upgrade in a development environment
+- [ ] Informed team members of planned maintenance
+- [ ] Reviewed release notes for breaking changes
 
 ## Backup Procedures
 
@@ -85,507 +51,250 @@ Minor migration with mostly additive changes:
 
 ```bash
 # Create timestamped backup
-tar -czf backup-$(date +%Y%m%d-%H%M%S).tar.gz \
+tar -czf aios-backup-$(date +%Y%m%d-%H%M%S).tar.gz \
   --exclude=node_modules \
   --exclude=.git \
   .
 
-# Or use built-in backup
-*backup --include all --compress \
-  --destination ../backups/pre-migration/
+# Move to safe location
+mv aios-backup-*.tar.gz ../backups/
 ```
 
-### 2. Export Current State
+### 2. Export Configuration
 
 ```bash
-# Export agents
-*export agents --format json \
-  --destination exports/agents.json
+# Save current configuration
+cp .aios-core/config.json ../backups/config-backup.json
 
-# Export workflows  
-*export workflows --format json \
-  --destination exports/workflows.json
-
-# Export memory
-*export memory --format archive \
-  --destination exports/memory.zip
-
-# Export configuration
-*export config --include-sensitive \
-  --destination exports/config.json
+# Save custom components
+cp -r .aios-core/agents/custom ../backups/custom-agents/
+cp -r .aios-core/tasks/custom ../backups/custom-tasks/
 ```
 
-### 3. Document Custom Code
+### 3. Document Current State
 
 ```bash
-# List custom components
-find . -name "*.custom.*" -type f > custom-files.txt
+# Record current version
+npm list @aios-fullstack/core > ../backups/version-info.txt
 
-# Save custom agent definitions
-cp -r agents/custom/ ../backup/custom-agents/
+# List custom files
+find .aios-core -name "*.custom.*" -type f > ../backups/custom-files.txt
 ```
 
-## Step-by-Step Migration
+## Upgrade Process
 
-### Phase 1: Preparation
-
-1. **Stop all running processes**
-   ```bash
-   *stop-workflow --all
-   *deactivate --all
-   ```
-
-2. **Create migration workspace**
-   ```bash
-   mkdir migration-workspace
-   cd migration-workspace
-   ```
-
-3. **Install new version**
-   ```bash
-   npx aios-fullstack@latest init aios-migrated
-   ```
-
-### Phase 2: Configuration Migration
-
-1. **Update configuration format**
-   ```javascript
-   // Old format (BMAD-METHOD)
-   {
-     "framework": {
-       "name": "bmad-method",
-       "version": "0.x"
-     }
-   }
-
-   // New format (AIOS-FULLSTACK)
-   {
-     "framework": {
-       "name": "aios-fullstack",
-       "version": "1.0.0",
-       "features": {
-         "memoryLayer": true,
-         "metaAgent": true
-       }
-     }
-   }
-   ```
-
-2. **Migrate environment variables**
-   ```bash
-   # Old
-   BMAD_REDACTED
-   BMAD_WORKSPACE=/path
-
-   # New
-   AIOS_REDACTED
-   AIOS_WORKSPACE=/path
-   ```
-
-3. **Update API configurations**
-   ```javascript
-   // Update provider configurations
-   {
-     "ai": {
-       "provider": "openai", // or "anthropic"
-       "model": "gpt-4",
-       "apiKey": process.env.OPENAI_API_KEY
-     }
-   }
-   ```
-
-### Phase 3: Agent Migration
-
-1. **Convert agent definitions**
-   ```yaml
-   # Old format
-   name: helper-agent
-   type: assistant
-   version: 1.0
-
-   # New format
-   name: helper-agent
-   type: assistant
-   version: 2.0
-   metadata:
-     migrated: true
-     originalVersion: 1.0
-   capabilities:
-     - name: help
-       enhanced: true
-   ```
-
-2. **Update agent commands**
-   ```javascript
-   // Old command structure
-   exports.command = async (args) => {
-     // implementation
-   };
-
-   // New command structure
-   export const command = {
-     name: 'command-name',
-     description: 'Command description',
-     parameters: [
-       { name: 'param1', type: 'string', required: true }
-     ],
-     execute: async (context, params) => {
-       // implementation
-     }
-   };
-   ```
-
-3. **Migrate agent dependencies**
-   ```bash
-   # Copy custom agents
-   cp ../backup/custom-agents/* ./agents/
-
-   # Update agent references
-   find ./agents -name "*.md" -exec \
-     sed -i 's/bmad-method/aios-fullstack/g' {} \;
-   ```
-
-### Phase 4: Workflow Migration
-
-1. **Update workflow definitions**
-   ```yaml
-   # Add migration metadata
-   workflows:
-     - name: existing-workflow
-       version: 2.0
-       metadata:
-         migratedFrom: 1.0
-         migrationDate: 2024-01-15
-   ```
-
-2. **Convert workflow triggers**
-   ```javascript
-   // Old trigger
-   on: ['push', 'manual']
-
-   // New trigger format
-   triggers:
-     - type: event
-       event: push
-     - type: manual
-       authentication: required
-   ```
-
-### Phase 5: Memory Layer Migration
-
-1. **Initialize new memory layer**
-   ```bash
-   # Initialize LlamaIndex
-   *memory initialize --backend llamaindex
-   ```
-
-2. **Import existing data**
-   ```bash
-   # Import memory export
-   *memory import ../exports/memory.zip \
-     --strategy merge \
-     --validate
-   ```
-
-3. **Rebuild indexes**
-   ```bash
-   # Rebuild for optimal performance
-   *memory rebuild --verbose
-   ```
-
-## Data Migration
-
-### Database Migration
-
-```javascript
-// Migration script example
-const migrationScript = {
-  version: '1.0.0',
-  up: async (db) => {
-    // Add new columns
-    await db.schema.alterTable('agents', (table) => {
-      table.boolean('meta_capable').defaultTo(false);
-      table.json('memory_config');
-    });
-    
-    // Migrate data
-    const agents = await db('agents').select();
-    for (const agent of agents) {
-      await db('agents')
-        .where('id', agent.id)
-        .update({
-          meta_capable: agent.type === 'meta-agent',
-          memory_config: { enabled: true }
-        });
-    }
-  },
-  down: async (db) => {
-    // Rollback changes
-    await db.schema.alterTable('agents', (table) => {
-      table.dropColumn('meta_capable');
-      table.dropColumn('memory_config');
-    });
-  }
-};
-```
-
-### File System Migration
+### Option 1: In-Place Upgrade (Recommended)
 
 ```bash
-# Migrate file structure
-mkdir -p .aios/memory
-mkdir -p .aios/config
-mkdir -p .aios/logs
+# 1. Stop any running processes
+# Close all IDE integrations and active agents
 
-# Move existing files
-mv .bmad/config/* .aios/config/
-mv .bmad/data/* .aios/memory/
+# 2. Update to latest version
+npm install -g aios-fullstack@latest
 
-# Update file references
-find . -type f -name "*.js" -o -name "*.json" | \
-  xargs sed -i 's/.bmad/.aios/g'
+# 3. Run upgrade command
+aios upgrade
+
+# 4. Verify installation
+aios --version
 ```
 
-## Configuration Updates
-
-### 1. Update Package.json
-
-```json
-{
-  "name": "my-aios-project",
-  "version": "1.0.0",
-  "dependencies": {
-    "@aios-fullstack/core": "^1.0.0",
-    "@aios-fullstack/memory": "^1.0.0",
-    "@aios-fullstack/meta-agent": "^1.0.0"
-  },
-  "scripts": {
-    "aios": "aios-fullstack",
-    "migrate": "aios-fullstack migrate"
-  }
-}
-```
-
-### 2. Update .gitignore
+### Option 2: Clean Installation
 
 ```bash
-# AIOS-FULLSTACK
-.aios/
-.aios/logs/
-.aios/cache/
-.aios/memory/*.db
-.env.local
-.env.*.local
+# 1. Remove old installation
+npm uninstall -g aios-fullstack
 
-# Remove old entries
-# .bmad/
+# 2. Clear cache
+npm cache clean --force
+
+# 3. Install latest version
+npm install -g aios-fullstack@latest
+
+# 4. Reinitialize project
+cd your-project
+aios init --upgrade
 ```
 
-### 3. Update CI/CD Pipelines
-
-```yaml
-# GitHub Actions example
-- name: Install AIOS-FULLSTACK
-  run: |
-    npx aios-fullstack@latest install
-    npx aios-fullstack doctor --fix
-
-- name: Run Migration Tests
-  run: |
-    npm run test:migration
-    npx aios-fullstack verify
-```
-
-## Breaking Changes
-
-### API Changes
-
-1. **Command Structure**
-   - Old: `bmad <command>`
-   - New: `*<command>` or `npx aios-fullstack <command>`
-
-2. **Configuration Keys**
-   - `framework.name`: Changed from "bmad-method" to "aios-fullstack"
-   - `agents.path`: Changed from "bmad-agents/" to "agents/"
-   - `memory.backend`: New required field
-
-3. **Environment Variables**
-   - All `BMAD_*` variables renamed to `AIOS_*`
-   - New required: `AIOS_MEMORY_BACKEND`
-
-### Deprecated Features
-
-1. **Legacy Agent Format**
-   - YAML-only agents deprecated
-   - Use Markdown with YAML frontmatter
-
-2. **Old Command Syntax**
-   - Direct function exports deprecated
-   - Use structured command objects
-
-3. **File-based Memory**
-   - Simple file storage deprecated
-   - Use LlamaIndex memory layer
-
-### Removed Features
-
-1. **Legacy Templates**
-   - Old template system removed
-   - Use new component generators
-
-2. **Direct Database Access**
-   - Raw SQL deprecated
-   - Use memory layer API
-
-## Post-Migration Tasks
-
-### 1. Verification
+### Option 3: Project-Specific Upgrade
 
 ```bash
-# Run system doctor
-npx aios-fullstack doctor --deep
+# Update project dependencies
+cd your-project
+npm update @aios-fullstack/core
 
-# Verify agents
-*list-agents --verify
+# Reinstall dependencies
+npm install
 
-# Test workflows
-*workflow-status --all
-
-# Check memory layer
-*memory status
+# Verify upgrade
+npm list @aios-fullstack/core
 ```
 
-### 2. Performance Optimization
+## Post-Upgrade Verification
+
+### 1. Verify Installation
 
 ```bash
-# Optimize memory indexes
-*memory optimize --aggressive
+# Check version
+aios --version
 
-# Update agent capabilities
-*improve-self --based-on analysis
+# Verify core components
+aios verify --components
 
-# Clean up old data
-*cleanup --remove-deprecated
+# Test basic functionality
+aios test --quick
 ```
 
-### 3. Team Training
-
-1. **Update documentation**
-   - New command reference
-   - Updated workflows
-   - API changes
-
-2. **Conduct training sessions**
-   - Meta-agent features
-   - Memory layer usage
-   - New commands
-
-### 4. Monitor System
+### 2. Test Agents
 
 ```bash
-# Enable monitoring
-*config --set monitoring.enabled true
+# List available agents
+aios list agents
 
-# Set up alerts
-*config --set alerts.email team@company.com
+# Test agent activation
+aios test agent aios-developer
 
-# Track performance
-*benchmark all --save-baseline
+# Verify agent dependencies
+aios verify --agents
+```
+
+### 3. Check Configuration
+
+```bash
+# Validate configuration
+aios config validate
+
+# Review upgrade log
+cat .aios-core/logs/upgrade.log
+```
+
+### 4. Test Workflows
+
+```bash
+# List workflows
+aios list workflows
+
+# Test workflow execution
+aios test workflow basic-dev-cycle
 ```
 
 ## Rollback Procedures
 
-If migration fails, follow these steps:
+If you encounter issues after upgrading:
 
-### 1. Immediate Rollback
+### Quick Rollback
 
 ```bash
-# Stop new system
-*shutdown --force
-
 # Restore from backup
 cd ..
-rm -rf aios-migrated
-tar -xzf backup-[timestamp].tar.gz
+rm -rf current-project
+tar -xzf backups/aios-backup-YYYYMMDD-HHMMSS.tar.gz
+
+# Reinstall previous version
+npm install -g aios-fullstack@<previous-version>
+
+# Verify rollback
+aios --version
 ```
 
-### 2. Partial Rollback
+### Selective Rollback
 
 ```bash
-# Rollback specific components
-*rollback agents --to-version 0.9
-*rollback memory --clear
+# Restore specific components
+cp ../backups/config-backup.json .aios-core/config.json
+cp -r ../backups/custom-agents/* .aios-core/agents/custom/
 
-# Restore configuration
-cp exports/config.json .aios/config.json
-*config --reload
+# Reinstall dependencies
+npm install
 ```
 
-### 3. Data Recovery
-
-```bash
-# Restore database
-mysql dbname < backup.sql
-
-# Restore files
-rsync -av backup/ ./
-
-# Rebuild indexes
-*memory rebuild --from-backup
-```
-
-## Migration Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
-1. **"Module not found" errors**
-   ```bash
-   # Clear node_modules and reinstall
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
+#### Installation Fails
 
-2. **Agent compatibility issues**
-   ```bash
-   # Run compatibility check
-   *doctor --component agents --fix
-   ```
+```bash
+# Clear npm cache
+npm cache clean --force
 
-3. **Memory layer errors**
-   ```bash
-   # Reset and rebuild
-   *memory reset
-   *memory import backup.zip
-   ```
+# Try with verbose logging
+npm install -g aios-fullstack@latest --verbose
+
+# Check npm permissions
+npm config get prefix
+```
+
+#### Agents Not Loading
+
+```bash
+# Rebuild agent manifests
+aios rebuild --manifests
+
+# Verify agent dependencies
+aios verify --agents --verbose
+
+# Check agent syntax
+aios validate agents
+```
+
+#### Configuration Errors
+
+```bash
+# Validate configuration
+aios config validate --verbose
+
+# Reset to defaults (careful!)
+aios config reset --backup
+
+# Repair configuration
+aios config repair
+```
+
+#### Memory Layer Issues
+
+```bash
+# Rebuild memory indexes
+aios memory rebuild
+
+# Verify memory integrity
+aios memory verify
+
+# Clear and reinitialize
+aios memory reset
+```
 
 ### Getting Help
 
-- Check [Migration FAQ](https://docs.aios-fullstack.com/migration-faq)
-- Join [Discord #migration channel](https://discord.gg/aios-migration)
-- Open [GitHub Issue](https://github.com/aios-fullstack/issues)
+If you encounter issues not covered here:
 
-## Migration Checklist Summary
+1. **Check Logs**: Review `.aios-core/logs/upgrade.log`
+2. **GitHub Issues**: [github.com/Pedrovaleriolopez/aios-fullstack/issues](https://github.com/Pedrovaleriolopez/aios-fullstack/issues)
+3. **Discord Community**: [discord.gg/gk8jAdXWmj](https://discord.gg/gk8jAdXWmj)
+4. **Documentation**: [docs directory](./README.md)
 
-- [ ] Pre-migration backup completed
-- [ ] New version installed
-- [ ] Configuration migrated
-- [ ] Agents converted
-- [ ] Workflows updated
-- [ ] Memory layer migrated
-- [ ] Data transferred
-- [ ] System verified
-- [ ] Team trained
-- [ ] Monitoring enabled
-- [ ] Performance baseline established
-- [ ] Rollback plan tested
+## Version-Specific Notes
+
+### Upgrading to v4.4.0
+
+**Key Changes:**
+- Enhanced meta-agent capabilities
+- Improved memory layer performance
+- Updated security features
+- Streamlined installation process
+
+**Breaking Changes:**
+- None (backward compatible with v4.0+)
+
+**New Features:**
+- `aios-developer` meta-agent enhancements
+- Interactive installation wizard
+- Performance monitoring tools
+
+**Deprecations:**
+- Legacy command syntax (still supported with warnings)
 
 ---
 
-**Important**: Always test migration in a development environment first. Schedule production migrations during low-usage periods and have your rollback plan ready.
-
-For automated migration assistance, use:
-```bash
-npx aios-fullstack migrate --from bmad-method --assisted
-```
-
-The migration wizard will guide you through each step and validate your migration.
+**Last Updated:** 2025-08-01
+**Current Version:** v4.4.0

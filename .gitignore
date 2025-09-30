@@ -19,6 +19,7 @@ web-bundles/
 # System files
 .DS_Store
 Thumbs.db
+nul                           # Windows temporary file
 
 # Development tools and configs
 .prettierignore
@@ -39,3 +40,20 @@ CLAUDE.md
 .aios-core
 test-project-install/*
 sample-project/*
+
+# AIOS Development Artifacts (generated during workflow execution)
+# These files are created by agents during development and should NOT be in version control
+docs/prd/                     # Sharded PRD epics (generated from docs/prd.md)
+docs/architecture/            # Sharded architecture docs (generated from docs/architecture.md)
+docs/stories/                 # Individual story files (*.story.md)
+story.md                      # Story files in any location
+**/story.md                   # Story files in subdirectories
+epic-retrospective.md         # Epic retrospective documents
+*.stats.md                    # Statistics and analysis files
+flattened-codebase.xml        # Flattened codebase exports
+
+# Keep these main planning documents (DO commit these)
+# docs/prd.md
+# docs/architecture.md
+# docs/front-end-spec.md
+# docs/project-brief.md

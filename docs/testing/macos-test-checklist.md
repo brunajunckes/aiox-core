@@ -18,7 +18,7 @@
 
 ### IDE Configuration
 - [ ] Cursor configuration is created at `.cursor/rules/`
-- [ ] Claude configuration is created at `.claude/commands/BMad/`
+- [ ] Claude configuration is created at `.claude/commands/AIOS/`
 - [ ] Windsurf configuration is created at `.windsurf/rules/`
 - [ ] IDE shortcuts work correctly (Cmd+L for Cursor)
 

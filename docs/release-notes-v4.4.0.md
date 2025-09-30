@@ -45,16 +45,13 @@ npm install -g aios-fullstack
 aios init my-project
 ```
 
-## 🔄 Migration from BMAD-METHOD
+## 🔄 Upgrading
 
-If you're upgrading from the previous BMAD-METHOD framework:
+When upgrading from a previous version:
 
 1. Review the [Migration Guide](./migration-guide.md)
 2. Backup your existing project
-3. Run the migration command:
-   ```bash
-   npx aios-fullstack migrate /path/to/bmad-project
-   ```
+3. Follow the upgrade instructions in the migration guide
 
 ## ⚡ Performance Improvements
 
@@ -82,9 +79,9 @@ If you're upgrading from the previous BMAD-METHOD framework:
 ## 📊 What's New
 
 ### Core Framework
-- Complete rebranding from BMAD-METHOD to AIOS-FULLSTACK
 - Modular architecture with workspace support
 - NPM package: `@aios-fullstack/core`
+- Enhanced component system
 
 ### Meta-Agent (`aios-developer`)
 - `*create-agent`: Generate new AI agents
@@ -141,10 +138,9 @@ If you're upgrading from the previous BMAD-METHOD framework:
 ## 🙏 Acknowledgments
 
 Special thanks to all contributors who made this release possible:
-- The original BMAD-METHOD team for the foundation
 - Beta testers for invaluable feedback
 - Security researchers for vulnerability reports
-- The open-source community for inspiration
+- The open-source community for inspiration and support
 
 ## 📋 Full Changelog
 
@@ -159,11 +155,11 @@ Special thanks to all contributors who made this release possible:
 - Cross-platform support
 
 ### Changed
-- Rebranded from BMAD-METHOD to AIOS-FULLSTACK
 - Improved installation process (25% faster)
 - Enhanced error messages and debugging
 - Optimized memory usage (30% reduction)
 - Modernized CLI interface
+- Streamlined component architecture
 
 ### Fixed
 - 18 security vulnerabilities

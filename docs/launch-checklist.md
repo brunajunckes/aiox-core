@@ -6,7 +6,7 @@
 ## Pre-Launch Tasks (T-2 days)
 
 ### Day 1: Distribution Testing ⏳
-- [ ] Test upgrade scenarios from BMAD-METHOD
+- [ ] Test upgrade scenarios from AIOS-METHOD
   - [ ] Data migration verification
   - [ ] Configuration preservation
   - [ ] Rollback procedures

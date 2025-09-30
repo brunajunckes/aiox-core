@@ -82,7 +82,7 @@ The installer automatically:
 
 ### Claude Code
 
-1. Commands are installed to `.claude/commands/BMad/`
+1. Commands are installed to `.claude/commands/AIOS/`
 2. Use `/agent-name` to activate agents
 
 ### Windsurf
