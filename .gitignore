@@ -41,6 +41,18 @@ CLAUDE.md
 test-project-install/*
 sample-project/*
 
+# Expansion Projects (separate from core AIOS-FULLSTACK)
+# These folders are from other projects and should NOT be in this repository
+.aios/                        # AIOS expansion project files
+.cursor/                      # Cursor IDE project files
+aios-memory-layer-mvp/        # Separate memory layer project
+memory/                       # Memory expansion package
+performance/                  # Performance expansion package
+scripts/                      # Project-specific scripts (not part of core)
+security/                     # Security expansion package
+telemetry/                    # Telemetry expansion package
+tests/                        # Test files for expansion projects
+
 # AIOS Development Artifacts (generated during workflow execution)
 # These files are created by agents during development and should NOT be in version control
 docs/prd/                     # Sharded PRD epics (generated from docs/prd.md)
