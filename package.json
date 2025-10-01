@@ -21,6 +21,7 @@
     "tools/",
     "templates/",
     "aios-core/",
+    "expansion-packs/",
     "memory/",
     "security/",
     "performance/",
