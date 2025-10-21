@@ -12,7 +12,7 @@
   "workspaces": [
     "aios-core",
     "memory",
-    "security", 
+    "security",
     "performance",
     "telemetry"
   ],
@@ -44,6 +44,9 @@
     "setup:github": "node tools/setup-github-cli.js",
     "setup": "npm run setup:github && npm run install:aios",
     "format": "prettier --write \"**/*.md\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "publish:dry-run": "node tools/npm-publish.js --dry-run",
     "publish:preview": "node tools/npm-publish.js --tag preview",
     "publish:stable": "node tools/npm-publish.js --tag latest",
@@ -72,6 +75,7 @@
     "fs-extra": "^11.3.0",
     "glob": "^11.0.3",
     "inquirer": "^8.2.6",
+    "isolated-vm": "^5.0.4",
     "js-yaml": "^4.1.0",
     "ora": "^5.4.1",
     "semver": "^7.7.2",
@@ -99,7 +103,9 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
+    "@types/jest": "^30.0.0",
     "husky": "^9.1.7",
+    "jest": "^30.2.0",
     "lint-staged": "^16.1.1",
     "prettier": "^3.5.3",
     "semantic-release": "^22.0.0",
