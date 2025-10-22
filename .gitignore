@@ -21,6 +21,14 @@ web-bundles/
 Thumbs.db
 nul                           # Windows temporary file
 
+# Binary installers and development artifacts
+*.msi                         # Windows installer packages
+*.exe                         # Executable binaries
+*.bat                         # Development batch scripts (sync-agents.bat, etc.)
+*.sh                          # Development shell scripts
+sync-*.bat                    # Agent sync scripts
+sync-*.sh                     # Agent sync scripts
+
 # Development tools and configs
 .prettierignore
 .prettierrc
@@ -58,11 +66,16 @@ tests/                        # Test files for expansion projects
 docs/prd/                     # Sharded PRD epics (generated from docs/prd.md)
 docs/architecture/            # Sharded architecture docs (generated from docs/architecture.md)
 docs/stories/                 # Individual story files (*.story.md)
+docs/analysis/                # Analysis artifacts
+docs/qa/                      # QA artifacts (may duplicate qa/ folder)
+qa/                           # Test artifacts and quality assurance files
 story.md                      # Story files in any location
 **/story.md                   # Story files in subdirectories
 epic-retrospective.md         # Epic retrospective documents
 *.stats.md                    # Statistics and analysis files
 flattened-codebase.xml        # Flattened codebase exports
+test-results.txt              # Test result outputs
+**/test-results.txt           # Test results in any subdirectory
 
 # Keep these main planning documents (DO commit these)
 # docs/prd.md
