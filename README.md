@@ -103,6 +103,24 @@ Este único comando:
 
 **Pré-requisitos**: [Node.js](https://nodejs.org) v14+ necessário
 
+### ⚠️ Importante para Usuários macOS
+
+**Sempre execute o comando NPX a partir do diretório do seu projeto!**
+
+```bash
+# ✅ CORRETO - Execute do diretório do projeto
+cd /caminho/para/seu/projeto
+npx aios-fullstack install
+
+# ❌ INCORRETO - Não execute do diretório home
+cd ~
+npx aios-fullstack install  # Isto vai falhar!
+```
+
+**Por quê?** O NPX executa em diretórios temporários no macOS (`/private/var/folders/.../npx-xxx/`), o que impede a detecção correta do seu IDE. A partir da versão 4.31.1, o AIOS detecta automaticamente este problema e mostra uma mensagem de ajuda clara.
+
+📖 **Para mais detalhes, veja**: [Guia de Instalação NPX para macOS](docs/npx-install.md)
+
 ### Atualizando uma Instalação Existente
 
 Se você já tem o AIOS instalado:
