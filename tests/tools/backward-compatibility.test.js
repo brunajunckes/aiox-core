@@ -21,7 +21,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
 describe('Backward Compatibility - No-Validator Pass-Through', () => {
   let simpleToolsPath, complexToolsPath;
   const v1SimpleTools = ['github-cli', 'supabase-cli', 'browser', 'exa'];
-  const v2ComplexTools = ['clickup', 'google-workspace', 'n8n', 'supabase'];
+  const _v2ComplexTools = ['clickup', 'google-workspace', 'n8n', 'supabase'];
 
   beforeAll(() => {
     simpleToolsPath = path.join(__dirname, '../../aios-core/tools');
@@ -36,7 +36,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
 
   describe('v1.0 Simple Tools (No executable_knowledge)', () => {
     test('github-cli tool passes validation automatically', async () => {
-      const tool = await toolResolver.resolveTool('github-cli');
+      const _tool = await toolResolver.resolveTool('github-cli');
 
       // Verify it's a v1.0 tool (no executable_knowledge)
       expect(tool.executable_knowledge).toBeUndefined();
@@ -53,7 +53,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
 
     test('supabase-cli tool passes validation automatically', async () => {
-      const tool = await toolResolver.resolveTool('supabase-cli');
+      const _tool = await toolResolver.resolveTool('supabase-cli');
 
       expect(tool.executable_knowledge).toBeUndefined();
 
@@ -65,7 +65,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
 
     test('browser tool passes validation automatically', async () => {
-      const tool = await toolResolver.resolveTool('browser');
+      const _tool = await toolResolver.resolveTool('browser');
 
       expect(tool.executable_knowledge).toBeUndefined();
 
@@ -77,7 +77,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
 
     test('exa tool passes validation automatically', async () => {
-      const tool = await toolResolver.resolveTool('exa');
+      const _tool = await toolResolver.resolveTool('exa');
 
       expect(tool.executable_knowledge).toBeUndefined();
 
@@ -92,14 +92,14 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
       const results = [];
 
       for (const toolName of v1SimpleTools) {
-        const tool = await toolResolver.resolveTool(toolName);
+        const _tool = await toolResolver.resolveTool(toolName);
         const validator = new ToolValidationHelper(tool.executable_knowledge);
         const result = await validator.validate('test-command', { test: 'data' });
         results.push({ tool: toolName, result });
       }
 
       // All should pass
-      results.forEach(({ tool, result }) => {
+      results.forEach(({ _tool, result }) => {
         expect(result.valid).toBe(true);
         expect(result.errors).toHaveLength(0);
       });
@@ -217,7 +217,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
       ];
 
       for (const command of commands) {
-        const result = await validator.validate(command, { test: 'data' });
+        const result = await validator.validate(_command, { test: 'data' });
         expect(result.valid).toBe(true);
         expect(result.errors).toHaveLength(0);
       }
@@ -235,7 +235,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
       ];
 
       for (const { command, args } of testCases) {
-        const result = await validator.validate(command, args);
+        const result = await validator.validate(_command, args);
         expect(result.valid).toBe(true);
         expect(result.errors).toHaveLength(0);
       }
@@ -287,7 +287,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
   describe('Integration with ToolResolver', () => {
     test('resolving and validating v1.0 tool works end-to-end', async () => {
       // Resolve a simple tool
-      const tool = await toolResolver.resolveTool('github-cli');
+      const _tool = await toolResolver.resolveTool('github-cli');
 
       // Create validator
       const validator = new ToolValidationHelper(tool.executable_knowledge);
@@ -307,7 +307,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
       const results = [];
 
       for (const toolName of v1SimpleTools) {
-        const tool = await toolResolver.resolveTool(toolName);
+        const _tool = await toolResolver.resolveTool(toolName);
         const validator = new ToolValidationHelper(tool.executable_knowledge);
         const result = await validator.validate('test-command', {});
 
@@ -319,7 +319,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
       }
 
       // All should have no executable_knowledge and pass validation
-      results.forEach(({ tool, hasExecKnowledge, validationResult }) => {
+      results.forEach(({ _tool, hasExecKnowledge, validationResult }) => {
         expect(hasExecKnowledge).toBe(false); // v1.0 tools
         expect(validationResult.valid).toBe(true);
         expect(validationResult.errors).toHaveLength(0);
@@ -381,7 +381,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
 
       // Test all v1.0 simple tools
       for (const toolName of v1SimpleTools) {
-        const tool = await toolResolver.resolveTool(toolName);
+        const _tool = await toolResolver.resolveTool(toolName);
         const validator = new ToolValidationHelper(tool.executable_knowledge);
 
         const start = Date.now();

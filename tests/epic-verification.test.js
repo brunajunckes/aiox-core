@@ -126,7 +126,7 @@ describe('Epic Verification - Integration Tests', () => {
       try {
         await verifyEpicExists(15);
         fail('Should have thrown error');
-      } catch (error) {
+      } catch (_error) {
         expect(error.message).toContain('Epic 15 not found');
         expect(error.message).toContain('Please create Epic task with:');
         expect(error.message).toContain("Name: 'Epic 15:");
@@ -145,7 +145,7 @@ describe('Epic Verification - Integration Tests', () => {
 
       try {
         await verifyEpicExists(20);
-      } catch (error) {
+      } catch (_error) {
         // Expected error
       }
 
@@ -207,7 +207,7 @@ describe('Epic Verification - Integration Tests', () => {
       try {
         await verifyEpicExists(8);
         fail('Should have thrown error');
-      } catch (error) {
+      } catch (_error) {
         expect(error.message).toContain('Epic 8 has invalid status: Blocked');
         expect(error.message).toContain('Valid statuses: Planning, In Progress');
       }
@@ -220,7 +220,7 @@ describe('Epic Verification - Integration Tests', () => {
 
       try {
         await verifyEpicExists(6);
-      } catch (error) {
+      } catch (_error) {
         // Expected error
       }
 
@@ -283,7 +283,7 @@ describe('Epic Verification - Integration Tests', () => {
       try {
         await verifyEpicExists(9);
         fail('Should have thrown error');
-      } catch (error) {
+      } catch (_error) {
         expect(error.message).toContain('Multiple Epics found');
         expect(error.message).toContain('epic-dup-a');
         expect(error.message).toContain('epic-dup-b');
@@ -315,7 +315,7 @@ describe('Epic Verification - Integration Tests', () => {
       try {
         await verifyEpicExists(11);
         fail('Should have thrown error');
-      } catch (error) {
+      } catch (_error) {
         expect(error.message).toContain('Please resolve this ambiguity by:');
         expect(error.message).toContain('Remove tag from incorrect Epic');
         expect(error.message).toContain('Archive or delete duplicate Epic');

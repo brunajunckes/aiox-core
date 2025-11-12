@@ -102,7 +102,7 @@ describe('Status Mapper - Bidirectional Mapping', () => {
 
 describe('Story Status Progression Flow', () => {
   test('should follow typical story lifecycle: Draft → In Progress → Review → Done', async () => {
-    const mockTaskId = 'test-story-123';
+    const _mockTaskId = 'test-story-123';
     const lifecycle = ['Draft', 'In Progress', 'Review', 'Done'];
 
     // Note: This is a conceptual test showing the expected flow
@@ -112,12 +112,12 @@ describe('Story Status Progression Flow', () => {
       expect(mappedStatus).toBe(status);
 
       // In real implementation, would call:
-      // await updateStoryStatus(mockTaskId, status);
+      // await updateStoryStatus(_mockTaskId, status);
     }
   });
 
   test('should handle status regression: Review → In Progress → Review', async () => {
-    const mockTaskId = 'test-story-456';
+    const _mockTaskId = 'test-story-456';
     const progression = ['Review', 'In Progress', 'Review'];
 
     for (const status of progression) {

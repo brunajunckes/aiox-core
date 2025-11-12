@@ -20,7 +20,7 @@ describe('ToolResolver', () => {
     resolver = require('../../common/utils/tool-resolver');
   });
 
-  const fixturesPath = () => path.join(__dirname, '../fixtures');
+  const _fixturesPath = () => path.join(__dirname, '../fixtures');
 
   // Sample tool definitions (with 'tool:' wrapper - matches spec format)
   const simpleToolYaml = `
@@ -100,7 +100,7 @@ tool:
       expect(tool2.id).toBe('test-simple');
 
       // Should be exact same object from cache
-      expect(tool1).toBe(tool2);
+      expect(_tool1).toBe(_tool2);
     });
 
     test('should use different cache keys for different expansion packs', async () => {

@@ -62,7 +62,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
       expect(results).toHaveLength(agentsWithoutTools.length);
 
       // All should NOT have tools field
-      results.forEach(({ id, hasTools }) => {
+      results.forEach(({ _id, hasTools }) => {
         expect(hasTools).toBe(false);
       });
     });
@@ -151,7 +151,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
 
     test('agents without tools can still be loaded and parsed', async () => {
       const configs = await Promise.all(
-        agentsWithoutTools.map(id => loadAgentYaml(id))
+        agentsWithoutTools.map(id => loadAgentYaml(_id))
       );
 
       configs.forEach((config, index) => {
@@ -286,12 +286,12 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
       }
 
       // Agents with tools should have > 0 tools
-      results.withTools.forEach(({ id, toolCount }) => {
+      results.withTools.forEach(({ _id, toolCount }) => {
         expect(toolCount).toBeGreaterThan(0);
       });
 
       // Agents without tools should have 0 tools
-      results.withoutTools.forEach(({ id, toolCount }) => {
+      results.withoutTools.forEach(({ _id, toolCount }) => {
         expect(toolCount).toBe(0);
       });
     });

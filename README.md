@@ -23,10 +23,7 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 
 - Node.js >=20.0.0
 - npm
-- **GitHub CLI (gh)** - OBRIGATÓRIO para operações GitHub
-  - Autenticação: `gh auth login`
-  - Usado por agentes para: PRs, Issues, Branch Protection, Releases
-  - **Política do projeto**: Sempre usar `gh` CLI, NUNCA APIs REST diretas para GitHub
+- GitHub CLI (necessário para colaboração em equipe)
 
 **Guias específicos por plataforma:**
 - 📖 [Guia de Instalação para macOS](docs/installation/macos.md)
@@ -52,7 +49,9 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 - **[Explorar usos não técnicos](#-além-do-desenvolvimento-de-software---expansion-packs)** → Escrita criativa, negócios, bem-estar, educação
 - **[Criar meus próprios agentes IA](#criando-seu-próprio-expansion-pack)** → Construir agentes para seu domínio
 - **[Navegar expansion packs prontos](expansion-packs/)** → Game dev, DevOps, infraestrutura e inspire-se com ideias e exemplos
+- **[Hybrid-Ops 2.0 Migration Guide](docs/migration-guide.md)** → Upgrade para PV Mode com cognitive architecture executável
 - **[Entender a arquitetura](docs/core-architecture.md)** → Mergulho técnico profundo
+- **[Juntar-se à comunidade](https://discord.gg/gk8jAdXWmj)** → Obter ajuda e compartilhar ideias
 
 ## Importante: Mantenha Sua Instalação AIOS Atualizada
 
@@ -78,7 +77,7 @@ Isto facilita beneficiar-se das últimas melhorias, correções de bugs e novos 
 **Instale o AIOS-FULLSTACK com um único comando:**
 
 ```bash
-# Criar um novo projeto
+# Criar um novo projeto com assistente interativo moderno
 npx aios-fullstack init meu-projeto
 
 # Ou instalar em projeto existente
@@ -89,37 +88,34 @@ npx aios-fullstack install
 npx aios-fullstack@latest init meu-projeto
 ```
 
-Este único comando:
+### ✨ Assistente de Instalação Moderno
 
-- ✅ Baixa a versão mais recente do NPM
-- ✅ Executa o assistente de instalação interativo
-- ✅ Configura seu IDE automaticamente (Windsurf, Cursor ou Claude Code)
-- ✅ Configura todos os agentes e fluxos de trabalho AIOS
-- ✅ Cria os arquivos de configuração necessários
-- ✅ Inicializa o sistema de meta-agentes
-- ✅ Executa verificações de saúde do sistema
+O AIOS-FULLSTACK agora inclui uma experiência de instalação interativa de última geração, inspirada em ferramentas modernas como Vite e Next.js:
 
-> **É isso!** Sem clonar, sem configuração manual - apenas um comando e você está pronto para começar.
+**Recursos do Instalador Interativo:**
+- 🎨 **Interface Moderna**: Prompts coloridos e visuais com @clack/prompts
+- ✅ **Validação em Tempo Real**: Feedback instantâneo sobre entradas inválidas
+- 🔄 **Indicadores de Progresso**: Spinners para operações longas (cópia de arquivos, instalação de deps)
+- 📦 **Seleção Multi-Componente**: Escolha quais componentes instalar com interface intuitiva
+- ⚙️ **Escolha de Gerenciador de Pacotes**: Selecione entre npm, yarn ou pnpm
+- ⌨️ **Suporte a Cancelamento**: Ctrl+C ou ESC para sair graciosamente a qualquer momento
+- 📊 **Resumo de Instalação**: Visualize todas as configurações antes de prosseguir
+- ⏱️ **Rastreamento de Duração**: Veja quanto tempo levou a instalação
 
-**Pré-requisitos**: [Node.js](https://nodejs.org) v14+ necessário
+**O instalador oferece:**
 
-### ⚠️ Importante para Usuários macOS
+- ✅ Download da versão mais recente do NPM
+- ✅ Assistente de instalação interativo moderno
+- ✅ Configuração automática do IDE (Windsurf, Cursor ou Claude Code)
+- ✅ Configuração de todos os agentes e fluxos de trabalho AIOS
+- ✅ Criação dos arquivos de configuração necessários
+- ✅ Inicialização do sistema de meta-agentes
+- ✅ Verificações de saúde do sistema
+- ✅ **Suporte Cross-Platform**: Testado em Windows, macOS e Linux
 
-**Sempre execute o comando NPX a partir do diretório do seu projeto!**
+> **É isso!** Sem clonar, sem configuração manual - apenas um comando e você está pronto para começar com uma experiência de instalação moderna e profissional.
 
-```bash
-# ✅ CORRETO - Execute do diretório do projeto
-cd /caminho/para/seu/projeto
-npx aios-fullstack install
-
-# ❌ INCORRETO - Não execute do diretório home
-cd ~
-npx aios-fullstack install  # Isto vai falhar!
-```
-
-**Por quê?** O NPX executa em diretórios temporários no macOS (`/private/var/folders/.../npx-xxx/`), o que impede a detecção correta do seu IDE. A partir da versão 4.31.1, o AIOS detecta automaticamente este problema e mostra uma mensagem de ajuda clara.
-
-📖 **Para mais detalhes, veja**: [Guia de Instalação NPX para macOS](docs/npx-install.md)
+**Pré-requisitos**: [Node.js](https://nodejs.org) v18+ necessário (v20+ recomendado)
 
 ### Atualizando uma Instalação Existente
 
@@ -159,29 +155,160 @@ Estas regras fornecem:
 5. **CRÍTICO**: Fale com o AIOS Orchestrator na web a QUALQUER MOMENTO (comando #aios-orchestrator) e faça perguntas sobre como tudo funciona!
 6. **Quando mudar para o IDE**: Uma vez que você tenha seu PRD, Arquitetura, UX opcional e Briefings - é hora de mudar para o IDE para fragmentar seus documentos e começar a implementar o código real! Veja o [Guia do usuário](aios-core/user-guide.md) para mais detalhes
 
-### Referência de Comandos NPX
+### Referência de Comandos CLI
+
+O AIOS-FULLSTACK oferece uma CLI moderna e cross-platform com comandos intuitivos:
 
 ```bash
-# Gerenciamento de Projeto
+# Gerenciamento de Projeto (com assistente interativo)
 npx aios-fullstack init <nome-projeto> [opções]
   --force              Forçar criação em diretório não vazio
   --skip-install       Pular instalação de dependências npm
   --template <nome>    Usar template específico (default, minimal, enterprise)
 
-# Instalação e Configuração
+# Instalação e Configuração (com prompts modernos)
 npx aios-fullstack install [opções]
   --force              Sobrescrever configuração existente
   --quiet              Saída mínima durante instalação
+  --dry-run            Simular instalação sem modificar arquivos
 
 # Comandos do Sistema
+npx aios-fullstack --version   Exibir versão instalada
+npx aios-fullstack --help      Exibir ajuda detalhada
 npx aios-fullstack info        Exibir informações do sistema
 npx aios-fullstack doctor      Executar diagnósticos do sistema
 npx aios-fullstack doctor --fix Corrigir problemas detectados automaticamente
-npx aios-fullstack demo        Executar demo interativa
 
 # Manutenção
 npx aios-fullstack update      Atualizar para versão mais recente
 npx aios-fullstack uninstall   Remover AIOS-FULLSTACK
+```
+
+**Recursos da CLI:**
+- ✅ **Help System Abrangente**: `--help` em qualquer comando mostra documentação detalhada
+- ✅ **Validação de Entrada**: Feedback imediato sobre parâmetros inválidos
+- ✅ **Mensagens Coloridas**: Erros em vermelho, sucessos em verde, avisos em amarelo
+- ✅ **Cross-Platform**: Funciona perfeitamente em Windows, macOS e Linux
+- ✅ **Suporte a Dry-Run**: Teste instalações sem modificar arquivos
+
+### 💡 Exemplos de Uso
+
+#### Instalação Interativa Completa
+
+```bash
+$ npx aios-fullstack install
+
+🚀 AIOS-FULLSTACK Installation
+
+◆ What is your project name?
+│  my-awesome-project
+│
+◇ Which directory should we use?
+│  ./my-awesome-project
+│
+◆ Choose components to install:
+│  ● Core Framework (Required)
+│  ● Agent System (Required)
+│  ● Expansion Packs (optional)
+│  ○ Example Projects (optional)
+│
+◇ Select package manager:
+│  ● npm
+│  ○ yarn
+│  ○ pnpm
+│
+◆ Initialize Git repository?
+│  Yes
+│
+◆ Install dependencies?
+│  Yes
+│
+▸ Creating project directory...
+▸ Copying framework files...
+▸ Initializing Git repository...
+▸ Installing dependencies (this may take a minute)...
+▸ Configuring environment...
+▸ Running post-installation setup...
+
+✔ Installation completed successfully! (34.2s)
+
+Next steps:
+  cd my-awesome-project
+  aios-fullstack doctor     # Verify installation
+  aios-fullstack --help     # See available commands
+```
+
+#### Instalação Silenciosa (CI/CD)
+
+```bash
+# Instalação automatizada sem prompts
+$ npx aios-fullstack install --quiet --force
+✔ AIOS-FULLSTACK installed successfully
+```
+
+#### Simulação de Instalação (Dry-Run)
+
+```bash
+# Testar instalação sem modificar arquivos
+$ npx aios-fullstack install --dry-run
+
+[DRY RUN] Would create: ./my-project/
+[DRY RUN] Would copy: .aios-core/ (45 files)
+[DRY RUN] Would initialize: Git repository
+[DRY RUN] Would install: npm dependencies
+✔ Dry run completed - no files were modified
+```
+
+#### Diagnóstico do Sistema
+
+```bash
+$ npx aios-fullstack doctor
+
+🏥 AIOS System Diagnostics
+
+✔ Node.js version: v20.10.0 (meets requirement: >=18.0.0)
+✔ npm version: 10.2.3
+✔ Git installed: version 2.43.0
+✔ GitHub CLI: gh 2.40.1
+✔ AIOS-FULLSTACK: v1.0.0
+
+Configuration:
+✔ .aios-core/ directory exists
+✔ Agent files: 11 found
+✔ Workflow files: 8 found
+✔ Templates: 15 found
+
+Dependencies:
+✔ @clack/prompts: ^0.7.0
+✔ commander: ^12.0.0
+✔ execa: ^9.0.0
+✔ fs-extra: ^11.0.0
+✔ picocolors: ^1.0.0
+
+✅ All checks passed! Your installation is healthy.
+```
+
+#### Obter Ajuda
+
+```bash
+$ npx aios-fullstack --help
+
+Usage: aios-fullstack [options] [command]
+
+AIOS-FULLSTACK: AI-Orchestrated System for Full Stack Development
+
+Options:
+  -V, --version                output the version number
+  -h, --help                   display help for command
+
+Commands:
+  init <project-name>          Create new AIOS project with interactive wizard
+  install [options]            Install AIOS in current directory
+  info                         Display system information
+  doctor [options]             Run system diagnostics and health checks
+  help [command]               display help for command
+
+Run 'aios-fullstack <command> --help' for detailed information about each command.
 ```
 
 ### Alternativa: Clonar e Construir
@@ -255,9 +382,188 @@ O AIOS-FULLSTACK vem com 11 agentes especializados:
 - 🏛️ **[Visão Geral da Arquitetura](docs/architecture-overview.md)** - Visão detalhada da arquitetura do sistema
 - ⚙️ **[Guia de Ajuste de Performance](docs/performance-tuning-guide.md)** - Otimize seu fluxo de trabalho AIOS
 - 🔒 **[Melhores Práticas de Segurança](docs/security-best-practices.md)** - Segurança e proteção de dados
-- 🔄 **[Guia de Migração](docs/migration-guide.md)** - Migração de versões anteriores
+- 🔄 **[Guia de Migração v4.31→v1.0](docs/migration-v4.31-to-v1.0.md)** - Migração para versão cross-platform moderna
+- 🔄 **[Guia de Migração (Legacy)](docs/migration-guide.md)** - Migração de versões anteriores
 - 📦 **[Versionamento e Releases](docs/versioning-and-releases.md)** - Política de versões
 - 🌳 **[Trabalhando no Brownfield](aios-core/working-in-the-brownfield.md)** - Integrar AIOS em projetos existentes
+
+## 📊 Architecture Mapping & Visualization System
+
+O AIOS-FULLSTACK v1.0.0 inclui um sistema completo de mapeamento e visualização de arquitetura construído nos Epics 2 & 3. Este sistema oferece **visibilidade total** da sua arquitetura através de múltiplos formatos e detecção automática de gaps.
+
+### 🎯 O Que é o Sistema de Mapeamento?
+
+Um **grafo de relacionamentos completo** de todos os componentes do framework:
+- 📦 **199 entidades mapeadas** (22 agents, 67 tasks, 27 templates, 9 checklists, 12 tools, 6 workflows, 54 utils, 2 data)
+- 🔗 **50 relacionamentos rastreados** (executes, uses_template, depends_on, imports, etc.)
+- 🔍 **7 categorias de gaps** detectadas automaticamente
+- 📈 **Auditoria trimestral** automatizada para prevenir regressões
+
+### 🗂️ Formatos Disponíveis
+
+O sistema exporta a arquitetura em **3 formatos complementares**:
+
+#### 1. 🔵 **Neo4j Graph Database**
+
+Explore a arquitetura interativamente com Neo4j:
+
+```bash
+# Localização: outputs/architecture-map/neo4j/
+cd outputs/architecture-map/neo4j/
+
+# Siga o guia de setup (Neo4j Desktop ou Docker)
+cat SETUP-GUIDE.md
+
+# Import rápido (após instalar Neo4j)
+neo4j-admin database import full \
+  --nodes=nodes.csv \
+  --relationships=relationships.csv \
+  --delimiter=',' \
+  architecture-db
+```
+
+**Queries Prontos:**
+- 🔍 Encontrar dependências de um componente
+- 🧩 Analisar cadeias de relacionamentos
+- 📊 Estatísticas de conectividade
+- ⚠️ Identificar componentes isolados
+
+Veja `sample-queries-annotated.cypher` para 13 queries prontos!
+
+#### 2. 📐 **Mermaid Diagrams**
+
+8 diagramas Mermaid prontos para documentação:
+
+```bash
+# Localização: outputs/architecture-map/mermaid/
+
+synthesis-full-architecture.mmd       # Arquitetura completa
+synthesis-layered-view.mmd           # Visão em camadas (agents → tasks → utils)
+synthesis-critical-paths.mmd         # Caminhos críticos
+synthesis-gap-visualization.mmd      # Gaps visualizados
+synthesis-module-view.mmd            # Visão modular
+gap-focus.mmd                        # Foco em gaps
+dependency-chains.mmd                # Cadeias de dependência
+ide-coverage.mmd                     # Cobertura IDE
+```
+
+**Renderize no GitHub, VSCode ou use Mermaid Live Editor!**
+
+#### 3. 🌐 **HTML Interactive Dashboard**
+
+Dashboard interativo (Vis.js) - funciona offline:
+
+```bash
+# Localização: outputs/architecture-map/visualization/
+open outputs/architecture-map/visualization/index.html
+```
+
+**Recursos do Dashboard:**
+- 🔍 Busca e filtros por tipo de entidade
+- 🎨 Visualização interativa do grafo (zoom, pan, drag)
+- 📊 Painel de detalhes de entidades
+- 🔗 Navegação por relacionamentos
+- 📈 Estatísticas em tempo real
+
+### 🛡️ Gap Detection System
+
+Sistema automatizado de detecção de gaps em **7 categorias**:
+
+| Categoria          | Descrição                                     | Status  |
+|--------------------|-----------------------------------------------|---------|
+| Broken References  | Referências a entidades inexistentes          | 17 gaps |
+| Orphaned Active    | Entidades ativas sem uso                      | 0 gaps ✅ |
+| Ambiguous Relations| Relacionamentos ambíguos                      | 5 gaps  |
+| Missing Docs       | Documentação faltante                         | 150 gaps|
+| Deprecated Active  | Componentes deprecated ainda em uso           | 0 gaps ✅ |
+| Incomplete Workflows| Workflows incompletos                        | 8 gaps  |
+| Tool Validation    | Ferramentas referenciadas mas não registradas | 12 gaps |
+
+**Total: 338 gaps rastreados** (88 Orphaned Active resolvidos no Epic 3.1!)
+
+### 🔄 Automated Validation
+
+**Validação contínua** em múltiplos pontos:
+
+1. **Pre-Commit Hook** (Story 3.22)
+   - Valida relacionamentos antes de cada commit
+   - Detecta referências quebradas
+   - Previne regressões
+
+2. **Gap Detection Script**
+   ```bash
+   node outputs/architecture-map/schemas/detect-gaps.js
+   ```
+
+3. **Quarterly Audit** (Story 3.25)
+   - Auditoria trimestral automatizada
+   - Report de tendências (`gap-trend.json`)
+   - Alertas para novos gaps
+
+4. **Tool Reference Validation** (Story 3.21)
+   ```bash
+   node outputs/architecture-map/schemas/validate-tool-references.js
+   ```
+   - Valida ferramentas MCP/CLI/Local
+   - Suporta dual-mode (Legacy/1MCP)
+
+### 📈 Epic 2 & 3 Achievements
+
+**Epic 2 - Architecture Mapping (100% Complete):**
+- ✅ 297 entidades catalogadas
+- ✅ 174 relacionamentos sintetizados
+- ✅ Neo4j/Mermaid/HTML exports prontos
+- ✅ Gap detection implementado
+- ✅ Visualização interativa funcional
+
+**Epic 3 - Gap Remediation (62% Complete):**
+- ✅ **88 Orphaned Active gaps resolvidos** (Stories 3.1.1-3.1.4)
+- ✅ 54 utilities ativas documentadas em `core-config.yaml`
+- ✅ 19 utilities arquivadas com rationale
+- ✅ **85% token reduction** via 1MCP integration (280k → 40k tokens)
+- ✅ Dual-mode validation (Legacy/1MCP)
+- ✅ Pre-commit hooks + Quarterly audit
+
+### 🚀 Quick Start
+
+**1. Explore o Sistema:**
+```bash
+# Ver entidades e relacionamentos
+cat outputs/architecture-map/MASTER-RELATIONSHIP-MAP.json | jq '.metadata'
+
+# Detectar gaps
+node outputs/architecture-map/schemas/detect-gaps.js
+
+# Abrir dashboard
+open outputs/architecture-map/visualization/index.html
+```
+
+**2. Importe no Neo4j** (opcional):
+```bash
+cd outputs/architecture-map/neo4j/
+cat SETUP-GUIDE.md  # Siga as instruções
+```
+
+**3. Use Diagramas Mermaid:**
+```bash
+# Copie qualquer .mmd para sua documentação
+cp outputs/architecture-map/mermaid/synthesis-layered-view.mmd docs/
+```
+
+### 📚 Documentação Adicional
+
+- 📖 **[Neo4j Setup Guide](outputs/architecture-map/neo4j/SETUP-GUIDE.md)** - Importação completa
+- 📖 **[Visualization Guide](outputs/architecture-map/VISUALIZATION-GUIDE.md)** - Como usar o dashboard
+- 📖 **[Gap Detection Guide](outputs/architecture-map/schemas/README.md)** - Validação automatizada
+- 📖 **[Story 2.11](docs/stories/2.11-synthesis-integration.yaml)** - Synthesis implementation
+- 📖 **[Story 2.12](docs/stories/2.12-visualization-reporting.yaml)** - Visualization implementation
+
+### 🎯 Roadmap v1.1
+
+- [ ] Story 3.31 - 1MCP preset relationship synthesis
+- [ ] Interactive Miro board export
+- [ ] Real-time Neo4j updates on code changes
+- [ ] VSCode extension for inline visualization
 
 ## Criando Seu Próprio Expansion Pack
 
@@ -288,7 +594,64 @@ Explore o diretório [expansion-packs/](expansion-packs/) para mais inspiração
 
 ## Suporte
 
+- 💬 [Comunidade Discord](https://discord.gg/gk8jAdXWmj)
 - 🐛 [Rastreador de Issues](https://github.com/Pedrovaleriolopez/aios-fullstack/issues)
+- 💬 [Discussões](https://github.com/Pedrovaleriolopez/aios-fullstack/discussions)
+
+## Git Workflow e Validação
+
+O AIOS-FULLSTACK implementa um sistema de validação de múltiplas camadas para garantir qualidade do código e consistência:
+
+### 🛡️ Defense in Depth - 3 Camadas de Validação
+
+**Camada 1: Pre-commit (Local - Rápida)**
+- ✅ ESLint - Qualidade de código
+- ✅ TypeScript - Verificação de tipos
+- ⚡ Performance: <5s
+- 💾 Cache habilitado
+
+**Camada 2: Pre-push (Local - Validação de Stories)**
+- ✅ Validação de checkboxes de histórias
+- ✅ Consistência de status
+- ✅ Seções obrigatórias
+
+**Camada 3: CI/CD (Cloud - Obrigatório para merge)**
+- ✅ Todos os testes
+- ✅ Cobertura de testes (80% mínimo)
+- ✅ Validações completas
+- ✅ GitHub Actions
+
+### 📖 Documentação Detalhada
+
+- 📋 **[Guia Completo de Git Workflow](docs/git-workflow-guide.md)** - Guia detalhado do fluxo de trabalho
+- 📋 **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guia de contribuição
+
+### Comandos Disponíveis
+
+```bash
+# Validações locais
+npm run lint           # ESLint
+npm run typecheck      # TypeScript
+npm test              # Testes
+npm run test:coverage # Testes com cobertura
+
+# Validador AIOS
+node .aios-core/utils/aios-validator.js pre-commit   # Validação pre-commit
+node .aios-core/utils/aios-validator.js pre-push     # Validação pre-push
+node .aios-core/utils/aios-validator.js stories      # Validar todas stories
+```
+
+### Branch Protection
+
+Configure proteção da branch master com:
+
+```bash
+node scripts/setup-branch-protection.js
+```
+
+Requer:
+- GitHub CLI (gh) instalado e autenticado
+- Acesso de admin ao repositório
 
 ## Contribuindo
 
@@ -304,6 +667,7 @@ Para contribuir:
 
 Veja também:
 - 📋 [Como Contribuir com Pull Requests](docs/how-to-contribute-with-pull-requests.md)
+- 📋 [Guia de Git Workflow](docs/git-workflow-guide.md)
 - 📋 [Checklist de Lançamento](docs/launch-checklist.md)
 
 ## Licença

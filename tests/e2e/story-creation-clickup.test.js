@@ -28,7 +28,7 @@ jest.mock('../../common/utils/tool-resolver', () => ({
   resolveTool: jest.fn(() => mockClickUpTool)
 }));
 
-const toolResolver = require('../../common/utils/tool-resolver');
+const _toolResolver = require('../../common/utils/tool-resolver');
 
 describe('End-to-End Story Creation with ClickUp Integration', () => {
   const testStoryPath = path.join(__dirname, '../fixtures/test-story-5.99.md');
@@ -42,7 +42,7 @@ describe('End-to-End Story Creation with ClickUp Integration', () => {
     // Cleanup test files
     try {
       await fs.unlink(testStoryPath);
-    } catch (error) {
+    } catch (_error) {
       // File may not exist, ignore
     }
   });

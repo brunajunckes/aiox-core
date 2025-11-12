@@ -62,7 +62,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
       }
 
       // All v1.0 tools should have schema_version = 1
-      results.forEach(({ name, schema_version, has_executable_knowledge }) => {
+      results.forEach(({ _name, schema_version, has_executable_knowledge }) => {
         expect(schema_version).toBe(1);
         expect(has_executable_knowledge).toBe(false);
       });
@@ -81,7 +81,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
       }
 
       // All v2.0 tools should have schema_version = 2
-      results.forEach(({ name, schema_version, has_executable_knowledge }) => {
+      results.forEach(({ _name, schema_version, has_executable_knowledge }) => {
         expect(schema_version).toBe(2);
         expect(has_executable_knowledge).toBe(true);
       });
@@ -89,7 +89,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
 
     test('auto-detection assigns version 1 to tools without schema_version field', async () => {
       // Test with a mock tool that has no schema_version field
-      const mockToolPath = path.join(__dirname, '../fixtures/tools');
+      const _mockToolPath = path.join(__dirname, '../fixtures/tools');
 
       // Note: If no fixtures exist, this test verifies existing v1.0 tools
       // have consistent schema_version assignment
@@ -112,7 +112,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
   describe('v1.0 Tools Functionality (No Breaking Changes)', () => {
     test('v1.0 tools resolve successfully', async () => {
       const resolvePromises = v1SimpleTools.map(name =>
-        toolResolver.resolveTool(name)
+        toolResolver.resolveTool(_name)
       );
 
       const tools = await Promise.all(resolvePromises);
