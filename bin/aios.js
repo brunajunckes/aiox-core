@@ -1,0 +1,237 @@
+#!/usr/bin/env node
+
+/**
+ * AIOS-FullStack CLI
+ * Main entry point - Standalone (no external dependencies for npx compatibility)
+ * Version: 1.2.0
+ */
+
+const path = require('path');
+const fs = require('fs');
+const { execSync } = require('child_process');
+
+// Read package.json for version
+const packageJsonPath = path.join(__dirname, '..', 'package.json');
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+// Parse arguments
+const args = process.argv.slice(2);
+const command = args[0];
+
+// Helper: Run initialization wizard
+function runWizard() {
+  const initScript = path.join(__dirname, 'aios-init.js');
+
+  if (!fs.existsSync(initScript)) {
+    console.error('❌ Initialization wizard not found:', initScript);
+    console.error('Please ensure AIOS-FullStack is installed correctly.');
+    process.exit(1);
+  }
+
+  // Run the wizard
+  require(initScript);
+}
+
+// Helper: Show help
+function showHelp() {
+  console.log(`
+AIOS-FullStack v${packageJson.version}
+AI-Orchestrated System for Full Stack Development
+
+USAGE:
+  npx aios-fullstack@latest              # Run installation wizard
+  npx aios-fullstack@latest install      # Install in current project
+  npx aios-fullstack@latest init <name>  # Create new project
+  npx aios-fullstack@latest info         # Show system info
+  npx aios-fullstack@latest doctor       # Run diagnostics
+  npx aios-fullstack@latest --version    # Show version
+  npx aios-fullstack@latest --help       # Show this help
+
+EXAMPLES:
+  # Install in current directory
+  npx aios-fullstack@latest
+
+  # Install with minimal mode (only expansion-creator)
+  npx aios-fullstack-minimal@latest
+
+  # Create new project
+  npx aios-fullstack@latest init my-project
+
+For more information, visit: https://github.com/Pedrovaleriolopez/aios-fullstack
+`);
+}
+
+// Helper: Show version
+function showVersion() {
+  console.log(packageJson.version);
+}
+
+// Helper: Show system info
+function showInfo() {
+  console.log('📊 AIOS-FullStack System Information\n');
+  console.log(`Version: ${packageJson.version}`);
+  console.log(`Platform: ${process.platform}`);
+  console.log(`Node.js: ${process.version}`);
+  console.log(`Architecture: ${process.arch}`);
+  console.log(`Working Directory: ${process.cwd()}`);
+  console.log(`Install Location: ${path.join(__dirname, '..')}`);
+
+  // Check if .aios-core exists
+  const aiosCoreDir = path.join(__dirname, '..', '.aios-core');
+  if (fs.existsSync(aiosCoreDir)) {
+    console.log('\n✓ AIOS Core installed');
+
+    // Count components
+    const countFiles = (dir) => {
+      try {
+        return fs.readdirSync(dir).length;
+      } catch {
+        return 0;
+      }
+    };
+
+    console.log(`  - Agents: ${countFiles(path.join(aiosCoreDir, 'agents'))}`);
+    console.log(`  - Tasks: ${countFiles(path.join(aiosCoreDir, 'tasks'))}`);
+    console.log(`  - Templates: ${countFiles(path.join(aiosCoreDir, 'templates'))}`);
+    console.log(`  - Workflows: ${countFiles(path.join(aiosCoreDir, 'workflows'))}`);
+  } else {
+    console.log('\n⚠️  AIOS Core not found');
+  }
+}
+
+// Helper: Run doctor diagnostics
+function runDoctor() {
+  console.log('🏥 AIOS System Diagnostics\n');
+
+  let hasErrors = false;
+
+  // Check Node.js version
+  const nodeVersion = process.version.replace('v', '');
+  const requiredNodeVersion = '18.0.0';
+  const compareVersions = (a, b) => {
+    const pa = a.split('.').map(n => parseInt(n, 10));
+    const pb = b.split('.').map(n => parseInt(n, 10));
+    for (let i = 0; i < 3; i++) {
+      const na = pa[i] || 0;
+      const nb = pb[i] || 0;
+      if (na > nb) return 1;
+      if (na < nb) return -1;
+    }
+    return 0;
+  };
+  const nodeOk = compareVersions(nodeVersion, requiredNodeVersion) >= 0;
+
+  console.log(`${nodeOk ? '✔' : '✗'} Node.js version: ${process.version} ${nodeOk ? '(meets requirement: >=18.0.0)' : '(requires >=18.0.0)'}`);
+  if (!nodeOk) hasErrors = true;
+
+  // Check npm
+  try {
+    const npmVersion = execSync('npm --version', { encoding: 'utf8' }).trim();
+    console.log(`✔ npm version: ${npmVersion}`);
+  } catch {
+    console.log('✗ npm not found');
+    hasErrors = true;
+  }
+
+  // Check git
+  try {
+    const gitVersion = execSync('git --version', { encoding: 'utf8' }).trim();
+    console.log(`✔ Git installed: ${gitVersion}`);
+  } catch {
+    console.log('⚠️  Git not found (optional but recommended)');
+  }
+
+  // Check AIOS installation
+  const aiosCoreDir = path.join(__dirname, '..', '.aios-core');
+  if (fs.existsSync(aiosCoreDir)) {
+    console.log(`✔ AIOS-FULLSTACK: v${packageJson.version}`);
+  } else {
+    console.log('✗ AIOS Core not installed');
+    console.log('  Run: npx aios-fullstack@latest');
+    hasErrors = true;
+  }
+
+  // Summary
+  console.log('');
+  if (hasErrors) {
+    console.log('⚠️  Some issues were detected.');
+    process.exit(1);
+  } else {
+    console.log('✅ All checks passed! Your installation is healthy.');
+  }
+}
+
+// Helper: Create new project
+function initProject(projectName) {
+  if (!projectName) {
+    console.error('❌ Project name is required');
+    console.log('\nUsage: npx aios-fullstack@latest init <project-name>');
+    process.exit(1);
+  }
+
+  console.log(`🚀 Creating new AIOS project: ${projectName}\n`);
+
+  const targetPath = path.join(process.cwd(), projectName);
+
+  // Check if directory exists
+  if (fs.existsSync(targetPath)) {
+    console.error(`❌ Directory already exists: ${projectName}`);
+    console.log('Use a different name or remove the existing directory.');
+    process.exit(1);
+  }
+
+  // Create project directory
+  fs.mkdirSync(targetPath, { recursive: true });
+  console.log(`✓ Created directory: ${projectName}`);
+
+  // Change to project directory
+  process.chdir(targetPath);
+
+  // Run the initialization wizard
+  runWizard();
+}
+
+// Command routing
+switch (command) {
+  case 'install':
+    // Install in current project
+    console.log('🚀 AIOS-FullStack Installation\n');
+    runWizard();
+    break;
+
+  case 'init':
+    // Create new project
+    const projectName = args[1];
+    initProject(projectName);
+    break;
+
+  case 'info':
+    showInfo();
+    break;
+
+  case 'doctor':
+    runDoctor();
+    break;
+
+  case '--version':
+  case '-v':
+  case '-V':
+    showVersion();
+    break;
+
+  case '--help':
+  case '-h':
+    showHelp();
+    break;
+
+  case undefined:
+    // No arguments - run wizard directly (npx default behavior)
+    console.log('🚀 AIOS-FullStack Installation\n');
+    runWizard();
+    break;
+
+  default:
+    console.error(`❌ Unknown command: ${command}`);
+    console.log('\nRun with --help to see available commands');
+    process.exit(1);
+}

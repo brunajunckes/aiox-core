@@ -1,13 +1,15 @@
 {
   "name": "aios-fullstack",
-  "version": "1.0.0",
+  "version": "1.2.3",
   "description": "AIOS-FULLSTACK: AI-Orchestrated System for Full Stack Development - Modern cross-platform CLI with interactive wizard",
   "main": "index.js",
   "module": "index.esm.js",
   "types": "index.d.ts",
   "bin": {
     "aios": "bin/aios-fullstack.js",
-    "aios-fullstack": "bin/aios-fullstack.js"
+    "aios-fullstack": "bin/aios-fullstack.js",
+    "aios-fullstack-minimal": "./bin/aios-minimal.js",
+    "aios-minimal": "./bin/aios-minimal.js"
   },
   "workspaces": [
     "aios-core",
@@ -49,6 +51,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:monitoring": "jest .claude/commands/hybridOps/tests",
+    "test:cross-platform": "jest test/cross-platform.test.js",
+    "lint": "eslint . --cache --cache-location .eslintcache",
+    "typecheck": "tsc --noEmit",
     "publish:dry-run": "node tools/npm-publish.js --dry-run",
     "publish:preview": "node tools/npm-publish.js --tag preview",
     "publish:stable": "node tools/npm-publish.js --tag latest",
@@ -107,12 +113,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allfluenceinc/aios-fullstack.git"
+    "url": "git+https://github.com/Pedrovaleriolopez/aios-fullstack.git"
   },
   "bugs": {
-    "url": "https://github.com/allfluenceinc/aios-fullstack/issues"
+    "url": "https://github.com/Pedrovaleriolopez/aios-fullstack/issues"
   },
-  "homepage": "https://github.com/allfluenceinc/aios-fullstack#readme",
+  "homepage": "https://github.com/Pedrovaleriolopez/aios-fullstack#readme",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
@@ -121,11 +127,15 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "lint-staged": "^16.1.1",
     "prettier": "^3.5.3",
     "semantic-release": "^22.0.0",
+    "typescript": "^5.9.3",
     "yaml-lint": "^1.7.0"
   },
   "lint-staged": {
