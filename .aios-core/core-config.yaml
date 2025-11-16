@@ -14,12 +14,12 @@ architecture:
   architectureShardedLocation: docs/architecture
 customTechnicalDocuments: null
 devLoadAlwaysFiles:
-  - docs/architecture/coding-standards.md
-  - docs/architecture/tech-stack.md
-  - docs/architecture/source-tree.md
-  - docs/architecture/hybrid-ops-pv-mind-integration.md
-  - docs/architecture/decision-analysis-architectural-decision.md
-  - docs/architecture/decision-analysis-deep-integration.md
+  - docs/framework/coding-standards.md
+  - docs/framework/tech-stack.md
+  - docs/framework/source-tree.md
+  - docs/architecture/project-decisions/hybrid-ops-pv-mind-integration.md
+  - docs/architecture/project-decisions/decision-analysis-architectural-decision.md
+  - docs/architecture/project-decisions/decision-analysis-deep-integration.md
 devLoadAlwaysFilesFallback:
   - docs/architecture/padroes-de-codigo.md
   - docs/architecture/pilha-tecnologica.md
@@ -32,6 +32,35 @@ devLoadAlwaysFilesFallback:
 devDebugLog: .ai/debug-log.md
 devStoryLocation: docs/stories
 slashPrefix: AIOS
+
+# Framework Documentation Paths (Story 6.1.2.6)
+frameworkDocsLocation: docs/framework
+projectDocsLocation: docs/architecture/project-decisions
+
+# Lazy Loading Configuration (Story 6.1.2.6)
+# Optimizes agent load times by only loading heavy sections when needed
+lazyLoading:
+  enabled: true
+  heavySections:
+    - pvMindContext              # Load only for hybrid-ops agents (saves 75KB for 10 agents)
+    - expansionPacks             # Load only when pack requested
+    - registry                   # Load only for meta operations
+
+# Git Configuration (Story 6.1.2.5)
+git:
+  showConfigWarning: true
+  cacheTimeSeconds: 300
+
+# Decision Logging Configuration (Story 6.1.2.6.2)
+# Automated decision tracking for yolo mode (autonomous) development
+decisionLogging:
+  enabled: true
+  async: true  # Non-blocking log writing
+  location: .ai/  # Log file directory
+  indexFile: decision-logs-index.md
+  format: adr  # Architecture Decision Record format
+  performance:
+    maxOverhead: 50  # Maximum logging overhead in ms
 
 # Resource Locations (added in documentation sync - 2025-10-22)
 toolsLocation: .aios-core/tools
@@ -103,6 +132,17 @@ projectStatus:
   statusFile: .aios/project-status.yaml
   maxModifiedFiles: 5  # Show only first 5 modified files
   maxRecentCommits: 2  # Show only 2 most recent commits
+
+# Agent Identity Configuration (Story 6.1.2.5)
+# Contextual agent greeting system
+agentIdentity:
+  greeting:
+    contextDetection: true
+    sessionDetection: hybrid  # conversation history preferred, file fallback
+    workflowDetection: hardcoded  # hardcoded patterns in workflow-patterns.yaml
+    performance:
+      gitCheckCache: true
+      gitCheckTTL: 300  # 5 minutes in seconds
 
 # Entity Registry (added in Story 2.13 - Gap Remediation Planning)
 # This section tracks all AIOS framework entities for discovery and validation
