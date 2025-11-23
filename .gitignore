@@ -61,6 +61,7 @@ sync-*.sh                     # Agent sync scripts
 # IDE and editor configs
 .windsurf/
 .trae/
+.cursor/rules/                # Cursor IDE personal rules and configurations
 
 # AI assistant files
 CLAUDE.md
@@ -119,6 +120,15 @@ aios-core/*.map
 aios-guide-app/
 examples/
 supabase/
+
+# Output directories (generated artifacts)
+outputs/
+
+# Test fixtures (generated during tests)
+tests/*/__fixtures__/
+
+# UI/UX design artifacts
+docs/ui-prompts.pdf
 
 # Keep these main planning documents (DO commit these)
 # docs/prd.md
