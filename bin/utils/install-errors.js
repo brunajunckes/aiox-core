@@ -9,6 +9,7 @@
  */
 
 const chalk = require('chalk');
+const { CRITICAL_ERRORS } = require('./install-transaction');
 
 /**
  * Error classification taxonomy
@@ -182,7 +183,8 @@ const ERROR_MESSAGES = {
 function formatErrorMessage(error, errorCode = null) {
   const code = errorCode || error.code || 'UNKNOWN_ERROR';
   const template = ERROR_MESSAGES[code] || ERROR_MESSAGES.UNKNOWN_ERROR;
-  const classification = ERROR_CLASSIFICATION.CRITICAL;
+  // Derive classification from error code instead of hardcoding CRITICAL
+  const classification = getErrorClassification(code);
 
   const lines = [];
   lines.push('');
@@ -311,10 +313,11 @@ function sanitizeErrorForUser(error) {
  * @returns {Object} Classification object {level, color, icon}
  */
 function getErrorClassification(errorCode) {
-  const criticalCodes = ['EACCES', 'ENOSPC', 'EROFS', 'ENOTDIR', 'EISDIR', 'GIT_CORRUPTION'];
+  // Use shared CRITICAL_ERRORS constant from install-transaction.js
+  const additionalCriticalCodes = ['GIT_CORRUPTION'];
   const recoverableCodes = ['NETWORK_TIMEOUT', 'NETWORK_ERROR', 'DEPENDENCY_FAILED'];
 
-  if (criticalCodes.includes(errorCode)) {
+  if (CRITICAL_ERRORS.includes(errorCode) || additionalCriticalCodes.includes(errorCode)) {
     return ERROR_CLASSIFICATION.CRITICAL;
   }
 

@@ -90,7 +90,11 @@ class InstallTransaction {
       return;
     }
 
-    const backupPath = path.join(this.backupDir, path.basename(filePath) + '.backup');
+    // Generate unique backup filename using path hash to prevent collisions
+    // e.g., /app/config.json and /data/config.json won't overwrite each other
+    const pathHash = crypto.createHash('sha256').update(originalPath).digest('hex').substring(0, 8);
+    const backupFilename = `${path.basename(filePath)}.${pathHash}.backup`;
+    const backupPath = path.join(this.backupDir, backupFilename);
     await fs.ensureDir(this.backupDir);
 
     // Set restrictive permissions on backup directory (owner only)
@@ -125,7 +129,12 @@ class InstallTransaction {
       return;
     }
 
-    const stats = await fs.stat(originalPath);
+    // Prevent symlink attacks (security) - use lstat to detect symlinks
+    const stats = await fs.lstat(originalPath);
+    if (stats.isSymbolicLink()) {
+      throw new Error(`Symlink detected in backup path - potential security risk: ${dirPath}`);
+    }
+
     if (!stats.isDirectory()) {
       throw new Error(`Path is not a directory: ${dirPath}`);
     }
@@ -136,7 +145,10 @@ class InstallTransaction {
       return;
     }
 
-    const backupPath = path.join(this.backupDir, path.basename(dirPath));
+    // Generate unique backup dirname using path hash to prevent collisions
+    const pathHash = crypto.createHash('sha256').update(originalPath).digest('hex').substring(0, 8);
+    const backupDirname = `${path.basename(dirPath)}.${pathHash}`;
+    const backupPath = path.join(this.backupDir, backupDirname);
     await fs.ensureDir(this.backupDir);
 
     // Set restrictive permissions
@@ -224,13 +236,27 @@ class InstallTransaction {
           continue;
         }
 
-        // Remove failed installation artifacts
-        if (await fs.pathExists(backup.original)) {
-          await fs.remove(backup.original);
-        }
+        // Atomic restore: Copy to temp first, then move to original
+        // This prevents data loss if copy fails
+        const tempPath = `${backup.original}.restore-temp`;
 
-        // Restore from backup
-        await fs.copy(backup.backup, backup.original, { recursive: backup.isDirectory });
+        try {
+          // Copy backup to temporary location
+          await fs.copy(backup.backup, tempPath, { recursive: backup.isDirectory });
+
+          // Remove failed installation artifacts (safe now that restore is ready)
+          if (await fs.pathExists(backup.original)) {
+            await fs.remove(backup.original);
+          }
+
+          // Atomic move from temp to original
+          await fs.move(tempPath, backup.original, { overwrite: true });
+        } finally {
+          // Cleanup temp file if it still exists (error case)
+          if (await fs.pathExists(tempPath)) {
+            await fs.remove(tempPath);
+          }
+        }
 
         this.log('INFO', `Restored: ${backup.original}`);
       } catch (error) {
@@ -350,6 +376,11 @@ class InstallTransaction {
    */
   _rotateLogIfNeeded() {
     try {
+      // Check if log file exists before trying to get stats
+      if (!fs.existsSync(this.logFile)) {
+        return;
+      }
+
       const stats = fs.statSync(this.logFile);
       const MAX_LOG_SIZE = 10 * 1024 * 1024; // 10MB
       const MAX_LOG_FILES = 5;
