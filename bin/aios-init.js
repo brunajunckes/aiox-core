@@ -51,7 +51,7 @@ function resolveAiosCoreModule(modulePath) {
 }
 
 // Load AIOS Core modules
-const { detectRepositoryContext } = resolveAiosCoreModule('utils/repository-detector');
+const { detectRepositoryContext } = resolveAiosCoreModule('scripts/repository-detector');
 // PM adapters imported but not used directly (loaded dynamically)
 // const { ClickUpAdapter } = resolveAiosCoreModule('utils/pm-adapters/clickup-adapter');
 // const { GitHubProjectsAdapter } = resolveAiosCoreModule('utils/pm-adapters/github-adapter');

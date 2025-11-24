@@ -24,6 +24,12 @@
     "node_modules",
     "dist",
     ".tsbuildinfo",
-    "coverage"
+    "coverage",
+    "**/*-tmpl.*",
+    "**/*.tmpl.*",
+    ".aios-core.backup*/**",
+    "aios-core.backup*/**",
+    "aios-core-deprecated/**",
+    "aios-core-depracated/**"
   ]
 }

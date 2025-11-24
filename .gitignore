@@ -15,6 +15,7 @@ npm-debug.log*
 .aios-install.log
 .aios-install.log.*
 .aios-backup/
+.aios-core.backup*/                # Backup directories (any timestamp)
 
 # Build output
 build/*.txt
