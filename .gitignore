@@ -80,7 +80,9 @@ CLAUDE.md
 *.decision-log.md
 
 # Project-specific
-.aios-core
+# Note: .aios-core is SOURCE CODE for framework-development mode
+# It should NOT be ignored in the main repository
+.aios-core.backup*/                # Only ignore backup directories
 test-project-install/*
 sample-project/*
 
