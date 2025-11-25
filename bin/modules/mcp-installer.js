@@ -338,7 +338,7 @@ async function appendLog(logPath, message) {
 /**
  * Display installation status
  */
-/* eslint-disable no-console */
+ 
 function displayInstallationStatus(results) {
   console.log('');
   console.log(chalk.cyan('📊 MCP Installation Status:'));
@@ -367,7 +367,7 @@ function displayInstallationStatus(results) {
   console.log(chalk.gray(`📋 Installation log: .aios/install-log.txt`));
   console.log('');
 }
-/* eslint-enable no-console */
+ 
 
 module.exports = {
   installProjectMCPs,

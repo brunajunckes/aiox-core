@@ -396,7 +396,7 @@ function validateEnvFormat(content) {
  *
  * @param {Object} results - Configuration results
  */
-/* eslint-disable no-console */
+ 
 function displayConfigSummary(results) {
   console.log('');
   console.log(chalk.cyan('📊 Environment Configuration Summary:'));
@@ -424,7 +424,7 @@ function displayConfigSummary(results) {
   console.log(chalk.gray('  3. Never commit .env file (already in .gitignore)'));
   console.log('');
 }
-/* eslint-enable no-console */
+ 
 
 module.exports = {
   configureEnvironment,

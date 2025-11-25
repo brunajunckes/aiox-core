@@ -113,11 +113,15 @@ async function executeInstall(packageManager, projectPath = process.cwd()) {
     // Security: Use args array to prevent shell injection
     const args = ['install'];
 
-    // Spawn process with no shell (security)
+    // Windows requires shell: true because npm is actually npm.cmd
+    // On Unix, we can use shell: false for better security
+    const isWindows = process.platform === 'win32';
+
+    // Spawn process
     const child = spawn(packageManager, args, {
       cwd: projectPath,
       stdio: 'inherit', // Show real-time output to user
-      shell: false // CRITICAL: Prevent command injection
+      shell: isWindows // Windows needs shell to find npm.cmd, Unix doesn't
     });
 
     child.on('close', (code) => {

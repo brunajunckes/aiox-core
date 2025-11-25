@@ -108,15 +108,16 @@ async function runWizard() {
     }
 
     // Story 1.4: Generate IDE configs if IDEs were selected
+    let ideConfigResult = null;
     if (answers.selectedIDEs && answers.selectedIDEs.length > 0) {
-      const configResult = await generateIDEConfigs(answers.selectedIDEs, answers);
+      ideConfigResult = await generateIDEConfigs(answers.selectedIDEs, answers);
 
-      if (configResult.success) {
-        showSuccessSummary(configResult);
+      if (ideConfigResult.success) {
+        showSuccessSummary(ideConfigResult);
       } else {
         console.error('\n⚠️  Some IDE configurations could not be created:');
-        if (configResult.errors) {
-          configResult.errors.forEach(err => {
+        if (ideConfigResult.errors) {
+          ideConfigResult.errors.forEach(err => {
             console.error(`  - ${err.ide || 'Unknown'}: ${err.error}`);
           });
         }
@@ -174,9 +175,14 @@ async function runWizard() {
     // Story 1.7: Dependency Installation
     console.log('\n📦 Installing dependencies...');
 
+    // Auto-detect package manager (no longer asked as question)
+    const { detectPackageManager } = require('../installer/dependency-installer');
+    const detectedPM = detectPackageManager();
+    answers.packageManager = detectedPM;
+
     try {
       const depsResult = await installDependencies({
-        packageManager: answers.packageManager,
+        packageManager: detectedPM,
         projectPath: process.cwd()
       });
 
@@ -275,7 +281,7 @@ async function runWizard() {
       const validation = await validateInstallation(
         {
           files: {
-            ideConfigs: configResult?.files || [],
+            ideConfigs: ideConfigResult?.files || [],
             env: '.env',
             coreConfig: '.aios-core/core-config.yaml',
             mcpConfig: '.mcp.json'

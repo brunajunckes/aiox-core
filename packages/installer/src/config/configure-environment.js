@@ -69,14 +69,12 @@ async function configureEnvironment(options = {}) {
       }
     }
 
-    // Step 2: Collect API keys interactively (if not skipping prompts)
-    let apiKeys = {};
+    // Step 2: API keys are configured later via .env or aios-master
+    // Skipping prompts during installation for better UX
+    const apiKeys = {};
 
     if (!skipPrompts) {
-      console.log('\n📝 API Key Configuration (all optional - press Enter to skip)');
-      console.log('You can configure these later in the .env file\n');
-
-      apiKeys = await collectApiKeys();
+      console.log('\n💡 API keys can be configured later in .env file or via aios-master');
     }
 
     // Step 3: Generate and write .env file

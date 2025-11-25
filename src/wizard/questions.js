@@ -120,18 +120,12 @@ function getMCPQuestions() {
           checked: true
         }
       ],
-      validate: (input) => {
+      validate: () => {
         // Allow empty selection (user can skip MCP installation)
         return true;
       }
-    },
-    {
-      type: 'password',
-      name: 'exaApiKey',
-      message: colors.primary('Exa API Key (optional, can configure later in .env):'),
-      when: (answers) => answers.selectedMCPs && answers.selectedMCPs.includes('exa'),
-      default: ''
     }
+    // Note: API keys are configured later via aios-master or directly in .env
   ];
 }
 
@@ -174,11 +168,9 @@ function buildQuestionSequence(_context = {}) {
   // Story 1.5/1.8: MCP Selection
   questions.push(...getMCPQuestions());
 
-  // Story 1.7: Package Manager Selection
-  // Note: Detection happens in wizard, we pass detected PM to highlight it
-  const { detectPackageManager } = require('../installer/dependency-installer');
-  const detectedPM = detectPackageManager();
-  questions.push(getPackageManagerQuestion(detectedPM));
+  // Story 1.7: Package Manager - Auto-detected (no question needed)
+  // The wizard will auto-detect and use the appropriate package manager
+  // See detectPackageManager() in dependency-installer.js
 
   // Story 1.6: Environment Configuration
   // Note: Env config prompts handled directly in configureEnvironment()

@@ -21,11 +21,11 @@ describe('IDE Selector', () => {
     });
 
     it('should accept multiple IDE selections', () => {
-      const result = validateIDESelection(['cursor', 'windsurf', 'zed']);
+      const result = validateIDESelection(['cursor', 'windsurf', 'trae']);
       expect(result).toBe(true);
     });
 
-    it('should accept all 6 IDE selections', () => {
+    it('should accept all 8 IDE selections', () => {
       const allIDEs = getIDEKeys();
       const result = validateIDESelection(allIDEs);
       expect(result).toBe(true);
@@ -64,9 +64,9 @@ describe('IDE Selector', () => {
       expect(question).toHaveProperty('validate');
     });
 
-    it('should have 6 IDE choices', () => {
+    it('should have 8 IDE choices', () => {
       const question = getIDESelectionQuestion();
-      expect(question.choices).toHaveLength(6);
+      expect(question.choices).toHaveLength(8);
     });
 
     it('should have valid choice structure', () => {
