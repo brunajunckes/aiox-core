@@ -268,7 +268,7 @@ async function updateGitignore(targetDir) {
     'Dependencies': ['node_modules/', 'node_modules'],
     'Build & Logs': ['dist/', 'build/', '*.log', 'logs/'],
     'IDE & OS': ['.DS_Store', 'Thumbs.db', '.idea/', '*.swp'],
-    'AIOS Local': ['.aios-core/local/', '.claude/settings.local.json']
+    'AIOS Local': ['.aios-core/local/', '.claude/settings.local.json', '.aios/install-log.txt']
   };
 
   const lines = gitignoreContent.split('\n').map(line => line.trim());

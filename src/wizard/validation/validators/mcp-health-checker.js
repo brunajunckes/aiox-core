@@ -213,7 +213,8 @@ async function testBrowserMCP(config) {
 }
 
 /**
- * Test Context7 MCP (SSE connection)
+ * Test Context7 MCP (HTTP connection)
+ * Note: SSE endpoint is deprecated, use HTTP endpoint (mcp.context7.com/mcp)
  * @private
  */
 async function testContext7MCP(config) {
@@ -225,19 +226,21 @@ async function testContext7MCP(config) {
     };
   }
 
-  // Test SSE endpoint connectivity
+  // Test HTTP endpoint connectivity
   return new Promise((resolve) => {
     const url = config.url;
     const protocol = url.startsWith('https') ? https : http;
     const timeout = 5000;
 
     const req = protocol.get(url, { timeout }, (res) => {
+      // HTTP endpoint may return various success codes
+      const isSuccess = res.statusCode >= 200 && res.statusCode < 400;
       resolve({
-        success: res.statusCode === 200 || res.statusCode === 301,
+        success: isSuccess,
         message:
-          res.statusCode === 200
-            ? 'SSE endpoint accessible'
-            : `SSE endpoint returned ${res.statusCode}`,
+          isSuccess
+            ? 'HTTP endpoint accessible'
+            : `HTTP endpoint returned ${res.statusCode}`,
         details: {
           statusCode: res.statusCode,
           url: url
@@ -248,7 +251,7 @@ async function testContext7MCP(config) {
     req.on('error', (error) => {
       resolve({
         success: false,
-        message: `SSE connection failed: ${error.message}`,
+        message: `HTTP connection failed: ${error.message}`,
         details: { error: error.message, url: url }
       });
     });
@@ -257,7 +260,7 @@ async function testContext7MCP(config) {
       req.destroy();
       resolve({
         success: false,
-        message: 'SSE connection timeout',
+        message: 'HTTP connection timeout',
         details: { timeout: timeout, url: url }
       });
     });

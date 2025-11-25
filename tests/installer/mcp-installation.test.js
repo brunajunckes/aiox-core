@@ -82,10 +82,10 @@ describe('MCP Installation Module', () => {
       expect(typeof browser.getConfig).toBe('function');
     });
 
-    test('context7 MCP should be SSE type', () => {
+    test('context7 MCP should be HTTP type', () => {
       const context7 = MCP_CONFIGS.context7;
-      expect(context7.type).toBe('sse');
-      expect(context7.url).toBe('https://mcp.context7.com/sse');
+      expect(context7.type).toBe('http');
+      expect(context7.url).toBe('https://mcp.context7.com/mcp');
       expect(typeof context7.getConfig).toBe('function');
     });
 
@@ -123,8 +123,7 @@ describe('MCP Installation Module', () => {
       const context7 = MCP_CONFIGS.context7;
       const config = context7.getConfig();
 
-      expect(config.type).toBe('sse');
-      expect(config.url).toBeDefined();
+      expect(config.url).toBe('https://mcp.context7.com/mcp');
     });
 
     test('exa should include tools parameter', () => {

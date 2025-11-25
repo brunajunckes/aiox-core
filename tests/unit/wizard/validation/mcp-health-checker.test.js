@@ -23,7 +23,7 @@ describe('MCP Health Checker', () => {
       fs.readFileSync.mockReturnValue(JSON.stringify({
         mcpServers: {
           browser: { command: 'npx', args: ['-y', '@modelcontextprotocol/server-puppeteer'] },
-          context7: { url: 'https://mcp.context7.com/sse' }
+          context7: { url: 'https://mcp.context7.com/mcp' }
         }
       }));
 
@@ -206,10 +206,10 @@ describe('MCP Health Checker', () => {
       expect(result.duration).toBeGreaterThanOrEqual(0);
     });
 
-    it('should test Context7 MCP SSE connection', async () => {
+    it('should test Context7 MCP HTTP connection', async () => {
       // Given
       const mcpConfig = {
-        url: 'https://mcp.context7.com/sse'
+        url: 'https://mcp.context7.com/mcp'
       };
 
       // Mock successful HTTPS response
@@ -223,7 +223,7 @@ describe('MCP Health Checker', () => {
 
       // Then
       expect(result.success).toBe(true);
-      expect(result.message).toContain('SSE endpoint accessible');
+      expect(result.message).toContain('HTTP endpoint accessible');
     });
 
     it('should detect Exa API key placeholder', async () => {
@@ -280,7 +280,7 @@ describe('MCP Health Checker', () => {
     it('should handle MCP health check timeouts', async () => {
       // Given
       const mcpConfig = {
-        url: 'https://mcp.context7.com/sse'
+        url: 'https://mcp.context7.com/mcp'
       };
 
       // Mock timeout

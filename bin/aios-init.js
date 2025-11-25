@@ -228,6 +228,7 @@ async function main() {
         { name: '  Cline ' + chalk.blue('(v2.1)'), value: 'cline' },
         { name: '  Gemini CLI ' + chalk.blue('(v2.1)'), value: 'gemini' },
         { name: '  GitHub Copilot ' + chalk.blue('(v2.1)'), value: 'github-copilot' },
+        { name: '  AntiGravity ' + chalk.blue('(v2.1)') + chalk.gray(' - Google AI IDE'), value: 'antigravity' },
         new inquirer.Separator(chalk.gray('─'.repeat(40))),
         { name: '  Skip IDE setup', value: 'none' }
       ],
@@ -268,7 +269,8 @@ async function main() {
       'roo': { source: 'roo-rules.md', target: '.roomodes' },
       'cline': { source: 'cline-rules.md', target: '.cline/rules.md' },
       'gemini': { source: 'gemini-rules.md', target: '.gemini/rules.md' },
-      'github-copilot': { source: 'copilot-rules.md', target: '.github/chatmodes/aios-agent.md' }
+      'github-copilot': { source: 'copilot-rules.md', target: '.github/chatmodes/aios-agent.md' },
+      'antigravity': { source: 'antigravity-rules.md', target: '.antigravity/rules.md' }
     };
 
     // Step 1: Copy basic IDE rules files
@@ -357,8 +359,8 @@ See .aios-core/user-guide.md for complete documentation.
 `);
     }
 
-    // Step 4: Install AIOS CORE agents for other IDEs (Trae, Cline, Gemini)
-    const otherIdeInstalls = ['trae', 'cline', 'gemini'];
+    // Step 4: Install AIOS CORE agents for other IDEs (Trae, Cline, Gemini, AntiGravity)
+    const otherIdeInstalls = ['trae', 'cline', 'gemini', 'antigravity'];
     for (const ide of otherIdeInstalls) {
       if (ides.includes(ide)) {
         const coreAgentsSource = path.join(targetCoreDir, 'agents');
@@ -431,11 +433,25 @@ See .aios-core/user-guide.md for complete documentation.
   }
 
   // Step 7: Expansion Packs (CHECKBOX with visual)
-  const sourceExpansionDir = path.join(context.frameworkLocation, 'expansion-packs');
+  // Try multiple locations for expansion-packs (npm package vs local development)
+  const possibleExpansionDirs = [
+    path.join(context.frameworkLocation, 'expansion-packs'),
+    path.join(__dirname, '..', 'expansion-packs'),
+    path.join(context.projectRoot, 'node_modules', 'aios-fullstack', 'expansion-packs')
+  ];
+
+  let sourceExpansionDir = null;
+  for (const dir of possibleExpansionDirs) {
+    if (fs.existsSync(dir)) {
+      sourceExpansionDir = dir;
+      break;
+    }
+  }
+
   const availablePacks = [];
   let expansionPacks = []; // Declare here to be accessible in summary
 
-  if (fs.existsSync(sourceExpansionDir)) {
+  if (sourceExpansionDir && fs.existsSync(sourceExpansionDir)) {
     let packs = fs.readdirSync(sourceExpansionDir).filter(f =>
       fs.statSync(path.join(sourceExpansionDir, f)).isDirectory()
     );
@@ -586,7 +602,7 @@ See .aios-core/user-guide.md for complete documentation.
   }
 
   // Show other IDE installations
-  const otherInstalledIdes = ['windsurf', 'trae', 'cline', 'gemini'].filter(ide => ides.includes(ide));
+  const otherInstalledIdes = ['windsurf', 'trae', 'cline', 'gemini', 'antigravity'].filter(ide => ides.includes(ide));
   for (const ide of otherInstalledIdes) {
     const ideDir = ide === 'gemini' ? '.gemini' : `.${ide}`;
     console.log('  ' + chalk.dim(`${ideDir}/`) + '           - ' + ide.charAt(0).toUpperCase() + ide.slice(1) + ' configuration');
@@ -634,6 +650,12 @@ See .aios-core/user-guide.md for complete documentation.
     console.log('  ' + chalk.yellow('GitHub Copilot:'));
     console.log('    • Open Chat view and select Agent mode');
     console.log('    • Requires VS Code 1.101+ with chat.agent.enabled: true');
+  }
+
+  if (ides.includes('antigravity')) {
+    console.log('  ' + chalk.yellow('AntiGravity:'));
+    console.log('    • Use Workspace Rules to activate agents');
+    console.log('    • Browse: .antigravity/rules/AIOS/agents/ for all available agents');
   }
 
   console.log('  ' + chalk.yellow('General:'));

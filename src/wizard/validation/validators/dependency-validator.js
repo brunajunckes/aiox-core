@@ -19,6 +19,7 @@ const execAsync = promisify(exec);
  * @param {boolean} depsContext.success - Installation success status
  * @param {string} depsContext.packageManager - Package manager used
  * @param {boolean} depsContext.offlineMode - Offline mode flag
+ * @param {string} depsContext.projectType - Project type (GREENFIELD, BROWNFIELD, etc.)
  * @returns {Promise<Object>} Validation result
  */
 async function validateDependencies(depsContext = {}) {
@@ -30,8 +31,8 @@ async function validateDependencies(depsContext = {}) {
   };
 
   try {
-    // Check if dependencies were installed
-    if (!depsContext.success) {
+    // Check if dependencies were installed (skip for greenfield with no deps defined)
+    if (depsContext.success === false) {
       results.success = false;
       results.errors.push({
         severity: 'critical',
@@ -43,7 +44,36 @@ async function validateDependencies(depsContext = {}) {
 
     // Check node_modules existence
     const nodeModulesPath = path.join(process.cwd(), 'node_modules');
+    const packageJsonPath = path.join(process.cwd(), 'package.json');
+
+    // For greenfield projects, check if package.json has dependencies
+    let hasDependencies = false;
+    if (fs.existsSync(packageJsonPath)) {
+      try {
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+        hasDependencies = !!(
+          (packageJson.dependencies && Object.keys(packageJson.dependencies).length > 0) ||
+          (packageJson.devDependencies && Object.keys(packageJson.devDependencies).length > 0)
+        );
+      } catch {
+        // If we can't parse package.json, assume no dependencies
+        hasDependencies = false;
+      }
+    }
+
     if (!fs.existsSync(nodeModulesPath)) {
+      // For greenfield projects with no dependencies, this is OK
+      if (!hasDependencies) {
+        results.checks.push({
+          component: 'Dependencies',
+          file: 'node_modules',
+          status: 'skipped',
+          message: 'No dependencies defined in package.json (greenfield project)'
+        });
+        return results;
+      }
+
+      // Otherwise, it's an error
       results.success = false;
       results.errors.push({
         severity: 'critical',

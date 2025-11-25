@@ -52,18 +52,18 @@ const MCP_CONFIGS = {
   context7: {
     id: 'context7',
     name: 'Context7',
-    type: 'sse',
-    transport: 'sse',
-    url: 'https://mcp.context7.com/sse',
+    type: 'http',
+    transport: 'http',
+    url: 'https://mcp.context7.com/mcp',
     healthCheck: {
-      type: 'sse-connection',
+      type: 'http-connection',
       timeout: 5000,
-      description: 'SSE connection test'
+      description: 'HTTP connection test'
     },
     getConfig: () => {
+      // Note: SSE endpoint is deprecated, use HTTP endpoint instead
       return {
-        type: 'sse',
-        url: 'https://mcp.context7.com/sse'
+        url: 'https://mcp.context7.com/mcp'
       };
     }
   },
