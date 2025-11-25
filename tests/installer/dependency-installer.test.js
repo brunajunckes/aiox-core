@@ -176,10 +176,13 @@ describe('Dependency Installer', () => {
 
       await executeInstall('npm', '/test/project');
 
+      // Windows requires shell: true because npm is actually npm.cmd
+      // Unix can use shell: false for better security
+      const isWindows = process.platform === 'win32';
       expect(spawn).toHaveBeenCalledWith('npm', ['install'], {
         cwd: '/test/project',
         stdio: 'inherit',
-        shell: false // CRITICAL: No shell execution
+        shell: isWindows // Windows needs shell, Unix doesn't
       });
     });
 

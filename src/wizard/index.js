@@ -16,7 +16,8 @@ const {
 } = require('./feedback');
 const { generateIDEConfigs, showSuccessSummary } = require('./ide-config-generator');
 const { configureEnvironment } = require('../../packages/installer/src/config/configure-environment');
-const { installDependencies } = require('../installer/dependency-installer');
+const { installDependencies, hasExistingDependencies } = require('../installer/dependency-installer');
+const { installAiosCore, hasPackageJson, createBasicPackageJson } = require('../installer/aios-core-installer');
 const { installProjectMCPs } = require('../../bin/modules/mcp-installer');
 const {
   validateInstallation,
@@ -107,6 +108,31 @@ async function runWizard() {
       console.warn(`Warning: Average question response time (${avgTimePerQuestion.toFixed(0)}ms) exceeds 100ms target`);
     }
 
+    // Story 1.4: Install AIOS core framework (agents, tasks, workflows, templates)
+    console.log('\n📦 Installing AIOS core framework...');
+    let aiosCoreResult = null;
+    try {
+      aiosCoreResult = await installAiosCore({
+        targetDir: process.cwd(),
+        onProgress: (status) => {
+          // Silent progress - spinner handles feedback
+        }
+      });
+
+      if (aiosCoreResult.success) {
+        console.log(`✅ AIOS core installed (${aiosCoreResult.installedFolders.length} folders)`);
+        console.log(`   - Agents: ${aiosCoreResult.installedFolders.includes('agents') ? '✓' : '⨉'}`);
+        console.log(`   - Tasks: ${aiosCoreResult.installedFolders.includes('tasks') ? '✓' : '⨉'}`);
+        console.log(`   - Workflows: ${aiosCoreResult.installedFolders.includes('workflows') ? '✓' : '⨉'}`);
+        console.log(`   - Templates: ${aiosCoreResult.installedFolders.includes('templates') ? '✓' : '⨉'}`);
+      }
+      answers.aiosCoreInstalled = true;
+      answers.aiosCoreResult = aiosCoreResult;
+    } catch (error) {
+      console.error('\n⚠️  AIOS core installation failed:', error.message);
+      answers.aiosCoreInstalled = false;
+    }
+
     // Story 1.4: Generate IDE configs if IDEs were selected
     let ideConfigResult = null;
     if (answers.selectedIDEs && answers.selectedIDEs.length > 0) {
@@ -173,67 +199,82 @@ async function runWizard() {
     }
 
     // Story 1.7: Dependency Installation
-    console.log('\n📦 Installing dependencies...');
-
-    // Auto-detect package manager (no longer asked as question)
+    // Check if package.json exists first (greenfield projects won't have one)
     const { detectPackageManager } = require('../installer/dependency-installer');
-    const detectedPM = detectPackageManager();
-    answers.packageManager = detectedPM;
+    const projectPath = process.cwd();
+    const packageJsonExists = await hasPackageJson(projectPath);
 
-    try {
-      const depsResult = await installDependencies({
-        packageManager: detectedPM,
-        projectPath: process.cwd()
-      });
+    if (!packageJsonExists) {
+      // Greenfield project - no package.json, skip dependency installation
+      console.log('\n📦 Dependency installation...');
+      console.log('   ℹ️  No package.json found (greenfield project)');
+      console.log('   💡 Dependencies will be installed when you add a package.json');
+      answers.depsInstalled = true; // Mark as success since there's nothing to install
+      answers.depsResult = { success: true, skipped: true, reason: 'no-package-json' };
+      answers.packageManager = detectPackageManager();
+    } else {
+      // Brownfield project or existing project - has package.json
+      console.log('\n📦 Installing dependencies...');
 
-      if (depsResult.success) {
-        if (depsResult.offlineMode) {
-          console.log('✅ Using existing dependencies (offline mode)');
-        } else {
-          console.log(`✅ Dependencies installed with ${depsResult.packageManager}!`);
-        }
-        answers.depsInstalled = true;
-        answers.depsResult = depsResult;
-      } else {
-        console.error('\n⚠️  Dependency installation failed:');
-        console.error(`  ${depsResult.errorMessage}`);
-        console.error(`  Solution: ${depsResult.solution}`);
+      // Auto-detect package manager (no longer asked as question)
+      const detectedPM = detectPackageManager();
+      answers.packageManager = detectedPM;
 
-        // Ask user if they want to retry
-        const { retryDeps } = await inquirer.prompt([
-          {
-            type: 'confirm',
-            name: 'retryDeps',
-            message: 'Retry dependency installation?',
-            default: true
-          }
-        ]);
+      try {
+        const depsResult = await installDependencies({
+          packageManager: detectedPM,
+          projectPath: projectPath
+        });
 
-        if (retryDeps) {
-          // Recursive retry with exponential backoff (built into installDependencies)
-          const retryResult = await installDependencies({
-            packageManager: answers.packageManager,
-            projectPath: process.cwd()
-          });
-
-          if (retryResult.success) {
-            console.log(`\n✅ Dependencies installed with ${retryResult.packageManager}!`);
-            answers.depsInstalled = true;
-            answers.depsResult = retryResult;
+        if (depsResult.success) {
+          if (depsResult.offlineMode) {
+            console.log('✅ Using existing dependencies (offline mode)');
           } else {
-            console.log('\n⚠️  Installation still failed. You can run `npm install` manually later.');
-            answers.depsInstalled = false;
-            answers.depsResult = retryResult;
+            console.log(`✅ Dependencies installed with ${depsResult.packageManager}!`);
           }
-        } else {
-          console.log('\n⚠️  Skipping dependency installation. Run manually with `npm install`.');
-          answers.depsInstalled = false;
+          answers.depsInstalled = true;
           answers.depsResult = depsResult;
+        } else {
+          console.error('\n⚠️  Dependency installation failed:');
+          console.error(`  ${depsResult.errorMessage}`);
+          console.error(`  Solution: ${depsResult.solution}`);
+
+          // Ask user if they want to retry
+          const { retryDeps } = await inquirer.prompt([
+            {
+              type: 'confirm',
+              name: 'retryDeps',
+              message: 'Retry dependency installation?',
+              default: true
+            }
+          ]);
+
+          if (retryDeps) {
+            // Recursive retry with exponential backoff (built into installDependencies)
+            const retryResult = await installDependencies({
+              packageManager: answers.packageManager,
+              projectPath: projectPath
+            });
+
+            if (retryResult.success) {
+              console.log(`\n✅ Dependencies installed with ${retryResult.packageManager}!`);
+              answers.depsInstalled = true;
+              answers.depsResult = retryResult;
+            } else {
+              console.log('\n⚠️  Installation still failed. You can run `npm install` manually later.');
+              answers.depsInstalled = false;
+              answers.depsResult = retryResult;
+            }
+          } else {
+            console.log('\n⚠️  Skipping dependency installation. Run manually with `npm install`.');
+            answers.depsInstalled = false;
+            answers.depsResult = depsResult;
+          }
         }
+      } catch (error) {
+        console.error('\n⚠️  Dependency installation error:', error.message);
+        answers.depsInstalled = false;
       }
-    } catch (error) {
-      console.error('\n⚠️  Dependency installation error:', error.message);
-      answers.depsInstalled = false;
     }
 
     // Story 1.5/1.8: MCP Installation

@@ -7,15 +7,34 @@
 
 const inquirer = require('inquirer');
 const { runWizard } = require('../../src/wizard/index');
-const { installDependencies } = require('../../src/installer/dependency-installer');
+const { installDependencies, detectPackageManager } = require('../../src/installer/dependency-installer');
 const { configureEnvironment } = require('../../packages/installer/src/config/configure-environment');
 const { generateIDEConfigs } = require('../../src/wizard/ide-config-generator');
+const { installAiosCore, hasPackageJson } = require('../../src/installer/aios-core-installer');
 
 // Mock dependencies
 jest.mock('inquirer');
 jest.mock('../../src/installer/dependency-installer');
 jest.mock('../../packages/installer/src/config/configure-environment');
 jest.mock('../../src/wizard/ide-config-generator');
+jest.mock('../../src/installer/aios-core-installer');
+jest.mock('../../bin/modules/mcp-installer', () => ({
+  installProjectMCPs: jest.fn().mockResolvedValue({
+    success: true,
+    installedMCPs: {},
+    configPath: '.mcp.json',
+    errors: []
+  })
+}));
+jest.mock('../../src/wizard/validation', () => ({
+  validateInstallation: jest.fn().mockResolvedValue({
+    valid: true,
+    errors: [],
+    warnings: []
+  }),
+  displayValidationReport: jest.fn().mockResolvedValue(),
+  provideTroubleshooting: jest.fn().mockResolvedValue()
+}));
 jest.mock('../../src/wizard/feedback', () => ({
   showWelcome: jest.fn(),
   showCompletion: jest.fn(),
@@ -33,8 +52,7 @@ describe('Wizard Integration - Story 1.7', () => {
     // Default mocks for successful flow
     inquirer.prompt.mockResolvedValue({
       projectType: 'greenfield',
-      selectedIDEs: ['vscode'],
-      packageManager: 'npm'
+      selectedIDEs: ['vscode']
     });
 
     generateIDEConfigs.mockResolvedValue({
@@ -49,6 +67,20 @@ describe('Wizard Integration - Story 1.7', () => {
       gitignoreUpdated: true,
       errors: []
     });
+
+    // Mock AIOS core installer
+    installAiosCore.mockResolvedValue({
+      success: true,
+      installedFiles: ['agents/dev.md', 'tasks/create-story.yaml'],
+      installedFolders: ['agents', 'tasks', 'workflows', 'templates'],
+      errors: []
+    });
+
+    // Mock hasPackageJson - default to true (brownfield project)
+    hasPackageJson.mockResolvedValue(true);
+
+    // Mock detectPackageManager
+    detectPackageManager.mockReturnValue('npm');
 
     installDependencies.mockResolvedValue({
       success: true,
@@ -67,10 +99,23 @@ describe('Wizard Integration - Story 1.7', () => {
 
       expect(answers.projectType).toBe('greenfield');
       expect(answers.selectedIDEs).toContain('vscode');
-      expect(answers.packageManager).toBe('npm');
+      expect(answers.packageManager).toBe('npm'); // Auto-detected
       expect(answers.envConfigured).toBe(true);
       expect(answers.depsInstalled).toBe(true);
       expect(answers.depsResult.success).toBe(true);
+    });
+
+    it('should install AIOS core before IDE configs', async () => {
+      await runWizard();
+
+      // Verify AIOS core was installed
+      expect(installAiosCore).toHaveBeenCalled();
+
+      // Verify order: AIOS core before IDE configs
+      const aiosCoreCallOrder = installAiosCore.mock.invocationCallOrder[0];
+      const ideConfigCallOrder = generateIDEConfigs.mock.invocationCallOrder[0];
+
+      expect(aiosCoreCallOrder).toBeLessThan(ideConfigCallOrder);
     });
 
     it('should install dependencies after env configuration', async () => {
@@ -83,12 +128,8 @@ describe('Wizard Integration - Story 1.7', () => {
       expect(envCallOrder).toBeLessThan(depsCallOrder);
     });
 
-    it('should pass selected package manager to installDependencies', async () => {
-      inquirer.prompt.mockResolvedValue({
-        projectType: 'greenfield',
-        selectedIDEs: ['vscode'],
-        packageManager: 'yarn'
-      });
+    it('should use auto-detected package manager for installDependencies', async () => {
+      detectPackageManager.mockReturnValue('yarn');
 
       await runWizard();
 
@@ -99,45 +140,55 @@ describe('Wizard Integration - Story 1.7', () => {
     });
   });
 
-  describe('Package Manager Selection (AC1)', () => {
-    it('should accept npm', async () => {
-      inquirer.prompt.mockResolvedValue({
-        projectType: 'greenfield',
-        packageManager: 'npm'
-      });
+  describe('Package Manager Auto-Detection (AC1)', () => {
+    it('should auto-detect npm', async () => {
+      detectPackageManager.mockReturnValue('npm');
 
       const answers = await runWizard();
       expect(answers.packageManager).toBe('npm');
     });
 
-    it('should accept yarn', async () => {
-      inquirer.prompt.mockResolvedValue({
-        projectType: 'greenfield',
-        packageManager: 'yarn'
-      });
+    it('should auto-detect yarn', async () => {
+      detectPackageManager.mockReturnValue('yarn');
 
       const answers = await runWizard();
       expect(answers.packageManager).toBe('yarn');
     });
 
-    it('should accept pnpm', async () => {
-      inquirer.prompt.mockResolvedValue({
-        projectType: 'greenfield',
-        packageManager: 'pnpm'
-      });
+    it('should auto-detect pnpm', async () => {
+      detectPackageManager.mockReturnValue('pnpm');
 
       const answers = await runWizard();
       expect(answers.packageManager).toBe('pnpm');
     });
 
-    it('should accept bun', async () => {
-      inquirer.prompt.mockResolvedValue({
-        projectType: 'greenfield',
-        packageManager: 'bun'
-      });
+    it('should auto-detect bun', async () => {
+      detectPackageManager.mockReturnValue('bun');
 
       const answers = await runWizard();
       expect(answers.packageManager).toBe('bun');
+    });
+  });
+
+  describe('Greenfield Projects (No package.json)', () => {
+    it('should skip dependency installation when no package.json exists', async () => {
+      hasPackageJson.mockResolvedValue(false);
+
+      const answers = await runWizard();
+
+      expect(installDependencies).not.toHaveBeenCalled();
+      expect(answers.depsInstalled).toBe(true);
+      expect(answers.depsResult.skipped).toBe(true);
+      expect(answers.depsResult.reason).toBe('no-package-json');
+    });
+
+    it('should still set packageManager when skipping dependencies', async () => {
+      hasPackageJson.mockResolvedValue(false);
+      detectPackageManager.mockReturnValue('pnpm');
+
+      const answers = await runWizard();
+
+      expect(answers.packageManager).toBe('pnpm');
     });
   });
 
@@ -176,8 +227,7 @@ describe('Wizard Integration - Story 1.7', () => {
       inquirer.prompt
         .mockResolvedValueOnce({
           projectType: 'greenfield',
-          selectedIDEs: [],
-          packageManager: 'npm'
+          selectedIDEs: []
         })
         .mockResolvedValueOnce({
           retryDeps: true
@@ -199,8 +249,7 @@ describe('Wizard Integration - Story 1.7', () => {
       inquirer.prompt
         .mockResolvedValueOnce({
           projectType: 'greenfield',
-          selectedIDEs: [],
-          packageManager: 'npm'
+          selectedIDEs: []
         })
         .mockResolvedValueOnce({
           retryDeps: false
@@ -224,8 +273,7 @@ describe('Wizard Integration - Story 1.7', () => {
 
       inquirer.prompt
         .mockResolvedValueOnce({
-          projectType: 'greenfield',
-          packageManager: 'npm'
+          projectType: 'greenfield'
         })
         .mockResolvedValueOnce({
           retryDeps: false
@@ -263,16 +311,16 @@ describe('Wizard Integration - Story 1.7', () => {
       expect(answers.projectType).toBeDefined(); // Story 1.3
       expect(answers.selectedIDEs).toBeDefined(); // Story 1.4
       expect(answers.envConfigured).toBeDefined(); // Story 1.6
-      expect(answers.packageManager).toBeDefined(); // Story 1.7
+      expect(answers.packageManager).toBeDefined(); // Story 1.7 (auto-detected)
       expect(answers.depsInstalled).toBeDefined(); // Story 1.7
+      expect(answers.aiosCoreInstalled).toBeDefined(); // Story 1.4 - AIOS core
     });
 
     it('should handle environment config failure gracefully', async () => {
       configureEnvironment.mockRejectedValue(new Error('Env config failed'));
       inquirer.prompt
         .mockResolvedValueOnce({
-          projectType: 'greenfield',
-          packageManager: 'npm'
+          projectType: 'greenfield'
         })
         .mockResolvedValueOnce({
           continueWithoutEnv: true
@@ -283,6 +331,16 @@ describe('Wizard Integration - Story 1.7', () => {
       expect(answers.envConfigured).toBe(false);
       // Should still proceed to dependency installation
       expect(installDependencies).toHaveBeenCalled();
+    });
+
+    it('should handle AIOS core installation failure gracefully', async () => {
+      installAiosCore.mockRejectedValue(new Error('AIOS core installation failed'));
+
+      const answers = await runWizard();
+
+      expect(answers.aiosCoreInstalled).toBe(false);
+      // Should still proceed to other steps
+      expect(configureEnvironment).toHaveBeenCalled();
     });
   });
 });

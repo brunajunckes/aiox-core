@@ -100,6 +100,14 @@ const IDE_CONFIGS = {
     template: 'ide-rules/copilot-rules.md',
     requiresDirectory: true,
     format: 'text'
+  },
+  antigravity: {
+    name: 'AntiGravity',
+    description: 'Modern AI-powered IDE with advanced code assistance',
+    configFile: path.join('.antigravity', 'rules.md'),
+    template: 'ide-rules/antigravity-rules.md',
+    requiresDirectory: true,
+    format: 'text'
   }
 };
 
