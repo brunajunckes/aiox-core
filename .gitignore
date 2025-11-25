@@ -147,3 +147,9 @@ docs/ui-prompts.pdf
 # docs/architecture/   - Architecture decisions and reviews
 # docs/decisions/      - Decision logs and learnings
 # docs/standards/      - AIOS standards and guidelines
+
+# Windows reserved device names
+NUL
+CON
+AUX
+PRN

@@ -1,3 +1,5 @@
+// Integration test - requires external services
+// Uses describeIntegration from setup.js
 /**
  * Performance Benchmarks for Decision Logging
  *
@@ -17,7 +19,7 @@ const {
   completeDecisionLogging
 } = require('../../.aios-core/scripts/decision-recorder');
 
-describe('Decision Logging Performance Benchmarks', () => {
+describeIntegration('Decision Logging Performance Benchmarks', () => {
   const testStoryPath = 'docs/stories/benchmark-test.md';
   const testStoryId = 'benchmark-test';
 
@@ -63,7 +65,7 @@ describe('Decision Logging Performance Benchmarks', () => {
     }
   });
 
-  describe('Individual Operation Performance', () => {
+  describeIntegration('Individual Operation Performance', () => {
     it('should initialize decision logging in <10ms', async () => {
       const startTime = Date.now();
 
@@ -177,7 +179,7 @@ describe('Decision Logging Performance Benchmarks', () => {
     });
   });
 
-  describe('Log Generation Performance', () => {
+  describeIntegration('Log Generation Performance', () => {
     it('should generate decision log in <30ms', async () => {
       await initializeDecisionLogging('dev', testStoryPath);
 
@@ -215,7 +217,7 @@ describe('Decision Logging Performance Benchmarks', () => {
     });
   });
 
-  describe('Total Workflow Overhead (CRITICAL - AC8)', () => {
+  describeIntegration('Total Workflow Overhead (CRITICAL - AC8)', () => {
     it('should complete full workflow with <50ms total overhead', async () => {
       const startTime = Date.now();
 
@@ -306,7 +308,7 @@ describe('Decision Logging Performance Benchmarks', () => {
     });
   });
 
-  describe('Performance Regression Tests', () => {
+  describeIntegration('Performance Regression Tests', () => {
     it('should not degrade with repeated calls', async () => {
       await initializeDecisionLogging('dev', testStoryPath);
 
@@ -343,7 +345,7 @@ describe('Decision Logging Performance Benchmarks', () => {
     });
   });
 
-  describe('Memory Efficiency', () => {
+  describeIntegration('Memory Efficiency', () => {
     it('should not leak memory with large datasets', async () => {
       const initialMemory = process.memoryUsage().heapUsed;
 

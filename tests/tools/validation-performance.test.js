@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -16,7 +17,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 2. Error prevention rate (target: 80%+)
  * 3. Timeout enforcement (500ms safety limit)
  */
-describe('Validation System Performance', () => {
+describeIntegration('Validation System Performance', () => {
   let clickupValidator, googleValidator, n8nValidator, supabaseValidator;
   let clickupTool, googleTool, n8nTool, supabaseTool;
   const performanceMetrics = {
@@ -71,7 +72,7 @@ describe('Validation System Performance', () => {
     console.log('\n' + '━'.repeat(60) + '\n');
   });
 
-  describe('ClickUp Validator Performance', () => {
+  describeIntegration('ClickUp Validator Performance', () => {
     test('create_task validation completes in <50ms', async () => {
       const start = Date.now();
       await clickupValidator.validate('create_task', {
@@ -127,7 +128,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('Google Workspace Validator Performance', () => {
+  describeIntegration('Google Workspace Validator Performance', () => {
     test('create_file validation completes in <50ms', async () => {
       const start = Date.now();
       await googleValidator.validate('create_file', {
@@ -183,7 +184,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('n8n Validator Performance', () => {
+  describeIntegration('n8n Validator Performance', () => {
     test('execute_workflow validation completes in <50ms', async () => {
       const start = Date.now();
       await n8nValidator.validate('execute_workflow', {
@@ -223,7 +224,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('Supabase Validator Performance', () => {
+  describeIntegration('Supabase Validator Performance', () => {
     test('execute_sql validation completes in <50ms', async () => {
       const start = Date.now();
       await supabaseValidator.validate('execute_sql', {
@@ -266,7 +267,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('Error Prevention Rate', () => {
+  describeIntegration('Error Prevention Rate', () => {
     test('ClickUp validator catches 80%+ of invalid inputs', async () => {
       const testCases = [
         // Valid cases (should pass)
@@ -384,7 +385,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('Timeout Enforcement', () => {
+  describeIntegration('Timeout Enforcement', () => {
     test('validation respects 500ms timeout limit', async () => {
       // Test with a valid operation that should complete quickly
       const start = Date.now();
@@ -407,7 +408,7 @@ describe('Validation System Performance', () => {
     });
   });
 
-  describe('Concurrent Validation Performance', () => {
+  describeIntegration('Concurrent Validation Performance', () => {
     test('10 concurrent validations complete in <200ms total', async () => {
       const promises = Array.from({ length: 10 }, (_, i) =>
         clickupValidator.validate('create_task', {

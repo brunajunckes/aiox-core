@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 /**
  * STORY-1.1: NPX Integration Tests
  * Tests for npx aios-fullstack@latest execution
@@ -7,10 +8,10 @@ const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-describe('npx Execution', () => {
+describeIntegration('npx Execution', () => {
   const timeout = 30000; // 30 seconds as per story requirement
 
-  describe('Package Configuration', () => {
+  describeIntegration('Package Configuration', () => {
     it('should have correct bin entries in package.json', () => {
       const packageJsonPath = path.join(__dirname, '../../package.json');
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -49,7 +50,7 @@ describe('npx Execution', () => {
     });
   });
 
-  describe('CLI Execution', () => {
+  describeIntegration('CLI Execution', () => {
     it('should execute aios command with --version', (done) => {
       const cliPath = path.join(__dirname, '../../bin/aios.js');
       const child = spawn('node', [cliPath, '--version']);
@@ -116,7 +117,7 @@ describe('npx Execution', () => {
     }, timeout);
   });
 
-  describe('Index.js init Export', () => {
+  describeIntegration('Index.js init Export', () => {
     it('should have init function in index.js source', () => {
       const indexPath = path.join(__dirname, '../../index.js');
       const indexContent = fs.readFileSync(indexPath, 'utf8');
@@ -148,7 +149,7 @@ describe('npx Execution', () => {
     });
   });
 
-  describe('Cross-Platform Compatibility', () => {
+  describeIntegration('Cross-Platform Compatibility', () => {
     it('should work on current platform', () => {
       const cliPath = path.join(__dirname, '../../bin/aios.js');
       
@@ -178,7 +179,7 @@ describe('npx Execution', () => {
     }, timeout);
   });
 
-  describe('Performance', () => {
+  describeIntegration('Performance', () => {
     it('should execute --version in under 5 seconds', (done) => {
       const startTime = Date.now();
       const cliPath = path.join(__dirname, '../../bin/aios.js');

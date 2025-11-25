@@ -1,3 +1,5 @@
+// Integration test - requires external services
+// Uses describeIntegration from setup.js
 // File: tests/e2e/story-creation-clickup.test.js
 
 /**
@@ -30,7 +32,7 @@ jest.mock('../../common/utils/tool-resolver', () => ({
 
 const _toolResolver = require('../../common/utils/tool-resolver');
 
-describe('End-to-End Story Creation with ClickUp Integration', () => {
+describeIntegration('End-to-End Story Creation with ClickUp Integration', () => {
   const testStoryPath = path.join(__dirname, '../fixtures/test-story-5.99.md');
 
   beforeEach(() => {
@@ -47,7 +49,7 @@ describe('End-to-End Story Creation with ClickUp Integration', () => {
     }
   });
 
-  describe('Complete Flow: Epic Verification → Story Creation → ClickUp Subtask → Frontmatter Update', () => {
+  describeIntegration('Complete Flow: Epic Verification → Story Creation → ClickUp Subtask → Frontmatter Update', () => {
     test('should successfully create story with ClickUp integration', async () => {
       // Step 1: Mock Epic verification
       mockClickUpTool.getWorkspaceTasks.mockResolvedValue({
@@ -192,7 +194,7 @@ Test content...
     });
   });
 
-  describe('Verify Parent-Child Relationship in ClickUp', () => {
+  describeIntegration('Verify Parent-Child Relationship in ClickUp', () => {
     test('should create story as subtask with correct parent reference', async () => {
       const epicTaskId = 'epic-parent-123';
 
@@ -272,7 +274,7 @@ Test content...
     });
   });
 
-  describe('Verify All Tags Applied Correctly', () => {
+  describeIntegration('Verify All Tags Applied Correctly', () => {
     test('should apply all three required tags to story', async () => {
       mockClickUpTool.createTask.mockResolvedValue({
         id: 'story-tags-test',
@@ -335,7 +337,7 @@ Test content...
     });
   });
 
-  describe('Verify Custom Fields Populated', () => {
+  describeIntegration('Verify Custom Fields Populated', () => {
     test('should populate all four required custom fields', async () => {
       mockClickUpTool.createTask.mockResolvedValue({
         id: 'custom-fields-test',

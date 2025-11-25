@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -18,7 +19,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 4. Agent-tool integration works
  * 5. No regressions in existing functionality
  */
-describe('Tools Migration Regression Suite', () => {
+describeIntegration('Tools Migration Regression Suite', () => {
   const toolsPath = path.join(__dirname, '../../.aios-core/tools');
 
   // All 12 tools (8 v1.0 + 4 v2.0)
@@ -68,7 +69,7 @@ describe('Tools Migration Regression Suite', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution API Stability', () => {
+  describeIntegration('Tool Resolution API Stability', () => {
     test('resolveTool() API unchanged for all 12 tools', async () => {
       const results = [];
 
@@ -126,7 +127,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('Validation API Stability', () => {
+  describeIntegration('Validation API Stability', () => {
     test('ToolValidationHelper constructor accepts executable_knowledge', () => {
       expect(() => {
         new ToolValidationHelper({ validators: [], helpers: [] });
@@ -171,7 +172,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('End-to-End Tool Workflows', () => {
+  describeIntegration('End-to-End Tool Workflows', () => {
     test('v1.0 tools complete workflow unchanged', async () => {
       for (const toolName of v1Tools) {
         // Step 1: Resolve tool
@@ -225,7 +226,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('Agent-Tool Integration', () => {
+  describeIntegration('Agent-Tool Integration', () => {
     test('agents can reference v1.0 tools', async () => {
       // Simulate agent with v1.0 tool dependencies
       const agentTools = ['github-cli', 'browser', 'ffmpeg'];
@@ -282,7 +283,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('Performance Regression Check', () => {
+  describeIntegration('Performance Regression Check', () => {
     test('tool resolution performance not degraded', async () => {
       toolResolver.clearCache();
 
@@ -330,7 +331,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('Error Handling Regression', () => {
+  describeIntegration('Error Handling Regression', () => {
     test('invalid tool name throws same error as before', async () => {
       await expect(
         toolResolver.resolveTool('non-existent-tool')
@@ -371,7 +372,7 @@ describe('Tools Migration Regression Suite', () => {
     });
   });
 
-  describe('Comprehensive Regression Report', () => {
+  describeIntegration('Comprehensive Regression Report', () => {
     test('full system regression check', async () => {
       const report = {
         tools_tested: 0,

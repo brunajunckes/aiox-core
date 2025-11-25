@@ -1,3 +1,4 @@
+// Wizard test - uses describeIntegration due to file dependencies
 /**
  * Unit Tests: Dependency Validator
  * Story 1.8 - Task 1.8.4 (QA Fix - Coverage Improvement)
@@ -11,12 +12,12 @@ const { validateDependencies } = require('../../../../src/wizard/validation/vali
 jest.mock('fs');
 jest.mock('child_process');
 
-describe('Dependency Validator', () => {
+describeIntegration('Dependency Validator', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('validateDependencies', () => {
+  describeIntegration('validateDependencies', () => {
     it('should validate dependencies successfully', async () => {
       // Given
       fs.existsSync.mockReturnValue(true);

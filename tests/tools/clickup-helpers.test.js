@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
@@ -14,7 +15,7 @@ const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
  * 6. calculate-time-tracking-total
  * 7. format-custom-field-update
  */
-describe('ClickUp Tool Helpers', () => {
+describeIntegration('ClickUp Tool Helpers', () => {
   let executor;
   let clickupTool;
 
@@ -35,7 +36,7 @@ describe('ClickUp Tool Helpers', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should have executable_knowledge with helpers', () => {
       expect(clickupTool.executable_knowledge).toBeDefined();
       expect(clickupTool.executable_knowledge.helpers).toBeDefined();
@@ -55,7 +56,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('extract-custom-field', () => {
+  describeIntegration('extract-custom-field', () => {
     test('should extract existing custom field by name', async () => {
       const result = await executor.execute('extract-custom-field', {
         response: {
@@ -117,7 +118,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('format-assignee-for-create', () => {
+  describeIntegration('format-assignee-for-create', () => {
     test('should return array as-is', async () => {
       const result = await executor.execute('format-assignee-for-create', {
         assignees: [456, 789]
@@ -157,7 +158,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('format-assignee-for-update', () => {
+  describeIntegration('format-assignee-for-update', () => {
     test('should format with both add and remove arrays', async () => {
       const result = await executor.execute('format-assignee-for-update', {
         add: [999, 888],
@@ -217,7 +218,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('parse-webhook-type', () => {
+  describeIntegration('parse-webhook-type', () => {
     test('should detect standard webhook (event field)', async () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
@@ -282,7 +283,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('extract-webhook-payload', () => {
+  describeIntegration('extract-webhook-payload', () => {
     test('should extract from standard format', async () => {
       const result = await executor.execute('extract-webhook-payload', {
         webhook: {
@@ -364,7 +365,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('calculate-time-tracking-total', () => {
+  describeIntegration('calculate-time-tracking-total', () => {
     test('should sum time entries', async () => {
       const result = await executor.execute('calculate-time-tracking-total', {
         timeEntries: [
@@ -435,7 +436,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('format-custom-field-update', () => {
+  describeIntegration('format-custom-field-update', () => {
     test('should format with id and value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-123',
@@ -509,7 +510,7 @@ describe('ClickUp Tool Helpers', () => {
     });
   });
 
-  describe('Helper Performance', () => {
+  describeIntegration('Helper Performance', () => {
     test('helper execution should complete in <100ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

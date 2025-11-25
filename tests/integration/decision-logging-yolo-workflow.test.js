@@ -1,3 +1,5 @@
+// Integration test - requires external services
+// Uses describeIntegration from setup.js
 /**
  * Integration Tests for Decision Logging + Yolo Mode Workflow
  *
@@ -21,7 +23,7 @@ const {
   getCurrentContext
 } = require('../../.aios-core/scripts/decision-recorder');
 
-describe('Decision Logging + Yolo Mode Integration', () => {
+describeIntegration('Decision Logging + Yolo Mode Integration', () => {
   const testStoryPath = 'docs/stories/test-integration-story.md';
   const testStoryId = 'test-integration';
 
@@ -55,7 +57,7 @@ describe('Decision Logging + Yolo Mode Integration', () => {
     }
   });
 
-  describe('Full Yolo Mode Workflow', () => {
+  describeIntegration('Full Yolo Mode Workflow', () => {
     it('should complete full workflow with decision logging', async () => {
       // Simulate yolo mode start
       const context = await initializeDecisionLogging('dev', testStoryPath, {
@@ -276,7 +278,7 @@ describe('Decision Logging + Yolo Mode Integration', () => {
     });
   });
 
-  describe('Rollback Metadata', () => {
+  describeIntegration('Rollback Metadata', () => {
     it('should capture git commit hash for rollback', async () => {
       await initializeDecisionLogging('dev', testStoryPath);
 
@@ -305,7 +307,7 @@ describe('Decision Logging + Yolo Mode Integration', () => {
     });
   });
 
-  describe('Index File Updates', () => {
+  describeIntegration('Index File Updates', () => {
     it('should update index file when log is generated', async () => {
       await initializeDecisionLogging('dev', testStoryPath);
       recordDecision({
@@ -346,7 +348,7 @@ describe('Decision Logging + Yolo Mode Integration', () => {
     });
   });
 
-  describe('Performance Validation', () => {
+  describeIntegration('Performance Validation', () => {
     it('should complete workflow in reasonable time', async () => {
       const startTime = Date.now();
 
@@ -386,7 +388,7 @@ describe('Decision Logging + Yolo Mode Integration', () => {
     });
   });
 
-  describe('Error Scenarios', () => {
+  describeIntegration('Error Scenarios', () => {
     it('should handle completion without initialization', async () => {
       const logPath = await completeDecisionLogging(testStoryId);
       expect(logPath).toBeNull();

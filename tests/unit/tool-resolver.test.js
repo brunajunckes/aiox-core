@@ -100,7 +100,7 @@ tool:
       expect(tool2.id).toBe('test-simple');
 
       // Should be exact same object from cache
-      expect(_tool1).toBe(_tool2);
+      expect(tool1).toBe(tool2);
     });
 
     test('should use different cache keys for different expansion packs', async () => {

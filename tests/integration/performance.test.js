@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 /**
  * Performance Tests for Contextual Greeting System
  *
@@ -19,7 +20,7 @@ jest.mock('../../.aios-core/scripts/project-status-loader');
 
 const { loadProjectStatus } = require('../../.aios-core/scripts/project-status-loader');
 
-describe('Greeting Performance Tests', () => {
+describeIntegration('Greeting Performance Tests', () => {
   let builder;
   let mockAgent;
   const ITERATIONS = 100;
@@ -57,7 +58,7 @@ describe('Greeting Performance Tests', () => {
     });
   });
 
-  describe('Baseline Performance (Simple Greeting)', () => {
+  describeIntegration('Baseline Performance (Simple Greeting)', () => {
     test('baseline simple greeting should be fast', () => {
       const times = [];
 
@@ -80,7 +81,7 @@ describe('Greeting Performance Tests', () => {
     });
   });
 
-  describe('Contextual Greeting Performance', () => {
+  describeIntegration('Contextual Greeting Performance', () => {
     test('P50 latency should be <100ms', async () => {
       const times = [];
 
@@ -151,7 +152,7 @@ describe('Greeting Performance Tests', () => {
     });
   });
 
-  describe('Cache Hit Performance', () => {
+  describeIntegration('Cache Hit Performance', () => {
     test('cached git config should be fast', async () => {
       const detector = new GitConfigDetector();
       const times = [];

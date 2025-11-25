@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
@@ -15,7 +16,7 @@ const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
  * 7. parse-postgres-error
  * 8. generate-migration-name
  */
-describe('Supabase Tool Helpers', () => {
+describeIntegration('Supabase Tool Helpers', () => {
   let executor;
   let supabaseTool;
 
@@ -36,7 +37,7 @@ describe('Supabase Tool Helpers', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve supabase tool with helpers', async () => {
       expect(supabaseTool).toBeDefined();
       expect(supabaseTool.executable_knowledge).toBeDefined();
@@ -58,7 +59,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('build-select-query', () => {
+  describeIntegration('build-select-query', () => {
     test('should build simple SELECT query', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'posts'
@@ -139,7 +140,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('build-insert-query', () => {
+  describeIntegration('build-insert-query', () => {
     test('should build INSERT query', async () => {
       const result = await executor.execute('build-insert-query', {
         table: 'posts',
@@ -198,7 +199,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('build-update-query', () => {
+  describeIntegration('build-update-query', () => {
     test('should build UPDATE query', async () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
@@ -284,7 +285,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('validate-rls-policy', () => {
+  describeIntegration('validate-rls-policy', () => {
     test('should validate complete policy', async () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: {
@@ -391,7 +392,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('format-realtime-subscription', () => {
+  describeIntegration('format-realtime-subscription', () => {
     test('should format basic subscription', async () => {
       const result = await executor.execute('format-realtime-subscription', {
         table: 'posts'
@@ -450,7 +451,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('validate-table-permissions', () => {
+  describeIntegration('validate-table-permissions', () => {
     test('should validate secure table', async () => {
       const result = await executor.execute('validate-table-permissions', {
         table: 'posts',
@@ -532,7 +533,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('parse-postgres-error', () => {
+  describeIntegration('parse-postgres-error', () => {
     test('should parse unique constraint violation', async () => {
       const result = await executor.execute('parse-postgres-error', {
         error: {
@@ -627,7 +628,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('generate-migration-name', () => {
+  describeIntegration('generate-migration-name', () => {
     test('should generate migration name with timestamp', async () => {
       const result = await executor.execute('generate-migration-name', {
         description: 'add user authentication'
@@ -687,7 +688,7 @@ describe('Supabase Tool Helpers', () => {
     });
   });
 
-  describe('Helper Performance', () => {
+  describeIntegration('Helper Performance', () => {
     test('helper execution should complete in <100ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

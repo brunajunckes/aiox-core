@@ -1,3 +1,4 @@
+// Wizard test - uses describeIntegration due to file dependencies
 /**
  * Questions Test Suite
  * 
@@ -13,8 +14,8 @@ const {
   getQuestionById
 } = require('../../src/wizard/questions');
 
-describe('questions', () => {
-  describe('getProjectTypeQuestion', () => {
+describeIntegration('questions', () => {
+  describeIntegration('getProjectTypeQuestion', () => {
     test('returns valid inquirer question object', () => {
       const question = getProjectTypeQuestion();
 
@@ -55,7 +56,7 @@ describe('questions', () => {
     });
   });
 
-  describe('getIDEQuestions', () => {
+  describeIntegration('getIDEQuestions', () => {
     test('returns array of IDE selection questions (Story 1.4)', () => {
       const questions = getIDEQuestions();
       expect(Array.isArray(questions)).toBe(true);
@@ -69,7 +70,7 @@ describe('questions', () => {
     });
   });
 
-  describe('getMCPQuestions', () => {
+  describeIntegration('getMCPQuestions', () => {
     test('returns array (placeholder for Story 1.5)', () => {
       const questions = getMCPQuestions();
       expect(Array.isArray(questions)).toBe(true);
@@ -81,7 +82,7 @@ describe('questions', () => {
     });
   });
 
-  describe('getEnvironmentQuestions', () => {
+  describeIntegration('getEnvironmentQuestions', () => {
     test('returns array (placeholder for Story 1.6)', () => {
       const questions = getEnvironmentQuestions();
       expect(Array.isArray(questions)).toBe(true);
@@ -93,7 +94,7 @@ describe('questions', () => {
     });
   });
 
-  describe('buildQuestionSequence', () => {
+  describeIntegration('buildQuestionSequence', () => {
     test('returns array of questions', () => {
       const questions = buildQuestionSequence();
       expect(Array.isArray(questions)).toBe(true);
@@ -128,7 +129,7 @@ describe('questions', () => {
     });
   });
 
-  describe('getQuestionById', () => {
+  describeIntegration('getQuestionById', () => {
     test('returns projectType question by ID', () => {
       const question = getQuestionById('projectType');
       expect(question).not.toBeNull();
@@ -146,7 +147,7 @@ describe('questions', () => {
     });
   });
 
-  describe('Question Message Formatting', () => {
+  describeIntegration('Question Message Formatting', () => {
     test('projectType question has colored message', () => {
       const question = getProjectTypeQuestion();
       // Message should be wrapped in color function (contains ANSI codes)

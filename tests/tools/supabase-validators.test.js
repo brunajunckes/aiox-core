@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -12,7 +13,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 4. validate-deploy-edge-function
  * 5. validate-create-project
  */
-describe('Supabase Tool Validators', () => {
+describeIntegration('Supabase Tool Validators', () => {
   let validator;
   let supabaseTool;
 
@@ -33,7 +34,7 @@ describe('Supabase Tool Validators', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve supabase tool from aios-core/tools/mcp', async () => {
       expect(supabaseTool).toBeDefined();
       expect(supabaseTool.id).toBe('supabase');
@@ -58,7 +59,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('validate-execute-sql', () => {
+  describeIntegration('validate-execute-sql', () => {
     test('should pass with valid SQL query', async () => {
       const result = await validator.validate('execute_sql', {
         project_id: 'proj_abc123',
@@ -148,7 +149,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('validate-apply-migration', () => {
+  describeIntegration('validate-apply-migration', () => {
     test('should pass with valid migration', async () => {
       const result = await validator.validate('apply_migration', {
         project_id: 'proj_abc123',
@@ -234,7 +235,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('validate-create-branch', () => {
+  describeIntegration('validate-create-branch', () => {
     test('should pass with valid branch creation', async () => {
       const result = await validator.validate('create_branch', {
         project_id: 'proj_abc123',
@@ -297,7 +298,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('validate-deploy-edge-function', () => {
+  describeIntegration('validate-deploy-edge-function', () => {
     test('should pass with valid edge function deployment', async () => {
       const result = await validator.validate('deploy_edge_function', {
         project_id: 'proj_abc123',
@@ -391,7 +392,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('validate-create-project', () => {
+  describeIntegration('validate-create-project', () => {
     test('should pass with valid project creation', async () => {
       const result = await validator.validate('create_project', {
         name: 'My Project',
@@ -479,7 +480,7 @@ describe('Supabase Tool Validators', () => {
     });
   });
 
-  describe('Validator Performance', () => {
+  describeIntegration('Validator Performance', () => {
     test('validation should complete in <50ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

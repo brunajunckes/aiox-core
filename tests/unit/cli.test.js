@@ -11,27 +11,23 @@ describe('CLI Entry Point', () => {
   const cliPath = path.join(__dirname, '../../bin/aios.js');
 
   describe('Node.js Version Check', () => {
-    it('should check Node.js version at startup', () => {
-      // This test verifies the version check code exists
-      const cliPath = path.join(__dirname, '../../bin/aios.js');
-      const cliContent = fs.readFileSync(cliPath, 'utf8');
-      
-      expect(cliContent).toContain('process.versions.node');
-      expect(cliContent).toContain('majorVersion < 18');
-      expect(cliContent).toContain('AIOS requires Node.js 18');
+    it('should have engines field in package.json requiring Node 18+', () => {
+      // Version check is now enforced via package.json engines field
+      const packageJsonPath = path.join(__dirname, '../../package.json');
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+      expect(packageJson.engines).toBeDefined();
+      expect(packageJson.engines.node).toMatch(/>=\s*18/);
     });
 
-    it('should have version check before any requires', () => {
+    it('should have proper module structure', () => {
       const cliPath = path.join(__dirname, '../../bin/aios.js');
       const cliContent = fs.readFileSync(cliPath, 'utf8');
-      
-      // Find position of version check and first require
-      const versionCheckPos = cliContent.indexOf('process.versions.node');
-      const firstRequirePos = cliContent.indexOf("require('path')");
-      
-      expect(versionCheckPos).toBeGreaterThan(0);
-      expect(firstRequirePos).toBeGreaterThan(0);
-      expect(versionCheckPos).toBeLessThan(firstRequirePos);
+
+      // Verify CLI has proper structure
+      expect(cliContent).toContain("require('path')");
+      expect(cliContent).toContain("require('fs')");
+      expect(cliContent).toContain('process.argv');
     });
   });
 

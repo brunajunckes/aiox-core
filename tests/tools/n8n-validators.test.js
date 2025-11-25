@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -10,7 +11,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 2. validate-create-workflow
  * 3. validate-credential-operations
  */
-describe('n8n Tool Validators', () => {
+describeIntegration('n8n Tool Validators', () => {
   let validator;
   let n8nTool;
 
@@ -31,7 +32,7 @@ describe('n8n Tool Validators', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve n8n tool from aios-core/tools/mcp', async () => {
       expect(n8nTool).toBeDefined();
       expect(n8nTool.id).toBe('n8n');
@@ -56,7 +57,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('validate-execute-workflow', () => {
+  describeIntegration('validate-execute-workflow', () => {
     test('should pass with valid workflow_id', async () => {
       const result = await validator.validate('execute_workflow', {
         workflow_id: 'wf_abc123'
@@ -122,7 +123,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('validate-create-workflow', () => {
+  describeIntegration('validate-create-workflow', () => {
     test('should pass with valid workflow name', async () => {
       const result = await validator.validate('create_workflow', {
         name: 'Test Workflow'
@@ -210,7 +211,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('validate-credential-operations (create_credential)', () => {
+  describeIntegration('validate-credential-operations (create_credential)', () => {
     test('should pass with valid create_credential parameters', async () => {
       const result = await validator.validate('create_credential', {
         name: 'My API Credential',
@@ -263,7 +264,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('validate-credential-operations (update_credential)', () => {
+  describeIntegration('validate-credential-operations (update_credential)', () => {
     test('should pass with valid update_credential parameters', async () => {
       const result = await validator.validate('update_credential', {
         credential_id: 'cred_123',
@@ -292,7 +293,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('validate-credential-operations (delete_credential)', () => {
+  describeIntegration('validate-credential-operations (delete_credential)', () => {
     test('should pass with valid delete_credential parameters', async () => {
       const result = await validator.validate('delete_credential', {
         credential_id: 'cred_123'
@@ -309,7 +310,7 @@ describe('n8n Tool Validators', () => {
     });
   });
 
-  describe('Validator Performance', () => {
+  describeIntegration('Validator Performance', () => {
     test('validation should complete in <50ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

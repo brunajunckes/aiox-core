@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 /**
  * Integration Tests: Agent Activation Performance
  * Story 6.1.2.6.2 - Agent Performance Optimization
@@ -8,7 +9,7 @@
 const DevContextLoader = require('../../.aios-core/scripts/dev-context-loader');
 const SessionContextLoader = require('../../.aios-core/scripts/session-context-loader');
 
-describe('Agent Activation Performance (Integration)', () => {
+describeIntegration('Agent Activation Performance (Integration)', () => {
   let devLoader;
   let sessionLoader;
 
@@ -24,7 +25,7 @@ describe('Agent Activation Performance (Integration)', () => {
     sessionLoader.clearSession();
   });
 
-  describe('@dev Activation with Session Context', () => {
+  describeIntegration('@dev Activation with Session Context', () => {
     test('activates with session context after @po', async () => {
       // Simulate @po activation and command
       sessionLoader.updateSession('po', 'Pax', 'validate-story-draft');
@@ -63,7 +64,7 @@ describe('Agent Activation Performance (Integration)', () => {
     });
   });
 
-  describe('Multi-Agent Transition Flow', () => {
+  describeIntegration('Multi-Agent Transition Flow', () => {
     test('tracks agent sequence: @po → @dev → @qa → @sm', () => {
       // Simulate agent transitions
       sessionLoader.updateSession('po', 'Pax', 'validate-story-draft');
@@ -85,7 +86,7 @@ describe('Agent Activation Performance (Integration)', () => {
     });
   });
 
-  describe('Performance Targets', () => {
+  describeIntegration('Performance Targets', () => {
     test('@dev activation loads efficiently', async () => {
       sessionLoader.clearSession();
 
@@ -115,7 +116,7 @@ describe('Agent Activation Performance (Integration)', () => {
     }, 60000);
   });
 
-  describe('Cache Behavior', () => {
+  describeIntegration('Cache Behavior', () => {
     test('cache persists across multiple loads', async () => {
       const result1 = await devLoader.load({ fullLoad: false });
       const result2 = await devLoader.load({ fullLoad: false });
@@ -142,7 +143,7 @@ describe('Agent Activation Performance (Integration)', () => {
     });
   });
 
-  describe('Data Reduction', () => {
+  describeIntegration('Data Reduction', () => {
     test('summary mode reduces data by ~82%', async () => {
       const summaryResult = await devLoader.load({ fullLoad: false, skipCache: true });
       const fullResult = await devLoader.load({ fullLoad: true, skipCache: true });
@@ -168,7 +169,7 @@ describe('Agent Activation Performance (Integration)', () => {
     });
   });
 
-  describe('Session Context Display', () => {
+  describeIntegration('Session Context Display', () => {
     test('formats context message correctly', () => {
       sessionLoader.updateSession('po', 'Pax', 'validate-story-draft');
 

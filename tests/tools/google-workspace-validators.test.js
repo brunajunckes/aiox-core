@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -11,7 +12,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 3. validate-gmail-operations (send_email, search_messages)
  * 4. validate-sheet-operations (create_spreadsheet, update_range)
  */
-describe('Google Workspace Tool Validators', () => {
+describeIntegration('Google Workspace Tool Validators', () => {
   let validator;
   let googleWorkspaceTool;
 
@@ -32,7 +33,7 @@ describe('Google Workspace Tool Validators', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve google-workspace tool from aios-core/tools/mcp', async () => {
       expect(googleWorkspaceTool).toBeDefined();
       expect(googleWorkspaceTool.id).toBe('google-workspace');
@@ -64,7 +65,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-drive-operations (create_file)', () => {
+  describeIntegration('validate-drive-operations (create_file)', () => {
     test('should pass with valid create_file parameters', async () => {
       const result = await validator.validate('create_file', {
         name: 'Test Document',
@@ -137,7 +138,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-drive-operations (share_file)', () => {
+  describeIntegration('validate-drive-operations (share_file)', () => {
     test('should pass with email address sharing', async () => {
       const result = await validator.validate('share_file', {
         fileId: 'abc123xyz',
@@ -207,7 +208,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-calendar-operations (create_event)', () => {
+  describeIntegration('validate-calendar-operations (create_event)', () => {
     test('should pass with required event parameters', async () => {
       const result = await validator.validate('create_event', {
         user_google_email: 'test@example.com',
@@ -308,7 +309,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-calendar-operations (update_event)', () => {
+  describeIntegration('validate-calendar-operations (update_event)', () => {
     test('should pass with eventId and updates', async () => {
       const result = await validator.validate('update_event', {
         eventId: 'event123',
@@ -339,7 +340,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-gmail-operations (send_email)', () => {
+  describeIntegration('validate-gmail-operations (send_email)', () => {
     test('should pass with required email parameters', async () => {
       const result = await validator.validate('send_email', {
         to: 'recipient@example.com',
@@ -426,7 +427,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-gmail-operations (search_messages)', () => {
+  describeIntegration('validate-gmail-operations (search_messages)', () => {
     test('should pass with search query', async () => {
       const result = await validator.validate('search_messages', {
         query: 'from:sender@example.com'
@@ -475,7 +476,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-sheet-operations (create_spreadsheet)', () => {
+  describeIntegration('validate-sheet-operations (create_spreadsheet)', () => {
     test('should pass with title', async () => {
       const result = await validator.validate('create_spreadsheet', {
         title: 'My Spreadsheet'
@@ -515,7 +516,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('validate-sheet-operations (update_range)', () => {
+  describeIntegration('validate-sheet-operations (update_range)', () => {
     test('should pass with valid range update', async () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
@@ -603,7 +604,7 @@ describe('Google Workspace Tool Validators', () => {
     });
   });
 
-  describe('Validator Performance', () => {
+  describeIntegration('Validator Performance', () => {
     test('validation should complete in <50ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

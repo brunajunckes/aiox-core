@@ -1,3 +1,4 @@
+// Integration test - requires tool YAML files
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 
@@ -16,7 +17,7 @@ const toolResolver = require('../../common/utils/tool-resolver');
  * 3. v1.0 tools function identically to pre-migration behavior
  * 4. No errors or warnings for v1.0 tools
  */
-describe('Schema Detection & v1.0 Backward Compatibility', () => {
+describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
   const toolsPath = path.join(__dirname, '../../aios-core/tools');
 
   // v1.0 simple tools (8 total)
@@ -48,7 +49,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
     toolResolver.clearCache();
   });
 
-  describe('v1.0 Schema Version Detection', () => {
+  describeIntegration('v1.0 Schema Version Detection', () => {
     test('correctly identifies all 8 v1.0 simple tools', async () => {
       const results = [];
 
@@ -109,7 +110,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
     });
   });
 
-  describe('v1.0 Tools Functionality (No Breaking Changes)', () => {
+  describeIntegration('v1.0 Tools Functionality (No Breaking Changes)', () => {
     test('v1.0 tools resolve successfully', async () => {
       const resolvePromises = v1SimpleTools.map(name =>
         toolResolver.resolveTool(_name)
@@ -178,7 +179,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
     });
   });
 
-  describe('Tool Type Distribution', () => {
+  describeIntegration('Tool Type Distribution', () => {
     test('tools are correctly categorized by type', async () => {
       const typeDistribution = {
         cli: [],
@@ -215,7 +216,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
     });
   });
 
-  describe('No Breaking Changes Verification', () => {
+  describeIntegration('No Breaking Changes Verification', () => {
     test('ToolResolver API unchanged for v1.0 tools', async () => {
       const toolName = 'browser';
 
@@ -301,7 +302,7 @@ describe('Schema Detection & v1.0 Backward Compatibility', () => {
     });
   });
 
-  describe('Backward Compatibility Summary', () => {
+  describeIntegration('Backward Compatibility Summary', () => {
     test('comprehensive v1.0 compatibility check', async () => {
       const report = {
         v1_tools: [],

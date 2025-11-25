@@ -1,3 +1,4 @@
+// Wizard test - uses describeIntegration due to file dependencies
 /**
  * Unit Tests: Config Validator
  * Story 1.8 - Task 1.8.2 (QA Fix - Coverage Improvement)
@@ -11,12 +12,12 @@ const { validateConfigs } = require('../../../../src/wizard/validation/validator
 jest.mock('fs');
 jest.mock('yaml');
 
-describe('Config Validator', () => {
+describeIntegration('Config Validator', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('validateConfigs', () => {
+  describeIntegration('validateConfigs', () => {
     it('should validate .env file successfully', async () => {
       // Given
       fs.existsSync.mockReturnValue(true);

@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -18,7 +19,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 4. No errors thrown in any backward compatibility scenario
  * 5. ToolValidationHelper handles missing validators gracefully
  */
-describe('Backward Compatibility - No-Validator Pass-Through', () => {
+describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => {
   let simpleToolsPath, complexToolsPath;
   const v1SimpleTools = ['github-cli', 'supabase-cli', 'browser', 'exa'];
   const _v2ComplexTools = ['clickup', 'google-workspace', 'n8n', 'supabase'];
@@ -34,7 +35,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     toolResolver.clearCache();
   });
 
-  describe('v1.0 Simple Tools (No executable_knowledge)', () => {
+  describeIntegration('v1.0 Simple Tools (No executable_knowledge)', () => {
     test('github-cli tool passes validation automatically', async () => {
       const _tool = await toolResolver.resolveTool('github-cli');
 
@@ -106,7 +107,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('v2.0 Complex Tools with Empty Validators', () => {
+  describeIntegration('v2.0 Complex Tools with Empty Validators', () => {
     test('complex tool with empty validators array passes validation', async () => {
       // Simulate a complex tool with executable_knowledge but no validators
       const mockTool = {
@@ -160,7 +161,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('No Errors Thrown for Missing Validators', () => {
+  describeIntegration('No Errors Thrown for Missing Validators', () => {
     test('ToolValidationHelper constructor does not throw with undefined executable_knowledge', () => {
       expect(() => {
         new ToolValidationHelper(undefined);
@@ -207,7 +208,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('Graceful Degradation', () => {
+  describeIntegration('Graceful Degradation', () => {
     test('validator with no executable_knowledge returns valid for all commands', async () => {
       const validator = new ToolValidationHelper(undefined);
 
@@ -284,7 +285,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('Integration with ToolResolver', () => {
+  describeIntegration('Integration with ToolResolver', () => {
     test('resolving and validating v1.0 tool works end-to-end', async () => {
       // Resolve a simple tool
       const _tool = await toolResolver.resolveTool('github-cli');
@@ -327,7 +328,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('Performance with No Validators', () => {
+  describeIntegration('Performance with No Validators', () => {
     test('validation without validators is instant (<1ms)', async () => {
       const validator = new ToolValidationHelper(undefined);
 
@@ -371,7 +372,7 @@ describe('Backward Compatibility - No-Validator Pass-Through', () => {
     });
   });
 
-  describe('Backward Compatibility Summary', () => {
+  describeIntegration('Backward Compatibility Summary', () => {
     test('comprehensive backward compatibility check', async () => {
       const report = {
         v1_tools: [],

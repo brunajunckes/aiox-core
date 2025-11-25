@@ -1,3 +1,5 @@
+// Integration test - requires external services
+// Uses describeIntegration from setup.js
 /**
  * Integration Tests for Unified Greeting System
  * 
@@ -19,8 +21,8 @@ const execPromise = util.promisify(exec);
 const TEST_AGENTS = ['qa', 'dev', 'pm'];
 const PERFORMANCE_TARGET_MS = 150;
 
-describe('Unified Greeting System Integration', () => {
-  describe('End-to-End Greeting Generation', () => {
+describeIntegration('Unified Greeting System Integration', () => {
+  describeIntegration('End-to-End Greeting Generation', () => {
     for (const agentId of TEST_AGENTS) {
       it(`should generate greeting for ${agentId} agent`, async function() {
         this.timeout(5000);
@@ -46,7 +48,7 @@ describe('Unified Greeting System Integration', () => {
     }
   });
   
-  describe('Performance Validation', () => {
+  describeIntegration('Performance Validation', () => {
     it('should complete within target time', async function() {
       this.timeout(5000);
       
@@ -71,7 +73,7 @@ describe('Unified Greeting System Integration', () => {
     });
   });
   
-  describe('Agent Configuration Loading', () => {
+  describeIntegration('Agent Configuration Loading', () => {
     it('should load complete agent definition', async () => {
       const { AgentConfigLoader } = require('../../.aios-core/scripts/agent-config-loader');
       const yaml = require('yaml');
@@ -105,7 +107,7 @@ describe('Unified Greeting System Integration', () => {
     });
   });
   
-  describe('Greeting Builder Integration', () => {
+  describeIntegration('Greeting Builder Integration', () => {
     it('should build greeting with all sections', async () => {
       const GreetingBuilder = require('../../.aios-core/scripts/greeting-builder');
       
@@ -148,7 +150,7 @@ describe('Unified Greeting System Integration', () => {
     });
   });
   
-  describe('Compact Command Format Normalization', () => {
+  describeIntegration('Compact Command Format Normalization', () => {
     it('should normalize compact commands during parsing', async () => {
       const { AgentConfigLoader } = require('../../.aios-core/scripts/agent-config-loader');
       const yaml = require('yaml');
@@ -176,7 +178,7 @@ describe('Unified Greeting System Integration', () => {
     });
   });
   
-  describe('Error Recovery', () => {
+  describeIntegration('Error Recovery', () => {
     it('should provide fallback greeting on failure', async function() {
       this.timeout(5000);
       

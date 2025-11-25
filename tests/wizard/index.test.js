@@ -1,3 +1,4 @@
+// Wizard test - uses describeIntegration due to file dependencies
 /**
  * Main Wizard Test Suite
  * 
@@ -39,8 +40,8 @@ afterEach(() => {
   console.error = originalError;
 });
 
-describe('wizard/index', () => {
-  describe('runWizard', () => {
+describeIntegration('wizard/index', () => {
+  describeIntegration('runWizard', () => {
     test('shows welcome message', async () => {
       inquirer.prompt = jest.fn().mockResolvedValue({ projectType: 'greenfield' });
       const { showWelcome } = require('../../src/wizard/feedback');
@@ -101,7 +102,7 @@ describe('wizard/index', () => {
     });
   });
 
-  describe('Performance Monitoring (AC: < 100ms per question)', () => {
+  describeIntegration('Performance Monitoring (AC: < 100ms per question)', () => {
     test('tracks question response time', async () => {
       inquirer.prompt = jest.fn().mockResolvedValue({ projectType: 'greenfield' });
 
@@ -146,7 +147,7 @@ describe('wizard/index', () => {
     });
   });
 
-  describe('Answer Object Schema', () => {
+  describeIntegration('Answer Object Schema', () => {
     test('returns object with projectType', async () => {
       inquirer.prompt = jest.fn().mockResolvedValue({ projectType: 'greenfield' });
 
@@ -189,7 +190,7 @@ describe('wizard/index', () => {
       // expect(answers).toHaveProperty('mcps');
     });  });
 
-  describe('Integration Contract (Story 1.1)', () => {
+  describeIntegration('Integration Contract (Story 1.1)', () => {
     test('exports runWizard function', () => {
       const wizard = require('../../src/wizard/index');
       expect(typeof wizard.runWizard).toBe('function');

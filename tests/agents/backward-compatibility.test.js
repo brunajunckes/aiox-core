@@ -1,3 +1,4 @@
+// Integration/Performance test - uses describeIntegration
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
@@ -17,7 +18,7 @@ const yaml = require('js-yaml');
  * 3. Agent structure remains valid
  * 4. Workflows using agents without tools work correctly
  */
-describe('Agent Backward Compatibility - Missing Tools Field', () => {
+describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => {
   const agentsPath = path.join(__dirname, '../../aios-core/agents');
 
   // Agents WITH dependencies.tools (migrated)
@@ -45,7 +46,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     return agentConfig?.dependencies?.tools || null;
   }
 
-  describe('Agents Without Tools Field', () => {
+  describeIntegration('Agents Without Tools Field', () => {
     test('agents without dependencies.tools load successfully', async () => {
       const results = [];
 
@@ -93,7 +94,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('Agents With Tools Field', () => {
+  describeIntegration('Agents With Tools Field', () => {
     test('dev agent has tools field', async () => {
       const config = await loadAgentYaml('dev');
 
@@ -129,7 +130,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('No Errors Thrown for Missing Tools', () => {
+  describeIntegration('No Errors Thrown for Missing Tools', () => {
     test('getAgentTools() handles undefined tools gracefully', async () => {
       const config = await loadAgentYaml('analyst');
 
@@ -162,7 +163,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('Agent Structure Validation', () => {
+  describeIntegration('Agent Structure Validation', () => {
     test('all agents have required core fields', async () => {
       const allAgents = [...agentsWithTools, ...agentsWithoutTools];
 
@@ -213,7 +214,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('Workflow Compatibility', () => {
+  describeIntegration('Workflow Compatibility', () => {
     test('agents without tools can execute their commands', async () => {
       // Test that analyst agent has valid commands despite no tools
       const config = await loadAgentYaml('analyst');
@@ -262,7 +263,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('Graceful Degradation', () => {
+  describeIntegration('Graceful Degradation', () => {
     test('agent system handles mixed agents (with and without tools)', async () => {
       const results = {
         withTools: [],
@@ -315,7 +316,7 @@ describe('Agent Backward Compatibility - Missing Tools Field', () => {
     });
   });
 
-  describe('Comprehensive Backward Compatibility Report', () => {
+  describeIntegration('Comprehensive Backward Compatibility Report', () => {
     test('comprehensive agent compatibility check', async () => {
       const report = {
         agents_with_tools: [],

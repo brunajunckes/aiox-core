@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -14,7 +15,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * 6. validate-priority-range (create_task)
  * 7. validate-time-estimate (create_task)
  */
-describe('ClickUp Tool Validators', () => {
+describeIntegration('ClickUp Tool Validators', () => {
   let validator;
   let clickupTool;
 
@@ -35,7 +36,7 @@ describe('ClickUp Tool Validators', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve clickup tool from aios-core/tools/mcp', async () => {
       expect(clickupTool).toBeDefined();
       expect(clickupTool.id).toBe('clickup');
@@ -58,7 +59,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-assignee-format (create_task)', () => {
+  describeIntegration('validate-assignee-format (create_task)', () => {
     test('should pass with valid array format', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
@@ -109,7 +110,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-custom-field-structure (create_task)', () => {
+  describeIntegration('validate-custom-field-structure (create_task)', () => {
     test('should pass with valid custom fields array', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
@@ -170,7 +171,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-task-update-assignees (update_task)', () => {
+  describeIntegration('validate-task-update-assignees (update_task)', () => {
     test('should pass with valid object format {add, rem}', async () => {
       const result = await validator.validate('update_task', {
         assignees: {
@@ -242,7 +243,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-webhook-payload (parse_webhook)', () => {
+  describeIntegration('validate-webhook-payload (parse_webhook)', () => {
     test('should pass with standard webhook format (event field)', async () => {
       const result = await validator.validate('parse_webhook', {
         event: 'taskCreated',
@@ -288,7 +289,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-list-id-format (create_task)', () => {
+  describeIntegration('validate-list-id-format (create_task)', () => {
     test('should pass with numeric string list_id', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
@@ -338,7 +339,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-priority-range (create_task)', () => {
+  describeIntegration('validate-priority-range (create_task)', () => {
     test('should pass with valid priority 1 (urgent)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
@@ -412,7 +413,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('validate-time-estimate (create_task)', () => {
+  describeIntegration('validate-time-estimate (create_task)', () => {
     test('should pass with valid time estimate (positive number)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
@@ -465,7 +466,7 @@ describe('ClickUp Tool Validators', () => {
     });
   });
 
-  describe('Validator Performance', () => {
+  describeIntegration('Validator Performance', () => {
     test('validation should complete in <50ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

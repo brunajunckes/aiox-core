@@ -1,3 +1,4 @@
+// Integration test - requires tool YAML files
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolValidationHelper = require('../../common/utils/tool-validation-helper');
@@ -14,7 +15,7 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  * This suite provides integration-level validation testing across all 4 complex tools,
  * ensuring validators work correctly in real-world scenarios.
  */
-describe('Complex Tool Validators - Integration Tests', () => {
+describeIntegration('Complex Tool Validators - Integration Tests', () => {
   let clickupValidator, googleValidator, n8nValidator, supabaseValidator;
 
   beforeAll(async () => {
@@ -37,7 +38,7 @@ describe('Complex Tool Validators - Integration Tests', () => {
     toolResolver.clearCache();
   });
 
-  describe('ClickUp Assignee Format Validation', () => {
+  describeIntegration('ClickUp Assignee Format Validation', () => {
     test('validates correct assignee format for create_task', async () => {
       const result = await clickupValidator.validate('create_task', {
         name: 'Test Task',
@@ -143,7 +144,7 @@ describe('Complex Tool Validators - Integration Tests', () => {
     });
   });
 
-  describe('Google Workspace Permission Validation', () => {
+  describeIntegration('Google Workspace Permission Validation', () => {
     test('validates file creation with required fields', async () => {
       const result = await googleValidator.validate('create_file', {
         name: 'test-document.txt',
@@ -269,7 +270,7 @@ describe('Complex Tool Validators - Integration Tests', () => {
     });
   });
 
-  describe('n8n Workflow Validation', () => {
+  describeIntegration('n8n Workflow Validation', () => {
     test('validates workflow execution with required fields', async () => {
       const result = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_abc123def456'
@@ -366,7 +367,7 @@ describe('Complex Tool Validators - Integration Tests', () => {
     });
   });
 
-  describe('Supabase RLS Policy Validation', () => {
+  describeIntegration('Supabase RLS Policy Validation', () => {
     test('validates SQL execution with required fields', async () => {
       const result = await supabaseValidator.validate('execute_sql', {
         project_id: 'proj_abc123',
@@ -504,7 +505,7 @@ describe('Complex Tool Validators - Integration Tests', () => {
     });
   });
 
-  describe('Cross-Tool Validation Consistency', () => {
+  describeIntegration('Cross-Tool Validation Consistency', () => {
     test('all validators return consistent error format', async () => {
       const results = await Promise.all([
         clickupValidator.validate('create_task', {}),

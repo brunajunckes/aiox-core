@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
@@ -14,7 +15,7 @@ const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
  * 6. validate-permission-level
  * 7. format-email-attachment
  */
-describe('Google Workspace Tool Helpers', () => {
+describeIntegration('Google Workspace Tool Helpers', () => {
   let executor;
   let googleWorkspaceTool;
 
@@ -35,7 +36,7 @@ describe('Google Workspace Tool Helpers', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should have executable_knowledge with helpers', () => {
       expect(googleWorkspaceTool.executable_knowledge).toBeDefined();
       expect(googleWorkspaceTool.executable_knowledge.helpers).toBeDefined();
@@ -55,7 +56,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('format-oauth-scopes', () => {
+  describeIntegration('format-oauth-scopes', () => {
     test('should format single service scope', async () => {
       const result = await executor.execute('format-oauth-scopes', {
         services: ['drive']
@@ -142,7 +143,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('parse-drive-file-id', () => {
+  describeIntegration('parse-drive-file-id', () => {
     test('should return ID as-is if no slashes', async () => {
       const result = await executor.execute('parse-drive-file-id', {
         input: 'abc123xyz789'
@@ -208,7 +209,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('format-calendar-datetime', () => {
+  describeIntegration('format-calendar-datetime', () => {
     test('should format date with time', async () => {
       const result = await executor.execute('format-calendar-datetime', {
         date: '2024-01-15',
@@ -263,7 +264,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('build-gmail-query', () => {
+  describeIntegration('build-gmail-query', () => {
     test('should build query with from parameter', async () => {
       const result = await executor.execute('build-gmail-query', {
         from: 'sender@example.com'
@@ -372,7 +373,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('parse-sheet-range', () => {
+  describeIntegration('parse-sheet-range', () => {
     test('should parse simple range', async () => {
       const result = await executor.execute('parse-sheet-range', {
         range: 'A1:B2'
@@ -489,7 +490,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('validate-permission-level', () => {
+  describeIntegration('validate-permission-level', () => {
     test('should validate reader permission', async () => {
       const result = await executor.execute('validate-permission-level', {
         permission: 'reader'
@@ -555,7 +556,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('format-email-attachment', () => {
+  describeIntegration('format-email-attachment', () => {
     test('should format attachment with filename and data', async () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'document.pdf',
@@ -650,7 +651,7 @@ describe('Google Workspace Tool Helpers', () => {
     });
   });
 
-  describe('Helper Performance', () => {
+  describeIntegration('Helper Performance', () => {
     test('helper execution should complete in <100ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

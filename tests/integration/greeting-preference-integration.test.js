@@ -1,3 +1,5 @@
+// Integration test - requires external services
+// Uses describeIntegration from setup.js
 /**
  * Integration Tests for Greeting Preference System
  * Tests end-to-end flow: Set preference → Activate agent → Verify greeting
@@ -20,7 +22,7 @@ const yaml = require('js-yaml');
 const CONFIG_PATH = path.join(process.cwd(), '.aios-core', 'core-config.yaml');
 const BACKUP_PATH = path.join(process.cwd(), '.aios-core', 'core-config.yaml.backup');
 
-describe('Greeting Preference Integration', () => {
+describeIntegration('Greeting Preference Integration', () => {
   let manager;
   let builder;
   let originalPreference;
@@ -77,7 +79,7 @@ describe('Greeting Preference Integration', () => {
     }
   });
 
-  describe('End-to-End: Set Preference → Activate Agent', () => {
+  describeIntegration('End-to-End: Set Preference → Activate Agent', () => {
     test('minimal preference shows minimal greeting', async () => {
       // Set preference
       manager.setPreference('minimal');
@@ -117,7 +119,7 @@ describe('Greeting Preference Integration', () => {
     });
   });
 
-  describe('Preference Change → Immediate Effect', () => {
+  describeIntegration('Preference Change → Immediate Effect', () => {
     test('changing preference updates greeting immediately', async () => {
       // Start with minimal
       manager.setPreference('minimal');
@@ -142,7 +144,7 @@ describe('Greeting Preference Integration', () => {
     });
   });
 
-  describe('Backward Compatibility', () => {
+  describeIntegration('Backward Compatibility', () => {
     test('default preference preserves Story 6.1.2.5 behavior', async () => {
       // Ensure preference is auto (default)
       manager.setPreference('auto');

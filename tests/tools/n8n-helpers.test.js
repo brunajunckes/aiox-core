@@ -1,3 +1,4 @@
+// Integration test - requires external services
 const path = require('path');
 const toolResolver = require('../../common/utils/tool-resolver');
 const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
@@ -14,7 +15,7 @@ const ToolHelperExecutor = require('../../common/utils/tool-helper-executor');
  * 6. build-workflow-structure
  * 7. calculate-workflow-complexity
  */
-describe('n8n Tool Helpers', () => {
+describeIntegration('n8n Tool Helpers', () => {
   let executor;
   let n8nTool;
 
@@ -35,7 +36,7 @@ describe('n8n Tool Helpers', () => {
     toolResolver.clearCache();
   });
 
-  describe('Tool Resolution', () => {
+  describeIntegration('Tool Resolution', () => {
     test('should resolve n8n tool with helpers', async () => {
       expect(n8nTool).toBeDefined();
       expect(n8nTool.executable_knowledge).toBeDefined();
@@ -56,7 +57,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('extract-workflow-state', () => {
+  describeIntegration('extract-workflow-state', () => {
     test('should extract finished workflow state', async () => {
       const result = await executor.execute('extract-workflow-state', {
         execution: {
@@ -123,7 +124,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('validate-node-connections', () => {
+  describeIntegration('validate-node-connections', () => {
     test('should validate correct connections', async () => {
       const result = await executor.execute('validate-node-connections', {
         nodes: [
@@ -194,7 +195,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('format-workflow-data', () => {
+  describeIntegration('format-workflow-data', () => {
     test('should format data with trigger node', async () => {
       const result = await executor.execute('format-workflow-data', {
         data: { input: 'test' },
@@ -278,7 +279,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('parse-execution-error', () => {
+  describeIntegration('parse-execution-error', () => {
     test('should parse error with full details', async () => {
       const result = await executor.execute('parse-execution-error', {
         error: {
@@ -320,7 +321,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('validate-credential-type', () => {
+  describeIntegration('validate-credential-type', () => {
     test('should validate httpBasicAuth', async () => {
       const result = await executor.execute('validate-credential-type', {
         type: 'httpBasicAuth'
@@ -370,7 +371,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('build-workflow-structure', () => {
+  describeIntegration('build-workflow-structure', () => {
     test('should build workflow with nodes and connections', async () => {
       const result = await executor.execute('build-workflow-structure', {
         name: 'Test Workflow',
@@ -418,7 +419,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('calculate-workflow-complexity', () => {
+  describeIntegration('calculate-workflow-complexity', () => {
     test('should calculate complexity for simple workflow', async () => {
       const result = await executor.execute('calculate-workflow-complexity', {
         nodes: [
@@ -496,7 +497,7 @@ describe('n8n Tool Helpers', () => {
     });
   });
 
-  describe('Helper Performance', () => {
+  describeIntegration('Helper Performance', () => {
     test('helper execution should complete in <100ms (target from Story 5.1)', async () => {
       const iterations = 20;
       const durations = [];

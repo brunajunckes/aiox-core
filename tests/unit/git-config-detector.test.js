@@ -22,8 +22,13 @@ describe('GitConfigDetector', () => {
   let detector;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     detector = new GitConfigDetector(5 * 60 * 1000); // 5 minute TTL
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   describe('Cache Management', () => {
@@ -145,11 +150,13 @@ describe('GitConfigDetector', () => {
     });
 
     test('should detect unconfigured repository (no git)', () => {
+      // Create a fresh detector to avoid cache pollution from other tests
+      const freshDetector = new GitConfigDetector(5 * 60 * 1000);
       execSync.mockImplementation(() => {
         throw new Error('not a git repository');
       });
 
-      const result = detector.detect();
+      const result = freshDetector.detect();
 
       expect(result.configured).toBe(false);
       expect(result.branch).toBeNull();
