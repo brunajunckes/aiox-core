@@ -25,7 +25,7 @@ const path = require('path');
 /**
  * IDE Configuration Metadata
  *
- * AIOS-FULLSTACK v2.1 supports 8 IDEs:
+ * AIOS-FULLSTACK v2.1 supports 9 IDEs:
  * - Claude Code (Anthropic's official CLI)
  * - Cursor (AI-first code editor)
  * - Windsurf (AI-powered development)
@@ -34,6 +34,7 @@ const path = require('path');
  * - Cline (VS Code AI coding assistant)
  * - Gemini CLI (Google's AI assistant)
  * - GitHub Copilot (GitHub's AI pair programmer)
+ * - AntiGravity (Modern AI-powered IDE)
  */
 const IDE_CONFIGS = {
   'claude-code': {
@@ -43,7 +44,8 @@ const IDE_CONFIGS = {
     template: 'ide-rules/claude-rules.md',
     requiresDirectory: true,
     format: 'text',
-    recommended: true
+    recommended: true,
+    agentFolder: path.join('.claude', 'commands', 'AIOS', 'agents')
   },
   cursor: {
     name: 'Cursor',
@@ -51,7 +53,8 @@ const IDE_CONFIGS = {
     configFile: '.cursorrules',
     template: 'ide-rules/cursor-rules.md',
     requiresDirectory: false,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.cursor', 'rules')
   },
   windsurf: {
     name: 'Windsurf',
@@ -59,7 +62,8 @@ const IDE_CONFIGS = {
     configFile: '.windsurfrules',
     template: 'ide-rules/windsurf-rules.md',
     requiresDirectory: false,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.windsurf', 'rules')
   },
   trae: {
     name: 'Trae',
@@ -67,7 +71,8 @@ const IDE_CONFIGS = {
     configFile: path.join('.trae', 'rules.md'),
     template: 'ide-rules/trae-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.trae', 'agents')
   },
   'roo-code': {
     name: 'Roo Code',
@@ -75,7 +80,8 @@ const IDE_CONFIGS = {
     configFile: '.roo/rules.md',
     template: 'ide-rules/roo-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.roo', 'agents')
   },
   cline: {
     name: 'Cline',
@@ -83,7 +89,8 @@ const IDE_CONFIGS = {
     configFile: path.join('.cline', 'rules.md'),
     template: 'ide-rules/cline-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.cline', 'agents')
   },
   'gemini-cli': {
     name: 'Gemini CLI',
@@ -91,7 +98,8 @@ const IDE_CONFIGS = {
     configFile: path.join('.gemini', 'rules.md'),
     template: 'ide-rules/gemini-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.gemini', 'agents')
   },
   'github-copilot': {
     name: 'GitHub Copilot',
@@ -99,7 +107,8 @@ const IDE_CONFIGS = {
     configFile: path.join('.github', 'copilot-instructions.md'),
     template: 'ide-rules/copilot-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.github', 'agents')
   },
   antigravity: {
     name: 'AntiGravity',
@@ -107,7 +116,8 @@ const IDE_CONFIGS = {
     configFile: path.join('.antigravity', 'rules.md'),
     template: 'ide-rules/antigravity-rules.md',
     requiresDirectory: true,
-    format: 'text'
+    format: 'text',
+    agentFolder: path.join('.antigravity', 'agents')
   }
 };
 

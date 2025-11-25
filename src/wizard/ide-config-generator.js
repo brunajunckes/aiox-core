@@ -176,6 +176,43 @@ function generateTemplateVariables(wizardState) {
 }
 
 /**
+ * Copy agent files from .aios-core/agents to IDE-specific agent folder
+ * @param {string} projectRoot - Project root directory
+ * @param {string} agentFolder - Target folder for agent files (IDE-specific)
+ * @returns {Promise<string[]>} List of copied files
+ */
+async function copyAgentFiles(projectRoot, agentFolder) {
+  const sourceDir = path.join(__dirname, '..', '..', '.aios-core', 'agents');
+  const targetDir = path.join(projectRoot, agentFolder);
+  const copiedFiles = [];
+
+  // Ensure target directory exists
+  await fs.ensureDir(targetDir);
+
+  // Get all agent files (excluding backup files)
+  const files = await fs.readdir(sourceDir);
+  const agentFiles = files.filter(file =>
+    file.endsWith('.md') &&
+    !file.includes('.backup') &&
+    !file.startsWith('test-')  // Exclude test agents
+  );
+
+  for (const file of agentFiles) {
+    const sourcePath = path.join(sourceDir, file);
+    const targetPath = path.join(targetDir, file);
+
+    // Only copy if source is a file (not directory)
+    const stat = await fs.stat(sourcePath);
+    if (stat.isFile()) {
+      await fs.copy(sourcePath, targetPath);
+      copiedFiles.push(targetPath);
+    }
+  }
+
+  return copiedFiles;
+}
+
+/**
  * Generate IDE configuration files
  *
  * AC2: Creates appropriate config file for each selected IDE
@@ -196,6 +233,7 @@ function generateTemplateVariables(wizardState) {
 async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
   const projectRoot = options.projectRoot || process.cwd();
   const createdFiles = [];
+  const createdFolders = [];
   const backupFiles = [];
   const errors = [];
 
@@ -265,6 +303,15 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
 
         spinner.succeed(`Created ${ide.configFile}`);
 
+        // Copy agent files to IDE-specific agent folder
+        if (ide.agentFolder) {
+          spinner.start(`Copying agents to ${ide.agentFolder}...`);
+          const agentFiles = await copyAgentFiles(projectRoot, ide.agentFolder);
+          createdFiles.push(...agentFiles);
+          createdFolders.push(path.join(projectRoot, ide.agentFolder));
+          spinner.succeed(`Copied ${agentFiles.length} agent files to ${ide.agentFolder}`);
+        }
+
       } catch (error) {
         spinner.fail(`Failed to configure ${ide.name}`);
         errors.push({ ide: ide.name, error: error.message });
@@ -272,6 +319,11 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
         // Rollback: Delete all created files
         for (const file of createdFiles) {
           await fs.remove(file).catch(() => {});
+        }
+
+        // Rollback: Delete created folders
+        for (const folder of createdFolders) {
+          await fs.remove(folder).catch(() => {});
         }
 
         // Restore backups

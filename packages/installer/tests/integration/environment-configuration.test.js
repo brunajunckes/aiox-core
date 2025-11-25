@@ -183,8 +183,8 @@ describe('Environment Configuration Integration', () => {
       await updateGitignore(testDir);
 
       const content = await fs.readFile(gitignorePath, 'utf8');
-      const matches = (content.match(/\.env/g) || []).length;
-      expect(matches).toBe(1);
+      const lines = content.split('\n').filter(line => line.trim() === '.env' || line.trim() === '/.env');
+      expect(lines.length).toBe(1);
     });
 
     it('should recognize existing .env entry with slash', async () => {
@@ -194,8 +194,8 @@ describe('Environment Configuration Integration', () => {
       await updateGitignore(testDir);
 
       const content = await fs.readFile(gitignorePath, 'utf8');
-      const matches = (content.match(/\.env/g) || []).length;
-      expect(matches).toBe(1);
+      const lines = content.split('\n').filter(line => line.trim() === '.env' || line.trim() === '/.env');
+      expect(lines.length).toBe(1);
     });
   });
 

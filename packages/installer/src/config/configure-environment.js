@@ -248,7 +248,7 @@ async function collectApiKeys() {
 }
 
 /**
- * Update .gitignore to include .env
+ * Update .gitignore to include critical entries for AIOS projects
  *
  * @param {string} targetDir - Target directory
  * @returns {Promise<void>}
@@ -262,15 +262,44 @@ async function updateGitignore(targetDir) {
     gitignoreContent = await fs.readFile(gitignorePath, 'utf8');
   }
 
-  // Check if .env is already in .gitignore
-  const lines = gitignoreContent.split('\n');
-  const hasEnv = lines.some(line => line.trim() === '.env' || line.trim() === '/.env');
+  // Critical entries that must be in .gitignore
+  const criticalEntries = {
+    'Environment & Secrets': ['.env', '.env.local', '.env.*.local', '*.key', '*.pem'],
+    'Dependencies': ['node_modules/', 'node_modules'],
+    'Build & Logs': ['dist/', 'build/', '*.log', 'logs/'],
+    'IDE & OS': ['.DS_Store', 'Thumbs.db', '.idea/', '*.swp'],
+    'AIOS Local': ['.aios-core/local/', '.claude/settings.local.json']
+  };
 
-  if (!hasEnv) {
-    // Add .env to .gitignore
-    const newContent = gitignoreContent.trim()
-      ? `${gitignoreContent.trim()}\n\n# Environment variables (AIOS)\n.env\n`
-      : `# Environment variables (AIOS)\n.env\n`;
+  const lines = gitignoreContent.split('\n').map(line => line.trim());
+  const entriesToAdd = [];
+
+  // Check each critical entry
+  for (const [category, entries] of Object.entries(criticalEntries)) {
+    const missingEntries = entries.filter(entry => {
+      // Check if entry already exists (with or without leading /)
+      const normalizedEntry = entry.replace(/^\//, '');
+      return !lines.some(line => {
+        const normalizedLine = line.replace(/^\//, '');
+        return normalizedLine === normalizedEntry || normalizedLine === entry;
+      });
+    });
+
+    if (missingEntries.length > 0) {
+      entriesToAdd.push({ category, entries: missingEntries });
+    }
+  }
+
+  // Add missing entries
+  if (entriesToAdd.length > 0) {
+    let newContent = gitignoreContent.trim();
+
+    for (const { category, entries } of entriesToAdd) {
+      const section = `\n\n# ${category} (AIOS)\n${entries.join('\n')}`;
+      newContent += section;
+    }
+
+    newContent += '\n';
 
     await fs.writeFile(gitignorePath, newContent, { encoding: 'utf8' });
   }

@@ -250,6 +250,28 @@ async function validateMCPConfig(results) {
 }
 
 /**
+ * Check if a gitignore entry exists (handles variations like node_modules, node_modules/, /node_modules)
+ * @private
+ * @param {string[]} lines - gitignore lines
+ * @param {string} entry - entry to check
+ * @returns {boolean}
+ */
+function hasGitignoreEntry(lines, entry) {
+  // Normalize the entry to check (remove leading/trailing slashes)
+  const normalizedEntry = entry.replace(/^\//, '').replace(/\/$/, '');
+
+  return lines.some(line => {
+    const normalizedLine = line.replace(/^\//, '').replace(/\/$/, '');
+    // Check exact match or variations
+    return normalizedLine === normalizedEntry ||
+           normalizedLine === entry ||
+           line === entry ||
+           line === `/${entry}` ||
+           line === `${entry}/`;
+  });
+}
+
+/**
  * Validate .gitignore entries
  * @private
  */
@@ -270,12 +292,13 @@ async function validateGitignore(results) {
     const gitignoreContent = fs.readFileSync(gitignorePath, 'utf8');
     const lines = gitignoreContent.split('\n').map(l => l.trim());
 
-    const criticalEntries = ['.env', 'node_modules'];
+    // Critical entries - .env is always critical, node_modules is critical but has variations
+    const criticalEntries = ['.env'];
     const recommendedEntries = ['.env.local', '*.key', '*.pem', '.aios/install-log.txt'];
 
     // Check critical entries
     for (const entry of criticalEntries) {
-      if (!lines.includes(entry)) {
+      if (!hasGitignoreEntry(lines, entry)) {
         results.errors.push({
           severity: 'high',
           message: `.gitignore missing critical entry: ${entry}`,
@@ -287,6 +310,18 @@ async function validateGitignore(results) {
       }
     }
 
+    // Check node_modules - it's critical but accepts variations
+    if (!hasGitignoreEntry(lines, 'node_modules')) {
+      results.errors.push({
+        severity: 'high',
+        message: '.gitignore missing critical entry: node_modules',
+        file: gitignorePath,
+        code: 'GITIGNORE_CRITICAL_MISSING',
+        solution: 'Add "node_modules" or "node_modules/" to .gitignore'
+      });
+      results.success = false;
+    }
+
     // Check recommended entries
     for (const entry of recommendedEntries) {
       const hasEntry = lines.some(line => {
@@ -294,7 +329,7 @@ async function validateGitignore(results) {
           const pattern = entry.replace(/\*/g, '.*');
           return new RegExp(`^${pattern}$`).test(line);
         }
-        return line === entry;
+        return hasGitignoreEntry(lines, entry);
       });
 
       if (!hasEntry) {

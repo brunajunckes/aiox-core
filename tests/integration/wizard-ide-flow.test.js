@@ -42,11 +42,16 @@ describe('Wizard IDE Flow Integration', () => {
 
       // Verify result
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(1);
+      // Now includes config file + agent files (16+ files)
+      expect(result.files.length).toBeGreaterThanOrEqual(1);
 
-      // Verify file exists
+      // Verify config file exists
       const configPath = path.join(testDir, '.cursorrules');
       expect(await fs.pathExists(configPath)).toBe(true);
+
+      // Verify agent folder was created with agents
+      const agentFolder = path.join(testDir, '.cursor', 'rules');
+      expect(await fs.pathExists(agentFolder)).toBe(true);
 
       // Verify content has AIOS branding
       const content = await fs.readFile(configPath, 'utf8');
@@ -68,12 +73,18 @@ describe('Wizard IDE Flow Integration', () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(3);
+      // 3 config files + agent files for each IDE
+      expect(result.files.length).toBeGreaterThanOrEqual(3);
 
-      // Verify all files exist
+      // Verify all config files exist
       expect(await fs.pathExists(path.join(testDir, '.cursorrules'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.windsurfrules'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.trae', 'rules.md'))).toBe(true);
+
+      // Verify agent folders were created
+      expect(await fs.pathExists(path.join(testDir, '.cursor', 'rules'))).toBe(true);
+      expect(await fs.pathExists(path.join(testDir, '.windsurf', 'rules'))).toBe(true);
+      expect(await fs.pathExists(path.join(testDir, '.trae', 'agents'))).toBe(true);
     });
 
     it('should complete flow for all 9 IDEs', async () => {
@@ -90,13 +101,18 @@ describe('Wizard IDE Flow Integration', () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(9);
+      // 9 config files + agent files for each IDE
+      expect(result.files.length).toBeGreaterThanOrEqual(9);
 
-      // Verify all config files based on IDE configuration
+      // Verify all config files and agent folders based on IDE configuration
       for (const ideKey of getIDEKeys()) {
         const config = getIDEConfig(ideKey);
         const configPath = path.join(testDir, config.configFile);
         expect(await fs.pathExists(configPath)).toBe(true);
+
+        // Verify agent folder exists
+        const agentFolder = path.join(testDir, config.agentFolder);
+        expect(await fs.pathExists(agentFolder)).toBe(true);
       }
     });
   });
@@ -224,7 +240,8 @@ describe('Wizard IDE Flow Integration', () => {
       });
 
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(3);
+      // 3 config files + agent files for each IDE
+      expect(result.files.length).toBeGreaterThanOrEqual(3);
 
       // All formats should be text (markdown)
       const cursorContent = await fs.readFile(path.join(testDir, '.cursorrules'), 'utf8');

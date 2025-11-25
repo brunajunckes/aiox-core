@@ -49,6 +49,7 @@ describe('IDE Configs', () => {
         expect(config).toHaveProperty('template');
         expect(config).toHaveProperty('requiresDirectory');
         expect(config).toHaveProperty('format');
+        expect(config).toHaveProperty('agentFolder');
 
         expect(typeof config.name).toBe('string');
         expect(typeof config.description).toBe('string');
@@ -56,6 +57,7 @@ describe('IDE Configs', () => {
         expect(typeof config.template).toBe('string');
         expect(typeof config.requiresDirectory).toBe('boolean');
         expect(['text', 'json', 'yaml']).toContain(config.format);
+        expect(typeof config.agentFolder).toBe('string');
       });
     });
 
@@ -101,6 +103,27 @@ describe('IDE Configs', () => {
 
     it('should have Claude Code as recommended', () => {
       expect(IDE_CONFIGS['claude-code'].recommended).toBe(true);
+    });
+
+    it('should have correct agent folder paths', () => {
+      expect(IDE_CONFIGS['claude-code'].agentFolder).toContain('.claude');
+      expect(IDE_CONFIGS['claude-code'].agentFolder).toContain('agents');
+      expect(IDE_CONFIGS.cursor.agentFolder).toContain('.cursor');
+      expect(IDE_CONFIGS.cursor.agentFolder).toContain('rules');
+      expect(IDE_CONFIGS.windsurf.agentFolder).toContain('.windsurf');
+      expect(IDE_CONFIGS.windsurf.agentFolder).toContain('rules');
+      expect(IDE_CONFIGS.trae.agentFolder).toContain('.trae');
+      expect(IDE_CONFIGS.trae.agentFolder).toContain('agents');
+      expect(IDE_CONFIGS['roo-code'].agentFolder).toContain('.roo');
+      expect(IDE_CONFIGS['roo-code'].agentFolder).toContain('agents');
+      expect(IDE_CONFIGS.cline.agentFolder).toContain('.cline');
+      expect(IDE_CONFIGS.cline.agentFolder).toContain('agents');
+      expect(IDE_CONFIGS['gemini-cli'].agentFolder).toContain('.gemini');
+      expect(IDE_CONFIGS['gemini-cli'].agentFolder).toContain('agents');
+      expect(IDE_CONFIGS['github-copilot'].agentFolder).toContain('.github');
+      expect(IDE_CONFIGS['github-copilot'].agentFolder).toContain('agents');
+      expect(IDE_CONFIGS.antigravity.agentFolder).toContain('.antigravity');
+      expect(IDE_CONFIGS.antigravity.agentFolder).toContain('agents');
     });
   });
 

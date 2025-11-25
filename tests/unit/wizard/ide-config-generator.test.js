@@ -159,10 +159,15 @@ describe('IDE Config Generator', () => {
       });
 
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(1);
+      // Now includes config file + agent files
+      expect(result.files.length).toBeGreaterThanOrEqual(1);
 
       const configPath = path.join(testDir, '.cursorrules');
       expect(await fs.pathExists(configPath)).toBe(true);
+
+      // Agent folder should also exist
+      const agentFolder = path.join(testDir, '.cursor', 'rules');
+      expect(await fs.pathExists(agentFolder)).toBe(true);
     });
 
     it('should create config files for multiple IDEs', async () => {
@@ -174,10 +179,15 @@ describe('IDE Config Generator', () => {
       });
 
       expect(result.success).toBe(true);
-      expect(result.files).toHaveLength(2);
+      // Now includes config files + agent files for each IDE
+      expect(result.files.length).toBeGreaterThanOrEqual(2);
 
       expect(await fs.pathExists(path.join(testDir, '.cursorrules'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.windsurfrules'))).toBe(true);
+
+      // Agent folders should also exist
+      expect(await fs.pathExists(path.join(testDir, '.cursor', 'rules'))).toBe(true);
+      expect(await fs.pathExists(path.join(testDir, '.windsurf', 'rules'))).toBe(true);
     });
 
     it('should create directory for IDEs that require it', async () => {
