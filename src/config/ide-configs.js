@@ -112,12 +112,20 @@ const IDE_CONFIGS = {
   },
   antigravity: {
     name: 'AntiGravity',
-    description: 'Modern AI-powered IDE with advanced code assistance',
+    description: 'Google agentic development platform',
     configFile: path.join('.antigravity', 'rules.md'),
     template: 'ide-rules/antigravity-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.antigravity', 'agents')
+    // AntiGravity uses .agent/workflows for agent activation (not .antigravity/agents)
+    agentFolder: path.join('.agent', 'workflows'),
+    // Special config: needs antigravity.json and workflow files instead of direct agents
+    specialConfig: {
+      type: 'antigravity',
+      configJsonPath: path.join('.antigravity', 'antigravity.json'),
+      workflowsFolder: path.join('.agent', 'workflows'),
+      agentsFolder: path.join('.antigravity', 'agents') // For reference in config, but workflows are used
+    }
   }
 };
 

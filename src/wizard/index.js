@@ -17,6 +17,7 @@ const {
   showCancellation
 } = require('./feedback');
 const { generateIDEConfigs, showSuccessSummary } = require('./ide-config-generator');
+const { getIDEConfig } = require('../config/ide-configs');
 const { configureEnvironment } = require('../../packages/installer/src/config/configure-environment');
 const { installDependencies, hasExistingDependencies } = require('../installer/dependency-installer');
 const { installAiosCore, hasPackageJson, createBasicPackageJson } = require('../installer/aios-core-installer');
@@ -26,6 +27,37 @@ const {
   displayValidationReport,
   provideTroubleshooting
 } = require('./validation');
+
+/**
+ * Generate AntiGravity workflow content for expansion pack agents
+ * @param {string} agentName - Agent name (e.g., 'data-collector')
+ * @param {string} packName - Expansion pack name (e.g., 'etl')
+ * @returns {string} Workflow file content
+ */
+function generateExpansionPackWorkflow(agentName, packName) {
+  const displayName = agentName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+  return `---
+description: Ativa o agente ${displayName} (${packName})
+---
+
+# Ativação do Agente ${displayName}
+
+**Expansion Pack:** ${packName}
+
+**INSTRUÇÕES CRÍTICAS PARA O ANTIGRAVITY:**
+
+1. Leia COMPLETAMENTE o arquivo \`.antigravity/agents/${packName}/${agentName}.md\`
+2. Siga EXATAMENTE as \`activation-instructions\` definidas no bloco YAML do agente
+3. Adote a persona conforme definido no agente
+4. Execute a saudação conforme \`greeting_levels\` definido no agente
+5. **MANTENHA esta persona até receber o comando \`*exit\`**
+6. Responda aos comandos com prefixo \`*\` conforme definido no agente
+7. Siga as regras globais do projeto em \`.antigravity/rules.md\`
+
+**Comandos disponíveis:** Use \`*help\` para ver todos os comandos do agente.
+`;
+}
 
 /**
  * Handle Ctrl+C gracefully
@@ -209,6 +241,63 @@ async function runWizard() {
           ideConfigResult.errors.forEach(err => {
             console.error(`  - ${err.ide || 'Unknown'}: ${err.error}`);
           });
+        }
+      }
+
+      // Install expansion pack agents to each selected IDE
+      if (answers.expansionPacksResult && answers.expansionPacksResult.installed.length > 0) {
+        console.log('\n📦 Installing expansion pack agents to IDEs...');
+
+        for (const packName of answers.expansionPacksResult.installed) {
+          const packAgentsDir = path.join(answers.expansionPacksResult.targetDir, packName, 'agents');
+
+          if (await fse.pathExists(packAgentsDir)) {
+            const agentFiles = (await fse.readdir(packAgentsDir)).filter(f => f.endsWith('.md'));
+
+            if (agentFiles.length > 0) {
+              for (const ideKey of answers.selectedIDEs) {
+                const ideConfig = getIDEConfig(ideKey);
+                if (!ideConfig || !ideConfig.agentFolder) continue;
+
+                const isAntiGravity = ideConfig.specialConfig && ideConfig.specialConfig.type === 'antigravity';
+
+                // Determine target folder for this expansion pack
+                let targetFolder;
+                if (isAntiGravity) {
+                  // AntiGravity: workflows go to .agent/workflows/{packName}/
+                  targetFolder = path.join(process.cwd(), ideConfig.agentFolder, packName);
+                  // Also need to copy actual agents to .antigravity/agents/{packName}/
+                  const agentsTargetFolder = path.join(process.cwd(), ideConfig.specialConfig.agentsFolder, packName);
+                  await fse.ensureDir(agentsTargetFolder);
+
+                  for (const agentFile of agentFiles) {
+                    const sourcePath = path.join(packAgentsDir, agentFile);
+                    const agentName = agentFile.replace('.md', '');
+
+                    // Create workflow file
+                    const workflowContent = generateExpansionPackWorkflow(agentName, packName);
+                    await fse.ensureDir(targetFolder);
+                    await fse.writeFile(path.join(targetFolder, agentFile), workflowContent, 'utf8');
+
+                    // Copy actual agent
+                    await fse.copy(sourcePath, path.join(agentsTargetFolder, agentFile));
+                  }
+                } else {
+                  // Other IDEs: copy directly to agentFolder/{packName}/
+                  targetFolder = path.join(process.cwd(), ideConfig.agentFolder, packName);
+                  await fse.ensureDir(targetFolder);
+
+                  for (const agentFile of agentFiles) {
+                    await fse.copy(
+                      path.join(packAgentsDir, agentFile),
+                      path.join(targetFolder, agentFile)
+                    );
+                  }
+                }
+              }
+              console.log(`   ✅ ${packName}: ${agentFiles.length} agents installed to ${answers.selectedIDEs.length} IDE(s)`);
+            }
+          }
         }
       }
     }
