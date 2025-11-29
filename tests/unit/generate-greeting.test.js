@@ -34,7 +34,7 @@ describe('generate-greeting.js', () => {
       
       // Verify agent file exists
       const fs = require('fs').promises;
-      const agentPath = path.join(process.cwd(), '.aios-core', 'agents', `${agentId}.md`);
+      const agentPath = path.join(process.cwd(), '.aios-core', 'development', 'agents', `${agentId}.md`);
       
       try {
         await fs.access(agentPath);

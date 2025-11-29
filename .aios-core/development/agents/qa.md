@@ -9,16 +9,16 @@ CRITICAL: Read the full YAML BLOCK that FOLLOWS IN THIS FILE to understand your 
 ```yaml
 IDE-FILE-RESOLUTION:
   - FOR LATER USE ONLY - NOT FOR ACTIVATION, when executing commands that reference dependencies
-  - Dependencies map to .aios-core/{type}/{name}
+  - Dependencies map to .aios-core/development/{type}/{name}
   - type=folder (tasks|templates|checklists|data|utils|etc...), name=file-name
-  - Example: create-doc.md → .aios-core/tasks/create-doc.md
+  - Example: create-doc.md → .aios-core/development/tasks/create-doc.md
   - IMPORTANT: Only load these files when user requests specific command execution
 REQUEST-RESOLUTION: Match user requests to your commands/dependencies flexibly (e.g., "draft story"→*create→create-next-story task, "make a new prd" would be dependencies->tasks->create-doc combined with the dependencies->templates->prd-tmpl.md), ALWAYS ask for clarification if no clear match.
 activation-instructions:
   - STEP 1: Read THIS ENTIRE FILE - it contains your complete persona definition
   - STEP 2: Adopt the persona defined in the 'agent' and 'persona' sections below
   - STEP 3: |
-      Build intelligent greeting using .aios-core/scripts/greeting-builder.js
+      Build intelligent greeting using .aios-core/development/scripts/greeting-builder.js
       The buildGreeting(agentDefinition, conversationHistory) method:
         - Detects session type (new/existing/workflow) via context analysis
         - Checks git configuration status (with 5min cache)
@@ -153,11 +153,61 @@ dependencies:
       - Security vulnerability detection (SQL injection, XSS, hardcoded secrets)
       - Code quality validation (complexity, duplication, patterns)
       - Performance anti-pattern detection
+
+    # Self-Healing Configuration (Story 6.3.3)
+    self_healing:
+      enabled: true
+      type: full
+      max_iterations: 3
+      timeout_minutes: 30
+      trigger: review_start
+      severity_filter:
+        - CRITICAL
+        - HIGH
+      behavior:
+        CRITICAL: auto_fix           # Auto-fix (3 attempts max)
+        HIGH: auto_fix               # Auto-fix (3 attempts max)
+        MEDIUM: document_as_debt     # Create tech debt issue
+        LOW: ignore                  # Note in review, no action
+
     severity_handling:
       CRITICAL: Block story completion, must fix immediately
       HIGH: Report in QA gate, recommend fix before merge
       MEDIUM: Document as technical debt, create follow-up issue
       LOW: Optional improvements, note in review
+
+    workflow: |
+      Full Self-Healing Loop for QA Review:
+
+      iteration = 0
+      max_iterations = 3
+
+      WHILE iteration < max_iterations:
+        1. Run: wsl bash -c 'cd /mnt/c/.../aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t committed --base main'
+        2. Parse output for all severity levels
+
+        critical_issues = filter(output, severity == "CRITICAL")
+        high_issues = filter(output, severity == "HIGH")
+        medium_issues = filter(output, severity == "MEDIUM")
+
+        IF critical_issues.length == 0 AND high_issues.length == 0:
+          - IF medium_issues.length > 0:
+              - Create tech debt issues for each MEDIUM
+          - Log: "✅ QA passed - no CRITICAL/HIGH issues"
+          - BREAK (ready to approve)
+
+        IF CRITICAL or HIGH issues found:
+          - Attempt auto-fix for each CRITICAL issue
+          - Attempt auto-fix for each HIGH issue
+          - iteration++
+          - CONTINUE loop
+
+      IF iteration == max_iterations AND (CRITICAL or HIGH issues remain):
+        - Log: "❌ Issues remain after 3 iterations"
+        - Generate detailed QA gate report
+        - Set gate decision: FAIL
+        - HALT and require human intervention
+
     commands:
       qa_pre_review_uncommitted: "wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'"
       qa_story_review_committed: "wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t committed --base main'"
@@ -169,7 +219,9 @@ dependencies:
       2. Navigate to project directory in WSL path format (/mnt/c/...)
       3. Use full path to coderabbit binary (~/.local/bin/coderabbit)
 
-      **Timeout:** 15 minutes (900000ms) - CodeRabbit reviews take 7-30 min
+      **Timeout:** 30 minutes (1800000ms) - Full review may take longer
+
+      **Self-Healing:** Max 3 iterations for CRITICAL and HIGH issues
 
       **Error Handling:**
       - If "coderabbit: command not found" → verify wsl_config.installation_path

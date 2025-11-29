@@ -285,7 +285,65 @@ To comprehensively validate a story draft before implementation begins, ensuring
 - **Completeness**: Do tasks cover all requirements and acceptance criteria?
 - **Blocking issues**: Are there any tasks that would block others?
 
-### 8. Anti-Hallucination Verification
+### 8. CodeRabbit Integration Validation (CONDITIONAL)
+
+**CONDITIONAL STEP** - Check `coderabbit_integration.enabled` in core-config.yaml
+
+**IF `coderabbit_integration.enabled: false`:**
+- SKIP this entire step
+- Verify the story contains the skip notice in the CodeRabbit Integration section:
+  > **CodeRabbit Integration**: Disabled
+- Log: "ℹ️ CodeRabbit validation skipped - disabled in core-config.yaml"
+- Proceed to Step 9
+
+**IF `coderabbit_integration.enabled: true`:**
+- Validate ALL of the following:
+
+**Section Presence:**
+- Is the `🤖 CodeRabbit Integration` section present?
+- Are all subsections populated (Story Type Analysis, Specialized Agents, Quality Gates, Self-Healing, Focus Areas)?
+
+**Story Type Analysis:**
+- Is the primary story type correctly identified?
+- Does the complexity level match the story scope?
+- Are secondary types listed if applicable?
+
+**Specialized Agent Assignment:**
+- Is @dev listed as primary agent (required for all stories)?
+- Are type-specific agents assigned appropriately?
+  - Database stories → @db-sage
+  - Frontend stories → @ux-expert
+  - Deployment stories → @github-devops
+  - Security stories → @architect
+
+**Quality Gate Tasks:**
+- Are all applicable quality gates defined as checkboxes?
+- Pre-Commit (@dev) - REQUIRED for all stories
+- Pre-PR (@github-devops) - Required if PR will be created
+- Pre-Deployment (@github-devops) - Required for production stories
+
+**Self-Healing Configuration (Story 6.3.3):**
+- Is the self-healing configuration present?
+- Does the mode match the primary agent?
+  - @dev: light mode (2 iterations, 15 min, CRITICAL only)
+  - @qa: full mode (3 iterations, 30 min, CRITICAL+HIGH)
+  - @github-devops: check mode (report only)
+- Is the severity behavior documented?
+
+**Focus Areas:**
+- Do focus areas match the story type?
+- Are type-specific validations listed?
+  - Database: service filters, schema compliance, RLS
+  - API: error handling, security, validation
+  - Frontend: accessibility, performance, responsive
+
+**Validation Result:**
+- [ ] PASS: CodeRabbit section complete and accurate
+- [ ] PARTIAL: Section present but incomplete
+- [ ] FAIL: Section missing or critically incomplete
+- [ ] N/A: CodeRabbit disabled in core-config.yaml
+
+### 9. Anti-Hallucination Verification
 
 - **Refer to tools/mcp/context7.yaml** for library documentation lookup to verify technical claims against official sources
 - Consult the examples section for documentation verification patterns and library-specific queries
@@ -295,7 +353,7 @@ To comprehensively validate a story draft before implementation begins, ensuring
 - **Reference accuracy**: Verify all source references are correct and accessible
 - **Fact checking**: Cross-reference claims against epic and architecture documents
 
-### 9. Dev Agent Implementation Readiness
+### 10. Dev Agent Implementation Readiness
 
 - **Self-contained context**: Can the story be implemented without reading external docs?
 - **Clear instructions**: Are implementation steps unambiguous?
@@ -303,7 +361,7 @@ To comprehensively validate a story draft before implementation begins, ensuring
 - **Missing information**: Identify any critical information gaps
 - **Actionability**: Are all tasks actionable by a development agent?
 
-### 10. Generate Validation Report
+### 11. Generate Validation Report
 
 Provide a structured validation report including:
 
@@ -339,6 +397,22 @@ Provide a structured validation report including:
 - Missing source references
 - Inconsistencies with architecture documents
 - Invented libraries, patterns, or standards
+
+#### CodeRabbit Integration Findings (CONDITIONAL)
+
+**IF `coderabbit_integration.enabled: true`:**
+
+- **Story Type Accuracy**: Is the story type correctly classified?
+- **Agent Assignment Completeness**: Are all required agents assigned?
+- **Quality Gate Coverage**: Are all applicable gates defined?
+- **Self-Healing Configuration**: Is Story 6.3.3 configuration present?
+- **Focus Areas Relevance**: Do focus areas match story type?
+
+**IF `coderabbit_integration.enabled: false`:**
+
+- **Skip Notice Present**: Verify skip notice is rendered in story
+- **No Quality Gate Tasks**: Confirm no CodeRabbit checkboxes exist
+- **Manual Review Fallback**: Note that manual review process applies
 
 #### Final Assessment
 

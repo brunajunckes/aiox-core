@@ -9,20 +9,20 @@
  * - Config backup/restore
  */
 
-const GreetingPreferenceManager = require('../../.aios-core/scripts/greeting-preference-manager');
+const GreetingPreferenceManager = require('../../.aios-core/development/scripts/greeting-preference-manager');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 
 // Mock dependencies for GreetingBuilder
-jest.mock('../../.aios-core/scripts/context-detector');
+jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/scripts/git-config-detector');
 jest.mock('../../.aios-core/scripts/project-status-loader', () => ({
   loadProjectStatus: jest.fn(),
   formatStatusDisplay: jest.fn()
 }));
 
-const GreetingBuilder = require('../../.aios-core/scripts/greeting-builder');
+const GreetingBuilder = require('../../.aios-core/development/scripts/greeting-builder');
 
 // Mock fs operations for config file
 const CONFIG_PATH = path.join(process.cwd(), '.aios-core', 'core-config.yaml');

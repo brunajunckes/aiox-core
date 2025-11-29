@@ -10,8 +10,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('yaml');
-const { globalConfigCache } = require('../core/config/config-cache');
-const { trackConfigLoad } = require('./performance-tracker');
+const { globalConfigCache } = require('../../core/config/config-cache');
+const { trackConfigLoad } = require('../../scripts/performance-tracker');
 
 /**
  * Agent configuration requirements cache
@@ -318,7 +318,7 @@ class AgentConfigLoader {
     }
     
     // Load from file
-    const agentPath = path.join(process.cwd(), '.aios-core', 'agents', `${this.agentId}.md`);
+    const agentPath = path.join(process.cwd(), '.aios-core', 'development', 'agents', `${this.agentId}.md`);
     
     try {
       const content = await fs.readFile(agentPath, 'utf8');

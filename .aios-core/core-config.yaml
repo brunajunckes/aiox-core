@@ -1,0 +1,286 @@
+# ============================================
+# AIOS-FULLSTACK Core Configuration
+# Version: 2.1.0 (Consolidated from analysis of 6 variants)
+# Last Updated: 2025-11-29
+# ============================================
+
+# ============================================
+# SECTION 1: Framework Metadata
+# ============================================
+markdownExploder: true
+
+project:
+  type: EXISTING_AIOS
+  installedAt: "2025-01-14T00:00:00Z"
+  version: "2.1.0"
+
+# ============================================
+# SECTION 2: Documentation Paths
+# ============================================
+qa:
+  qaLocation: docs/qa
+
+prd:
+  prdFile: docs/prd.md
+  prdVersion: v4
+  prdSharded: true
+  prdShardedLocation: docs/prd
+  epicFilePattern: "epic-{n}*.md"
+
+architecture:
+  architectureFile: docs/architecture.md
+  architectureVersion: v4
+  architectureSharded: true
+  architectureShardedLocation: docs/architecture
+
+customTechnicalDocuments: null
+
+devLoadAlwaysFiles:
+  - docs/architecture/coding-standards.md
+  - docs/architecture/tech-stack.md
+  - docs/architecture/source-tree.md
+
+# Fallback patterns for Portuguese or alternative naming conventions
+# These will be tried if the primary files above are not found
+devLoadAlwaysFilesFallback:
+  # Portuguese variants
+  - docs/architecture/padroes-de-codigo.md
+  - docs/architecture/pilha-tecnologica.md
+  - docs/architecture/arvore-de-origem.md
+  # Alternative English names
+  - docs/architecture/code-standards.md
+  - docs/architecture/technology-stack.md
+  - docs/architecture/project-structure.md
+  - docs/architecture/unified-project-structure.md
+  - docs/architecture/directory-structure.md
+
+devDebugLog: .ai/debug-log.md
+devStoryLocation: docs/stories
+slashPrefix: AIOS
+
+# ============================================
+# SECTION 3: Resource Locations
+# ============================================
+toolsLocation: .aios-core/tools
+scriptsLocation: .aios-core/scripts
+dataLocation: .aios-core/data
+elicitationLocation: .aios-core/elicitation
+expansionPacksLocation: expansion-packs
+mindsLocation: outputs/minds
+
+# ============================================
+# SECTION 4: IDE Configuration
+# ============================================
+ide:
+  selected:
+    - vscode
+    - cursor
+    - claude-code
+  configs:
+    vscode: true
+    cursor: true
+    windsurf: false
+    zed: false
+    claude-desktop: false
+    claude-code: true
+
+# ============================================
+# SECTION 5: MCP Configuration
+# ============================================
+mcp:
+  enabled: true
+  configLocation: .claude/mcp.json
+  servers: []
+
+# ============================================
+# SECTION 6: Performance & Caching
+# ============================================
+lazyLoading:
+  enabled: true
+  heavySections:
+    - pvMindContext
+    - expansionPacks
+    - registry
+
+git:
+  showConfigWarning: true
+  cacheTimeSeconds: 300
+
+# ============================================
+# SECTION 7: Logging & Status
+# ============================================
+decisionLogging:
+  enabled: true
+  async: true
+  location: .ai/
+  indexFile: decision-logs-index.md
+  format: adr
+  performance:
+    maxOverhead: 50
+
+projectStatus:
+  enabled: true
+  autoLoadOnAgentActivation: true
+  showInGreeting: true
+  cacheTimeSeconds: 60
+  components:
+    gitBranch: true
+    gitStatus: true
+    recentWork: true
+    currentEpic: true
+    currentStory: true
+  statusFile: .aios/project-status.yaml
+  maxModifiedFiles: 5
+  maxRecentCommits: 2
+
+agentIdentity:
+  greeting:
+    contextDetection: true
+    sessionDetection: hybrid
+    workflowDetection: hardcoded
+    performance:
+      gitCheckCache: true
+      gitCheckTTL: 300
+
+# ============================================
+# SECTION 8: GitHub Integration
+# ============================================
+github:
+  enabled: true
+  cli_required: false  # gh CLI enhances but not required
+  features:
+    pr_creation: true
+    issue_management: true
+
+# ============================================
+# SECTION 9: CodeRabbit Integration (Story 6.3.3)
+# MASTER TOGGLE: When enabled=false, ALL CodeRabbit behavior is disabled
+# ============================================
+coderabbit_integration:
+  enabled: true  # CodeRabbit CLI installed on this machine
+  installation_mode: wsl
+  wsl_config:
+    distribution: Ubuntu
+    installation_path: ~/.local/bin/coderabbit
+    working_directory: /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack
+
+  # Self-healing configuration
+  self_healing:
+    enabled: true
+    type: full
+    max_iterations: 3
+    timeout_minutes: 30
+
+  # Severity handling by agent type
+  severity_handling:
+    CRITICAL: auto_fix        # Block and auto-fix (must resolve)
+    HIGH: auto_fix            # Auto-fix (recommend fix)
+    MEDIUM: document_as_debt  # Create tech debt issue
+    LOW: ignore               # Note in review, no action
+
+  # Graceful degradation for machines without CodeRabbit
+  graceful_degradation:
+    skip_if_not_installed: true
+    fallback_message: "CodeRabbit CLI not found. Skipping automated review. Install via: pip install coderabbit-cli"
+
+  # CLI commands (WSL wrapper for Windows)
+  commands:
+    qa_pre_review_uncommitted: |
+      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'
+    qa_story_review_committed: |
+      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t committed --base main'
+
+  report_location: docs/qa/coderabbit-reports/
+
+# ============================================
+# SECTION 10: Expansion Packs
+# ============================================
+expansionPacks:
+  location: expansion-packs
+  installed:
+    - hybrid-ops
+  autoLoad: false
+
+pvMindContext:
+  enabled: true
+  location: outputs/minds/pedro_valerio
+  features:
+    persona_voice: true
+    technical_depth: advanced
+    communication_style: structured
+
+storyBacklog:
+  enabled: true
+  location: docs/stories/backlog
+  prioritization: value_risk
+
+# ============================================
+# SECTION 11: Utility Scripts Registry (Stories 3.4 + 3.5)
+# Utilities are categorized by integration pattern
+# ============================================
+utils:
+  # Agent Helper utilities (28) - Used directly by agents
+  helpers:
+    - batch-creator
+    - capability-analyzer
+    - change-propagation-predictor
+    - clickup-helpers  # Located at common/utils/clickup-helpers.js
+    - code-quality-improver
+    - compatibility-checker
+    - component-metadata
+    - component-preview
+    - conflict-manager
+    - coverage-analyzer
+    - dependency-analyzer
+    - diff-generator
+    - framework-analyzer
+    - git-wrapper
+    - manifest-preview
+    - migration-path-generator
+    - migration-tester
+    - modification-history
+    - modification-risk-assessment
+    - modification-validator
+    - performance-analyzer
+    - redundancy-analyzer
+    - refactoring-suggester
+    - sandbox-tester
+    - template-validator
+    - test-quality-assessment
+    - validate-filenames
+    - version-tracker
+    - visual-impact-generator
+
+  # Task Execution utilities (18) - Called during task execution
+  executors:
+    - approval-workflow
+    - branch-manager
+    - commit-message-generator
+    - component-generator
+    - component-search
+    - conflict-resolver
+    - deprecation-manager
+    - dependency-impact-analyzer
+    - documentation-synchronizer
+    - migration-generator
+    - migration-rollback
+    - modification-synchronizer
+    - performance-optimizer
+    - rollback-handler
+    - safe-removal-handler
+    - test-generator
+    - test-updater
+
+  # Framework utilities (11) - Framework-level components
+  framework:
+    - elicitation-engine
+    - elicitation-session-manager
+    - improvement-engine
+    - improvement-validator  # Mapped from util-aios-validator
+    - metrics-tracker
+    - pattern-learner
+    - template-engine
+    - test-template-system
+    - transaction-manager
+    - usage-analytics
+    - usage-tracker

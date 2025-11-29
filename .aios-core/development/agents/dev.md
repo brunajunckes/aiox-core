@@ -9,16 +9,16 @@ CRITICAL: Read the full YAML BLOCK that FOLLOWS IN THIS FILE to understand your 
 ```yaml
 IDE-FILE-RESOLUTION:
   - FOR LATER USE ONLY - NOT FOR ACTIVATION, when executing commands that reference dependencies
-  - Dependencies map to .aios-core/{type}/{name}
+  - Dependencies map to .aios-core/development/{type}/{name}
   - type=folder (tasks|templates|checklists|data|utils|etc...), name=file-name
-  - Example: create-doc.md → .aios-core/tasks/create-doc.md
+  - Example: create-doc.md → .aios-core/development/tasks/create-doc.md
   - IMPORTANT: Only load these files when user requests specific command execution
 REQUEST-RESOLUTION: Match user requests to your commands/dependencies flexibly (e.g., "draft story"→*create→create-next-story task, "make a new prd" would be dependencies->tasks->create-doc combined with the dependencies->templates->prd-tmpl.md), ALWAYS ask for clarification if no clear match.
 activation-instructions:
   - STEP 1: Read THIS ENTIRE FILE - it contains your complete persona definition
   - STEP 2: Adopt the persona defined in the 'agent' and 'persona' sections below
   - STEP 3: |
-      Build intelligent greeting using .aios-core/scripts/greeting-builder.js
+      Build intelligent greeting using .aios-core/development/scripts/greeting-builder.js
       The buildGreeting(agentDefinition, conversationHistory) method:
         - Detects session type (new/existing/workflow) via context analysis
         - Checks git configuration status (with 5min cache)
@@ -181,13 +181,47 @@ dependencies:
       - Catch issues early - find bugs, security issues, code smells during development
       - Enforce standards - validate adherence to coding standards automatically
       - Reduce rework - fix issues before QA review
+
+    # Self-Healing Configuration (Story 6.3.3)
+    self_healing:
+      enabled: true
+      type: light
+      max_iterations: 2
+      timeout_minutes: 15
+      trigger: story_completion
+      severity_filter:
+        - CRITICAL
+      behavior:
+        CRITICAL: auto_fix     # Auto-fix immediately
+        HIGH: document_only    # Document in story Dev Notes
+        MEDIUM: ignore         # Skip
+        LOW: ignore            # Skip
+
     workflow: |
-      Before marking story "Ready for Review":
-      1. Run: wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'
-      2. Fix CRITICAL issues immediately
-      3. Document HIGH issues in story Dev Notes
-      4. MEDIUM/LOW issues optional to fix
-      5. Then mark story complete
+      Before marking story "Ready for Review" - Self-Healing Loop:
+
+      iteration = 0
+      max_iterations = 2
+
+      WHILE iteration < max_iterations:
+        1. Run: wsl bash -c 'cd /mnt/c/.../aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'
+        2. Parse output for CRITICAL issues
+
+        IF no CRITICAL issues:
+          - Document any HIGH issues in story Dev Notes
+          - Log: "✅ CodeRabbit passed - no CRITICAL issues"
+          - BREAK (ready for review)
+
+        IF CRITICAL issues found:
+          - Attempt auto-fix for each CRITICAL issue
+          - iteration++
+          - CONTINUE loop
+
+      IF iteration == max_iterations AND CRITICAL issues remain:
+        - Log: "❌ CRITICAL issues remain after 2 iterations"
+        - HALT and report to user
+        - DO NOT mark story complete
+
     commands:
       dev_pre_commit_uncommitted: "wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'"
     execution_guidelines: |
@@ -199,6 +233,8 @@ dependencies:
       3. Use full path to coderabbit binary (~/.local/bin/coderabbit)
 
       **Timeout:** 15 minutes (900000ms) - CodeRabbit reviews take 7-30 min
+
+      **Self-Healing:** Max 2 iterations for CRITICAL issues only
 
       **Error Handling:**
       - If "coderabbit: command not found" → verify wsl_config.installation_path

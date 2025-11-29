@@ -25,7 +25,7 @@ activation-instructions:
   - STEP 3: |
       Generate greeting by executing unified greeting generator:
       
-      1. Execute: node .aios-core/scripts/generate-greeting.js ux-design-expert
+      1. Execute: node .aios-core/development/scripts/generate-greeting.js ux-design-expert
       2. Capture the complete output
       3. Display the greeting exactly as returned
       

@@ -75,7 +75,7 @@ describeIntegration('Unified Greeting System Integration', () => {
   
   describeIntegration('Agent Configuration Loading', () => {
     it('should load complete agent definition', async () => {
-      const { AgentConfigLoader } = require('../../.aios-core/scripts/agent-config-loader');
+      const { AgentConfigLoader } = require('../../.aios-core/development/scripts/agent-config-loader');
       const yaml = require('yaml');
       const fs = require('fs');
       
@@ -109,7 +109,7 @@ describeIntegration('Unified Greeting System Integration', () => {
   
   describeIntegration('Greeting Builder Integration', () => {
     it('should build greeting with all sections', async () => {
-      const GreetingBuilder = require('../../.aios-core/scripts/greeting-builder');
+      const GreetingBuilder = require('../../.aios-core/development/scripts/greeting-builder');
       
       const mockAgent = {
         id: 'test',
@@ -152,7 +152,7 @@ describeIntegration('Unified Greeting System Integration', () => {
   
   describeIntegration('Compact Command Format Normalization', () => {
     it('should normalize compact commands during parsing', async () => {
-      const { AgentConfigLoader } = require('../../.aios-core/scripts/agent-config-loader');
+      const { AgentConfigLoader } = require('../../.aios-core/development/scripts/agent-config-loader');
       const yaml = require('yaml');
       const fs = require('fs');
       

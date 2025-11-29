@@ -11,11 +11,11 @@
  * Fallback: Simple greeting on any error
  */
 
-const ContextDetector = require('../core/session/context-detector');
-const GitConfigDetector = require('./git-config-detector');
+const ContextDetector = require('../../core/session/context-detector');
+const GitConfigDetector = require('../../scripts/git-config-detector');
 const WorkflowNavigator = require('./workflow-navigator');
 const GreetingPreferenceManager = require('./greeting-preference-manager');
-const { loadProjectStatus, formatStatusDisplay } = require('./project-status-loader');
+const { loadProjectStatus, formatStatusDisplay } = require('../../scripts/project-status-loader');
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');

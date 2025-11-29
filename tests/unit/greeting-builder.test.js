@@ -14,18 +14,18 @@
  * - Backwards compatibility
  */
 
-const GreetingBuilder = require('../../.aios-core/scripts/greeting-builder');
-const ContextDetector = require('../../.aios-core/scripts/context-detector');
+const GreetingBuilder = require('../../.aios-core/development/scripts/greeting-builder');
+const ContextDetector = require('../../.aios-core/core/session/context-detector');
 const GitConfigDetector = require('../../.aios-core/scripts/git-config-detector');
 
 // Mock dependencies
-jest.mock('../../.aios-core/scripts/context-detector');
+jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/scripts/git-config-detector');
 jest.mock('../../.aios-core/scripts/project-status-loader', () => ({
   loadProjectStatus: jest.fn(),
   formatStatusDisplay: jest.fn()
 }));
-jest.mock('../../.aios-core/scripts/greeting-preference-manager', () => {
+jest.mock('../../.aios-core/development/scripts/greeting-preference-manager', () => {
   return jest.fn().mockImplementation(() => ({
     getPreference: jest.fn().mockReturnValue('auto'),
     setPreference: jest.fn(),

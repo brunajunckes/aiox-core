@@ -9,12 +9,12 @@
  * - No regression vs baseline
  */
 
-const GreetingBuilder = require('../../.aios-core/scripts/greeting-builder');
-const ContextDetector = require('../../.aios-core/scripts/context-detector');
+const GreetingBuilder = require('../../.aios-core/development/scripts/greeting-builder');
+const ContextDetector = require('../../.aios-core/core/session/context-detector');
 const GitConfigDetector = require('../../.aios-core/scripts/git-config-detector');
 
 // Mock dependencies for consistent testing
-jest.mock('../../.aios-core/scripts/context-detector');
+jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/scripts/git-config-detector');
 jest.mock('../../.aios-core/scripts/project-status-loader');
 

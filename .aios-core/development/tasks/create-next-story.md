@@ -462,6 +462,35 @@ custom_fields:
 
 #### 5.2.5 Predict Specialized Agents and CodeRabbit Tasks
 
+**CONDITIONAL STEP** - Check `coderabbit_integration.enabled` in core-config.yaml
+
+```yaml
+# core-config.yaml check
+coderabbit_integration:
+  enabled: true|false  # ← This controls whether to populate CodeRabbit section
+```
+
+**IF `coderabbit_integration.enabled: false`:**
+- SKIP this entire step (5.2.5)
+- In the story file, render only the skip notice in the CodeRabbit Integration section:
+  ```markdown
+  ## 🤖 CodeRabbit Integration
+
+  > **CodeRabbit Integration**: Disabled
+  >
+  > CodeRabbit CLI is not enabled in `core-config.yaml`.
+  > Quality validation will use manual review process only.
+  > To enable, set `coderabbit_integration.enabled: true` in core-config.yaml
+  ```
+- Log: "ℹ️ CodeRabbit Integration disabled - skipping quality gate configuration"
+- Proceed to Step 5.3
+
+**IF `coderabbit_integration.enabled: true`:**
+- Continue with full CodeRabbit section population below
+- Include self-healing configuration based on Story 6.3.3
+
+---
+
 **CRITICAL:** This step populates the `🤖 CodeRabbit Integration` section created by the story template. Use the architecture context gathered in Step 3 and story requirements from Step 2 to predict which specialized agents and quality gates are needed.
 
 **Story Type Detection Rules:**
@@ -669,10 +698,42 @@ If story spans multiple types (e.g., Database + API):
       - RLS policies properly configured
       - API contract consistency with spec
       - Migration reversibility
+
+  Self-Healing Configuration:
+    Expected Self-Healing:
+      - Primary Agent: @dev (light mode)
+      - Max Iterations: 2
+      - Timeout: 15 minutes
+      - Severity Filter: CRITICAL only
+
+    Predicted Behavior:
+      - CRITICAL issues: auto_fix (up to 2 iterations)
+      - HIGH issues: document_only (noted in Dev Notes)
 ```
 
+**Self-Healing Configuration (Story 6.3.3):**
+
+After populating the basic CodeRabbit sections, add the Self-Healing Configuration based on the primary agent:
+
+| Primary Agent | Mode | Max Iterations | Timeout | Severity Filter |
+|---------------|------|----------------|---------|-----------------|
+| @dev | light | 2 | 15 min | CRITICAL |
+| @qa | full | 3 | 30 min | CRITICAL, HIGH |
+| @github-devops | check | 0 | N/A | report_only |
+
+**Severity Behavior Matrix:**
+
+| Severity | @dev (light) | @qa (full) | @github-devops (check) |
+|----------|--------------|------------|------------------------|
+| CRITICAL | auto_fix | auto_fix | report_only |
+| HIGH | document_only | auto_fix | report_only |
+| MEDIUM | ignore | document_as_debt | report_only |
+| LOW | ignore | ignore | ignore |
+
+Use the primary agent from "Specialized Agent Assignment" to determine which self-healing configuration to document.
+
 **Log Completion:**
-- After populating this section, log: "✅ Story type analysis complete: [Primary Type] | Agents assigned: [agent list] | Quality gates: [gate count]"
+- After populating this section, log: "✅ Story type analysis complete: [Primary Type] | Agents assigned: [agent list] | Quality gates: [gate count] | Self-healing: [mode]"
 
 - **`Dev Notes` section (CRITICAL):**
   - CRITICAL: This section MUST contain ONLY information extracted from architecture documents. NEVER invent or assume technical details.

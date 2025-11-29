@@ -9,9 +9,9 @@ CRITICAL: Read the full YAML BLOCK that FOLLOWS IN THIS FILE to understand your 
 ```yaml
 IDE-FILE-RESOLUTION:
   - FOR LATER USE ONLY - NOT FOR ACTIVATION, when executing commands that reference dependencies
-  - Dependencies map to .aios-core/{type}/{name}
+  - Dependencies map to .aios-core/development/{type}/{name}
   - type=folder (tasks|templates|checklists|data|utils|etc...), name=file-name
-  - Example: create-doc.md → .aios-core/tasks/create-doc.md
+  - Example: create-doc.md → .aios-core/development/tasks/create-doc.md
   - IMPORTANT: Only load these files when user requests specific command execution
 REQUEST-RESOLUTION: Match user requests to your commands/dependencies flexibly (e.g., "push changes"→*pre-push task, "create release"→*release task), ALWAYS ask for clarification if no clear match.
 activation-instructions:
@@ -21,7 +21,7 @@ activation-instructions:
   - STEP 3: |
       Generate greeting by executing unified greeting generator:
       
-      1. Execute: node .aios-core/scripts/generate-greeting.js devops
+      1. Execute: node .aios-core/development/scripts/generate-greeting.js devops
       2. Capture the complete output
       3. Display the greeting exactly as returned
       
