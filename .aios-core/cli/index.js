@@ -16,6 +16,7 @@ const fs = require('fs');
 // Import command modules
 const { createWorkersCommand } = require('./commands/workers');
 const { createManifestCommand } = require('./commands/manifest');
+const { createQaCommand } = require('./commands/qa');
 
 // Read package.json for version
 const packageJsonPath = path.join(__dirname, '..', '..', 'package.json');
@@ -42,6 +43,7 @@ function createProgram() {
 Commands:
   workers           Manage and discover workers
   manifest          Manage manifest files (validate, regenerate)
+  qa                Quality Gate Manager (run, status)
   install           Install AIOS in current project
   init <name>       Create new AIOS project
   info              Show system information
@@ -55,6 +57,8 @@ Examples:
   $ aios workers list --category=data
   $ aios manifest validate
   $ aios manifest regenerate
+  $ aios qa run
+  $ aios qa status
   $ aios install
   $ aios doctor
 `);
@@ -64,6 +68,9 @@ Examples:
 
   // Add manifest command (Story 2.13)
   program.addCommand(createManifestCommand());
+
+  // Add qa command (Story 2.10)
+  program.addCommand(createQaCommand());
 
   return program;
 }
