@@ -15,6 +15,7 @@ const fs = require('fs');
 
 // Import command modules
 const { createWorkersCommand } = require('./commands/workers');
+const { createManifestCommand } = require('./commands/manifest');
 
 // Read package.json for version
 const packageJsonPath = path.join(__dirname, '..', '..', 'package.json');
@@ -40,6 +41,7 @@ function createProgram() {
     .addHelpText('after', `
 Commands:
   workers           Manage and discover workers
+  manifest          Manage manifest files (validate, regenerate)
   install           Install AIOS in current project
   init <name>       Create new AIOS project
   info              Show system information
@@ -51,12 +53,17 @@ For command help:
 Examples:
   $ aios workers search "json transformation"
   $ aios workers list --category=data
+  $ aios manifest validate
+  $ aios manifest regenerate
   $ aios install
   $ aios doctor
 `);
 
   // Add workers command
   program.addCommand(createWorkersCommand());
+
+  // Add manifest command (Story 2.13)
+  program.addCommand(createManifestCommand());
 
   return program;
 }
