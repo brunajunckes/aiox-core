@@ -5,12 +5,15 @@
  * Includes search, list, and info subcommands.
  *
  * @module cli/commands/workers
- * @version 1.0.0
+ * @version 1.1.0
  * @story 2.7 - Discovery CLI Search
+ * @story 2.8-2.9 - Discovery CLI Info & List
  */
 
 const { Command } = require('commander');
 const { createSearchCommand } = require('./search');
+const { createInfoCommand } = require('./info');
+const { createListCommand } = require('./list');
 
 /**
  * Create the workers command with all subcommands
@@ -24,42 +27,26 @@ function createWorkersCommand() {
     .addHelpText('after', `
 Commands:
   search <query>    Search for workers matching a query
-  list              List all workers (coming in Story 2.8-2.9)
-  info <id>         Show details for a specific worker (coming in Story 2.8-2.9)
+  list              List all workers grouped by category
+  info <id>         Show detailed information about a worker
 
 Examples:
   $ aios workers search "json transformation"
   $ aios workers search "data" --category=etl
   $ aios workers list --category=testing
+  $ aios workers list --format=table --page=2
   $ aios workers info json-csv-transformer
+  $ aios workers info architect-checklist --format=json
 `);
 
-  // Add search subcommand
+  // Add search subcommand (Story 2.7)
   workers.addCommand(createSearchCommand());
 
-  // Placeholder for list command (Story 2.8-2.9)
-  const list = new Command('list');
-  list
-    .description('List all workers in the service registry')
-    .option('-c, --category <category>', 'Filter by category')
-    .option('-f, --format <format>', 'Output format: table, json, yaml', 'table')
-    .action(() => {
-      console.log('List command coming in Story 2.8-2.9');
-      console.log('Use "aios workers search <query>" for now');
-    });
-  workers.addCommand(list);
+  // Add info subcommand (Story 2.8)
+  workers.addCommand(createInfoCommand());
 
-  // Placeholder for info command (Story 2.8-2.9)
-  const info = new Command('info');
-  info
-    .description('Show detailed information about a worker')
-    .argument('<id>', 'Worker ID')
-    .option('-f, --format <format>', 'Output format: table, json, yaml', 'table')
-    .action((id) => {
-      console.log(`Info command for "${id}" coming in Story 2.8-2.9`);
-      console.log('Use "aios workers search <query>" for now');
-    });
-  workers.addCommand(info);
+  // Add list subcommand (Story 2.9)
+  workers.addCommand(createListCommand());
 
   return workers;
 }
