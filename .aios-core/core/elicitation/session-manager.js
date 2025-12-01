@@ -276,10 +276,28 @@ class ElicitationSessionManager {
   }
 
   /**
+   * Validate sessionId format to prevent path traversal attacks
+   * @param {string} sessionId - Session ID to validate
+   * @returns {boolean} True if valid hex format
+   * @private
+   */
+  isValidSessionId(sessionId) {
+    // SessionId must be a 16-character hex string (from crypto.randomBytes(8).toString('hex'))
+    return typeof sessionId === 'string' && /^[a-f0-9]{16}$/i.test(sessionId);
+  }
+
+  /**
    * Get session file path
+   * @param {string} sessionId - Session ID
+   * @returns {string} Session file path
+   * @throws {Error} If sessionId format is invalid (path traversal prevention)
    * @private
    */
   getSessionPath(sessionId) {
+    // Security: Validate sessionId format to prevent path traversal attacks
+    if (!this.isValidSessionId(sessionId)) {
+      throw new Error(`Invalid sessionId format: ${sessionId}`);
+    }
     return path.join(this.sessionDir, `${sessionId}.json`);
   }
 

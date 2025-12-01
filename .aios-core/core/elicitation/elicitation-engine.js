@@ -49,6 +49,46 @@ class BasicInputValidator {
   }
 }
 
+/**
+ * Check if a regex pattern is safe from ReDoS attacks
+ * @param {string} pattern - The regex pattern to validate
+ * @returns {boolean} True if the pattern is safe
+ */
+function isSafePattern(pattern) {
+  if (typeof pattern !== 'string') {
+    return false;
+  }
+
+  try {
+    // Check for common ReDoS patterns:
+    // - Nested quantifiers: (a+)+ or (a*)*
+    // - Overlapping alternations with quantifiers: (a|a)+
+    const reDoSPatterns = [
+      /\(\.\*\)\{2,\}/,           // (.*){2,} - nested quantifiers
+      /\(\.\+\)\{2,\}/,           // (.+){2,} - nested quantifiers
+      /\(\[.*\]\+\)\+/,           // ([...]+)+ - nested quantifiers
+      /\(\[.*\]\*\)\*/,           // ([...]*)*  - nested quantifiers
+      /\(\.\+\)\+/,               // (.+)+ - catastrophic backtracking
+      /\(\.\*\)\+/,               // (.*)+  - catastrophic backtracking
+      /\(\.\+\)\*/,               // (.+)* - catastrophic backtracking
+      /\(\.\*\)\*/,               // (.*)* - catastrophic backtracking
+      /\(\?\!/                    // Negative lookahead (can be slow)
+    ];
+
+    for (const reDoSPattern of reDoSPatterns) {
+      if (reDoSPattern.test(pattern)) {
+        return false;
+      }
+    }
+
+    // Try to compile the regex to ensure it's valid
+    new RegExp(pattern);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 class ElicitationEngine {
   constructor() {
     // Use SecurityChecker if available, otherwise use basic validator
@@ -56,6 +96,8 @@ class ElicitationEngine {
     this.sessionManager = new ElicitationSessionManager();
     this.sessionData = {};
     this.sessionFile = null;
+    // Initialize currentSession to prevent uninitialized variable access
+    this.currentSession = null;
   }
 
   /**
@@ -69,8 +111,12 @@ class ElicitationEngine {
       startTime: new Date().toISOString(),
       answers: {},
       currentStep: 0,
-      options
+      options,
+      saveSession: options.saveSession || false
     };
+
+    // Set currentSession to track session state for completeSession
+    this.currentSession = this.sessionData;
 
     if (options.saveSession) {
       this.sessionFile = path.join(
@@ -328,6 +374,10 @@ class ElicitationEngine {
     if (typeof validator === 'object') {
       switch (validator.type) {
         case 'regex':
+          // Security: Validate pattern before RegExp construction to prevent ReDoS
+          if (!isSafePattern(validator.pattern)) {
+            return validator.message || 'Invalid or unsafe regex pattern';
+          }
           const regex = new RegExp(validator.pattern);
           return regex.test(value) || validator.message;
 
@@ -374,11 +424,17 @@ class ElicitationEngine {
   /**
    * Load a saved session
    * @param {string} sessionPath - Path to session file
+   * @returns {Object|null} Session data or null if load fails
    */
   async loadSession(sessionPath) {
-    this.sessionData = await fs.readJson(sessionPath);
-    this.sessionFile = sessionPath;
-    return this.sessionData;
+    try {
+      this.sessionData = await fs.readJson(sessionPath);
+      this.sessionFile = sessionPath;
+      return this.sessionData;
+    } catch (error) {
+      console.error(`Failed to load session from ${sessionPath}:`, error.message);
+      return null;
+    }
   }
 
   /**
