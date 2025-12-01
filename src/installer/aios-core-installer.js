@@ -23,9 +23,17 @@ function getAiosCoreSourcePath() {
 
 /**
  * Folders to copy from .aios-core
+ * Includes both v2.1 modular structure and v2.0 legacy flat structure for compatibility
  * @constant {string[]}
  */
 const FOLDERS_TO_COPY = [
+  // v2.1 Modular Structure (Story 2.15)
+  'core',           // Framework utilities, config, registry, migration
+  'development',    // Agents, tasks, workflows, scripts, personas
+  'product',        // Templates, checklists, cli, api
+  'infrastructure', // Hooks, telemetry, integrations, tools
+
+  // v2.0 Legacy Flat Structure (for backwards compatibility)
   'agents',
   'agent-teams',
   'checklists',
@@ -36,7 +44,11 @@ const FOLDERS_TO_COPY = [
   'tasks',
   'templates',
   'tools',
-  'workflows'
+  'workflows',
+
+  // Additional directories
+  'cli',            // CLI commands
+  'manifests'       // Manifest definitions
 ];
 
 /**
@@ -47,6 +59,8 @@ const ROOT_FILES_TO_COPY = [
   'index.js',
   'index.esm.js',
   'index.d.ts',
+  'core-config.yaml',   // Core framework configuration
+  'package.json',       // Module package definition
   'user-guide.md',
   'working-in-the-brownfield.md'
 ];
