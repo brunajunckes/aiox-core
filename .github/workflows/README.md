@@ -91,16 +91,63 @@ If 1MCP is detected (~/.1mcp/config.json exists), the report includes:
 
 ---
 
+## PR Automation (pr-automation.yml)
+
+**File:** `pr-automation.yml`
+**Story:** 3.3-3.4
+**Created:** 2025-12-02
+
+### Purpose
+
+Automates PR validation with coverage reporting, quality summary comments, and required status checks.
+
+### Features
+
+1. **Required Status Checks** - Lint, TypeCheck, Tests, Story Validation
+2. **Coverage Comments** - Posts coverage report to PR
+3. **Quality Summary** - Generates quality gate summary comment
+4. **CodeRabbit Integration** - Verifies CodeRabbit configuration
+
+### Performance Targets
+
+| Job | Target | Timeout |
+|-----|--------|---------|
+| lint | < 60s | 5 min |
+| typecheck | < 60s | 5 min |
+| test | < 2 min | 10 min |
+| story-validation | < 30s | 5 min |
+| **Total (parallel)** | **< 3 min** | - |
+
+All main jobs run in parallel, achieving total PR validation time under 3 minutes.
+
+### Required Checks for Merge
+
+These checks must pass before a PR can be merged to `main`:
+
+```yaml
+# Required status checks
+- lint
+- typecheck
+- test
+- story-validation
+- quality-summary
+```
+
+---
+
 ## Other Workflows
 
 ### CI (ci.yml)
-Continuous integration testing for pull requests.
+Continuous integration testing for push events and PRs.
+
+### Test (test.yml)
+Extended test suite with security audit, build validation, and compatibility testing.
 
 ### Cross-Platform Tests (cross-platform-tests.yml)
 Tests the framework across different operating systems.
 
 ---
 
-**Last Updated:** 2025-10-28 (Story 3.25)
+**Last Updated:** 2025-12-02 (Story 3.3-3.4)
 
 

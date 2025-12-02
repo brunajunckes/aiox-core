@@ -3,6 +3,16 @@
 ## 📋 Description
 A clear and concise description of what this PR does and why it's needed.
 
+## 🎯 AIOS Story Reference
+<!-- REQUIRED: Link to the story this PR implements -->
+**Story ID:** <!-- e.g., 3.3-3.4 -->
+**Story File:** <!-- e.g., docs/stories/v2.1/sprint-3/story-3.3-3.4-pr-automation.md -->
+**Sprint:** <!-- e.g., Sprint 3 -->
+
+### Acceptance Criteria Addressed
+<!-- Check the ACs this PR completes -->
+- [ ] AC ID: Description
+
 ## 🔗 Related Issue
 Closes #(issue number)
 
@@ -58,6 +68,22 @@ Add screenshots to help explain your changes.
 - [ ] I have reviewed my code for security vulnerabilities
 - [ ] I have not introduced any new security issues
 - [ ] I have checked for sensitive data exposure
+
+## 🐰 CodeRabbit Review
+<!-- CodeRabbit will automatically review this PR -->
+- [ ] No CRITICAL issues found
+- [ ] No HIGH severity issues blocking merge
+- [ ] All CodeRabbit suggestions addressed or documented
+
+## 📊 Quality Gates
+<!-- Automated checks - do not modify manually -->
+| Check | Status |
+|-------|--------|
+| Lint | ⏳ Pending |
+| TypeCheck | ⏳ Pending |
+| Tests | ⏳ Pending |
+| Coverage | ⏳ Pending |
+| CodeRabbit | ⏳ Pending |
 
 ## 📖 Documentation
 - [ ] Updated README.md (if needed)
