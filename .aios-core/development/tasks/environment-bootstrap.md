@@ -1,8 +1,9 @@
 # environment-bootstrap
 
 **Task ID:** environment-bootstrap
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Created:** 2025-12-02
+**Updated:** 2025-12-02
 **Agent:** @devops (Gage)
 
 ---
@@ -255,17 +256,25 @@ token_usage: ~500-1,000 tokens (for guidance only)
 
 ```yaml
 story: N/A (Framework enhancement)
-version: 1.0.0
+version: 1.1.0
 dependencies:
   - github-cli.yaml
   - supabase-cli.yaml
   - railway-cli.yaml
+  - coderabbit
 tags:
   - bootstrap
   - environment
   - setup
   - greenfield
 updated_at: 2025-12-02
+changelog:
+  1.1.0:
+    - Fixed: Git workflow - commit before gh repo create --push
+    - Fixed: PowerShell vs bash syntax separation
+    - Added: CLI update detection and offer for outdated tools
+    - Added: Enhanced CodeRabbit CLI verification with WSL support
+    - Improved: Clear separation of Windows/Unix commands
 ```
 
 ---
@@ -289,28 +298,26 @@ interaction_points:
 
 **Action:** Identify OS and available package managers
 
-```bash
-# Windows
-echo "Detecting operating system..."
+**IMPORTANT:** The agent executing this task should detect the OS using native commands appropriate for the current shell. Do NOT mix PowerShell and bash syntax.
 
-# PowerShell detection
-$os = [System.Environment]::OSVersion.Platform
-$arch = [System.Environment]::Is64BitOperatingSystem
-
+**For Windows (PowerShell):**
+```powershell
+# Windows PowerShell detection - use in PowerShell context only
+Write-Host "Detecting operating system..."
 Write-Host "OS: Windows"
-Write-Host "Architecture: $(if ($arch) { '64-bit' } else { '32-bit' })"
+Write-Host "Architecture: $([System.Environment]::Is64BitOperatingSystem ? '64-bit' : '32-bit')"
 
-# Check available package managers
-$packageManagers = @()
-if (Get-Command winget -ErrorAction SilentlyContinue) { $packageManagers += "winget" }
-if (Get-Command choco -ErrorAction SilentlyContinue) { $packageManagers += "chocolatey" }
-if (Get-Command scoop -ErrorAction SilentlyContinue) { $packageManagers += "scoop" }
-
-Write-Host "Available package managers: $($packageManagers -join ', ')"
+# Check package managers
+$pkgMgrs = @()
+if (Get-Command winget -ErrorAction SilentlyContinue) { $pkgMgrs += "winget" }
+if (Get-Command choco -ErrorAction SilentlyContinue) { $pkgMgrs += "chocolatey" }
+if (Get-Command scoop -ErrorAction SilentlyContinue) { $pkgMgrs += "scoop" }
+Write-Host "Package managers: $($pkgMgrs -join ', ')"
 ```
 
+**For macOS/Linux (bash):**
 ```bash
-# macOS/Linux
+# Unix bash detection - use in bash/zsh context only
 echo "Detecting operating system..."
 OS=$(uname -s)
 ARCH=$(uname -m)
@@ -320,19 +327,19 @@ echo "Architecture: $ARCH"
 
 # Check available package managers
 if [ "$OS" = "Darwin" ]; then
-  if command -v brew >/dev/null 2>&1; then
-    echo "Package manager: Homebrew"
-  fi
+  command -v brew >/dev/null 2>&1 && echo "Package manager: Homebrew"
 elif [ "$OS" = "Linux" ]; then
-  if command -v apt >/dev/null 2>&1; then
-    echo "Package manager: apt"
-  elif command -v dnf >/dev/null 2>&1; then
-    echo "Package manager: dnf"
-  elif command -v pacman >/dev/null 2>&1; then
-    echo "Package manager: pacman"
-  fi
+  command -v apt >/dev/null 2>&1 && echo "Package manager: apt"
+  command -v dnf >/dev/null 2>&1 && echo "Package manager: dnf"
+  command -v pacman >/dev/null 2>&1 && echo "Package manager: pacman"
 fi
 ```
+
+**Agent Guidance:**
+- On Windows: Use PowerShell commands directly (no bash wrapper needed)
+- On macOS/Linux: Use bash commands directly
+- NEVER mix syntax (e.g., don't use `${}` bash variables in PowerShell context)
+- Simple version checks work cross-platform: `git --version`, `node --version`, etc.
 
 **Output:** Store OS info for subsequent steps
 
@@ -359,13 +366,58 @@ Present comprehensive status table:
 ║               │ railway       │ ❌ MISSING│ -          │ OPTIONAL     ║
 ║               │ docker        │ ✅ OK     │ 24.0.7     │ RECOMMENDED  ║
 ╠═══════════════╪═══════════════╪═══════════╪════════════╪══════════════╣
-║ QUALITY       │ coderabbit    │ ⚠️ WSL    │ 0.8.0      │ RECOMMENDED  ║
+║ QUALITY       │ coderabbit    │ ⚠️ CHECK  │ 0.8.0      │ RECOMMENDED  ║
+║               │               │ (WSL/Win) │            │              ║
 ╠═══════════════╪═══════════════╪═══════════╪════════════╪══════════════╣
 ║ OPTIONAL      │ pnpm          │ ❌ MISSING│ -          │ OPTIONAL     ║
 ║               │ bun           │ ❌ MISSING│ -          │ OPTIONAL     ║
 ╚════════════════════════════════════════════════════════════════════════╝
 
 Summary: 4/10 tools installed | 2 essential missing | 4 recommended missing
+```
+
+**Update Detection:**
+
+When a tool is installed but outdated, display additional information:
+
+```
+║  ⚠️ UPDATES AVAILABLE                                                        ║
+╠═══════════════╪═══════════════╪═══════════════╪═══════════════╪══════════════╣
+║ Tool          │ Current       │ Latest        │ Update Command                ║
+╠═══════════════╪═══════════════╪═══════════════╪═══════════════════════════════╣
+║ supabase      │ 2.24.3        │ 2.62.10       │ npm update -g supabase        ║
+║ gh            │ 2.40.0        │ 2.63.0        │ winget upgrade GitHub.cli     ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+Would you like to update outdated tools? (Y/n): _
+```
+
+**Update Check Commands:**
+
+```yaml
+update_checks:
+  supabase:
+    check_latest: "npm view supabase version"
+    update:
+      npm: "npm update -g supabase"
+      scoop: "scoop update supabase"
+      brew: "brew upgrade supabase"
+
+  gh:
+    check_latest: "gh api repos/cli/cli/releases/latest --jq .tag_name"
+    update:
+      windows: "winget upgrade GitHub.cli"
+      macos: "brew upgrade gh"
+      linux: "gh upgrade"
+
+  node:
+    note: "Consider using nvm/fnm for Node.js version management"
+    check_latest: "npm view node version"
+
+  railway:
+    check_latest: "npm view @railway/cli version"
+    update:
+      npm: "npm update -g @railway/cli"
 ```
 
 **CLI Check Commands:**
@@ -432,11 +484,44 @@ cli_checks:
 
   quality:
     coderabbit:
-      check: "wsl bash -c '~/.local/bin/coderabbit --version'"
-      expected: "0.8.x"
+      check_windows: |
+        # Windows: CodeRabbit CLI is installed in WSL, not native Windows
+        # First check if WSL is available
+        wsl --version
+        if ($LASTEXITCODE -eq 0) {
+          # Then check CodeRabbit in WSL
+          wsl bash -c 'if [ -f ~/.local/bin/coderabbit ]; then ~/.local/bin/coderabbit --version; else echo "NOT_INSTALLED"; fi'
+        } else {
+          Write-Host "WSL not available - CodeRabbit requires WSL on Windows"
+        }
+      check_unix: |
+        # macOS/Linux: Check direct installation
+        if command -v coderabbit >/dev/null 2>&1; then
+          coderabbit --version
+        elif [ -f ~/.local/bin/coderabbit ]; then
+          ~/.local/bin/coderabbit --version
+        else
+          echo "NOT_INSTALLED"
+        fi
+      expected: "0.8.x or higher"
       install:
-        wsl: "See docs/guides/coderabbit/README.md"
-      note: "Windows: Requires WSL installation"
+        windows_wsl: |
+          # 1. Ensure WSL is installed: wsl --install
+          # 2. In WSL terminal:
+          curl -fsSL https://coderabbit.ai/install.sh | bash
+          # 3. Authenticate:
+          ~/.local/bin/coderabbit auth login
+        macos: "curl -fsSL https://coderabbit.ai/install.sh | bash"
+        linux: "curl -fsSL https://coderabbit.ai/install.sh | bash"
+      note: |
+        WINDOWS USERS: CodeRabbit CLI runs in WSL, not native Windows.
+        - Requires WSL with Ubuntu/Debian distribution
+        - Binary located at ~/.local/bin/coderabbit (inside WSL)
+        - All coderabbit commands must use: wsl bash -c 'command'
+        - See: docs/guides/coderabbit/README.md for full setup guide
+      verification:
+        windows: "wsl bash -c '~/.local/bin/coderabbit --version'"
+        unix: "coderabbit --version"
 
   optional:
     pnpm:
@@ -720,7 +805,27 @@ npm run dev
 *Generated by AIOS Environment Bootstrap*
 "@ | Out-File -FilePath README.md -Encoding utf8
 
-# Create GitHub repository
+# CRITICAL: Create initial commit BEFORE gh repo create --push
+# The --push flag requires at least one commit to exist
+git add .
+git commit -m "chore: initial project setup
+
+- Initialize AIOS-FULLSTACK project structure
+- Add .gitignore with standard exclusions
+- Add README.md with project placeholder
+
+🤖 Generated by AIOS Environment Bootstrap"
+
+if ($LASTEXITCODE -ne 0) {
+  Write-Host "⚠️ Initial commit failed. Checking if already committed..."
+  $hasCommits = git rev-parse HEAD 2>$null
+  if (-not $hasCommits) {
+    Write-Host "❌ Cannot proceed without initial commit"
+    exit 1
+  }
+}
+
+# Now create GitHub repository with --push (requires existing commits)
 gh repo create $PROJECT_NAME --private --description "$DESCRIPTION" --source . --remote origin --push
 
 if ($LASTEXITCODE -eq 0) {
@@ -728,7 +833,16 @@ if ($LASTEXITCODE -eq 0) {
   gh repo view --web
 } else {
   Write-Host "❌ GitHub repository creation failed"
-  Write-Host "   You can create manually: gh repo create"
+  Write-Host "   Trying alternative approach..."
+
+  # Alternative: Create repo without push, then push manually
+  gh repo create $PROJECT_NAME --private --description "$DESCRIPTION" --source . --remote origin
+  if ($LASTEXITCODE -eq 0) {
+    git push -u origin main
+    Write-Host "✅ Repository created and pushed (alternative method)"
+  } else {
+    Write-Host "❌ Please create repository manually: gh repo create"
+  }
 }
 ```
 
