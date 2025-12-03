@@ -199,9 +199,9 @@ max: 1800000     # 30 minutes (large reviews)
 
 | Step | Status | Action |
 |------|--------|--------|
-| GitHub App installed | ⚠️ Pending | Install from [GitHub Marketplace](https://github.com/apps/coderabbit-ai) |
-| Repository authorized | ⚠️ Pending | Select `aios-fullstack` repository |
-| .coderabbit.yaml created | ⚠️ Pending | Create from template |
+| GitHub App installed | ✅ Complete | Installed from GitHub Marketplace |
+| Repository authorized | ✅ Complete | `aios-fullstack` repository authorized |
+| .coderabbit.yaml created | ✅ Complete | Configuration in project root |
 
 ### Comment Types
 
