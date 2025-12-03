@@ -17,6 +17,8 @@ const yaml = require('yaml');
 const { Layer1PreCommit } = require('./layer1-precommit');
 const { Layer2PRAutomation } = require('./layer2-pr-automation');
 const { Layer3HumanReview } = require('./layer3-human-review');
+const { HumanReviewOrchestrator } = require('./human-review-orchestrator');
+const { NotificationManager } = require('./notification-manager');
 
 /**
  * Default configuration path
@@ -38,6 +40,8 @@ class QualityGateManager {
       layer2: new Layer2PRAutomation(config.layer2 || {}),
       layer3: new Layer3HumanReview(config.layer3 || {})
     };
+    this.humanReviewOrchestrator = new HumanReviewOrchestrator(config.humanReview || {});
+    this.notificationManager = new NotificationManager(config.notifications || {});
     this.results = [];
     this.startTime = null;
     this.endTime = null;
@@ -404,6 +408,193 @@ class QualityGateManager {
     lines.push(`Total Duration: ${this.formatDuration(this.getDuration())}`);
 
     return lines.join('\n');
+  }
+
+  /**
+   * Orchestrate full 3-layer review flow (Story 3.5)
+   *
+   * Flow:
+   * 1. Run Layer 1 (pre-commit) → fail-fast if fails
+   * 2. Run Layer 2 (PR automation) → block if fails
+   * 3. If 1+2 pass → Request human review with focus areas
+   * 4. Notify human reviewer
+   *
+   * @param {Object} prContext - PR/change context
+   * @returns {Promise<Object>} Orchestration result
+   */
+  async orchestrateHumanReview(prContext = {}) {
+    this.startTime = Date.now();
+    this.results = [];
+
+    const { verbose = false, changedFiles = [] } = prContext;
+
+    if (verbose) {
+      console.log('\n🔍 3-Layer Quality Gate Orchestration');
+      console.log('━'.repeat(50));
+      console.log('Story 3.5: Human Review Orchestration (Layer 3)');
+      console.log('━'.repeat(50));
+    }
+
+    // Layer 1: Pre-commit checks
+    if (verbose) console.log('\n📋 Phase 1: Running Layer 1 (Pre-commit)...');
+    const l1Result = await this.runLayer1({ ...prContext, verbose });
+    this.results.push(l1Result);
+
+    if (!l1Result.pass) {
+      this.endTime = Date.now();
+      const blockResult = this.humanReviewOrchestrator.block(
+        { pass: false, layer: 'Layer 1', issues: this.extractIssues(l1Result), reason: 'Layer 1 failed' },
+        'layer1',
+        this.startTime
+      );
+
+      if (verbose) {
+        console.log('\n🚫 BLOCKED: Fix Layer 1 issues first');
+        blockResult.fixFirst?.forEach((fix) => {
+          console.log(`  → ${fix.suggestion}`);
+        });
+      }
+
+      // Send blocking notification
+      await this.notificationManager.sendBlockingNotification(blockResult);
+
+      return {
+        ...blockResult,
+        layers: this.results,
+        exitCode: 1
+      };
+    }
+
+    // Layer 2: PR Automation
+    if (verbose) console.log('\n🤖 Phase 2: Running Layer 2 (PR Automation)...');
+    const l2Result = await this.runLayer2({ ...prContext, verbose });
+    this.results.push(l2Result);
+
+    if (!l2Result.pass) {
+      this.endTime = Date.now();
+      const blockResult = this.humanReviewOrchestrator.block(
+        { pass: false, layer: 'Layer 2', issues: this.extractIssues(l2Result), reason: 'Layer 2 failed' },
+        'layer2',
+        this.startTime
+      );
+
+      if (verbose) {
+        console.log('\n🚫 BLOCKED: Fix Layer 2 issues first');
+        blockResult.fixFirst?.forEach((fix) => {
+          console.log(`  → ${fix.suggestion}`);
+        });
+      }
+
+      // Send blocking notification
+      await this.notificationManager.sendBlockingNotification(blockResult);
+
+      return {
+        ...blockResult,
+        layers: this.results,
+        exitCode: 1
+      };
+    }
+
+    // Both layers passed - Request human review
+    if (verbose) {
+      console.log('\n✅ Layers 1+2 PASSED');
+      console.log('\n👤 Phase 3: Requesting Human Review...');
+    }
+
+    const orchestrationResult = await this.humanReviewOrchestrator.orchestrateReview(
+      { ...prContext, changedFiles },
+      l1Result,
+      l2Result
+    );
+
+    // Run Layer 3 setup
+    const l3Context = {
+      ...prContext,
+      previousLayers: [l1Result, l2Result]
+    };
+    const l3Result = await this.runLayer3(l3Context);
+    this.results.push(l3Result);
+
+    this.endTime = Date.now();
+
+    if (verbose) {
+      console.log('\n' + '━'.repeat(50));
+      console.log('📊 Orchestration Summary');
+      console.log('━'.repeat(50));
+      console.log(`✅ Layer 1: PASSED`);
+      console.log(`✅ Layer 2: PASSED`);
+      console.log(`⏳ Layer 3: ${orchestrationResult.reviewRequest ? 'HUMAN REVIEW REQUESTED' : 'PENDING'}`);
+      console.log(`\n📬 Review assigned to: ${orchestrationResult.reviewRequest?.reviewer || 'TBD'}`);
+      console.log(`⏱️ Estimated review time: ~${orchestrationResult.reviewRequest?.estimatedTime || 30} minutes`);
+
+      if (orchestrationResult.reviewRequest?.focusAreas?.primary?.length > 0) {
+        console.log(`\n🎯 Focus Areas:`);
+        orchestrationResult.reviewRequest.focusAreas.primary.forEach((area) => {
+          console.log(`  • ${area.area}: ${area.reason}`);
+        });
+      }
+
+      console.log(`\n⏭️ Skip: ${orchestrationResult.reviewRequest?.skipAreas?.join(', ') || 'syntax, formatting'}`);
+      console.log('\nTotal Duration: ' + this.formatDuration(this.getDuration()));
+    }
+
+    return {
+      pass: true,
+      status: 'pending_human_review',
+      duration: this.getDuration(),
+      layers: this.results,
+      reviewRequest: orchestrationResult.reviewRequest,
+      exitCode: 0,
+      message: 'Layers 1+2 passed. Human review requested.'
+    };
+  }
+
+  /**
+   * Extract issues from layer result for orchestration
+   * @param {Object} layerResult - Layer result
+   * @returns {Array} Extracted issues
+   */
+  extractIssues(layerResult) {
+    const issues = [];
+
+    if (!layerResult.results) return issues;
+
+    layerResult.results.forEach((result) => {
+      if (!result.pass && !result.skipped) {
+        issues.push({
+          check: result.check,
+          message: result.message,
+          severity: result.issues?.critical > 0 ? 'CRITICAL' : 'HIGH'
+        });
+      }
+    });
+
+    return issues;
+  }
+
+  /**
+   * Complete a human review
+   * @param {string} requestId - Review request ID
+   * @param {Object} reviewResult - Review result (approved, comments, etc)
+   * @returns {Promise<Object>} Completion result
+   */
+  async completeHumanReview(requestId, reviewResult) {
+    const completedRequest = await this.humanReviewOrchestrator.completeReview(
+      requestId,
+      reviewResult
+    );
+
+    await this.notificationManager.sendCompletionNotification(completedRequest);
+
+    return completedRequest;
+  }
+
+  /**
+   * Get pending human review requests
+   * @returns {Promise<Array>} Pending requests
+   */
+  async getPendingReviews() {
+    return await this.humanReviewOrchestrator.getPendingRequests();
   }
 }
 
