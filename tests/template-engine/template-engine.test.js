@@ -185,11 +185,17 @@ describe('Template Engine v2.0', () => {
 
     test('should support formatDate helper', () => {
       const template = { body: 'Date: {{formatDate now "YYYY-MM-DD"}}' };
-      const context = { now: new Date('2025-12-03') };
+      // Use current date to avoid timezone issues between test and renderer
+      const testDate = new Date();
+      const context = { now: testDate };
 
       const result = renderer.render(template, context);
 
-      expect(result).toBe('Date: 2025-12-03');
+      // Verify format matches YYYY-MM-DD pattern with correct values from local date
+      const expectedYear = testDate.getFullYear();
+      const expectedMonth = String(testDate.getMonth() + 1).padStart(2, '0');
+      const expectedDay = String(testDate.getDate()).padStart(2, '0');
+      expect(result).toBe(`Date: ${expectedYear}-${expectedMonth}-${expectedDay}`);
     });
 
     test('should support conditional blocks', () => {

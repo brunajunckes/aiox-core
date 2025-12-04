@@ -34,16 +34,17 @@ class TemplateEngine {
    * @param {Object} options.helpers - Custom Handlebars helpers
    */
   constructor(options = {}) {
-    const baseDir = options.baseDir || process.cwd();
+    // Store baseDir as instance property for predictable path resolution
+    this.baseDir = options.baseDir || process.cwd();
 
     this.templatesDir = options.templatesDir ||
-      path.join(baseDir, '.aios-core', 'product', 'templates');
+      path.join(this.baseDir, '.aios-core', 'product', 'templates');
 
     this.schemasDir = options.schemasDir ||
       path.join(this.templatesDir, 'engine', 'schemas');
 
     this.outputDir = options.outputDir ||
-      path.join(baseDir, 'docs');
+      path.join(this.baseDir, 'docs');
 
     this.interactive = options.interactive !== false;
 
@@ -163,7 +164,8 @@ class TemplateEngine {
       ? `-${variables.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`
       : '';
 
-    return path.join(this.outputDir, '..', dir, `${templateType}${number}${slug}.md`);
+    // Use baseDir for predictable path resolution instead of fragile '..' navigation
+    return path.join(this.baseDir, dir, `${templateType}${number}${slug}.md`);
   }
 
   /**

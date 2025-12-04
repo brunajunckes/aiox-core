@@ -45,9 +45,14 @@ function parseTemplate(content) {
 /**
  * Validate template metadata structure
  * @param {Object} metadata - Template metadata from frontmatter
- * @throws {Error} If required fields are missing
+ * @throws {Error} If required fields are missing or metadata is invalid
  */
 function validateMetadata(metadata) {
+  // Guard against non-object metadata (null, undefined, scalar values)
+  if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) {
+    throw new Error('Template metadata must be a valid object');
+  }
+
   const requiredFields = ['template_id', 'template_name', 'version'];
   const missingFields = requiredFields.filter(field => !metadata[field]);
 
