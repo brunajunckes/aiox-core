@@ -132,7 +132,7 @@ Model Context Protocol (MCP) servers provide external context:
 |-----------|--------|----------|
 | CodeRabbit CLI | ✅ Installed | WSL: `~/.local/bin/coderabbit` |
 | Authentication | ✅ Configured | `pedro@allfluence.com.br` |
-| GitHub App | ⚠️ Pending | Install from GitHub Marketplace |
+| GitHub App | ✅ Installed | Repository: `aios-fullstack` |
 | .coderabbit.yaml | ✅ Created | Project root: `.coderabbit.yaml` |
 
 ## Related Documents

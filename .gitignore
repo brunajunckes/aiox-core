@@ -9,6 +9,7 @@ logs/
 *.log
 npm-debug.log*
 *.tmp
+*.bak
 .cache/
 
 # Installation logs and backups (Story 1.9 - Error Handling & Rollback)
