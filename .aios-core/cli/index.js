@@ -20,6 +20,7 @@ const { createQaCommand } = require('./commands/qa');
 const { createMcpCommand } = require('./commands/mcp');
 const { createMigrateCommand } = require('./commands/migrate');
 const { createGenerateCommand } = require('./commands/generate');
+const { createMetricsCommand } = require('./commands/metrics');
 
 // Read package.json for version
 const packageJsonPath = path.join(__dirname, '..', '..', 'package.json');
@@ -47,6 +48,7 @@ Commands:
   workers           Manage and discover workers
   manifest          Manage manifest files (validate, regenerate)
   qa                Quality Gate Manager (run, status)
+  metrics           Quality Gate Metrics (record, show, seed, cleanup)
   mcp               Manage global MCP configuration
   migrate           Migrate from v2.0 to v2.1 structure
   generate          Generate documents from templates (prd, adr, pmdr, etc.)
@@ -68,6 +70,9 @@ Examples:
   $ aios mcp setup --with-defaults
   $ aios mcp link
   $ aios mcp status
+  $ aios metrics show
+  $ aios metrics record --layer 1 --passed
+  $ aios metrics seed --days 30
   $ aios migrate --dry-run
   $ aios migrate --from=2.0 --to=2.1
   $ aios generate pmdr --title "Feature X Decision"
@@ -94,6 +99,9 @@ Examples:
 
   // Add generate command (Story 3.9)
   program.addCommand(createGenerateCommand());
+
+  // Add metrics command (Story 3.11a)
+  program.addCommand(createMetricsCommand());
 
   return program;
 }
