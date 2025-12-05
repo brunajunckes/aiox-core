@@ -70,7 +70,15 @@ npm run benchmark
 | Guide | Purpose | Time | Audience |
 |-------|---------|------|----------|
 | **[Quality Gates Guide](./quality-gates.md)** | 3-layer quality gate system | 15 min | QA, DevOps |
+| **[Quality Dashboard Guide](./quality-dashboard.md)** | Dashboard metrics visualization | 10 min | Tech Leads, QA |
 | **[MCP Global Setup Guide](./mcp-global-setup.md)** | Global MCP server configuration | 10 min | All users |
+
+### Development Tools (Sprint 3)
+
+| Guide | Purpose | Time | Audience |
+|-------|---------|------|----------|
+| **[Template Engine v2](./template-engine-v2.md)** | Document generation engine | 10 min | Developers |
+| **[CodeRabbit Integration](./coderabbit/README.md)** | AI code review setup | 15 min | QA, DevOps |
 
 ### Quick Navigation (v2.1)
 
@@ -85,6 +93,15 @@ npm run benchmark
 
 **...configure quality gates**
 → [`quality-gates.md`](./quality-gates.md) (15 min)
+
+**...monitor quality metrics dashboard**
+→ [`quality-dashboard.md`](./quality-dashboard.md) (10 min)
+
+**...use the template engine**
+→ [`template-engine-v2.md`](./template-engine-v2.md) (10 min)
+
+**...setup CodeRabbit integration**
+→ [`coderabbit/README.md`](./coderabbit/README.md) (15 min)
 
 **...setup global MCP servers**
 → [`mcp-global-setup.md`](./mcp-global-setup.md) (10 min)
@@ -126,10 +143,21 @@ npm run benchmark
 
 ## Documentation Stats
 
-**Total Documentation:** ~2000 lines
-**Guides Created:** 5 comprehensive documents
-**Coverage:** Installation, Configuration, Integration, Troubleshooting, Summary
+**Total Documentation:** ~3500 lines
+**Guides Created:** 9 comprehensive documents
+**Coverage:** Installation, Configuration, Integration, Troubleshooting, Quality Gates, Dashboard, Templates
 **Production Status:** ✅ Ready to deploy
+
+---
+
+## Sprint 3 Documentation (New)
+
+| Document | Lines | Status |
+|----------|-------|--------|
+| [Quality Gates Guide](./quality-gates.md) | ~600 | ✅ Complete |
+| [Quality Dashboard Guide](./quality-dashboard.md) | ~350 | ✅ Complete |
+| [Template Engine v2](./template-engine-v2.md) | ~400 | ✅ Complete |
+| [CodeRabbit Integration](./coderabbit/) | ~1000 | ✅ Complete |
 
 ---
 
@@ -141,5 +169,5 @@ npm run benchmark
 
 ---
 
-**Last Updated:** 2025-01-14
-**Version:** 1.0
+**Last Updated:** 2025-12-05
+**Version:** 2.0 (Sprint 3)
