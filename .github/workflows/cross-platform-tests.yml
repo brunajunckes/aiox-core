@@ -14,6 +14,14 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: ['18.x', '20.x', '22.x']
+        # Exclude macOS with Node 18.x and 20.x due to isolated-vm SIGSEGV crash
+        # See: https://github.com/nicolo-ribaudo/isolated-vm/issues (upstream issue)
+        # Tracked in backlog: #1733427600002
+        exclude:
+          - os: macos-latest
+            node-version: '18.x'
+          - os: macos-latest
+            node-version: '20.x'
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
