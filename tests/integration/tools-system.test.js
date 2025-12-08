@@ -538,8 +538,16 @@ describe('Tools System Integration', () => {
       const tool2 = await toolResolver.resolveTool('cacheable_tool');
       const duration2 = Date.now() - startTime2;
 
-      expect(tool1).toBe(tool2); // Same reference (cached)
-      expect(duration2).toBeLessThan(duration1); // Cached should be faster
+      expect(tool1).toBe(tool2); // Same reference (cached) - THIS is the key test
+
+      // Performance assertion: relaxed for CI environments
+      // Skip strict timing comparison if durations are too short to measure reliably
+      if (duration1 > 5 && duration2 > 0) {
+        // Only assert cached is faster when we have measurable durations
+        expect(duration2).toBeLessThanOrEqual(duration1);
+      }
+      // Note: In CI environments, both can be 0-1ms due to fast I/O
+      // The key assertion is tool1 === tool2 (same reference), not timing
 
       // Verify cached tool still works
       const executor = new ToolHelperExecutor(tool2.executable_knowledge.helpers);

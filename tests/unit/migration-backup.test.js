@@ -18,20 +18,48 @@ const {
   listBackups
 } = require('../../.aios-core/cli/commands/migrate/backup');
 
+/**
+ * Cleanup helper with retry logic for flaky file system operations
+ * @param {string} dir - Directory to remove
+ * @param {number} maxRetries - Maximum retry attempts
+ * @param {number} retryDelay - Delay between retries in ms
+ */
+async function cleanupWithRetry(dir, maxRetries = 3, retryDelay = 100) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      if (fs.existsSync(dir)) {
+        await fs.promises.rm(dir, { recursive: true, force: true, maxRetries: 3 });
+      }
+      return;
+    } catch (error) {
+      const isRetryable = error.code && ['ENOTEMPTY', 'EBUSY', 'EPERM', 'EACCES'].includes(error.code);
+      if (attempt === maxRetries || !isRetryable) {
+        // Last attempt failed or non-retryable error, log but don't throw
+        console.warn(`Warning: Failed to cleanup ${dir} after ${attempt} attempts:`, error.code);
+        return;
+      }
+      // Linear backoff (100ms, 200ms, 300ms...)
+      await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
+    }
+  }
+}
+
 describe('Migration Backup Module', () => {
   let testDir;
+  let testId;
 
   beforeEach(async () => {
-    // Create a temporary test directory
-    testDir = path.join(os.tmpdir(), `aios-test-${Date.now()}`);
+    // Create a unique temporary test directory with random suffix to avoid collisions
+    testId = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+    testDir = path.join(os.tmpdir(), `aios-backup-test-${testId}`);
     await fs.promises.mkdir(testDir, { recursive: true });
   });
 
   afterEach(async () => {
-    // Cleanup test directory
-    if (testDir && fs.existsSync(testDir)) {
-      await fs.promises.rm(testDir, { recursive: true, force: true });
-    }
+    // Small delay to allow file handles to close
+    await new Promise(resolve => setTimeout(resolve, 50));
+    // Cleanup test directory with retry logic
+    await cleanupWithRetry(testDir);
   });
 
   describe('createBackupDirName', () => {

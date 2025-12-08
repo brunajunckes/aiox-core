@@ -10,20 +10,49 @@ const path = require('path');
 const os = require('os');
 const { configureEnvironment, updateGitignore } = require('../../src/config/configure-environment');
 
+/**
+ * Cleanup helper with retry logic for flaky file system operations
+ * Handles ENOTEMPTY and EBUSY errors common in CI environments
+ * @param {string} dir - Directory to remove
+ * @param {number} maxRetries - Maximum retry attempts
+ * @param {number} retryDelay - Delay between retries in ms
+ */
+async function cleanupWithRetry(dir, maxRetries = 5, retryDelay = 100) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      if (await fs.pathExists(dir)) {
+        await fs.remove(dir);
+      }
+      return;
+    } catch (error) {
+      const isRetryable = error.code && ['ENOTEMPTY', 'EBUSY', 'EPERM', 'EACCES'].includes(error.code);
+      if (attempt === maxRetries || !isRetryable) {
+        // Last attempt failed or non-retryable error, log but don't throw
+        console.warn(`Warning: Failed to cleanup ${dir} after ${attempt} attempts:`, error.code);
+        return;
+      }
+      // Linear backoff (100ms, 200ms, 300ms...)
+      await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
+    }
+  }
+}
+
 describe('Environment Configuration Integration', () => {
   let testDir;
+  let testId;
 
   beforeEach(async () => {
-    // Create temporary test directory
-    testDir = path.join(os.tmpdir(), `aios-test-${Date.now()}`);
+    // Create unique temporary test directory with random suffix to avoid collisions
+    testId = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+    testDir = path.join(os.tmpdir(), `aios-env-test-${testId}`);
     await fs.ensureDir(testDir);
   });
 
   afterEach(async () => {
-    // Clean up test directory
-    if (testDir && await fs.pathExists(testDir)) {
-      await fs.remove(testDir);
-    }
+    // Small delay to allow file handles to close
+    await new Promise(resolve => setTimeout(resolve, 50));
+    // Cleanup test directory with retry logic
+    await cleanupWithRetry(testDir);
   });
 
   describe('configureEnvironment', () => {

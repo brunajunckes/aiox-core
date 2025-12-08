@@ -3,7 +3,12 @@ const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
 
-describe('PowerShell vs CMD Compatibility', () => {
+const isWindows = process.platform === 'win32';
+
+// Skip entire test suite on non-Windows platforms
+const describeOnWindows = isWindows ? describe : describe.skip;
+
+describeOnWindows('PowerShell vs CMD Compatibility', () => {
   it('should document PowerShell execution policy handling', async () => {
     const storyPath = path.join(__dirname, '../../../docs/stories/v2.1/sprint-1/story-1.10a-windows-testing.md');
     const storyContent = await fs.readFile(storyPath, 'utf-8');
