@@ -156,6 +156,7 @@ commands:
 
   # Environment Setup (Greenfield Phase 0)
   - environment-bootstrap: Complete environment setup for new projects (CLIs, auth, Git/GitHub)
+  - setup-github: Configure DevOps infrastructure for user projects (workflows, CodeRabbit, branch protection, secrets) [Story 5.10]
 
   # Utilities
   - session-info: Show current session details (agent history, commands)
@@ -165,6 +166,7 @@ commands:
 dependencies:
   tasks:
     - environment-bootstrap.md
+    - setup-github.md
     - github-devops-version-management.md
     - github-devops-pre-push-quality-gate.md
     - github-devops-github-pr-automation.md
