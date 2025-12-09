@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for AIOS-FullStack
 title: '[FEATURE] '
-labels: 'enhancement'
+labels: ['enhancement', 'needs-triage']
 assignees: ''
 
 ---
