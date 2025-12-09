@@ -354,16 +354,17 @@ gh pr checks  # View PR checks
 
 ## Additional Resources
 
+- 📖 [Community Guide](COMMUNITY.md) - How to participate in the AIOS community
 - 📖 [Git Workflow Guide](docs/git-workflow-guide.md) - Detailed workflow documentation
 - 📖 [User Guide](aios-core/user-guide.md) - Complete user guide
 - 📖 [Architecture](docs/architecture.md) - System architecture
-- 💬 [Discord Community](https://discord.gg/gk8jAdXWmj) - Get help
+- 💬 [GitHub Discussions](https://github.com/allfluence/aios-core/discussions) - Community hub
 
 ## Questions?
 
-- Open an [issue](https://github.com/Pedrovaleriolopez/aios-fullstack/issues)
-- Join our [Discord](https://discord.gg/gk8jAdXWmj)
-- Start a [discussion](https://github.com/Pedrovaleriolopez/aios-fullstack/discussions)
+- Open an [issue](https://github.com/allfluence/aios-core/issues)
+- Start a [discussion](https://github.com/allfluence/aios-core/discussions)
+- Read the [Community Guide](COMMUNITY.md)
 
 ---
 

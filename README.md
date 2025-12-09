@@ -598,11 +598,12 @@ Veja o [Guia de Expansion Packs](docs/expansion-packs.md) para instruções deta
 
 Explore o diretório [expansion-packs/](expansion-packs/) para mais inspiração!
 
-## Suporte
+## Suporte & Comunidade
 
-- 💬 [Comunidade Discord](https://discord.gg/gk8jAdXWmj)
-- 🐛 [Rastreador de Issues](https://github.com/Pedrovaleriolopez/aios-fullstack/issues)
-- 💬 [Discussões](https://github.com/Pedrovaleriolopez/aios-fullstack/discussions)
+- 📖 [Guia da Comunidade](COMMUNITY.md) - Como participar e contribuir
+- 💬 [Discussões GitHub](https://github.com/allfluence/aios-core/discussions) - Hub central da comunidade
+- 🐛 [Rastreador de Issues](https://github.com/allfluence/aios-core/issues)
+- 📋 [Como Contribuir](CONTRIBUTING.md)
 
 ## Git Workflow e Validação
 
