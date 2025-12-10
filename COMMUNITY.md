@@ -164,7 +164,7 @@ Report violations to: conduct@allfluence.com
 Want to know where AIOS is headed? Check out our public roadmap:
 
 - [ROADMAP.md](ROADMAP.md) - High-level vision and planned features
-- [GitHub Project](https://github.com/orgs/SynkraAI/projects) - Detailed tracking (when available)
+- [GitHub Project](https://github.com/orgs/SynkraAI/projects/1) - Detailed tracking board
 
 The roadmap is updated monthly and reflects community input. You can influence our direction by:
 
