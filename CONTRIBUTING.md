@@ -352,19 +352,35 @@ gh pr checks  # View PR checks
 - Increase test coverage
 - Update story validation
 
+## Creating Squads
+
+Want to extend AIOS with new functionality?
+
+See our [Squads Guide](docs/guides/squads-guide.md) for:
+- Squad structure and manifest format
+- Creating agents, tasks, and workflows
+- Testing and publishing your Squad
+- Integration guidelines
+
+### Quick Links
+- [Squad Template](templates/squad/) - Start from a working template
+- [Example Squads](docs/guides/squad-examples/) - Learn from examples
+- [Squad Discussions](https://github.com/SynkraAI/aios-core/discussions/categories/ideas) - Share your Squad ideas
+
 ## Additional Resources
 
 - 📖 [Community Guide](COMMUNITY.md) - How to participate in the AIOS community
+- 📖 [Squads Guide](docs/guides/squads-guide.md) - Create and publish AI agent teams
 - 📖 [Git Workflow Guide](docs/git-workflow-guide.md) - Detailed workflow documentation
 - 📖 [User Guide](aios-core/user-guide.md) - Complete user guide
 - 📖 [Architecture](docs/architecture.md) - System architecture
 - 🗺️ [Roadmap](ROADMAP.md) - See what's planned and influence our direction
-- 💬 [GitHub Discussions](https://github.com/allfluence/aios-core/discussions) - Community hub
+- 💬 [GitHub Discussions](https://github.com/SynkraAI/aios-core/discussions) - Community hub
 
 ## Questions?
 
-- Open an [issue](https://github.com/allfluence/aios-core/issues)
-- Start a [discussion](https://github.com/allfluence/aios-core/discussions)
+- Open an [issue](https://github.com/SynkraAI/aios-core/issues)
+- Start a [discussion](https://github.com/SynkraAI/aios-core/discussions)
 - Read the [Community Guide](COMMUNITY.md)
 
 ---

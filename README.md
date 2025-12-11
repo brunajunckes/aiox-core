@@ -379,6 +379,7 @@ O AIOS-FULLSTACK vem com 11 agentes especializados:
 
 ### Documentação Adicional
 
+- 🤖 **[Guia de Squads](docs/guides/squads-guide.md)** - Crie e publique equipes de agentes IA
 - 📋 **[Primeiros Passos](docs/getting-started.md)** - Tutorial passo a passo para iniciantes
 - 🔧 **[Solução de Problemas](docs/troubleshooting.md)** - Soluções para problemas comuns
 - 🎯 **[Princípios Orientadores](docs/GUIDING-PRINCIPLES.md)** - Filosofia e melhores práticas do AIOS
@@ -601,11 +602,12 @@ Explore o diretório [expansion-packs/](expansion-packs/) para mais inspiração
 ## Suporte & Comunidade
 
 - 📖 [Guia da Comunidade](COMMUNITY.md) - Como participar e contribuir
-- 💬 [Discussões GitHub](https://github.com/allfluence/aios-core/discussions) - Hub central da comunidade
+- 💬 [Discussões GitHub](https://github.com/SynkraAI/aios-core/discussions) - Hub central da comunidade
 - 💡 [Processo de Features](docs/FEATURE_PROCESS.md) - Como propor novas funcionalidades
-- 🐛 [Rastreador de Issues](https://github.com/allfluence/aios-core/issues)
+- 🐛 [Rastreador de Issues](https://github.com/SynkraAI/aios-core/issues)
 - 📋 [Como Contribuir](CONTRIBUTING.md)
 - 🗺️ [Roadmap](ROADMAP.md) - Veja o que estamos construindo
+- 🤖 [Guia de Squads](docs/guides/squads-guide.md) - Crie equipes de agentes IA
 
 ## Git Workflow e Validação
 
