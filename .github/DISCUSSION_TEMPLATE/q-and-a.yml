@@ -20,7 +20,7 @@ body:
       description: Select the repository your question relates to
       options:
         - aios-core (Core Framework, Agents, Tasks)
-        - aios-squads (ETL Squad, Creator Squad, MMOS Squad)
+        - aios-squads (ETL Squad, Creator Squad)
         - mcp-ecosystem (Docker MCP Toolkit, IDE Configs, Presets)
         - General / Multiple repos
     validations:

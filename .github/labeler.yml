@@ -58,12 +58,6 @@ squad:
       - 'aios-squads/creator-squad/**/*'
       - 'expansion-packs/creator/**/*'
 
-'squad: mmos':
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'aios-squads/mmos-squad/**/*'
-      - 'expansion-packs/mmos/**/*'
-
 # ============================================
 # MCP ECOSYSTEM LABELS
 # ============================================

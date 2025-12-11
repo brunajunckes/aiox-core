@@ -24,7 +24,6 @@ For discussions, questions, and community interaction, visit our central hub:
 |-------|-------------|--------|
 | 🔄 **ETL Squad** | Data collection, transformation, and pipeline automation | Active |
 | ✍️ **Creator Squad** | Content generation, blog posts, course creation | Active |
-| 🧠 **MMOS Squad** | Mind Model mapping and cognitive clone creation | Active |
 
 ### Proposing a New Squad
 

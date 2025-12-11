@@ -81,7 +81,6 @@ Create and share your own Squads (modular AI agent teams)!
 Squads are specialized teams of AI agents that work together on specific domains:
 - **ETL Squad** - Data collection and transformation
 - **Creator Squad** - Content generation
-- **MMOS Squad** - Mind Model mapping
 
 See [docs/expansion-packs.md](docs/expansion-packs.md) for details on creating your own Squad.
 
