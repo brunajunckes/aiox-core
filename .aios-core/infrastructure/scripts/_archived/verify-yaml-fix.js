@@ -8,7 +8,7 @@ console.log('🔍 Verifying YAML Fix\n');
 const AGENTS = [
   'dev.md', 'qa.md', 'po.md', 'sm.md', 'pm.md',
   'architect.md', 'analyst.md', 'data-engineer.md',
-  'devops.md', 'aios-master.md', 'ux-design-expert.md'
+  'devops.md', 'aios-master.md', 'ux-design-expert.md',
 ];
 
 let passCount = 0;

@@ -15,7 +15,7 @@ const mockSessionContext = {
   message: null,
   previousAgent: null,
   lastCommands: [],
-  workflowActive: null
+  workflowActive: null,
 };
 
 // Mock project status
@@ -23,7 +23,7 @@ const mockProjectStatus = {
   branch: 'main',
   modifiedFiles: 5,
   recentCommit: 'feat: implement unified greeting system',
-  currentStory: 'story-6.1.4'
+  currentStory: 'story-6.1.4',
 };
 
 describe('generate-greeting.js', () => {
@@ -75,7 +75,7 @@ describe('generate-greeting.js', () => {
       const context = { 
         ...mockSessionContext, 
         sessionType: 'existing',
-        lastCommands: ['review']
+        lastCommands: ['review'],
       };
       assert.strictEqual(context.sessionType, 'existing');
       assert.strictEqual(context.lastCommands.length, 1);
@@ -86,7 +86,7 @@ describe('generate-greeting.js', () => {
         ...mockSessionContext, 
         sessionType: 'workflow',
         lastCommands: ['review', 'gate', 'apply-fixes'],
-        previousAgent: 'qa'
+        previousAgent: 'qa',
       };
       assert.strictEqual(context.sessionType, 'workflow');
       assert.ok(context.lastCommands.length >= 3);
@@ -150,22 +150,22 @@ if (require.main === module) {
         const agentPath = path.join(process.cwd(), '.aios-core', 'agents', 'qa.md');
         await fs.access(agentPath);
         return true;
-      }
+      },
     },
     {
       name: 'Fallback greeting format',
       fn: async () => {
         const fallback = generateFallbackGreeting('test');
         return fallback.includes('test') && fallback.includes('ready');
-      }
+      },
     },
     {
       name: 'Session context structure',
       fn: async () => {
-        return mockSessionContext.hasOwnProperty('sessionType') &&
-               mockSessionContext.hasOwnProperty('lastCommands');
-      }
-    }
+        return Object.hasOwn(mockSessionContext, 'sessionType') &&
+               Object.hasOwn(mockSessionContext, 'lastCommands');
+      },
+    },
   ];
   
   let passed = 0;
@@ -194,6 +194,6 @@ if (require.main === module) {
 }
 
 module.exports = {
-  generateFallbackGreeting
+  generateFallbackGreeting,
 };
 

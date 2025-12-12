@@ -67,7 +67,7 @@ class JiraAdapter extends PMAdapter {
       if (!fs.existsSync(storyPath)) {
         return {
           success: false,
-          error: `Story file not found: ${storyPath}`
+          error: `Story file not found: ${storyPath}`,
         };
       }
 
@@ -77,7 +77,7 @@ class JiraAdapter extends PMAdapter {
       if (!story || !story.id) {
         return {
           success: false,
-          error: 'Invalid story file: missing id field'
+          error: 'Invalid story file: missing id field',
         };
       }
 
@@ -95,7 +95,7 @@ class JiraAdapter extends PMAdapter {
 
         return {
           success: true,
-          url: issueUrl
+          url: issueUrl,
         };
       } else {
         // Create new issue
@@ -106,7 +106,7 @@ class JiraAdapter extends PMAdapter {
 
         return {
           success: true,
-          url: issueUrl
+          url: issueUrl,
         };
       }
 
@@ -114,7 +114,7 @@ class JiraAdapter extends PMAdapter {
       console.error('❌ Error syncing story to Jira:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -136,7 +136,7 @@ class JiraAdapter extends PMAdapter {
       if (!issueKey) {
         return {
           success: false,
-          error: `Jira issue not found for story ${storyId}`
+          error: `Jira issue not found for story ${storyId}`,
         };
       }
 
@@ -148,7 +148,7 @@ class JiraAdapter extends PMAdapter {
         'To Do': 'Draft',
         'In Progress': 'InProgress',
         'In Review': 'Review',
-        'Done': 'Done'
+        'Done': 'Done',
       };
 
       const jiraStatus = issue.fields.status.name;
@@ -159,15 +159,15 @@ class JiraAdapter extends PMAdapter {
       return {
         success: true,
         updates: {
-          status: mappedStatus
-        }
+          status: mappedStatus,
+        },
       };
 
     } catch (error) {
       console.error('❌ Error pulling story from Jira:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -189,14 +189,14 @@ class JiraAdapter extends PMAdapter {
 
       return {
         success: true,
-        url: issueUrl
+        url: issueUrl,
       };
 
     } catch (error) {
       console.error('❌ Error creating story in Jira:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -217,7 +217,7 @@ class JiraAdapter extends PMAdapter {
       if (!issueKey) {
         return {
           success: false,
-          error: `Jira issue not found for story ${storyId}`
+          error: `Jira issue not found for story ${storyId}`,
         };
       }
 
@@ -226,7 +226,7 @@ class JiraAdapter extends PMAdapter {
         'Draft': 'To Do',
         'InProgress': 'In Progress',
         'Review': 'In Review',
-        'Done': 'Done'
+        'Done': 'Done',
       };
 
       const jiraStatus = transitionMapping[status] || 'To Do';
@@ -242,7 +242,7 @@ class JiraAdapter extends PMAdapter {
       console.error('❌ Error updating story status:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -259,14 +259,14 @@ class JiraAdapter extends PMAdapter {
       if (!this.apiToken) {
         return {
           success: false,
-          error: 'JIRA_API_TOKEN not configured'
+          error: 'JIRA_API_TOKEN not configured',
         };
       }
 
       if (!this.email) {
         return {
           success: false,
-          error: 'JIRA_EMAIL not configured'
+          error: 'JIRA_EMAIL not configured',
         };
       }
 
@@ -283,7 +283,7 @@ class JiraAdapter extends PMAdapter {
       console.error('❌ Jira connection failed:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -309,8 +309,8 @@ class JiraAdapter extends PMAdapter {
         headers: {
           'Authorization': `Basic ${auth}`,
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+          'Accept': 'application/json',
+        },
       };
 
       const req = https.request(options, (res) => {
@@ -385,19 +385,19 @@ class JiraAdapter extends PMAdapter {
     const issueData = {
       fields: {
         project: {
-          key: this.projectKey
+          key: this.projectKey,
         },
         summary: `${story.id}: ${story.title}`,
         description: story.description || story.context || '',
         issuetype: {
-          name: 'Story'
+          name: 'Story',
         },
         labels: [
           'story',
           `story-${story.id}`,
-          ...(story.epic ? [`epic-${story.epic}`] : [])
-        ]
-      }
+          ...(story.epic ? [`epic-${story.epic}`] : []),
+        ],
+      },
     };
 
     const result = await this._apiRequest('POST', '/rest/api/3/issue', issueData);
@@ -414,8 +414,8 @@ class JiraAdapter extends PMAdapter {
     const updateData = {
       fields: {
         summary: `${story.id}: ${story.title}`,
-        description: story.description || story.context || ''
-      }
+        description: story.description || story.context || '',
+      },
     };
 
     await this._apiRequest('PUT', `/rest/api/3/issue/${issueKey}`, updateData);
@@ -440,7 +440,7 @@ class JiraAdapter extends PMAdapter {
 
     // Execute transition
     await this._apiRequest('POST', `/rest/api/3/issue/${issueKey}/transitions`, {
-      transition: { id: transition.id }
+      transition: { id: transition.id },
     });
   }
 }

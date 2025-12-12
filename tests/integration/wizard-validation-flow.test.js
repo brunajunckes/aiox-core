@@ -13,18 +13,18 @@ describe('Wizard Validation Flow', () => {
         ideConfigs: [],
         env: '.env',
         coreConfig: '.aios-core/core-config.yaml',
-        mcpConfig: '.mcp.json'
+        mcpConfig: '.mcp.json',
       },
       configs: {
         env: { envCreated: true, coreConfigCreated: true },
         mcps: {},
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       },
       dependencies: {
         success: true,
         packageManager: 'npm',
-        offlineMode: false
-      }
+        offlineMode: false,
+      },
     };
 
     // When
@@ -45,11 +45,11 @@ describe('Wizard Validation Flow', () => {
       mcps: {
         installedMCPs: {
           browser: { status: 'success', message: 'Installed' },
-          context7: { status: 'success', message: 'Installed' }
+          context7: { status: 'success', message: 'Installed' },
         },
-        configPath: '.mcp.json'
+        configPath: '.mcp.json',
       },
-      dependencies: { success: true, packageManager: 'npm' }
+      dependencies: { success: true, packageManager: 'npm' },
     };
 
     // When
@@ -64,7 +64,7 @@ describe('Wizard Validation Flow', () => {
     const installationContext = {
       files: { env: '.env' },
       configs: {},
-      dependencies: { success: true }
+      dependencies: { success: true },
     };
 
     const progressCalls = [];

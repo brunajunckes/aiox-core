@@ -44,7 +44,7 @@ class SessionContextLoader {
         message: null,
         previousAgent: null,
         lastCommands: [],
-        workflowActive: null
+        workflowActive: null,
       };
     }
 
@@ -59,7 +59,7 @@ class SessionContextLoader {
       previousAgent,
       lastCommands,
       workflowActive,
-      currentAgentId
+      currentAgentId,
     });
 
     return {
@@ -70,7 +70,7 @@ class SessionContextLoader {
       workflowActive,
       currentStory: sessionState.currentStory || null,
       sessionId: sessionState.sessionId,
-      sessionStartTime: sessionState.startTime
+      sessionStartTime: sessionState.startTime,
     };
   }
 
@@ -115,7 +115,7 @@ class SessionContextLoader {
           agentId: agent.agentId,
           agentName: agent.agentName,
           activatedAt: agent.activatedAt,
-          lastCommand: agent.lastCommand
+          lastCommand: agent.lastCommand,
         };
       }
     }
@@ -195,7 +195,7 @@ class SessionContextLoader {
         agentId,
         agentName,
         activatedAt: Date.now(),
-        lastCommand
+        lastCommand,
       });
 
       // Keep last 20 agent activations

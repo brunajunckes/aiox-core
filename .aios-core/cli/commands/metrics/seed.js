@@ -30,7 +30,7 @@ function createSeedCommand() {
         const seedOptions = {
           days: parseInt(options.days, 10),
           runsPerDay: parseInt(options.runs, 10),
-          weekendReduction: options.weekends !== false
+          weekendReduction: options.weekends !== false,
         };
 
         console.log('\n🌱 Generating Seed Data');
@@ -122,5 +122,5 @@ function createSeedCommand() {
 }
 
 module.exports = {
-  createSeedCommand
+  createSeedCommand,
 };

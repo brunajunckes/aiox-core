@@ -22,7 +22,7 @@ async function validateFiles(fileContext = {}) {
     success: true,
     checks: [],
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   try {
@@ -34,7 +34,7 @@ async function validateFiles(fileContext = {}) {
           component: 'IDE Config',
           file: configPath,
           status: exists ? 'success' : 'failed',
-          message: exists ? 'File created' : 'File missing'
+          message: exists ? 'File created' : 'File missing',
         };
 
         results.checks.push(check);
@@ -45,7 +45,7 @@ async function validateFiles(fileContext = {}) {
             severity: 'high',
             message: `IDE config file missing: ${configPath}`,
             file: configPath,
-            code: 'FILE_MISSING'
+            code: 'FILE_MISSING',
           });
         }
       }
@@ -58,7 +58,7 @@ async function validateFiles(fileContext = {}) {
       component: 'Environment',
       file: envPath,
       status: envExists ? 'success' : 'failed',
-      message: envExists ? 'Created' : 'Missing'
+      message: envExists ? 'Created' : 'Missing',
     });
 
     if (!envExists) {
@@ -67,7 +67,7 @@ async function validateFiles(fileContext = {}) {
         severity: 'critical',
         message: '.env file missing - environment configuration incomplete',
         file: envPath,
-        code: 'ENV_FILE_MISSING'
+        code: 'ENV_FILE_MISSING',
       });
     } else {
       // Check .env file permissions (Unix/macOS only)
@@ -83,7 +83,7 @@ async function validateFiles(fileContext = {}) {
               message: `.env file permissions should be 600 (currently ${mode.toString(8)})`,
               file: envPath,
               code: 'ENV_PERMISSIONS_INSECURE',
-              solution: `Run: chmod 600 ${envPath}`
+              solution: `Run: chmod 600 ${envPath}`,
             });
           }
         } catch {
@@ -99,7 +99,7 @@ async function validateFiles(fileContext = {}) {
         component: 'Environment',
         file: envExamplePath,
         status: 'success',
-        message: 'Created'
+        message: 'Created',
       });
     }
 
@@ -110,7 +110,7 @@ async function validateFiles(fileContext = {}) {
       component: 'Core Config',
       file: coreConfigPath,
       status: coreConfigExists ? 'success' : 'failed',
-      message: coreConfigExists ? 'Created' : 'Missing'
+      message: coreConfigExists ? 'Created' : 'Missing',
     });
 
     if (!coreConfigExists) {
@@ -119,7 +119,7 @@ async function validateFiles(fileContext = {}) {
         severity: 'high',
         message: 'core-config.yaml missing - framework configuration incomplete',
         file: coreConfigPath,
-        code: 'CORE_CONFIG_MISSING'
+        code: 'CORE_CONFIG_MISSING',
       });
     }
 
@@ -130,7 +130,7 @@ async function validateFiles(fileContext = {}) {
         component: 'MCP Config',
         file: mcpConfigPath,
         status: 'success',
-        message: 'Created'
+        message: 'Created',
       });
     } else {
       // MCP config is optional - only warning if MCPs were selected
@@ -138,7 +138,7 @@ async function validateFiles(fileContext = {}) {
         severity: 'low',
         message: '.mcp.json missing - MCPs may not have been installed',
         file: mcpConfigPath,
-        code: 'MCP_CONFIG_MISSING'
+        code: 'MCP_CONFIG_MISSING',
       });
     }
 
@@ -150,14 +150,14 @@ async function validateFiles(fileContext = {}) {
           component: 'Directory',
           file: dir,
           status: 'success',
-          message: 'Exists'
+          message: 'Exists',
         });
       } else {
         results.warnings.push({
           severity: 'medium',
           message: `Directory missing: ${dir}`,
           file: dir,
-          code: 'DIRECTORY_MISSING'
+          code: 'DIRECTORY_MISSING',
         });
       }
     }
@@ -169,7 +169,7 @@ async function validateFiles(fileContext = {}) {
       severity: 'critical',
       message: `File validation failed: ${error.message}`,
       code: 'VALIDATION_ERROR',
-      details: error.stack
+      details: error.stack,
     });
 
     return results;
@@ -177,5 +177,5 @@ async function validateFiles(fileContext = {}) {
 }
 
 module.exports = {
-  validateFiles
+  validateFiles,
 };

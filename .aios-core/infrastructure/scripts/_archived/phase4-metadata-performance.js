@@ -22,7 +22,7 @@ const TOKEN_USAGE_BY_LAYER = {
   Organism: '~3,000-10,000 tokens',
   Template: '~1,500-5,000 tokens',
   Strategy: '~2,000-8,000 tokens',
-  Config: '~800-2,500 tokens'
+  Config: '~800-2,500 tokens',
 };
 
 // Optimization notes by atomic layer
@@ -32,7 +32,7 @@ const OPTIMIZATION_NOTES_BY_LAYER = {
   Organism: 'Break into smaller workflows; implement checkpointing; use async processing where possible',
   Template: 'Cache template compilation; minimize data transformations; lazy load resources',
   Strategy: 'Iterative analysis with depth limits; cache intermediate results; batch similar operations',
-  Config: 'Validate configuration early; use atomic writes; implement rollback checkpoints'
+  Config: 'Validate configuration early; use atomic writes; implement rollback checkpoints',
 };
 
 // Process single task file
@@ -80,7 +80,7 @@ function processTaskFile(filename) {
   }
   
   // Resolve dependencies TODO
-  const dependenciesPattern = /  - \{TODO: dependency file or N\/A\}/g;
+  const dependenciesPattern = / {2}- \{TODO: dependency file or N\/A\}/g;
   if (dependenciesPattern.test(content)) {
     content = content.replace(dependenciesPattern, '  - N/A');
     modified = true;
@@ -88,8 +88,8 @@ function processTaskFile(filename) {
   }
   
   // Resolve tags TODO
-  const tag1Pattern = /  - \{TODO: tag1\}/g;
-  const tag2Pattern = /  - \{TODO: tag2\}/g;
+  const tag1Pattern = / {2}- \{TODO: tag1\}/g;
+  const tag2Pattern = / {2}- \{TODO: tag2\}/g;
   
   // Determine appropriate tags based on task category
   const tags = [];
@@ -124,7 +124,7 @@ function processTaskFile(filename) {
     skipped: false,
     modified,
     atomicLayer,
-    todosResolved
+    todosResolved,
   };
 }
 
@@ -150,7 +150,7 @@ function main() {
     skipped: 0,
     modified: 0,
     todosResolved: 0,
-    details: []
+    details: [],
   };
   
   // Process each file
@@ -176,7 +176,7 @@ function main() {
       
       results.details.push({
         filename,
-        ...result
+        ...result,
       });
     }
   });

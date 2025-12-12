@@ -26,8 +26,8 @@ describeIntegration('Dependency Validator', () => {
         version: '1.0.0',
         dependencies: {
           express: '^4.18.0',
-          react: '^18.2.0'
-        }
+          react: '^18.2.0',
+        },
       }));
       fs.readdirSync.mockReturnValue(new Array(247).fill('package'));
 
@@ -38,7 +38,7 @@ describeIntegration('Dependency Validator', () => {
       const depContext = {
         success: true,
         packageManager: 'npm',
-        installedCount: 247
+        installedCount: 247,
       };
 
       // When
@@ -63,9 +63,9 @@ describeIntegration('Dependency Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'NODE_MODULES_MISSING'
-          })
-        ])
+            code: 'NODE_MODULES_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -74,7 +74,7 @@ describeIntegration('Dependency Validator', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         name: 'test-package',
-        version: '1.0.0'
+        version: '1.0.0',
       }));
       fs.readdirSync.mockReturnValue([]);
 
@@ -95,7 +95,7 @@ describeIntegration('Dependency Validator', () => {
       // Given
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
-        name: 'test-package'
+        name: 'test-package',
       }));
       fs.readdirSync.mockReturnValue(new Array(150).fill('pkg'));
 
@@ -138,7 +138,7 @@ describeIntegration('Dependency Validator', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         name: 'test',
-        dependencies: { express: '^4.0.0' }
+        dependencies: { express: '^4.0.0' },
       }));
       fs.readdirSync.mockReturnValue(['express']);
 
@@ -148,8 +148,8 @@ describeIntegration('Dependency Validator', () => {
             low: 2,
             moderate: 1,
             high: 0,
-            critical: 0
-          }
+            critical: 0,
+          },
         }), '');
       });
 
@@ -160,9 +160,9 @@ describeIntegration('Dependency Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'NPM_AUDIT_VULNERABILITIES'
-          })
-        ])
+            code: 'NPM_AUDIT_VULNERABILITIES',
+          }),
+        ]),
       );
     });
 
@@ -171,7 +171,7 @@ describeIntegration('Dependency Validator', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         name: 'test',
-        dependencies: { express: '^4.0.0' }
+        dependencies: { express: '^4.0.0' },
       }));
       fs.readdirSync.mockReturnValue(['express']);
 
@@ -181,8 +181,8 @@ describeIntegration('Dependency Validator', () => {
             low: 0,
             moderate: 0,
             high: 2,
-            critical: 1
-          }
+            critical: 1,
+          },
         }), '');
       });
 
@@ -194,9 +194,9 @@ describeIntegration('Dependency Validator', () => {
         expect.arrayContaining([
           expect.objectContaining({
             severity: 'high',
-            code: 'NPM_AUDIT_CRITICAL_VULNERABILITIES'
-          })
-        ])
+            code: 'NPM_AUDIT_CRITICAL_VULNERABILITIES',
+          }),
+        ]),
       );
     });
 
@@ -205,7 +205,7 @@ describeIntegration('Dependency Validator', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         name: 'test',
-        dependencies: { express: '^4.0.0' }
+        dependencies: { express: '^4.0.0' },
       }));
       fs.readdirSync.mockReturnValue(['express']);
 
@@ -220,9 +220,9 @@ describeIntegration('Dependency Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'NPM_AUDIT_ERROR'
-          })
-        ])
+            code: 'NPM_AUDIT_ERROR',
+          }),
+        ]),
       );
     });
 
@@ -233,8 +233,8 @@ describeIntegration('Dependency Validator', () => {
         name: 'test',
         dependencies: {
           express: '^4.0.0',
-          react: '^18.0.0'
-        }
+          react: '^18.0.0',
+        },
       }));
       fs.readdirSync.mockReturnValue(['express', 'react']);
 
@@ -264,9 +264,9 @@ describeIntegration('Dependency Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'PACKAGE_JSON_MISSING'
-          })
-        ])
+            code: 'PACKAGE_JSON_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -287,9 +287,9 @@ describeIntegration('Dependency Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'PACKAGE_JSON_PARSE_ERROR'
-          })
-        ])
+            code: 'PACKAGE_JSON_PARSE_ERROR',
+          }),
+        ]),
       );
     });
   });

@@ -41,28 +41,28 @@ class NotificationManager {
       reviewRequest: {
         subject: '🔍 Human Review Required',
         priority: 'normal',
-        format: 'markdown'
+        format: 'markdown',
       },
       blocked: {
         subject: '🚫 Review Blocked - Fix Required',
         priority: 'high',
-        format: 'markdown'
+        format: 'markdown',
       },
       approved: {
         subject: '✅ Review Approved',
         priority: 'normal',
-        format: 'markdown'
+        format: 'markdown',
       },
       changesRequested: {
         subject: '📝 Changes Requested',
         priority: 'high',
-        format: 'markdown'
+        format: 'markdown',
       },
       reminder: {
         subject: '⏰ Review Reminder',
         priority: 'normal',
-        format: 'markdown'
-      }
+        format: 'markdown',
+      },
     };
   }
 
@@ -83,9 +83,9 @@ class NotificationManager {
       metadata: {
         requestId: reviewRequest.id,
         estimatedTime: reviewRequest.estimatedTime,
-        focusAreas: reviewRequest.focusAreas?.primary?.map((f) => f.area) || []
+        focusAreas: reviewRequest.focusAreas?.primary?.map((f) => f.area) || [],
       },
-      status: 'sent'
+      status: 'sent',
     };
 
     // Send through enabled channels
@@ -97,7 +97,7 @@ class NotificationManager {
     return {
       success: true,
       notificationId: notification.id,
-      channels: results
+      channels: results,
     };
   }
 
@@ -118,9 +118,9 @@ class NotificationManager {
       metadata: {
         stoppedAt: blockResult.stoppedAt,
         issues: blockResult.issues?.length || 0,
-        fixRecommendations: blockResult.fixFirst?.length || 0
+        fixRecommendations: blockResult.fixFirst?.length || 0,
       },
-      status: 'sent'
+      status: 'sent',
     };
 
     const results = await this.sendThroughChannels(notification);
@@ -129,7 +129,7 @@ class NotificationManager {
     return {
       success: true,
       notificationId: notification.id,
-      channels: results
+      channels: results,
     };
   }
 
@@ -153,9 +153,9 @@ class NotificationManager {
       metadata: {
         requestId: completedRequest.id,
         reviewer: completedRequest.reviewer,
-        approved: isApproved
+        approved: isApproved,
       },
-      status: 'sent'
+      status: 'sent',
     };
 
     const results = await this.sendThroughChannels(notification);
@@ -164,7 +164,7 @@ class NotificationManager {
     return {
       success: true,
       notificationId: notification.id,
-      channels: results
+      channels: results,
     };
   }
 
@@ -185,9 +185,9 @@ class NotificationManager {
       metadata: {
         requestId: reviewRequest.id,
         createdAt: reviewRequest.createdAt,
-        expiresAt: reviewRequest.expiresAt
+        expiresAt: reviewRequest.expiresAt,
       },
-      status: 'sent'
+      status: 'sent',
     };
 
     const results = await this.sendThroughChannels(notification);
@@ -196,7 +196,7 @@ class NotificationManager {
     return {
       success: true,
       notificationId: notification.id,
-      channels: results
+      channels: results,
     };
   }
 
@@ -207,32 +207,32 @@ class NotificationManager {
    */
   formatReviewRequestContent(reviewRequest) {
     const lines = [
-      `# Human Review Required`,
-      ``,
+      '# Human Review Required',
+      '',
       `**Review ID:** ${reviewRequest.id}`,
       `**Assigned To:** ${reviewRequest.reviewer}`,
       `**Estimated Time:** ~${reviewRequest.estimatedTime} minutes`,
       `**Expires:** ${reviewRequest.expiresAt}`,
-      ``,
-      `## Automated Review Summary`,
-      ``,
-      `Layers 1+2 have **passed** all automated checks.`,
-      ``
+      '',
+      '## Automated Review Summary',
+      '',
+      'Layers 1+2 have **passed** all automated checks.',
+      '',
     ];
 
     // Add Layer 1 summary
     if (reviewRequest.automatedSummary?.layer1) {
-      lines.push(`### Layer 1: Pre-commit`);
+      lines.push('### Layer 1: Pre-commit');
       reviewRequest.automatedSummary.layer1.checks.forEach((c) => {
         const icon = c.status === 'passed' ? '✅' : (c.status === 'skipped' ? '⏭️' : '❌');
         lines.push(`- ${icon} ${c.check}: ${c.message}`);
       });
-      lines.push(``);
+      lines.push('');
     }
 
     // Add Layer 2 summary
     if (reviewRequest.automatedSummary?.layer2) {
-      lines.push(`### Layer 2: PR Automation`);
+      lines.push('### Layer 2: PR Automation');
       if (reviewRequest.automatedSummary.layer2.coderabbit) {
         const cr = reviewRequest.automatedSummary.layer2.coderabbit;
         lines.push(`- 🐰 CodeRabbit: ${cr.issues.critical} CRITICAL, ${cr.issues.high} HIGH, ${cr.issues.medium} MEDIUM`);
@@ -241,38 +241,38 @@ class NotificationManager {
         const q = reviewRequest.automatedSummary.layer2.quinn;
         lines.push(`- 🧪 Quinn: ${q.suggestions} suggestions, ${q.blocking} blocking`);
       }
-      lines.push(``);
+      lines.push('');
     }
 
     // Add focus areas
-    lines.push(`## Focus Areas (Strategic Review Only)`);
-    lines.push(``);
+    lines.push('## Focus Areas (Strategic Review Only)');
+    lines.push('');
     lines.push(`**You can skip:** ${reviewRequest.skipAreas.join(', ')}`);
-    lines.push(``);
+    lines.push('');
 
     if (reviewRequest.focusAreas?.primary?.length > 0) {
-      lines.push(`### Primary Focus`);
+      lines.push('### Primary Focus');
       reviewRequest.focusAreas.primary.forEach((area) => {
         lines.push(`#### ${area.area.charAt(0).toUpperCase() + area.area.slice(1)}`);
         lines.push(`> ${area.reason}`);
         if (area.questions?.length > 0) {
-          lines.push(`**Key questions:**`);
+          lines.push('**Key questions:**');
           area.questions.forEach((q) => lines.push(`- [ ] ${q}`));
         }
-        lines.push(``);
+        lines.push('');
       });
     }
 
     if (reviewRequest.focusAreas?.secondary?.length > 0) {
-      lines.push(`### Secondary Focus`);
+      lines.push('### Secondary Focus');
       reviewRequest.focusAreas.secondary.forEach((area) => {
         lines.push(`- **${area.area}:** ${area.reason}`);
       });
-      lines.push(``);
+      lines.push('');
     }
 
-    lines.push(`---`);
-    lines.push(`_Respond with approval or request changes._`);
+    lines.push('---');
+    lines.push('_Respond with approval or request changes._');
 
     return lines.join('\n');
   }
@@ -284,35 +284,35 @@ class NotificationManager {
    */
   formatBlockingContent(blockResult) {
     const lines = [
-      `# 🚫 Human Review Blocked`,
-      ``,
+      '# 🚫 Human Review Blocked',
+      '',
       `**Stopped At:** ${blockResult.stoppedAt}`,
       `**Reason:** ${blockResult.reason}`,
-      ``,
-      `## Issues to Fix`,
-      ``
+      '',
+      '## Issues to Fix',
+      '',
     ];
 
     if (blockResult.issues?.length > 0) {
       blockResult.issues.forEach((issue) => {
         lines.push(`### ${issue.severity}: ${issue.check}`);
         lines.push(`${issue.message}`);
-        lines.push(``);
+        lines.push('');
       });
     }
 
     if (blockResult.fixFirst?.length > 0) {
-      lines.push(`## How to Fix`);
-      lines.push(``);
+      lines.push('## How to Fix');
+      lines.push('');
       blockResult.fixFirst.forEach((rec, idx) => {
         lines.push(`${idx + 1}. **${rec.issue}**`);
         lines.push(`   → ${rec.suggestion}`);
-        lines.push(``);
+        lines.push('');
       });
     }
 
-    lines.push(`---`);
-    lines.push(`_Fix these issues and re-run the quality gate pipeline._`);
+    lines.push('---');
+    lines.push('_Fix these issues and re-run the quality gate pipeline._');
 
     return lines.join('\n');
   }
@@ -329,38 +329,38 @@ class NotificationManager {
 
     const lines = [
       `# ${icon} ${title}`,
-      ``,
+      '',
       `**Review ID:** ${completedRequest.id}`,
       `**Reviewer:** ${completedRequest.reviewer}`,
       `**Completed At:** ${completedRequest.completedAt}`,
       `**Time Spent:** ${completedRequest.actualTime || 'Not recorded'} minutes`,
-      ``
+      '',
     ];
 
     if (completedRequest.reviewResult) {
       if (completedRequest.reviewResult.comments) {
-        lines.push(`## Reviewer Comments`);
-        lines.push(``);
+        lines.push('## Reviewer Comments');
+        lines.push('');
         lines.push(completedRequest.reviewResult.comments);
-        lines.push(``);
+        lines.push('');
       }
 
       if (!isApproved && completedRequest.reviewResult.requestedChanges?.length > 0) {
-        lines.push(`## Requested Changes`);
-        lines.push(``);
+        lines.push('## Requested Changes');
+        lines.push('');
         completedRequest.reviewResult.requestedChanges.forEach((change, idx) => {
           lines.push(`${idx + 1}. ${change}`);
         });
-        lines.push(``);
+        lines.push('');
       }
     }
 
     if (isApproved) {
-      lines.push(`---`);
-      lines.push(`_This change is approved for merge. Proceed with @github-devops._`);
+      lines.push('---');
+      lines.push('_This change is approved for merge. Proceed with @github-devops._');
     } else {
-      lines.push(`---`);
-      lines.push(`_Address the requested changes and re-submit for review._`);
+      lines.push('---');
+      lines.push('_Address the requested changes and re-submit for review._');
     }
 
     return lines.join('\n');
@@ -377,18 +377,18 @@ class NotificationManager {
     const hoursPending = Math.round((now - createdAt) / (1000 * 60 * 60));
 
     return [
-      `# ⏰ Review Reminder`,
-      ``,
+      '# ⏰ Review Reminder',
+      '',
       `**Review ID:** ${reviewRequest.id}`,
       `**Pending For:** ${hoursPending} hours`,
       `**Estimated Time:** ~${reviewRequest.estimatedTime} minutes`,
-      ``,
-      `A human review has been waiting for your attention.`,
-      ``,
+      '',
+      'A human review has been waiting for your attention.',
+      '',
       `**Focus Areas:** ${reviewRequest.focusAreas?.primary?.map((f) => f.area).join(', ') || 'General review'}`,
-      ``,
-      `---`,
-      `_Please complete this review at your earliest convenience._`
+      '',
+      '---',
+      '_Please complete this review at your earliest convenience._',
     ].join('\n');
   }
 
@@ -448,15 +448,15 @@ class NotificationManager {
     const filePath = path.join(notificationDir, `${notification.id}.md`);
 
     const content = [
-      `---`,
+      '---',
       `id: ${notification.id}`,
       `type: ${notification.type}`,
       `recipient: ${notification.recipient}`,
       `timestamp: ${notification.timestamp}`,
       `status: ${notification.status}`,
-      `---`,
-      ``,
-      notification.content
+      '---',
+      '',
+      notification.content,
     ].join('\n');
 
     await fs.mkdir(notificationDir, { recursive: true });
@@ -488,7 +488,7 @@ class NotificationManager {
         type: notification.type,
         recipient: notification.recipient,
         timestamp: notification.timestamp,
-        status: notification.status
+        status: notification.status,
       });
 
       // Keep only last 100 notifications

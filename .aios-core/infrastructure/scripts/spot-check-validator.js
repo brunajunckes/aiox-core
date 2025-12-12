@@ -88,7 +88,7 @@ function main() {
   const results = {
     passed: [],
     failed: [],
-    warnings: []
+    warnings: [],
   };
   
   // Validate each sampled task

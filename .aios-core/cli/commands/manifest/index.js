@@ -42,5 +42,5 @@ Examples:
 }
 
 module.exports = {
-  createManifestCommand
+  createManifestCommand,
 };

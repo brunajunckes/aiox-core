@@ -24,7 +24,7 @@ describeIntegration('Validation System Performance', () => {
     clickup: [],
     google: [],
     n8n: [],
-    supabase: []
+    supabase: [],
   };
 
   beforeAll(async () => {
@@ -78,7 +78,7 @@ describeIntegration('Validation System Performance', () => {
       await clickupValidator.validate('create_task', {
         name: 'Performance Test Task',
         list_id: '123456789',
-        assignees: [456]
+        assignees: [456],
       });
       const duration = Date.now() - start;
       performanceMetrics.clickup.push(duration);
@@ -90,7 +90,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await clickupValidator.validate('update_task', {
         task_id: '123',
-        assignees: { add: [456], rem: [789] }
+        assignees: { add: [456], rem: [789] },
       });
       const duration = Date.now() - start;
       performanceMetrics.clickup.push(duration);
@@ -102,7 +102,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await clickupValidator.validate('parse_webhook', {
         event: 'task_created',
-        task_id: '123'
+        task_id: '123',
       });
       const duration = Date.now() - start;
       performanceMetrics.clickup.push(duration);
@@ -116,8 +116,8 @@ describeIntegration('Validation System Performance', () => {
         args: {
           name: `Batch Task ${i}`,
           list_id: '123456789',
-          assignees: [456]
-        }
+          assignees: [456],
+        },
       }));
 
       const start = Date.now();
@@ -133,7 +133,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await googleValidator.validate('create_file', {
         name: 'test.txt',
-        content: 'Test content'
+        content: 'Test content',
       });
       const duration = Date.now() - start;
       performanceMetrics.google.push(duration);
@@ -146,7 +146,7 @@ describeIntegration('Validation System Performance', () => {
       await googleValidator.validate('share_file', {
         fileId: 'abc123',
         email: 'test@example.com',
-        role: 'reader'
+        role: 'reader',
       });
       const duration = Date.now() - start;
       performanceMetrics.google.push(duration);
@@ -159,7 +159,7 @@ describeIntegration('Validation System Performance', () => {
       await googleValidator.validate('create_event', {
         summary: 'Test Meeting',
         start_time: '2025-01-15T10:00:00Z',
-        end_time: '2025-01-15T11:00:00Z'
+        end_time: '2025-01-15T11:00:00Z',
       });
       const duration = Date.now() - start;
       performanceMetrics.google.push(duration);
@@ -172,8 +172,8 @@ describeIntegration('Validation System Performance', () => {
         command: 'create_file',
         args: {
           name: `file${i}.txt`,
-          content: `Content ${i}`
-        }
+          content: `Content ${i}`,
+        },
       }));
 
       const start = Date.now();
@@ -188,7 +188,7 @@ describeIntegration('Validation System Performance', () => {
     test('execute_workflow validation completes in <50ms', async () => {
       const start = Date.now();
       await n8nValidator.validate('execute_workflow', {
-        workflow_id: 'wf_123'
+        workflow_id: 'wf_123',
       });
       const duration = Date.now() - start;
       performanceMetrics.n8n.push(duration);
@@ -200,7 +200,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await n8nValidator.validate('create_workflow', {
         name: 'Test Workflow',
-        nodes: []
+        nodes: [],
       });
       const duration = Date.now() - start;
       performanceMetrics.n8n.push(duration);
@@ -212,8 +212,8 @@ describeIntegration('Validation System Performance', () => {
       const operations = Array.from({ length: 10 }, (_, i) => ({
         command: 'execute_workflow',
         args: {
-          workflow_id: `wf_${i}`
-        }
+          workflow_id: `wf_${i}`,
+        },
       }));
 
       const start = Date.now();
@@ -229,7 +229,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await supabaseValidator.validate('execute_sql', {
         project_id: 'proj_123',
-        query: 'SELECT * FROM users WHERE id = 1'
+        query: 'SELECT * FROM users WHERE id = 1',
       });
       const duration = Date.now() - start;
       performanceMetrics.supabase.push(duration);
@@ -242,7 +242,7 @@ describeIntegration('Validation System Performance', () => {
       await supabaseValidator.validate('apply_migration', {
         project_id: 'proj_123',
         name: 'add_users_table',
-        query: 'CREATE TABLE users (id SERIAL PRIMARY KEY);'
+        query: 'CREATE TABLE users (id SERIAL PRIMARY KEY);',
       });
       const duration = Date.now() - start;
       performanceMetrics.supabase.push(duration);
@@ -255,8 +255,8 @@ describeIntegration('Validation System Performance', () => {
         command: 'execute_sql',
         args: {
           project_id: 'proj_123',
-          query: `SELECT * FROM table${i}`
-        }
+          query: `SELECT * FROM table${i}`,
+        },
       }));
 
       const start = Date.now();
@@ -284,7 +284,7 @@ describeIntegration('Validation System Performance', () => {
       ];
 
       let caught = 0;
-      let total = testCases.filter(tc => tc.shouldFail).length;
+      const total = testCases.filter(tc => tc.shouldFail).length;
 
       for (const tc of testCases) {
         const result = await clickupValidator.validate('create_task', tc.args);
@@ -313,7 +313,7 @@ describeIntegration('Validation System Performance', () => {
       ];
 
       let caught = 0;
-      let total = testCases.filter(tc => tc.shouldFail).length;
+      const total = testCases.filter(tc => tc.shouldFail).length;
 
       for (const tc of testCases) {
         const result = await googleValidator.validate('create_file', tc.args);
@@ -341,7 +341,7 @@ describeIntegration('Validation System Performance', () => {
       ];
 
       let caught = 0;
-      let total = testCases.filter(tc => tc.shouldFail).length;
+      const total = testCases.filter(tc => tc.shouldFail).length;
 
       for (const tc of testCases) {
         const result = await n8nValidator.validate('execute_workflow', tc.args);
@@ -370,7 +370,7 @@ describeIntegration('Validation System Performance', () => {
       ];
 
       let caught = 0;
-      let total = testCases.filter(tc => tc.shouldFail).length;
+      const total = testCases.filter(tc => tc.shouldFail).length;
 
       for (const tc of testCases) {
         const result = await supabaseValidator.validate('execute_sql', tc.args);
@@ -391,7 +391,7 @@ describeIntegration('Validation System Performance', () => {
       const start = Date.now();
       await clickupValidator.validate('create_task', {
         name: 'Timeout Test',
-        list_id: '123456789'
+        list_id: '123456789',
       });
       const duration = Date.now() - start;
 
@@ -414,8 +414,8 @@ describeIntegration('Validation System Performance', () => {
         clickupValidator.validate('create_task', {
           name: `Concurrent Task ${i}`,
           list_id: '123456789',
-          assignees: [456 + i]
-        })
+          assignees: [456 + i],
+        }),
       );
 
       const start = Date.now();
@@ -430,7 +430,7 @@ describeIntegration('Validation System Performance', () => {
         clickupValidator.validate('create_task', { name: 'Task', list_id: '123' }),
         googleValidator.validate('create_file', { name: 'file.txt', content: 'data' }),
         n8nValidator.validate('execute_workflow', { workflow_id: 'wf_123' }),
-        supabaseValidator.validate('execute_sql', { project_id: 'proj_123', query: 'SELECT 1' })
+        supabaseValidator.validate('execute_sql', { project_id: 'proj_123', query: 'SELECT 1' }),
       ];
 
       const start = Date.now();

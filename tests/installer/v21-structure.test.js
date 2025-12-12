@@ -21,9 +21,9 @@ jest.mock('../../tools/installer/lib/module-manager', () => ({
       red: jest.fn(x => x),
       dim: jest.fn(x => x),
       bold: jest.fn(x => x),
-      cyan: jest.fn(x => x)
-    }
-  })
+      cyan: jest.fn(x => x),
+    },
+  }),
 }));
 
 const resourceLocator = require('../../tools/installer/lib/resource-locator');
@@ -174,7 +174,7 @@ describe('v2.1 Module Structure Tests', () => {
       utils: 'core/utils',
       config: 'core/config',
       tools: 'infrastructure/tools',
-      integrations: 'infrastructure/integrations'
+      integrations: 'infrastructure/integrations',
     };
 
     it('should map tasks to development module', () => {
@@ -203,7 +203,7 @@ describe('Legacy Flag Support (--legacy)', () => {
       directory: '.',
       ides: [],
       expansionPacks: [],
-      legacyStructure: true
+      legacyStructure: true,
     };
 
     expect(config.legacyStructure).toBe(true);
@@ -215,7 +215,7 @@ describe('Legacy Flag Support (--legacy)', () => {
       directory: '.',
       ides: [],
       expansionPacks: [],
-      legacyStructure: false
+      legacyStructure: false,
     };
 
     expect(config.legacyStructure).toBe(false);

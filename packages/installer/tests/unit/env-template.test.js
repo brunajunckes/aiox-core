@@ -22,7 +22,7 @@ describe('.env Template Generator', () => {
     it('should generate .env with provided API keys', () => {
       const apiKeys = {
         openai: 'sk-test-openai-key',
-        anthropic: 'sk-ant-test-anthropic-key'
+        anthropic: 'sk-ant-test-anthropic-key',
       };
 
       const content = generateEnvContent(apiKeys);
@@ -35,7 +35,7 @@ describe('.env Template Generator', () => {
       const apiKeys = {
         clickup: 'clickup-test-key',
         github: 'ghp-test-token',
-        exa: 'exa-test-key'
+        exa: 'exa-test-key',
       };
 
       const content = generateEnvContent(apiKeys);
@@ -94,7 +94,7 @@ describe('.env Template Generator', () => {
 
       // All API key fields should be empty
       const apiKeyLines = content.split('\n').filter(line =>
-        line.includes('_API_KEY=') || line.includes('_TOKEN=')
+        line.includes('_API_KEY=') || line.includes('_TOKEN='),
       );
 
       apiKeyLines.forEach(line => {
@@ -119,7 +119,7 @@ describe('.env Template Generator', () => {
       const sensitivePatterns = [
         /sk-[a-zA-Z0-9]{20,}/, // OpenAI keys
         /sk-ant-[a-zA-Z0-9]{30,}/, // Anthropic keys
-        /ghp_[a-zA-Z0-9]+/ // GitHub tokens
+        /ghp_[a-zA-Z0-9]+/, // GitHub tokens
       ];
 
       sensitivePatterns.forEach(pattern => {

@@ -40,7 +40,7 @@ function calculateScores(results, query) {
     // Boost for tag matches
     const tags = (result.tags || []).map(t => t.toLowerCase());
     const tagMatchCount = queryWords.filter(word =>
-      tags.some(tag => tag === word || tag.includes(word))
+      tags.some(tag => tag === word || tag.includes(word)),
     ).length;
 
     if (tagMatchCount > 0) {
@@ -58,7 +58,7 @@ function calculateScores(results, query) {
 
     return {
       ...result,
-      score
+      score,
     };
   });
 }
@@ -99,7 +99,7 @@ function normalizeScores(results) {
 
   return results.map(result => ({
     ...result,
-    score: Math.round(((result.score - minScore) / range) * 100)
+    score: Math.round(((result.score - minScore) / range) * 100),
   }));
 }
 
@@ -116,7 +116,7 @@ function calculateRelevanceScore(worker, query, options = {}) {
     nameMatch: options.nameWeight || 1.3,
     tagMatch: options.tagWeight || 1.1,
     descriptionMatch: options.descriptionWeight || 0.8,
-    categoryMatch: options.categoryWeight || 0.7
+    categoryMatch: options.categoryWeight || 0.7,
   };
 
   const queryLower = query.toLowerCase();
@@ -181,7 +181,7 @@ function boostExactMatches(results, query) {
 
     return {
       ...result,
-      score: boostedScore
+      score: boostedScore,
     };
   });
 }
@@ -197,7 +197,7 @@ function calculateSearchAccuracy(results, expectedId) {
     return {
       found: false,
       position: -1,
-      accuracy: 0
+      accuracy: 0,
     };
   }
 
@@ -207,7 +207,7 @@ function calculateSearchAccuracy(results, expectedId) {
     found: position !== -1,
     position: position,
     isFirst: position === 0,
-    accuracy: position === 0 ? 100 : position > 0 ? Math.max(0, 100 - (position * 10)) : 0
+    accuracy: position === 0 ? 100 : position > 0 ? Math.max(0, 100 - (position * 10)) : 0,
   };
 }
 
@@ -217,5 +217,5 @@ module.exports = {
   normalizeScores,
   calculateRelevanceScore,
   boostExactMatches,
-  calculateSearchAccuracy
+  calculateSearchAccuracy,
 };

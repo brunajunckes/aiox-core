@@ -52,8 +52,8 @@ function generateLayer1Run(timestamp) {
     durationMs: baseDuration,
     findingsCount,
     metadata: {
-      triggeredBy: randomBool(0.8) ? 'hook' : 'cli'
-    }
+      triggeredBy: randomBool(0.8) ? 'hook' : 'cli',
+    },
   };
 }
 
@@ -86,7 +86,7 @@ function generateLayer2Run(timestamp) {
     'performance',
     'security',
     'code-style',
-    'maintainability'
+    'maintainability',
   ];
   const topCategories = categories
     .sort(() => Math.random() - 0.5)
@@ -106,14 +106,14 @@ function generateLayer2Run(timestamp) {
           critical: crCritical,
           high: crHigh,
           medium: crMedium,
-          low: crLow
-        }
+          low: crLow,
+        },
       } : null,
       quinn: {
         findingsCount: quinnFindings,
-        topCategories
-      }
-    }
+        topCategories,
+      },
+    },
   };
 }
 
@@ -140,8 +140,8 @@ function generateLayer3Run(timestamp) {
     findingsCount,
     metadata: {
       triggeredBy: 'manual',
-      reviewer: randomBool(0.7) ? 'human' : 'team-lead'
-    }
+      reviewer: randomBool(0.7) ? 'human' : 'team-lead',
+    },
   };
 }
 
@@ -271,12 +271,12 @@ function generateSeedData(options = {}) {
         critical: crCritical,
         high: crHigh,
         medium: crMedium,
-        low: crLow
-      }
+        low: crLow,
+      },
     };
     metrics.layers.layer2.quinn = {
       findingsCount: quinnFindings,
-      topCategories
+      topCategories,
     };
   }
 
@@ -289,13 +289,13 @@ function generateSeedData(options = {}) {
 
     // Daily pass rate
     const dayRuns = history.filter((r) =>
-      r.timestamp.startsWith(dateStr)
+      r.timestamp.startsWith(dateStr),
     );
     if (dayRuns.length > 0) {
       const passedToday = dayRuns.filter((r) => r.passed).length;
       metrics.trends.passRates.push({
         date: dateStr,
-        value: passedToday / dayRuns.length
+        value: passedToday / dayRuns.length,
       });
     }
 
@@ -305,7 +305,7 @@ function generateSeedData(options = {}) {
       const findings = layer2DayRuns.reduce((sum, r) => sum + (r.findingsCount || 0), 0);
       metrics.trends.autoCatchRate.push({
         date: dateStr,
-        value: findings / layer2DayRuns.length
+        value: findings / layer2DayRuns.length,
       });
     }
   }
@@ -332,5 +332,5 @@ module.exports = {
   seedMetrics,
   generateLayer1Run,
   generateLayer2Run,
-  generateLayer3Run
+  generateLayer3Run,
 };

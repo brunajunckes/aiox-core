@@ -47,7 +47,7 @@ class WorkflowNavigator {
           return {
             workflow: workflowName,
             state: stateName,
-            context: this.extractContext(context)
+            context: this.extractContext(context),
           };
         }
       }
@@ -83,7 +83,7 @@ class WorkflowNavigator {
         command: `*${step.command}${command ? ' ' + command : ''}`,
         description: step.description || '',
         raw_command: step.command,
-        args: command
+        args: command,
       };
     });
 
@@ -147,7 +147,7 @@ class WorkflowNavigator {
     return {
       story_path: rawContext.story_path || rawContext.currentStory || '',
       branch: rawContext.branch || rawContext.gitBranch || '',
-      epic: rawContext.epic || rawContext.currentEpic || ''
+      epic: rawContext.epic || rawContext.currentEpic || '',
     };
   }
 

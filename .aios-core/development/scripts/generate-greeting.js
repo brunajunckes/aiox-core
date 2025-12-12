@@ -53,7 +53,7 @@ async function generateGreeting(agentId) {
     const [complete, sessionContext, projectStatus] = await Promise.all([
       loader.loadComplete(coreConfig), // Loads config + definition
       loadSessionContext(agentId),
-      loadProjectStatus()
+      loadProjectStatus(),
     ]);
     
     // Build unified context
@@ -65,7 +65,7 @@ async function generateGreeting(agentId) {
       previousAgent: sessionContext.previousAgent,
       sessionMessage: sessionContext.message,
       workflowActive: sessionContext.workflowActive,
-      sessionStory: sessionContext.currentStory || null // Session's current story (more accurate than git)
+      sessionStory: sessionContext.currentStory || null, // Session's current story (more accurate than git)
     };
     
     // Ensure agent has persona_profile and persona from definition
@@ -73,7 +73,7 @@ async function generateGreeting(agentId) {
       ...complete.agent,
       persona_profile: complete.persona_profile || complete.definition?.persona_profile,
       persona: complete.definition?.persona || complete.persona,
-      commands: complete.commands || complete.definition?.commands || []
+      commands: complete.commands || complete.definition?.commands || [],
     };
     
     // Generate greeting using GreetingBuilder
@@ -92,7 +92,7 @@ async function generateGreeting(agentId) {
       agentId,
       error: error.message,
       stack: error.stack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
     
     // Fallback: Simple greeting
@@ -117,7 +117,7 @@ async function loadSessionContext(agentId) {
       message: null,
       previousAgent: null,
       lastCommands: [],
-      workflowActive: null
+      workflowActive: null,
     };
   }
 }

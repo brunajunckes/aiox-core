@@ -86,7 +86,7 @@ class ProjectStatusLoader {
       this.getGitBranch(),
       this.getModifiedFiles(),
       this.getRecentCommits(),
-      this.getCurrentStoryInfo()
+      this.getCurrentStoryInfo(),
     ]);
 
     return {
@@ -97,7 +97,7 @@ class ProjectStatusLoader {
       currentEpic: storyInfo.epic || null,
       currentStory: storyInfo.story || null,
       lastUpdate: new Date().toISOString(),
-      isGitRepo: true
+      isGitRepo: true,
     };
   }
 
@@ -110,7 +110,7 @@ class ProjectStatusLoader {
     try {
       await execa('git', ['rev-parse', '--is-inside-work-tree'], {
         cwd: this.rootPath,
-        stderr: 'ignore'
+        stderr: 'ignore',
       });
       return true;
     } catch (error) {
@@ -127,14 +127,14 @@ class ProjectStatusLoader {
     try {
       // Try modern git command first (git >= 2.22)
       const { stdout } = await execa('git', ['branch', '--show-current'], {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
       return stdout.trim();
     } catch (error) {
       // Fallback for older git versions
       try {
         const { stdout } = await execa('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
-          cwd: this.rootPath
+          cwd: this.rootPath,
         });
         return stdout.trim();
       } catch (fallbackError) {
@@ -151,7 +151,7 @@ class ProjectStatusLoader {
   async getModifiedFiles() {
     try {
       const { stdout } = await execa('git', ['status', '--porcelain'], {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
 
       if (!stdout) return { files: [], totalCount: 0 };
@@ -182,7 +182,7 @@ class ProjectStatusLoader {
   async getRecentCommits() {
     try {
       const { stdout } = await execa('git', ['log', `-${this.maxRecentCommits}`, '--oneline', '--no-decorate'], {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
 
       if (!stdout) return [];
@@ -237,7 +237,7 @@ class ProjectStatusLoader {
 
           return {
             story: storyIdMatch ? storyIdMatch[1] : path.basename(file, '.md'),
-            epic: epicMatch ? epicMatch[1].trim() : null
+            epic: epicMatch ? epicMatch[1].trim() : null,
           };
         }
       }
@@ -320,7 +320,7 @@ class ProjectStatusLoader {
       const cache = {
         status,
         timestamp: Date.now(),
-        ttl: this.cacheTTL
+        ttl: this.cacheTTL,
       };
 
       const content = yaml.dump(cache);
@@ -356,7 +356,7 @@ class ProjectStatusLoader {
       currentEpic: null,
       currentStory: null,
       lastUpdate: new Date().toISOString(),
-      isGitRepo: false
+      isGitRepo: false,
     };
   }
 
@@ -373,7 +373,7 @@ class ProjectStatusLoader {
       currentEpic: null,
       currentStory: null,
       lastUpdate: new Date().toISOString(),
-      isGitRepo: false
+      isGitRepo: false,
     };
   }
 
@@ -441,5 +441,5 @@ module.exports = {
   loadProjectStatus: () => loader.loadProjectStatus(),
   clearCache: () => loader.clearCache(),
   formatStatusDisplay: (status) => loader.formatStatusDisplay(status),
-  ProjectStatusLoader
+  ProjectStatusLoader,
 };

@@ -18,7 +18,7 @@ const COLUMNS = {
   id: { header: 'ID', width: 30 },
   name: { header: 'NAME', width: 30 },
   category: { header: 'CATEGORY', width: 12 },
-  subcategory: { header: 'SUBCATEGORY', width: 15 }
+  subcategory: { header: 'SUBCATEGORY', width: 15 },
 };
 
 /**
@@ -105,7 +105,7 @@ function formatJSON(workers, options = {}) {
     category: worker.category,
     subcategory: worker.subcategory || null,
     tags: worker.tags || [],
-    path: worker.path
+    path: worker.path,
   }));
 
   if (pagination) {
@@ -115,8 +115,8 @@ function formatJSON(workers, options = {}) {
         page: pagination.page,
         limit: pagination.limit,
         totalItems: pagination.totalItems,
-        totalPages: pagination.totalPages
-      }
+        totalPages: pagination.totalPages,
+      },
     }, null, 2);
   }
 
@@ -139,7 +139,7 @@ function formatYAML(workers, options = {}) {
     category: worker.category,
     subcategory: worker.subcategory || null,
     tags: worker.tags || [],
-    path: worker.path
+    path: worker.path,
   }));
 
   if (pagination) {
@@ -149,19 +149,19 @@ function formatYAML(workers, options = {}) {
         page: pagination.page,
         limit: pagination.limit,
         totalItems: pagination.totalItems,
-        totalPages: pagination.totalPages
-      }
+        totalPages: pagination.totalPages,
+      },
     }, {
       indent: 2,
       lineWidth: 120,
-      noRefs: true
+      noRefs: true,
     });
   }
 
   return yaml.dump(output, {
     indent: 2,
     lineWidth: 120,
-    noRefs: true
+    noRefs: true,
   });
 }
 
@@ -261,5 +261,5 @@ module.exports = {
   formatYAML,
   formatList,
   formatCount,
-  truncate
+  truncate,
 };

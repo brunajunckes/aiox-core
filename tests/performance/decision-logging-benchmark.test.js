@@ -16,7 +16,7 @@ const {
   trackFile,
   trackTest,
   updateMetrics,
-  completeDecisionLogging
+  completeDecisionLogging,
 } = require('../../.aios-core/development/scripts/decision-recorder');
 
 describeIntegration('Decision Logging Performance Benchmarks', () => {
@@ -32,7 +32,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
     updateMetrics: 1,          // <1ms
     logGeneration: 30,         // <30ms
     indexUpdate: 5,            // <5ms
-    totalOverhead: 50          // <50ms (CRITICAL)
+    totalOverhead: 50,          // <50ms (CRITICAL)
   };
 
   beforeEach(async () => {
@@ -70,7 +70,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
       const startTime = Date.now();
 
       await initializeDecisionLogging('dev', testStoryPath, {
-        agentLoadTime: 150
+        agentLoadTime: 150,
       });
 
       const duration = Date.now() - startTime;
@@ -93,7 +93,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
           reason: 'Performance test',
           alternatives: ['Alt 1', 'Alt 2', 'Alt 3'],
           type: 'library-choice',
-          priority: 'medium'
+          priority: 'medium',
         });
 
         const duration = Date.now() - startTime;
@@ -145,7 +145,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         trackTest({
           name: `test-${i}.js`,
           passed: i % 2 === 0,
-          duration: 100 + i
+          duration: 100 + i,
         });
 
         const duration = Date.now() - startTime;
@@ -169,7 +169,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
       updateMetrics({
         agentLoadTime: 150,
         taskExecutionTime: 300000,
-        customMetric: 'test'
+        customMetric: 'test',
       });
 
       const duration = Date.now() - startTime;
@@ -188,7 +188,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         recordDecision({
           description: `Decision ${i}`,
           reason: 'Performance test',
-          alternatives: ['Alt 1', 'Alt 2']
+          alternatives: ['Alt 1', 'Alt 2'],
         });
       }
 
@@ -200,7 +200,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         trackTest({
           name: `test-${i}.js`,
           passed: true,
-          duration: 100
+          duration: 100,
         });
       }
 
@@ -223,7 +223,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
 
       // Simulate realistic yolo mode workflow
       await initializeDecisionLogging('dev', testStoryPath, {
-        agentLoadTime: 150
+        agentLoadTime: 150,
       });
 
       // Typical decision count: 3-10
@@ -233,7 +233,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
           reason: 'Performance validation',
           alternatives: ['Alt 1', 'Alt 2', 'Alt 3'],
           type: i % 2 === 0 ? 'library-choice' : 'architecture',
-          priority: i < 3 ? 'high' : 'medium'
+          priority: i < 3 ? 'high' : 'medium',
         });
       }
 
@@ -247,12 +247,12 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         trackTest({
           name: `feature-${i}.test.js`,
           passed: i % 10 !== 0, // 10% failure rate
-          duration: 50 + Math.floor(Math.random() * 200)
+          duration: 50 + Math.floor(Math.random() * 200),
         });
       }
 
       updateMetrics({
-        taskExecutionTime: 180000 // 3 minutes
+        taskExecutionTime: 180000, // 3 minutes
       });
 
       await completeDecisionLogging(testStoryId, 'completed');
@@ -263,9 +263,9 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
       expect(totalOverhead).toBeLessThan(TARGETS.totalOverhead);
 
       console.log(`\n📊 TOTAL WORKFLOW OVERHEAD: ${totalOverhead}ms (target: <${TARGETS.totalOverhead}ms) ✓`);
-      console.log(`   - Decisions: 7`);
-      console.log(`   - Files: 12`);
-      console.log(`   - Tests: 15`);
+      console.log('   - Decisions: 7');
+      console.log('   - Files: 12');
+      console.log('   - Tests: 15');
       console.log(`   - Status: ${totalOverhead < TARGETS.totalOverhead ? '✅ PASS' : '❌ FAIL'}\n`);
     });
 
@@ -279,7 +279,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         recordDecision({
           description: `Stress test decision ${i}`,
           reason: 'Large workflow test',
-          alternatives: ['Alt 1', 'Alt 2']
+          alternatives: ['Alt 1', 'Alt 2'],
         });
       }
 
@@ -293,7 +293,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         trackTest({
           name: `test-${i}.js`,
           passed: true,
-          duration: 100
+          duration: 100,
         });
       }
 
@@ -320,7 +320,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         recordDecision({
           description: `Regression test ${i}`,
           reason: 'Checking for performance degradation',
-          alternatives: []
+          alternatives: [],
         });
 
         const duration = Date.now() - startTime;
@@ -356,7 +356,7 @@ describeIntegration('Decision Logging Performance Benchmarks', () => {
         recordDecision({
           description: `Memory test ${i}`,
           reason: 'Testing memory usage',
-          alternatives: []
+          alternatives: [],
         });
       }
 

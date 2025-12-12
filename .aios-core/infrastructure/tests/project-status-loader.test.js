@@ -206,7 +206,7 @@ Test story
 
       await fs.writeFile(
         path.join(testRoot, 'docs', 'stories', 'story-6.1.2.4.md'),
-        storyContent
+        storyContent,
       );
 
       const info = await loader.getCurrentStoryInfo();
@@ -220,13 +220,13 @@ Test story
       // Create one completed story
       await fs.writeFile(
         path.join(testRoot, 'docs', 'stories', 'story-1.md'),
-        '**Status:** Completed'
+        '**Status:** Completed',
       );
 
       // Create one in progress story
       await fs.writeFile(
         path.join(testRoot, 'docs', 'stories', 'story-2.md'),
-        '**Status:** InProgress\n**Story ID:** STORY-2'
+        '**Status:** InProgress\n**Story ID:** STORY-2',
       );
 
       const info = await loader.getCurrentStoryInfo();
@@ -352,7 +352,7 @@ Test story
         modifiedFiles: ['file1.md', 'file2.js'],
         recentCommits: ['chore: cleanup', 'feat: new feature'],
         currentStory: 'STORY-123',
-        lastUpdate: new Date().toISOString()
+        lastUpdate: new Date().toISOString(),
       };
 
       const display = loader.formatStatusDisplay(status);
@@ -370,7 +370,7 @@ Test story
         modifiedFiles: [],
         recentCommits: [],
         currentStory: null,
-        lastUpdate: new Date().toISOString()
+        lastUpdate: new Date().toISOString(),
       };
 
       const display = loader.formatStatusDisplay(status);
@@ -384,7 +384,7 @@ Test story
         modifiedFiles: [],
         recentCommits: [],
         currentStory: null,
-        lastUpdate: new Date().toISOString()
+        lastUpdate: new Date().toISOString(),
       };
 
       const display = loader.formatStatusDisplay(status);

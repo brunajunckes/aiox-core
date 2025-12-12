@@ -72,7 +72,7 @@ class DiffGenerator {
           const filePath = fileParts.join('\t');
           return {
             status: this._parseStatus(status),
-            path: filePath
+            path: filePath,
           };
         });
     } catch (error) {
@@ -90,7 +90,7 @@ class DiffGenerator {
       'M': 'modified',
       'D': 'deleted',
       'R': 'renamed',
-      'C': 'copied'
+      'C': 'copied',
     };
     return statusMap[code] || 'unknown';
   }
@@ -121,7 +121,7 @@ class DiffGenerator {
       files: Array.from(files),
       additions,
       deletions,
-      total: additions + deletions
+      total: additions + deletions,
     };
   }
 }

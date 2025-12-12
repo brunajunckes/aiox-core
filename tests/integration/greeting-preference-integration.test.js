@@ -10,7 +10,7 @@ jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/git-config-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/project-status-loader', () => ({
   loadProjectStatus: jest.fn(),
-  formatStatusDisplay: jest.fn()
+  formatStatusDisplay: jest.fn(),
 }));
 
 const GreetingPreferenceManager = require('../../.aios-core/development/scripts/greeting-preference-manager');
@@ -37,9 +37,9 @@ describeIntegration('Greeting Preference Integration', () => {
       greeting_levels: {
         minimal: '💻 dev Agent ready',
         named: '💻 Dex (Builder) ready',
-        archetypal: '💻 Dex the Builder ready to innovate!'
-      }
-    }
+        archetypal: '💻 Dex the Builder ready to innovate!',
+      },
+    },
   };
 
   beforeEach(async () => {
@@ -56,9 +56,9 @@ describeIntegration('Greeting Preference Integration', () => {
         agentIdentity: {
           greeting: {
             preference: 'auto',
-            contextDetection: true
-          }
-        }
+            contextDetection: true,
+          },
+        },
       };
       fs.writeFileSync(CONFIG_PATH, yaml.dump(testConfig), 'utf8');
       originalPreference = 'auto';
@@ -161,7 +161,7 @@ describeIntegration('Greeting Preference Integration', () => {
       const agentWithoutLevels = {
         name: 'Test',
         id: 'test',
-        icon: '🤖'
+        icon: '🤖',
       };
       
       const greeting = await builder.buildGreeting(agentWithoutLevels, {});

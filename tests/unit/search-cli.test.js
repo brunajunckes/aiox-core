@@ -24,7 +24,7 @@ const mockWorkers = [
     category: 'data',
     subcategory: 'transformation',
     tags: ['etl', 'data', 'json', 'csv'],
-    path: '.aios-core/development/tasks/data/json-csv-transformer.md'
+    path: '.aios-core/development/tasks/data/json-csv-transformer.md',
   },
   {
     id: 'csv-json-transformer',
@@ -33,7 +33,7 @@ const mockWorkers = [
     category: 'data',
     subcategory: 'transformation',
     tags: ['etl', 'data', 'json', 'csv'],
-    path: '.aios-core/development/tasks/data/csv-json-transformer.md'
+    path: '.aios-core/development/tasks/data/csv-json-transformer.md',
   },
   {
     id: 'json-validator',
@@ -42,7 +42,7 @@ const mockWorkers = [
     category: 'validation',
     subcategory: 'schema',
     tags: ['validation', 'schema', 'json'],
-    path: '.aios-core/development/tasks/validation/json-validator.md'
+    path: '.aios-core/development/tasks/validation/json-validator.md',
   },
   {
     id: 'api-generator',
@@ -51,7 +51,7 @@ const mockWorkers = [
     category: 'code',
     subcategory: 'generation',
     tags: ['api', 'rest', 'generator', 'openapi'],
-    path: '.aios-core/development/tasks/code/api-generator.md'
+    path: '.aios-core/development/tasks/code/api-generator.md',
   },
   {
     id: 'test-runner',
@@ -60,8 +60,8 @@ const mockWorkers = [
     category: 'testing',
     subcategory: 'execution',
     tags: ['testing', 'unit', 'integration', 'jest'],
-    path: '.aios-core/development/tasks/testing/test-runner.md'
-  }
+    path: '.aios-core/development/tasks/testing/test-runner.md',
+  },
 ];
 
 describe('Levenshtein Distance', () => {
@@ -113,7 +113,7 @@ describe('Filter Functions', () => {
   test('applyFilters combines category and tags', () => {
     const filtered = applyFilters(mockWorkers, {
       category: 'validation',
-      tags: ['json']
+      tags: ['json'],
     });
     expect(filtered.length).toBe(1);
     expect(filtered[0].id).toBe('json-validator');
@@ -136,7 +136,7 @@ describe('Score Calculator', () => {
     const workers = [
       { id: 'a', name: 'A', score: 50 },
       { id: 'b', name: 'B', score: 90 },
-      { id: 'c', name: 'C', score: 70 }
+      { id: 'c', name: 'C', score: 70 },
     ];
     const sorted = sortByScore(workers);
     expect(sorted[0].id).toBe('b');
@@ -147,7 +147,7 @@ describe('Score Calculator', () => {
   test('calculateSearchAccuracy returns correct metrics', () => {
     const results = [
       { id: 'json-validator' },
-      { id: 'other-worker' }
+      { id: 'other-worker' },
     ];
     const accuracy = calculateSearchAccuracy(results, 'json-validator');
     expect(accuracy.found).toBe(true);
@@ -165,8 +165,8 @@ describe('Output Formatter', () => {
       category: 'data',
       tags: ['etl', 'json', 'csv'],
       score: 95,
-      path: '.aios-core/tasks/json-csv-transformer.md'
-    }
+      path: '.aios-core/tasks/json-csv-transformer.md',
+    },
   ];
 
   test('formatJSON returns valid JSON', () => {
@@ -224,7 +224,7 @@ describe('Semantic Search Utilities', () => {
       name: 'Test Worker',
       description: 'A test worker',
       category: 'testing',
-      tags: ['test', 'unit']
+      tags: ['test', 'unit'],
     };
     const text = buildSearchText(worker);
     expect(text).toContain('Test Worker');

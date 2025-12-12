@@ -119,7 +119,7 @@ async function executeList(options) {
     if (format === 'tree') {
       // Tree format doesn't use pagination (shows all grouped)
       const output = formatTree(workers, {
-        verbose: options.verbose
+        verbose: options.verbose,
       });
       console.log(output);
     } else {
@@ -132,7 +132,7 @@ async function executeList(options) {
       const output = formatList(paginatedResult.items, {
         format: format,
         pagination: paginatedResult.pagination,
-        verbose: options.verbose
+        verbose: options.verbose,
       });
 
       console.log(output);
@@ -184,7 +184,7 @@ async function executeCountMode(registry, options) {
   } else {
     // Show all categories
     const output = formatCount(categories, totalWorkers, {
-      verbose: options.verbose
+      verbose: options.verbose,
     });
     console.log(output);
   }
@@ -210,5 +210,5 @@ function logPerformance(startTime, verbose) {
 
 module.exports = {
   createListCommand,
-  executeList
+  executeList,
 };

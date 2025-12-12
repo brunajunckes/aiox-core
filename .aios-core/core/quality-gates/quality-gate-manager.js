@@ -38,7 +38,7 @@ class QualityGateManager {
     this.layers = {
       layer1: new Layer1PreCommit(config.layer1 || {}),
       layer2: new Layer2PRAutomation(config.layer2 || {}),
-      layer3: new Layer3HumanReview(config.layer3 || {})
+      layer3: new Layer3HumanReview(config.layer3 || {}),
     };
     this.humanReviewOrchestrator = new HumanReviewOrchestrator(config.humanReview || {});
     this.notificationManager = new NotificationManager(config.notifications || {});
@@ -73,7 +73,7 @@ class QualityGateManager {
     const layerMap = {
       1: 'layer1',
       2: 'layer2',
-      3: 'layer3'
+      3: 'layer3',
     };
 
     const layerKey = layerMap[layerNum];
@@ -149,7 +149,7 @@ class QualityGateManager {
     // Layer 3: Human Review
     const l3Context = {
       ...context,
-      previousLayers: [l1Result, l2Result]
+      previousLayers: [l1Result, l2Result],
     };
     const l3Result = await this.runLayer3(l3Context);
     this.results.push(l3Result);
@@ -187,7 +187,7 @@ class QualityGateManager {
       duration: this.getDuration(),
       layers: this.results,
       exitCode: 1,
-      message: 'Layer 1 failed - fix lint/test/typecheck errors before proceeding'
+      message: 'Layer 1 failed - fix lint/test/typecheck errors before proceeding',
     };
   }
 
@@ -213,7 +213,7 @@ class QualityGateManager {
       duration: this.getDuration(),
       layers: this.results,
       exitCode: 1,
-      message: 'Layer 2 found blocking issues - review and fix before proceeding'
+      message: 'Layer 2 found blocking issues - review and fix before proceeding',
     };
   }
 
@@ -257,7 +257,7 @@ class QualityGateManager {
       duration: this.getDuration(),
       layers: this.results,
       exitCode,
-      message
+      message,
     };
   }
 
@@ -278,7 +278,7 @@ class QualityGateManager {
         layer2: status.layer2 || null,
         layer3: status.layer3 || null,
         signoffs: status.signoffs || {},
-        overall: this.determineOverallStatus(status)
+        overall: this.determineOverallStatus(status),
       };
     } catch {
       return {
@@ -287,7 +287,7 @@ class QualityGateManager {
         layer2: null,
         layer3: null,
         signoffs: {},
-        overall: 'unknown'
+        overall: 'unknown',
       };
     }
   }
@@ -318,7 +318,7 @@ class QualityGateManager {
       duration: this.getDuration(),
       layer1: this.results[0] || null,
       layer2: this.results[1] || null,
-      layer3: this.results[2] || null
+      layer3: this.results[2] || null,
     };
 
     // Preserve existing signoffs
@@ -353,8 +353,8 @@ class QualityGateManager {
         layer1Duration: this.results[0]?.duration || 0,
         layer2Duration: this.results[1]?.duration || 0,
         layer3Duration: this.results[2]?.duration || 0,
-        totalDuration: this.getDuration()
-      }
+        totalDuration: this.getDuration(),
+      },
     };
 
     await fs.mkdir(reportDir, { recursive: true });
@@ -445,7 +445,7 @@ class QualityGateManager {
       const blockResult = this.humanReviewOrchestrator.block(
         { pass: false, layer: 'Layer 1', issues: this.extractIssues(l1Result), reason: 'Layer 1 failed' },
         'layer1',
-        this.startTime
+        this.startTime,
       );
 
       if (verbose) {
@@ -461,7 +461,7 @@ class QualityGateManager {
       return {
         ...blockResult,
         layers: this.results,
-        exitCode: 1
+        exitCode: 1,
       };
     }
 
@@ -475,7 +475,7 @@ class QualityGateManager {
       const blockResult = this.humanReviewOrchestrator.block(
         { pass: false, layer: 'Layer 2', issues: this.extractIssues(l2Result), reason: 'Layer 2 failed' },
         'layer2',
-        this.startTime
+        this.startTime,
       );
 
       if (verbose) {
@@ -491,7 +491,7 @@ class QualityGateManager {
       return {
         ...blockResult,
         layers: this.results,
-        exitCode: 1
+        exitCode: 1,
       };
     }
 
@@ -504,13 +504,13 @@ class QualityGateManager {
     const orchestrationResult = await this.humanReviewOrchestrator.orchestrateReview(
       { ...prContext, changedFiles },
       l1Result,
-      l2Result
+      l2Result,
     );
 
     // Run Layer 3 setup
     const l3Context = {
       ...prContext,
-      previousLayers: [l1Result, l2Result]
+      previousLayers: [l1Result, l2Result],
     };
     const l3Result = await this.runLayer3(l3Context);
     this.results.push(l3Result);
@@ -521,14 +521,14 @@ class QualityGateManager {
       console.log('\n' + '━'.repeat(50));
       console.log('📊 Orchestration Summary');
       console.log('━'.repeat(50));
-      console.log(`✅ Layer 1: PASSED`);
-      console.log(`✅ Layer 2: PASSED`);
+      console.log('✅ Layer 1: PASSED');
+      console.log('✅ Layer 2: PASSED');
       console.log(`⏳ Layer 3: ${orchestrationResult.reviewRequest ? 'HUMAN REVIEW REQUESTED' : 'PENDING'}`);
       console.log(`\n📬 Review assigned to: ${orchestrationResult.reviewRequest?.reviewer || 'TBD'}`);
       console.log(`⏱️ Estimated review time: ~${orchestrationResult.reviewRequest?.estimatedTime || 30} minutes`);
 
       if (orchestrationResult.reviewRequest?.focusAreas?.primary?.length > 0) {
-        console.log(`\n🎯 Focus Areas:`);
+        console.log('\n🎯 Focus Areas:');
         orchestrationResult.reviewRequest.focusAreas.primary.forEach((area) => {
           console.log(`  • ${area.area}: ${area.reason}`);
         });
@@ -545,7 +545,7 @@ class QualityGateManager {
       layers: this.results,
       reviewRequest: orchestrationResult.reviewRequest,
       exitCode: 0,
-      message: 'Layers 1+2 passed. Human review requested.'
+      message: 'Layers 1+2 passed. Human review requested.',
     };
   }
 
@@ -564,7 +564,7 @@ class QualityGateManager {
         issues.push({
           check: result.check,
           message: result.message,
-          severity: result.issues?.critical > 0 ? 'CRITICAL' : 'HIGH'
+          severity: result.issues?.critical > 0 ? 'CRITICAL' : 'HIGH',
         });
       }
     });
@@ -581,7 +581,7 @@ class QualityGateManager {
   async completeHumanReview(requestId, reviewResult) {
     const completedRequest = await this.humanReviewOrchestrator.completeReview(
       requestId,
-      reviewResult
+      reviewResult,
     );
 
     await this.notificationManager.sendCompletionNotification(completedRequest);

@@ -124,5 +124,5 @@ async function run(args = process.argv) {
 
 module.exports = {
   createProgram,
-  run
+  run,
 };

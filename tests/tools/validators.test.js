@@ -43,7 +43,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await clickupValidator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        assignees: [456, 789, 101112]
+        assignees: [456, 789, 101112],
       });
 
       expect(result.valid).toBe(true);
@@ -54,7 +54,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await clickupValidator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        assignees: { add: [456], rem: [789] }
+        assignees: { add: [456], rem: [789] },
       });
 
       expect(result.valid).toBe(false);
@@ -65,7 +65,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates correct assignee format for update_task', async () => {
       const result = await clickupValidator.validate('update_task', {
         task_id: '123',
-        assignees: { add: [456], rem: [789] }
+        assignees: { add: [456], rem: [789] },
       });
 
       expect(result.valid).toBe(true);
@@ -75,7 +75,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('rejects array format for update_task (expects object)', async () => {
       const result = await clickupValidator.validate('update_task', {
         task_id: '123',
-        assignees: [456, 789]
+        assignees: [456, 789],
       });
 
       expect(result.valid).toBe(false);
@@ -84,7 +84,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('validates required fields for create_task', async () => {
       const result = await clickupValidator.validate('create_task', {
-        list_id: '123456789'
+        list_id: '123456789',
         // Missing: name
       });
 
@@ -95,7 +95,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates list_id format', async () => {
       const result = await clickupValidator.validate('create_task', {
         name: 'Test Task',
-        list_id: 'short' // Too short
+        list_id: 'short', // Too short
       });
 
       expect(result.valid).toBe(false);
@@ -106,7 +106,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const invalidPriority = await clickupValidator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 5 // Out of range
+        priority: 5, // Out of range
       });
 
       expect(invalidPriority.valid).toBe(false);
@@ -115,7 +115,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const validPriority = await clickupValidator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 2
+        priority: 2,
       });
 
       expect(validPriority.valid).toBe(true);
@@ -126,8 +126,8 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         name: 'Test Task',
         list_id: '123456789',
         custom_fields: [
-          { id: 'field_123', value: 'test value' }
-        ]
+          { id: 'field_123', value: 'test value' },
+        ],
       });
 
       expect(result.valid).toBe(true);
@@ -137,7 +137,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await clickupValidator.validate('parse_webhook', {
         event: 'task_created',
         task_id: '123456789',
-        webhook_id: 'wh_abc123'
+        webhook_id: 'wh_abc123',
       });
 
       expect(result.valid).toBe(true);
@@ -148,7 +148,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates file creation with required fields', async () => {
       const result = await googleValidator.validate('create_file', {
         name: 'test-document.txt',
-        content: 'Test content here'
+        content: 'Test content here',
       });
 
       expect(result.valid).toBe(true);
@@ -157,7 +157,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('requires either content or fileUrl for file creation', async () => {
       const result = await googleValidator.validate('create_file', {
-        name: 'test-document.txt'
+        name: 'test-document.txt',
         // Missing both content and fileUrl
       });
 
@@ -169,7 +169,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const invalidMime = await googleValidator.validate('create_file', {
         name: 'test.txt',
         content: 'data',
-        mimeType: 'invalid-type'
+        mimeType: 'invalid-type',
       });
 
       expect(invalidMime.valid).toBe(false);
@@ -178,7 +178,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const validMime = await googleValidator.validate('create_file', {
         name: 'test.txt',
         content: 'data',
-        mimeType: 'text/plain'
+        mimeType: 'text/plain',
       });
 
       expect(validMime.valid).toBe(true);
@@ -188,7 +188,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await googleValidator.validate('share_file', {
         fileId: 'abc123def456',
         emailAddress: 'user@example.com',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(true);
@@ -197,7 +197,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('requires fileId for share_file', async () => {
       const result = await googleValidator.validate('share_file', {
         emailAddress: 'user@example.com',
-        role: 'reader'
+        role: 'reader',
         // Missing fileId
       });
 
@@ -209,7 +209,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await googleValidator.validate('share_file', {
         fileId: 'abc123',
         emailAddress: 'not-an-email',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(false);
@@ -220,7 +220,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const invalidRole = await googleValidator.validate('share_file', {
         fileId: 'abc123',
         emailAddress: 'user@example.com',
-        role: 'invalid-role'
+        role: 'invalid-role',
       });
 
       expect(invalidRole.valid).toBe(false);
@@ -230,7 +230,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         const result = await googleValidator.validate('share_file', {
           fileId: 'abc123',
           emailAddress: 'user@example.com',
-          role
+          role,
         });
         expect(result.valid).toBe(true);
       }
@@ -240,7 +240,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await googleValidator.validate('create_event', {
         summary: 'Team Meeting',
         startTime: '2025-01-15T10:00:00Z',
-        endTime: '2025-01-15T11:00:00Z'
+        endTime: '2025-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(true);
@@ -250,7 +250,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await googleValidator.validate('create_event', {
         summary: 'Team Meeting',
         startTime: 'invalid-date',
-        endTime: '2025-01-15T11:00:00Z'
+        endTime: '2025-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(false);
@@ -262,7 +262,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         summary: 'Team Meeting',
         startTime: '2025-01-15T10:00:00Z',
         endTime: '2025-01-15T11:00:00Z',
-        attendees: ['user@example.com', 'invalid-email']
+        attendees: ['user@example.com', 'invalid-email'],
       });
 
       expect(result.valid).toBe(false);
@@ -273,7 +273,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
   describeIntegration('n8n Workflow Validation', () => {
     test('validates workflow execution with required fields', async () => {
       const result = await n8nValidator.validate('execute_workflow', {
-        workflow_id: 'wf_abc123def456'
+        workflow_id: 'wf_abc123def456',
       });
 
       expect(result.valid).toBe(true);
@@ -282,7 +282,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('requires workflow_id for execution', async () => {
       const result = await n8nValidator.validate('execute_workflow', {
-        data: { key: 'value' }
+        data: { key: 'value' },
         // Missing workflow_id
       });
 
@@ -293,7 +293,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates data parameter structure', async () => {
       const invalidData = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_123',
-        data: 'not-an-object'
+        data: 'not-an-object',
       });
 
       expect(invalidData.valid).toBe(false);
@@ -301,7 +301,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
       const validData = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_123',
-        data: { input: 'value', count: 42 }
+        data: { input: 'value', count: 42 },
       });
 
       expect(validData.valid).toBe(true);
@@ -310,7 +310,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates wait_for_completion as boolean', async () => {
       const invalid = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_123',
-        wait_for_completion: 'yes'
+        wait_for_completion: 'yes',
       });
 
       expect(invalid.valid).toBe(false);
@@ -318,7 +318,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
       const valid = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_123',
-        wait_for_completion: true
+        wait_for_completion: true,
       });
 
       expect(valid.valid).toBe(true);
@@ -327,7 +327,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates workflow creation with name', async () => {
       const result = await n8nValidator.validate('create_workflow', {
         name: 'Data Processing Workflow',
-        nodes: []
+        nodes: [],
       });
 
       expect(result.valid).toBe(true);
@@ -335,7 +335,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('requires workflow name for creation', async () => {
       const result = await n8nValidator.validate('create_workflow', {
-        nodes: []
+        nodes: [],
         // Missing name
       });
 
@@ -348,8 +348,8 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         name: 'Test Workflow',
         nodes: [
           { id: 'node1', type: 'trigger', name: 'Webhook Trigger' },
-          { id: 'node2', type: 'action', name: 'Send Email' }
-        ]
+          { id: 'node2', type: 'action', name: 'Send Email' },
+        ],
       });
 
       expect(result.valid).toBe(true);
@@ -359,8 +359,8 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await n8nValidator.validate('execute_workflow', {
         workflow_id: 'wf_123',
         credentials: {
-          http: 'cred_abc123'
-        }
+          http: 'cred_abc123',
+        },
       });
 
       expect(result.valid).toBe(true);
@@ -371,7 +371,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates SQL execution with required fields', async () => {
       const result = await supabaseValidator.validate('execute_sql', {
         project_id: 'proj_abc123',
-        query: 'SELECT * FROM users WHERE id = $1'
+        query: 'SELECT * FROM users WHERE id = $1',
       });
 
       expect(result.valid).toBe(true);
@@ -380,7 +380,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('requires project_id for SQL execution', async () => {
       const result = await supabaseValidator.validate('execute_sql', {
-        query: 'SELECT * FROM users'
+        query: 'SELECT * FROM users',
         // Missing project_id
       });
 
@@ -390,7 +390,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
     test('requires query for SQL execution', async () => {
       const result = await supabaseValidator.validate('execute_sql', {
-        project_id: 'proj_abc123'
+        project_id: 'proj_abc123',
         // Missing query
       });
 
@@ -401,7 +401,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('blocks dangerous DROP operations in execute_sql', async () => {
       const dropTable = await supabaseValidator.validate('execute_sql', {
         project_id: 'proj_123',
-        query: 'DROP TABLE users'
+        query: 'DROP TABLE users',
       });
 
       expect(dropTable.valid).toBe(false);
@@ -409,7 +409,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
 
       const dropDatabase = await supabaseValidator.validate('execute_sql', {
         project_id: 'proj_123',
-        query: 'DROP DATABASE mydb'
+        query: 'DROP DATABASE mydb',
       });
 
       expect(dropDatabase.valid).toBe(false);
@@ -420,13 +420,13 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         'CREATE TABLE test (id INT)',
         'ALTER TABLE users ADD COLUMN email TEXT',
         'CREATE INDEX idx_email ON users(email)',
-        'DROP INDEX idx_email'
+        'DROP INDEX idx_email',
       ];
 
       for (const query of ddlOperations) {
         const result = await supabaseValidator.validate('execute_sql', {
           project_id: 'proj_123',
-          query
+          query,
         });
 
         expect(result.valid).toBe(false);
@@ -439,13 +439,13 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         'SELECT * FROM users',
         'INSERT INTO users (name, email) VALUES ($1, $2)',
         'UPDATE users SET email = $1 WHERE id = $2',
-        'DELETE FROM users WHERE id = $1'
+        'DELETE FROM users WHERE id = $1',
       ];
 
       for (const query of dmlOperations) {
         const result = await supabaseValidator.validate('execute_sql', {
           project_id: 'proj_123',
-          query
+          query,
         });
 
         expect(result.valid).toBe(true);
@@ -456,7 +456,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const result = await supabaseValidator.validate('apply_migration', {
         project_id: 'proj_123',
         name: 'add_users_table',
-        query: 'CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT);'
+        query: 'CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT);',
       });
 
       expect(result.valid).toBe(true);
@@ -466,7 +466,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const invalid = await supabaseValidator.validate('apply_migration', {
         project_id: 'proj_123',
         name: 'Add Users Table',
-        query: 'CREATE TABLE users (id INT);'
+        query: 'CREATE TABLE users (id INT);',
       });
 
       expect(invalid.valid).toBe(false);
@@ -475,7 +475,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
       const valid = await supabaseValidator.validate('apply_migration', {
         project_id: 'proj_123',
         name: 'add_users_table',
-        query: 'CREATE TABLE users (id INT);'
+        query: 'CREATE TABLE users (id INT);',
       });
 
       expect(valid.valid).toBe(true);
@@ -488,7 +488,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         query: `
           ALTER TABLE users ENABLE ROW LEVEL SECURITY;
           CREATE POLICY user_select_own ON users FOR SELECT USING (auth.uid() = user_id);
-        `
+        `,
       });
 
       expect(result.valid).toBe(true);
@@ -497,7 +497,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
     test('validates project reference format', async () => {
       const result = await supabaseValidator.validate('execute_sql', {
         project_id: 'invalid_format',
-        query: 'SELECT 1'
+        query: 'SELECT 1',
       });
 
       expect(result.valid).toBe(false);
@@ -511,7 +511,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         clickupValidator.validate('create_task', {}),
         googleValidator.validate('create_file', {}),
         n8nValidator.validate('execute_workflow', {}),
-        supabaseValidator.validate('execute_sql', {})
+        supabaseValidator.validate('execute_sql', {}),
       ]);
 
       results.forEach(result => {
@@ -527,7 +527,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         clickupValidator.validate('create_task', {}),
         googleValidator.validate('create_file', {}),
         n8nValidator.validate('execute_workflow', {}),
-        supabaseValidator.validate('execute_sql', {})
+        supabaseValidator.validate('execute_sql', {}),
       ]);
 
       results.forEach(result => {
@@ -541,7 +541,7 @@ describeIntegration('Complex Tool Validators - Integration Tests', () => {
         clickupValidator.validate('create_task', null),
         googleValidator.validate('create_file', undefined),
         n8nValidator.validate('execute_workflow', null),
-        supabaseValidator.validate('execute_sql', undefined)
+        supabaseValidator.validate('execute_sql', undefined),
       ];
 
       for (const operation of operations) {

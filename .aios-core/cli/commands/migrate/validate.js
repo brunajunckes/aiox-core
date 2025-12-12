@@ -26,7 +26,7 @@ async function validateStructure(aiosCoreDir) {
     valid: true,
     modules: {},
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   const expectedModules = ['core', 'development', 'product', 'infrastructure'];
@@ -38,7 +38,7 @@ async function validateStructure(aiosCoreDir) {
       fileCount: 0,
       totalSize: 0,
       hasExpectedDirs: true,
-      missingDirs: []
+      missingDirs: [],
     };
 
     if (fs.existsSync(moduleDir)) {
@@ -62,13 +62,13 @@ async function validateStructure(aiosCoreDir) {
       if (moduleResult.missingDirs.length > 0) {
         result.warnings.push({
           module: moduleName,
-          message: `Missing expected directories: ${moduleResult.missingDirs.join(', ')}`
+          message: `Missing expected directories: ${moduleResult.missingDirs.join(', ')}`,
         });
       }
     } else {
       result.warnings.push({
         module: moduleName,
-        message: `Module directory not found: ${moduleName}/`
+        message: `Module directory not found: ${moduleName}/`,
       });
     }
 
@@ -85,7 +85,7 @@ async function validateStructure(aiosCoreDir) {
         if (config.directories.includes(entry.name)) {
           result.warnings.push({
             type: 'leftover',
-            message: `Leftover v2.0 directory found: ${entry.name}/ (should be in module)`
+            message: `Leftover v2.0 directory found: ${entry.name}/ (should be in module)`,
           });
         }
       }
@@ -141,7 +141,7 @@ async function runLintCheck(projectRoot, options = {}) {
       errors: 0,
       warnings: 0,
       output: '',
-      error: null
+      error: null,
     };
 
     // Check if package.json has lint script
@@ -169,7 +169,7 @@ async function runLintCheck(projectRoot, options = {}) {
 
     const child = spawn(shell, shellArgs, {
       cwd: projectRoot,
-      timeout
+      timeout,
     });
 
     let stdout = '';
@@ -221,7 +221,7 @@ async function runTests(projectRoot, options = {}) {
       passed: 0,
       failed: 0,
       output: '',
-      error: null
+      error: null,
     };
 
     // Check if package.json has test script
@@ -250,7 +250,7 @@ async function runTests(projectRoot, options = {}) {
     const child = spawn(shell, shellArgs, {
       cwd: projectRoot,
       timeout,
-      env: { ...process.env, CI: 'true' } // Disable watch mode
+      env: { ...process.env, CI: 'true' }, // Disable watch mode
     });
 
     let stdout = '';
@@ -306,8 +306,8 @@ async function runFullValidation(projectRoot, options = {}) {
     summary: {
       passed: [],
       failed: [],
-      skipped: []
-    }
+      skipped: [],
+    },
   };
 
   // Validate structure
@@ -448,5 +448,5 @@ module.exports = {
   runLintCheck,
   runTests,
   runFullValidation,
-  generateSummary
+  generateSummary,
 };

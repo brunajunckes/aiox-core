@@ -12,7 +12,7 @@ const {
   validateListSelection,
   sanitizeShellInput,
   INPUT_LIMITS,
-  ALLOWED_PROJECT_TYPES
+  ALLOWED_PROJECT_TYPES,
 } = require('../../src/wizard/validators');
 
 describe('validators', () => {

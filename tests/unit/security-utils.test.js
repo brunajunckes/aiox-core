@@ -18,7 +18,7 @@ const {
   RateLimiter,
   safePath,
   isSafeString,
-  getObjectDepth
+  getObjectDepth,
 } = require('../../.aios-core/core/utils/security-utils');
 
 describe('security-utils', () => {
@@ -78,7 +78,7 @@ describe('security-utils', () => {
 
     test('should detect path escaping base directory', () => {
       const result = validatePath('subdir/../../../outside.txt', {
-        basePath: '/safe/directory'
+        basePath: '/safe/directory',
       });
 
       expect(result.valid).toBe(false);

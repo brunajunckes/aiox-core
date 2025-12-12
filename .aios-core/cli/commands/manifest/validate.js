@@ -28,7 +28,7 @@ function createValidateCommand() {
       try {
         const validator = createManifestValidator({
           basePath: process.cwd(),
-          verbose: options.verbose
+          verbose: options.verbose,
         });
 
         console.log('Validating manifests...\n');
@@ -62,5 +62,5 @@ function createValidateCommand() {
 }
 
 module.exports = {
-  createValidateCommand
+  createValidateCommand,
 };

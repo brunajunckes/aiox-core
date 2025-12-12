@@ -142,7 +142,7 @@ class ConfigCache {
       total,
       hitRate: `${hitRate}%`,
       ttl: this.ttl,
-      ttlMinutes: (this.ttl / 1000 / 60).toFixed(1)
+      ttlMinutes: (this.ttl / 1000 / 60).toFixed(1),
     };
   }
 
@@ -182,7 +182,7 @@ class ConfigCache {
         age,
         ageSeconds: (age / 1000).toFixed(1),
         expires: this.ttl - age,
-        expiresSeconds: ((this.ttl - age) / 1000).toFixed(1)
+        expiresSeconds: ((this.ttl - age) / 1000).toFixed(1),
       });
     }
 
@@ -210,8 +210,8 @@ class ConfigCache {
       entries: this.entries().map(e => ({
         key: e.key,
         age: e.ageSeconds,
-        expires: e.expiresSeconds
-      }))
+        expires: e.expiresSeconds,
+      })),
     }, null, 2);
   }
 }
@@ -229,5 +229,5 @@ setInterval(() => {
 
 module.exports = {
   ConfigCache,
-  globalConfigCache
+  globalConfigCache,
 };

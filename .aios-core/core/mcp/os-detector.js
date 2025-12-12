@@ -20,7 +20,7 @@ const OS_TYPES = {
   WINDOWS: 'windows',
   MACOS: 'macos',
   LINUX: 'linux',
-  UNKNOWN: 'unknown'
+  UNKNOWN: 'unknown',
 };
 
 /**
@@ -142,7 +142,7 @@ function getOSInfo() {
     release: os.release(),
     arch: os.arch(),
     homeDir: getHomeDir(),
-    supportsSymlinks: !isWindows() || hasWindowsSymlinkSupport()
+    supportsSymlinks: !isWindows() || hasWindowsSymlinkSupport(),
   };
 }
 
@@ -184,5 +184,5 @@ module.exports = {
   getCredentialsDir,
   getOSInfo,
   hasWindowsSymlinkSupport,
-  getLinkType
+  getLinkType,
 };

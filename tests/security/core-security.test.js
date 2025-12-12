@@ -37,7 +37,7 @@ describe('Core Security Tests (Story 3.0)', () => {
       const maliciousValidator = {
         type: 'regex',
         pattern: '(.+)+$',
-        message: 'Invalid input'
+        message: 'Invalid input',
       };
 
       // Act - runValidator is private, so we test via the validation flow
@@ -52,7 +52,7 @@ describe('Core Security Tests (Story 3.0)', () => {
       const maliciousValidator = {
         type: 'regex',
         pattern: '(.*)*$',
-        message: 'Dangerous pattern'
+        message: 'Dangerous pattern',
       };
 
       const result = await engine.runValidator(maliciousValidator, 'test');
@@ -63,7 +63,7 @@ describe('Core Security Tests (Story 3.0)', () => {
       const safeValidator = {
         type: 'regex',
         pattern: '^[a-zA-Z0-9]+$',
-        message: 'Invalid format'
+        message: 'Invalid format',
       };
 
       const result = await engine.runValidator(safeValidator, 'test123');
@@ -74,7 +74,7 @@ describe('Core Security Tests (Story 3.0)', () => {
       const invalidValidator = {
         type: 'regex',
         pattern: '[invalid regex(',
-        message: 'Syntax error'
+        message: 'Syntax error',
       };
 
       const result = await engine.runValidator(invalidValidator, 'test');

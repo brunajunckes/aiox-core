@@ -13,7 +13,7 @@ describe('QualityGateManager', () => {
     manager = new QualityGateManager({
       layer1: { enabled: true },
       layer2: { enabled: true },
-      layer3: { enabled: true }
+      layer3: { enabled: true },
     });
   });
 
@@ -31,7 +31,7 @@ describe('QualityGateManager', () => {
       const customManager = new QualityGateManager({
         layer1: { enabled: false },
         layer2: { enabled: true },
-        layer3: { enabled: false }
+        layer3: { enabled: false },
       });
       expect(customManager.layers.layer1.enabled).toBe(false);
       expect(customManager.layers.layer2.enabled).toBe(true);
@@ -51,7 +51,7 @@ describe('QualityGateManager', () => {
         exitCode: 0,
         stdout: '0 errors',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.runLayer(1, { verbose: false });
@@ -142,7 +142,7 @@ describe('QualityGateManager', () => {
     it('should return layer2-blocked when layer2 failed', () => {
       expect(manager.determineOverallStatus({
         layer1: { pass: true },
-        layer2: { pass: false }
+        layer2: { pass: false },
       })).toBe('layer2-blocked');
     });
 
@@ -150,7 +150,7 @@ describe('QualityGateManager', () => {
       expect(manager.determineOverallStatus({
         layer1: { pass: true },
         layer2: { pass: true },
-        layer3: { pass: true }
+        layer3: { pass: true },
       })).toBe('layer3-pending');
     });
   });

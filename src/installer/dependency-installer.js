@@ -28,7 +28,7 @@ const LOCK_FILES = {
   'bun.lockb': 'bun',
   'pnpm-lock.yaml': 'pnpm',
   'yarn.lock': 'yarn',
-  'package-lock.json': 'npm'
+  'package-lock.json': 'npm',
 };
 
 /**
@@ -68,7 +68,7 @@ function validatePackageManager(packageManager) {
   if (!ALLOWED_PACKAGE_MANAGERS.includes(packageManager)) {
     throw new Error(
       `Invalid package manager: ${packageManager}. ` +
-      `Allowed: ${ALLOWED_PACKAGE_MANAGERS.join(', ')}`
+      `Allowed: ${ALLOWED_PACKAGE_MANAGERS.join(', ')}`,
     );
   }
 }
@@ -121,7 +121,7 @@ async function executeInstall(packageManager, projectPath = process.cwd()) {
     const child = spawn(packageManager, args, {
       cwd: projectPath,
       stdio: 'inherit', // Show real-time output to user
-      shell: isWindows // Windows needs shell to find npm.cmd, Unix doesn't
+      shell: isWindows, // Windows needs shell to find npm.cmd, Unix doesn't
     });
 
     child.on('close', (code) => {
@@ -131,7 +131,7 @@ async function executeInstall(packageManager, projectPath = process.cwd()) {
         resolve({
           success: false,
           exitCode: code,
-          error: `${packageManager} install exited with code ${code}`
+          error: `${packageManager} install exited with code ${code}`,
         });
       }
     });
@@ -139,7 +139,7 @@ async function executeInstall(packageManager, projectPath = process.cwd()) {
     child.on('error', (error) => {
       resolve({
         success: false,
-        error: error.message
+        error: error.message,
       });
     });
   });
@@ -160,7 +160,7 @@ function categorizeError(error) {
     return {
       category: 'network',
       message: 'Network connection failed',
-      solution: 'Check your internet connection and try again'
+      solution: 'Check your internet connection and try again',
     };
   }
 
@@ -170,7 +170,7 @@ function categorizeError(error) {
     return {
       category: 'permission',
       message: 'Permission denied',
-      solution: 'Try running with elevated permissions or check folder ownership'
+      solution: 'Try running with elevated permissions or check folder ownership',
     };
   }
 
@@ -179,7 +179,7 @@ function categorizeError(error) {
     return {
       category: 'diskspace',
       message: 'Insufficient disk space',
-      solution: 'Free up disk space and try again'
+      solution: 'Free up disk space and try again',
     };
   }
 
@@ -187,7 +187,7 @@ function categorizeError(error) {
   return {
     category: 'unknown',
     message: errorMsg,
-    solution: 'Check the error message above for details'
+    solution: 'Check the error message above for details',
   };
 }
 
@@ -251,7 +251,7 @@ async function installDependencies(options = {}) {
     packageManager: pmOverride,
     projectPath = process.cwd(),
     skipRetry = false,
-    maxRetries = 3
+    maxRetries = 3,
   } = options;
 
   let spinner;
@@ -270,7 +270,7 @@ async function installDependencies(options = {}) {
       return {
         success: true,
         offlineMode: true,
-        packageManager
+        packageManager,
       };
     }
 
@@ -289,7 +289,7 @@ async function installDependencies(options = {}) {
       spinner.succeed(`Dependencies installed with ${packageManager}!`);
       return {
         success: true,
-        packageManager
+        packageManager,
       };
     } else {
       spinner.fail('Installation failed');
@@ -303,7 +303,7 @@ async function installDependencies(options = {}) {
         error: result.error,
         errorCategory: errorInfo.category,
         errorMessage: errorInfo.message,
-        solution: errorInfo.solution
+        solution: errorInfo.solution,
       };
     }
   } catch (error) {
@@ -318,7 +318,7 @@ async function installDependencies(options = {}) {
       error: error.message,
       errorCategory: errorInfo.category,
       errorMessage: errorInfo.message,
-      solution: errorInfo.solution
+      solution: errorInfo.solution,
     };
   }
 }
@@ -331,5 +331,5 @@ module.exports = {
   // Export for testing
   executeInstall,
   categorizeError,
-  installWithRetry
+  installWithRetry,
 };

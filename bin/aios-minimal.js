@@ -18,7 +18,7 @@ try {
   // Execute aios-init.js with --minimal flag
   execSync(`node "${initScriptPath}" --minimal`, {
     stdio: 'inherit',
-    cwd: process.cwd()
+    cwd: process.cwd(),
   });
 } catch (error) {
   // Error is already displayed by child process

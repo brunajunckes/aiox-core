@@ -30,14 +30,14 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'test-project',
-        selectedIDEs: ['cursor']
+        selectedIDEs: ['cursor'],
       };
 
       // Generate configs
       const result = await generateIDEConfigs(
         wizardState.selectedIDEs,
         wizardState,
-        { projectRoot: testDir }
+        { projectRoot: testDir },
       );
 
       // Verify result
@@ -63,13 +63,13 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'brownfield',
         projectName: 'multi-ide-project',
-        selectedIDEs: ['cursor', 'windsurf', 'trae']
+        selectedIDEs: ['cursor', 'windsurf', 'trae'],
       };
 
       const result = await generateIDEConfigs(
         wizardState.selectedIDEs,
         wizardState,
-        { projectRoot: testDir }
+        { projectRoot: testDir },
       );
 
       expect(result.success).toBe(true);
@@ -91,13 +91,13 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'all-ides-project',
-        selectedIDEs: getIDEKeys()
+        selectedIDEs: getIDEKeys(),
       };
 
       const result = await generateIDEConfigs(
         wizardState.selectedIDEs,
         wizardState,
-        { projectRoot: testDir }
+        { projectRoot: testDir },
       );
 
       expect(result.success).toBe(true);
@@ -122,11 +122,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'dir-test',
-        selectedIDEs: ['claude-code', 'trae', 'roo-code', 'cline', 'gemini-cli', 'github-copilot', 'antigravity']
+        selectedIDEs: ['claude-code', 'trae', 'roo-code', 'cline', 'gemini-cli', 'github-copilot', 'antigravity'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -145,11 +145,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'no-dir-test',
-        selectedIDEs: ['windsurf']  // Only windsurf uses root file now
+        selectedIDEs: ['windsurf'],  // Only windsurf uses root file now
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -165,11 +165,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'content-test',
-        selectedIDEs: ['cursor', 'windsurf']
+        selectedIDEs: ['cursor', 'windsurf'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -188,11 +188,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'claude-test',
-        selectedIDEs: ['claude-code']
+        selectedIDEs: ['claude-code'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -210,11 +210,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'nested-test',
-        selectedIDEs: ['trae', 'roo-code', 'cline']
+        selectedIDEs: ['trae', 'roo-code', 'cline'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -229,11 +229,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'format-test',
-        selectedIDEs: ['cursor', 'trae', 'antigravity']
+        selectedIDEs: ['cursor', 'trae', 'antigravity'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -257,11 +257,11 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'brownfield',
         projectName: 'my-awesome-project',
-        selectedIDEs: ['cursor']
+        selectedIDEs: ['cursor'],
       };
 
       await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       const configPath = path.join(testDir, '.cursor', 'rules.md');
@@ -278,7 +278,7 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {}; // No projectName or projectType
 
       const result = await generateIDEConfigs(['cursor'], wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);

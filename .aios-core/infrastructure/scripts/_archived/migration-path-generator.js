@@ -58,7 +58,7 @@ class MigrationPathGenerator {
       rollback_plan: {},
       estimated_effort: { hours: 0, complexity: 'simple' },
       prerequisites: [],
-      post_migration_tasks: []
+      post_migration_tasks: [],
     };
 
     try {
@@ -68,7 +68,7 @@ class MigrationPathGenerator {
       migrationPath.migration_strategy = await this.determineMigrationStrategy(
         componentId, 
         deprecationPlan, 
-        usageAnalysis
+        usageAnalysis,
       );
 
       // Generate migration steps
@@ -76,52 +76,52 @@ class MigrationPathGenerator {
         componentId,
         deprecationPlan,
         usageAnalysis,
-        migrationPath.migration_strategy
+        migrationPath.migration_strategy,
       );
 
       // Generate automated scripts
       migrationPath.automated_scripts = await this.generateAutomatedScripts(
         componentId,
         migrationPath.migration_steps,
-        usageAnalysis
+        usageAnalysis,
       );
 
       // Identify manual tasks
       migrationPath.manual_tasks = await this.identifyManualTasks(
         migrationPath.migration_steps,
-        usageAnalysis
+        usageAnalysis,
       );
 
       // Generate validation tests
       migrationPath.validation_tests = await this.generateValidationTests(
         componentId,
         deprecationPlan,
-        migrationPath.migration_strategy
+        migrationPath.migration_strategy,
       );
 
       // Create rollback plan
       migrationPath.rollback_plan = await this.createRollbackPlan(
         componentId,
-        migrationPath.migration_steps
+        migrationPath.migration_steps,
       );
 
       // Estimate effort
       migrationPath.estimated_effort = this.estimateMigrationEffort(
         migrationPath.migration_steps,
-        usageAnalysis
+        usageAnalysis,
       );
 
       // Identify prerequisites
       migrationPath.prerequisites = await this.identifyPrerequisites(
         componentId,
         deprecationPlan,
-        migrationPath.migration_strategy
+        migrationPath.migration_strategy,
       );
 
       // Generate post-migration tasks
       migrationPath.post_migration_tasks = this.generatePostMigrationTasks(
         componentId,
-        migrationPath.migration_strategy
+        migrationPath.migration_strategy,
       );
 
       // Cache migration path
@@ -159,7 +159,7 @@ class MigrationPathGenerator {
       has_dependencies: usageAnalysis.dependentComponents?.length > 0,
       external_references: usageAnalysis.externalReferences?.length > 0,
       critical_severity: severity === 'critical',
-      no_replacement: !hasReplacement
+      no_replacement: !hasReplacement,
     };
 
     let strategyType = 'direct_replacement';
@@ -186,7 +186,7 @@ class MigrationPathGenerator {
       phases: phaseCount,
       complexity_factors: complexityFactors,
       recommended_timeline: this.calculateRecommendedTimeline(complexityFactors, usageCount),
-      risk_level: this.assessMigrationRisk(complexityFactors, usageCount)
+      risk_level: this.assessMigrationRisk(complexityFactors, usageCount),
     };
   }
 
@@ -209,11 +209,11 @@ class MigrationPathGenerator {
         'Create migration backup',
         'Validate replacement component availability',
         'Check dependency compatibility',
-        'Set up migration tracking'
+        'Set up migration tracking',
       ],
       estimated_duration: 30,
       prerequisites: [],
-      validation_criteria: ['Backup created', 'Prerequisites satisfied']
+      validation_criteria: ['Backup created', 'Prerequisites satisfied'],
     });
 
     // Component-specific migration steps
@@ -222,7 +222,7 @@ class MigrationPathGenerator {
       componentName,
       deprecationPlan,
       usageAnalysis,
-      migrationStrategy
+      migrationStrategy,
     );
     steps.push(...componentSteps);
 
@@ -232,7 +232,7 @@ class MigrationPathGenerator {
         componentId,
         usageAnalysis,
         deprecationPlan.replacement,
-        migrationStrategy
+        migrationStrategy,
       );
       steps.push(...usageSteps);
     }
@@ -241,7 +241,7 @@ class MigrationPathGenerator {
     if (usageAnalysis.externalReferences?.length > 0) {
       const configSteps = await this.generateConfigurationMigrationSteps(
         usageAnalysis.externalReferences,
-        deprecationPlan.replacement
+        deprecationPlan.replacement,
       );
       steps.push(...configSteps);
     }
@@ -259,11 +259,11 @@ class MigrationPathGenerator {
         'Verify replacement functionality',
         'Remove deprecated component files',
         'Update documentation',
-        'Archive migration artifacts'
+        'Archive migration artifacts',
       ],
       estimated_duration: 45,
       prerequisites: ['All previous steps completed'],
-      validation_criteria: ['All tests pass', 'No usage of deprecated component']
+      validation_criteria: ['All tests pass', 'No usage of deprecated component'],
     });
 
     return steps;
@@ -287,11 +287,11 @@ class MigrationPathGenerator {
           automated: pattern.automated,
           tasks: pattern.tasks.map(task => 
             task.replace('{component}', componentName)
-               .replace('{replacement}', deprecationPlan.replacement || 'alternative')
+              .replace('{replacement}', deprecationPlan.replacement || 'alternative'),
           ),
           estimated_duration: pattern.estimated_duration,
           prerequisites: pattern.prerequisites || [],
-          validation_criteria: pattern.validation_criteria || []
+          validation_criteria: pattern.validation_criteria || [],
         };
 
         steps.push(step);
@@ -321,12 +321,12 @@ class MigrationPathGenerator {
           `Identify ${usageList.length} ${usageType} usage locations`,
           `Update references to use ${replacement}`,
           'Validate syntax and imports',
-          'Test updated functionality'
+          'Test updated functionality',
         ],
         estimated_duration: Math.max(15, usageList.length * 5),
         prerequisites: ['Replacement component available'],
         validation_criteria: ['All references updated', 'No syntax errors', 'Tests pass'],
-        usage_locations: usageList
+        usage_locations: usageList,
       });
       stepIndex++;
     }
@@ -353,12 +353,12 @@ class MigrationPathGenerator {
           `Update ${source} configuration files`,
           'Validate configuration syntax',
           'Test configuration loading',
-          'Update related documentation'
+          'Update related documentation',
         ],
         estimated_duration: 20,
         prerequisites: [],
         validation_criteria: ['Configuration valid', 'System loads correctly'],
-        config_references: references
+        config_references: references,
       });
     }
 
@@ -401,7 +401,7 @@ class MigrationPathGenerator {
       content: scriptContent,
       executable: true,
       parameters: this.extractScriptParameters(step),
-      validation_checks: step.validation_criteria || []
+      validation_checks: step.validation_criteria || [],
     };
 
     // Save script to file
@@ -719,7 +719,7 @@ if (require.main === module) {
     
     return {
       hours: Math.round(totalHours * 10) / 10, // Round to 1 decimal
-      complexity: maxComplexity
+      complexity: maxComplexity,
     };
   }
 
@@ -730,7 +730,7 @@ if (require.main === module) {
       prerequisites.push({
         type: 'replacement_available',
         description: `Replacement component ${deprecationPlan.replacement} must be available`,
-        validation: `Check that ${deprecationPlan.replacement} exists and is functional`
+        validation: `Check that ${deprecationPlan.replacement} exists and is functional`,
       });
     }
     
@@ -738,14 +738,14 @@ if (require.main === module) {
       prerequisites.push({
         type: 'backup_required',
         description: 'Full system backup required before migration',
-        validation: 'Verify backup creation and restore capability'
+        validation: 'Verify backup creation and restore capability',
       });
     }
     
     prerequisites.push({
       type: 'testing_environment',
       description: 'Isolated testing environment for migration validation',
-      validation: 'Confirm testing environment matches production'
+      validation: 'Confirm testing environment matches production',
     });
     
     return prerequisites;
@@ -756,23 +756,23 @@ if (require.main === module) {
       {
         task: 'monitor_system_stability',
         description: 'Monitor system for 24-48 hours after migration',
-        priority: 'high'
+        priority: 'high',
       },
       {
         task: 'update_documentation',
         description: 'Update all documentation to reflect component changes',
-        priority: 'medium'
+        priority: 'medium',
       },
       {
         task: 'cleanup_deprecated_files',
         description: 'Remove deprecated component files and references',
-        priority: 'low'
+        priority: 'low',
       },
       {
         task: 'archive_migration_artifacts',
         description: 'Archive migration logs and scripts for future reference',
-        priority: 'low'
-      }
+        priority: 'low',
+      },
     ];
   }
 
@@ -802,11 +802,11 @@ if (require.main === module) {
             'Update agent configuration files',
             'Replace agent references in workflows',
             'Update agent documentation',
-            'Test agent functionality'
+            'Test agent functionality',
           ],
           estimated_duration: 45,
-          validation_criteria: ['Agent loads correctly', 'No configuration errors']
-        }
+          validation_criteria: ['Agent loads correctly', 'No configuration errors'],
+        },
       ],
       task: [
         {
@@ -820,11 +820,11 @@ if (require.main === module) {
             'Update task command references',
             'Replace task imports',
             'Update task documentation',
-            'Test task execution'
+            'Test task execution',
           ],
           estimated_duration: 30,
-          validation_criteria: ['Task executes correctly', 'No import errors']
-        }
+          validation_criteria: ['Task executes correctly', 'No import errors'],
+        },
       ],
       workflow: [
         {
@@ -838,11 +838,11 @@ if (require.main === module) {
             'Analyze workflow dependencies',
             'Create replacement workflow',
             'Update workflow references',
-            'Test workflow execution'
+            'Test workflow execution',
           ],
           estimated_duration: 90,
-          validation_criteria: ['Workflow runs successfully', 'All steps execute']
-        }
+          validation_criteria: ['Workflow runs successfully', 'All steps execute'],
+        },
       ],
       util: [
         {
@@ -856,11 +856,11 @@ if (require.main === module) {
             'Update import statements',
             'Replace function calls',
             'Update utility documentation',
-            'Test utility functionality'
+            'Test utility functionality',
           ],
           estimated_duration: 20,
-          validation_criteria: ['No import errors', 'Functions work correctly']
-        }
+          validation_criteria: ['No import errors', 'Functions work correctly'],
+        },
       ],
       default: [
         {
@@ -874,12 +874,12 @@ if (require.main === module) {
             'Identify all component references',
             'Plan replacement approach',
             'Execute replacement',
-            'Validate replacement'
+            'Validate replacement',
           ],
           estimated_duration: 60,
-          validation_criteria: ['Component replaced successfully']
-        }
-      ]
+          validation_criteria: ['Component replaced successfully'],
+        },
+      ],
     };
   }
 
@@ -893,10 +893,10 @@ if (require.main === module) {
         title: `Rollback ${step.title}`,
         description: `Reverse changes made in ${step.title}`,
         automated: step.automated,
-        estimated_duration: Math.ceil(step.estimated_duration * 0.7)
+        estimated_duration: Math.ceil(step.estimated_duration * 0.7),
       })),
       backup_restoration: true,
-      validation_required: true
+      validation_required: true,
     };
   }
 
@@ -906,13 +906,13 @@ if (require.main === module) {
         test_id: 'component_removal_validation',
         description: 'Verify deprecated component is no longer referenced',
         type: 'automated',
-        validation_script: 'search_for_component_references.js'
+        validation_script: 'search_for_component_references.js',
       },
       {
         test_id: 'replacement_functionality',
         description: 'Verify replacement component works correctly',
         type: 'automated',
-        validation_script: 'test_replacement_functionality.js'
+        validation_script: 'test_replacement_functionality.js',
       },
       {
         test_id: 'system_integration',
@@ -921,9 +921,9 @@ if (require.main === module) {
         checklist: [
           'All workflows execute successfully',
           'No error messages in logs',
-          'Performance is acceptable'
-        ]
-      }
+          'Performance is acceptable',
+        ],
+      },
     ];
   }
 
@@ -939,7 +939,7 @@ if (require.main === module) {
         description: step.description,
         checklist: step.tasks,
         estimated_duration: step.estimated_duration,
-        priority: step.phase === 1 ? 'high' : 'medium'
+        priority: step.phase === 1 ? 'high' : 'medium',
       });
     }
     

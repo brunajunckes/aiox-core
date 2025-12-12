@@ -51,7 +51,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       if (!fs.existsSync(storyPath)) {
         return {
           success: false,
-          error: `Story file not found: ${storyPath}`
+          error: `Story file not found: ${storyPath}`,
         };
       }
 
@@ -61,7 +61,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       if (!story || !story.id) {
         return {
           success: false,
-          error: 'Invalid story file: missing id field'
+          error: 'Invalid story file: missing id field',
         };
       }
 
@@ -79,7 +79,7 @@ class GitHubProjectsAdapter extends PMAdapter {
 
         return {
           success: true,
-          url: issueUrl
+          url: issueUrl,
         };
       } else {
         // Create new issue
@@ -89,7 +89,7 @@ class GitHubProjectsAdapter extends PMAdapter {
 
         return {
           success: true,
-          url: newIssueUrl
+          url: newIssueUrl,
         };
       }
 
@@ -97,7 +97,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       console.error('❌ Error syncing story to GitHub Projects:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -120,7 +120,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       if (!issueNumber) {
         return {
           success: false,
-          error: `GitHub issue not found for story ${storyId}`
+          error: `GitHub issue not found for story ${storyId}`,
         };
       }
 
@@ -130,7 +130,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       // Map GitHub issue state to AIOS status
       const statusMapping = {
         'open': 'InProgress',
-        'closed': 'Done'
+        'closed': 'Done',
       };
 
       const mappedStatus = statusMapping[issueData.state] || 'Draft';
@@ -140,15 +140,15 @@ class GitHubProjectsAdapter extends PMAdapter {
       return {
         success: true,
         updates: {
-          status: mappedStatus
-        }
+          status: mappedStatus,
+        },
       };
 
     } catch (error) {
       console.error('❌ Error pulling story from GitHub Projects:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -169,14 +169,14 @@ class GitHubProjectsAdapter extends PMAdapter {
 
       return {
         success: true,
-        url: issueUrl
+        url: issueUrl,
       };
 
     } catch (error) {
       console.error('❌ Error creating story in GitHub Projects:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -199,7 +199,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       if (!issueNumber) {
         return {
           success: false,
-          error: `GitHub issue not found for story ${storyId}`
+          error: `GitHub issue not found for story ${storyId}`,
         };
       }
 
@@ -208,7 +208,7 @@ class GitHubProjectsAdapter extends PMAdapter {
         'Draft': 'open',
         'InProgress': 'open',
         'Review': 'open',
-        'Done': 'closed'
+        'Done': 'closed',
       };
 
       const githubState = stateMapping[status] || 'open';
@@ -224,7 +224,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       console.error('❌ Error updating story status:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -246,7 +246,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       } catch (error) {
         return {
           success: false,
-          error: 'GitHub CLI (gh) not installed. Install from: https://cli.github.com/'
+          error: 'GitHub CLI (gh) not installed. Install from: https://cli.github.com/',
         };
       }
 
@@ -259,7 +259,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       } catch (error) {
         return {
           success: false,
-          error: 'GitHub CLI not authenticated. Run: gh auth login'
+          error: 'GitHub CLI not authenticated. Run: gh auth login',
         };
       }
 
@@ -269,7 +269,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       } catch (error) {
         return {
           success: false,
-          error: `Cannot access organization: ${this.org}`
+          error: `Cannot access organization: ${this.org}`,
         };
       }
 
@@ -281,7 +281,7 @@ class GitHubProjectsAdapter extends PMAdapter {
       console.error('❌ GitHub connection failed:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -309,7 +309,7 @@ class GitHubProjectsAdapter extends PMAdapter {
         'issue', 'list',
         '--label', `story-${storyId}`,
         '--json', 'number',
-        '--limit', '1'
+        '--limit', '1',
       ]);
 
       const issues = JSON.parse(result);
@@ -334,7 +334,7 @@ class GitHubProjectsAdapter extends PMAdapter {
   async _getIssue(issueNumber) {
     const result = this._execGH([
       'issue', 'view', issueNumber.toString(),
-      '--json', 'state,title,body,labels'
+      '--json', 'state,title,body,labels',
     ]);
 
     return JSON.parse(result);
@@ -355,14 +355,14 @@ class GitHubProjectsAdapter extends PMAdapter {
       'story',
       `story-${story.id}`,
       ...(story.epic ? [`epic-${story.epic}`] : []),
-      ...(story.priority ? [story.priority] : [])
+      ...(story.priority ? [story.priority] : []),
     ];
 
     const result = this._execGH([
       'issue', 'create',
       '--title', `"${title}"`,
       '--body', `"${body.replace(/"/g, '\\"')}"`,
-      '--label', labels.join(',')
+      '--label', labels.join(','),
     ]);
 
     // Extract URL from output
@@ -384,7 +384,7 @@ class GitHubProjectsAdapter extends PMAdapter {
     this._execGH([
       'issue', 'edit', issueNumber.toString(),
       '--title', `"${title}"`,
-      '--body', `"${body.replace(/"/g, '\\"')}"`
+      '--body', `"${body.replace(/"/g, '\\"')}"`,
     ]);
   }
 }

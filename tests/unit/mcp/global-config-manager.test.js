@@ -26,7 +26,7 @@ const {
   setServerEnabled,
   listServers,
   getAvailableTemplates,
-  getServerTemplate
+  getServerTemplate,
 } = require('../../../.aios-core/core/mcp/global-config-manager');
 
 describe('Global Config Manager', () => {
@@ -133,7 +133,7 @@ describe('Global Config Manager', () => {
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         expect.any(String),
         expect.stringContaining('"version"'),
-        'utf8'
+        'utf8',
       );
     });
 
@@ -147,7 +147,7 @@ describe('Global Config Manager', () => {
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         expect.any(String),
         expect.stringContaining('test'),
-        'utf8'
+        'utf8',
       );
     });
 
@@ -318,8 +318,8 @@ describe('Global Config Manager', () => {
         version: '1.0',
         servers: {
           server1: { type: 'sse', url: 'http://test', enabled: true },
-          server2: { command: 'npx', enabled: false }
-        }
+          server2: { command: 'npx', enabled: false },
+        },
       };
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify(config));

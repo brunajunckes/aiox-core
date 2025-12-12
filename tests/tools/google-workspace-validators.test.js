@@ -69,7 +69,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should pass with valid create_file parameters', async () => {
       const result = await validator.validate('create_file', {
         name: 'Test Document',
-        content: 'File content here'
+        content: 'File content here',
       });
 
       expect(result.valid).toBe(true);
@@ -79,7 +79,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should pass with fileUrl instead of content', async () => {
       const result = await validator.validate('create_file', {
         name: 'Test Document',
-        fileUrl: 'https://example.com/document.pdf'
+        fileUrl: 'https://example.com/document.pdf',
       });
 
       expect(result.valid).toBe(true);
@@ -89,7 +89,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_file', {
         name: 'Test Document',
         content: 'Content',
-        mimeType: 'application/pdf'
+        mimeType: 'application/pdf',
       });
 
       expect(result.valid).toBe(true);
@@ -97,7 +97,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
 
     test('should fail without name', async () => {
       const result = await validator.validate('create_file', {
-        content: 'Some content'
+        content: 'Some content',
       });
 
       expect(result.valid).toBe(false);
@@ -107,7 +107,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
 
     test('should fail without content or fileUrl', async () => {
       const result = await validator.validate('create_file', {
-        name: 'Test Document'
+        name: 'Test Document',
       });
 
       expect(result.valid).toBe(false);
@@ -119,7 +119,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_file', {
         name: 'Test Document',
         content: 'Content',
-        mimeType: 'invalid-mime'
+        mimeType: 'invalid-mime',
       });
 
       expect(result.valid).toBe(false);
@@ -131,7 +131,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_file', {
         name: 'Test',
         content: 'Content',
-        mimeType: 'application/vnd.google-apps.document'
+        mimeType: 'application/vnd.google-apps.document',
       });
 
       expect(result.valid).toBe(true);
@@ -143,7 +143,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('share_file', {
         fileId: 'abc123xyz',
         emailAddress: 'user@example.com',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(true);
@@ -153,7 +153,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('share_file', {
         fileId: 'abc123xyz',
         type: 'anyone',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(true);
@@ -162,7 +162,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without fileId', async () => {
       const result = await validator.validate('share_file', {
         emailAddress: 'user@example.com',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(false);
@@ -173,7 +173,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without emailAddress or type', async () => {
       const result = await validator.validate('share_file', {
         fileId: 'abc123xyz',
-        role: 'reader'
+        role: 'reader',
       });
 
       expect(result.valid).toBe(false);
@@ -185,7 +185,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('share_file', {
         fileId: 'abc123xyz',
         emailAddress: 'user@example.com',
-        role: 'invalid-role'
+        role: 'invalid-role',
       });
 
       expect(result.valid).toBe(false);
@@ -200,7 +200,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         const result = await validator.validate('share_file', {
           fileId: 'abc123xyz',
           emailAddress: 'user@example.com',
-          role: role
+          role: role,
         });
 
         expect(result.valid).toBe(true);
@@ -214,7 +214,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         user_google_email: 'test@example.com',
         summary: 'Team Meeting',
         startTime: '2024-01-15T10:00:00Z',
-        endTime: '2024-01-15T11:00:00Z'
+        endTime: '2024-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(true);
@@ -226,7 +226,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         summary: 'Team Meeting',
         startTime: '2024-01-15T10:00:00Z',
         endTime: '2024-01-15T11:00:00Z',
-        attendees: ['user1@example.com', 'user2@example.com']
+        attendees: ['user1@example.com', 'user2@example.com'],
       });
 
       expect(result.valid).toBe(true);
@@ -236,7 +236,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_event', {
         user_google_email: 'test@example.com',
         startTime: '2024-01-15T10:00:00Z',
-        endTime: '2024-01-15T11:00:00Z'
+        endTime: '2024-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(false);
@@ -248,7 +248,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_event', {
         user_google_email: 'test@example.com',
         summary: 'Meeting',
-        endTime: '2024-01-15T11:00:00Z'
+        endTime: '2024-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(false);
@@ -260,7 +260,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('create_event', {
         user_google_email: 'test@example.com',
         summary: 'Meeting',
-        startTime: '2024-01-15T10:00:00Z'
+        startTime: '2024-01-15T10:00:00Z',
       });
 
       expect(result.valid).toBe(false);
@@ -273,7 +273,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         user_google_email: 'test@example.com',
         summary: 'Meeting',
         startTime: '2024-01-15 10:00:00',
-        endTime: '2024-01-15T11:00:00Z'
+        endTime: '2024-01-15T11:00:00Z',
       });
 
       expect(result.valid).toBe(false);
@@ -286,7 +286,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         user_google_email: 'test@example.com',
         summary: 'Meeting',
         startTime: '2024-01-15T10:00:00Z',
-        endTime: 'invalid-date'
+        endTime: 'invalid-date',
       });
 
       expect(result.valid).toBe(false);
@@ -300,7 +300,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         summary: 'Meeting',
         startTime: '2024-01-15T10:00:00Z',
         endTime: '2024-01-15T11:00:00Z',
-        attendees: 'user@example.com'
+        attendees: 'user@example.com',
       });
 
       expect(result.valid).toBe(false);
@@ -313,7 +313,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should pass with eventId and updates', async () => {
       const result = await validator.validate('update_event', {
         eventId: 'event123',
-        summary: 'Updated Meeting Title'
+        summary: 'Updated Meeting Title',
       });
 
       expect(result.valid).toBe(true);
@@ -321,7 +321,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
 
     test('should fail without eventId', async () => {
       const result = await validator.validate('update_event', {
-        summary: 'Updated Title'
+        summary: 'Updated Title',
       });
 
       expect(result.valid).toBe(false);
@@ -333,7 +333,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('update_event', {
         eventId: 'event123',
         startTime: '2024-01-16T10:00:00Z',
-        endTime: '2024-01-16T11:00:00Z'
+        endTime: '2024-01-16T11:00:00Z',
       });
 
       expect(result.valid).toBe(true);
@@ -345,7 +345,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('send_email', {
         to: 'recipient@example.com',
         subject: 'Test Email',
-        body: 'Email body content'
+        body: 'Email body content',
       });
 
       expect(result.valid).toBe(true);
@@ -357,7 +357,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         subject: 'Test',
         body: 'Content',
         cc: 'cc@example.com',
-        bcc: 'bcc@example.com'
+        bcc: 'bcc@example.com',
       });
 
       expect(result.valid).toBe(true);
@@ -366,7 +366,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without to address', async () => {
       const result = await validator.validate('send_email', {
         subject: 'Test',
-        body: 'Content'
+        body: 'Content',
       });
 
       expect(result.valid).toBe(false);
@@ -377,7 +377,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without subject', async () => {
       const result = await validator.validate('send_email', {
         to: 'recipient@example.com',
-        body: 'Content'
+        body: 'Content',
       });
 
       expect(result.valid).toBe(false);
@@ -388,7 +388,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without body', async () => {
       const result = await validator.validate('send_email', {
         to: 'recipient@example.com',
-        subject: 'Test'
+        subject: 'Test',
       });
 
       expect(result.valid).toBe(false);
@@ -400,7 +400,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('send_email', {
         to: 'invalid-email',
         subject: 'Test',
-        body: 'Content'
+        body: 'Content',
       });
 
       expect(result.valid).toBe(false);
@@ -412,14 +412,14 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const validEmails = [
         'user@example.com',
         'user.name@example.co.uk',
-        'user+tag@example.com'
+        'user+tag@example.com',
       ];
 
       for (const email of validEmails) {
         const result = await validator.validate('send_email', {
           to: email,
           subject: 'Test',
-          body: 'Content'
+          body: 'Content',
         });
 
         expect(result.valid).toBe(true);
@@ -430,7 +430,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
   describeIntegration('validate-gmail-operations (search_messages)', () => {
     test('should pass with search query', async () => {
       const result = await validator.validate('search_messages', {
-        query: 'from:sender@example.com'
+        query: 'from:sender@example.com',
       });
 
       expect(result.valid).toBe(true);
@@ -439,7 +439,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should pass with maxResults', async () => {
       const result = await validator.validate('search_messages', {
         query: 'subject:important',
-        maxResults: 50
+        maxResults: 50,
       });
 
       expect(result.valid).toBe(true);
@@ -456,7 +456,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail with invalid maxResults', async () => {
       const result = await validator.validate('search_messages', {
         query: 'test',
-        maxResults: 'invalid'
+        maxResults: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -467,7 +467,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail with negative maxResults', async () => {
       const result = await validator.validate('search_messages', {
         query: 'test',
-        maxResults: -10
+        maxResults: -10,
       });
 
       expect(result.valid).toBe(false);
@@ -479,7 +479,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
   describeIntegration('validate-sheet-operations (create_spreadsheet)', () => {
     test('should pass with title', async () => {
       const result = await validator.validate('create_spreadsheet', {
-        title: 'My Spreadsheet'
+        title: 'My Spreadsheet',
       });
 
       expect(result.valid).toBe(true);
@@ -488,7 +488,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should pass with sheets array', async () => {
       const result = await validator.validate('create_spreadsheet', {
         title: 'My Spreadsheet',
-        sheets: ['Sheet1', 'Sheet2', 'Sheet3']
+        sheets: ['Sheet1', 'Sheet2', 'Sheet3'],
       });
 
       expect(result.valid).toBe(true);
@@ -496,7 +496,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
 
     test('should fail without title', async () => {
       const result = await validator.validate('create_spreadsheet', {
-        sheets: ['Sheet1']
+        sheets: ['Sheet1'],
       });
 
       expect(result.valid).toBe(false);
@@ -507,7 +507,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail if sheets is not an array', async () => {
       const result = await validator.validate('create_spreadsheet', {
         title: 'Spreadsheet',
-        sheets: 'Sheet1'
+        sheets: 'Sheet1',
       });
 
       expect(result.valid).toBe(false);
@@ -521,7 +521,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
         range: 'Sheet1!A1:B2',
-        values: [['A1', 'B1'], ['A2', 'B2']]
+        values: [['A1', 'B1'], ['A2', 'B2']],
       });
 
       expect(result.valid).toBe(true);
@@ -530,7 +530,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without spreadsheetId', async () => {
       const result = await validator.validate('update_range', {
         range: 'A1:B2',
-        values: [['data']]
+        values: [['data']],
       });
 
       expect(result.valid).toBe(false);
@@ -541,7 +541,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without range', async () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
-        values: [['data']]
+        values: [['data']],
       });
 
       expect(result.valid).toBe(false);
@@ -552,7 +552,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
     test('should fail without values', async () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
-        range: 'A1:B2'
+        range: 'A1:B2',
       });
 
       expect(result.valid).toBe(false);
@@ -564,7 +564,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
         range: 'A1:B2',
-        values: 'invalid'
+        values: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -576,7 +576,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
       const result = await validator.validate('update_range', {
         spreadsheetId: 'spreadsheet123',
         range: 'invalid-range',
-        values: [['data']]
+        values: [['data']],
       });
 
       expect(result.valid).toBe(false);
@@ -589,14 +589,14 @@ describeIntegration('Google Workspace Tool Validators', () => {
         'Sheet1!A1:B2',
         'A1:B2',
         'Sheet Name!A1:Z100',
-        "'Sheet with spaces'!A1:B2"
+        "'Sheet with spaces'!A1:B2",
       ];
 
       for (const range of validRanges) {
         const result = await validator.validate('update_range', {
           spreadsheetId: 'spreadsheet123',
           range: range,
-          values: [['data']]
+          values: [['data']],
         });
 
         expect(result.valid).toBe(true);
@@ -613,7 +613,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
         const start = Date.now();
         await validator.validate('create_file', {
           name: 'Performance Test',
-          content: 'Test content'
+          content: 'Test content',
         });
         const duration = Date.now() - start;
         durations.push(duration);
@@ -637,7 +637,7 @@ describeIntegration('Google Workspace Tool Validators', () => {
           summary: 'Performance Test Event',
           startTime: '2024-01-15T10:00:00Z',
           endTime: '2024-01-15T11:00:00Z',
-          attendees: ['user1@example.com', 'user2@example.com', 'user3@example.com']
+          attendees: ['user1@example.com', 'user2@example.com', 'user3@example.com'],
         });
         const duration = Date.now() - start;
         durations.push(duration);

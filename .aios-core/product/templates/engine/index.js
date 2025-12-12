@@ -80,7 +80,7 @@ class TemplateEngine {
     if (!SUPPORTED_TYPES.includes(templateType)) {
       throw new Error(
         `Unsupported template type: ${templateType}. ` +
-        `Supported types: ${SUPPORTED_TYPES.join(', ')}`
+        `Supported types: ${SUPPORTED_TYPES.join(', ')}`,
       );
     }
 
@@ -128,7 +128,7 @@ class TemplateEngine {
       variables,
       metadata: template.metadata,
       validation,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
 
     // Save to file if requested
@@ -156,7 +156,7 @@ class TemplateEngine {
       dbdr: 'docs/decisions',
       story: 'docs/stories',
       epic: 'docs/epics',
-      task: 'docs/tasks'
+      task: 'docs/tasks',
     };
 
     const dir = outputDirs[templateType] || 'docs';
@@ -189,7 +189,7 @@ class TemplateEngine {
   async preview(templateType, context = {}) {
     const result = await this.generate(templateType, context, {
       validate: false,
-      save: false
+      save: false,
     });
     return result.content;
   }
@@ -210,8 +210,8 @@ class TemplateEngine {
         name: v.name,
         type: v.type,
         required: v.required,
-        description: v.prompt
-      }))
+        description: v.prompt,
+      })),
     };
   }
 
@@ -233,7 +233,7 @@ class TemplateEngine {
           name: type.toUpperCase(),
           version: 'N/A',
           variables: [],
-          status: 'missing'
+          status: 'missing',
         });
       }
     }
@@ -284,7 +284,7 @@ class TemplateEngine {
     return {
       isValid: structureResult.isValid && schemaResult.isValid,
       structureErrors: structureResult.errors,
-      schemaErrors: schemaResult.errors
+      schemaErrors: schemaResult.errors,
     };
   }
 
@@ -304,5 +304,5 @@ module.exports = {
   VariableElicitation,
   TemplateRenderer,
   TemplateValidator,
-  SUPPORTED_TYPES
+  SUPPORTED_TYPES,
 };

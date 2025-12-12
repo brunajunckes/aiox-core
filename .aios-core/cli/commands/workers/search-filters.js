@@ -35,7 +35,7 @@ function applyFilters(results, filters = {}) {
     filtered = filtered.filter(worker => {
       const workerTags = (worker.tags || []).map(t => t.toLowerCase());
       return filters.tags.every(tag =>
-        workerTags.some(wt => wt === tag.toLowerCase() || wt.includes(tag.toLowerCase()))
+        workerTags.some(wt => wt === tag.toLowerCase() || wt.includes(tag.toLowerCase())),
       );
     });
   }
@@ -119,7 +119,7 @@ function filterByTaskFormat(results, taskFormat) {
   if (!taskFormat) return results;
 
   return results.filter(worker =>
-    worker.taskFormat === taskFormat
+    worker.taskFormat === taskFormat,
   );
 }
 
@@ -181,5 +181,5 @@ module.exports = {
   filterBySubcategory,
   filterByTaskFormat,
   filterByExecutorType,
-  applyMultipleFilters
+  applyMultipleFilters,
 };

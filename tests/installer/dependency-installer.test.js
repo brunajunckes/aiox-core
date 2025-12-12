@@ -15,7 +15,7 @@ const {
   installDependencies,
   executeInstall,
   categorizeError,
-  installWithRetry
+  installWithRetry,
 } = require('../../src/installer/dependency-installer');
 
 // Mock dependencies
@@ -25,7 +25,7 @@ jest.mock('ora', () => {
   return jest.fn(() => ({
     start: jest.fn().mockReturnThis(),
     succeed: jest.fn().mockReturnThis(),
-    fail: jest.fn().mockReturnThis()
+    fail: jest.fn().mockReturnThis(),
   }));
 });
 
@@ -170,7 +170,7 @@ describe('Dependency Installer', () => {
           if (event === 'close') {
             setTimeout(() => callback(0), 10);
           }
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -182,7 +182,7 @@ describe('Dependency Installer', () => {
       expect(spawn).toHaveBeenCalledWith('npm', ['install'], {
         cwd: '/test/project',
         stdio: 'inherit',
-        shell: isWindows // Windows needs shell, Unix doesn't
+        shell: isWindows, // Windows needs shell, Unix doesn't
       });
     });
 
@@ -192,7 +192,7 @@ describe('Dependency Installer', () => {
           if (event === 'close') {
             setTimeout(() => callback(0), 10);
           }
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -207,7 +207,7 @@ describe('Dependency Installer', () => {
           if (event === 'close') {
             setTimeout(() => callback(1), 10);
           }
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -222,7 +222,7 @@ describe('Dependency Installer', () => {
           if (event === 'error') {
             setTimeout(() => callback(new Error('ENOENT')), 10);
           }
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -265,7 +265,7 @@ describe('Dependency Installer', () => {
       const mockChild = {
         on: jest.fn((event, callback) => {
           if (event === 'close') setTimeout(() => callback(0), 10);
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -284,7 +284,7 @@ describe('Dependency Installer', () => {
               // First attempt fails, second succeeds
               setTimeout(() => callback(attempts < 2 ? 1 : 0), 10);
             }
-          })
+          }),
         };
       });
 
@@ -309,7 +309,7 @@ describe('Dependency Installer', () => {
       const mockChild = {
         on: jest.fn((event, callback) => {
           if (event === 'close') setTimeout(() => callback(1), 10);
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
@@ -336,12 +336,12 @@ describe('Dependency Installer', () => {
       const mockChild = {
         on: jest.fn((event, callback) => {
           if (event === 'close') setTimeout(() => callback(0), 10);
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
       const result = await installDependencies({
-        projectPath: '/test/project'
+        projectPath: '/test/project',
       });
 
       expect(result.success).toBe(true);
@@ -352,13 +352,13 @@ describe('Dependency Installer', () => {
       const mockChild = {
         on: jest.fn((event, callback) => {
           if (event === 'close') setTimeout(() => callback(0), 10);
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
       await installDependencies({
         packageManager: 'yarn',
-        projectPath: '/test/project'
+        projectPath: '/test/project',
       });
 
       expect(spawn).toHaveBeenCalledWith('yarn', ['install'], expect.any(Object));
@@ -371,21 +371,21 @@ describe('Dependency Installer', () => {
       fs.readdirSync.mockReturnValue(['lodash', 'express']);
 
       const result = await installDependencies({
-        projectPath: '/test/project'
+        projectPath: '/test/project',
       });
 
       expect(result.success).toBe(true);
       expect(result.offlineMode).toBe(true);
       expect(spawn).not.toHaveBeenCalled();
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining('offline mode')
+        expect.stringContaining('offline mode'),
       );
     });
 
     it('should reject invalid package manager', async () => {
       const result = await installDependencies({
         packageManager: 'malicious-pm',
-        projectPath: '/test/project'
+        projectPath: '/test/project',
       });
 
       expect(result.success).toBe(false);
@@ -398,13 +398,13 @@ describe('Dependency Installer', () => {
           if (event === 'close') {
             setTimeout(() => callback(1), 10);
           }
-        })
+        }),
       };
       spawn.mockReturnValue(mockChild);
 
       const result = await installDependencies({
         projectPath: '/test/project',
-        skipRetry: true
+        skipRetry: true,
       });
 
       expect(result.success).toBe(false);

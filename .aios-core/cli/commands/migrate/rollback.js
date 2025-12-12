@@ -25,7 +25,7 @@ async function removeV21Structure(aiosCoreDir, options = {}) {
   const v21Modules = ['core', 'development', 'product', 'infrastructure'];
   const result = {
     removed: [],
-    errors: []
+    errors: [],
   };
 
   onProgress({ phase: 'remove', message: '✓ Removing v2.1 structure...' });
@@ -41,7 +41,7 @@ async function removeV21Structure(aiosCoreDir, options = {}) {
       } catch (error) {
         result.errors.push({
           path: moduleDir,
-          error: error.message
+          error: error.message,
         });
       }
     }
@@ -64,7 +64,7 @@ async function restoreFromBackup(backup, projectRoot, options = {}) {
     success: false,
     restored: 0,
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   // Verify backup integrity first
@@ -79,8 +79,8 @@ async function restoreFromBackup(backup, projectRoot, options = {}) {
         message: 'Backup verification failed',
         details: {
           missing: verification.missing,
-          failed: verification.failed
-        }
+          failed: verification.failed,
+        },
       });
       return result;
     }
@@ -110,7 +110,7 @@ async function restoreFromBackup(backup, projectRoot, options = {}) {
     } catch (error) {
       result.errors.push({
         file: file.relativePath,
-        error: error.message
+        error: error.message,
       });
     }
   }
@@ -136,7 +136,7 @@ async function executeRollback(projectRoot, options = {}) {
     backup: null,
     removal: null,
     restore: null,
-    errors: []
+    errors: [],
   };
 
   // Find backup
@@ -170,7 +170,7 @@ async function executeRollback(projectRoot, options = {}) {
     path: backup.path,
     date: backup.manifest?.created,
     files: backup.manifest?.totalFiles,
-    size: backup.manifest?.totalSize
+    size: backup.manifest?.totalSize,
   };
 
   onProgress({
@@ -178,8 +178,8 @@ async function executeRollback(projectRoot, options = {}) {
     message: `Found backup: ${path.basename(backup.path)}`,
     details: {
       created: backup.manifest?.created,
-      files: backup.manifest?.totalFiles
-    }
+      files: backup.manifest?.totalFiles,
+    },
   });
 
   // Step 1: Remove v2.1 structure
@@ -290,7 +290,7 @@ async function canRollback(projectRoot) {
   if (!backup) {
     return {
       canRollback: false,
-      reason: 'No backup found'
+      reason: 'No backup found',
     };
   }
 
@@ -300,7 +300,7 @@ async function canRollback(projectRoot) {
     return {
       canRollback: false,
       reason: 'Backup verification failed',
-      details: verification
+      details: verification,
     };
   }
 
@@ -309,8 +309,8 @@ async function canRollback(projectRoot) {
     backup: {
       path: backup.path,
       date: backup.manifest?.created,
-      files: backup.manifest?.totalFiles
-    }
+      files: backup.manifest?.totalFiles,
+    },
   };
 }
 
@@ -319,5 +319,5 @@ module.exports = {
   restoreFromBackup,
   executeRollback,
   formatRollbackSummary,
-  canRollback
+  canRollback,
 };

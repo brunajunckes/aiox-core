@@ -24,7 +24,7 @@ class BranchManager {
       type,
       target,
       action,
-      ticketId
+      ticketId,
     } = modification;
 
     // Generate branch name
@@ -53,13 +53,13 @@ class BranchManager {
         success: true,
         branchName,
         baseBranch: this.git.defaultBranch,
-        timestamp: new Date(timestamp).toISOString()
+        timestamp: new Date(timestamp).toISOString(),
       };
     } catch (error) {
       console.error(chalk.red(`Failed to create branch: ${error.message}`));
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -85,7 +85,7 @@ class BranchManager {
           lastCommitHash: hash,
           lastCommitDate: new Date(parseInt(timestamp) * 1000),
           lastCommitMessage: subject,
-          age: this.calculateAge(parseInt(timestamp) * 1000)
+          age: this.calculateAge(parseInt(timestamp) * 1000),
         });
       }
 
@@ -113,8 +113,8 @@ class BranchManager {
           choices: [
             { name: 'Stash changes and switch', value: 'stash' },
             { name: 'Commit changes first', value: 'commit' },
-            { name: 'Cancel', value: 'cancel' }
-          ]
+            { name: 'Cancel', value: 'cancel' },
+          ],
         }]);
 
         if (action === 'cancel') {
@@ -151,7 +151,7 @@ class BranchManager {
       // Attempt merge
       const mergeResult = await this.git.mergeBranch(branchName, {
         message: options.message || `Merge modification branch '${branchName}'`,
-        noFastForward: true
+        noFastForward: true,
       });
 
       if (mergeResult.success) {
@@ -163,19 +163,19 @@ class BranchManager {
         return {
           success: true,
           message: 'Branch merged successfully',
-          targetBranch
+          targetBranch,
         };
       } else {
         return {
           success: false,
           conflicts: mergeResult.conflicts,
-          message: 'Merge conflicts detected'
+          message: 'Merge conflicts detected',
         };
       }
     } catch (error) {
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -214,7 +214,7 @@ class BranchManager {
 
     const toDelete = branches.filter(branch =>
       branch.lastCommitDate < cutoffDate &&
-      branch.name !== currentBranch
+      branch.name !== currentBranch,
     );
 
     if (toDelete.length === 0) {
@@ -231,7 +231,7 @@ class BranchManager {
       type: 'confirm',
       name: 'confirm',
       message: `Delete ${toDelete.length} old branches?`,
-      default: false
+      default: false,
     }]);
 
     if (!confirm) {
@@ -258,7 +258,7 @@ class BranchManager {
     const protectionFile = path.join(
       this.git.rootPath,
       '.git',
-      'aios-branch-protection.json'
+      'aios-branch-protection.json',
     );
 
     try {
@@ -275,12 +275,12 @@ class BranchManager {
         requiredReviews: 1,
         dismissStaleReviews: true,
         requireUpToDate: true,
-        protectedAt: new Date().toISOString()
+        protectedAt: new Date().toISOString(),
       };
 
       await require('fs').promises.writeFile(
         protectionFile,
-        JSON.stringify(protections, null, 2)
+        JSON.stringify(protections, null, 2),
       );
 
       console.log(chalk.green(`✅ Branch protection enabled for: ${branchName}`));
@@ -302,17 +302,17 @@ class BranchManager {
     try {
       // Get commits ahead/behind
       const ahead = await this.git.execGit(
-        `rev-list --count ${targetBranch}..${branch1}`
+        `rev-list --count ${targetBranch}..${branch1}`,
       );
       const behind = await this.git.execGit(
-        `rev-list --count ${branch1}..${targetBranch}`
+        `rev-list --count ${branch1}..${targetBranch}`,
       );
 
       // Get changed files
       const changedFiles = await this.git.getDiff({
         from: targetBranch,
         to: branch1,
-        nameOnly: true
+        nameOnly: true,
       });
 
       return {
@@ -321,12 +321,12 @@ class BranchManager {
         ahead: parseInt(ahead),
         behind: parseInt(behind),
         changedFiles: changedFiles.split('\n').filter(Boolean),
-        canFastForward: parseInt(behind) === 0
+        canFastForward: parseInt(behind) === 0,
       };
     } catch (error) {
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -361,27 +361,27 @@ class BranchManager {
         prefix: 'feature/',
         baseFrom: 'main',
         protectByDefault: false,
-        autoMerge: false
+        autoMerge: false,
       },
       bugfix: {
         prefix: 'fix/',
         baseFrom: 'main',
         protectByDefault: false,
-        autoMerge: true
+        autoMerge: true,
       },
       experiment: {
         prefix: 'experiment/',
         baseFrom: 'develop',
         protectByDefault: false,
-        autoMerge: false
+        autoMerge: false,
       },
       'self-modification': {
         prefix: 'self-mod/',
         baseFrom: 'main',
         protectByDefault: true,
         autoMerge: false,
-        requireApproval: true
-      }
+        requireApproval: true,
+      },
     };
 
     return strategies[modificationType] || strategies.enhancement;

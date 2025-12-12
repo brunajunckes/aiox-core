@@ -45,7 +45,7 @@ const IDE_CONFIGS = {
     requiresDirectory: true,
     format: 'text',
     recommended: true,
-    agentFolder: path.join('.claude', 'commands', 'AIOS', 'agents')
+    agentFolder: path.join('.claude', 'commands', 'AIOS', 'agents'),
   },
   cursor: {
     name: 'Cursor',
@@ -54,7 +54,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/cursor-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.cursor', 'rules')
+    agentFolder: path.join('.cursor', 'rules'),
   },
   windsurf: {
     name: 'Windsurf',
@@ -63,7 +63,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/windsurf-rules.md',
     requiresDirectory: false,
     format: 'text',
-    agentFolder: path.join('.windsurf', 'rules')
+    agentFolder: path.join('.windsurf', 'rules'),
   },
   trae: {
     name: 'Trae',
@@ -72,7 +72,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/trae-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.trae', 'agents')
+    agentFolder: path.join('.trae', 'agents'),
   },
   'roo-code': {
     name: 'Roo Code',
@@ -81,7 +81,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/roo-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.roo', 'agents')
+    agentFolder: path.join('.roo', 'agents'),
   },
   cline: {
     name: 'Cline',
@@ -90,7 +90,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/cline-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.cline', 'agents')
+    agentFolder: path.join('.cline', 'agents'),
   },
   'gemini-cli': {
     name: 'Gemini CLI',
@@ -99,7 +99,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/gemini-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.gemini', 'agents')
+    agentFolder: path.join('.gemini', 'agents'),
   },
   'github-copilot': {
     name: 'GitHub Copilot',
@@ -108,7 +108,7 @@ const IDE_CONFIGS = {
     template: 'ide-rules/copilot-rules.md',
     requiresDirectory: true,
     format: 'text',
-    agentFolder: path.join('.github', 'agents')
+    agentFolder: path.join('.github', 'agents'),
   },
   antigravity: {
     name: 'AntiGravity',
@@ -124,9 +124,9 @@ const IDE_CONFIGS = {
       type: 'antigravity',
       configJsonPath: path.join('.antigravity', 'antigravity.json'),
       workflowsFolder: path.join('.agent', 'workflows'),
-      agentsFolder: path.join('.antigravity', 'agents') // For reference in config, but workflows are used
-    }
-  }
+      agentsFolder: path.join('.antigravity', 'agents'), // For reference in config, but workflows are used
+    },
+  },
 };
 
 /**
@@ -175,7 +175,7 @@ function getIDEChoices() {
     return {
       name: `${displayName} ${colors.dim('- ' + config.description)}`,
       value: key,
-      checked: isRecommended // Pre-select recommended IDEs
+      checked: isRecommended, // Pre-select recommended IDEs
     };
   });
 }
@@ -185,5 +185,5 @@ module.exports = {
   getIDEKeys,
   getIDEConfig,
   isValidIDE,
-  getIDEChoices
+  getIDEChoices,
 };

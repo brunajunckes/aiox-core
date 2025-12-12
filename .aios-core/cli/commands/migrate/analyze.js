@@ -29,9 +29,9 @@ const MODULE_MAPPING = {
       'config/**',
       'mcp/**',
       'data/**',
-      'docs/**'
+      'docs/**',
     ],
-    directories: ['registry', 'quality-gates', 'manifest', 'utils', 'elicitation', 'session', 'config', 'mcp', 'data', 'docs']
+    directories: ['registry', 'quality-gates', 'manifest', 'utils', 'elicitation', 'session', 'config', 'mcp', 'data', 'docs'],
   },
   development: {
     target: 'development',
@@ -41,27 +41,27 @@ const MODULE_MAPPING = {
       'templates/**',
       'checklists/**',
       'scripts/**',
-      'personas/**'
+      'personas/**',
     ],
-    directories: ['agents', 'tasks', 'templates', 'checklists', 'scripts', 'personas']
+    directories: ['agents', 'tasks', 'templates', 'checklists', 'scripts', 'personas'],
   },
   product: {
     target: 'product',
     patterns: [
       'cli/**',
-      'api/**'
+      'api/**',
     ],
-    directories: ['cli', 'api']
+    directories: ['cli', 'api'],
   },
   infrastructure: {
     target: 'infrastructure',
     patterns: [
       'hooks/**',
       'telemetry/**',
-      'integrations/**'
+      'integrations/**',
     ],
-    directories: ['hooks', 'telemetry', 'integrations']
-  }
+    directories: ['hooks', 'telemetry', 'integrations'],
+  },
 };
 
 /**
@@ -77,14 +77,14 @@ async function detectV2Structure(projectRoot) {
       isV2: false,
       isV21: false,
       version: null,
-      error: 'No .aios-core directory found'
+      error: 'No .aios-core directory found',
     };
   }
 
   // Check for v2.1 modular structure (core, development, product, infrastructure dirs)
   const v21Modules = ['core', 'development', 'product', 'infrastructure'];
   const hasV21Structure = v21Modules.every(module =>
-    fs.existsSync(path.join(aiosCoreDir, module))
+    fs.existsSync(path.join(aiosCoreDir, module)),
   );
 
   if (hasV21Structure) {
@@ -92,14 +92,14 @@ async function detectV2Structure(projectRoot) {
       isV2: false,
       isV21: true,
       version: '2.1',
-      message: 'Project already has v2.1 modular structure'
+      message: 'Project already has v2.1 modular structure',
     };
   }
 
   // Check for v2.0 flat structure
   const v20Indicators = ['agents', 'tasks', 'registry', 'cli'];
   const hasV20Structure = v20Indicators.some(dir =>
-    fs.existsSync(path.join(aiosCoreDir, dir))
+    fs.existsSync(path.join(aiosCoreDir, dir)),
   );
 
   if (hasV20Structure) {
@@ -107,7 +107,7 @@ async function detectV2Structure(projectRoot) {
       isV2: true,
       isV21: false,
       version: '2.0',
-      message: 'Project has v2.0 flat structure'
+      message: 'Project has v2.0 flat structure',
     };
   }
 
@@ -115,7 +115,7 @@ async function detectV2Structure(projectRoot) {
     isV2: false,
     isV21: false,
     version: null,
-    error: 'Unable to detect AIOS version structure'
+    error: 'Unable to detect AIOS version structure',
   };
 }
 
@@ -159,7 +159,7 @@ async function analyzeMigrationPlan(projectRoot, options = {}) {
   if (!versionInfo.isV2) {
     return {
       canMigrate: false,
-      ...versionInfo
+      ...versionInfo,
     };
   }
 
@@ -177,13 +177,13 @@ async function analyzeMigrationPlan(projectRoot, options = {}) {
       core: { files: [], size: 0 },
       development: { files: [], size: 0 },
       product: { files: [], size: 0 },
-      infrastructure: { files: [], size: 0 }
+      infrastructure: { files: [], size: 0 },
     },
     uncategorized: [],
     conflicts: [],
     totalFiles: 0,
     totalSize: 0,
-    stats: {}
+    stats: {},
   };
 
   // Categorize each file
@@ -195,7 +195,7 @@ async function analyzeMigrationPlan(projectRoot, options = {}) {
     const fileInfo = {
       sourcePath: filePath,
       relativePath,
-      size: stats.size
+      size: stats.size,
     };
 
     if (module && plan.modules[module]) {
@@ -218,7 +218,7 @@ async function analyzeMigrationPlan(projectRoot, options = {}) {
       plan.conflicts.push({
         type: 'existing_directory',
         path: targetDir,
-        module: moduleName
+        module: moduleName,
       });
     }
   }
@@ -227,25 +227,25 @@ async function analyzeMigrationPlan(projectRoot, options = {}) {
   plan.stats = {
     core: {
       files: plan.modules.core.files.length,
-      size: formatSize(plan.modules.core.size)
+      size: formatSize(plan.modules.core.size),
     },
     development: {
       files: plan.modules.development.files.length,
-      size: formatSize(plan.modules.development.size)
+      size: formatSize(plan.modules.development.size),
     },
     product: {
       files: plan.modules.product.files.length,
-      size: formatSize(plan.modules.product.size)
+      size: formatSize(plan.modules.product.size),
     },
     infrastructure: {
       files: plan.modules.infrastructure.files.length,
-      size: formatSize(plan.modules.infrastructure.size)
+      size: formatSize(plan.modules.infrastructure.size),
     },
     uncategorized: plan.uncategorized.length,
     total: {
       files: plan.totalFiles,
-      size: formatSize(plan.totalSize)
-    }
+      size: formatSize(plan.totalSize),
+    },
   };
 
   return plan;
@@ -324,7 +324,7 @@ function analyzeImports(plan) {
           file: file.relativePath,
           module: moduleName,
           oldPath: file.relativePath,
-          newPath: path.join(moduleName, file.relativePath)
+          newPath: path.join(moduleName, file.relativePath),
         });
       }
     }
@@ -336,9 +336,9 @@ function analyzeImports(plan) {
       core: importPaths.filter(f => f.module === 'core').length,
       development: importPaths.filter(f => f.module === 'development').length,
       product: importPaths.filter(f => f.module === 'product').length,
-      infrastructure: importPaths.filter(f => f.module === 'infrastructure').length
+      infrastructure: importPaths.filter(f => f.module === 'infrastructure').length,
     },
-    files: importPaths
+    files: importPaths,
   };
 }
 
@@ -349,5 +349,5 @@ module.exports = {
   analyzeMigrationPlan,
   formatSize,
   formatMigrationPlan,
-  analyzeImports
+  analyzeImports,
 };

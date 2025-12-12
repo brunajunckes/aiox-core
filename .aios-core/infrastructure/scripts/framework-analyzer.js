@@ -21,7 +21,7 @@ class FrameworkAnalyzer {
       '.next',
       '.nuxt',
       'tmp',
-      'temp'
+      'temp',
     ];
   }
 
@@ -36,7 +36,7 @@ class FrameworkAnalyzer {
       utils: [],
       templates: [],
       docs: [],
-      tests: []
+      tests: [],
     };
 
     try {
@@ -81,7 +81,7 @@ class FrameworkAnalyzer {
         tests: components.tests,
         directory_structure: await this.analyzeDirectoryStructure(),
         dependencies: await this.analyzeDependencies(components),
-        metrics: await this.calculateFrameworkMetrics(components)
+        metrics: await this.calculateFrameworkMetrics(components),
       };
     } catch (error) {
       console.error(chalk.red(`Framework analysis failed: ${error.message}`));
@@ -304,7 +304,7 @@ class FrameworkAnalyzer {
         dependencies: this.extractDependencies(content),
         capabilities: metadata.capabilities || [],
         complexity: this.calculateComplexity(content),
-        maintainability: this.calculateMaintainability(content)
+        maintainability: this.calculateMaintainability(content),
       };
     } catch (error) {
       console.warn(`Failed to parse agent ${filePath}: ${error.message}`);
@@ -335,7 +335,7 @@ class FrameworkAnalyzer {
         last_modified: (await fs.stat(filePath)).mtime,
         dependencies: this.extractDependencies(content),
         parameters: this.extractTaskParameters(content),
-        implementation_status: this.analyzeImplementationStatus(content)
+        implementation_status: this.analyzeImplementationStatus(content),
       };
     } catch (error) {
       console.warn(`Failed to parse task ${filePath}: ${error.message}`);
@@ -363,7 +363,7 @@ class FrameworkAnalyzer {
         dependencies: workflow.dependencies || [],
         triggers: workflow.triggers || [],
         complexity: this.calculateWorkflowComplexity(workflow),
-        validation_status: await this.validateWorkflow(workflow)
+        validation_status: await this.validateWorkflow(workflow),
       };
     } catch (error) {
       console.warn(`Failed to parse workflow ${filePath}: ${error.message}`);
@@ -390,7 +390,7 @@ class FrameworkAnalyzer {
         functions: this.extractFunctions(content),
         dependencies: this.extractImports(content),
         complexity: this.calculateCodeComplexity(content),
-        test_coverage: await this.calculateTestCoverage(filePath)
+        test_coverage: await this.calculateTestCoverage(filePath),
       };
     } catch (error) {
       console.warn(`Failed to parse util ${filePath}: ${error.message}`);
@@ -415,7 +415,7 @@ class FrameworkAnalyzer {
         size: content.length,
         last_modified: stats.mtime,
         template_type: this.detectTemplateType(filePath, content),
-        variables: this.extractTemplateVariables(content)
+        variables: this.extractTemplateVariables(content),
       };
     } catch (error) {
       console.warn(`Failed to parse template ${filePath}: ${error.message}`);
@@ -441,7 +441,7 @@ class FrameworkAnalyzer {
         last_modified: stats.mtime,
         doc_type: this.detectDocType(filePath),
         sections: this.extractSections(content),
-        word_count: this.countWords(content)
+        word_count: this.countWords(content),
       };
     } catch (error) {
       console.warn(`Failed to parse doc ${filePath}: ${error.message}`);
@@ -468,7 +468,7 @@ class FrameworkAnalyzer {
         test_framework: this.detectTestFramework(content),
         test_suites: this.extractTestSuites(content),
         test_count: this.countTests(content),
-        coverage_target: this.extractCoverageTarget(filePath)
+        coverage_target: this.extractCoverageTarget(filePath),
       };
     } catch (error) {
       console.warn(`Failed to parse test ${filePath}: ${error.message}`);
@@ -485,7 +485,7 @@ class FrameworkAnalyzer {
       total_files: 0,
       depth: 0,
       size_distribution: {},
-      file_types: {}
+      file_types: {},
     };
 
     try {
@@ -506,7 +506,7 @@ class FrameworkAnalyzer {
       external: new Map(),
       circular: [],
       orphaned: [],
-      highly_coupled: []
+      highly_coupled: [],
     };
 
     // Analyze dependencies for each component type
@@ -540,7 +540,7 @@ class FrameworkAnalyzer {
       external_dependencies: Array.from(dependencies.external.entries()).map(([name, count]) => ({ name, count })),
       circular_dependencies: dependencies.circular,
       orphaned_components: dependencies.orphaned,
-      highly_coupled_components: dependencies.highly_coupled
+      highly_coupled_components: dependencies.highly_coupled,
     };
   }
 
@@ -557,7 +557,7 @@ class FrameworkAnalyzer {
       test_coverage: await this.calculateOverallTestCoverage(components),
       documentation_coverage: this.calculateDocumentationCoverage(components),
       code_quality_score: this.calculateCodeQualityScore(allComponents),
-      technical_debt: this.calculateTechnicalDebt(allComponents)
+      technical_debt: this.calculateTechnicalDebt(allComponents),
     };
   }
 
@@ -648,7 +648,7 @@ class FrameworkAnalyzer {
     return this.excludes.some(exclude => 
       name === exclude || 
       name.startsWith(exclude) || 
-      name.startsWith('.')
+      name.startsWith('.'),
     );
   }
 

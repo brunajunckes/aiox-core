@@ -90,7 +90,7 @@ describe('SessionContextLoader', () => {
         'create-story',
         'validate-story-draft',
         'develop',
-        'run-tests'
+        'run-tests',
       ]);
     });
 
@@ -190,7 +190,7 @@ describe('SessionContextLoader', () => {
 
     test('includes active workflow if set', () => {
       loader.updateSession('po', 'Pax', 'create-story', {
-        workflowActive: 'story-creation'
+        workflowActive: 'story-creation',
       });
 
       const context = loader.loadContext('dev');
@@ -259,8 +259,8 @@ describe('SessionContextLoader', () => {
         agentSequence: [
           { agentId: 'po', agentName: 'Pax', activatedAt: Date.now() - 10000, lastCommand: 'create-story' },
           { agentId: 'dev', agentName: 'Dex', activatedAt: Date.now() - 5000, lastCommand: 'develop' },
-          { agentId: 'qa', agentName: 'Quinn', activatedAt: Date.now(), lastCommand: 'review' }
-        ]
+          { agentId: 'qa', agentName: 'Quinn', activatedAt: Date.now(), lastCommand: 'review' },
+        ],
       };
 
       const previous = loader.getPreviousAgent(sessionState, 'qa');

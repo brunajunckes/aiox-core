@@ -29,7 +29,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
     '21st-dev-magic',  // MCP tools
     'browser',
     'context7',
-    'exa'
+    'exa',
   ];
 
   // v2.0 complex tools (4 total)
@@ -37,7 +37,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
     'clickup',
     'google-workspace',
     'n8n',
-    'supabase'
+    'supabase',
   ];
 
   beforeAll(() => {
@@ -58,7 +58,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
         results.push({
           name: toolName,
           schema_version: tool.schema_version,
-          has_executable_knowledge: !!tool.executable_knowledge
+          has_executable_knowledge: !!tool.executable_knowledge,
         });
       }
 
@@ -77,7 +77,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
         results.push({
           name: toolName,
           schema_version: tool.schema_version,
-          has_executable_knowledge: !!tool.executable_knowledge
+          has_executable_knowledge: !!tool.executable_knowledge,
         });
       }
 
@@ -113,7 +113,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
   describeIntegration('v1.0 Tools Functionality (No Breaking Changes)', () => {
     test('v1.0 tools resolve successfully', async () => {
       const resolvePromises = v1SimpleTools.map(name =>
-        toolResolver.resolveTool(_name)
+        toolResolver.resolveTool(_name),
       );
 
       const tools = await Promise.all(resolvePromises);
@@ -184,7 +184,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
       const typeDistribution = {
         cli: [],
         local: [],
-        mcp: []
+        mcp: [],
       };
 
       for (const toolName of v1SimpleTools) {
@@ -256,7 +256,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
 
     test('error handling unchanged for invalid tools', async () => {
       await expect(
-        toolResolver.resolveTool('non-existent-tool')
+        toolResolver.resolveTool('non-existent-tool'),
       ).rejects.toThrow();
 
       // Error should still be clear and helpful
@@ -277,13 +277,13 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
           results.push({
             name: toolName,
             success: true,
-            schema_version: tool.schema_version
+            schema_version: tool.schema_version,
           });
         } catch (error) {
           results.push({
             name: toolName,
             success: false,
-            error: error.message
+            error: error.message,
           });
         }
       }
@@ -308,7 +308,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
         v1_tools: [],
         schema_detection: [],
         api_compatibility: [],
-        issues: []
+        issues: [],
       };
 
       // Test all v1.0 tools
@@ -319,7 +319,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
           name: toolName,
           schema_version: tool.schema_version,
           has_executable_knowledge: !!tool.executable_knowledge,
-          knowledge_strategy: tool.knowledge_strategy
+          knowledge_strategy: tool.knowledge_strategy,
         });
 
         // Verify schema detection
@@ -327,7 +327,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
           report.schema_detection.push({
             tool: toolName,
             expected: 1,
-            actual: tool.schema_version
+            actual: tool.schema_version,
           });
         }
 
@@ -335,7 +335,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
         if (tool.executable_knowledge) {
           report.api_compatibility.push({
             tool: toolName,
-            issue: 'v1.0 tool has executable_knowledge field'
+            issue: 'v1.0 tool has executable_knowledge field',
           });
         }
 
@@ -343,7 +343,7 @@ describeIntegration('Schema Detection & v1.0 Backward Compatibility', () => {
         if (tool.knowledge_strategy !== 'declarative') {
           report.issues.push({
             tool: toolName,
-            issue: `knowledge_strategy is ${tool.knowledge_strategy}, expected declarative`
+            issue: `knowledge_strategy is ${tool.knowledge_strategy}, expected declarative`,
           });
         }
       }

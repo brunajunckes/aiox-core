@@ -60,7 +60,7 @@ function createRecordCommand() {
           passed,
           durationMs: options.duration ? parseInt(options.duration, 10) : 0,
           findingsCount: options.findings ? parseInt(options.findings, 10) : 0,
-          metadata: {}
+          metadata: {},
         };
 
         // Add metadata
@@ -81,8 +81,8 @@ function createRecordCommand() {
                 critical: parseInt(options.crCritical, 10),
                 high: parseInt(options.crHigh, 10),
                 medium: parseInt(options.crMedium, 10),
-                low: parseInt(options.crLow, 10)
-              }
+                low: parseInt(options.crLow, 10),
+              },
             };
           }
 
@@ -91,7 +91,7 @@ function createRecordCommand() {
               findingsCount: parseInt(options.quinnFindings, 10),
               topCategories: options.quinnCategories
                 ? options.quinnCategories.split(',').map((c) => c.trim())
-                : []
+                : [],
             };
           }
 
@@ -150,5 +150,5 @@ function createRecordCommand() {
 }
 
 module.exports = {
-  createRecordCommand
+  createRecordCommand,
 };

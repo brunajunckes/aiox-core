@@ -60,7 +60,7 @@ describeIntegration('n8n Tool Validators', () => {
   describeIntegration('validate-execute-workflow', () => {
     test('should pass with valid workflow_id', async () => {
       const result = await validator.validate('execute_workflow', {
-        workflow_id: 'wf_abc123'
+        workflow_id: 'wf_abc123',
       });
 
       expect(result.valid).toBe(true);
@@ -69,7 +69,7 @@ describeIntegration('n8n Tool Validators', () => {
 
     test('should pass with workflowId (alternative field name)', async () => {
       const result = await validator.validate('execute_workflow', {
-        workflowId: 'wf_abc123'
+        workflowId: 'wf_abc123',
       });
 
       expect(result.valid).toBe(true);
@@ -78,7 +78,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should pass with data object', async () => {
       const result = await validator.validate('execute_workflow', {
         workflow_id: 'wf_abc123',
-        data: { key: 'value' }
+        data: { key: 'value' },
       });
 
       expect(result.valid).toBe(true);
@@ -87,7 +87,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should pass with wait_for_completion boolean', async () => {
       const result = await validator.validate('execute_workflow', {
         workflow_id: 'wf_abc123',
-        wait_for_completion: true
+        wait_for_completion: true,
       });
 
       expect(result.valid).toBe(true);
@@ -95,7 +95,7 @@ describeIntegration('n8n Tool Validators', () => {
 
     test('should fail without workflow_id', async () => {
       const result = await validator.validate('execute_workflow', {
-        data: { key: 'value' }
+        data: { key: 'value' },
       });
 
       expect(result.valid).toBe(false);
@@ -105,7 +105,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail with non-object data', async () => {
       const result = await validator.validate('execute_workflow', {
         workflow_id: 'wf_abc123',
-        data: 'invalid'
+        data: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -115,7 +115,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail with non-boolean wait_for_completion', async () => {
       const result = await validator.validate('execute_workflow', {
         workflow_id: 'wf_abc123',
-        wait_for_completion: 'yes'
+        wait_for_completion: 'yes',
       });
 
       expect(result.valid).toBe(false);
@@ -126,7 +126,7 @@ describeIntegration('n8n Tool Validators', () => {
   describeIntegration('validate-create-workflow', () => {
     test('should pass with valid workflow name', async () => {
       const result = await validator.validate('create_workflow', {
-        name: 'Test Workflow'
+        name: 'Test Workflow',
       });
 
       expect(result.valid).toBe(true);
@@ -137,8 +137,8 @@ describeIntegration('n8n Tool Validators', () => {
         name: 'Test Workflow',
         nodes: [
           { type: 'n8n-nodes-base.start', name: 'Start' },
-          { type: 'n8n-nodes-base.httpRequest', name: 'HTTP Request' }
-        ]
+          { type: 'n8n-nodes-base.httpRequest', name: 'HTTP Request' },
+        ],
       });
 
       expect(result.valid).toBe(true);
@@ -149,9 +149,9 @@ describeIntegration('n8n Tool Validators', () => {
         name: 'Test Workflow',
         connections: {
           'Start': {
-            main: [[{ node: 'HTTP Request', type: 'main', index: 0 }]]
-          }
-        }
+            main: [[{ node: 'HTTP Request', type: 'main', index: 0 }]],
+          },
+        },
       });
 
       expect(result.valid).toBe(true);
@@ -159,7 +159,7 @@ describeIntegration('n8n Tool Validators', () => {
 
     test('should fail without name', async () => {
       const result = await validator.validate('create_workflow', {
-        nodes: []
+        nodes: [],
       });
 
       expect(result.valid).toBe(false);
@@ -169,7 +169,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail with non-array nodes', async () => {
       const result = await validator.validate('create_workflow', {
         name: 'Test Workflow',
-        nodes: 'invalid'
+        nodes: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -180,8 +180,8 @@ describeIntegration('n8n Tool Validators', () => {
       const result = await validator.validate('create_workflow', {
         name: 'Test Workflow',
         nodes: [
-          { name: 'Start' }
-        ]
+          { name: 'Start' },
+        ],
       });
 
       expect(result.valid).toBe(false);
@@ -192,8 +192,8 @@ describeIntegration('n8n Tool Validators', () => {
       const result = await validator.validate('create_workflow', {
         name: 'Test Workflow',
         nodes: [
-          { type: 'n8n-nodes-base.start' }
-        ]
+          { type: 'n8n-nodes-base.start' },
+        ],
       });
 
       expect(result.valid).toBe(false);
@@ -203,7 +203,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail with non-object connections', async () => {
       const result = await validator.validate('create_workflow', {
         name: 'Test Workflow',
-        connections: 'invalid'
+        connections: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -216,7 +216,7 @@ describeIntegration('n8n Tool Validators', () => {
       const result = await validator.validate('create_credential', {
         name: 'My API Credential',
         type: 'httpBasicAuth',
-        data: { username: 'user', password: 'pass' }
+        data: { username: 'user', password: 'pass' },
       });
 
       expect(result.valid).toBe(true);
@@ -225,7 +225,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail create_credential without name', async () => {
       const result = await validator.validate('create_credential', {
         type: 'httpBasicAuth',
-        data: { username: 'user' }
+        data: { username: 'user' },
       });
 
       expect(result.valid).toBe(false);
@@ -235,7 +235,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail create_credential without type', async () => {
       const result = await validator.validate('create_credential', {
         name: 'My Credential',
-        data: { username: 'user' }
+        data: { username: 'user' },
       });
 
       expect(result.valid).toBe(false);
@@ -245,7 +245,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should fail create_credential without data', async () => {
       const result = await validator.validate('create_credential', {
         name: 'My Credential',
-        type: 'httpBasicAuth'
+        type: 'httpBasicAuth',
       });
 
       expect(result.valid).toBe(false);
@@ -256,7 +256,7 @@ describeIntegration('n8n Tool Validators', () => {
       const result = await validator.validate('create_credential', {
         name: 'My Credential',
         type: 'httpBasicAuth',
-        data: 'invalid'
+        data: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -268,7 +268,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should pass with valid update_credential parameters', async () => {
       const result = await validator.validate('update_credential', {
         credential_id: 'cred_123',
-        data: { username: 'newuser' }
+        data: { username: 'newuser' },
       });
 
       expect(result.valid).toBe(true);
@@ -277,7 +277,7 @@ describeIntegration('n8n Tool Validators', () => {
     test('should pass with credentialId (alternative field name)', async () => {
       const result = await validator.validate('update_credential', {
         credentialId: 'cred_123',
-        name: 'Updated Name'
+        name: 'Updated Name',
       });
 
       expect(result.valid).toBe(true);
@@ -285,7 +285,7 @@ describeIntegration('n8n Tool Validators', () => {
 
     test('should fail update_credential without credential_id', async () => {
       const result = await validator.validate('update_credential', {
-        name: 'Updated Name'
+        name: 'Updated Name',
       });
 
       expect(result.valid).toBe(false);
@@ -296,7 +296,7 @@ describeIntegration('n8n Tool Validators', () => {
   describeIntegration('validate-credential-operations (delete_credential)', () => {
     test('should pass with valid delete_credential parameters', async () => {
       const result = await validator.validate('delete_credential', {
-        credential_id: 'cred_123'
+        credential_id: 'cred_123',
       });
 
       expect(result.valid).toBe(true);
@@ -320,7 +320,7 @@ describeIntegration('n8n Tool Validators', () => {
         await validator.validate('execute_workflow', {
           workflow_id: 'wf_test123',
           data: { key: 'value' },
-          wait_for_completion: true
+          wait_for_completion: true,
         });
         const duration = Date.now() - start;
         durations.push(duration);

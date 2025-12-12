@@ -32,7 +32,7 @@ async function validateInstallation(installationContext, onProgress = () => {}) 
     components: {},
     errors: [],
     warnings: [],
-    overallStatus: 'unknown'
+    overallStatus: 'unknown',
   };
 
   try {
@@ -53,7 +53,7 @@ async function validateInstallation(installationContext, onProgress = () => {}) 
     // Phase 4: Dependency Validation (Task 1.8.4)
     onProgress({ step: 'dependencies', message: 'Validating dependencies...', progress: 75 });
     validationResults.components.dependencies = await validateDependencies(
-      installationContext.dependencies
+      installationContext.dependencies,
     );
 
     // Aggregate errors and warnings
@@ -87,7 +87,7 @@ async function validateInstallation(installationContext, onProgress = () => {}) 
       component: 'validation',
       severity: 'critical',
       message: `Validation failed: ${error.message}`,
-      details: error.stack
+      details: error.stack,
     });
 
     return validationResults;
@@ -116,5 +116,5 @@ async function provideTroubleshooting(errors) {
 module.exports = {
   validateInstallation,
   displayValidationReport,
-  provideTroubleshooting
+  provideTroubleshooting,
 };

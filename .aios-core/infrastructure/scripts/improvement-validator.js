@@ -21,7 +21,7 @@ class ImprovementValidator {
       'security-checker.js',
       'improvement-validator.js',
       'rollback-handler.js',
-      'backup-manager.js'
+      'backup-manager.js',
     ];
     
     this.protectedPatterns = [
@@ -29,14 +29,14 @@ class ImprovementValidator {
       /node_modules/,
       /\.env/,
       /config\/security/,
-      /backup\//
+      /backup\//,
     ];
     
     // Improvement history for recursive detection
     this.improvementHistoryFile = path.join(
       this.rootPath,
       '.aios',
-      'improvement-history.json'
+      'improvement-history.json',
     );
     
     // Safety thresholds
@@ -45,7 +45,7 @@ class ImprovementValidator {
       maxImprovementDepth: options.maxDepth || 1,
       maxRiskScore: options.maxRisk || 7,
       minTestCoverage: options.minCoverage || 80,
-      maxComplexityIncrease: options.maxComplexity || 10
+      maxComplexityIncrease: options.maxComplexity || 10,
     };
   }
 
@@ -64,7 +64,7 @@ class ImprovementValidator {
       reason: null,
       suggestions: [],
       warnings: [],
-      risk_assessment: {}
+      risk_assessment: {},
     };
 
     try {
@@ -138,7 +138,7 @@ class ImprovementValidator {
         return {
           isRecursive: true,
           message: `Maximum improvement depth (${this.thresholds.maxImprovementDepth}) reached`,
-          depth: currentDepth
+          depth: currentDepth,
         };
       }
 
@@ -158,7 +158,7 @@ class ImprovementValidator {
             isRecursive: true,
             message: `Similar improvement attempted ${improvement.timestamp}`,
             similarity,
-            previousId: improvement.id
+            previousId: improvement.id,
           };
         }
       }
@@ -168,7 +168,7 @@ class ImprovementValidator {
         return {
           isRecursive: true,
           message: 'Self-referential improvement detected',
-          pattern: 'self-modification of improvement system'
+          pattern: 'self-modification of improvement system',
         };
       }
 
@@ -176,7 +176,7 @@ class ImprovementValidator {
       await this.recordImprovementAttempt({
         fingerprint,
         request,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       return { isRecursive: false };
@@ -187,7 +187,7 @@ class ImprovementValidator {
       return {
         isRecursive: true,
         message: 'Could not verify non-recursive nature',
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -206,7 +206,7 @@ class ImprovementValidator {
       risks: [],
       mitigations: [],
       interface_preserved: true,
-      breaking_changes: []
+      breaking_changes: [],
     };
 
     try {
@@ -218,7 +218,7 @@ class ImprovementValidator {
             type: 'protected_file',
             file,
             severity: 'critical',
-            message: `Cannot modify protected file: ${file}`
+            message: `Cannot modify protected file: ${file}`,
           });
         }
       }
@@ -244,7 +244,7 @@ class ImprovementValidator {
           type: 'dependency_impact',
           severity: 'medium',
           message: 'Changes may affect dependent components',
-          details: depImpact.issues
+          details: depImpact.issues,
         });
       }
 
@@ -268,7 +268,7 @@ class ImprovementValidator {
       safety.risks.push({
         type: 'validation_error',
         severity: 'high',
-        message: error.message
+        message: error.message,
       });
     }
 
@@ -283,7 +283,7 @@ class ImprovementValidator {
     const validation = {
       safe: true,
       risks: [],
-      breaking_changes: []
+      breaking_changes: [],
     };
 
     // Check modification types
@@ -293,7 +293,7 @@ class ImprovementValidator {
           validation.breaking_changes.push({
             type: 'api_change',
             description: mod.description,
-            impact: 'Existing integrations may break'
+            impact: 'Existing integrations may break',
           });
           break;
           
@@ -301,7 +301,7 @@ class ImprovementValidator {
           validation.breaking_changes.push({
             type: 'signature_change',
             function: mod.function,
-            impact: 'Callers must be updated'
+            impact: 'Callers must be updated',
           });
           break;
           
@@ -309,7 +309,7 @@ class ImprovementValidator {
           validation.risks.push({
             type: 'config_change',
             severity: 'medium',
-            message: 'Configuration format changes require migration'
+            message: 'Configuration format changes require migration',
           });
           break;
       }
@@ -320,7 +320,7 @@ class ImprovementValidator {
       validation.risks.push({
         type: 'missing_tests',
         severity: 'medium',
-        message: 'No tests specified for changes'
+        message: 'No tests specified for changes',
       });
     }
 
@@ -344,8 +344,8 @@ class ImprovementValidator {
           total_attempts: 0,
           successful: 0,
           failed: 0,
-          rolled_back: 0
-        }
+          rolled_back: 0,
+        },
       };
       
       await this.saveImprovementHistory(initialHistory);
@@ -362,7 +362,7 @@ class ImprovementValidator {
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(
       this.improvementHistoryFile,
-      JSON.stringify(history, null, 2)
+      JSON.stringify(history, null, 2),
     );
   }
 
@@ -376,7 +376,7 @@ class ImprovementValidator {
     history.improvements.push({
       id: `imp-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       ...attempt,
-      depth: this.getCurrentImprovementDepth()
+      depth: this.getCurrentImprovementDepth(),
     });
     
     history.statistics.total_attempts++;
@@ -417,7 +417,7 @@ class ImprovementValidator {
       hash,
       length: request.length,
       keywords: this.extractKeywords(normalized),
-      patterns: this.extractPatterns(normalized)
+      patterns: this.extractPatterns(normalized),
     };
     
     return features;
@@ -458,7 +458,7 @@ class ImprovementValidator {
       /modify.*validator/i,
       /change.*safety.*check/i,
       /update.*recursive.*detection/i,
-      /enhance.*self.*modification/i
+      /enhance.*self.*modification/i,
     ];
     
     return selfPatterns.some(pattern => pattern.test(request));
@@ -471,7 +471,7 @@ class ImprovementValidator {
   analyzeRequestPatterns(request) {
     const analysis = {
       suspicious: false,
-      warnings: []
+      warnings: [],
     };
     
     // Check for dangerous patterns
@@ -479,7 +479,7 @@ class ImprovementValidator {
       { pattern: /disable.*safety/i, message: 'Attempting to disable safety features' },
       { pattern: /bypass.*validation/i, message: 'Attempting to bypass validation' },
       { pattern: /remove.*check/i, message: 'Attempting to remove checks' },
-      { pattern: /unlimited|infinite|no.*limit/i, message: 'Attempting to remove limits' }
+      { pattern: /unlimited|infinite|no.*limit/i, message: 'Attempting to remove limits' },
     ];
     
     for (const check of dangerous) {
@@ -532,7 +532,7 @@ class ImprovementValidator {
       { pattern: /all|every|entire/i, points: 2 },
       { pattern: /refactor|rewrite|redesign/i, points: 3 },
       { pattern: /performance|optimize/i, points: 1 },
-      { pattern: /security|auth/i, points: 2 }
+      { pattern: /security|auth/i, points: 2 },
     ];
     
     for (const risk of riskPatterns) {
@@ -540,7 +540,7 @@ class ImprovementValidator {
         score += risk.points;
         factors.push({ 
           factor: risk.pattern.source, 
-          points: risk.points 
+          points: risk.points, 
         });
       }
     }
@@ -571,7 +571,7 @@ class ImprovementValidator {
   async assessDependencyImpact(plan) {
     const impact = {
       hasIssues: false,
-      issues: []
+      issues: [],
     };
     
     try {
@@ -582,7 +582,7 @@ class ImprovementValidator {
           impact.issues.push({
             file,
             dependents: deps.length,
-            samples: deps.slice(0, 3)
+            samples: deps.slice(0, 3),
           });
         }
       }
@@ -600,7 +600,7 @@ class ImprovementValidator {
   async performSecurityCheck(plan) {
     const check = {
       safe: true,
-      risks: []
+      risks: [],
     };
     
     // Check for security-sensitive modifications
@@ -612,7 +612,7 @@ class ImprovementValidator {
             type: 'security_modification',
             severity: 'critical',
             message: 'Changes affect security components',
-            detail: mod.description
+            detail: mod.description,
           });
         }
       }
@@ -646,7 +646,7 @@ class ImprovementValidator {
           mitigations.push({
             risk: risk.type,
             mitigation: 'Create a copy of the protected file for modifications',
-            action: 'copy_and_modify'
+            action: 'copy_and_modify',
           });
           break;
           
@@ -654,7 +654,7 @@ class ImprovementValidator {
           mitigations.push({
             risk: risk.type,
             mitigation: 'Generate comprehensive test suite before applying changes',
-            action: 'generate_tests'
+            action: 'generate_tests',
           });
           break;
           
@@ -662,7 +662,7 @@ class ImprovementValidator {
           mitigations.push({
             risk: risk.type,
             mitigation: 'Update dependent components to handle changes',
-            action: 'update_dependents'
+            action: 'update_dependents',
           });
           break;
           
@@ -670,7 +670,7 @@ class ImprovementValidator {
           mitigations.push({
             risk: risk.type,
             mitigation: 'Manual review required',
-            action: 'manual_review'
+            action: 'manual_review',
           });
       }
     }

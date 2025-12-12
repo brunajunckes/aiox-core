@@ -14,22 +14,22 @@
 
 const STATUS_MAPPING = {
   AIOS_TO_CLICKUP: {
-    "Draft": "Draft",
-    "Ready for Review": "Ready for Review",
-    "Review": "Review",
-    "In Progress": "In Progress",
-    "Done": "Done",
-    "Blocked": "Blocked"
+    'Draft': 'Draft',
+    'Ready for Review': 'Ready for Review',
+    'Review': 'Review',
+    'In Progress': 'In Progress',
+    'Done': 'Done',
+    'Blocked': 'Blocked',
   },
   CLICKUP_TO_AIOS: {
-    "Draft": "Draft",
-    "Ready for Dev": "Ready for Review",  // ClickUp-specific status
-    "Ready for Review": "Ready for Review",
-    "Review": "Review",
-    "In Progress": "In Progress",
-    "Done": "Done",
-    "Blocked": "Blocked"
-  }
+    'Draft': 'Draft',
+    'Ready for Dev': 'Ready for Review',  // ClickUp-specific status
+    'Ready for Review': 'Ready for Review',
+    'Review': 'Review',
+    'In Progress': 'In Progress',
+    'Done': 'Done',
+    'Blocked': 'Blocked',
+  },
 };
 
 /**
@@ -111,5 +111,5 @@ module.exports = {
   isValidClickUpStatus,
   getValidAIOSStatuses,
   getValidClickUpStatuses,
-  STATUS_MAPPING // Export for testing
+  STATUS_MAPPING, // Export for testing
 };

@@ -23,13 +23,13 @@ jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/git-config-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/project-status-loader', () => ({
   loadProjectStatus: jest.fn(),
-  formatStatusDisplay: jest.fn()
+  formatStatusDisplay: jest.fn(),
 }));
 jest.mock('../../.aios-core/development/scripts/greeting-preference-manager', () => {
   return jest.fn().mockImplementation(() => ({
     getPreference: jest.fn().mockReturnValue('auto'),
     setPreference: jest.fn(),
-    getConfig: jest.fn().mockReturnValue({})
+    getConfig: jest.fn().mockReturnValue({}),
   }));
 });
 
@@ -50,31 +50,31 @@ describe('GreetingBuilder', () => {
         greeting_levels: {
           minimal: '🤖 TestAgent ready',
           named: '🤖 TestAgent (Tester) ready',
-          archetypal: '🤖 TestAgent the Tester ready'
-        }
+          archetypal: '🤖 TestAgent the Tester ready',
+        },
       },
       persona: {
-        role: 'Test automation expert'
+        role: 'Test automation expert',
       },
       commands: [
         { name: 'help', visibility: ['full', 'quick', 'key'], description: 'Show help' },
         { name: 'test', visibility: ['full', 'quick'], description: 'Run tests' },
         { name: 'build', visibility: ['full'], description: 'Build project' },
-        { name: 'deploy', visibility: ['key'], description: 'Deploy to production' }
-      ]
+        { name: 'deploy', visibility: ['key'], description: 'Deploy to production' },
+      ],
     };
 
     // Setup default mocks - must be done BEFORE creating GreetingBuilder instance
     ContextDetector.mockImplementation(() => ({
-      detectSessionType: jest.fn().mockReturnValue('new')
+      detectSessionType: jest.fn().mockReturnValue('new'),
     }));
 
     GitConfigDetector.mockImplementation(() => ({
       get: jest.fn().mockReturnValue({
         configured: true,
         type: 'github',
-        branch: 'main'
-      })
+        branch: 'main',
+      }),
     }));
 
     loadProjectStatus.mockResolvedValue({
@@ -83,7 +83,7 @@ describe('GreetingBuilder', () => {
       modifiedFilesTotalCount: 2,
       recentCommits: ['feat: add feature', 'fix: bug fix'],
       currentStory: 'STORY-123',
-      isGitRepo: true
+      isGitRepo: true,
     });
     formatStatusDisplay.mockReturnValue('Project Status Display');
 
@@ -132,7 +132,7 @@ describe('GreetingBuilder', () => {
       builder.gitConfigDetector.get.mockReturnValue({
         configured: true,
         type: 'github',
-        branch: 'main'
+        branch: 'main',
       });
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -145,7 +145,7 @@ describe('GreetingBuilder', () => {
       builder.gitConfigDetector.get.mockReturnValue({
         configured: false,
         type: null,
-        branch: null
+        branch: null,
       });
       loadProjectStatus.mockResolvedValue(null);
 
@@ -158,7 +158,7 @@ describe('GreetingBuilder', () => {
       builder.gitConfigDetector.get.mockReturnValue({
         configured: false,
         type: null,
-        branch: null
+        branch: null,
       });
       loadProjectStatus.mockResolvedValue(null); // No status when git not configured
 
@@ -174,7 +174,7 @@ describe('GreetingBuilder', () => {
       builder.gitConfigDetector.get.mockReturnValue({
         configured: true,
         type: 'github',
-        branch: 'main'
+        branch: 'main',
       });
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -221,7 +221,7 @@ describe('GreetingBuilder', () => {
       mockAgent.commands = [
         { name: 'help' },
         { name: 'test' },
-        { name: 'build' }
+        { name: 'build' },
       ];
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -234,7 +234,7 @@ describe('GreetingBuilder', () => {
     test('should limit to 12 commands maximum', async () => {
       mockAgent.commands = Array(20).fill(null).map((_, i) => ({
         name: `command-${i}`,
-        visibility: ['full', 'quick', 'key']
+        visibility: ['full', 'quick', 'key'],
       }));
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -258,7 +258,7 @@ describe('GreetingBuilder', () => {
       builder.contextDetector.detectSessionType.mockReturnValue('existing');
 
       const greeting = await builder.buildGreeting(mockAgent, {
-        lastCommands: ['validate-story-draft']
+        lastCommands: ['validate-story-draft'],
       });
 
       // Implementation uses Context section with different format
@@ -287,7 +287,7 @@ describe('GreetingBuilder', () => {
         branch: 'main',
         modifiedFilesTotalCount: 5,
         currentStory: 'STORY-123',
-        isGitRepo: true
+        isGitRepo: true,
       });
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -310,7 +310,7 @@ describe('GreetingBuilder', () => {
     test('should fallback to simple greeting on timeout', async () => {
       // Mock slow operation
       loadProjectStatus.mockImplementation(() =>
-        new Promise(resolve => setTimeout(resolve, 200))
+        new Promise(resolve => setTimeout(resolve, 200)),
       );
 
       const greeting = await builder.buildGreeting(mockAgent, {});
@@ -365,7 +365,7 @@ describe('GreetingBuilder', () => {
     test('should handle agent without persona profile', () => {
       const basicAgent = {
         name: 'BasicAgent',
-        icon: '⚡'
+        icon: '⚡',
       };
 
       const simple = builder.buildSimpleGreeting(basicAgent);
@@ -390,7 +390,7 @@ describe('GreetingBuilder', () => {
     test('buildCommands should format commands list', () => {
       const commands = [
         { name: 'help', description: 'Show help' },
-        { name: 'test', description: 'Run tests' }
+        { name: 'test', description: 'Run tests' },
       ];
 
       const formatted = builder.buildCommands(commands, 'new');

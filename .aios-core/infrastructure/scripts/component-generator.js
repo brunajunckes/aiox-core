@@ -24,7 +24,7 @@ class ComponentGenerator {
     this.outputPaths = {
       agent: path.join(this.rootPath, 'aios-core', 'agents'),
       task: path.join(this.rootPath, 'aios-core', 'tasks'),
-      workflow: path.join(this.rootPath, 'aios-core', 'workflows')
+      workflow: path.join(this.rootPath, 'aios-core', 'workflows'),
     };
     
     this.templateEngine = new TemplateEngine();
@@ -55,7 +55,7 @@ class ComponentGenerator {
         transactionId = await this.transactionManager.beginTransaction({
           type: 'component_creation',
           description: `Create ${componentType}`,
-          rollbackOnError: true
+          rollbackOnError: true,
         });
       } else {
         transactionId = options.transactionId;
@@ -66,7 +66,7 @@ class ComponentGenerator {
       
       // Start elicitation session
       await this.elicitationEngine.startSession(componentType, {
-        saveSession: options.saveSession !== false
+        saveSession: options.saveSession !== false,
       });
       
       // Run elicitation to gather answers
@@ -111,13 +111,13 @@ class ComponentGenerator {
       const previewMetadata = {
         name: variables.AGENT_NAME || variables.TASK_ID || variables.WORKFLOW_ID,
         path: outputPath,
-        type: componentType
+        type: componentType,
       };
       
       const preview = await this.componentPreview.generatePreview(
         componentType, 
         content, 
-        previewMetadata
+        previewMetadata,
       );
       
       // Show preview statistics
@@ -133,7 +133,7 @@ class ComponentGenerator {
       
       // Confirm with preview
       const proceed = options.skipPreview || await this.componentPreview.confirmWithPreview(preview, {
-        message: `Create this ${componentType}?`
+        message: `Create this ${componentType}?`,
       });
       
       if (!proceed) {
@@ -166,7 +166,7 @@ class ComponentGenerator {
         target: 'file',
         path: outputPath,
         content: content,
-        metadata: { componentType, componentId: variables.AGENT_NAME || variables.TASK_ID || variables.WORKFLOW_ID }
+        metadata: { componentType, componentId: variables.AGENT_NAME || variables.TASK_ID || variables.WORKFLOW_ID },
       });
       
       // Create task files for agent commands if needed
@@ -179,12 +179,12 @@ class ComponentGenerator {
         const componentInfo = {
           id: variables.AGENT_NAME || variables.TASK_ID || variables.WORKFLOW_ID,
           name: variables.AGENT_TITLE || variables.TASK_TITLE || variables.WORKFLOW_NAME,
-          description: variables.WHEN_TO_USE || variables.TASK_DESCRIPTION || variables.WORKFLOW_DESCRIPTION
+          description: variables.WHEN_TO_USE || variables.TASK_DESCRIPTION || variables.WORKFLOW_DESCRIPTION,
         };
         
         const manifestUpdated = await this.manifestPreview.interactiveManifestUpdate(
           componentType,
-          componentInfo
+          componentInfo,
         );
         
         if (!manifestUpdated) {
@@ -200,13 +200,13 @@ class ComponentGenerator {
           id: componentId,
           name: variables.AGENT_TITLE || variables.TASK_TITLE || variables.WORKFLOW_NAME,
           description: variables.WHEN_TO_USE || variables.TASK_DESCRIPTION || variables.WORKFLOW_DESCRIPTION,
-          ...variables
+          ...variables,
         },
         {
           creator: process.env.USER || 'system',
           description: `Created ${componentType} via template system`,
-          tags: options.tags || ['generated', componentType]
-        }
+          tags: options.tags || ['generated', componentType],
+        },
       );
       
       console.log(chalk.gray(`📊 Metadata created with ID: ${metadata.id}`));
@@ -218,7 +218,7 @@ class ComponentGenerator {
           await this.componentMetadata.trackRelationship(
             { type: 'agent', id: componentId },
             { type: 'task', id: taskId },
-            'depends-on'
+            'depends-on',
           );
         }
       }
@@ -241,7 +241,7 @@ class ComponentGenerator {
         name: componentId,
         variables,
         metadata,
-        transactionId
+        transactionId,
       };
       
     } catch (error) {
@@ -259,7 +259,7 @@ class ComponentGenerator {
       
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -291,7 +291,7 @@ class ComponentGenerator {
         if (answers.standardCommands && answers.standardCommands.length > 0) {
           commands.push(...answers.standardCommands.map(cmd => ({
             COMMAND_NAME: cmd,
-            COMMAND_DESCRIPTION: this.getStandardCommandDescription(cmd)
+            COMMAND_DESCRIPTION: this.getStandardCommandDescription(cmd),
           })));
         }
         if (answers.customCommands && Array.isArray(answers.customCommands)) {
@@ -299,7 +299,7 @@ class ComponentGenerator {
             const [name, desc] = cmd.split(':');
             return {
               COMMAND_NAME: name ? name.trim() : 'custom',
-              COMMAND_DESCRIPTION: desc ? desc.trim() : 'Custom command'
+              COMMAND_DESCRIPTION: desc ? desc.trim() : 'Custom command',
             };
           }));
         }
@@ -379,7 +379,7 @@ class ComponentGenerator {
             STEP_TITLE: `Step ${i}`,
             STEP_DESCRIPTION: `Implementation for step ${i}`,
             IF_STEP_VALIDATION: true,
-            STEP_VALIDATION: 'Validate step completion'
+            STEP_VALIDATION: 'Validate step completion',
           });
         }
         variables.EACH_STEPS = steps;
@@ -400,7 +400,7 @@ class ComponentGenerator {
           variables.IF_ERROR_HANDLING = true;
           variables.EACH_ERROR_CASES = answers.commonErrors.map(err => ({
             ERROR_CASE: err,
-            ERROR_HANDLING: `Handle ${err} appropriately`
+            ERROR_HANDLING: `Handle ${err} appropriately`,
           }));
         }
         
@@ -432,7 +432,7 @@ class ComponentGenerator {
           variables.IF_TRIGGERS = true;
           variables.EACH_TRIGGERS = answers.triggerTypes.map(type => ({
             TRIGGER_TYPE: type,
-            TRIGGER_CONDITION: this.getTriggerCondition(type, answers)
+            TRIGGER_CONDITION: this.getTriggerCondition(type, answers),
           }));
         }
         
@@ -449,7 +449,7 @@ class ComponentGenerator {
           workflowSteps.push({
             STEP_ID: `step-${i}`,
             STEP_NAME: `Step ${i}`,
-            STEP_TYPE: 'task'
+            STEP_TYPE: 'task',
           });
         }
         variables.EACH_STEPS = workflowSteps;
@@ -461,7 +461,7 @@ class ComponentGenerator {
             OUTPUT_NAME: `output-${idx + 1}`,
             OUTPUT_TYPE: type,
             OUTPUT_DESCRIPTION: `${type} output`,
-            OUTPUT_SOURCE: `step-${answers.stepCount || 3}.result`
+            OUTPUT_SOURCE: `step-${answers.stepCount || 3}.result`,
           }));
         }
         
@@ -500,7 +500,7 @@ class ComponentGenerator {
     const requiredFields = {
       agent: ['AGENT_NAME', 'AGENT_ID', 'AGENT_TITLE'],
       task: ['TASK_TITLE', 'TASK_ID', 'AGENT_NAME'],
-      workflow: ['WORKFLOW_ID', 'WORKFLOW_NAME', 'WORKFLOW_TYPE']
+      workflow: ['WORKFLOW_ID', 'WORKFLOW_NAME', 'WORKFLOW_TYPE'],
     };
     
     const errors = [];
@@ -516,7 +516,7 @@ class ComponentGenerator {
     const nameField = {
       agent: 'AGENT_NAME',
       task: 'TASK_ID',
-      workflow: 'WORKFLOW_ID'
+      workflow: 'WORKFLOW_ID',
     }[componentType];
     
     if (variables[nameField] && !/^[a-z][a-z0-9-]*$/.test(variables[nameField])) {
@@ -525,7 +525,7 @@ class ComponentGenerator {
     
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -548,7 +548,7 @@ class ComponentGenerator {
       this.rootPath,
       'aios-core',
       'elicitation',
-      `${componentType}-elicitation.js`
+      `${componentType}-elicitation.js`,
     );
     
     if (!await fs.pathExists(workflowPath)) {
@@ -570,7 +570,7 @@ class ComponentGenerator {
       suggest: 'Provide recommendations and improvements',
       explain: 'Explain concepts or code in detail',
       validate: 'Check for errors and issues',
-      report: 'Generate comprehensive reports'
+      report: 'Generate comprehensive reports',
     };
     
     return descriptions[command] || 'Execute command';
@@ -609,7 +609,7 @@ class ComponentGenerator {
       type: 'confirm',
       name: 'overwrite',
       message: `File ${path.basename(filePath)} already exists. Overwrite?`,
-      default: false
+      default: false,
     }]);
     
     return overwrite;
@@ -640,7 +640,7 @@ class ComponentGenerator {
           taskId,
           command: command.COMMAND_NAME,
           description: command.COMMAND_DESCRIPTION,
-          agentName: variables.AGENT_NAME
+          agentName: variables.AGENT_NAME,
         });
       }
     }
@@ -660,7 +660,7 @@ class ComponentGenerator {
       type: 'confirm',
       name: 'createTasks',
       message: `Create ${tasksToCreate.length} missing task file(s)?`,
-      default: true
+      default: true,
     }]);
     
     if (!createTasks) {
@@ -685,18 +685,18 @@ class ComponentGenerator {
           workflow: [
             'Parse command parameters',
             'Execute main logic',
-            'Return results'
+            'Return results',
           ],
           validation: ['Input validation', 'Result verification'],
           errorHandling: ['Invalid parameters', 'Execution failures'],
-          outputFormat: 'Formatted response'
+          outputFormat: 'Formatted response',
         });
         
         // Generate task
         const result = await this.generateComponent('task', {
           ...options,
           skipPreview: true,
-          skipManifest: true
+          skipManifest: true,
         });
         
         if (result.success) {

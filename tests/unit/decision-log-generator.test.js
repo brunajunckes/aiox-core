@@ -19,7 +19,7 @@ const {
   generateDecisionsList,
   generateFilesList,
   generateTestsList,
-  generateRollbackFilesList
+  generateRollbackFilesList,
 } = require('../../.aios-core/development/scripts/decision-log-generator');
 
 const fs = require('fs').promises;
@@ -57,7 +57,7 @@ describe('decision-log-generator', () => {
     test('should format duration in hours and minutes when > 1 hour', () => {
       const context = {
         startTime: 1705406400000,
-        endTime: 1705406400000 + (3600000 * 2.5) // 2.5 hours later
+        endTime: 1705406400000 + (3600000 * 2.5), // 2.5 hours later
       };
 
       const result = calculateDuration(context);
@@ -68,7 +68,7 @@ describe('decision-log-generator', () => {
     test('should format duration in minutes and seconds when < 1 hour', () => {
       const context = {
         startTime: 1705406400000,
-        endTime: 1705406400000 + (60000 * 5.5) // 5.5 minutes later
+        endTime: 1705406400000 + (60000 * 5.5), // 5.5 minutes later
       };
 
       const result = calculateDuration(context);
@@ -79,7 +79,7 @@ describe('decision-log-generator', () => {
     test('should format duration in seconds when < 1 minute', () => {
       const context = {
         startTime: 1705406400000,
-        endTime: 1705406400000 + 45000 // 45 seconds later
+        endTime: 1705406400000 + 45000, // 45 seconds later
       };
 
       const result = calculateDuration(context);
@@ -89,7 +89,7 @@ describe('decision-log-generator', () => {
 
     test('should show "in progress" when endTime is missing', () => {
       const context = {
-        startTime: 1705406400000
+        startTime: 1705406400000,
         // No endTime
       };
 
@@ -101,7 +101,7 @@ describe('decision-log-generator', () => {
     test('should handle zero duration', () => {
       const context = {
         startTime: 1705406400000,
-        endTime: 1705406400000 // Same time
+        endTime: 1705406400000, // Same time
       };
 
       const result = calculateDuration(context);
@@ -117,8 +117,8 @@ describe('decision-log-generator', () => {
           timestamp: 1705406400000,
           description: 'Use Axios for HTTP client',
           reason: 'Better error handling',
-          alternatives: ['Fetch API', 'Got library']
-        }
+          alternatives: ['Fetch API', 'Got library'],
+        },
       ];
 
       const result = generateDecisionsList(decisions);
@@ -137,14 +137,14 @@ describe('decision-log-generator', () => {
           timestamp: 1705406400000,
           description: 'Decision 1',
           reason: 'Reason 1',
-          alternatives: []
+          alternatives: [],
         },
         {
           timestamp: 1705406400000,
           description: 'Decision 2',
           reason: 'Reason 2',
-          alternatives: ['Alt 1']
-        }
+          alternatives: ['Alt 1'],
+        },
       ];
 
       const result = generateDecisionsList(decisions);
@@ -161,8 +161,8 @@ describe('decision-log-generator', () => {
           timestamp: 1705406400000,
           description: 'Simple decision',
           reason: 'Only one option',
-          alternatives: []
-        }
+          alternatives: [],
+        },
       ];
 
       const result = generateDecisionsList(decisions);
@@ -190,8 +190,8 @@ describe('decision-log-generator', () => {
           type: 'architecture',
           priority: 'high',
           reason: 'Better scalability',
-          alternatives: ['Monolith']
-        }
+          alternatives: ['Monolith'],
+        },
       ];
 
       const result = generateDecisionsList(decisions);
@@ -205,7 +205,7 @@ describe('decision-log-generator', () => {
     test('should generate markdown for files with action metadata', () => {
       const files = [
         { path: 'src/api.js', action: 'created' },
-        { path: 'src/utils.js', action: 'modified' }
+        { path: 'src/utils.js', action: 'modified' },
       ];
 
       const result = generateFilesList(files);
@@ -246,7 +246,7 @@ describe('decision-log-generator', () => {
   describe('generateTestsList', () => {
     test('should generate markdown for passed tests', () => {
       const tests = [
-        { name: 'api.test.js', passed: true, duration: 125 }
+        { name: 'api.test.js', passed: true, duration: 125 },
       ];
 
       const result = generateTestsList(tests);
@@ -256,7 +256,7 @@ describe('decision-log-generator', () => {
 
     test('should generate markdown for failed tests with error', () => {
       const tests = [
-        { name: 'broken.test.js', passed: false, duration: 50, error: 'Assertion failed' }
+        { name: 'broken.test.js', passed: false, duration: 50, error: 'Assertion failed' },
       ];
 
       const result = generateTestsList(tests);
@@ -267,7 +267,7 @@ describe('decision-log-generator', () => {
 
     test('should handle tests without duration', () => {
       const tests = [
-        { name: 'test.js', passed: true }
+        { name: 'test.js', passed: true },
       ];
 
       const result = generateTestsList(tests);
@@ -292,7 +292,7 @@ describe('decision-log-generator', () => {
     test('should generate file list for rollback', () => {
       const files = [
         { path: 'src/api.js', action: 'created' },
-        { path: 'src/utils.js', action: 'modified' }
+        { path: 'src/utils.js', action: 'modified' },
       ];
 
       const result = generateRollbackFilesList(files);
@@ -336,20 +336,20 @@ describe('decision-log-generator', () => {
             timestamp: 1705408000000,
             description: 'Use Axios for HTTP',
             reason: 'Better error handling',
-            alternatives: ['Fetch API', 'Got library']
-          }
+            alternatives: ['Fetch API', 'Got library'],
+          },
         ],
         filesModified: [
-          { path: 'src/api.js', action: 'created' }
+          { path: 'src/api.js', action: 'created' },
         ],
         testsRun: [
-          { name: 'api.test.js', passed: true, duration: 125 }
+          { name: 'api.test.js', passed: true, duration: 125 },
         ],
         metrics: {
           agentLoadTime: 150,
-          taskExecutionTime: 60000
+          taskExecutionTime: 60000,
         },
-        commitBefore: 'abc123def456'
+        commitBefore: 'abc123def456',
       };
 
       const logPath = await generateDecisionLog(storyId, context);
@@ -382,7 +382,7 @@ describe('decision-log-generator', () => {
         agentId: 'dev',
         storyPath: 'docs/stories/story-6.1.2.6.md',
         startTime: 1705406400000,
-        status: 'in-progress'
+        status: 'in-progress',
       };
 
       const logPath = await generateDecisionLog(storyId, context);
@@ -406,7 +406,7 @@ describe('decision-log-generator', () => {
         agentId: 'dev',
         storyPath: 'test.md',
         startTime: Date.now(),
-        status: 'completed'
+        status: 'completed',
       };
 
       await generateDecisionLog(storyId, context);
@@ -421,7 +421,7 @@ describe('decision-log-generator', () => {
         agentId: 'dev',
         storyPath: 'test.md',
         startTime: 1705406400000,
-        status: 'running'
+        status: 'running',
       };
 
       const logPath = await generateDecisionLog('test', context);
@@ -436,7 +436,7 @@ describe('decision-log-generator', () => {
         agentId: 'dev',
         storyPath: 'test.md',
         startTime: 1705406400000,
-        status: 'completed'
+        status: 'completed',
       };
 
       const logPath = await generateDecisionLog('test', context);
@@ -450,7 +450,7 @@ describe('decision-log-generator', () => {
         agentId: 'dev',
         storyPath: 'test.md',
         startTime: 1705406400000,
-        status: 'completed'
+        status: 'completed',
         // No metrics provided
       };
 

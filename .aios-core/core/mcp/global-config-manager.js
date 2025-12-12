@@ -17,7 +17,7 @@ const {
   getGlobalConfigPath,
   getServersDir,
   getCacheDir,
-  getCredentialsDir
+  getCredentialsDir,
 } = require('./os-detector');
 
 /**
@@ -28,8 +28,8 @@ const DEFAULT_CONFIG = {
   servers: {},
   defaults: {
     timeout: 30000,
-    retries: 3
-  }
+    retries: 3,
+  },
 };
 
 /**
@@ -39,44 +39,44 @@ const SERVER_TEMPLATES = {
   context7: {
     type: 'sse',
     url: 'https://mcp.context7.com/sse',
-    enabled: true
+    enabled: true,
   },
   exa: {
     command: 'npx',
     args: ['-y', 'exa-mcp-server'],
     env: {
-      EXA_API_KEY: '${EXA_API_KEY}'
+      EXA_API_KEY: '${EXA_API_KEY}',
     },
-    enabled: true
+    enabled: true,
   },
   github: {
     command: 'npx',
     args: ['-y', '@modelcontextprotocol/server-github'],
     env: {
-      GITHUB_TOKEN: '${GITHUB_TOKEN}'
+      GITHUB_TOKEN: '${GITHUB_TOKEN}',
     },
-    enabled: true
+    enabled: true,
   },
   puppeteer: {
     command: 'npx',
     args: ['-y', '@anthropic-ai/mcp-server-puppeteer'],
-    enabled: true
+    enabled: true,
   },
   'desktop-commander': {
     command: 'npx',
     args: ['-y', '@anthropic-ai/mcp-server-desktop-commander'],
-    enabled: true
+    enabled: true,
   },
   filesystem: {
     command: 'npx',
     args: ['-y', '@modelcontextprotocol/server-filesystem'],
-    enabled: true
+    enabled: true,
   },
   memory: {
     command: 'npx',
     args: ['-y', '@modelcontextprotocol/server-memory'],
-    enabled: true
-  }
+    enabled: true,
+  },
 };
 
 /**
@@ -116,7 +116,7 @@ function createGlobalStructure() {
     getGlobalMcpDir(),
     getServersDir(),
     getCacheDir(),
-    getCredentialsDir()
+    getCredentialsDir(),
   ];
 
   for (const dir of directories) {
@@ -158,7 +158,7 @@ function createGlobalConfig(initialServers = {}) {
 
   const config = {
     ...DEFAULT_CONFIG,
-    servers: { ...initialServers }
+    servers: { ...initialServers },
   };
 
   try {
@@ -323,13 +323,13 @@ function listServers() {
     type: cfg.type || 'command',
     enabled: cfg.enabled !== false,
     url: cfg.url,
-    command: cfg.command
+    command: cfg.command,
   }));
 
   return {
     servers,
     total: servers.length,
-    enabled: servers.filter(s => s.enabled).length
+    enabled: servers.filter(s => s.enabled).length,
   };
 }
 
@@ -365,5 +365,5 @@ module.exports = {
   setServerEnabled,
   listServers,
   getAvailableTemplates,
-  getServerTemplate
+  getServerTemplate,
 };

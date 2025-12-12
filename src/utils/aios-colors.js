@@ -98,7 +98,7 @@ const colors = {
     middle: chalk.hex('#8B5CF6'),
     
     /** Gradient end - Blue (logo bottom) */
-    end: chalk.hex('#3B82F6')
+    end: chalk.hex('#3B82F6'),
   },
   
   // ============================================
@@ -118,7 +118,7 @@ const colors = {
   /**
    * Secondary branding - Cyan for supporting brand elements
    */
-  brandSecondary: chalk.hex('#06B6D4')
+  brandSecondary: chalk.hex('#06B6D4'),
 };
 
 /**
@@ -147,7 +147,7 @@ const status = {
   tip: (text) => `${colors.info('💡')} ${text}`,
   
   /** Party indicator: 🎉 (brand primary) */
-  celebrate: (text) => `${colors.brandPrimary('🎉')} ${text}`
+  celebrate: (text) => `${colors.brandPrimary('🎉')} ${text}`,
 };
 
 /**
@@ -164,7 +164,7 @@ const headings = {
   h3: (text) => colors.primary(text),
   
   /** Section divider */
-  divider: () => colors.dim('─'.repeat(50))
+  divider: () => colors.dim('─'.repeat(50)),
 };
 
 /**
@@ -181,7 +181,7 @@ const lists = {
   checkbox: (text, checked = false) => {
     const icon = checked ? colors.success('☑') : colors.muted('☐');
     return `${icon} ${text}`;
-  }
+  },
 };
 
 /**
@@ -217,7 +217,7 @@ const examples = {
     console.log(status.celebrate('Installation Complete!'));
     console.log(colors.info('Your AIOS project is ready to use.'));
     console.log(headings.divider() + '\n');
-  }
+  },
 };
 
 // Export all utilities
@@ -226,7 +226,7 @@ module.exports = {
   status,
   headings,
   lists,
-  examples
+  examples,
 };
 
 // Also export as default for ESM compatibility

@@ -13,8 +13,8 @@ describe('ToolHelperExecutor', () => {
         {
           id: 'test-helper',
           language: 'javascript',
-          function: 'function test() { return "result"; }'
-        }
+          function: 'function test() { return "result"; }',
+        },
       ];
 
       const executor = new ToolHelperExecutor(helpers);
@@ -26,7 +26,7 @@ describe('ToolHelperExecutor', () => {
       const helpers = [
         { id: 'valid', function: 'function() {}' },
         { id: 'no-function' }, // Missing function
-        { function: 'function() {}' } // Missing id
+        { function: 'function() {}' }, // Missing id
       ];
 
       const executor = new ToolHelperExecutor(helpers);
@@ -38,7 +38,7 @@ describe('ToolHelperExecutor', () => {
 
       executor.addHelper({
         id: 'dynamic-helper',
-        function: 'function() { return 42; }'
+        function: 'function() { return 42; }',
       });
 
       expect(executor.hasHelper('dynamic-helper')).toBe(true);
@@ -46,7 +46,7 @@ describe('ToolHelperExecutor', () => {
 
     test('should throw error when adding duplicate helper', () => {
       const executor = new ToolHelperExecutor([
-        { id: 'existing', function: 'function() {}' }
+        { id: 'existing', function: 'function() {}' },
       ]);
 
       expect(() => {
@@ -56,12 +56,12 @@ describe('ToolHelperExecutor', () => {
 
     test('should replace existing helper', () => {
       const executor = new ToolHelperExecutor([
-        { id: 'replaceable', function: 'function() { return 1; }' }
+        { id: 'replaceable', function: 'function() { return 1; }' },
       ]);
 
       executor.replaceHelper({
         id: 'replaceable',
-        function: 'function() { return 2; }'
+        function: 'function() { return 2; }',
       });
 
       expect(executor.hasHelper('replaceable')).toBe(true);
@@ -69,7 +69,7 @@ describe('ToolHelperExecutor', () => {
 
     test('should remove helper', () => {
       const executor = new ToolHelperExecutor([
-        { id: 'removable', function: 'function() {}' }
+        { id: 'removable', function: 'function() {}' },
       ]);
 
       const removed = executor.removeHelper('removable');
@@ -80,7 +80,7 @@ describe('ToolHelperExecutor', () => {
     test('should clear all helpers', () => {
       const executor = new ToolHelperExecutor([
         { id: 'helper1', function: 'function() {}' },
-        { id: 'helper2', function: 'function() {}' }
+        { id: 'helper2', function: 'function() {}' },
       ]);
 
       executor.clearHelpers();
@@ -98,8 +98,8 @@ describe('ToolHelperExecutor', () => {
               return 42;
             }
             execute();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('simple-return');
@@ -115,8 +115,8 @@ describe('ToolHelperExecutor', () => {
               return args.value * 2;
             }
             process();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('args-helper', { value: 21 });
@@ -136,8 +136,8 @@ describe('ToolHelperExecutor', () => {
               };
             }
             process();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('complex-args', {
@@ -145,14 +145,14 @@ describe('ToolHelperExecutor', () => {
         items: [
           { value: 10 },
           { value: 20 },
-          { value: 30 }
-        ]
+          { value: 30 },
+        ],
       });
 
       expect(result).toEqual({
         name: 'TEST',
         count: 3,
-        total: 60
+        total: 60,
       });
     });
 
@@ -167,12 +167,12 @@ describe('ToolHelperExecutor', () => {
               ).join(' ');
             }
             format();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('string-helper', {
-        text: 'hello WORLD from TEST'
+        text: 'hello WORLD from TEST',
       });
       expect(result).toBe('Hello World From Test');
     });
@@ -189,12 +189,12 @@ describe('ToolHelperExecutor', () => {
                 .reduce((sum, n) => sum + n, 0);
             }
             process();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('array-helper', {
-        numbers: [1, 2, 3, 4, 5, 6]
+        numbers: [1, 2, 3, 4, 5, 6],
       });
       expect(result).toBe(24); // (2+4+6)*2 = 24
     });
@@ -214,8 +214,8 @@ describe('ToolHelperExecutor', () => {
               return "completed";
             }
             slowOperation();
-          `
-        }
+          `,
+        },
       ]);
 
       await expect(executor.execute('slow-helper'))
@@ -236,8 +236,8 @@ describe('ToolHelperExecutor', () => {
               return sum;
             }
             fastOperation();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('fast-helper');
@@ -255,8 +255,8 @@ describe('ToolHelperExecutor', () => {
               }
             }
             infiniteLoop();
-          `
-        }
+          `,
+        },
       ]);
 
       await expect(executor.execute('infinite-loop'))
@@ -280,8 +280,8 @@ describe('ToolHelperExecutor', () => {
               }
             }
             attemptRequire();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('require-test');
@@ -301,8 +301,8 @@ describe('ToolHelperExecutor', () => {
               }
             }
             attemptProcess();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('process-test');
@@ -324,8 +324,8 @@ describe('ToolHelperExecutor', () => {
               }
             }
             attemptFs();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('fs-test');
@@ -348,8 +348,8 @@ describe('ToolHelperExecutor', () => {
               }
             }
             attemptGlobal();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('global-test');
@@ -373,8 +373,8 @@ describe('ToolHelperExecutor', () => {
               return available;
             }
             checkScope();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await executor.execute('scope-test', { test: true });
@@ -397,7 +397,7 @@ describe('ToolHelperExecutor', () => {
     test('should provide helpful error with available helpers', async () => {
       const executor = new ToolHelperExecutor([
         { id: 'helper1', function: 'function() {}' },
-        { id: 'helper2', function: 'function() {}' }
+        { id: 'helper2', function: 'function() {}' },
       ]);
 
       await expect(executor.execute('wrong-helper'))
@@ -409,8 +409,8 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         {
           id: 'syntax-error',
-          function: 'function invalid( { // Invalid syntax'
-        }
+          function: 'function invalid( { // Invalid syntax',
+        },
       ]);
 
       await expect(executor.execute('syntax-error'))
@@ -427,8 +427,8 @@ describe('ToolHelperExecutor', () => {
               throw new Error("Intentional error");
             }
             throwError();
-          `
-        }
+          `,
+        },
       ]);
 
       await expect(executor.execute('runtime-error'))
@@ -445,8 +445,8 @@ describe('ToolHelperExecutor', () => {
               return undefinedVariable.property;
             }
             accessUndefined();
-          `
-        }
+          `,
+        },
       ]);
 
       await expect(executor.execute('undefined-var'))
@@ -471,8 +471,8 @@ describe('ToolHelperExecutor', () => {
           id: 'test-helper',
           language: 'javascript',
           runtime: 'isolated_vm',
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const info = executor.getHelperInfo('test-helper');
@@ -480,7 +480,7 @@ describe('ToolHelperExecutor', () => {
         id: 'test-helper',
         language: 'javascript',
         runtime: 'isolated_vm',
-        hasFunction: true
+        hasFunction: true,
       });
     });
 
@@ -494,8 +494,8 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         {
           id: 'minimal-helper',
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const info = executor.getHelperInfo('minimal-helper');
@@ -507,7 +507,7 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         { id: 'helper1', function: 'function() {}' },
         { id: 'helper2', function: 'function() {}' },
-        { id: 'helper3', function: 'function() {}' }
+        { id: 'helper3', function: 'function() {}' },
       ]);
 
       const stats = executor.getStats();
@@ -524,8 +524,8 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         {
           id: 'dispose-test',
-          function: '(function() { return "ok"; })();'
-        }
+          function: '(function() { return "ok"; })();',
+        },
       ]);
 
       const result = await executor.execute('dispose-test');
@@ -537,8 +537,8 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         {
           id: 'fail-dispose',
-          function: 'throw new Error("test error");'
-        }
+          function: 'throw new Error("test error");',
+        },
       ]);
 
       await expect(executor.execute('fail-dispose'))
@@ -551,8 +551,8 @@ describe('ToolHelperExecutor', () => {
       const executor = new ToolHelperExecutor([
         {
           id: 'timeout-dispose',
-          function: 'while(true) {}'
-        }
+          function: 'while(true) {}',
+        },
       ]);
 
       await expect(executor.execute('timeout-dispose'))

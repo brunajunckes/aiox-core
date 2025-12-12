@@ -12,7 +12,7 @@ const {
   parseLogMetadata,
   generateIndexContent,
   addToIndex,
-  rebuildIndex
+  rebuildIndex,
 } = require('../../.aios-core/development/scripts/decision-log-indexer');
 
 // Mock fs.promises
@@ -21,8 +21,8 @@ jest.mock('fs', () => ({
     readFile: jest.fn(),
     writeFile: jest.fn(),
     mkdir: jest.fn(),
-    readdir: jest.fn()
-  }
+    readdir: jest.fn(),
+  },
 }));
 
 describe('decision-log-indexer', () => {
@@ -112,7 +112,7 @@ Some content without proper metadata
           status: 'completed',
           duration: '15m 30s',
           decisionCount: 3,
-          logPath: '.ai/decision-log-6.1.2.6.2.md'
+          logPath: '.ai/decision-log-6.1.2.6.2.md',
         },
         {
           storyId: '6.1.2.6.1',
@@ -121,8 +121,8 @@ Some content without proper metadata
           status: 'completed',
           duration: '5m 10s',
           decisionCount: 1,
-          logPath: '.ai/decision-log-6.1.2.6.1.md'
-        }
+          logPath: '.ai/decision-log-6.1.2.6.1.md',
+        },
       ];
 
       const indexContent = generateIndexContent(metadata);
@@ -148,7 +148,7 @@ Some content without proper metadata
           status: 'completed',
           duration: '5m',
           decisionCount: 1,
-          logPath: '.ai/decision-log-old.md'
+          logPath: '.ai/decision-log-old.md',
         },
         {
           storyId: 'new',
@@ -157,8 +157,8 @@ Some content without proper metadata
           status: 'completed',
           duration: '3m',
           decisionCount: 2,
-          logPath: '.ai/decision-log-new.md'
-        }
+          logPath: '.ai/decision-log-new.md',
+        },
       ];
 
       const indexContent = generateIndexContent(metadata);
@@ -186,8 +186,8 @@ Some content without proper metadata
         decisionLogging: {
           enabled: true,
           location: '.ai/',
-          indexFile: 'decision-logs-index.md'
-        }
+          indexFile: 'decision-logs-index.md',
+        },
       });
 
       // Mock log content
@@ -239,8 +239,8 @@ Some content without proper metadata
         decisionLogging: {
           enabled: true,
           location: '.ai/',
-          indexFile: 'decision-logs-index.md'
-        }
+          indexFile: 'decision-logs-index.md',
+        },
       });
 
       const existingIndex = `# Decision Log Index
@@ -294,8 +294,8 @@ Total logs: 1
         decisionLogging: {
           enabled: true,
           location: '.ai/',
-          indexFile: 'decision-logs-index.md'
-        }
+          indexFile: 'decision-logs-index.md',
+        },
       });
 
       const existingIndex = `# Decision Log Index
@@ -350,8 +350,8 @@ Total logs: 1
       const yaml = require('yaml');
       jest.spyOn(yaml, 'parse').mockReturnValue({
         decisionLogging: {
-          enabled: false
-        }
+          enabled: false,
+        },
       });
 
       fs.readFile.mockResolvedValue('decisionLogging:\n  enabled: false');
@@ -374,15 +374,15 @@ Total logs: 1
         decisionLogging: {
           enabled: true,
           location: '.ai/',
-          indexFile: 'decision-logs-index.md'
-        }
+          indexFile: 'decision-logs-index.md',
+        },
       });
 
       fs.readdir.mockResolvedValue([
         'decision-log-6.1.2.6.2.md',
         'decision-log-6.1.2.6.1.md',
         'other-file.md',
-        'decision-logs-index.md'
+        'decision-logs-index.md',
       ]);
 
       const log1Content = `**Generated:** 2025-11-16T14:30:00.000Z

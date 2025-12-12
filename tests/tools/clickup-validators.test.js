@@ -64,7 +64,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        assignees: [456, 789]
+        assignees: [456, 789],
       });
 
       expect(result.valid).toBe(true);
@@ -75,7 +75,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        assignees: { add: [456] }
+        assignees: { add: [456] },
       });
 
       expect(result.valid).toBe(false);
@@ -84,7 +84,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should fail without required name field', async () => {
       const result = await validator.validate('create_task', {
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(false);
@@ -93,7 +93,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should fail without required list_id field', async () => {
       const result = await validator.validate('create_task', {
-        name: 'Test Task'
+        name: 'Test Task',
       });
 
       expect(result.valid).toBe(false);
@@ -103,7 +103,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass without assignees (optional field)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(true);
@@ -117,8 +117,8 @@ describeIntegration('ClickUp Tool Validators', () => {
         list_id: '123456789',
         custom_fields: [
           { id: 'field-uuid-1', value: 'High' },
-          { id: 'field-uuid-2', value: 1000 }
-        ]
+          { id: 'field-uuid-2', value: 1000 },
+        ],
       });
 
       expect(result.valid).toBe(true);
@@ -128,7 +128,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        custom_fields: 'field-value'
+        custom_fields: 'field-value',
       });
 
       expect(result.valid).toBe(false);
@@ -140,8 +140,8 @@ describeIntegration('ClickUp Tool Validators', () => {
         name: 'Test Task',
         list_id: '123456789',
         custom_fields: [
-          { value: 'High' }
-        ]
+          { value: 'High' },
+        ],
       });
 
       expect(result.valid).toBe(false);
@@ -153,8 +153,8 @@ describeIntegration('ClickUp Tool Validators', () => {
         name: 'Test Task',
         list_id: '123456789',
         custom_fields: [
-          { id: 'field-uuid-1' }
-        ]
+          { id: 'field-uuid-1' },
+        ],
       });
 
       expect(result.valid).toBe(false);
@@ -164,7 +164,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass without custom_fields (optional)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(true);
@@ -176,8 +176,8 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('update_task', {
         assignees: {
           add: [999],
-          rem: [456]
-        }
+          rem: [456],
+        },
       });
 
       expect(result.valid).toBe(true);
@@ -186,8 +186,8 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with only add array', async () => {
       const result = await validator.validate('update_task', {
         assignees: {
-          add: [111, 222]
-        }
+          add: [111, 222],
+        },
       });
 
       expect(result.valid).toBe(true);
@@ -196,8 +196,8 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with only rem array', async () => {
       const result = await validator.validate('update_task', {
         assignees: {
-          rem: [333]
-        }
+          rem: [333],
+        },
       });
 
       expect(result.valid).toBe(true);
@@ -205,7 +205,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should fail with array format (wrong for update)', async () => {
       const result = await validator.validate('update_task', {
-        assignees: [999]
+        assignees: [999],
       });
 
       expect(result.valid).toBe(false);
@@ -215,8 +215,8 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should fail if add is not an array', async () => {
       const result = await validator.validate('update_task', {
         assignees: {
-          add: 999
-        }
+          add: 999,
+        },
       });
 
       expect(result.valid).toBe(false);
@@ -226,8 +226,8 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should fail if rem is not an array', async () => {
       const result = await validator.validate('update_task', {
         assignees: {
-          rem: 456
-        }
+          rem: 456,
+        },
       });
 
       expect(result.valid).toBe(false);
@@ -236,7 +236,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should pass without assignees (optional)', async () => {
       const result = await validator.validate('update_task', {
-        name: 'Updated Task'
+        name: 'Updated Task',
       });
 
       expect(result.valid).toBe(true);
@@ -247,7 +247,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with standard webhook format (event field)', async () => {
       const result = await validator.validate('parse_webhook', {
         event: 'taskCreated',
-        payload: { task: {} }
+        payload: { task: {} },
       });
 
       expect(result.valid).toBe(true);
@@ -256,7 +256,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with webhook_variant format (webhook_id field)', async () => {
       const result = await validator.validate('parse_webhook', {
         webhook_id: 'abc123',
-        data: { webhook: { payload: {} } }
+        data: { webhook: { payload: {} } },
       });
 
       expect(result.valid).toBe(true);
@@ -265,8 +265,8 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with history_items format', async () => {
       const result = await validator.validate('parse_webhook', {
         history_items: [
-          { field: 'status', before: 'todo', after: 'in progress' }
-        ]
+          { field: 'status', before: 'todo', after: 'in progress' },
+        ],
       });
 
       expect(result.valid).toBe(true);
@@ -281,7 +281,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should fail with invalid webhook payload (missing all identification fields)', async () => {
       const result = await validator.validate('parse_webhook', {
-        random_field: 'value'
+        random_field: 'value',
       });
 
       expect(result.valid).toBe(false);
@@ -293,7 +293,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with numeric string list_id', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(true);
@@ -302,7 +302,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass with numeric string listId (alternative field name)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        listId: '987654321'
+        listId: '987654321',
       });
 
       expect(result.valid).toBe(true);
@@ -311,7 +311,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should fail with non-numeric list_id', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: 'invalid-id'
+        list_id: 'invalid-id',
       });
 
       expect(result.valid).toBe(false);
@@ -321,7 +321,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should fail with alphanumeric list_id', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: 'abc123'
+        list_id: 'abc123',
       });
 
       expect(result.valid).toBe(false);
@@ -330,7 +330,7 @@ describeIntegration('ClickUp Tool Validators', () => {
 
     test('should pass without list_id if not provided (validated elsewhere)', async () => {
       const result = await validator.validate('create_task', {
-        name: 'Test Task'
+        name: 'Test Task',
       });
 
       // This specific validator only checks format IF list_id exists
@@ -344,7 +344,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 1
+        priority: 1,
       });
 
       expect(result.valid).toBe(true);
@@ -354,7 +354,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 4
+        priority: 4,
       });
 
       expect(result.valid).toBe(true);
@@ -364,7 +364,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 2
+        priority: 2,
       });
 
       expect(result.valid).toBe(true);
@@ -374,7 +374,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 0
+        priority: 0,
       });
 
       expect(result.valid).toBe(false);
@@ -385,7 +385,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 5
+        priority: 5,
       });
 
       expect(result.valid).toBe(false);
@@ -396,7 +396,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        priority: 'high'
+        priority: 'high',
       });
 
       expect(result.valid).toBe(false);
@@ -406,7 +406,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass without priority (optional)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(true);
@@ -418,7 +418,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        time_estimate: 3600000
+        time_estimate: 3600000,
       });
 
       expect(result.valid).toBe(true);
@@ -428,7 +428,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        time_estimate: 0
+        time_estimate: 0,
       });
 
       expect(result.valid).toBe(true);
@@ -438,7 +438,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        time_estimate: -1000
+        time_estimate: -1000,
       });
 
       expect(result.valid).toBe(false);
@@ -449,7 +449,7 @@ describeIntegration('ClickUp Tool Validators', () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
         list_id: '123456789',
-        time_estimate: 'invalid'
+        time_estimate: 'invalid',
       });
 
       expect(result.valid).toBe(false);
@@ -459,7 +459,7 @@ describeIntegration('ClickUp Tool Validators', () => {
     test('should pass without time_estimate (optional)', async () => {
       const result = await validator.validate('create_task', {
         name: 'Test Task',
-        list_id: '123456789'
+        list_id: '123456789',
       });
 
       expect(result.valid).toBe(true);
@@ -477,7 +477,7 @@ describeIntegration('ClickUp Tool Validators', () => {
           name: 'Performance Test',
           list_id: '123456789',
           assignees: [456],
-          priority: 2
+          priority: 2,
         });
         const duration = Date.now() - start;
         durations.push(duration);

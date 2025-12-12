@@ -27,7 +27,7 @@ function createRegenerateCommand() {
     .action(async (options) => {
       try {
         const generator = createManifestGenerator({
-          basePath: process.cwd()
+          basePath: process.cwd(),
         });
 
         if (!options.dryRun) {
@@ -92,5 +92,5 @@ function createRegenerateCommand() {
 }
 
 module.exports = {
-  createRegenerateCommand
+  createRegenerateCommand,
 };

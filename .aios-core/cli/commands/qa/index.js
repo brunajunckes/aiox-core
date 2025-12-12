@@ -52,5 +52,5 @@ Exit Codes:
 }
 
 module.exports = {
-  createQaCommand
+  createQaCommand,
 };

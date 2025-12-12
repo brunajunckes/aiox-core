@@ -57,7 +57,7 @@ function detectRepositoryContext() {
     projectRoot: cwd,
     frameworkLocation: isFrameworkRepo ? cwd : path.join(cwd, 'node_modules/@aios/fullstack'),
     packageName: packageJson.name,
-    packageVersion: packageJson.version
+    packageVersion: packageJson.version,
   };
 }
 

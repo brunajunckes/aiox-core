@@ -1,7 +1,7 @@
 // Mock dependencies before requiring
 jest.mock('fs-extra');
 jest.mock('glob', () => ({
-  sync: jest.fn().mockReturnValue([])
+  sync: jest.fn().mockReturnValue([]),
 }));
 
 describe('ToolResolver', () => {
@@ -156,7 +156,7 @@ tool:
 
       // Should have searched expansion pack first
       expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining('expansion-packs/my-pack/tools')
+        expect.stringContaining('expansion-packs/my-pack/tools'),
       );
 
       expect(tool.id).toBe('test-simple');
@@ -197,7 +197,7 @@ tool:
 
       // Should have searched common directory
       expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining('common/tools')
+        expect.stringContaining('common/tools'),
       );
     });
   });
@@ -207,7 +207,7 @@ tool:
       glob.sync.mockReturnValue([]);
 
       await expect(resolver.resolveTool('nonexistent-tool')).rejects.toThrow(
-        /Tool 'nonexistent-tool' not found/
+        /Tool 'nonexistent-tool' not found/,
       );
     });
 
@@ -231,7 +231,7 @@ tool:
       fs.readFile.mockResolvedValue(invalidToolYaml);
 
       await expect(resolver.resolveTool('invalid-tool')).rejects.toThrow(
-        /required field/i
+        /required field/i,
       );
     });
 
@@ -430,7 +430,7 @@ tool:
       glob.sync.mockReturnValue([
         'aios-core/tools/tool1.yaml',
         'aios-core/tools/tool2.yaml',
-        'common/tools/tool3.yaml'
+        'common/tools/tool3.yaml',
       ]);
 
       const tools = resolver.listAvailableTools();

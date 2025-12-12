@@ -21,7 +21,7 @@ const AGENTS = [
   'data-engineer.md',
   'devops.md',
   'aios-master.md',
-  'ux-design-expert.md'
+  'ux-design-expert.md',
 ];
 
 const INLINE_GREETING_LOGIC = `
@@ -61,7 +61,7 @@ const INLINE_GREETING_LOGIC = `
   - STEP 5: HALT and await user input
 `;
 
-const OLD_PATTERN = /  - STEP 3: Execute \/greet slash command to generate contextual greeting\n  - STEP 4: Display the greeting returned by \/greet command\n  - STEP 5: HALT and await user input/;
+const OLD_PATTERN = / {2}- STEP 3: Execute \/greet slash command to generate contextual greeting\n {2}- STEP 4: Display the greeting returned by \/greet command\n {2}- STEP 5: HALT and await user input/;
 
 function updateAgent(agentFile) {
   const filePath = path.join(AGENTS_DIR, agentFile);
@@ -116,7 +116,7 @@ function main() {
   const results = {
     updated: 0,
     skipped: 0,
-    errors: 0
+    errors: 0,
   };
 
   AGENTS.forEach(agent => {

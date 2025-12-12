@@ -11,7 +11,7 @@ const {
   detectChanges,
   generateChangelog,
   syncStoryToClickUp,
-  updateFrontmatterTimestamp
+  updateFrontmatterTimestamp,
 } = require('../common/utils/story-update-hook');
 
 // Mock ClickUp helper functions
@@ -19,7 +19,7 @@ jest.mock('../common/utils/clickup-helpers', () => ({
   updateStoryStatus: jest.fn(),
   updateTaskDescription: jest.fn(),
   addTaskComment: jest.fn(),
-  verifyEpicExists: jest.fn()
+  verifyEpicExists: jest.fn(),
 }));
 
 const clickupHelpers = require('../common/utils/clickup-helpers');
@@ -39,7 +39,7 @@ describe('Story Update Hook - Change Detection', () => {
       expect(changes.status).toEqual({
         changed: true,
         from: 'Draft',
-        to: 'In Progress'
+        to: 'In Progress',
       });
     });
 
@@ -52,7 +52,7 @@ describe('Story Update Hook - Change Detection', () => {
       expect(changes.status).toEqual({
         changed: false,
         from: 'In Progress',
-        to: 'In Progress'
+        to: 'In Progress',
       });
     });
 
@@ -65,7 +65,7 @@ describe('Story Update Hook - Change Detection', () => {
       expect(changes.status).toEqual({
         changed: true,
         from: undefined,
-        to: 'Draft'
+        to: 'Draft',
       });
     });
   });
@@ -201,7 +201,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -215,7 +215,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       tasksCompleted: ['Task 1', 'Task 2'],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -231,7 +231,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       tasksCompleted: [],
       filesAdded: ['common/utils/new-file.js', 'tests/new-test.js'],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -248,7 +248,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       filesAdded: [],
       devNotesAdded: true,
       devNotesContent: 'Implementation note',
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -262,7 +262,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: true
+      acceptanceCriteriaChanged: true,
     };
 
     const changelog = generateChangelog(changes);
@@ -277,7 +277,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       filesAdded: ['src/module.js'],
       devNotesAdded: true,
       devNotesContent: 'Note',
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -294,7 +294,7 @@ describe('Story Update Hook - Changelog Generation', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     const changelog = generateChangelog(changes);
@@ -314,9 +314,9 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
     const storyFile = {
       metadata: {
         clickup_task_id: 'story-123',
-        status: 'In Progress'
+        status: 'In Progress',
       },
-      content: '---\nstatus: In Progress\n---\nContent'
+      content: '---\nstatus: In Progress\n---\nContent',
     };
 
     const changes = {
@@ -324,14 +324,14 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await syncStoryToClickUp(storyFile, changes);
 
     expect(clickupHelpers.updateStoryStatus).toHaveBeenCalledWith(
       'story-123',
-      'In Progress'
+      'In Progress',
     );
   });
 
@@ -340,8 +340,8 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
 
     const storyFile = {
       metadata: {
-        clickup_task_id: 'story-456'
-      }
+        clickup_task_id: 'story-456',
+      },
     };
 
     const changes = {
@@ -349,14 +349,14 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
       tasksCompleted: ['Task 1', 'Task 2'],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await syncStoryToClickUp(storyFile, changes);
 
     expect(clickupHelpers.addTaskComment).toHaveBeenCalledWith(
       'story-456',
-      expect.stringContaining('Completed tasks:')
+      expect.stringContaining('Completed tasks:'),
     );
   });
 
@@ -365,9 +365,9 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
 
     const storyFile = {
       metadata: {
-        clickup_task_id: 'story-789'
+        clickup_task_id: 'story-789',
       },
-      content: '## Acceptance Criteria\n- AC1: Updated'
+      content: '## Acceptance Criteria\n- AC1: Updated',
     };
 
     const changes = {
@@ -375,20 +375,20 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: true
+      acceptanceCriteriaChanged: true,
     };
 
     await syncStoryToClickUp(storyFile, changes);
 
     expect(clickupHelpers.updateTaskDescription).toHaveBeenCalledWith(
       'story-789',
-      expect.stringContaining('AC1: Updated')
+      expect.stringContaining('AC1: Updated'),
     );
   });
 
   test('should handle sync when no changes detected', async () => {
     const storyFile = {
-      metadata: { clickup_task_id: 'story-000' }
+      metadata: { clickup_task_id: 'story-000' },
     };
 
     const changes = {
@@ -396,7 +396,7 @@ describe('Story Update Hook - ClickUp Synchronization', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await syncStoryToClickUp(storyFile, changes);
@@ -451,7 +451,7 @@ describe('Story Update Hook - Error Handling', () => {
 
   test('should handle missing metadata gracefully', async () => {
     const storyFile = {
-      content: 'Story content'
+      content: 'Story content',
       // No metadata
     };
 
@@ -460,7 +460,7 @@ describe('Story Update Hook - Error Handling', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await expect(syncStoryToClickUp(storyFile, changes)).resolves.not.toThrow();
@@ -469,14 +469,14 @@ describe('Story Update Hook - Error Handling', () => {
 
   test('should handle network failures during status update', async () => {
     clickupHelpers.updateStoryStatus.mockRejectedValue(
-      new Error('Network error')
+      new Error('Network error'),
     );
 
     const storyFile = {
       metadata: {
         clickup_task_id: 'story-fail-1',
-        status: 'In Progress'
-      }
+        status: 'In Progress',
+      },
     };
 
     const changes = {
@@ -484,7 +484,7 @@ describe('Story Update Hook - Error Handling', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await expect(syncStoryToClickUp(storyFile, changes)).rejects.toThrow('Network error');
@@ -492,14 +492,14 @@ describe('Story Update Hook - Error Handling', () => {
 
   test('should handle invalid task_id in metadata', async () => {
     clickupHelpers.updateStoryStatus.mockRejectedValue(
-      new Error('Task not found')
+      new Error('Task not found'),
     );
 
     const storyFile = {
       metadata: {
         clickup_task_id: 'invalid-task-id',
-        status: 'In Progress'
-      }
+        status: 'In Progress',
+      },
     };
 
     const changes = {
@@ -507,7 +507,7 @@ describe('Story Update Hook - Error Handling', () => {
       tasksCompleted: [],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await expect(syncStoryToClickUp(storyFile, changes)).rejects.toThrow('Task not found');
@@ -515,11 +515,11 @@ describe('Story Update Hook - Error Handling', () => {
 
   test('should handle ClickUp API rate limit errors', async () => {
     clickupHelpers.addTaskComment.mockRejectedValue(
-      new Error('Rate limit exceeded')
+      new Error('Rate limit exceeded'),
     );
 
     const storyFile = {
-      metadata: { clickup_task_id: 'story-rate-limit' }
+      metadata: { clickup_task_id: 'story-rate-limit' },
     };
 
     const changes = {
@@ -527,7 +527,7 @@ describe('Story Update Hook - Error Handling', () => {
       tasksCompleted: ['Task 1'],
       filesAdded: [],
       devNotesAdded: false,
-      acceptanceCriteriaChanged: false
+      acceptanceCriteriaChanged: false,
     };
 
     await expect(syncStoryToClickUp(storyFile, changes)).rejects.toThrow('Rate limit exceeded');

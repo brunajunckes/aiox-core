@@ -83,10 +83,10 @@ async function promptFileExists(filePath) {
       choices: [
         { name: 'Overwrite', value: 'overwrite' },
         { name: 'Create backup and overwrite', value: 'backup' },
-        { name: 'Skip', value: 'skip' }
+        { name: 'Skip', value: 'skip' },
       ],
-      default: 'backup'
-    }
+      default: 'backup',
+    },
   ]);
 
   return action;
@@ -171,7 +171,7 @@ function generateTemplateVariables(wizardState) {
     projectName,
     projectType: wizardState.projectType || 'greenfield',
     timestamp,
-    aiosVersion: '2.1.0' // From package.json in real implementation
+    aiosVersion: '2.1.0', // From package.json in real implementation
   };
 }
 
@@ -197,7 +197,7 @@ async function copyAgentFiles(projectRoot, agentFolder, ideConfig = null) {
   const agentFiles = files.filter(file =>
     file.endsWith('.md') &&
     !file.includes('.backup') &&
-    !file.startsWith('test-')  // Exclude test agents
+    !file.startsWith('test-'),  // Exclude test agents
   );
 
   // Check if this is AntiGravity - needs workflow files instead of direct copy
@@ -281,24 +281,24 @@ async function createAntiGravityConfigJson(projectRoot, ideConfig) {
     agents: {
       enabled: true,
       directory: ideConfig.specialConfig.agentsFolder,
-      default: 'aios-master'
+      default: 'aios-master',
     },
     rules: {
       enabled: true,
-      file: ideConfig.configFile
+      file: ideConfig.configFile,
     },
     features: {
       storyDrivenDevelopment: true,
       agentActivation: true,
-      workflowAutomation: true
+      workflowAutomation: true,
     },
     paths: {
       stories: 'docs/stories',
       prd: 'docs/prd',
       architecture: 'docs/architecture',
       tasks: '.aios-core/tasks',
-      workflows: '.aios-core/workflows'
-    }
+      workflows: '.aios-core/workflows',
+    },
   };
 
   await fs.ensureDir(path.dirname(configPath));
@@ -442,14 +442,14 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
     return {
       success: true,
       files: createdFiles,
-      errors: errors.length > 0 ? errors : undefined
+      errors: errors.length > 0 ? errors : undefined,
     };
 
   } catch (error) {
     return {
       success: false,
       files: [],
-      errors: [{ error: error.message }]
+      errors: [{ error: error.message }],
     };
   }
 }
@@ -484,5 +484,5 @@ module.exports = {
   validateConfigContent,
   backupFile,
   promptFileExists,
-  generateTemplateVariables
+  generateTemplateVariables,
 };

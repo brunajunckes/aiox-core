@@ -27,7 +27,7 @@ const ATOMIC_CLASSIFICATIONS = {
   'Atom': [
     'undo-last.md',
     'kb-mode-interaction.md',
-    'init-project-status.md'
+    'init-project-status.md',
   ],
   
   // Molecule: Combines multiple atoms
@@ -48,7 +48,7 @@ const ATOMIC_CLASSIFICATIONS = {
     'export-design-tokens-dtcg.md',
     'learn-patterns.md',
     'create-suite.md',
-    'integrate-expansion-pack.md'
+    'integrate-expansion-pack.md',
   ],
   
   // Organism: Complex workflows orchestrating multiple tasks
@@ -83,7 +83,7 @@ const ATOMIC_CLASSIFICATIONS = {
     'db-bootstrap.md',
     'db-dry-run.md',
     'db-rollback.md',
-    'db-supabase-setup.md'
+    'db-supabase-setup.md',
   ],
   
   // Template: Document generation
@@ -95,7 +95,7 @@ const ATOMIC_CLASSIFICATIONS = {
     'generate-shock-report.md',
     'document-project.md',
     'create-deep-research-prompt.md',
-    'ux-create-wireframe.md'
+    'ux-create-wireframe.md',
   ],
   
   // Strategy: High-level planning, analysis, decision-making
@@ -131,7 +131,7 @@ const ATOMIC_CLASSIFICATIONS = {
     'db-env-check.md',
     'db-expansion-pack-integration.md',
     'ux-ds-scan-artifact.md',
-    'ux-user-research.md'
+    'ux-user-research.md',
   ],
   
   // Config: System configuration, setup, initialization
@@ -157,8 +157,8 @@ const ATOMIC_CLASSIFICATIONS = {
     'qa-generate-tests.md',
     'qa-run-tests.md',
     'qa-test-design.md',
-    'test-as-user.md'
-  ]
+    'test-as-user.md',
+  ],
 };
 
 // Flatten classification map for quick lookup
@@ -189,7 +189,7 @@ function processTaskFile(filename) {
   }
   
   // Read file content
-  let content = fs.readFileSync(filePath, 'utf8');
+  const content = fs.readFileSync(filePath, 'utf8');
   
   // Check if TODO exists
   if (!TODO_PATTERN.test(content)) {
@@ -203,14 +203,14 @@ function processTaskFile(filename) {
     return { 
       needsReview: true, 
       filename,
-      reason: 'No clear classification found'
+      reason: 'No clear classification found',
     };
   }
   
   // Replace TODO with actual classification
   const updatedContent = content.replace(
     TODO_PATTERN,
-    `atomic_layer: ${atomicLayer}`
+    `atomic_layer: ${atomicLayer}`,
   );
   
   // Write updated content
@@ -219,7 +219,7 @@ function processTaskFile(filename) {
   return {
     processed: true,
     filename,
-    atomicLayer
+    atomicLayer,
   };
 }
 
@@ -246,8 +246,8 @@ function main() {
       'Organism': 0,
       'Template': 0,
       'Strategy': 0,
-      'Config': 0
-    }
+      'Config': 0,
+    },
   };
   
   // Process each file

@@ -12,7 +12,7 @@ const fs = require('fs').promises;
 const {
   MetricsCollector,
   createEmptyMetrics,
-  DEFAULT_RETENTION_DAYS
+  DEFAULT_RETENTION_DAYS,
 } = require('../../../.aios-core/quality/metrics-collector');
 
 // Test data directory
@@ -38,7 +38,7 @@ describe('MetricsCollector', () => {
 
     collector = new MetricsCollector({
       dataFile: TEST_METRICS_FILE,
-      retentionDays: 30
+      retentionDays: 30,
     });
   });
 
@@ -94,7 +94,7 @@ describe('MetricsCollector', () => {
 
       // Create new collector instance
       const newCollector = new MetricsCollector({
-        dataFile: TEST_METRICS_FILE
+        dataFile: TEST_METRICS_FILE,
       });
       const loadedMetrics = await newCollector.load();
 
@@ -108,7 +108,7 @@ describe('MetricsCollector', () => {
       const run = await collector.recordRun(1, {
         passed: true,
         durationMs: 3200,
-        findingsCount: 0
+        findingsCount: 0,
       });
 
       expect(run.layer).toBe(1);
@@ -122,7 +122,7 @@ describe('MetricsCollector', () => {
       const run = await collector.recordRun(2, {
         passed: false,
         durationMs: 120000,
-        findingsCount: 5
+        findingsCount: 5,
       });
 
       expect(run.layer).toBe(2);
@@ -134,7 +134,7 @@ describe('MetricsCollector', () => {
       const run = await collector.recordRun(3, {
         passed: true,
         durationMs: 600000,
-        findingsCount: 1
+        findingsCount: 1,
       });
 
       expect(run.layer).toBe(3);
@@ -155,8 +155,8 @@ describe('MetricsCollector', () => {
         durationMs: 1000,
         metadata: {
           storyId: '3.11a',
-          branchName: 'feature/test'
-        }
+          branchName: 'feature/test',
+        },
       });
 
       expect(run.metadata.storyId).toBe('3.11a');
@@ -168,7 +168,7 @@ describe('MetricsCollector', () => {
     it('should record pre-commit as Layer 1', async () => {
       const run = await collector.recordPreCommit({
         passed: true,
-        durationMs: 2500
+        durationMs: 2500,
       });
 
       expect(run.layer).toBe(1);
@@ -187,9 +187,9 @@ describe('MetricsCollector', () => {
             critical: 0,
             high: 1,
             medium: 2,
-            low: 2
-          }
-        }
+            low: 2,
+          },
+        },
       });
 
       const metrics = await collector.getMetrics();
@@ -203,8 +203,8 @@ describe('MetricsCollector', () => {
         durationMs: 100000,
         coderabbit: {
           findingsCount: 3,
-          severityBreakdown: { critical: 1, high: 1, medium: 1, low: 0 }
-        }
+          severityBreakdown: { critical: 1, high: 1, medium: 1, low: 0 },
+        },
       });
 
       await collector.recordPRReview({
@@ -212,8 +212,8 @@ describe('MetricsCollector', () => {
         durationMs: 100000,
         coderabbit: {
           findingsCount: 2,
-          severityBreakdown: { critical: 0, high: 0, medium: 1, low: 1 }
-        }
+          severityBreakdown: { critical: 0, high: 0, medium: 1, low: 1 },
+        },
       });
 
       const metrics = await collector.getMetrics();
@@ -229,8 +229,8 @@ describe('MetricsCollector', () => {
         durationMs: 120000,
         quinn: {
           findingsCount: 3,
-          topCategories: ['test-coverage', 'documentation']
-        }
+          topCategories: ['test-coverage', 'documentation'],
+        },
       });
 
       const metrics = await collector.getMetrics();
@@ -243,7 +243,7 @@ describe('MetricsCollector', () => {
     it('should record human review as Layer 3', async () => {
       const run = await collector.recordHumanReview({
         passed: true,
-        durationMs: 300000
+        durationMs: 300000,
       });
 
       expect(run.layer).toBe(3);
@@ -297,7 +297,7 @@ describe('MetricsCollector', () => {
       // Create collector with 1 day retention
       const shortRetentionCollector = new MetricsCollector({
         dataFile: TEST_METRICS_FILE,
-        retentionDays: 1
+        retentionDays: 1,
       });
 
       // Add a record and manually backdate it
@@ -312,7 +312,7 @@ describe('MetricsCollector', () => {
         layer: 1,
         passed: true,
         durationMs: 1000,
-        findingsCount: 0
+        findingsCount: 0,
       });
 
       // Add recent record
@@ -321,7 +321,7 @@ describe('MetricsCollector', () => {
         layer: 1,
         passed: true,
         durationMs: 1000,
-        findingsCount: 0
+        findingsCount: 0,
       });
 
       await shortRetentionCollector.save(metrics);
@@ -410,7 +410,7 @@ describe('MetricsCollector', () => {
         lastUpdated: new Date().toISOString(),
         layers: {},
         trends: {},
-        history: []
+        history: [],
       };
 
       const { valid } = await collector.validate(invalidMetrics);

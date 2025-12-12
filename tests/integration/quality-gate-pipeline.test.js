@@ -24,18 +24,18 @@ describe('Quality Gate Pipeline Integration', () => {
           checks: {
             lint: { enabled: true },
             test: { enabled: true },
-            typecheck: { enabled: true }
-          }
+            typecheck: { enabled: true },
+          },
         },
         layer2: {
           enabled: true,
           coderabbit: { enabled: true },
-          quinn: { enabled: true }
+          quinn: { enabled: true },
         },
         layer3: {
           enabled: true,
-          requireSignoff: false
-        }
+          requireSignoff: false,
+        },
       });
     });
 
@@ -51,14 +51,14 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 0,
         stdout: '0 errors',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       manager.layers.layer2.runCommand = jest.fn().mockResolvedValue({
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate({ verbose: false });
@@ -75,7 +75,7 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 1,
         stdout: '5 errors',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate({ verbose: false });
@@ -92,7 +92,7 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 0,
         stdout: '0 errors',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       // Make Layer 2 fail with CRITICAL issue
@@ -100,7 +100,7 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 0,
         stdout: 'CRITICAL: Major security issue',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate({ verbose: false });
@@ -116,7 +116,7 @@ describe('Quality Gate Pipeline Integration', () => {
 
     beforeEach(() => {
       generator = new ChecklistGenerator({
-        minItems: 5
+        minItems: 5,
       });
     });
 
@@ -126,9 +126,9 @@ describe('Quality Gate Pipeline Integration', () => {
         changedFiles: [
           'tests/unit/layer1.test.js',
           '.aios-core/core/quality-gates/manager.js',
-          'docs/architecture/quality-gates.md'
+          'docs/architecture/quality-gates.md',
         ],
-        layers: []
+        layers: [],
       });
 
       expect(checklist.items.length).toBeGreaterThanOrEqual(5);
@@ -137,7 +137,7 @@ describe('Quality Gate Pipeline Integration', () => {
 
     it('should add items for test file changes', async () => {
       const checklist = await generator.generate({
-        changedFiles: ['tests/unit/something.test.js']
+        changedFiles: ['tests/unit/something.test.js'],
       });
 
       const testItem = checklist.items.find(i => i.id === 'test-coverage');
@@ -146,7 +146,7 @@ describe('Quality Gate Pipeline Integration', () => {
 
     it('should add items for config file changes', async () => {
       const checklist = await generator.generate({
-        changedFiles: ['config/app.yaml']
+        changedFiles: ['config/app.yaml'],
       });
 
       const configItem = checklist.items.find(i => i.id === 'config-changes');
@@ -167,7 +167,7 @@ describe('Quality Gate Pipeline Integration', () => {
       const manager = new QualityGateManager({
         layer1: { enabled: true },
         layer2: { enabled: true },
-        layer3: { enabled: true, requireSignoff: false }
+        layer3: { enabled: true, requireSignoff: false },
       });
 
       // Mock all commands to pass
@@ -175,14 +175,14 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 0,
         stdout: '0 errors, 5 warnings',
         stderr: '',
-        duration: 1000
+        duration: 1000,
       });
 
       manager.layers.layer2.runCommand = jest.fn().mockResolvedValue({
         exitCode: 0,
         stdout: 'HIGH: Minor suggestion',
         stderr: '',
-        duration: 2000
+        duration: 2000,
       });
 
       const result = await manager.orchestrate();
@@ -211,21 +211,21 @@ describe('Quality Gate Pipeline Integration', () => {
       const manager = new QualityGateManager({
         layer1: { enabled: true },
         layer2: { enabled: true },
-        layer3: { enabled: true, requireSignoff: false }
+        layer3: { enabled: true, requireSignoff: false },
       });
 
       manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       manager.layers.layer2.runCommand = jest.fn().mockResolvedValue({
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate();
@@ -239,7 +239,7 @@ describe('Quality Gate Pipeline Integration', () => {
         exitCode: 1,
         stdout: 'error',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate();
@@ -252,7 +252,7 @@ describe('Quality Gate Pipeline Integration', () => {
       const manager = new QualityGateManager({
         layer1: { enabled: false },
         layer2: { enabled: false },
-        layer3: { enabled: false }
+        layer3: { enabled: false },
       });
 
       const result = await manager.orchestrate();
@@ -267,14 +267,14 @@ describe('Quality Gate Pipeline Integration', () => {
       const manager = new QualityGateManager({
         layer1: { enabled: true },
         layer2: { enabled: false },
-        layer3: { enabled: false }
+        layer3: { enabled: false },
       });
 
       manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await manager.orchestrate();
@@ -293,7 +293,7 @@ describe('Smoke Tests', () => {
       exitCode: 0,
       stdout: '0 errors',
       stderr: '',
-      duration: 100
+      duration: 100,
     });
 
     const result = await layer.execute();
@@ -304,13 +304,13 @@ describe('Smoke Tests', () => {
   it('QGM-02: Layer 1 should fail when lint has errors', async () => {
     const layer = new Layer1PreCommit({
       enabled: true,
-      checks: { lint: { enabled: true } }
+      checks: { lint: { enabled: true } },
     });
     layer.runCommand = jest.fn().mockResolvedValue({
       exitCode: 1,
       stdout: '5 errors',
       stderr: '',
-      duration: 100
+      duration: 100,
     });
 
     const result = await layer.execute();
@@ -321,13 +321,13 @@ describe('Smoke Tests', () => {
   it('QGM-03: Layer 2 should pass with no CRITICAL issues', async () => {
     const layer = new Layer2PRAutomation({
       enabled: true,
-      coderabbit: { enabled: true, blockOn: ['CRITICAL'] }
+      coderabbit: { enabled: true, blockOn: ['CRITICAL'] },
     });
     layer.runCommand = jest.fn().mockResolvedValue({
       exitCode: 0,
       stdout: 'HIGH: Minor issue\nMEDIUM: Suggestion',
       stderr: '',
-      duration: 100
+      duration: 100,
     });
 
     const result = await layer.execute();
@@ -339,14 +339,14 @@ describe('Smoke Tests', () => {
     const manager = new QualityGateManager({
       layer1: { enabled: true },
       layer2: { enabled: true },
-      layer3: { enabled: true, requireSignoff: false }
+      layer3: { enabled: true, requireSignoff: false },
     });
 
     manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 0, stdout: '', stderr: '', duration: 100
+      exitCode: 0, stdout: '', stderr: '', duration: 100,
     });
     manager.layers.layer2.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 0, stdout: '', stderr: '', duration: 100
+      exitCode: 0, stdout: '', stderr: '', duration: 100,
     });
 
     const result = await manager.orchestrate();
@@ -357,11 +357,11 @@ describe('Smoke Tests', () => {
   it('QGM-05: Pipeline should stop on Layer 1 failure', async () => {
     const manager = new QualityGateManager({
       layer1: { enabled: true, failFast: true },
-      layer2: { enabled: true }
+      layer2: { enabled: true },
     });
 
     manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 1, stdout: 'error', stderr: '', duration: 100
+      exitCode: 1, stdout: 'error', stderr: '', duration: 100,
     });
 
     const result = await manager.orchestrate();
@@ -374,11 +374,11 @@ describe('Smoke Tests', () => {
     const manager = new QualityGateManager({
       layer1: { enabled: true },
       layer2: { enabled: true },
-      layer3: { enabled: true }
+      layer3: { enabled: true },
     });
 
     manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 0, stdout: '', stderr: '', duration: 100
+      exitCode: 0, stdout: '', stderr: '', duration: 100,
     });
 
     const result = await manager.runLayer(1);
@@ -390,15 +390,15 @@ describe('Smoke Tests', () => {
     const manager = new QualityGateManager({
       layer1: { enabled: true },
       layer2: { enabled: true },
-      layer3: { enabled: true, requireSignoff: false }
+      layer3: { enabled: true, requireSignoff: false },
     });
 
     // Pass case
     manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 0, stdout: '', stderr: '', duration: 100
+      exitCode: 0, stdout: '', stderr: '', duration: 100,
     });
     manager.layers.layer2.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 0, stdout: '', stderr: '', duration: 100
+      exitCode: 0, stdout: '', stderr: '', duration: 100,
     });
 
     let result = await manager.orchestrate();
@@ -406,7 +406,7 @@ describe('Smoke Tests', () => {
 
     // Fail case
     manager.layers.layer1.runCommand = jest.fn().mockResolvedValue({
-      exitCode: 1, stdout: 'error', stderr: '', duration: 100
+      exitCode: 1, stdout: 'error', stderr: '', duration: 100,
     });
 
     result = await manager.orchestrate();

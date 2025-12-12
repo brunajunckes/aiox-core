@@ -33,7 +33,7 @@ function createRunCommand() {
         const context = {
           verbose: options.verbose,
           storyId: options.story,
-          failFast: options.failFast !== false
+          failFast: options.failFast !== false,
         };
 
         let result;
@@ -159,5 +159,5 @@ function formatDuration(ms) {
 }
 
 module.exports = {
-  createRunCommand
+  createRunCommand,
 };

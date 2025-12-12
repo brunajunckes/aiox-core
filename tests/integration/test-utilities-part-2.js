@@ -53,7 +53,7 @@ const UTILITIES_TO_TEST = [
   { name: 'framework-analyzer', category: 'helpers', path: UTILS_PATH },
   { name: 'manifest-preview', category: 'helpers', path: UTILS_PATH },
   { name: 'metrics-tracker', category: 'framework', path: UTILS_PATH },
-  { name: 'safe-removal-handler', category: 'executors', path: UTILS_PATH }
+  { name: 'safe-removal-handler', category: 'executors', path: UTILS_PATH },
 ];
 
 // Agents to test
@@ -61,7 +61,7 @@ const AGENTS_TO_TEST = [
   'aios-developer',
   'architect',
   'dev',
-  'qa'
+  'qa',
   // Note: github-devops is at .aios-core/agents/github-devops.md
 ];
 
@@ -71,7 +71,7 @@ const testResults = {
   test2: { name: 'Reference Validation', passed: false, errors: [] },
   test3: { name: 'Gap Detection', passed: false, gapsFound: null },
   test4: { name: 'Agent Load Test', passed: 0, failed: 0, errors: [] },
-  test5: { name: 'Relationship Synthesis', passed: false, errors: [] }
+  test5: { name: 'Relationship Synthesis', passed: false, errors: [] },
 };
 
 console.log('🧪 Starting Integration Test Suite: Utility Scripts Part 2');
@@ -97,7 +97,7 @@ for (const util of UTILITIES_TO_TEST) {
     testResults.test1.failed++;
     testResults.test1.errors.push({
       utility: util.name,
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -123,7 +123,7 @@ try {
       const output = execSync(`node "${validateScriptPath}"`, {
         cwd: path.resolve(ROOT_PATH, '..'),
         encoding: 'utf8',
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
       
       const hasErrors = output.includes('ERROR') || output.includes('FAIL');
@@ -165,7 +165,7 @@ try {
       const output = execSync(`node "${detectGapsPath}"`, {
         cwd: path.resolve(ROOT_PATH, '..'),
         encoding: 'utf8',
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
       
       // Count gaps related to our utilities
@@ -234,7 +234,7 @@ for (const agentName of AGENTS_TO_TEST) {
     testResults.test4.failed++;
     testResults.test4.errors.push({
       agent: agentName,
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -260,7 +260,7 @@ try {
         cwd: path.resolve(ROOT_PATH, '..'),
         encoding: 'utf8',
         stdio: 'pipe',
-        timeout: 30000
+        timeout: 30000,
       });
       
       console.log('✓ Relationship map regenerated successfully');

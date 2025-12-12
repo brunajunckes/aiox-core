@@ -38,12 +38,12 @@ describeIntegration('Config Validator', () => {
         markdownExploder: {},
         qa: {},
         prd: {},
-        architecture: {}
+        architecture: {},
       });
 
       // When
       const result = await validateConfigs({
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       });
 
       // Then
@@ -65,9 +65,9 @@ describeIntegration('Config Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'ENV_FILE_MISSING'
-          })
-        ])
+            code: 'ENV_FILE_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -93,9 +93,9 @@ describeIntegration('Config Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'ENV_VAR_MISSING'
-          })
-        ])
+            code: 'ENV_VAR_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -121,9 +121,9 @@ describeIntegration('Config Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'POTENTIAL_HARDCODED_CREDENTIAL'
-          })
-        ])
+            code: 'POTENTIAL_HARDCODED_CREDENTIAL',
+          }),
+        ]),
       );
     });
 
@@ -147,12 +147,12 @@ describeIntegration('Config Validator', () => {
         markdownExploder: { enabled: true },
         qa: {},
         prd: {},
-        architecture: {}
+        architecture: {},
       });
 
       // When
       const result = await validateConfigs({
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       });
 
       // Then
@@ -180,16 +180,16 @@ describeIntegration('Config Validator', () => {
 
       // When
       const result = await validateConfigs({
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       });
 
       // Then
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'CORE_CONFIG_MISSING'
-          })
-        ])
+            code: 'CORE_CONFIG_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -215,7 +215,7 @@ describeIntegration('Config Validator', () => {
 
       // When
       const result = await validateConfigs({
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       });
 
       // Then
@@ -223,9 +223,9 @@ describeIntegration('Config Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'CORE_CONFIG_PARSE_ERROR'
-          })
-        ])
+            code: 'CORE_CONFIG_PARSE_ERROR',
+          }),
+        ]),
       );
     });
 
@@ -246,22 +246,22 @@ describeIntegration('Config Validator', () => {
       });
 
       yaml.parse.mockReturnValue({
-        markdownExploder: { enabled: true }
+        markdownExploder: { enabled: true },
         // Missing: qa, prd, architecture
       });
 
       // When
       const result = await validateConfigs({
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       });
 
       // Then
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'CORE_CONFIG_INCOMPLETE'
-          })
-        ])
+            code: 'CORE_CONFIG_INCOMPLETE',
+          }),
+        ]),
       );
     });
 
@@ -276,8 +276,8 @@ describeIntegration('Config Validator', () => {
           return JSON.stringify({
             mcpServers: {
               browser: { command: 'npx' },
-              context7: { url: 'https://mcp.context7.com/sse' }
-            }
+              context7: { url: 'https://mcp.context7.com/sse' },
+            },
           });
         }
         if (path === '.gitignore') {
@@ -348,9 +348,9 @@ describeIntegration('Config Validator', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'MCP_CONFIG_PARSE_ERROR'
-          })
-        ])
+            code: 'MCP_CONFIG_PARSE_ERROR',
+          }),
+        ]),
       );
     });
 
@@ -402,13 +402,13 @@ describeIntegration('Config Validator', () => {
         expect.arrayContaining([
           expect.objectContaining({
             code: 'GITIGNORE_CRITICAL_MISSING',
-            message: expect.stringContaining('.env')
+            message: expect.stringContaining('.env'),
           }),
           expect.objectContaining({
             code: 'GITIGNORE_CRITICAL_MISSING',
-            message: expect.stringContaining('node_modules')
-          })
-        ])
+            message: expect.stringContaining('node_modules'),
+          }),
+        ]),
       );
     });
 
@@ -434,9 +434,9 @@ describeIntegration('Config Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'GITIGNORE_RECOMMENDED_MISSING'
-          })
-        ])
+            code: 'GITIGNORE_RECOMMENDED_MISSING',
+          }),
+        ]),
       );
     });
   });

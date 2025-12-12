@@ -24,7 +24,7 @@ class ComponentMetadata {
     // Initialize memory adapter if available
     this.memoryClient = MemoryAdapter ? new MemoryAdapter({
       persistencePath: path.join(this.rootPath, 'aios-memory-layer-mvp', 'data'),
-      namespace: 'component-metadata'
+      namespace: 'component-metadata',
     }) : null;
     
     // Component metadata schema version
@@ -45,12 +45,12 @@ class ComponentMetadata {
       created: {
         timestamp: null,
         creator: null,
-        context: null
+        context: null,
       },
       modified: {
         timestamp: null,
         modifier: null,
-        changes: []
+        changes: [],
       },
       description: null,
       tags: [],
@@ -59,26 +59,26 @@ class ComponentMetadata {
       relationships: {
         dependencies: [],
         dependents: [],
-        related: []
+        related: [],
       },
       usage: {
         count: 0,
         lastUsed: null,
         frequency: 'never', // never, rarely, occasionally, frequently, always
-        contexts: []
+        contexts: [],
       },
       metrics: {
         complexity: 0, // 0-10 scale
         maintainability: 0, // 0-10 scale
         reliability: 0, // 0-10 scale
-        performance: null
+        performance: null,
       },
       security: {
         level: 'standard', // standard, elevated, restricted
         permissions: [],
-        auditLog: []
+        auditLog: [],
       },
-      customFields: {}
+      customFields: {},
     };
     
     // Add type-specific fields
@@ -90,8 +90,8 @@ class ComponentMetadata {
             commands: [],
             persona: {},
             capabilities: [],
-            integrations: []
-          }
+            integrations: [],
+          },
         };
         
       case 'task':
@@ -103,8 +103,8 @@ class ComponentMetadata {
             workflow: null,
             inputSchema: {},
             outputSchema: {},
-            errorCodes: []
-          }
+            errorCodes: [],
+          },
         };
         
       case 'workflow':
@@ -115,8 +115,8 @@ class ComponentMetadata {
             triggers: [],
             variables: {},
             outcomes: [],
-            branchingLogic: {}
-          }
+            branchingLogic: {},
+          },
         };
         
       default:
@@ -143,7 +143,7 @@ class ComponentMetadata {
         created: {
           timestamp: new Date().toISOString(),
           creator: context.creator || process.env.USER || 'system',
-          context: context.description || 'Component created'
+          context: context.description || 'Component created',
         },
         modified: {
           timestamp: new Date().toISOString(),
@@ -151,13 +151,13 @@ class ComponentMetadata {
           changes: [{
             timestamp: new Date().toISOString(),
             type: 'created',
-            description: 'Initial creation'
-          }]
+            description: 'Initial creation',
+          }],
         },
         description: componentData.description || componentData.whenToUse || componentData.taskDescription || componentData.workflowDescription || '',
         tags: context.tags || [],
         status: context.status || 'active',
-        visibility: context.visibility || 'private'
+        visibility: context.visibility || 'private',
       };
       
       // Add type-specific data
@@ -167,7 +167,7 @@ class ComponentMetadata {
       await this.memoryClient.addMemory({
         type: 'component_metadata',
         component: componentType,
-        metadata: metadata
+        metadata: metadata,
       });
       
       // Save to file system
@@ -248,9 +248,9 @@ class ComponentMetadata {
             timestamp: new Date().toISOString(),
             type: context.changeType || 'updated',
             description: context.changeDescription || 'Component updated',
-            fields: Object.keys(updates)
-          }
-        ]
+            fields: Object.keys(updates),
+          },
+        ],
       };
       
       // Update version if significant change
@@ -263,7 +263,7 @@ class ComponentMetadata {
         type: 'component_metadata',
         component: componentType,
         id: componentId,
-        metadata: metadata
+        metadata: metadata,
       });
       
       // Save to file system
@@ -290,8 +290,8 @@ class ComponentMetadata {
         filters: {
           type: 'component_metadata',
           component: componentType,
-          'metadata.id': componentId
-        }
+          'metadata.id': componentId,
+        },
       });
       
       if (memories && memories.length > 0) {
@@ -332,7 +332,7 @@ class ComponentMetadata {
           type: target.type,
           id: target.id,
           relationshipType,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
         
         switch (relationshipType) {
@@ -348,7 +348,7 @@ class ComponentMetadata {
         }
         
         await this.updateMetadata(source.type, source.id, {
-          relationships: sourceMetadata.relationships
+          relationships: sourceMetadata.relationships,
         });
       }
       
@@ -363,7 +363,7 @@ class ComponentMetadata {
           type: source.type,
           id: source.id,
           relationshipType: this.getReverseRelationship(relationshipType),
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
         
         switch (reverseRelationship.relationshipType) {
@@ -379,7 +379,7 @@ class ComponentMetadata {
         }
         
         await this.updateMetadata(target.type, target.id, {
-          relationships: targetMetadata.relationships
+          relationships: targetMetadata.relationships,
         });
       }
       
@@ -423,9 +423,9 @@ class ComponentMetadata {
       const memories = await this.memoryClient.searchMemories({
         filters: {
           type: 'component_metadata',
-          ...filters
+          ...filters,
         },
-        limit: criteria.limit || 100
+        limit: criteria.limit || 100,
       });
       
       return memories.map(m => m.metadata);
@@ -456,7 +456,7 @@ class ComponentMetadata {
           count: 0,
           lastUsed: null,
           frequency: 'never',
-          contexts: []
+          contexts: [],
         };
       }
       
@@ -470,7 +470,7 @@ class ComponentMetadata {
           context: usageData.context,
           user: usageData.user || process.env.USER,
           duration: usageData.duration,
-          success: usageData.success !== false
+          success: usageData.success !== false,
         });
         
         // Keep only last 100 contexts
@@ -484,10 +484,10 @@ class ComponentMetadata {
       
       // Save updated metadata
       await this.updateMetadata(componentType, componentId, {
-        usage: metadata.usage
+        usage: metadata.usage,
       }, {
         changeType: 'usage',
-        changeDescription: 'Usage analytics updated'
+        changeDescription: 'Usage analytics updated',
       });
       
       // Also log to memory layer for analytics
@@ -496,7 +496,7 @@ class ComponentMetadata {
         component: componentType,
         id: componentId,
         timestamp: new Date().toISOString(),
-        ...usageData
+        ...usageData,
       });
       
     } catch (error) {
@@ -525,7 +525,7 @@ class ComponentMetadata {
           timestamp: change.timestamp,
           modifier: change.modifier || metadata.modified.modifier,
           description: change.description,
-          changes: change.fields || []
+          changes: change.fields || [],
         }));
       
       return versionHistory;
@@ -566,7 +566,7 @@ class ComponentMetadata {
     const reverseMap = {
       'depends-on': 'used-by',
       'used-by': 'depends-on',
-      'related-to': 'related-to'
+      'related-to': 'related-to',
     };
     
     return reverseMap[relationshipType] || relationshipType;
@@ -586,7 +586,7 @@ class ComponentMetadata {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     
     const recentUsage = usage.contexts.filter(ctx => 
-      new Date(ctx.timestamp) > thirtyDaysAgo
+      new Date(ctx.timestamp) > thirtyDaysAgo,
     ).length;
     
     if (recentUsage === 0) return 'rarely';

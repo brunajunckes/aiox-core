@@ -19,7 +19,7 @@ const fs = require('fs').promises;
 
 // Mock inquirer for non-interactive tests
 jest.mock('inquirer', () => ({
-  prompt: jest.fn().mockResolvedValue({})
+  prompt: jest.fn().mockResolvedValue({}),
 }));
 
 const {
@@ -28,7 +28,7 @@ const {
   VariableElicitation,
   TemplateRenderer,
   TemplateValidator,
-  SUPPORTED_TYPES
+  SUPPORTED_TYPES,
 } = require('../../.aios-core/product/templates/engine');
 
 const inquirer = require('inquirer');
@@ -45,7 +45,7 @@ describe('Template Engine v2.0', () => {
       baseDir,
       templatesDir,
       schemasDir,
-      interactive: false
+      interactive: false,
     });
     jest.clearAllMocks();
   });
@@ -109,7 +109,7 @@ describe('Template Engine v2.0', () => {
     test('should merge provided context with defaults', async () => {
       const variables = [
         { name: 'title', type: 'string', required: true },
-        { name: 'status', type: 'choice', default: 'Draft' }
+        { name: 'status', type: 'choice', default: 'Draft' },
       ];
 
       const values = await elicitation.elicit(variables, { title: 'Test Title' });
@@ -120,7 +120,7 @@ describe('Template Engine v2.0', () => {
 
     test('should resolve auto values', async () => {
       const variables = [
-        { name: 'now', type: 'string', auto: 'current_date' }
+        { name: 'now', type: 'string', auto: 'current_date' },
       ];
 
       const values = await elicitation.elicit(variables, {});
@@ -132,7 +132,7 @@ describe('Template Engine v2.0', () => {
     test('should validate required variables', () => {
       const variables = [
         { name: 'title', required: true },
-        { name: 'description', required: false }
+        { name: 'description', required: false },
       ];
 
       const result = elicitation.validate(variables, { description: 'test' });
@@ -147,7 +147,7 @@ describe('Template Engine v2.0', () => {
       inquirer.prompt.mockResolvedValue({ title: 'Interactive Title' });
 
       const variables = [
-        { name: 'title', type: 'string', required: true, prompt: 'Enter title:' }
+        { name: 'title', type: 'string', required: true, prompt: 'Enter title:' },
       ];
 
       const values = await interactiveElicitation.elicit(variables, {});
@@ -200,7 +200,7 @@ describe('Template Engine v2.0', () => {
 
     test('should support conditional blocks', () => {
       const template = {
-        body: '{{#if showDetails}}Details: {{details}}{{else}}No details{{/if}}'
+        body: '{{#if showDetails}}Details: {{details}}{{else}}No details{{/if}}',
       };
 
       expect(renderer.render(template, { showDetails: true, details: 'Some info' }))
@@ -211,7 +211,7 @@ describe('Template Engine v2.0', () => {
 
     test('should support each loops', () => {
       const template = {
-        body: '{{#each items}}- {{this}}\n{{/each}}'
+        body: '{{#each items}}- {{this}}\n{{/each}}',
       };
       const context = { items: ['Item 1', 'Item 2', 'Item 3'] };
 
@@ -255,7 +255,7 @@ describe('Template Engine v2.0', () => {
         deciders: 'Team Lead, Architect',
         context: 'We need to choose a language for the backend that provides type safety.',
         decision: 'We will use TypeScript with Node.js for all backend services.',
-        positiveConsequences: ['Better type safety', 'Improved developer experience']
+        positiveConsequences: ['Better type safety', 'Improved developer experience'],
       };
 
       const result = await validator.validate(data, 'adr');
@@ -272,7 +272,7 @@ describe('Template Engine v2.0', () => {
         deciders: 'Team',
         context: 'Short', // Too short
         decision: 'Short', // Too short
-        positiveConsequences: [] // Empty array
+        positiveConsequences: [], // Empty array
       };
 
       const result = await validator.validate(data, 'adr');
@@ -284,8 +284,8 @@ describe('Template Engine v2.0', () => {
     test('should validate structure of rendered content', async () => {
       const template = {
         metadata: {
-          required_sections: ['Context', 'Decision']
-        }
+          required_sections: ['Context', 'Decision'],
+        },
       };
 
       const validContent = '# ADR 001\n\n## Context\nSome context\n\n## Decision\nSome decision';
@@ -308,11 +308,11 @@ describe('Template Engine v2.0', () => {
         positiveConsequences: [
           'Simple and familiar syntax',
           'Good documentation',
-          'Active community'
+          'Active community',
         ],
         negativeConsequences: [
-          'Limited logic in templates'
-        ]
+          'Limited logic in templates',
+        ],
       };
 
       const result = await engine.generate('adr', context);
@@ -337,8 +337,8 @@ describe('Template Engine v2.0', () => {
         goals: [
           'Unified template format',
           'Schema validation',
-          'Interactive variable elicitation'
-        ]
+          'Interactive variable elicitation',
+        ],
       };
 
       const result = await engine.generate('prd', context);

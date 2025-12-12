@@ -77,7 +77,7 @@ function generateDecisionsList(decisions) {
     markdown += `**Reason:** ${decision.reason}\n\n`;
 
     if (decision.alternatives && decision.alternatives.length > 0) {
-      markdown += `**Alternatives Considered:**\n`;
+      markdown += '**Alternatives Considered:**\n';
       decision.alternatives.forEach(alt => {
         markdown += `- ${alt}\n`;
       });
@@ -289,5 +289,5 @@ module.exports = {
   generateDecisionsList,
   generateFilesList,
   generateTestsList,
-  generateRollbackFilesList
+  generateRollbackFilesList,
 };

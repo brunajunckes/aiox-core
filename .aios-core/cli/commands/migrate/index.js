@@ -37,7 +37,7 @@ function printHeader(fromVersion, toVersion) {
 async function askConfirmation(message) {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
   return new Promise((resolve) => {
@@ -76,7 +76,7 @@ async function runMigration(options) {
     verbose = false,
     skipTests = false,
     skipLint = false,
-    yes = false
+    yes = false,
   } = options;
 
   const projectRoot = process.cwd();
@@ -182,7 +182,7 @@ async function runMigration(options) {
     await saveMigrationState(projectRoot, {
       phase: 'backup',
       backup: backupResult.backupDir,
-      plan: { totalFiles: plan.totalFiles }
+      plan: { totalFiles: plan.totalFiles },
     });
 
   } catch (error) {
@@ -208,7 +208,7 @@ async function runMigration(options) {
 
     await saveMigrationState(projectRoot, {
       phase: 'migrated',
-      files: migrationResult.totalFiles
+      files: migrationResult.totalFiles,
     });
 
   } catch (error) {
@@ -242,7 +242,7 @@ async function runMigration(options) {
   const validationResult = await runFullValidation(projectRoot, {
     onProgress,
     skipTests,
-    skipLint
+    skipLint,
   });
 
   // Clear migration state
@@ -256,7 +256,7 @@ async function runMigration(options) {
   console.log(generateSummary(
     { totalFiles: plan.totalFiles, modules: plan.stats },
     validationResult,
-    { backupLocation: backupDir, duration }
+    { backupLocation: backupDir, duration },
   ));
 }
 
@@ -437,5 +437,5 @@ Rollback:
 }
 
 module.exports = {
-  createMigrateCommand
+  createMigrateCommand,
 };

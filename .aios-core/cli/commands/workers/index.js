@@ -52,5 +52,5 @@ Examples:
 }
 
 module.exports = {
-  createWorkersCommand
+  createWorkersCommand,
 };

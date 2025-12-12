@@ -29,7 +29,7 @@ const AGENTS = [
   'data-engineer',
   'devops',
   'db-sage',
-  'security'
+  'security',
 ];
 
 /**
@@ -40,7 +40,7 @@ const LAZY_LOADABLE_SECTIONS = [
   'expansionPacks',
   'registry',
   'toolConfigurations',
-  'hybridOpsConfig'
+  'hybridOpsConfig',
 ];
 
 /**
@@ -50,7 +50,7 @@ const ALWAYS_LOADED_SECTIONS = [
   'frameworkDocsLocation',
   'projectDocsLocation',
   'devLoadAlwaysFiles',
-  'lazyLoading'
+  'lazyLoading',
 ];
 
 /**
@@ -77,7 +77,7 @@ async function extractAgentDependencies(agentId) {
       title: agentConfig.agent?.title || 'Unknown',
       dependencies: agentConfig.dependencies || {},
       commands: agentConfig.commands || [],
-      customization: agentConfig.agent?.customization || null
+      customization: agentConfig.agent?.customization || null,
     };
   } catch (error) {
     console.error(`❌ Failed to parse ${agentId}:`, error.message);
@@ -92,7 +92,7 @@ function analyzeConfigNeeds(agentData) {
   const needs = {
     always: [...ALWAYS_LOADED_SECTIONS],
     lazy: [],
-    optional: []
+    optional: [],
   };
 
   // Check dependencies for heavy sections
@@ -138,7 +138,7 @@ function estimateConfigSize(sectionName) {
     frameworkDocsLocation: 0.1,
     projectDocsLocation: 0.1,
     devLoadAlwaysFiles: 1,
-    lazyLoading: 0.5
+    lazyLoading: 0.5,
   };
 
   return sizes[sectionName] || 5;
@@ -169,7 +169,7 @@ function calculateSavings(agentNeeds) {
     without: totalWithoutLazy,
     with: totalWithLazy,
     savings: totalWithoutLazy - totalWithLazy,
-    savingsPercent: ((totalWithoutLazy - totalWithLazy) / totalWithoutLazy * 100).toFixed(1)
+    savingsPercent: ((totalWithoutLazy - totalWithLazy) / totalWithoutLazy * 100).toFixed(1),
   };
 }
 
@@ -217,7 +217,7 @@ function generateAuditReport(auditResults) {
 
   auditResults.forEach(result => {
     const savingsEmoji = result.savings.savings > 50 ? '🟢' :
-                        result.savings.savings > 20 ? '🟡' : '🔴';
+      result.savings.savings > 20 ? '🟡' : '🔴';
 
     report += `### ${savingsEmoji} ${result.agent.name} (@${result.agent.agentId})
 
@@ -242,7 +242,7 @@ function generateAuditReport(auditResults) {
 
     // List dependencies
     if (Object.keys(result.agent.dependencies).length > 0) {
-      report += `**Dependencies:**\n`;
+      report += '**Dependencies:**\n';
       Object.entries(result.agent.dependencies).forEach(([type, items]) => {
         if (Array.isArray(items) && items.length > 0) {
           report += `- ${type}: ${items.length} items\n`;
@@ -268,7 +268,7 @@ function generateAuditReport(auditResults) {
     report += '*None - all agents have reasonable config size*\n';
   }
 
-  report += `\n### Medium Priority (Agents with 20-50KB savings)\n`;
+  report += '\n### Medium Priority (Agents with 20-50KB savings)\n';
 
   const mediumPriority = auditResults.filter(r => r.savings.savings >= 20 && r.savings.savings <= 50);
   if (mediumPriority.length > 0) {
@@ -279,7 +279,7 @@ function generateAuditReport(auditResults) {
     report += '*None*\n';
   }
 
-  report += `\n### Low Priority (Agents with <20KB savings)\n`;
+  report += '\n### Low Priority (Agents with <20KB savings)\n';
 
   const lowPriority = auditResults.filter(r => r.savings.savings < 20);
   if (lowPriority.length > 0) {
@@ -319,7 +319,7 @@ async function auditAllAgents() {
 
     const agentData = await extractAgentDependencies(agentId);
     if (!agentData) {
-      console.log(`   ⚠️ Skipped (parsing failed)\n`);
+      console.log('   ⚠️ Skipped (parsing failed)\n');
       continue;
     }
 
@@ -329,7 +329,7 @@ async function auditAllAgents() {
     auditResults.push({
       agent: agentData,
       needs,
-      savings
+      savings,
     });
 
     console.log(`   ✅ Config needs: ${needs.always.length} always + ${needs.lazy.length} lazy`);
@@ -376,5 +376,5 @@ module.exports = {
   generateAuditReport,
   AGENTS,
   LAZY_LOADABLE_SECTIONS,
-  ALWAYS_LOADED_SECTIONS
+  ALWAYS_LOADED_SECTIONS,
 };

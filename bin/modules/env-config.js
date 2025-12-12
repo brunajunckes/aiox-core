@@ -29,14 +29,14 @@ async function configureEnvironment(options = {}) {
   const {
     projectPath = process.cwd(),
     wizardState = {},
-    onProgress = () => {}
+    onProgress = () => {},
   } = options;
 
   const results = {
     success: false,
     files: [],
     skippedKeys: [],
-    errors: []
+    errors: [],
   };
 
   const spinner = ora();
@@ -64,7 +64,7 @@ async function configureEnvironment(options = {}) {
     const envExampleResult = await generateEnvExampleFile(projectPath);
     if (envExampleResult.success) {
       results.files.push(envExampleResult.file);
-      spinner.succeed(`.env.example created`);
+      spinner.succeed('.env.example created');
     } else {
       spinner.warn(`.env.example skipped: ${envExampleResult.error}`);
     }
@@ -114,32 +114,32 @@ async function collectAPIKeys() {
       type: 'password',
       name: 'openaiKey',
       message: 'OpenAI API Key (optional):',
-      mask: '*'
+      mask: '*',
     },
     {
       type: 'password',
       name: 'anthropicKey',
       message: 'Anthropic API Key (optional):',
-      mask: '*'
+      mask: '*',
     },
     {
       type: 'password',
       name: 'exaKey',
       message: 'Exa Search API Key (optional):',
-      mask: '*'
+      mask: '*',
     },
     {
       type: 'password',
       name: 'clickupKey',
       message: 'ClickUp API Key (optional):',
-      mask: '*'
+      mask: '*',
     },
     {
       type: 'password',
       name: 'githubToken',
       message: 'GitHub Personal Access Token (optional):',
-      mask: '*'
-    }
+      mask: '*',
+    },
   ]);
 
   // Show summary of skipped keys
@@ -176,10 +176,10 @@ async function generateEnvFile(projectPath, apiKeys, wizardState) {
           choices: [
             { name: 'Create backup and overwrite', value: 'backup' },
             { name: 'Overwrite', value: 'overwrite' },
-            { name: 'Skip (keep existing)', value: 'skip' }
+            { name: 'Skip (keep existing)', value: 'skip' },
           ],
-          default: 'backup'
-        }
+          default: 'backup',
+        },
       ]);
 
       if (action === 'skip') {
@@ -205,7 +205,7 @@ async function generateEnvFile(projectPath, apiKeys, wizardState) {
       anthropicKey: apiKeys.anthropicKey || '',
       exaKey: apiKeys.exaKey || '',
       clickupKey: apiKeys.clickupKey || '',
-      githubToken: apiKeys.githubToken || ''
+      githubToken: apiKeys.githubToken || '',
     };
 
     for (const [key, value] of Object.entries(variables)) {
@@ -319,7 +319,7 @@ async function generateCoreConfigYAML(projectPath, wizardState) {
       timestamp: new Date().toISOString(),
       selectedIDEs: JSON.stringify(selectedIDEs),
       installedMCPs: JSON.stringify(installedMCPs),
-      ideConfigFiles
+      ideConfigFiles,
     };
 
     // Replace placeholders
@@ -357,7 +357,7 @@ function getIDEConfigFile(ideKey) {
     trae: '.trae/config.json',
     zed: '.zed/settings.json',
     antigravity: '.antigravity.yaml',
-    continue: '.continue/config.json'
+    continue: '.continue/config.json',
   };
 
   return ideConfigMap[ideKey] || ideKey;
@@ -432,5 +432,5 @@ module.exports = {
   collectAPIKeys,
   generateEnvFile,
   generateCoreConfigYAML,
-  validateEnvFormat
+  validateEnvFormat,
 };

@@ -28,7 +28,7 @@ async function getClickUpTool() {
     return {
       createTask: global.mcp__clickup__create_task,
       updateTask: global.mcp__clickup__update_task,
-      getTask: global.mcp__clickup__get_task
+      getTask: global.mcp__clickup__get_task,
     };
   }
 }
@@ -59,7 +59,7 @@ async function parseStoryFile(storyFilePath) {
   const taskMatches = fileContent.matchAll(/^- \[([ x])\] (.+)$/gm);
   const tasks = Array.from(taskMatches).map(match => ({
     completed: match[1] === 'x',
-    text: match[2]
+    text: match[2],
   }));
 
   // Extract File List section
@@ -81,7 +81,7 @@ async function parseStoryFile(storyFilePath) {
     tasks,
     fileList,
     devNotes,
-    acceptanceCriteria
+    acceptanceCriteria,
   };
 }
 
@@ -123,9 +123,9 @@ async function saveStoryFile(storyFilePath, content, skipSync = false) {
     // Create storyFile object for sync
     const storyFile = {
       metadata: {
-        clickup_task_id: frontmatter?.clickup?.task_id
+        clickup_task_id: frontmatter?.clickup?.task_id,
       },
-      content: content
+      content: content,
     };
 
     // Sync to ClickUp if there are changes
@@ -138,10 +138,10 @@ async function saveStoryFile(storyFilePath, content, skipSync = false) {
                       changes.acceptanceCriteriaChanged;
 
     if (hasChanges) {
-      console.log(`✅ Story synced to ClickUp`);
+      console.log('✅ Story synced to ClickUp');
       return { saved: true, synced: true, changes: Object.keys(changes).filter(k => changes[k] && changes[k] !== false).length };
     } else {
-      console.log(`ℹ️ No sync needed: no changes detected`);
+      console.log('ℹ️ No sync needed: no changes detected');
       return { saved: true, synced: false, reason: 'no_changes' };
     }
 
@@ -195,8 +195,8 @@ async function updateFrontmatterTimestamp(storyFilePath) {
   const timestamp = new Date().toISOString();
   await updateFrontmatter(storyFilePath, {
     clickup: {
-      last_sync: timestamp
-    }
+      last_sync: timestamp,
+    },
   });
 }
 
@@ -226,7 +226,7 @@ async function createStoryInClickUp({
   epicTaskId,
   listName,
   storyContent,
-  storyFilePath
+  storyFilePath,
 }) {
   // Validation
   if (typeof epicNum !== 'number') {
@@ -254,7 +254,7 @@ async function createStoryInClickUp({
     { id: 'epic_number', value: epicNum },
     { id: 'story_number', value: storyId },
     { id: 'story_file_path', value: filePath },
-    { id: 'story-status', value: 'Draft' }
+    { id: 'story-status', value: 'Draft' },
   ];
 
   try {
@@ -270,18 +270,18 @@ async function createStoryInClickUp({
       parent: epicTaskId,  // Creates as subtask
       markdown_description: storyContent,
       tags: tags,
-      custom_fields: customFields
+      custom_fields: customFields,
     });
 
     console.log(`✅ Story created in ClickUp: ${result.id}`);
 
     return {
       taskId: result.id,
-      url: result.url || `https://app.clickup.com/t/${result.id}`
+      url: result.url || `https://app.clickup.com/t/${result.id}`,
     };
 
   } catch (error) {
-    console.error(`Error creating story in ClickUp:`, error);
+    console.error('Error creating story in ClickUp:', error);
     throw new Error(`Failed to create story in ClickUp: ${error.message}`);
   }
 }
@@ -301,7 +301,7 @@ async function syncStoryToPM(storyPath) {
     const result = await adapter.syncStory(storyPath);
 
     if (result.success) {
-      console.log(`✅ Story synced successfully`);
+      console.log('✅ Story synced successfully');
       if (result.url) {
         console.log(`   URL: ${result.url}`);
       }
@@ -314,7 +314,7 @@ async function syncStoryToPM(storyPath) {
     console.error('Error syncing story:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -332,7 +332,7 @@ async function pullStoryFromPM(storyId) {
       console.log('ℹ️  Local-only mode: No PM tool configured');
       return {
         success: true,
-        updates: null
+        updates: null,
       };
     }
 
@@ -344,9 +344,9 @@ async function pullStoryFromPM(storyId) {
 
     if (result.success) {
       if (result.updates) {
-        console.log(`📥 Updates found:`, result.updates);
+        console.log('📥 Updates found:', result.updates);
       } else {
-        console.log(`✅ Story is up to date`);
+        console.log('✅ Story is up to date');
       }
     } else {
       console.error(`❌ Pull failed: ${result.error}`);
@@ -357,7 +357,7 @@ async function pullStoryFromPM(storyId) {
     console.error('Error pulling story:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -371,5 +371,5 @@ module.exports = {
   createStoryInClickUp,
   // PM adapter-aware functions (Story 3.20)
   syncStoryToPM,
-  pullStoryFromPM
+  pullStoryFromPM,
 };

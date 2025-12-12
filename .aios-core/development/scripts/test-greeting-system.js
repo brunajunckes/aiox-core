@@ -24,11 +24,11 @@ const mockDevAgent = {
     greeting_levels: {
       minimal: '💻 Dex ready',
       named: '💻 Dex (Builder) ready. Let\'s build something solid!',
-      archetypal: '💻 Dex the Builder (♒ Aquarius) ready to construct excellence!'
-    }
+      archetypal: '💻 Dex the Builder (♒ Aquarius) ready to construct excellence!',
+    },
   },
   persona: {
-    role: 'Full Stack Developer specializing in clean, maintainable code'
+    role: 'Full Stack Developer specializing in clean, maintainable code',
   },
   commands: [
     { name: 'help', visibility: ['full', 'quick', 'key'], description: 'Show all available commands with descriptions' },
@@ -42,8 +42,8 @@ const mockDevAgent = {
     { name: 'security', visibility: ['full'], description: 'Run security audit and fix vulnerabilities' },
     { name: 'qa-gate', visibility: ['key'], description: 'Run quality gate before commit' },
     { name: 'commit', visibility: ['key'], description: 'Create git commit with conventional format' },
-    { name: 'exit', visibility: ['full', 'quick', 'key'], description: 'Exit dev mode' }
-  ]
+    { name: 'exit', visibility: ['full', 'quick', 'key'], description: 'Exit dev mode' },
+  ],
 };
 
 // Mock PO agent
@@ -58,11 +58,11 @@ const mockPoAgent = {
     greeting_levels: {
       minimal: '⚖️ Pax ready',
       named: '⚖️ Pax (Balancer) ready. Let\'s prioritize together!',
-      archetypal: '⚖️ Pax the Balancer (♎ Libra) ready to harmonize requirements!'
-    }
+      archetypal: '⚖️ Pax the Balancer (♎ Libra) ready to harmonize requirements!',
+    },
   },
   persona: {
-    role: 'Product Owner focused on value delivery and stakeholder alignment'
+    role: 'Product Owner focused on value delivery and stakeholder alignment',
   },
   commands: [
     { name: 'help', visibility: ['full', 'quick', 'key'], description: 'Show available commands' },
@@ -71,8 +71,8 @@ const mockPoAgent = {
     { name: 'backlog-summary', visibility: ['quick', 'key'], description: 'Quick backlog status summary' },
     { name: 'backlog-prioritize', visibility: ['full'], description: 'Prioritize backlog items' },
     { name: 'sync-story', visibility: ['full'], description: 'Sync story to ClickUp' },
-    { name: 'exit', visibility: ['full', 'quick', 'key'], description: 'Exit PO mode' }
-  ]
+    { name: 'exit', visibility: ['full', 'quick', 'key'], description: 'Exit PO mode' },
+  ],
 };
 
 async function testGreetings() {
@@ -86,7 +86,7 @@ async function testGreetings() {
   console.log('─'.repeat(80));
   try {
     const newSessionGreeting = await builder.buildGreeting(mockDevAgent, {
-      conversationHistory: [] // Empty history = new session
+      conversationHistory: [], // Empty history = new session
     });
     console.log(newSessionGreeting);
   } catch (error) {
@@ -101,9 +101,9 @@ async function testGreetings() {
       conversationHistory: [
         { content: 'Hello' },
         { content: '*help' },
-        { content: 'Show me the code' }
+        { content: 'Show me the code' },
       ],
-      lastCommand: 'review-code'
+      lastCommand: 'review-code',
     });
     console.log(existingSessionGreeting);
   } catch (error) {
@@ -117,8 +117,8 @@ async function testGreetings() {
     const workflowSessionGreeting = await builder.buildGreeting(mockPoAgent, {
       conversationHistory: [
         { content: '*validate-story-draft story-6.1.2.5.md' },
-        { content: 'Story validated successfully!' }
-      ]
+        { content: 'Story validated successfully!' },
+      ],
     });
     console.log(workflowSessionGreeting);
   } catch (error) {

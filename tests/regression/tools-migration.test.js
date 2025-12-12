@@ -35,7 +35,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
     'clickup',
     'google-workspace',
     'n8n',
-    'supabase'
+    'supabase',
   ];
 
   const v1Tools = [
@@ -46,14 +46,14 @@ describeIntegration('Tools Migration Regression Suite', () => {
     '21st-dev-magic',
     'browser',
     'context7',
-    'exa'
+    'exa',
   ];
 
   const v2Tools = [
     'clickup',
     'google-workspace',
     'n8n',
-    'supabase'
+    'supabase',
   ];
 
   beforeAll(() => {
@@ -80,7 +80,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
           hasId: !!tool.id,
           hasType: !!tool.type,
           hasName: !!tool.name,
-          hasDescription: !!tool.description
+          hasDescription: !!tool.description,
         });
       }
 
@@ -156,7 +156,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
       await expect(async () => {
         await validator.validateBatch([
           { command: 'cmd1', args: {} },
-          { command: 'cmd2', args: {} }
+          { command: 'cmd2', args: {} },
         ]);
       }).not.toThrow();
     });
@@ -218,7 +218,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
       const v1Result = await v1Validator.validate('test', {});
       const v2Result = await v2Validator.validate('create_task', {
         list_id: '12345678',
-        name: 'test'
+        name: 'test',
       });
 
       expect(v1Result.valid).toBe(true);
@@ -257,7 +257,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
         'supabase',      // v2.0
         'n8n',           // v2.0
         'browser',       // v1.0
-        'ffmpeg'         // v1.0
+        'ffmpeg',         // v1.0
       ];
 
       const results = [];
@@ -267,7 +267,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
         results.push({
           name: toolName,
           version: tool.schema_version,
-          hasValidators: !!tool.executable_knowledge?.validators
+          hasValidators: !!tool.executable_knowledge?.validators,
         });
       }
 
@@ -308,7 +308,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
 
       const start = Date.now();
       await validator.validate('list_spreadsheets', {
-        user_google_email: 'test@example.com'
+        user_google_email: 'test@example.com',
       });
       const duration = Date.now() - start;
 
@@ -318,7 +318,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
 
     test('concurrent operations performance maintained', async () => {
       const promises = allTools.map(toolName =>
-        toolResolver.resolveTool(toolName)
+        toolResolver.resolveTool(toolName),
       );
 
       const start = Date.now();
@@ -334,7 +334,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
   describeIntegration('Error Handling Regression', () => {
     test('invalid tool name throws same error as before', async () => {
       await expect(
-        toolResolver.resolveTool('non-existent-tool')
+        toolResolver.resolveTool('non-existent-tool'),
       ).rejects.toThrow();
     });
 
@@ -346,7 +346,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
         // Missing required user_google_email field
         summary: 'test',
         start_time: '2024-01-01T10:00:00',
-        end_time: '2024-01-01T11:00:00'
+        end_time: '2024-01-01T11:00:00',
       });
 
       expect(result.valid).toBe(false);
@@ -380,7 +380,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
         resolution_failures: [],
         validation_failures: [],
         performance_issues: [],
-        api_breaking_changes: []
+        api_breaking_changes: [],
       };
 
       // Test all 12 tools
@@ -412,7 +412,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
           if (duration > 5) { // Cached should be <5ms
             report.performance_issues.push({
               tool: toolName,
-              duration
+              duration,
             });
           }
 
@@ -421,7 +421,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
           if (!hasRequiredFields) {
             report.api_breaking_changes.push({
               tool: toolName,
-              issue: 'Missing required fields'
+              issue: 'Missing required fields',
             });
             continue;
           }
@@ -431,7 +431,7 @@ describeIntegration('Tools Migration Regression Suite', () => {
         } catch (error) {
           report.resolution_failures.push({
             tool: toolName,
-            error: error.message
+            error: error.message,
           });
         }
       }

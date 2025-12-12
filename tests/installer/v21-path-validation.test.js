@@ -46,7 +46,7 @@ const MODULE_MAPPING = {
   tools: 'infrastructure/tools',
   integrations: 'infrastructure/integrations',
   hooks: 'infrastructure/hooks',
-  telemetry: 'infrastructure/telemetry'
+  telemetry: 'infrastructure/telemetry',
 };
 
 /**
@@ -122,9 +122,9 @@ function resolveDependencyPath(type, filename) {
 }
 
 describe('v2.1 Path Validation', () => {
-  let agents = [];
-  let tasks = [];
-  let workflows = [];
+  const agents = [];
+  const tasks = [];
+  const workflows = [];
   let allFiles = [];
 
   before(async () => {
@@ -139,7 +139,7 @@ describe('v2.1 Path Validation', () => {
           file: path.relative(AIOS_CORE_PATH, file),
           name: path.basename(file, '.md'),
           content,
-          yaml: parsed
+          yaml: parsed,
         });
       }
     }
@@ -155,7 +155,7 @@ describe('v2.1 Path Validation', () => {
           file: path.relative(AIOS_CORE_PATH, file),
           name: path.basename(file, '.md'),
           content,
-          yaml: parsed
+          yaml: parsed,
         });
       }
     }
@@ -171,7 +171,7 @@ describe('v2.1 Path Validation', () => {
           file: path.relative(AIOS_CORE_PATH, file),
           name: path.basename(file, '.md'),
           content,
-          yaml: parsed
+          yaml: parsed,
         });
       }
     }
@@ -199,7 +199,7 @@ describe('v2.1 Path Validation', () => {
               agent: agent.name,
               type: 'tasks',
               dependency: task,
-              expectedPath: path.relative(AIOS_CORE_PATH, taskPath)
+              expectedPath: path.relative(AIOS_CORE_PATH, taskPath),
             });
           }
         }
@@ -231,7 +231,7 @@ describe('v2.1 Path Validation', () => {
               agent: agent.name,
               type: 'checklists',
               dependency: checklist,
-              expectedPath: path.relative(AIOS_CORE_PATH, checklistPath)
+              expectedPath: path.relative(AIOS_CORE_PATH, checklistPath),
             });
           }
         }
@@ -263,7 +263,7 @@ describe('v2.1 Path Validation', () => {
               agent: agent.name,
               type: 'templates',
               dependency: template,
-              expectedPath: path.relative(AIOS_CORE_PATH, templatePath)
+              expectedPath: path.relative(AIOS_CORE_PATH, templatePath),
             });
           }
         }
@@ -308,7 +308,7 @@ describe('v2.1 Path Validation', () => {
                 task: task.name,
                 type,
                 dependency: dep,
-                expectedPath: path.relative(AIOS_CORE_PATH, depPath)
+                expectedPath: path.relative(AIOS_CORE_PATH, depPath),
               });
             }
           }
@@ -349,7 +349,7 @@ describe('v2.1 Path Validation', () => {
                 workflow: workflow.name,
                 stepType: 'agent',
                 reference: step.agent,
-                expectedPath: path.relative(AIOS_CORE_PATH, agentPath)
+                expectedPath: path.relative(AIOS_CORE_PATH, agentPath),
               });
             }
           }
@@ -362,7 +362,7 @@ describe('v2.1 Path Validation', () => {
                 workflow: workflow.name,
                 stepType: 'task',
                 reference: step.task,
-                expectedPath: path.relative(AIOS_CORE_PATH, taskPath)
+                expectedPath: path.relative(AIOS_CORE_PATH, taskPath),
               });
             }
           }
@@ -398,7 +398,7 @@ describe('v2.1 Path Validation', () => {
           const matches = content.match(/\{root\}/g);
           filesWithRoot.push({
             file: path.relative(AIOS_CORE_PATH, file),
-            count: matches ? matches.length : 0
+            count: matches ? matches.length : 0,
           });
         }
       }
@@ -479,7 +479,7 @@ async function generateValidationReport() {
     tasks: { total: 0, withDeps: 0, missingDeps: [] },
     workflows: { total: 0, invalidRefs: [] },
     rootPlaceholders: { files: [] },
-    modules: { core: false, development: false, product: false, infrastructure: false }
+    modules: { core: false, development: false, product: false, infrastructure: false },
   };
 
   // Check modules exist
@@ -508,7 +508,7 @@ async function generateValidationReport() {
     report.tasks.total = tasks.length;
   }
 
-  console.log(`\nFile Counts:`);
+  console.log('\nFile Counts:');
   console.log(`  Agents:    ${report.agents.total}`);
   console.log(`  Tasks:     ${report.tasks.total}`);
 

@@ -22,14 +22,14 @@ async function validateMCPs(mcpContext = {}) {
     success: true,
     healthChecks: [],
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   if (!mcpContext.installedMCPs || Object.keys(mcpContext.installedMCPs).length === 0) {
     results.checks = [{
       component: 'MCPs',
       status: 'skipped',
-      message: 'No MCPs installed'
+      message: 'No MCPs installed',
     }];
     return results;
   }
@@ -41,7 +41,7 @@ async function validateMCPs(mcpContext = {}) {
       results.warnings.push({
         severity: 'medium',
         message: '.mcp.json not found - skipping health checks',
-        code: 'MCP_CONFIG_MISSING'
+        code: 'MCP_CONFIG_MISSING',
       });
       return results;
     }
@@ -55,7 +55,7 @@ async function validateMCPs(mcpContext = {}) {
           return {
             mcp: mcpId,
             status: 'skipped',
-            message: 'Installation failed - skipping health check'
+            message: 'Installation failed - skipping health check',
           };
         }
 
@@ -66,17 +66,17 @@ async function validateMCPs(mcpContext = {}) {
             status: healthResult.success ? 'success' : 'warning',
             message: healthResult.message,
             responseTime: healthResult.duration,
-            details: healthResult.details
+            details: healthResult.details,
           };
         } catch (error) {
           return {
             mcp: mcpId,
             status: 'failed',
             message: `Health check failed: ${error.message}`,
-            error: error.message
+            error: error.message,
           };
         }
-      }
+      },
     );
 
     const healthCheckResults = await Promise.all(healthCheckPromises);
@@ -90,14 +90,14 @@ async function validateMCPs(mcpContext = {}) {
           severity: 'medium',
           message: `${healthCheck.mcp} health check failed: ${healthCheck.message}`,
           code: 'MCP_HEALTH_CHECK_FAILED',
-          mcp: healthCheck.mcp
+          mcp: healthCheck.mcp,
         });
       } else if (healthCheck.status === 'warning') {
         results.warnings.push({
           severity: 'low',
           message: `${healthCheck.mcp} health check warning: ${healthCheck.message}`,
           code: 'MCP_HEALTH_CHECK_WARNING',
-          mcp: healthCheck.mcp
+          mcp: healthCheck.mcp,
         });
       }
     }
@@ -111,7 +111,7 @@ async function validateMCPs(mcpContext = {}) {
       results.errors.push({
         severity: 'high',
         message: 'All MCP health checks failed',
-        code: 'ALL_MCP_HEALTH_CHECKS_FAILED'
+        code: 'ALL_MCP_HEALTH_CHECKS_FAILED',
       });
     }
 
@@ -121,7 +121,7 @@ async function validateMCPs(mcpContext = {}) {
       severity: 'medium',
       message: `MCP health check validation failed: ${error.message}`,
       code: 'MCP_HEALTH_CHECK_ERROR',
-      details: error.stack
+      details: error.stack,
     });
 
     return results;
@@ -163,7 +163,7 @@ async function runHealthCheck(mcpId, mcpConfig) {
         result = {
           success: true,
           message: 'Unknown MCP type - basic config validation only',
-          details: { configValid: !!mcpConfig }
+          details: { configValid: !!mcpConfig },
         };
     }
 
@@ -171,14 +171,14 @@ async function runHealthCheck(mcpId, mcpConfig) {
       success: result.success,
       message: result.message,
       duration: Date.now() - startTime,
-      details: result.details
+      details: result.details,
     };
   } catch (error) {
     return {
       success: false,
       message: `Health check error: ${error.message}`,
       duration: Date.now() - startTime,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -193,7 +193,7 @@ async function testBrowserMCP(config) {
     return {
       success: false,
       message: 'Invalid configuration - missing command',
-      details: { configValid: false }
+      details: { configValid: false },
     };
   }
 
@@ -205,8 +205,8 @@ async function testBrowserMCP(config) {
     details: {
       configValid: true,
       command: config.command,
-      note: 'Full test deferred to first use'
-    }
+      note: 'Full test deferred to first use',
+    },
   };
 }
 
@@ -221,7 +221,7 @@ async function testContext7MCP(config) {
     return {
       success: false,
       message: 'Invalid configuration - missing command',
-      details: { configValid: false }
+      details: { configValid: false },
     };
   }
 
@@ -232,8 +232,8 @@ async function testContext7MCP(config) {
     details: {
       configValid: true,
       command: config.command,
-      note: 'Full test deferred to first use'
-    }
+      note: 'Full test deferred to first use',
+    },
   };
 }
 
@@ -249,8 +249,8 @@ async function testExaMCP(config) {
       details: {
         configValid: true,
         apiKeyConfigured: false,
-        solution: 'Add EXA_API_KEY to .env file'
-      }
+        solution: 'Add EXA_API_KEY to .env file',
+      },
     };
   }
 
@@ -263,8 +263,8 @@ async function testExaMCP(config) {
       details: {
         configValid: true,
         apiKeyConfigured: false,
-        solution: 'Replace ${EXA_API_KEY} or placeholder in .env'
-      }
+        solution: 'Replace ${EXA_API_KEY} or placeholder in .env',
+      },
     };
   }
 
@@ -274,8 +274,8 @@ async function testExaMCP(config) {
     details: {
       configValid: true,
       apiKeyConfigured: true,
-      note: 'Full API test deferred to first use'
-    }
+      note: 'Full API test deferred to first use',
+    },
   };
 }
 
@@ -288,7 +288,7 @@ async function testDesktopCommanderMCP(config) {
     return {
       success: false,
       message: 'Invalid configuration - missing command',
-      details: { configValid: false }
+      details: { configValid: false },
     };
   }
 
@@ -299,12 +299,12 @@ async function testDesktopCommanderMCP(config) {
     details: {
       configValid: true,
       command: config.command,
-      note: 'Full test deferred to first use'
-    }
+      note: 'Full test deferred to first use',
+    },
   };
 }
 
 module.exports = {
   validateMCPs,
-  runHealthCheck
+  runHealthCheck,
 };

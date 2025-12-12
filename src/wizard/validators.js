@@ -16,7 +16,7 @@ const path = require('path');
 const INPUT_LIMITS = {
   projectName: 100,
   path: 255,
-  generic: 500
+  generic: 500,
 };
 
 /**
@@ -269,6 +269,6 @@ module.exports = {
   // Constants (export for testing)
   INPUT_LIMITS,
   ALLOWED_PROJECT_TYPES,
-  SHELL_SPECIAL_CHARS
+  SHELL_SPECIAL_CHARS,
 };
 

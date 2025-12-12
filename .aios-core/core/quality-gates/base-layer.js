@@ -74,7 +74,7 @@ class BaseLayer {
   addResult(result) {
     this.results.push({
       ...result,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -104,9 +104,9 @@ class BaseLayer {
         total: this.results.length,
         passed,
         failed,
-        warnings
+        warnings,
       },
-      results: this.results
+      results: this.results,
     };
   }
 

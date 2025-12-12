@@ -185,7 +185,7 @@ class ContextDetector {
         lastActivity: Date.now(),
         workflowActive: state.workflowActive || null,
         lastCommands: state.lastCommands || [],
-        agentSequence: state.agentSequence || []
+        agentSequence: state.agentSequence || [],
       };
 
       fs.writeFileSync(sessionFilePath, JSON.stringify(sessionData, null, 2), 'utf8');

@@ -40,7 +40,7 @@ const SCAN_SOURCES = [
       if (filename.includes('audit') || filename.includes('validate')) return 'validation';
       if (filename.includes('analyze')) return 'analysis';
       return 'general';
-    }
+    },
   },
   {
     pattern: '.aios-core/product/templates/**/*.md',
@@ -50,7 +50,7 @@ const SCAN_SOURCES = [
       if (filePath.includes('ide-rules')) return 'ide-rules';
       if (filePath.includes('personalized')) return 'personalized';
       return 'document';
-    }
+    },
   },
   {
     pattern: '.aios-core/infrastructure/scripts/**/*.js',
@@ -66,13 +66,13 @@ const SCAN_SOURCES = [
       if (filename.includes('test')) return 'testing';
       return 'utility';
     },
-    skipArchived: true
+    skipArchived: true,
   },
   {
     pattern: '.aios-core/product/checklists/**/*.md',
     category: 'checklist',
     taskFormat: 'CHECKLIST',
-    subcategoryExtractor: () => 'quality'
+    subcategoryExtractor: () => 'quality',
   },
   {
     pattern: '.aios-core/development/workflows/**/*.yaml',
@@ -83,20 +83,20 @@ const SCAN_SOURCES = [
       if (filename.includes('brownfield')) return 'brownfield';
       if (filename.includes('greenfield')) return 'greenfield';
       return 'general';
-    }
+    },
   },
   {
     pattern: '.aios-core/core/data/**/*.md',
     category: 'data',
     taskFormat: 'TASK-FORMAT-V1',
-    subcategoryExtractor: () => 'knowledge'
+    subcategoryExtractor: () => 'knowledge',
   },
   {
     pattern: '.aios-core/core/data/**/*.yaml',
     category: 'data',
     taskFormat: 'TASK-FORMAT-V1',
-    subcategoryExtractor: () => 'configuration'
-  }
+    subcategoryExtractor: () => 'configuration',
+  },
 ];
 
 /**
@@ -221,7 +221,7 @@ function extractAgents(filePath) {
     'architect-': 'architect',
     'analyst-': 'analyst',
     'github-devops-': 'github-devops',
-    'ux-': 'ux-expert'
+    'ux-': 'ux-expert',
   };
 
   for (const [prefix, agent] of Object.entries(agentPrefixes)) {
@@ -244,7 +244,7 @@ function getExecutorTypes(category) {
     'script': ['CLI', 'Script'],
     'checklist': ['Agent'],
     'workflow': ['Agent', 'Worker'],
-    'data': ['Agent']
+    'data': ['Agent'],
   };
   return executorMap[category] || ['Agent'];
 }
@@ -259,7 +259,7 @@ function estimatePerformance(category) {
     'script': { avgDuration: '500ms', cacheable: true, parallelizable: true },
     'checklist': { avgDuration: '2m', cacheable: false, parallelizable: false },
     'workflow': { avgDuration: '5m', cacheable: false, parallelizable: false },
-    'data': { avgDuration: '50ms', cacheable: true, parallelizable: true }
+    'data': { avgDuration: '50ms', cacheable: true, parallelizable: true },
   };
   return perfMap[category] || { avgDuration: '1s', cacheable: false, parallelizable: false };
 }
@@ -297,10 +297,10 @@ async function buildWorkerEntry(filePath, source, baseDir) {
     agents: extractAgents(filePath),
     metadata: {
       source: source.category === 'task' ? 'development' :
-              source.category === 'template' || source.category === 'checklist' ? 'product' :
-              source.category === 'script' ? 'infrastructure' : 'core',
-      addedVersion: REGISTRY_VERSION
-    }
+        source.category === 'template' || source.category === 'checklist' ? 'product' :
+          source.category === 'script' ? 'infrastructure' : 'core',
+      addedVersion: REGISTRY_VERSION,
+    },
   };
 }
 
@@ -315,7 +315,7 @@ function buildCategorySummary(workers) {
       categories[worker.category] = {
         count: 0,
         subcategories: new Set(),
-        description: getCategoryDescription(worker.category)
+        description: getCategoryDescription(worker.category),
       };
     }
     categories[worker.category].count++;
@@ -342,7 +342,7 @@ function getCategoryDescription(category) {
     'script': 'JavaScript utility scripts',
     'checklist': 'Quality validation checklists',
     'workflow': 'Multi-step workflow definitions',
-    'data': 'Knowledge base and configuration data'
+    'data': 'Knowledge base and configuration data',
   };
   return descriptions[category] || 'General category';
 }
@@ -364,7 +364,7 @@ async function buildRegistry(baseDir = process.cwd()) {
       const files = await glob(source.pattern, {
         cwd: baseDir,
         nodir: true,
-        ignore: source.skipArchived ? ['**/_archived/**'] : []
+        ignore: source.skipArchived ? ['**/_archived/**'] : [],
       });
 
       console.log(`  Found ${files.length} files`);
@@ -398,7 +398,7 @@ async function buildRegistry(baseDir = process.cwd()) {
     generated: new Date().toISOString(),
     totalWorkers: workers.length,
     categories: buildCategorySummary(workers),
-    workers
+    workers,
   };
 
   console.log(`\nTotal workers: ${workers.length}`);
@@ -448,5 +448,5 @@ if (require.main === module) {
 module.exports = {
   buildRegistry,
   saveRegistry,
-  REGISTRY_VERSION
+  REGISTRY_VERSION,
 };

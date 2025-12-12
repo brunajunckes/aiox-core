@@ -14,7 +14,7 @@ class ComponentSearch {
       agent: { directory: 'agents', extension: '.md' },
       task: { directory: 'tasks', extension: '.md' },
       workflow: { directory: 'workflows', extension: '.yaml' },
-      util: { directory: 'utils', extension: '.js' }
+      util: { directory: 'utils', extension: '.js' },
     };
   }
 
@@ -54,7 +54,7 @@ class ComponentSearch {
 
     const searchPaths = [
       path.join(this.rootPath, 'aios-core', typeConfig.directory),
-      path.join(this.rootPath, typeConfig.directory)
+      path.join(this.rootPath, typeConfig.directory),
     ];
 
     for (const searchPath of searchPaths) {
@@ -90,7 +90,7 @@ class ComponentSearch {
       `${componentName}${extension}`,
       `${componentName.toLowerCase()}${extension}`,
       `${componentName.replace(/-/g, '_')}${extension}`,
-      `${componentName.replace(/_/g, '-')}${extension}`
+      `${componentName.replace(/_/g, '-')}${extension}`,
     ];
 
     for (const filename of possibleNames) {
@@ -154,7 +154,7 @@ class ComponentSearch {
 
     const searchPaths = [
       path.join(this.rootPath, 'aios-core', typeConfig.directory),
-      path.join(this.rootPath, typeConfig.directory)
+      path.join(this.rootPath, typeConfig.directory),
     ];
 
     for (const searchPath of searchPaths) {
@@ -172,7 +172,7 @@ class ComponentSearch {
                 type: componentType,
                 name: basename,
                 similarity: similarity,
-                file_path: path.join(searchPath, file)
+                file_path: path.join(searchPath, file),
               });
             }
           }
@@ -211,7 +211,7 @@ class ComponentSearch {
         matrix[j][i] = Math.min(
           matrix[j - 1][i] + 1,     // deletion
           matrix[j][i - 1] + 1,     // insertion
-          matrix[j - 1][i - 1] + cost // substitution
+          matrix[j - 1][i - 1] + cost, // substitution
         );
       }
     }
@@ -232,7 +232,7 @@ class ComponentSearch {
       name: componentName,
       filePath: filePath,
       registrationFile: await this.findRegistrationFile(componentType, componentName),
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
 
     return component;
@@ -258,7 +258,7 @@ class ComponentSearch {
     const possibleRegistrationFiles = [
       path.join(this.rootPath, 'aios-core', 'registry.json'),
       path.join(this.rootPath, 'components.json'),
-      path.join(this.rootPath, 'manifest.yaml')
+      path.join(this.rootPath, 'manifest.yaml'),
     ];
 
     for (const regFile of possibleRegistrationFiles) {

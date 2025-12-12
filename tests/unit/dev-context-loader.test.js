@@ -224,7 +224,7 @@ describe('DevContextLoader', () => {
         '## Section 1',
         'More content',
         '## Section 2',
-        'Even more content'
+        'Even more content',
       ];
 
       const content = lines.join('\n');
@@ -267,7 +267,7 @@ describe('DevContextLoader', () => {
       const key = loader.getCacheKey('docs/framework/coding-standards.md', false);
 
       // Should not contain special characters
-      expect(key).not.toMatch(/[\/\\.]/);
+      expect(key).not.toMatch(/[/\\.]/);
       expect(key).toMatch(/^devcontext_/);
     });
   });

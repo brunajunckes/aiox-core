@@ -18,7 +18,7 @@ describe('DBDR Template', () => {
   beforeAll(() => {
     engine = new TemplateEngine({
       interactive: false,
-      baseDir: path.join(__dirname, '..', '..')
+      baseDir: path.join(__dirname, '..', '..'),
     });
   });
 
@@ -38,7 +38,7 @@ describe('DBDR Template', () => {
         context: 'We need to track all user actions for compliance and debugging purposes.',
         decision: 'Create a dedicated audit_trail table with partitioning by date for performance.',
         migrationStrategy: 'Blue-green deployment with dual-write during migration period.',
-        rollbackPlan: 'Restore from pre-migration backup and disable audit triggers if issues occur.'
+        rollbackPlan: 'Restore from pre-migration backup and disable audit triggers if issues occur.',
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -58,12 +58,12 @@ describe('DBDR Template', () => {
     it('should fail validation without required fields', async () => {
       const incompleteContext = {
         number: 1,
-        title: 'Test'
+        title: 'Test',
         // Missing: status, dbType, owner, context, decision, migrationStrategy, rollbackPlan
       };
 
       await expect(
-        engine.generate('dbdr', incompleteContext, { validate: true, save: false })
+        engine.generate('dbdr', incompleteContext, { validate: true, save: false }),
       ).rejects.toThrow(/required.*has no default|missing required/i);
     });
   });
@@ -88,8 +88,8 @@ describe('DBDR Template', () => {
         schemaChanges: [
           { table: 'user_preferences', changeType: 'CREATE', description: 'New preferences table' },
           { table: 'users', changeType: 'ALTER', description: 'Add preference_id foreign key' },
-          { table: 'user_preferences', changeType: 'INDEX', description: 'Index on user_id' }
-        ]
+          { table: 'user_preferences', changeType: 'INDEX', description: 'Index on user_id' },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -116,7 +116,7 @@ describe('DBDR Template', () => {
         context: 'Testing empty schema changes rendering.',
         decision: 'Optimize existing queries without schema changes.',
         migrationStrategy: 'No schema migration needed, only query updates.',
-        rollbackPlan: 'Revert query changes via git if performance degrades.'
+        rollbackPlan: 'Revert query changes via git if performance degrades.',
         // No schemaChanges
       };
 
@@ -147,15 +147,15 @@ describe('DBDR Template', () => {
             table: 'users',
             changeType: 'ALTER',
             description: 'Add audit columns',
-            sql: 'ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT NOW();'
+            sql: 'ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT NOW();',
           },
           {
             table: 'orders',
             changeType: 'ALTER',
             description: 'Add audit columns',
-            sql: 'ALTER TABLE orders ADD COLUMN updated_at TIMESTAMP DEFAULT NOW();'
-          }
-        ]
+            sql: 'ALTER TABLE orders ADD COLUMN updated_at TIMESTAMP DEFAULT NOW();',
+          },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -179,7 +179,7 @@ describe('DBDR Template', () => {
         decision: 'Test decision with rollback scripts.',
         migrationStrategy: 'Standard migration with rollback capability.',
         rollbackPlan: 'Execute rollback script to restore previous state.',
-        rollbackScripts: 'DROP TABLE IF EXISTS new_table;\nALTER TABLE users DROP COLUMN IF EXISTS new_column;'
+        rollbackScripts: 'DROP TABLE IF EXISTS new_table;\nALTER TABLE users DROP COLUMN IF EXISTS new_column;',
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -205,12 +205,12 @@ describe('DBDR Template', () => {
         owner: 'DBA',
         context: 'Testing validation of rollback plan field.',
         decision: 'Test decision requiring rollback plan.',
-        migrationStrategy: 'Standard migration approach with blue-green.'
+        migrationStrategy: 'Standard migration approach with blue-green.',
         // Missing: rollbackPlan
       };
 
       await expect(
-        engine.generate('dbdr', context, { validate: true, save: false })
+        engine.generate('dbdr', context, { validate: true, save: false }),
       ).rejects.toThrow(/required.*has no default|missing required/i);
     });
 
@@ -224,7 +224,7 @@ describe('DBDR Template', () => {
         context: 'Testing validation of rollback plan minimum length.',
         decision: 'Test decision with short rollback plan.',
         migrationStrategy: 'Standard migration approach.',
-        rollbackPlan: 'Too short' // Less than 20 chars
+        rollbackPlan: 'Too short', // Less than 20 chars
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -255,8 +255,8 @@ describe('DBDR Template', () => {
         performanceMetrics: [
           { metric: 'Query Time (avg)', before: '500ms', after: '50ms', acceptable: 'Yes' },
           { metric: 'Index Size', before: '0 MB', after: '150 MB', acceptable: 'Yes' },
-          { metric: 'Write Latency', before: '10ms', after: '15ms', acceptable: 'Acceptable' }
-        ]
+          { metric: 'Write Latency', before: '10ms', after: '15ms', acceptable: 'Acceptable' },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -286,8 +286,8 @@ describe('DBDR Template', () => {
         rollbackPlan: 'Drop indexes if space or performance issues arise.',
         indexes: [
           { name: 'idx_users_email', table: 'users', columns: 'email', reason: 'Unique lookup by email' },
-          { name: 'idx_orders_user_date', table: 'orders', columns: 'user_id, created_at', reason: 'User order history queries' }
-        ]
+          { name: 'idx_orders_user_date', table: 'orders', columns: 'user_id, created_at', reason: 'User order history queries' },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -316,12 +316,12 @@ describe('DBDR Template', () => {
         owner: 'DBA',
         context: 'Testing validation of migration strategy field.',
         decision: 'Test decision requiring migration strategy.',
-        rollbackPlan: 'Execute rollback script to restore previous state.'
+        rollbackPlan: 'Execute rollback script to restore previous state.',
         // Missing: migrationStrategy
       };
 
       await expect(
-        engine.generate('dbdr', context, { validate: true, save: false })
+        engine.generate('dbdr', context, { validate: true, save: false }),
       ).rejects.toThrow(/required.*has no default|missing required/i);
     });
 
@@ -335,11 +335,11 @@ describe('DBDR Template', () => {
         context: 'Testing validation of empty migration strategy.',
         decision: 'Test decision with empty migration strategy.',
         migrationStrategy: '', // Empty string
-        rollbackPlan: 'Execute rollback script to restore previous state.'
+        rollbackPlan: 'Execute rollback script to restore previous state.',
       };
 
       await expect(
-        engine.generate('dbdr', context, { validate: true, save: false })
+        engine.generate('dbdr', context, { validate: true, save: false }),
       ).rejects.toThrow(/required.*has no default|missing required/i);
     });
 
@@ -353,7 +353,7 @@ describe('DBDR Template', () => {
         context: 'Testing validation of migration strategy minimum length.',
         decision: 'Test decision with short migration strategy.',
         migrationStrategy: 'Too short', // Less than 20 chars
-        rollbackPlan: 'Execute rollback script to restore previous state.'
+        rollbackPlan: 'Execute rollback script to restore previous state.',
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -422,8 +422,8 @@ describe('DBDR Template', () => {
         migrationPhases: [
           { phase: 'Preparation', duration: '1 day', description: 'Create new schema', validation: 'Schema exists' },
           { phase: 'Dual Write', duration: '3 days', description: 'Write to both schemas', validation: 'Data parity check' },
-          { phase: 'Cutover', duration: '1 hour', description: 'Switch to new schema', validation: 'All queries work' }
-        ]
+          { phase: 'Cutover', duration: '1 hour', description: 'Switch to new schema', validation: 'All queries work' },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -449,13 +449,13 @@ describe('DBDR Template', () => {
         positiveConsequences: [
           'Read queries 10x faster',
           'Simpler application logic',
-          'Better user experience'
+          'Better user experience',
         ],
         negativeConsequences: [
           'Increased storage requirements',
           'More complex write logic',
-          'Potential for data inconsistency'
-        ]
+          'Potential for data inconsistency',
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -481,8 +481,8 @@ describe('DBDR Template', () => {
         dataVolume: {
           current: '500 GB',
           projected: '2 TB (1 year)',
-          retention: '7 years regulatory'
-        }
+          retention: '7 years regulatory',
+        },
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -506,11 +506,11 @@ describe('DBDR Template', () => {
         rollbackPlan: 'Revert to state before this migration.',
         relatedDBDRs: [
           { number: 1, title: 'Implement User Audit Trail Table' },
-          { number: 5, title: 'Add User Preferences Schema' }
+          { number: 5, title: 'Add User Preferences Schema' },
         ],
         relatedADRs: [
-          { number: 3, title: 'Use PostgreSQL for Primary Database' }
-        ]
+          { number: 3, title: 'Use PostgreSQL for Primary Database' },
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });
@@ -536,13 +536,13 @@ describe('DBDR Template', () => {
         preMigrationTests: [
           'Verify backup is complete and valid',
           'Confirm staging environment matches production',
-          'Run load tests on new schema'
+          'Run load tests on new schema',
         ],
         postMigrationValidation: [
           'Verify row counts match expected',
           'Run integrity checks on all foreign keys',
-          'Validate query performance benchmarks'
-        ]
+          'Validate query performance benchmarks',
+        ],
       };
 
       const result = await engine.generate('dbdr', context, { validate: true, save: false });

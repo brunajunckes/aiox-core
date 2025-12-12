@@ -16,7 +16,7 @@ const {
   globalConfigExists,
   getAvailableTemplates,
   getServerTemplate,
-  listServers
+  listServers,
 } = require('../../../core/mcp/global-config-manager');
 const { getGlobalConfigPath } = require('../../../core/mcp/os-detector');
 
@@ -137,7 +137,7 @@ async function executeAdd(server, options) {
   // Check if custom config provided
   if (options.type || options.url || options.command) {
     serverConfig = {
-      enabled: !options.disable
+      enabled: !options.disable,
     };
 
     if (options.type === 'sse' || options.url) {
@@ -184,7 +184,7 @@ async function executeAdd(server, options) {
       const servers = listServers();
       const added = servers.servers.find(s => s.name === server);
       if (added) {
-        console.log(`\nServer details:`);
+        console.log('\nServer details:');
         console.log(`  Name: ${added.name}`);
         console.log(`  Type: ${added.type}`);
         console.log(`  Enabled: ${added.enabled}`);
@@ -230,5 +230,5 @@ async function executeAdd(server, options) {
 
 module.exports = {
   createAddCommand,
-  executeAdd
+  executeAdd,
 };

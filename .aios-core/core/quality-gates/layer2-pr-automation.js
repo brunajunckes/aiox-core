@@ -46,7 +46,7 @@ class Layer2PRAutomation extends BaseLayer {
         check: 'layer2',
         pass: true,
         skipped: true,
-        message: 'Layer 2 disabled'
+        message: 'Layer 2 disabled',
       });
       this.stopTimer();
       return this.getSummary();
@@ -122,13 +122,13 @@ class Layer2PRAutomation extends BaseLayer {
           high: highCount,
           medium: mediumCount,
           low: lowCount,
-          total: issues.length
+          total: issues.length,
         },
         details: issues,
         duration: result.duration,
         message: pass
           ? `CodeRabbit passed (${criticalCount} CRITICAL, ${highCount} HIGH)`
-          : `CodeRabbit found blocking issues (${criticalCount} CRITICAL)`
+          : `CodeRabbit found blocking issues (${criticalCount} CRITICAL)`,
       };
 
       if (verbose) {
@@ -147,7 +147,7 @@ class Layer2PRAutomation extends BaseLayer {
           check: 'coderabbit',
           pass: true,
           skipped: true,
-          message: 'CodeRabbit not installed - skipping (graceful degradation)'
+          message: 'CodeRabbit not installed - skipping (graceful degradation)',
         };
       }
 
@@ -155,7 +155,7 @@ class Layer2PRAutomation extends BaseLayer {
         check: 'coderabbit',
         pass: false,
         error: error.message,
-        message: `CodeRabbit error: ${error.message}`
+        message: `CodeRabbit error: ${error.message}`,
       };
     }
   }
@@ -173,7 +173,7 @@ class Layer2PRAutomation extends BaseLayer {
       { regex: /\bCRITICAL\b[:\s]+([^\n]+)/gi, severity: 'CRITICAL' },
       { regex: /\bHIGH\b[:\s]+([^\n]+)/gi, severity: 'HIGH' },
       { regex: /\bMEDIUM\b[:\s]+([^\n]+)/gi, severity: 'MEDIUM' },
-      { regex: /\bLOW\b[:\s]+([^\n]+)/gi, severity: 'LOW' }
+      { regex: /\bLOW\b[:\s]+([^\n]+)/gi, severity: 'LOW' },
     ];
 
     patterns.forEach(({ regex, severity }) => {
@@ -182,7 +182,7 @@ class Layer2PRAutomation extends BaseLayer {
         issues.push({
           severity,
           message: match[1].trim(),
-          raw: match[0]
+          raw: match[0],
         });
       }
     });
@@ -208,7 +208,7 @@ class Layer2PRAutomation extends BaseLayer {
       const suggestions = await this.generateQuinnSuggestions(context);
 
       const blockingSuggestions = suggestions.filter((s) =>
-        this.quinn.severity?.block?.includes(s.severity)
+        this.quinn.severity?.block?.includes(s.severity),
       );
 
       const pass = blockingSuggestions.length === 0;
@@ -221,7 +221,7 @@ class Layer2PRAutomation extends BaseLayer {
         details: suggestions,
         message: pass
           ? `Quinn review: ${suggestions.length} suggestions`
-          : `Quinn review: ${blockingSuggestions.length} blocking issues`
+          : `Quinn review: ${blockingSuggestions.length} blocking issues`,
       };
 
       if (verbose) {
@@ -236,7 +236,7 @@ class Layer2PRAutomation extends BaseLayer {
         pass: true, // Don't block on Quinn errors
         skipped: true,
         error: error.message,
-        message: `Quinn skipped: ${error.message}`
+        message: `Quinn skipped: ${error.message}`,
       };
     }
   }
@@ -262,7 +262,7 @@ class Layer2PRAutomation extends BaseLayer {
     const report = {
       timestamp: new Date().toISOString(),
       layer: this.name,
-      ...summary
+      ...summary,
     };
 
     await fs.mkdir(path.dirname(reportPath), { recursive: true });
@@ -282,7 +282,7 @@ class Layer2PRAutomation extends BaseLayer {
       const options = {
         shell: true,
         cwd: process.cwd(),
-        env: { ...process.env }
+        env: { ...process.env },
       };
 
       const child = spawn(command, [], options);
@@ -309,7 +309,7 @@ class Layer2PRAutomation extends BaseLayer {
           exitCode,
           stdout,
           stderr,
-          duration: Date.now() - startTime
+          duration: Date.now() - startTime,
         });
       });
 

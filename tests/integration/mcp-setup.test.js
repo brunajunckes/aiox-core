@@ -174,7 +174,7 @@ describe('MCP Setup Integration', () => {
       getGlobalConfigPath,
       getServersDir,
       getCacheDir,
-      getCredentialsDir
+      getCredentialsDir,
     } = require('../../.aios-core/core/mcp/os-detector');
 
     it('should generate correct global AIOS directory path', () => {

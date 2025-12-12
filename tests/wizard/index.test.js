@@ -19,8 +19,8 @@ jest.mock('../../packages/installer/src/config/configure-environment', () => ({
     envExampleCreated: true,
     coreConfigCreated: true,
     gitignoreUpdated: true,
-    errors: []
-  })
+    errors: [],
+  }),
 }));
 
 const originalLog = console.log;
@@ -59,9 +59,9 @@ describeIntegration('wizard/index', () => {
       expect(inquirer.prompt).toHaveBeenCalledWith(
         expect.arrayContaining([
           expect.objectContaining({
-            name: 'projectType'
-          })
-        ])
+            name: 'projectType',
+          }),
+        ]),
       );
     });
 
@@ -97,7 +97,7 @@ describeIntegration('wizard/index', () => {
 
       await expect(runWizard()).rejects.toThrow();
       expect(console.error).toHaveBeenCalledWith(
-        expect.stringContaining('couldn\'t be rendered')
+        expect.stringContaining('couldn\'t be rendered'),
       );
     });
   });
@@ -128,7 +128,7 @@ describeIntegration('wizard/index', () => {
 
       // Should log warning about slow performance
       expect(console.warn).toHaveBeenCalledWith(
-        expect.stringContaining('exceeds 100ms target')
+        expect.stringContaining('exceeds 100ms target'),
       );
     });
 

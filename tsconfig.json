@@ -45,6 +45,7 @@
     ".aios-core.backup*/**",
     "aios-core.backup*/**",
     "aios-core-deprecated/**",
-    "aios-core-depracated/**"
+    "aios-core-depracated/**",
+    "eslint.config.js"
   ]
 }

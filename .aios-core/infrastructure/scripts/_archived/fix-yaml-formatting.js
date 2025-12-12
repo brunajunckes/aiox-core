@@ -15,7 +15,7 @@ const CLAUDE_AGENTS_DIR = path.join(__dirname, '..', '..', '.claude', 'commands'
 const AGENTS = [
   'dev.md', 'qa.md', 'po.md', 'sm.md', 'pm.md',
   'architect.md', 'analyst.md', 'data-engineer.md',
-  'devops.md', 'aios-master.md', 'ux-design-expert.md'
+  'devops.md', 'aios-master.md', 'ux-design-expert.md',
 ];
 
 // New STEP 3 with proper YAML pipe syntax
@@ -35,7 +35,7 @@ function fixAgentFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
 
   // Find and replace the problematic STEP 3
-  const step3Pattern = /  - STEP 3: Build intelligent greeting using \.aios-core\/scripts\/greeting-builder\.js\n           Call buildGreeting\(agentDefinition, conversationHistory\) which:\n           - Detects session type \(new\/existing\/workflow\) via context analysis\n           - Checks git configuration status \(with 5min cache\)\n           - Loads project status automatically\n           - Filters commands by visibility metadata \(full\/quick\/key\)\n           - Suggests workflow next steps if in recurring pattern\n           - Formats adaptive greeting automatically/;
+  const step3Pattern = / {2}- STEP 3: Build intelligent greeting using \.aios-core\/scripts\/greeting-builder\.js\n {11}Call buildGreeting\(agentDefinition, conversationHistory\) which:\n {11}- Detects session type \(new\/existing\/workflow\) via context analysis\n {11}- Checks git configuration status \(with 5min cache\)\n {11}- Loads project status automatically\n {11}- Filters commands by visibility metadata \(full\/quick\/key\)\n {11}- Suggests workflow next steps if in recurring pattern\n {11}- Formats adaptive greeting automatically/;
 
   if (step3Pattern.test(content)) {
     content = content.replace(step3Pattern, NEW_STEP_3);
@@ -52,7 +52,7 @@ function main() {
   console.log('🔧 Fixing YAML Formatting in Agent Files\n');
 
   let fixedCount = 0;
-  let errors = [];
+  const errors = [];
 
   // Fix agents in .aios-core/agents/
   for (const agent of AGENTS) {
@@ -71,19 +71,19 @@ function main() {
     }
   }
 
-  console.log(`\n📊 Results:`);
+  console.log('\n📊 Results:');
   console.log(`  Fixed: ${fixedCount}/${AGENTS.length} agents`);
 
   if (errors.length > 0) {
-    console.log(`\n⚠️  Errors:`);
+    console.log('\n⚠️  Errors:');
     errors.forEach(err => console.log(`  - ${err}`));
   }
 
-  console.log(`\n✅ YAML formatting fixes complete!`);
-  console.log(`\nNext steps:`);
-  console.log(`  1. Sync to .claude/commands/AIOS/agents/`);
-  console.log(`  2. Run unit tests`);
-  console.log(`  3. Verify YAML parsing works`);
+  console.log('\n✅ YAML formatting fixes complete!');
+  console.log('\nNext steps:');
+  console.log('  1. Sync to .claude/commands/AIOS/agents/');
+  console.log('  2. Run unit tests');
+  console.log('  3. Verify YAML parsing works');
 }
 
 main();

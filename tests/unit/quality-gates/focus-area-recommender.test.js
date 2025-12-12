@@ -32,7 +32,7 @@ describe('FocusAreaRecommender', () => {
 
     it('should accept custom strategic areas', () => {
       const custom = new FocusAreaRecommender({
-        strategicAreas: ['custom-area']
+        strategicAreas: ['custom-area'],
       });
       expect(custom.strategicAreas).toContain('custom-area');
     });
@@ -114,8 +114,8 @@ describe('FocusAreaRecommender', () => {
       const fileAnalysis = {
         categories: {
           security: ['auth.js'],
-          ux: ['button.js', 'form.js']
-        }
+          ux: ['button.js', 'form.js'],
+        },
       };
       const primary = recommender.determinePrimaryAreas(fileAnalysis, {});
 
@@ -126,8 +126,8 @@ describe('FocusAreaRecommender', () => {
       const fileAnalysis = {
         categories: {
           architecture: ['base.js'],
-          configuration: ['config.yaml']
-        }
+          configuration: ['config.yaml'],
+        },
       };
       const primary = recommender.determinePrimaryAreas(fileAnalysis, {});
 
@@ -141,8 +141,8 @@ describe('FocusAreaRecommender', () => {
           architecture: ['base.js'],
           'data-integrity': ['migration.js'],
           'business-logic': ['service.js'],
-          api: ['routes.js']
-        }
+          api: ['routes.js'],
+        },
       };
       const primary = recommender.determinePrimaryAreas(fileAnalysis, {});
 
@@ -154,8 +154,8 @@ describe('FocusAreaRecommender', () => {
       const layer2Result = {
         results: [{
           check: 'coderabbit',
-          issues: { high: 5 }
-        }]
+          issues: { high: 5 },
+        }],
       };
       const primary = recommender.determinePrimaryAreas(fileAnalysis, layer2Result);
 
@@ -167,8 +167,8 @@ describe('FocusAreaRecommender', () => {
     it('should include ux as secondary', () => {
       const fileAnalysis = {
         categories: {
-          ux: ['component.js']
-        }
+          ux: ['component.js'],
+        },
       };
       const secondary = recommender.determineSecondaryAreas(fileAnalysis, {});
 
@@ -181,8 +181,8 @@ describe('FocusAreaRecommender', () => {
           ux: ['a.js'],
           configuration: ['b.yaml'],
           performance: ['c.js'],
-          'aios-core': ['d.js']
-        }
+          'aios-core': ['d.js'],
+        },
       };
       const secondary = recommender.determineSecondaryAreas(fileAnalysis, {});
 
@@ -223,8 +223,8 @@ describe('FocusAreaRecommender', () => {
     it('should return complete recommendations structure', async () => {
       const context = {
         prContext: {
-          changedFiles: ['src/auth/login.js', 'src/components/Header.tsx']
-        }
+          changedFiles: ['src/auth/login.js', 'src/components/Header.tsx'],
+        },
       };
       const recommendations = await recommender.recommend(context);
 
@@ -247,11 +247,11 @@ describe('FocusAreaRecommender', () => {
     it('should generate summary with primary areas', () => {
       const recommendations = {
         primary: [
-          { area: 'security', reason: '2 security files' }
+          { area: 'security', reason: '2 security files' },
         ],
         secondary: [],
         highlightedAspects: ['Security-sensitive code changes'],
-        skip: ['syntax', 'formatting']
+        skip: ['syntax', 'formatting'],
       };
       const summary = recommender.generateSummary(recommendations);
 
@@ -264,7 +264,7 @@ describe('FocusAreaRecommender', () => {
         primary: [],
         secondary: [],
         highlightedAspects: ['API endpoint changes detected', 'Database changes'],
-        skip: ['syntax']
+        skip: ['syntax'],
       };
       const summary = recommender.generateSummary(recommendations);
 
@@ -276,21 +276,21 @@ describe('FocusAreaRecommender', () => {
   describe('calculatePriority', () => {
     it('should return P0 for critical areas', () => {
       const recommendations = {
-        primary: [{ area: 'security' }]
+        primary: [{ area: 'security' }],
       };
       expect(recommender.calculatePriority(recommendations)).toBe('P0');
     });
 
     it('should return P1 for high areas', () => {
       const recommendations = {
-        primary: [{ area: 'business-logic' }]
+        primary: [{ area: 'business-logic' }],
       };
       expect(recommender.calculatePriority(recommendations)).toBe('P1');
     });
 
     it('should return P2 for other areas', () => {
       const recommendations = {
-        primary: [{ area: 'ux' }]
+        primary: [{ area: 'ux' }],
       };
       expect(recommender.calculatePriority(recommendations)).toBe('P2');
     });

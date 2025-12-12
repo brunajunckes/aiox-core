@@ -13,7 +13,7 @@ const {
   getIDEKeys,
   getIDEConfig,
   isValidIDE,
-  getIDEChoices
+  getIDEChoices,
 } = require('../../../src/config/ide-configs');
 
 describe('IDE Configs', () => {
@@ -33,7 +33,7 @@ describe('IDE Configs', () => {
         'cline',
         'gemini-cli',
         'github-copilot',
-        'antigravity'
+        'antigravity',
       ];
 
       expectedIDEs.forEach(ide => {
@@ -147,7 +147,7 @@ describe('IDE Configs', () => {
         'cline',
         'gemini-cli',
         'github-copilot',
-        'antigravity'
+        'antigravity',
       ];
 
       expectedKeys.forEach(key => {
@@ -180,7 +180,7 @@ describe('IDE Configs', () => {
         'cline',
         'gemini-cli',
         'github-copilot',
-        'antigravity'
+        'antigravity',
       ];
 
       ides.forEach(ide => {

@@ -38,7 +38,7 @@ function parseTemplate(content) {
 
   return {
     metadata,
-    body: body.trim()
+    body: body.trim(),
   };
 }
 
@@ -114,7 +114,7 @@ class TemplateLoader {
       path: templatePath,
       metadata,
       body,
-      variables: this.normalizeVariables(metadata.variables || [])
+      variables: this.normalizeVariables(metadata.variables || []),
     };
 
     if (useCache) {
@@ -134,7 +134,7 @@ class TemplateLoader {
 
     // Handle versioned templates (e.g., prd-v2 -> prd-v2.0.hbs)
     const templateAliases = {
-      'prd-v2': 'prd-v2.0'
+      'prd-v2': 'prd-v2.0',
     };
 
     const templateName = templateAliases[templateType] || templateType;
@@ -171,7 +171,7 @@ class TemplateLoader {
       prompt: variable.prompt || `Enter ${variable.name}:`,
       choices: variable.choices,
       auto: variable.auto,
-      validation: variable.validation
+      validation: variable.validation,
     }));
   }
 
@@ -227,5 +227,5 @@ class TemplateLoader {
 module.exports = {
   TemplateLoader,
   parseTemplate,
-  validateMetadata
+  validateMetadata,
 };

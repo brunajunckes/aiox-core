@@ -123,5 +123,5 @@ EXA_API_KEY=
 
 module.exports = {
   generateEnvContent,
-  generateEnvExample
+  generateEnvExample,
 };

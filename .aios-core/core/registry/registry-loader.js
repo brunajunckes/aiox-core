@@ -189,7 +189,7 @@ class ServiceRegistry {
         worker.id,
         worker.name,
         worker.description,
-        ...(worker.tags || [])
+        ...(worker.tags || []),
       ].join(' ').toLowerCase();
 
       return searchText.includes(queryLower);
@@ -229,7 +229,7 @@ class ServiceRegistry {
       version: this.cache.version,
       generated: this.cache.generated,
       totalWorkers: this.cache.totalWorkers,
-      categories: Object.keys(this.cache.categories)
+      categories: Object.keys(this.cache.categories),
     };
   }
 
@@ -292,7 +292,7 @@ class ServiceRegistry {
       cacheAge: this.cache ? Date.now() - this.cacheTimestamp : null,
       workerCount: this._byId.size,
       categoryCount: this._byCategory.size,
-      tagCount: this._byTag.size
+      tagCount: this._byTag.size,
     };
   }
 }
@@ -326,5 +326,5 @@ async function loadRegistry(registryPath = null) {
 module.exports = {
   ServiceRegistry,
   getRegistry,
-  loadRegistry
+  loadRegistry,
 };

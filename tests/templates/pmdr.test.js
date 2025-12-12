@@ -18,7 +18,7 @@ describe('PMDR Template', () => {
   beforeAll(() => {
     engine = new TemplateEngine({
       interactive: false,
-      baseDir: path.join(__dirname, '..', '..')
+      baseDir: path.join(__dirname, '..', '..'),
     });
   });
 
@@ -39,8 +39,8 @@ describe('PMDR Template', () => {
         businessImpact: 'This will reduce deployment risk by 80% and enable faster iteration on features.',
         successMetrics: [
           { metric: 'Deployment failures', current: '15%', target: '3%', timeline: 'Q2 2025' },
-          { metric: 'Feature iteration time', current: '2 weeks', target: '3 days', timeline: 'Q3 2025' }
-        ]
+          { metric: 'Feature iteration time', current: '2 weeks', target: '3 days', timeline: 'Q3 2025' },
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -61,12 +61,12 @@ describe('PMDR Template', () => {
     it('should fail validation without required fields', async () => {
       const incompleteContext = {
         number: 1,
-        title: 'Test'
+        title: 'Test',
         // Missing: status, owner, stakeholders, context, decision, businessImpact, successMetrics
       };
 
       await expect(
-        engine.generate('pmdr', incompleteContext, { validate: true, save: false })
+        engine.generate('pmdr', incompleteContext, { validate: true, save: false }),
       ).rejects.toThrow(/required.*has no default|missing required/i);
     });
   });
@@ -89,8 +89,8 @@ describe('PMDR Template', () => {
         successMetrics: [
           { metric: 'Conversion Rate', current: '2%', target: '5%', timeline: 'Q1' },
           { metric: 'User Engagement', current: '10min', target: '20min', timeline: 'Q2' },
-          { metric: 'Revenue Growth', target: '25%' } // No current value
-        ]
+          { metric: 'Revenue Growth', target: '25%' }, // No current value
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -126,8 +126,8 @@ describe('PMDR Template', () => {
         approvals: [
           { stakeholder: 'CTO', decision: 'Approved', date: '2025-01-15', notes: 'LGTM' },
           { stakeholder: 'CEO', decision: 'Pending' },
-          { stakeholder: 'Engineering Lead', decision: 'Approved', date: '2025-01-14' }
-        ]
+          { stakeholder: 'Engineering Lead', decision: 'Approved', date: '2025-01-14' },
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -148,7 +148,7 @@ describe('PMDR Template', () => {
         context: 'Testing when no approvals exist.',
         decision: 'Test decision.',
         businessImpact: 'Test impact.',
-        successMetrics: [{ metric: 'Test', target: '100%' }]
+        successMetrics: [{ metric: 'Test', target: '100%' }],
         // No approvals array
       };
 
@@ -173,11 +173,11 @@ describe('PMDR Template', () => {
         context: 'Testing validation of business impact field.',
         decision: 'Test decision requiring business impact.',
         businessImpact: '', // Empty string - should fail minLength: 20
-        successMetrics: [{ metric: 'Test', target: '100%' }]
+        successMetrics: [{ metric: 'Test', target: '100%' }],
       };
 
       await expect(
-        engine.generate('pmdr', context, { validate: true, save: false })
+        engine.generate('pmdr', context, { validate: true, save: false }),
       ).rejects.toThrow();
     });
 
@@ -191,7 +191,7 @@ describe('PMDR Template', () => {
         context: 'Testing validation of business impact minimum length.',
         decision: 'Test decision with short business impact.',
         businessImpact: 'Too short', // Less than 20 chars
-        successMetrics: [{ metric: 'Test', target: '100%' }]
+        successMetrics: [{ metric: 'Test', target: '100%' }],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -257,8 +257,8 @@ describe('PMDR Template', () => {
         implementationPhases: [
           { name: 'Discovery', duration: '2 weeks', description: 'Research and planning' },
           { name: 'Development', duration: '4 weeks', description: 'Build the solution' },
-          { name: 'Rollout', duration: '1 week', description: 'Gradual deployment' }
-        ]
+          { name: 'Rollout', duration: '1 week', description: 'Gradual deployment' },
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -282,8 +282,8 @@ describe('PMDR Template', () => {
         successMetrics: [{ metric: 'Test', target: '100%' }],
         risks: [
           { risk: 'Technical complexity', impact: 'High', mitigation: 'Spike investigation' },
-          { risk: 'Resource constraints', impact: 'Medium', mitigation: 'Hire contractors' }
-        ]
+          { risk: 'Resource constraints', impact: 'Medium', mitigation: 'Hire contractors' },
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });
@@ -307,8 +307,8 @@ describe('PMDR Template', () => {
         successMetrics: [{ metric: 'Test', target: '100%' }],
         alternatives: [
           { name: 'Option B', description: 'Alternative approach', whyNot: 'Too expensive' },
-          { name: 'Option C', description: 'Another approach', whyNot: 'Not scalable' }
-        ]
+          { name: 'Option C', description: 'Another approach', whyNot: 'Not scalable' },
+        ],
       };
 
       const result = await engine.generate('pmdr', context, { validate: true, save: false });

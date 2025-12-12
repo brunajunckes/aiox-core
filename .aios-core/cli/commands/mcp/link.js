@@ -14,22 +14,22 @@ const {
   removeLink,
   checkLinkStatus,
   LINK_STATUS,
-  getProjectMcpPath
+  getProjectMcpPath,
 } = require('../../../core/mcp/symlink-manager');
 const {
   globalConfigExists,
   createGlobalStructure,
-  createGlobalConfig
+  createGlobalConfig,
 } = require('../../../core/mcp/global-config-manager');
 const {
   getGlobalMcpDir,
   getLinkType,
-  isWindows
+  isWindows,
 } = require('../../../core/mcp/os-detector');
 const {
   analyzeMigration,
   executeMigration,
-  MIGRATION_OPTION
+  MIGRATION_OPTION,
 } = require('../../../core/mcp/config-migrator');
 
 /**
@@ -95,7 +95,7 @@ async function executeLink(options) {
 
   // Already linked
   if (status.status === LINK_STATUS.LINKED) {
-    console.log(`✓ Already linked to global MCP config`);
+    console.log('✓ Already linked to global MCP config');
     console.log(`  ${status.linkPath} → ${status.target}`);
     console.log('\n✅ No changes needed');
     return;
@@ -134,7 +134,7 @@ async function executeLink(options) {
   // Handle existing directory with config
   if (status.status === LINK_STATUS.DIRECTORY) {
     if (analysis.projectConfig.found) {
-      console.log(`Existing MCP configuration found at project level.`);
+      console.log('Existing MCP configuration found at project level.');
       console.log(`  ${analysis.projectConfig.serverCount} servers configured\n`);
 
       if (options.migrate) {
@@ -146,7 +146,7 @@ async function executeLink(options) {
           if (migrationResult.results.backupPath) {
             console.log(`  ✓ Backup created at ${migrationResult.results.backupPath}`);
           }
-          console.log(`  ✓ Created link`);
+          console.log('  ✓ Created link');
         } else {
           console.error(`✗ Migration failed: ${migrationResult.errors.join(', ')}`);
           process.exit(1);
@@ -166,7 +166,7 @@ async function executeLink(options) {
           if (migrationResult.results.backupPath) {
             console.log(`  ✓ Backup created at ${migrationResult.results.backupPath}`);
           }
-          console.log(`  ✓ Created link`);
+          console.log('  ✓ Created link');
         } else {
           console.error(`✗ Merge failed: ${migrationResult.errors.join(', ')}`);
           process.exit(1);
@@ -189,7 +189,7 @@ async function executeLink(options) {
 
     if (linkResult.success) {
       if (linkResult.alreadyLinked) {
-        console.log(`✓ Already linked`);
+        console.log('✓ Already linked');
       } else {
         console.log(`✓ Created ${getLinkType()}: ${linkResult.linkPath}`);
         console.log(`  → ${linkResult.globalPath}`);
@@ -213,5 +213,5 @@ async function executeLink(options) {
 
 module.exports = {
   createLinkCommand,
-  executeLink
+  executeLink,
 };

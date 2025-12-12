@@ -46,7 +46,7 @@ class GitConfigDetector {
       const result = {
         configured: false,
         type: null,
-        branch: null
+        branch: null,
       };
 
       // Check if git repository exists
@@ -117,7 +117,7 @@ class GitConfigDetector {
       const output = execSync('git rev-parse --is-inside-work-tree', {
         encoding: 'utf8',
         timeout: GIT_TIMEOUT,
-        stdio: ['pipe', 'pipe', 'ignore'] // Suppress stderr
+        stdio: ['pipe', 'pipe', 'ignore'], // Suppress stderr
       }).trim();
 
       return output === 'true';
@@ -136,7 +136,7 @@ class GitConfigDetector {
       const branch = execSync('git branch --show-current', {
         encoding: 'utf8',
         timeout: GIT_TIMEOUT,
-        stdio: ['pipe', 'pipe', 'ignore']
+        stdio: ['pipe', 'pipe', 'ignore'],
       }).trim();
 
       return branch || null;
@@ -155,7 +155,7 @@ class GitConfigDetector {
       const url = execSync('git config --get remote.origin.url', {
         encoding: 'utf8',
         timeout: GIT_TIMEOUT,
-        stdio: ['pipe', 'pipe', 'ignore']
+        stdio: ['pipe', 'pipe', 'ignore'],
       }).trim();
 
       return url || null;
@@ -245,7 +245,7 @@ class GitConfigDetector {
         userEmail,
         remoteUrl,
         lastCommit,
-        hasUncommittedChanges
+        hasUncommittedChanges,
       };
     } catch (error) {
       return this.detect(); // Fallback to basic detection
@@ -263,7 +263,7 @@ class GitConfigDetector {
       return execSync(command, {
         encoding: 'utf8',
         timeout: GIT_TIMEOUT,
-        stdio: ['pipe', 'pipe', 'ignore']
+        stdio: ['pipe', 'pipe', 'ignore'],
       }).trim();
     } catch (error) {
       return null;
@@ -280,7 +280,7 @@ class GitConfigDetector {
       const status = execSync('git status --porcelain', {
         encoding: 'utf8',
         timeout: GIT_TIMEOUT,
-        stdio: ['pipe', 'pipe', 'ignore']
+        stdio: ['pipe', 'pipe', 'ignore'],
       }).trim();
 
       return status.length > 0;

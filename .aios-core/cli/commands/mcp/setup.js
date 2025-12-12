@@ -14,12 +14,12 @@ const {
   createGlobalConfig,
   globalConfigExists,
   getAvailableTemplates,
-  getServerTemplate
+  getServerTemplate,
 } = require('../../../core/mcp/global-config-manager');
 const {
   getGlobalAiosDir,
   getGlobalMcpDir,
-  getGlobalConfigPath
+  getGlobalConfigPath,
 } = require('../../../core/mcp/os-detector');
 
 /**
@@ -74,7 +74,7 @@ async function executeSetup(options) {
   }
 
   // Step 2: Determine initial servers
-  let initialServers = {};
+  const initialServers = {};
 
   if (options.withDefaults) {
     // Add default servers
@@ -120,8 +120,8 @@ async function executeSetup(options) {
       servers: initialServers,
       defaults: {
         timeout: 30000,
-        retries: 3
-      }
+        retries: 3,
+      },
     };
     fs.writeFileSync(configResult.configPath, JSON.stringify(config, null, 2), 'utf8');
     console.log(`  ✓ Overwrote ${configResult.configPath}`);
@@ -134,12 +134,12 @@ async function executeSetup(options) {
   console.log('\n✅ Global MCP setup complete!\n');
   console.log('Structure created:');
   console.log(`  ${getGlobalAiosDir()}/`);
-  console.log(`  ├── mcp/`);
-  console.log(`  │   ├── global-config.json`);
-  console.log(`  │   ├── servers/`);
-  console.log(`  │   └── cache/`);
-  console.log(`  ├── config.yaml`);
-  console.log(`  └── credentials/`);
+  console.log('  ├── mcp/');
+  console.log('  │   ├── global-config.json');
+  console.log('  │   ├── servers/');
+  console.log('  │   └── cache/');
+  console.log('  ├── config.yaml');
+  console.log('  └── credentials/');
 
   if (Object.keys(initialServers).length > 0) {
     console.log(`\nServers configured: ${Object.keys(initialServers).join(', ')}`);
@@ -160,5 +160,5 @@ async function executeSetup(options) {
 
 module.exports = {
   createSetupCommand,
-  executeSetup
+  executeSetup,
 };

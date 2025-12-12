@@ -30,5 +30,5 @@ module.exports = {
   osDetector,
   globalConfigManager,
   symlinkManager,
-  configMigrator
+  configMigrator,
 };

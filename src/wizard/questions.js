@@ -24,15 +24,15 @@ function getProjectTypeQuestion() {
     choices: [
       {
         name: colors.highlight('Greenfield') + colors.dim(' (new project from scratch)'),
-        value: 'greenfield'
+        value: 'greenfield',
       },
       {
         name: 'Brownfield' + colors.dim(' (existing project integration)'),
-        value: 'brownfield'
-      }
+        value: 'brownfield',
+      },
     ],
     default: 0,
-    validate: createInquirerValidator(validateProjectType)
+    validate: createInquirerValidator(validateProjectType),
   };
 }
 
@@ -62,28 +62,28 @@ function getPackageManagerQuestion(detectedPM = 'npm') {
         name: detectedPM === 'npm'
           ? colors.highlight('npm') + colors.dim(' (detected)')
           : 'npm',
-        value: 'npm'
+        value: 'npm',
       },
       {
         name: detectedPM === 'yarn'
           ? colors.highlight('yarn') + colors.dim(' (detected)')
           : 'yarn',
-        value: 'yarn'
+        value: 'yarn',
       },
       {
         name: detectedPM === 'pnpm'
           ? colors.highlight('pnpm') + colors.dim(' (detected)')
           : 'pnpm',
-        value: 'pnpm'
+        value: 'pnpm',
       },
       {
         name: detectedPM === 'bun'
           ? colors.highlight('bun') + colors.dim(' (detected)')
           : 'bun',
-        value: 'bun'
-      }
+        value: 'bun',
+      },
     ],
-    default: ['npm', 'yarn', 'pnpm', 'bun'].indexOf(detectedPM) || 0
+    default: ['npm', 'yarn', 'pnpm', 'bun'].indexOf(detectedPM) || 0,
   };
 }
 
@@ -102,29 +102,29 @@ function getMCPQuestions() {
         {
           name: colors.highlight('Browser (Puppeteer)') + colors.dim(' - Web automation and testing'),
           value: 'browser',
-          checked: true
+          checked: true,
         },
         {
           name: colors.highlight('Context7') + colors.dim(' - Library documentation search'),
           value: 'context7',
-          checked: true
+          checked: true,
         },
         {
           name: colors.highlight('Exa') + colors.dim(' - Advanced web search'),
           value: 'exa',
-          checked: true
+          checked: true,
         },
         {
           name: colors.highlight('Desktop Commander') + colors.dim(' - File system access'),
           value: 'desktop-commander',
-          checked: true
-        }
+          checked: true,
+        },
       ],
       validate: () => {
         // Allow empty selection (user can skip MCP installation)
         return true;
-      }
-    }
+      },
+    },
     // Note: API keys are configured later via aios-master or directly in .env
   ];
 }
@@ -168,19 +168,19 @@ function getExpansionPackQuestions() {
         {
           name: colors.highlight('expansion-creator') + colors.dim(' - Tools to create custom expansion packs'),
           value: 'expansion-creator',
-          checked: false
+          checked: false,
         },
         {
           name: colors.highlight('etl') + colors.dim(' - ETL pipeline for knowledge base creation'),
           value: 'etl',
-          checked: false
-        }
+          checked: false,
+        },
       ],
       validate: () => {
         // Allow empty selection (user can skip expansion pack installation)
         return true;
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -244,6 +244,6 @@ module.exports = {
   getEnvironmentQuestions,
   getPackageManagerQuestion,
   buildQuestionSequence,
-  getQuestionById
+  getQuestionById,
 };
 

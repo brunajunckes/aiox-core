@@ -50,7 +50,7 @@ async function getFileStats(filePath) {
     size: stats.size,
     mode: stats.mode,
     mtime: stats.mtime.toISOString(),
-    isDirectory: stats.isDirectory()
+    isDirectory: stats.isDirectory(),
   };
 }
 
@@ -81,7 +81,7 @@ async function copyFileWithMetadata(src, dest) {
     dest,
     size: stats.size,
     mode: stats.mode,
-    checksum
+    checksum,
   };
 }
 
@@ -147,7 +147,7 @@ async function createBackup(projectRoot, options = {}) {
     files: [],
     totalSize: 0,
     totalFiles: files.length,
-    checksums: {}
+    checksums: {},
   };
 
   onProgress({ phase: 'copying', message: `Backing up ${files.length} files...`, total: files.length });
@@ -164,7 +164,7 @@ async function createBackup(projectRoot, options = {}) {
       relativePath,
       size: result.size,
       mode: result.mode,
-      checksum: result.checksum
+      checksum: result.checksum,
     });
     manifest.checksums[relativePath] = result.checksum;
     manifest.totalSize += result.size;
@@ -179,7 +179,7 @@ async function createBackup(projectRoot, options = {}) {
     'aios.config.js',
     'aios.config.json',
     '.aios/config.yaml',
-    '.mcp.json'
+    '.mcp.json',
   ];
 
   for (const configFile of configFiles) {
@@ -193,7 +193,7 @@ async function createBackup(projectRoot, options = {}) {
         size: result.size,
         mode: result.mode,
         checksum: result.checksum,
-        isConfig: true
+        isConfig: true,
       });
       manifest.checksums[configFile] = result.checksum;
       manifest.totalSize += result.size;
@@ -212,7 +212,7 @@ async function createBackup(projectRoot, options = {}) {
     success: true,
     backupDir,
     backupDirName,
-    manifest
+    manifest,
   };
 }
 
@@ -234,7 +234,7 @@ async function verifyBackup(backupDir) {
     totalFiles: manifest.files.length,
     verified: 0,
     failed: [],
-    missing: []
+    missing: [],
   };
 
   for (const file of manifest.files) {
@@ -254,7 +254,7 @@ async function verifyBackup(backupDir) {
       results.failed.push({
         file: file.relativePath,
         expected: file.checksum,
-        actual: checksum
+        actual: checksum,
       });
       results.valid = false;
     } else {
@@ -278,7 +278,7 @@ async function findLatestBackup(projectRoot) {
     .map(entry => ({
       name: entry.name,
       path: path.join(projectRoot, entry.name),
-      date: entry.name.replace('.aios-backup-', '')
+      date: entry.name.replace('.aios-backup-', ''),
     }))
     .sort((a, b) => b.date.localeCompare(a.date));
 
@@ -293,7 +293,7 @@ async function findLatestBackup(projectRoot) {
     const manifest = JSON.parse(await fs.promises.readFile(manifestPath, 'utf8'));
     return {
       ...latestBackup,
-      manifest
+      manifest,
     };
   }
 
@@ -321,7 +321,7 @@ async function listBackups(projectRoot) {
         date: entry.name.replace('.aios-backup-', ''),
         hasManifest: false,
         fileCount: 0,
-        totalSize: 0
+        totalSize: 0,
       };
 
       if (fs.existsSync(manifestPath)) {
@@ -348,5 +348,5 @@ module.exports = {
   createBackup,
   verifyBackup,
   findLatestBackup,
-  listBackups
+  listBackups,
 };

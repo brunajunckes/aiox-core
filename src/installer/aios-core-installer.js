@@ -48,7 +48,7 @@ const FOLDERS_TO_COPY = [
 
   // Additional directories
   'cli',            // CLI commands
-  'manifests'       // Manifest definitions
+  'manifests',       // Manifest definitions
 ];
 
 /**
@@ -62,7 +62,7 @@ const ROOT_FILES_TO_COPY = [
   'core-config.yaml',   // Core framework configuration
   'package.json',       // Module package definition
   'user-guide.md',
-  'working-in-the-brownfield.md'
+  'working-in-the-brownfield.md',
 ];
 
 /**
@@ -165,14 +165,14 @@ async function copyDirectoryWithRootReplacement(sourceDir, destDir, onProgress =
 async function installAiosCore(options = {}) {
   const {
     targetDir = process.cwd(),
-    onProgress = null
+    onProgress = null,
   } = options;
 
   const result = {
     success: false,
     installedFiles: [],
     installedFolders: [],
-    errors: []
+    errors: [],
   };
 
   const spinner = ora('Installing AIOS core framework...').start();
@@ -200,7 +200,7 @@ async function installAiosCore(options = {}) {
         const copiedFiles = await copyDirectoryWithRootReplacement(
           folderSource,
           folderDest,
-          onProgress
+          onProgress,
         );
 
         if (copiedFiles.length > 0) {
@@ -230,13 +230,13 @@ async function installAiosCore(options = {}) {
       version: require('../../package.json').version,
       installed_at: new Date().toISOString(),
       install_type: 'full',
-      files: result.installedFiles
+      files: result.installedFiles,
     };
 
     await fs.writeFile(
       path.join(targetAiosCore, 'install-manifest.yaml'),
       require('js-yaml').dump(manifest),
-      'utf8'
+      'utf8',
     );
 
     result.success = true;
@@ -273,7 +273,7 @@ async function createBasicPackageJson(options = {}) {
   const {
     targetDir = process.cwd(),
     projectName = path.basename(targetDir),
-    projectType = 'greenfield'
+    projectType = 'greenfield',
   } = options;
 
   const packageJson = {
@@ -284,10 +284,10 @@ async function createBasicPackageJson(options = {}) {
     scripts: {
       start: 'echo "Configure your start script"',
       test: 'echo "Configure your test script"',
-      lint: 'echo "Configure your lint script"'
+      lint: 'echo "Configure your lint script"',
     },
     keywords: ['aios', projectType],
-    license: 'MIT'
+    license: 'MIT',
   };
 
   const packageJsonPath = path.join(targetDir, 'package.json');
@@ -315,5 +315,5 @@ module.exports = {
   copyFileWithRootReplacement,
   copyDirectoryWithRootReplacement,
   FOLDERS_TO_COPY,
-  ROOT_FILES_TO_COPY
+  ROOT_FILES_TO_COPY,
 };

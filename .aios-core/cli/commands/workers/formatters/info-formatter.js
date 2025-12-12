@@ -19,7 +19,7 @@ const BOX = {
   topLeft: '┌',
   topRight: '┐',
   bottomLeft: '└',
-  bottomRight: '┘'
+  bottomRight: '┘',
 };
 
 /**
@@ -152,7 +152,7 @@ function formatInfoJSON(worker, options = {}) {
     performance: worker.performance || null,
     agents: worker.agents || [],
     metadata: worker.metadata || {},
-    relatedWorkers: relatedWorkers.slice(0, 5).map(w => w.id)
+    relatedWorkers: relatedWorkers.slice(0, 5).map(w => w.id),
   };
 
   return JSON.stringify(output, null, 2);
@@ -183,13 +183,13 @@ function formatInfoYAML(worker, options = {}) {
     performance: worker.performance || null,
     agents: worker.agents || [],
     metadata: worker.metadata || {},
-    relatedWorkers: relatedWorkers.slice(0, 5).map(w => w.id)
+    relatedWorkers: relatedWorkers.slice(0, 5).map(w => w.id),
   };
 
   return yaml.dump(output, {
     indent: 2,
     lineWidth: 120,
-    noRefs: true
+    noRefs: true,
   });
 }
 
@@ -270,5 +270,5 @@ module.exports = {
   formatInfoJSON,
   formatInfoYAML,
   formatNotFoundError,
-  wrapText
+  wrapText,
 };

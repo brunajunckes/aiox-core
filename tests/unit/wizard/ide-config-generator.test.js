@@ -11,7 +11,7 @@ const {
   renderTemplate,
   validateConfigContent,
   generateTemplateVariables,
-  generateIDEConfigs
+  generateIDEConfigs,
 } = require('../../../src/wizard/ide-config-generator');
 
 describe('IDE Config Generator', () => {
@@ -155,7 +155,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -176,7 +176,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -197,7 +197,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -212,7 +212,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'my-project', projectType: 'brownfield' };
 
       await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       // v2.1: Cursor uses .cursor/rules.md (not .cursorrules)
@@ -231,7 +231,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -250,7 +250,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);
@@ -264,7 +264,7 @@ describe('IDE Config Generator', () => {
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
-        projectRoot: testDir
+        projectRoot: testDir,
       });
 
       expect(result.success).toBe(true);

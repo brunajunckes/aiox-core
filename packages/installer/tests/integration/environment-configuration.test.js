@@ -62,7 +62,7 @@ describe('Environment Configuration Integration', () => {
         skipPrompts: true,
         projectType: 'GREENFIELD',
         selectedIDEs: ['vscode'],
-        mcpServers: []
+        mcpServers: [],
       });
 
       expect(result.envCreated).toBe(true);
@@ -78,7 +78,7 @@ describe('Environment Configuration Integration', () => {
     it('should create .env.example file', async () => {
       const result = await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       expect(result.envExampleCreated).toBe(true);
@@ -97,7 +97,7 @@ describe('Environment Configuration Integration', () => {
         skipPrompts: true,
         projectType: 'BROWNFIELD',
         selectedIDEs: ['vscode', 'cursor'],
-        mcpServers: [{ name: 'github' }, { name: 'exa' }]
+        mcpServers: [{ name: 'github' }, { name: 'exa' }],
       });
 
       expect(result.coreConfigCreated).toBe(true);
@@ -116,7 +116,7 @@ describe('Environment Configuration Integration', () => {
     it('should update .gitignore', async () => {
       const result = await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       expect(result.gitignoreUpdated).toBe(true);
@@ -136,7 +136,7 @@ describe('Environment Configuration Integration', () => {
 
       await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       const envPath = path.join(testDir, '.env');
@@ -155,7 +155,7 @@ describe('Environment Configuration Integration', () => {
       // Run configuration (skipPrompts mode doesn't backup)
       await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       // In skipPrompts mode, no backup is created, file is overwritten
@@ -173,7 +173,7 @@ describe('Environment Configuration Integration', () => {
       try {
         await configureEnvironment({
           targetDir: '/invalid/path/that/does/not/exist',
-          skipPrompts: true
+          skipPrompts: true,
         });
         fail('Should have thrown an error');
       } catch (error) {
@@ -236,14 +236,14 @@ describe('Environment Configuration Integration', () => {
         selectedIDEs: ['vscode', 'cursor'],
         mcpServers: [
           { name: 'github', id: 'github' },
-          { name: 'exa', id: 'exa' }
-        ]
+          { name: 'exa', id: 'exa' },
+        ],
       };
 
       const result = await configureEnvironment({
         targetDir: testDir,
         skipPrompts: true,
-        ...wizardState
+        ...wizardState,
       });
 
       // Verify all files created
@@ -267,7 +267,7 @@ describe('Environment Configuration Integration', () => {
     it('should handle Windows paths', async () => {
       const result = await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       expect(result.envCreated).toBe(true);
@@ -278,7 +278,7 @@ describe('Environment Configuration Integration', () => {
       await configureEnvironment({
         targetDir: testDir,
         skipPrompts: true,
-        projectType: 'GREENFIELD'
+        projectType: 'GREENFIELD',
       });
 
       const yaml = require('js-yaml');
@@ -296,7 +296,7 @@ describe('Environment Configuration Integration', () => {
     it('should create correct directory structure', async () => {
       await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       // Check all expected files exist
@@ -304,7 +304,7 @@ describe('Environment Configuration Integration', () => {
         '.env',
         '.env.example',
         '.gitignore',
-        '.aios-core/core-config.yaml'
+        '.aios-core/core-config.yaml',
       ];
 
       for (const file of expectedFiles) {
@@ -319,7 +319,7 @@ describe('Environment Configuration Integration', () => {
 
       await configureEnvironment({
         targetDir: testDir,
-        skipPrompts: true
+        skipPrompts: true,
       });
 
       expect(await fs.pathExists(aioscoreDir)).toBe(true);

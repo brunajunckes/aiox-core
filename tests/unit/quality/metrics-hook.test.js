@@ -14,7 +14,7 @@ const {
   recordPRReviewMetrics,
   recordHumanReviewMetrics,
   withPreCommitMetrics,
-  getQuickSummary
+  getQuickSummary,
 } = require('../../../.aios-core/quality/metrics-hook');
 const { MetricsCollector } = require('../../../.aios-core/quality/metrics-collector');
 
@@ -62,7 +62,7 @@ describe('Metrics Hook', () => {
       const result = await recordPreCommitMetrics({
         passed: true,
         durationMs: 2500,
-        findingsCount: 0
+        findingsCount: 0,
       });
 
       // Result could be null if recording fails (graceful degradation)
@@ -73,7 +73,7 @@ describe('Metrics Hook', () => {
     it('should include triggeredBy: hook in metadata', async () => {
       const result = await recordPreCommitMetrics({
         passed: true,
-        durationMs: 1500
+        durationMs: 1500,
       });
 
       if (result) {
@@ -88,7 +88,7 @@ describe('Metrics Hook', () => {
       // Even with invalid input, should not throw
       const result = await recordPreCommitMetrics({
         passed: 'invalid', // Should be boolean
-        durationMs: 'not a number'
+        durationMs: 'not a number',
       });
 
       // Should handle gracefully (either record or return null)
@@ -109,9 +109,9 @@ describe('Metrics Hook', () => {
             critical: 0,
             high: 1,
             medium: 2,
-            low: 2
-          }
-        }
+            low: 2,
+          },
+        },
       });
 
       if (result) {
@@ -126,8 +126,8 @@ describe('Metrics Hook', () => {
         durationMs: 120000,
         quinn: {
           findingsCount: 3,
-          topCategories: ['test-coverage', 'documentation']
-        }
+          topCategories: ['test-coverage', 'documentation'],
+        },
       });
 
       if (result) {
@@ -141,8 +141,8 @@ describe('Metrics Hook', () => {
         durationMs: 150000,
         metadata: {
           prNumber: 42,
-          branchName: 'feature/test'
-        }
+          branchName: 'feature/test',
+        },
       });
 
       if (result) {
@@ -157,7 +157,7 @@ describe('Metrics Hook', () => {
       const result = await recordHumanReviewMetrics({
         passed: true,
         durationMs: 600000,
-        findingsCount: 1
+        findingsCount: 1,
       });
 
       if (result) {
@@ -173,7 +173,7 @@ describe('Metrics Hook', () => {
         // Simulate some checks
         return {
           passed: true,
-          findingsCount: 0
+          findingsCount: 0,
         };
       });
 
@@ -195,7 +195,7 @@ describe('Metrics Hook', () => {
         return {
           passed: true,
           findingsCount: 2,
-          metadata: { lintErrors: 1, typeErrors: 1 }
+          metadata: { lintErrors: 1, typeErrors: 1 },
         };
       });
 
@@ -221,7 +221,7 @@ describe('Metrics Hook', () => {
       // First record some metrics
       await recordPreCommitMetrics({
         passed: true,
-        durationMs: 2000
+        durationMs: 2000,
       });
 
       const summary = await getQuickSummary();

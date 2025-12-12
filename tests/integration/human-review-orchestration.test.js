@@ -19,7 +19,7 @@ describe('Human Review Orchestration Integration Tests', () => {
     beforeEach(() => {
       orchestrator = new HumanReviewOrchestrator({
         statusPath: '.aios/qa-status-integration-test.json',
-        reviewRequestsPath: '.aios/human-review-requests-integration-test'
+        reviewRequestsPath: '.aios/human-review-requests-integration-test',
       });
       // Mock file operations to avoid actual file I/O
       orchestrator.saveReviewRequest = jest.fn().mockResolvedValue();
@@ -29,7 +29,7 @@ describe('Human Review Orchestration Integration Tests', () => {
     it('should execute 3-layer flow in correct sequence', async () => {
       const prContext = {
         prNumber: 123,
-        changedFiles: ['src/services/auth.service.js', 'src/components/Login.tsx']
+        changedFiles: ['src/services/auth.service.js', 'src/components/Login.tsx'],
       };
 
       const layer1Result = {
@@ -39,9 +39,9 @@ describe('Human Review Orchestration Integration Tests', () => {
         results: [
           { check: 'lint', pass: true, message: 'No errors' },
           { check: 'test', pass: true, message: 'All tests passed' },
-          { check: 'typecheck', pass: true, message: 'No type errors' }
+          { check: 'typecheck', pass: true, message: 'No type errors' },
         ],
-        checks: { total: 3, passed: 3, failed: 0 }
+        checks: { total: 3, passed: 3, failed: 0 },
       };
 
       const layer2Result = {
@@ -50,9 +50,9 @@ describe('Human Review Orchestration Integration Tests', () => {
         duration: 30000,
         results: [
           { check: 'coderabbit', pass: true, issues: { critical: 0, high: 0, medium: 2, low: 5 } },
-          { check: 'quinn', pass: true, suggestions: 3, blocking: 0 }
+          { check: 'quinn', pass: true, suggestions: 3, blocking: 0 },
         ],
-        checks: { total: 2, passed: 2, failed: 0 }
+        checks: { total: 2, passed: 2, failed: 0 },
       };
 
       const result = await orchestrator.orchestrateReview(prContext, layer1Result, layer2Result);
@@ -72,8 +72,8 @@ describe('Human Review Orchestration Integration Tests', () => {
       const layer1Result = {
         pass: false,
         results: [
-          { check: 'lint', pass: false, message: '5 errors found' }
-        ]
+          { check: 'lint', pass: false, message: '5 errors found' },
+        ],
       };
 
       const layer2Result = { pass: true }; // Should not matter
@@ -93,8 +93,8 @@ describe('Human Review Orchestration Integration Tests', () => {
       const layer2Result = {
         pass: false,
         results: [
-          { check: 'coderabbit', pass: false, issues: { critical: 1 }, message: 'Critical issue found' }
-        ]
+          { check: 'coderabbit', pass: false, issues: { critical: 1 }, message: 'Critical issue found' },
+        ],
       };
 
       const result = await orchestrator.orchestrateReview(prContext, layer1Result, layer2Result);
@@ -118,8 +118,8 @@ describe('Human Review Orchestration Integration Tests', () => {
         pass: false,
         results: [
           { check: 'lint', pass: false, message: '10 errors' },
-          { check: 'test', pass: false, message: '2 tests failed' }
-        ]
+          { check: 'test', pass: false, message: '2 tests failed' },
+        ],
       };
 
       const result = await orchestrator.orchestrateReview(prContext, layer1Result, {});
@@ -136,7 +136,7 @@ describe('Human Review Orchestration Integration Tests', () => {
 
       const layer1Result = {
         pass: false,
-        results: [{ check: 'typecheck', pass: false, message: 'Type errors' }]
+        results: [{ check: 'typecheck', pass: false, message: 'Type errors' }],
       };
 
       const result = await orchestrator.orchestrateReview(prContext, layer1Result, {});
@@ -151,7 +151,7 @@ describe('Human Review Orchestration Integration Tests', () => {
 
     beforeEach(() => {
       orchestrator = new HumanReviewOrchestrator({
-        notifications: { channels: ['console'] }
+        notifications: { channels: ['console'] },
       });
       orchestrator.saveReviewRequest = jest.fn().mockResolvedValue();
 
@@ -206,9 +206,9 @@ describe('Human Review Orchestration Integration Tests', () => {
           changedFiles: [
             'src/auth/login.controller.js',
             'src/auth/password.util.js',
-            'src/middleware/jwt.middleware.js'
-          ]
-        }
+            'src/middleware/jwt.middleware.js',
+          ],
+        },
       };
 
       const recommendations = await recommender.recommend(context);
@@ -222,9 +222,9 @@ describe('Human Review Orchestration Integration Tests', () => {
         prContext: {
           changedFiles: [
             'src/core/base-service.js',
-            'src/interfaces/repository.interface.ts'
-          ]
-        }
+            'src/interfaces/repository.interface.ts',
+          ],
+        },
       };
 
       const recommendations = await recommender.recommend(context);
@@ -237,9 +237,9 @@ describe('Human Review Orchestration Integration Tests', () => {
         prContext: {
           changedFiles: [
             'src/services/order.service.js',
-            'src/handlers/checkout.handler.js'
-          ]
-        }
+            'src/handlers/checkout.handler.js',
+          ],
+        },
       };
 
       const recommendations = await recommender.recommend(context);
@@ -250,8 +250,8 @@ describe('Human Review Orchestration Integration Tests', () => {
     it('should provide review questions for focus areas', async () => {
       const context = {
         prContext: {
-          changedFiles: ['src/auth/session.js']
-        }
+          changedFiles: ['src/auth/session.js'],
+        },
       };
 
       const recommendations = await recommender.recommend(context);
@@ -264,7 +264,7 @@ describe('Human Review Orchestration Integration Tests', () => {
 
     it('should exclude automated-covered areas', async () => {
       const context = {
-        prContext: { changedFiles: ['src/file.js'] }
+        prContext: { changedFiles: ['src/file.js'] },
       };
 
       const recommendations = await recommender.recommend(context);
@@ -286,7 +286,7 @@ describe('Human Review Orchestration Integration Tests', () => {
 
     it('should estimate review time based on focus areas', async () => {
       const prContext = {
-        changedFiles: ['src/auth/login.js'] // Single security file
+        changedFiles: ['src/auth/login.js'], // Single security file
       };
 
       const layer1Result = { pass: true, results: [] };
@@ -305,8 +305,8 @@ describe('Human Review Orchestration Integration Tests', () => {
           'src/auth/login.js',
           'src/services/order.service.js',
           'src/components/Dashboard.tsx',
-          'config/settings.yaml'
-        ]
+          'config/settings.yaml',
+        ],
       };
 
       const layer1Result = { pass: true, results: [] };
@@ -326,7 +326,7 @@ describe('Human Review Orchestration Integration Tests', () => {
       manager = new QualityGateManager({
         layer1: { enabled: true },
         layer2: { enabled: true },
-        layer3: { enabled: true }
+        layer3: { enabled: true },
       });
     });
 
@@ -343,13 +343,13 @@ describe('Human Review Orchestration Integration Tests', () => {
       manager.layers.layer1.execute = jest.fn().mockResolvedValue({
         pass: true,
         layer: 'Layer 1: Pre-commit',
-        results: [{ check: 'lint', pass: true }]
+        results: [{ check: 'lint', pass: true }],
       });
 
       manager.layers.layer2.execute = jest.fn().mockResolvedValue({
         pass: true,
         layer: 'Layer 2: PR Automation',
-        results: [{ check: 'coderabbit', pass: true }]
+        results: [{ check: 'coderabbit', pass: true }],
       });
 
       // Mock file operations
@@ -358,7 +358,7 @@ describe('Human Review Orchestration Integration Tests', () => {
 
       const result = await manager.orchestrateHumanReview({
         prNumber: 123,
-        changedFiles: ['src/auth/login.js']
+        changedFiles: ['src/auth/login.js'],
       });
 
       expect(result.status).toBe('pending_human_review');

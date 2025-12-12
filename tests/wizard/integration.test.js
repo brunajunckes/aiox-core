@@ -23,22 +23,22 @@ jest.mock('../../bin/modules/mcp-installer', () => ({
     success: true,
     installedMCPs: {},
     configPath: '.mcp.json',
-    errors: []
-  })
+    errors: [],
+  }),
 }));
 jest.mock('../../src/wizard/validation', () => ({
   validateInstallation: jest.fn().mockResolvedValue({
     valid: true,
     errors: [],
-    warnings: []
+    warnings: [],
   }),
   displayValidationReport: jest.fn().mockResolvedValue(),
-  provideTroubleshooting: jest.fn().mockResolvedValue()
+  provideTroubleshooting: jest.fn().mockResolvedValue(),
 }));
 jest.mock('../../src/wizard/feedback', () => ({
   showWelcome: jest.fn(),
   showCompletion: jest.fn(),
-  showCancellation: jest.fn()
+  showCancellation: jest.fn(),
 }));
 
 describe('Wizard Integration - Story 1.7', () => {
@@ -52,12 +52,12 @@ describe('Wizard Integration - Story 1.7', () => {
     // Default mocks for successful flow
     inquirer.prompt.mockResolvedValue({
       projectType: 'greenfield',
-      selectedIDEs: ['vscode']
+      selectedIDEs: ['vscode'],
     });
 
     generateIDEConfigs.mockResolvedValue({
       success: true,
-      configs: [{ ide: 'vscode', path: '.vscode/settings.json' }]
+      configs: [{ ide: 'vscode', path: '.vscode/settings.json' }],
     });
 
     configureEnvironment.mockResolvedValue({
@@ -65,7 +65,7 @@ describe('Wizard Integration - Story 1.7', () => {
       envExampleCreated: true,
       coreConfigCreated: true,
       gitignoreUpdated: true,
-      errors: []
+      errors: [],
     });
 
     // Mock AIOS core installer
@@ -73,7 +73,7 @@ describe('Wizard Integration - Story 1.7', () => {
       success: true,
       installedFiles: ['agents/dev.md', 'tasks/create-story.yaml'],
       installedFolders: ['agents', 'tasks', 'workflows', 'templates'],
-      errors: []
+      errors: [],
     });
 
     // Mock hasPackageJson - default to true (brownfield project)
@@ -84,7 +84,7 @@ describe('Wizard Integration - Story 1.7', () => {
 
     installDependencies.mockResolvedValue({
       success: true,
-      packageManager: 'npm'
+      packageManager: 'npm',
     });
   });
 
@@ -135,7 +135,7 @@ describe('Wizard Integration - Story 1.7', () => {
 
       expect(installDependencies).toHaveBeenCalledWith({
         packageManager: 'yarn',
-        projectPath: process.cwd()
+        projectPath: process.cwd(),
       });
     });
   });
@@ -197,7 +197,7 @@ describe('Wizard Integration - Story 1.7', () => {
       installDependencies.mockResolvedValue({
         success: true,
         offlineMode: true,
-        packageManager: 'npm'
+        packageManager: 'npm',
       });
 
       const answers = await runWizard();
@@ -205,7 +205,7 @@ describe('Wizard Integration - Story 1.7', () => {
       expect(answers.depsInstalled).toBe(true);
       expect(answers.depsResult.offlineMode).toBe(true);
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining('offline mode')
+        expect.stringContaining('offline mode'),
       );
     });
   });
@@ -217,20 +217,20 @@ describe('Wizard Integration - Story 1.7', () => {
           success: false,
           errorMessage: 'Network connection failed',
           solution: 'Check your internet connection',
-          errorCategory: 'network'
+          errorCategory: 'network',
         })
         .mockResolvedValueOnce({
           success: true,
-          packageManager: 'npm'
+          packageManager: 'npm',
         });
 
       inquirer.prompt
         .mockResolvedValueOnce({
           projectType: 'greenfield',
-          selectedIDEs: []
+          selectedIDEs: [],
         })
         .mockResolvedValueOnce({
-          retryDeps: true
+          retryDeps: true,
         });
 
       const answers = await runWizard();
@@ -243,23 +243,23 @@ describe('Wizard Integration - Story 1.7', () => {
       installDependencies.mockResolvedValue({
         success: false,
         errorMessage: 'Network connection failed',
-        solution: 'Check your internet connection'
+        solution: 'Check your internet connection',
       });
 
       inquirer.prompt
         .mockResolvedValueOnce({
           projectType: 'greenfield',
-          selectedIDEs: []
+          selectedIDEs: [],
         })
         .mockResolvedValueOnce({
-          retryDeps: false
+          retryDeps: false,
         });
 
       const answers = await runWizard();
 
       expect(answers.depsInstalled).toBe(false);
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining('manually')
+        expect.stringContaining('manually'),
       );
     });
 
@@ -268,24 +268,24 @@ describe('Wizard Integration - Story 1.7', () => {
         success: false,
         errorMessage: 'Permission denied',
         solution: 'Try running with elevated permissions',
-        errorCategory: 'permission'
+        errorCategory: 'permission',
       });
 
       inquirer.prompt
         .mockResolvedValueOnce({
-          projectType: 'greenfield'
+          projectType: 'greenfield',
         })
         .mockResolvedValueOnce({
-          retryDeps: false
+          retryDeps: false,
         });
 
       await runWizard();
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Permission denied')
+        expect.stringContaining('Permission denied'),
       );
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining('elevated permissions')
+        expect.stringContaining('elevated permissions'),
       );
     });
   });
@@ -295,10 +295,10 @@ describe('Wizard Integration - Story 1.7', () => {
       await runWizard();
 
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Installing dependencies')
+        expect.stringContaining('Installing dependencies'),
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        expect.stringContaining('installed')
+        expect.stringContaining('installed'),
       );
     });
   });
@@ -320,10 +320,10 @@ describe('Wizard Integration - Story 1.7', () => {
       configureEnvironment.mockRejectedValue(new Error('Env config failed'));
       inquirer.prompt
         .mockResolvedValueOnce({
-          projectType: 'greenfield'
+          projectType: 'greenfield',
         })
         .mockResolvedValueOnce({
-          continueWithoutEnv: true
+          continueWithoutEnv: true,
         });
 
       const answers = await runWizard();

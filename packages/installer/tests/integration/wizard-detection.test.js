@@ -10,7 +10,7 @@ jest.mock('fs');
 global.console = {
   ...console,
   log: jest.fn(),
-  error: jest.fn()
+  error: jest.fn(),
 };
 
 describe('Wizard Integration with Project Type Detection', () => {
@@ -142,7 +142,7 @@ describe('Wizard Integration with Project Type Detection', () => {
 
       expect(confirmed).toBe('EXISTING_AIOS');
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('update or reinstall')
+        expect.stringContaining('update or reinstall'),
       );
     });
 
@@ -187,7 +187,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       await confirmProjectType('GREENFIELD');
 
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('New project')
+        expect.stringContaining('New project'),
       );
     });
 
@@ -195,7 +195,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       await confirmProjectType('BROWNFIELD');
 
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('Existing project')
+        expect.stringContaining('Existing project'),
       );
     });
   });
@@ -212,7 +212,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       });
 
       await expect(runWizard({ targetDir: '/invalid' })).rejects.toThrow(
-        'Failed to detect project type'
+        'Failed to detect project type',
       );
     });
 
@@ -226,7 +226,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       // Check that console.error was called with the error message
       const errorCalls = console.error.mock.calls;
       const hasInstallationFailed = errorCalls.some(call => 
-        call.some(arg => String(arg).includes('Installation failed'))
+        call.some(arg => String(arg).includes('Installation failed')),
       );
       expect(hasInstallationFailed).toBe(true);
     });
@@ -236,7 +236,7 @@ describe('Wizard Integration with Project Type Detection', () => {
 
       expect(confirmed).toBe('UNKNOWN');
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('Manual selection required')
+        expect.stringContaining('Manual selection required'),
       );
     });
   });
@@ -330,7 +330,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       await runWizard({ targetDir: '/test' });
 
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('Welcome to AIOS Installer')
+        expect.stringContaining('Welcome to AIOS Installer'),
       );
     });
 
@@ -341,7 +341,7 @@ describe('Wizard Integration with Project Type Detection', () => {
       await runWizard({ targetDir: '/test' });
 
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('Detecting project type')
+        expect.stringContaining('Detecting project type'),
       );
     });
   });

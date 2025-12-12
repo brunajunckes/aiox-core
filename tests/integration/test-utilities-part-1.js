@@ -55,7 +55,7 @@ const UTILITIES_TO_TEST = [
   { name: 'batch-creator', category: 'helpers', path: UTILS_PATH },
   { name: 'clickup-helpers', category: 'helpers', path: COMMON_UTILS_PATH },
   { name: 'capability-analyzer', category: 'helpers', path: UTILS_PATH },
-  { name: 'elicitation-engine', category: 'framework', path: UTILS_PATH }
+  { name: 'elicitation-engine', category: 'framework', path: UTILS_PATH },
 ];
 
 // Agents to test
@@ -64,7 +64,7 @@ const AGENTS_TO_TEST = [
   'qa',
   'architect',
   'po',
-  'pm'
+  'pm',
   // Note: github-devops is at .aios-core/agents/github-devops.md
 ];
 
@@ -74,7 +74,7 @@ const testResults = {
   test2: { name: 'Reference Validation', passed: false, errors: [] },
   test3: { name: 'Gap Detection', passed: false, gapsFound: null },
   test4: { name: 'Agent Load Test', passed: 0, failed: 0, errors: [] },
-  test5: { name: 'Relationship Synthesis', passed: false, errors: [] }
+  test5: { name: 'Relationship Synthesis', passed: false, errors: [] },
 };
 
 console.log('🧪 Starting Integration Test Suite: Utility Scripts Part 1');
@@ -100,7 +100,7 @@ for (const util of UTILITIES_TO_TEST) {
     testResults.test1.failed++;
     testResults.test1.errors.push({
       utility: util.name,
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -126,7 +126,7 @@ try {
       const output = execSync(`node "${validateScriptPath}"`, {
         cwd: ROOT_PATH,
         encoding: 'utf8',
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
       
       // Check if output indicates success
@@ -171,7 +171,7 @@ try {
       const output = execSync(`node "${detectGapsPath}"`, {
         cwd: ROOT_PATH,
         encoding: 'utf8',
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
       
       // Count gaps related to our utilities
@@ -249,7 +249,7 @@ for (const agentName of AGENTS_TO_TEST) {
     testResults.test4.failed++;
     testResults.test4.errors.push({
       agent: agentName,
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -275,7 +275,7 @@ try {
         cwd: ROOT_PATH,
         encoding: 'utf8',
         stdio: 'pipe',
-        timeout: 30000 // 30 second timeout
+        timeout: 30000, // 30 second timeout
       });
       
       // Check if MASTER-RELATIONSHIP-MAP.json was updated
@@ -291,7 +291,7 @@ try {
             const utilNode = masterMap.nodes.find(n => 
               n.id === `util-${util.name}` || 
               n.id === util.name ||
-              n.name === util.name
+              n.name === util.name,
             );
             if (utilNode) {
               utilsInMap++;
@@ -299,7 +299,7 @@ try {
           }
         }
         
-        console.log(`✓ Relationship map regenerated`);
+        console.log('✓ Relationship map regenerated');
         console.log(`  Utilities found in map: ${utilsInMap}/${UTILITIES_TO_TEST.length}`);
         testResults.test5.passed = true;
       } else {

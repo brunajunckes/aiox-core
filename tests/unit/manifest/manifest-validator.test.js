@@ -14,7 +14,7 @@ const {
   ManifestValidator,
   createManifestValidator,
   parseCSV,
-  parseCSVLine
+  parseCSVLine,
 } = require('../../../.aios-core/core/manifest/manifest-validator');
 
 describe('ManifestValidator', () => {
@@ -60,12 +60,12 @@ describe('ManifestValidator', () => {
       expect(result.rows[0]).toMatchObject({
         id: '1',
         name: 'First',
-        status: 'active'
+        status: 'active',
       });
       expect(result.rows[1]).toMatchObject({
         id: '2',
         name: 'Second',
-        status: 'deprecated'
+        status: 'deprecated',
       });
     });
 
@@ -96,7 +96,7 @@ describe('ManifestValidator', () => {
     test('creates validator with custom options', () => {
       const validator = createManifestValidator({
         basePath: '/custom',
-        verbose: true
+        verbose: true,
       });
       expect(validator.basePath).toBe('/custom');
       expect(validator.verbose).toBe(true);
@@ -201,7 +201,7 @@ describe('ManifestValidator', () => {
             errors: [],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           workers: {
             filename: 'workers.csv',
@@ -210,7 +210,7 @@ describe('ManifestValidator', () => {
             errors: [],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           tasks: {
             filename: 'tasks.csv',
@@ -219,15 +219,15 @@ describe('ManifestValidator', () => {
             errors: [],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           summary: {
             totalManifests: 3,
             valid: 3,
             invalid: 0,
             missing: [],
-            orphan: []
-          }
+            orphan: [],
+          },
         };
 
         const output = validator.formatResults(mockResults);
@@ -247,7 +247,7 @@ describe('ManifestValidator', () => {
             errors: ['File not found'],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           workers: {
             filename: 'workers.csv',
@@ -256,7 +256,7 @@ describe('ManifestValidator', () => {
             errors: [],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           tasks: {
             filename: 'tasks.csv',
@@ -265,15 +265,15 @@ describe('ManifestValidator', () => {
             errors: [],
             warnings: [],
             missingFiles: [],
-            orphanFiles: []
+            orphanFiles: [],
           },
           summary: {
             totalManifests: 3,
             valid: 2,
             invalid: 1,
             missing: [],
-            orphan: []
-          }
+            orphan: [],
+          },
         };
 
         const output = validator.formatResults(mockResults);

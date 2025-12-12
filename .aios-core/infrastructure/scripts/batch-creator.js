@@ -26,7 +26,7 @@ class BatchCreator {
       id: null,
       components: [],
       files: [],
-      manifests: []
+      manifests: [],
     };
   }
 
@@ -48,9 +48,9 @@ class BatchCreator {
         user: process.env.USER || 'system',
         metadata: {
           batchType: options.type || 'custom',
-          componentCount: options.componentCount || 'unknown'
+          componentCount: options.componentCount || 'unknown',
         },
-        rollbackOnError: true
+        rollbackOnError: true,
       });
       
       this.transaction.id = transactionId;
@@ -94,7 +94,7 @@ class BatchCreator {
       // Create components in dependency order
       const results = await this.createComponentsInOrder(
         { ...suiteConfig, components: orderedComponents },
-        options
+        options,
       );
       
       // Verify all succeeded
@@ -107,7 +107,7 @@ class BatchCreator {
           type: 'confirm',
           name: 'rollback',
           message: 'Do you want to rollback all changes?',
-          default: true
+          default: true,
         }]);
         
         if (rollback) {
@@ -115,12 +115,12 @@ class BatchCreator {
           return {
             success: false,
             error: 'Batch creation failed and rolled back',
-            details: failed
+            details: failed,
           };
         }
       }
       
-      console.log(chalk.green(`\n✅ Suite created successfully!`));
+      console.log(chalk.green('\n✅ Suite created successfully!'));
       console.log(chalk.gray(`📦 Components: ${results.length}`));
       
       // Commit transaction
@@ -134,7 +134,7 @@ class BatchCreator {
       return {
         success: true,
         transaction: transactionId,
-        components: results
+        components: results,
       };
       
     } catch (error) {
@@ -158,7 +158,7 @@ class BatchCreator {
       return {
         success: false,
         error: error.message,
-        transactionId
+        transactionId,
       };
     }
   }
@@ -176,8 +176,8 @@ class BatchCreator {
         { name: 'Complete Agent Package (agent + tasks + workflow)', value: 'agent-package' },
         { name: 'Workflow Suite (workflow + required tasks)', value: 'workflow-suite' },
         { name: 'Task Collection (multiple related tasks)', value: 'task-collection' },
-        { name: 'Custom Suite (define your own)', value: 'custom' }
-      ]
+        { name: 'Custom Suite (define your own)', value: 'custom' },
+      ],
     }]);
     
     switch (suiteType) {
@@ -204,30 +204,30 @@ class BatchCreator {
         type: 'input',
         name: 'agentName',
         message: 'Agent name (lowercase-hyphenated):',
-        validate: name => /^[a-z][a-z0-9-]*$/.test(name) || 'Invalid name format'
+        validate: name => /^[a-z][a-z0-9-]*$/.test(name) || 'Invalid name format',
       },
       {
         type: 'input',
         name: 'agentTitle',
-        message: 'Agent title:'
+        message: 'Agent title:',
       },
       {
         type: 'input',
         name: 'agentDescription',
-        message: 'Agent description:'
+        message: 'Agent description:',
       },
       {
         type: 'checkbox',
         name: 'includeCommands',
         message: 'Which standard commands to include?',
-        choices: ['analyze', 'create', 'review', 'suggest', 'report']
+        choices: ['analyze', 'create', 'review', 'suggest', 'report'],
       },
       {
         type: 'confirm',
         name: 'includeWorkflow',
         message: 'Include a workflow for this agent?',
-        default: true
-      }
+        default: true,
+      },
     ]);
     
     const components = [{
@@ -237,7 +237,7 @@ class BatchCreator {
         agentTitle: answers.agentTitle,
         whenToUse: answers.agentDescription,
         // ... other agent config
-      }
+      },
     }];
     
     // Add tasks for each command
@@ -249,7 +249,7 @@ class BatchCreator {
           taskTitle: `${command} for ${answers.agentTitle}`,
           agentName: answers.agentName,
           // ... other task config
-        }
+        },
       });
     });
     
@@ -262,7 +262,7 @@ class BatchCreator {
           workflowName: `${answers.agentTitle} Workflow`,
           workflowType: 'standard',
           // ... other workflow config
-        }
+        },
       });
     }
     
@@ -278,7 +278,7 @@ class BatchCreator {
     const created = new Set();
     const results = [];
     const totalComponents = suiteConfig.components.length;
-    let createdCount = 0;
+    const createdCount = 0;
     
     // Progress bar setup
     const ProgressBar = require('progress');
@@ -286,7 +286,7 @@ class BatchCreator {
       complete: '█',
       incomplete: '░',
       width: 30,
-      total: totalComponents
+      total: totalComponents,
     });
     
     // Create all components in order (already sorted by dependency analyzer)
@@ -300,7 +300,7 @@ class BatchCreator {
       if (result.success) {
         this.transaction.components.push(result);
         this.transaction.files.push(result.path);
-        console.log(chalk.green(`   ✓ Created successfully`));
+        console.log(chalk.green('   ✓ Created successfully'));
       } else {
         console.log(chalk.red(`   ✗ Failed: ${result.error}`));
       }
@@ -331,8 +331,8 @@ class BatchCreator {
           ...options,
           skipPreview: true, // Skip individual previews in batch mode
           skipManifest: true, // Handle manifest updates at the end
-          transactionId: this.transaction.id // Pass transaction ID
-        }
+          transactionId: this.transaction.id, // Pass transaction ID
+        },
       );
       
       // Record component creation in transaction
@@ -344,8 +344,8 @@ class BatchCreator {
           metadata: {
             componentType: component.type,
             componentId: result.name,
-            variables: result.variables
-          }
+            variables: result.variables,
+          },
         });
       }
       
@@ -354,7 +354,7 @@ class BatchCreator {
       return {
         success: false,
         type: component.type,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -370,7 +370,7 @@ class BatchCreator {
       // Use TransactionManager for rollback
       const rollbackResult = await this.transactionManager.rollbackTransaction(
         this.transaction.id,
-        { continueOnError: true }
+        { continueOnError: true },
       );
       
       if (rollbackResult) {
@@ -402,19 +402,19 @@ class BatchCreator {
         type: 'input',
         name: 'workflowId',
         message: 'Workflow ID (lowercase-hyphenated):',
-        validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid ID format'
+        validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid ID format',
       },
       {
         type: 'input',
         name: 'workflowName',
-        message: 'Workflow name:'
+        message: 'Workflow name:',
       },
       {
         type: 'number',
         name: 'stepCount',
         message: 'How many steps in the workflow?',
-        default: 3
-      }
+        default: 3,
+      },
     ]);
     
     const components = [{
@@ -423,8 +423,8 @@ class BatchCreator {
         workflowId: answers.workflowId,
         workflowName: answers.workflowName,
         workflowType: 'standard',
-        stepCount: answers.stepCount
-      }
+        stepCount: answers.stepCount,
+      },
     }];
     
     // Add tasks for each step
@@ -433,7 +433,7 @@ class BatchCreator {
         type: 'input',
         name: 'taskName',
         message: `Task name for step ${i}:`,
-        default: `${answers.workflowId}-step-${i}`
+        default: `${answers.workflowId}-step-${i}`,
       }]);
       
       components.push({
@@ -441,8 +441,8 @@ class BatchCreator {
         config: {
           taskId: taskName,
           taskTitle: `Step ${i} of ${answers.workflowName}`,
-          agentName: 'aios-developer' // Default to meta-agent
-        }
+          agentName: 'aios-developer', // Default to meta-agent
+        },
       });
     }
     
@@ -458,7 +458,7 @@ class BatchCreator {
       type: 'number',
       name: 'taskCount',
       message: 'How many tasks to create?',
-      default: 3
+      default: 3,
     }]);
     
     const components = [];
@@ -469,24 +469,24 @@ class BatchCreator {
           type: 'input',
           name: 'taskId',
           message: `Task ${i} ID:`,
-          validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid ID format'
+          validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid ID format',
         },
         {
           type: 'input',
           name: 'taskTitle',
-          message: `Task ${i} title:`
+          message: `Task ${i} title:`,
         },
         {
           type: 'input',
           name: 'agentName',
           message: `Task ${i} agent:`,
-          default: 'aios-developer'
-        }
+          default: 'aios-developer',
+        },
       ]);
       
       components.push({
         type: 'task',
-        config: answers
+        config: answers,
       });
     }
     
@@ -506,7 +506,7 @@ class BatchCreator {
         type: 'list',
         name: 'componentType',
         message: 'Add component type:',
-        choices: ['agent', 'task', 'workflow', '(done)']
+        choices: ['agent', 'task', 'workflow', '(done)'],
       }]);
       
       if (componentType === '(done)') {
@@ -554,13 +554,13 @@ class BatchCreator {
             type: 'input',
             name: 'agentName',
             message: 'Agent name:',
-            validate: name => /^[a-z][a-z0-9-]*$/.test(name) || 'Invalid format'
+            validate: name => /^[a-z][a-z0-9-]*$/.test(name) || 'Invalid format',
           },
           {
             type: 'input',
             name: 'agentTitle',
-            message: 'Agent title:'
-          }
+            message: 'Agent title:',
+          },
         ]);
         return agentAnswers;
         
@@ -570,19 +570,19 @@ class BatchCreator {
             type: 'input',
             name: 'taskId',
             message: 'Task ID:',
-            validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid format'
+            validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid format',
           },
           {
             type: 'input',
             name: 'taskTitle',
-            message: 'Task title:'
+            message: 'Task title:',
           },
           {
             type: 'input',
             name: 'agentName',
             message: 'Agent name:',
-            default: 'aios-developer'
-          }
+            default: 'aios-developer',
+          },
         ]);
         return taskAnswers;
         
@@ -592,13 +592,13 @@ class BatchCreator {
             type: 'input',
             name: 'workflowId',
             message: 'Workflow ID:',
-            validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid format'
+            validate: id => /^[a-z][a-z0-9-]*$/.test(id) || 'Invalid format',
           },
           {
             type: 'input',
             name: 'workflowName',
-            message: 'Workflow name:'
-          }
+            message: 'Workflow name:',
+          },
         ]);
         return workflowAnswers;
     }

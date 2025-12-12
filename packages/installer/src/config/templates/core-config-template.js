@@ -24,7 +24,7 @@ function generateCoreConfig(options = {}) {
     projectType = 'GREENFIELD',
     selectedIDEs = [],
     mcpServers = [],
-    aiosVersion = '2.1.0'
+    aiosVersion = '2.1.0',
   } = options;
 
   const config = {
@@ -35,7 +35,7 @@ function generateCoreConfig(options = {}) {
     project: {
       type: projectType,
       installedAt: new Date().toISOString(),
-      version: aiosVersion
+      version: aiosVersion,
     },
 
     // IDE Configuration (from Story 1.4)
@@ -47,20 +47,20 @@ function generateCoreConfig(options = {}) {
         windsurf: selectedIDEs.includes('windsurf'),
         zed: selectedIDEs.includes('zed'),
         'claude-desktop': selectedIDEs.includes('claude-desktop'),
-        'claude-code': selectedIDEs.includes('claude-code')
-      }
+        'claude-code': selectedIDEs.includes('claude-code'),
+      },
     },
 
     // MCP Configuration (from Story 1.5)
     mcp: {
       enabled: mcpServers.length > 0,
       configLocation: '.claude/mcp.json',
-      servers: mcpServers.map(server => server.name || server.id)
+      servers: mcpServers.map(server => server.name || server.id),
     },
 
     // QA Configuration
     qa: {
-      qaLocation: 'docs/qa'
+      qaLocation: 'docs/qa',
     },
 
     // PRD Configuration
@@ -69,7 +69,7 @@ function generateCoreConfig(options = {}) {
       prdVersion: 'v4',
       prdSharded: true,
       prdShardedLocation: 'docs/prd',
-      epicFilePattern: 'epic-{n}*.md'
+      epicFilePattern: 'epic-{n}*.md',
     },
 
     // Architecture Configuration
@@ -77,7 +77,7 @@ function generateCoreConfig(options = {}) {
       architectureFile: 'docs/architecture.md',
       architectureVersion: 'v4',
       architectureSharded: true,
-      architectureShardedLocation: 'docs/architecture'
+      architectureShardedLocation: 'docs/architecture',
     },
 
     // Development Configuration
@@ -85,12 +85,12 @@ function generateCoreConfig(options = {}) {
     devLoadAlwaysFiles: [
       'docs/framework/coding-standards.md',
       'docs/framework/tech-stack.md',
-      'docs/framework/source-tree.md'
+      'docs/framework/source-tree.md',
     ],
     devLoadAlwaysFilesFallback: [
       'docs/architecture/padroes-de-codigo.md',
       'docs/architecture/pilha-tecnologica.md',
-      'docs/architecture/arvore-de-origem.md'
+      'docs/architecture/arvore-de-origem.md',
     ],
     devDebugLog: '.ai/debug-log.md',
     devStoryLocation: 'docs/stories',
@@ -108,14 +108,14 @@ function generateCoreConfig(options = {}) {
       heavySections: [
         'pvMindContext',
         'expansionPacks',
-        'registry'
-      ]
+        'registry',
+      ],
     },
 
     // Git Configuration
     git: {
       showConfigWarning: true,
-      cacheTimeSeconds: 300
+      cacheTimeSeconds: 300,
     },
 
     // Decision Logging Configuration
@@ -126,8 +126,8 @@ function generateCoreConfig(options = {}) {
       indexFile: 'decision-logs-index.md',
       format: 'adr',
       performance: {
-        maxOverhead: 50
-      }
+        maxOverhead: 50,
+      },
     },
 
     // Resource Locations
@@ -149,11 +149,11 @@ function generateCoreConfig(options = {}) {
         gitStatus: true,
         recentWork: true,
         currentEpic: true,
-        currentStory: true
+        currentStory: true,
       },
       statusFile: '.aios/project-status.yaml',
       maxModifiedFiles: 5,
-      maxRecentCommits: 2
+      maxRecentCommits: 2,
     },
 
     // Agent Identity Configuration
@@ -164,20 +164,20 @@ function generateCoreConfig(options = {}) {
         workflowDetection: 'hardcoded',
         performance: {
           gitCheckCache: true,
-          gitCheckTTL: 300
-        }
-      }
-    }
+          gitCheckTTL: 300,
+        },
+      },
+    },
   };
 
   // Convert to YAML with proper formatting
   return yaml.dump(config, {
     indent: 2,
     lineWidth: 120,
-    noRefs: true
+    noRefs: true,
   });
 }
 
 module.exports = {
-  generateCoreConfig
+  generateCoreConfig,
 };

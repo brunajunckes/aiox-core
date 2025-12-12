@@ -207,7 +207,7 @@ class ToolResolver {
     const hasAntiPatterns = !!tool.anti_patterns;
     const hasEnhancedExamples = tool.examples &&
       Object.values(tool.examples).some(ex =>
-        ex.some(e => e.scenario && ['success', 'failure_invalid_param'].includes(e.scenario))
+        ex.some(e => e.scenario && ['success', 'failure_invalid_param'].includes(e.scenario)),
       );
 
     if (hasExecutableKnowledge || hasApiComplexity || hasAntiPatterns || hasEnhancedExamples) {
@@ -276,7 +276,7 @@ class ToolResolver {
   getCacheStats() {
     return {
       size: this.cache.size,
-      keys: Array.from(this.cache.keys())
+      keys: Array.from(this.cache.keys()),
     };
   }
 
@@ -332,7 +332,7 @@ class ToolResolver {
   resetSearchPaths() {
     this.basePaths = [
       'aios-core/tools',
-      'common/tools'
+      'common/tools',
     ];
   }
 }

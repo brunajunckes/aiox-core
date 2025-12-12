@@ -19,7 +19,7 @@ const performanceData = {
   sessions: [],
   configLoads: [],
   agentActivations: [],
-  startTime: Date.now()
+  startTime: Date.now(),
 };
 
 /**
@@ -29,7 +29,7 @@ const PERFORMANCE_TARGETS = {
   critical: 30,   // aios-master
   high: 50,       // dev, qa, devops, security
   medium: 75,     // po, sm, architect, data-engineer, db-sage
-  low: 100        // pm, analyst, ux-expert
+  low: 100,        // pm, analyst, ux-expert
 };
 
 /**
@@ -48,7 +48,7 @@ const AGENT_PRIORITIES = {
   'db-sage': 'medium',
   'pm': 'low',
   'analyst': 'low',
-  'ux-expert': 'low'
+  'ux-expert': 'low',
 };
 
 /**
@@ -73,7 +73,7 @@ function trackConfigLoad(loadData) {
     sectionsCount: loadData.sectionsLoaded?.length || 0,
     priority: AGENT_PRIORITIES[loadData.agentId] || 'unknown',
     target: PERFORMANCE_TARGETS[AGENT_PRIORITIES[loadData.agentId]] || 100,
-    meetsTarget: loadData.loadTime <= (PERFORMANCE_TARGETS[AGENT_PRIORITIES[loadData.agentId]] || 100)
+    meetsTarget: loadData.loadTime <= (PERFORMANCE_TARGETS[AGENT_PRIORITIES[loadData.agentId]] || 100),
   };
 
   performanceData.configLoads.push(entry);
@@ -99,7 +99,7 @@ function trackAgentActivation(activationData) {
     initTime: activationData.initTime,
     priority: AGENT_PRIORITIES[activationData.agentId] || 'unknown',
     target: PERFORMANCE_TARGETS[AGENT_PRIORITIES[activationData.agentId]] || 100,
-    meetsTarget: activationData.totalTime <= (PERFORMANCE_TARGETS[AGENT_PRIORITIES[activationData.agentId]] || 100)
+    meetsTarget: activationData.totalTime <= (PERFORMANCE_TARGETS[AGENT_PRIORITIES[activationData.agentId]] || 100),
   };
 
   performanceData.agentActivations.push(entry);
@@ -122,7 +122,7 @@ function startSession(sessionType = 'default') {
     startTime: Date.now(),
     endTime: null,
     configLoads: 0,
-    agentActivations: 0
+    agentActivations: 0,
   });
 
   return sessionId;
@@ -141,11 +141,11 @@ function endSession(sessionId) {
 
     // Count operations in this session
     session.configLoads = performanceData.configLoads.filter(
-      load => load.timestamp >= session.startTime && load.timestamp <= session.endTime
+      load => load.timestamp >= session.startTime && load.timestamp <= session.endTime,
     ).length;
 
     session.agentActivations = performanceData.agentActivations.filter(
-      act => act.timestamp >= session.startTime && act.timestamp <= session.endTime
+      act => act.timestamp >= session.startTime && act.timestamp <= session.endTime,
     ).length;
   }
 
@@ -165,7 +165,7 @@ function getStatistics() {
     return {
       configLoads: { count: 0 },
       agentActivations: { count: 0 },
-      overall: { uptime: Date.now() - performanceData.startTime }
+      overall: { uptime: Date.now() - performanceData.startTime },
     };
   }
 
@@ -201,7 +201,7 @@ function getStatistics() {
         avgTime: Math.round(avgTime),
         target,
         meetsTarget: meets,
-        successRate: ((meets / loads.length) * 100).toFixed(1) + '%'
+        successRate: ((meets / loads.length) * 100).toFixed(1) + '%',
       };
     }
   });
@@ -214,19 +214,19 @@ function getStatistics() {
       cacheHits,
       cacheHitRate: cacheHitRate + '%',
       meetsTarget,
-      targetSuccessRate: targetSuccessRate + '%'
+      targetSuccessRate: targetSuccessRate + '%',
     },
     agentActivations: {
       count: agentActivations.length,
       avgActivationTime: Math.round(avgActivationTime),
       meetsTarget: activationTargetMet,
-      targetSuccessRate: activationSuccessRate + '%'
+      targetSuccessRate: activationSuccessRate + '%',
     },
     byPriority,
     overall: {
       uptime: Date.now() - performanceData.startTime,
-      sessions: performanceData.sessions.length
-    }
+      sessions: performanceData.sessions.length,
+    },
   };
 }
 
@@ -261,8 +261,8 @@ function generateReport() {
 
   Object.entries(stats.byPriority).forEach(([priority, data]) => {
     const emoji = priority === 'critical' ? '🔴' :
-                  priority === 'high' ? '🟠' :
-                  priority === 'medium' ? '🟡' : '🟢';
+      priority === 'high' ? '🟠' :
+        priority === 'medium' ? '🟡' : '🟢';
 
     report += `### ${emoji} ${priority.toUpperCase()} (Target: ${data.target}ms)\n\n`;
     report += `- Loads: ${data.count}\n`;
@@ -270,16 +270,16 @@ function generateReport() {
     report += `- Meets Target: ${data.meetsTarget}/${data.count} (${data.successRate})\n\n`;
   });
 
-  report += `---\n\n## 🚀 Agent Activations\n\n`;
+  report += '---\n\n## 🚀 Agent Activations\n\n';
   report += `**Total Activations:** ${stats.agentActivations.count}\n`;
   report += `**Average Time:** ${stats.agentActivations.avgActivationTime}ms\n`;
   report += `**Meets Target:** ${stats.agentActivations.meetsTarget}/${stats.agentActivations.count} (${stats.agentActivations.targetSuccessRate})\n\n`;
 
-  report += `---\n\n## 📋 Recent Operations (Last 10)\n\n`;
+  report += '---\n\n## 📋 Recent Operations (Last 10)\n\n';
 
   const recent = performanceData.configLoads.slice(-10).reverse();
-  report += `| Agent | Load Time | Config Size | Cache Hit | Meets Target |\n`;
-  report += `|-------|-----------|-------------|-----------|-------------|\n`;
+  report += '| Agent | Load Time | Config Size | Cache Hit | Meets Target |\n';
+  report += '|-------|-----------|-------------|-----------|-------------|\n';
 
   recent.forEach(load => {
     const meetsEmoji = load.meetsTarget ? '✅' : '❌';
@@ -288,7 +288,7 @@ function generateReport() {
     report += `| @${load.agentId} | ${load.loadTime}ms | ${load.configSizeKB} KB | ${cacheEmoji} | ${meetsEmoji} |\n`;
   });
 
-  report += `\n---\n\n*Auto-generated by AIOS Performance Tracker (Story 6.1.2.6)*\n`;
+  report += '\n---\n\n*Auto-generated by AIOS Performance Tracker (Story 6.1.2.6)*\n';
 
   return report;
 }
@@ -302,7 +302,7 @@ async function savePerformanceData(filepath = '.aios-core/performance-data.json'
   const data = {
     ...performanceData,
     statistics: getStatistics(),
-    savedAt: new Date().toISOString()
+    savedAt: new Date().toISOString(),
   };
 
   await fs.writeFile(filepath, JSON.stringify(data, null, 2), 'utf8');
@@ -357,7 +357,7 @@ module.exports = {
   loadPerformanceData,
   reset,
   PERFORMANCE_TARGETS,
-  AGENT_PRIORITIES
+  AGENT_PRIORITIES,
 };
 
 // CLI support
@@ -391,7 +391,7 @@ if (require.main === module) {
             loadTime: 45,
             configSize: 1024,
             cacheHit: false,
-            sectionsLoaded: ['frameworkDocsLocation', 'devLoadAlwaysFiles']
+            sectionsLoaded: ['frameworkDocsLocation', 'devLoadAlwaysFiles'],
           });
 
           trackConfigLoad({
@@ -399,7 +399,7 @@ if (require.main === module) {
             loadTime: 2,
             configSize: 1024,
             cacheHit: true,
-            sectionsLoaded: ['frameworkDocsLocation', 'devLoadAlwaysFiles']
+            sectionsLoaded: ['frameworkDocsLocation', 'devLoadAlwaysFiles'],
           });
 
           trackConfigLoad({
@@ -407,7 +407,7 @@ if (require.main === module) {
             loadTime: 30,
             configSize: 512,
             cacheHit: false,
-            sectionsLoaded: ['frameworkDocsLocation']
+            sectionsLoaded: ['frameworkDocsLocation'],
           });
 
           console.log('  ✅ Tracked 3 config loads\n');
@@ -417,7 +417,7 @@ if (require.main === module) {
             agentId: 'dev',
             totalTime: 50,
             configLoadTime: 45,
-            initTime: 5
+            initTime: 5,
           });
 
           console.log('  ✅ Tracked 1 activation\n');

@@ -26,7 +26,7 @@ class PerformanceOptimizer extends EventEmitter {
       memoryThreshold: options.memoryThreshold || 100 * 1024 * 1024, // 100MB
       timeThreshold: options.timeThreshold || 1000, // 1 second
       complexityThreshold: options.complexityThreshold || 10,
-      ...options
+      ...options,
     };
     
     this.initializeOptimizationPatterns();
@@ -40,7 +40,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectHighComplexityAlgorithms.bind(this),
       optimizer: this.suggestAlgorithmOptimizations.bind(this),
       impact: 'high',
-      category: 'algorithm'
+      category: 'algorithm',
     });
 
     // Loop optimizations
@@ -50,7 +50,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectIneffientLoops.bind(this),
       optimizer: this.suggestLoopOptimizations.bind(this),
       impact: 'high',
-      category: 'algorithm'
+      category: 'algorithm',
     });
 
     // Memory optimizations
@@ -60,7 +60,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectMemoryIssues.bind(this),
       optimizer: this.suggestMemoryOptimizations.bind(this),
       impact: 'medium',
-      category: 'memory'
+      category: 'memory',
     });
 
     // Async optimizations
@@ -70,7 +70,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectAsyncIssues.bind(this),
       optimizer: this.suggestAsyncOptimizations.bind(this),
       impact: 'high',
-      category: 'async'
+      category: 'async',
     });
 
     // Caching opportunities
@@ -80,7 +80,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectCachingOpportunities.bind(this),
       optimizer: this.suggestCachingStrategies.bind(this),
       impact: 'medium',
-      category: 'caching'
+      category: 'caching',
     });
 
     // Database query optimizations
@@ -90,7 +90,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectDatabaseIssues.bind(this),
       optimizer: this.suggestDatabaseOptimizations.bind(this),
       impact: 'high',
-      category: 'database'
+      category: 'database',
     });
 
     // Bundle size optimizations
@@ -100,7 +100,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectBundleSizeIssues.bind(this),
       optimizer: this.suggestBundleOptimizations.bind(this),
       impact: 'medium',
-      category: 'bundle'
+      category: 'bundle',
     });
 
     // React-specific optimizations
@@ -110,7 +110,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectReactIssues.bind(this),
       optimizer: this.suggestReactOptimizations.bind(this),
       impact: 'medium',
-      category: 'framework'
+      category: 'framework',
     });
 
     // String operation optimizations
@@ -120,7 +120,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectStringIssues.bind(this),
       optimizer: this.suggestStringOptimizations.bind(this),
       impact: 'low',
-      category: 'algorithm'
+      category: 'algorithm',
     });
 
     // Object operation optimizations
@@ -130,7 +130,7 @@ class PerformanceOptimizer extends EventEmitter {
       detector: this.detectObjectIssues.bind(this),
       optimizer: this.suggestObjectOptimizations.bind(this),
       impact: 'medium',
-      category: 'memory'
+      category: 'memory',
     });
   }
 
@@ -141,7 +141,7 @@ class PerformanceOptimizer extends EventEmitter {
       timestamp: new Date().toISOString(),
       issues: [],
       suggestions: [],
-      metrics: {}
+      metrics: {},
     };
 
     try {
@@ -151,7 +151,7 @@ class PerformanceOptimizer extends EventEmitter {
       const ast = parser.parse(content, {
         sourceType: 'module',
         plugins: ['jsx', 'typescript', 'decorators-legacy'],
-        errorRecovery: true
+        errorRecovery: true,
       });
 
       // Run static analysis
@@ -175,14 +175,14 @@ class PerformanceOptimizer extends EventEmitter {
                 pattern: patternName,
                 category: pattern.category,
                 impact: pattern.impact,
-                ...issue
+                ...issue,
               });
               
               if (suggestion) {
                 analysis.suggestions.push({
                   pattern: patternName,
                   issueId: issue.id || `${patternName}-${analysis.issues.length}`,
-                  ...suggestion
+                  ...suggestion,
                 });
               }
             }
@@ -223,7 +223,7 @@ class PerformanceOptimizer extends EventEmitter {
       arrayOperations: 0,
       domOperations: 0,
       fileSize: content.length,
-      lineCount: content.split('\n').length
+      lineCount: content.split('\n').length,
     };
 
     let currentLoopDepth = 0;
@@ -250,7 +250,7 @@ class PerformanceOptimizer extends EventEmitter {
         },
         exit() {
           currentLoopDepth--;
-        }
+        },
       },
       AwaitExpression() {
         metrics.asyncOperations++;
@@ -283,7 +283,7 @@ class PerformanceOptimizer extends EventEmitter {
             metrics.domOperations++;
           }
         }
-      }
+      },
     });
 
     analysis.metrics.static = metrics;
@@ -295,13 +295,13 @@ class PerformanceOptimizer extends EventEmitter {
         'IfStatement|ConditionalExpression|SwitchCase|WhileStatement|DoWhileStatement|ForStatement': {
           enter() {
             complexity++;
-          }
+          },
         },
         LogicalExpression(path) {
           if (path.node.operator === '&&' || path.node.operator === '||') {
             complexity++;
           }
-        }
+        },
       }, null, { noScope: true });
       
       return complexity;
@@ -315,7 +315,7 @@ class PerformanceOptimizer extends EventEmitter {
     traverse(ast, {
       FunctionDeclaration: checkFunction,
       FunctionExpression: checkFunction,
-      ArrowFunctionExpression: checkFunction
+      ArrowFunctionExpression: checkFunction,
     });
 
     function checkFunction(path) {
@@ -326,12 +326,12 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'high_complexity',
           location: {
             start: path.node.loc?.start,
-            end: path.node.loc?.end
+            end: path.node.loc?.end,
           },
           functionName: path.node.id?.name || '<anonymous>',
           complexity: complexity,
           description: `Function has high time complexity: ${complexity.notation}`,
-          severity: complexity.score > 15 ? 'critical' : 'warning'
+          severity: complexity.score > 15 ? 'critical' : 'warning',
         });
       }
     }
@@ -355,7 +355,7 @@ class PerformanceOptimizer extends EventEmitter {
           },
           exit() {
             loopDepth--;
-          }
+          },
         },
         CallExpression(path) {
           // Check for recursive calls
@@ -373,7 +373,7 @@ class PerformanceOptimizer extends EventEmitter {
               if (loopDepth > 0) exponentialPatterns++;
             }
           }
-        }
+        },
       }, null, { noScope: true });
       
       // Calculate complexity score and notation
@@ -417,9 +417,9 @@ class PerformanceOptimizer extends EventEmitter {
           'Use hash maps/Set for lookups instead of nested loops',
           'Consider sorting data first if searching frequently',
           'Use dynamic programming for overlapping subproblems',
-          'Consider using binary search for sorted data'
+          'Consider using binary search for sorted data',
         ],
-        example: this.generateOptimizationExample(issue.complexity)
+        example: this.generateOptimizationExample(issue.complexity),
       });
     }
     
@@ -431,15 +431,15 @@ class PerformanceOptimizer extends EventEmitter {
           'Add memoization to cache results',
           'Convert to iterative approach if possible',
           'Implement tail recursion optimization',
-          'Add base case optimization'
-        ]
+          'Add base case optimization',
+        ],
       });
     }
     
     return {
       optimizations: suggestions,
       estimatedImprovement: this.estimatePerformanceImprovement(issue),
-      priority: issue.severity === 'critical' ? 'high' : 'medium'
+      priority: issue.severity === 'critical' ? 'high' : 'medium',
     };
   }
 
@@ -462,7 +462,7 @@ class PerformanceOptimizer extends EventEmitter {
                   loopIssues.push({
                     type: 'array_growth_in_loop',
                     method: property.name,
-                    description: 'Growing array in loop can cause performance issues'
+                    description: 'Growing array in loop can cause performance issues',
                   });
                 }
                 
@@ -470,21 +470,21 @@ class PerformanceOptimizer extends EventEmitter {
                   loopIssues.push({
                     type: 'array_copy_in_loop',
                     method: property.name,
-                    description: 'Creating array copies in loop is inefficient'
+                    description: 'Creating array copies in loop is inefficient',
                   });
                 }
                 
                 if (['find', 'filter', 'map', 'reduce'].includes(property.name)) {
                   // Check if this is nested iteration
                   const parentLoop = innerPath.findParent(p => 
-                    p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement()
+                    p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement(),
                   );
                   
                   if (parentLoop && parentLoop !== path) {
                     loopIssues.push({
                       type: 'nested_iteration',
                       method: property.name,
-                      description: 'Nested iteration can lead to O(n²) complexity'
+                      description: 'Nested iteration can lead to O(n²) complexity',
                     });
                   }
                 }
@@ -498,10 +498,10 @@ class PerformanceOptimizer extends EventEmitter {
                 (t.isStringLiteral(innerPath.node.left) || t.isStringLiteral(innerPath.node.right))) {
               loopIssues.push({
                 type: 'string_concatenation_in_loop',
-                description: 'String concatenation in loop is inefficient'
+                description: 'String concatenation in loop is inefficient',
               });
             }
-          }
+          },
         });
         
         if (loopIssues.length > 0) {
@@ -509,13 +509,13 @@ class PerformanceOptimizer extends EventEmitter {
             type: 'inefficient_loop',
             location: {
               start: path.node.loc?.start,
-              end: path.node.loc?.end
+              end: path.node.loc?.end,
             },
             problems: loopIssues,
-            description: 'Loop contains inefficient operations'
+            description: 'Loop contains inefficient operations',
           });
         }
-      }
+      },
     });
     
     return issues;
@@ -531,7 +531,7 @@ class PerformanceOptimizer extends EventEmitter {
             type: 'preallocate_array',
             description: 'Preallocate array with known size',
             code: 'const result = new Array(knownSize);',
-            improvement: 'Avoids dynamic array resizing'
+            improvement: 'Avoids dynamic array resizing',
           });
           break;
           
@@ -539,7 +539,7 @@ class PerformanceOptimizer extends EventEmitter {
           optimizations.push({
             type: 'avoid_copies',
             description: 'Work with original array or use single copy',
-            improvement: 'Reduces memory allocation and copying'
+            improvement: 'Reduces memory allocation and copying',
           });
           break;
           
@@ -547,8 +547,8 @@ class PerformanceOptimizer extends EventEmitter {
           optimizations.push({
             type: 'use_lookup',
             description: 'Use Set or Map for O(1) lookups',
-            code: `const lookup = new Set(array2);\nfor (const item of array1) {\n  if (lookup.has(item)) { ... }\n}`,
-            improvement: 'Reduces complexity from O(n²) to O(n)'
+            code: 'const lookup = new Set(array2);\nfor (const item of array1) {\n  if (lookup.has(item)) { ... }\n}',
+            improvement: 'Reduces complexity from O(n²) to O(n)',
           });
           break;
           
@@ -556,8 +556,8 @@ class PerformanceOptimizer extends EventEmitter {
           optimizations.push({
             type: 'use_array_join',
             description: 'Use array push and join',
-            code: `const parts = [];\nfor (...) { parts.push(str); }\nconst result = parts.join('');`,
-            improvement: 'Avoids creating intermediate strings'
+            code: 'const parts = [];\nfor (...) { parts.push(str); }\nconst result = parts.join(\'\');',
+            improvement: 'Avoids creating intermediate strings',
           });
           break;
       }
@@ -565,7 +565,7 @@ class PerformanceOptimizer extends EventEmitter {
     
     return {
       optimizations,
-      priority: issue.problems.some(p => p.type === 'nested_iteration') ? 'high' : 'medium'
+      priority: issue.problems.some(p => p.type === 'nested_iteration') ? 'high' : 'medium',
     };
   }
 
@@ -586,7 +586,7 @@ class PerformanceOptimizer extends EventEmitter {
               variableName: path.node.id.name,
               size: path.node.init.elements.length,
               location: path.node.loc,
-              description: 'Large array allocation'
+              description: 'Large array allocation',
             });
           }
           
@@ -599,10 +599,10 @@ class PerformanceOptimizer extends EventEmitter {
                     type: 'potential_closure_leak',
                     variableName: path.node.id.name,
                     location: innerPath.node.loc,
-                    description: 'Closure may retain reference to large object'
+                    description: 'Closure may retain reference to large object',
                   });
                 }
-              }
+              },
             });
           }
         }
@@ -620,7 +620,7 @@ class PerformanceOptimizer extends EventEmitter {
                 type: 'unnecessary_copy',
                 method: 'slice',
                 location: path.node.loc,
-                description: 'Creating unnecessary array copy'
+                description: 'Creating unnecessary array copy',
               });
             }
             
@@ -628,17 +628,17 @@ class PerformanceOptimizer extends EventEmitter {
               issues.push({
                 type: 'concat_in_loop',
                 location: path.node.loc,
-                description: 'Concatenating arrays in loop creates many intermediate arrays'
+                description: 'Concatenating arrays in loop creates many intermediate arrays',
               });
             }
           }
         }
-      }
+      },
     });
     
     function isInLoop(path) {
       return path.findParent(p => 
-        p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement()
+        p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement(),
       );
     }
     
@@ -653,13 +653,13 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'lazy_loading',
           description: 'Consider lazy loading or pagination',
-          recommendation: 'Load data in chunks as needed'
+          recommendation: 'Load data in chunks as needed',
         });
         optimizations.push({
           type: 'typed_array',
           description: 'Use TypedArray for numeric data',
           code: `const data = new Float32Array(${issue.size});`,
-          improvement: 'More memory efficient for numbers'
+          improvement: 'More memory efficient for numbers',
         });
         break;
         
@@ -668,7 +668,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'cleanup_references',
           description: 'Clear references when no longer needed',
           code: `${issue.variableName} = null; // Clear reference`,
-          improvement: 'Allows garbage collection'
+          improvement: 'Allows garbage collection',
         });
         break;
         
@@ -676,7 +676,7 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'avoid_copy',
           description: 'Use original array if not modifying',
-          improvement: 'Saves memory and copying time'
+          improvement: 'Saves memory and copying time',
         });
         break;
         
@@ -685,14 +685,14 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'use_push_spread',
           description: 'Use push with spread operator',
           code: 'result.push(...newItems);',
-          improvement: 'Modifies array in place'
+          improvement: 'Modifies array in place',
         });
         break;
     }
     
     return {
       optimizations,
-      estimatedMemorySaving: this.estimateMemorySaving(issue)
+      estimatedMemorySaving: this.estimateMemorySaving(issue),
     };
   }
 
@@ -709,7 +709,7 @@ class PerformanceOptimizer extends EventEmitter {
         parent.traverse({
           AwaitExpression(innerPath) {
             awaits.push(innerPath);
-          }
+          },
         });
         
         // Check for sequential independent awaits
@@ -720,7 +720,7 @@ class PerformanceOptimizer extends EventEmitter {
               type: 'sequential_awaits',
               count: sequentialAwaits.length,
               location: parent.node.loc,
-              description: 'Sequential awaits could be parallelized'
+              description: 'Sequential awaits could be parallelized',
             });
           }
         }
@@ -737,7 +737,7 @@ class PerformanceOptimizer extends EventEmitter {
               issues.push({
                 type: 'async_foreach',
                 location: path.node.loc,
-                description: 'forEach does not wait for async operations'
+                description: 'forEach does not wait for async operations',
               });
             }
           }
@@ -753,19 +753,19 @@ class PerformanceOptimizer extends EventEmitter {
             path.traverse({
               AwaitExpression() {
                 hasAsyncOperation = true;
-              }
+              },
             });
             
             if (hasAsyncOperation) {
               issues.push({
                 type: 'promise_constructor_antipattern',
                 location: path.node.loc,
-                description: 'Avoid using async/await in Promise constructor'
+                description: 'Avoid using async/await in Promise constructor',
               });
             }
           }
         }
-      }
+      },
     });
     
     return issues;
@@ -799,8 +799,8 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'parallel_execution',
           description: 'Use Promise.all for parallel execution',
-          code: `const [result1, result2] = await Promise.all([\n  asyncOperation1(),\n  asyncOperation2()\n]);`,
-          improvement: `Execute ${issue.count} operations in parallel`
+          code: 'const [result1, result2] = await Promise.all([\n  asyncOperation1(),\n  asyncOperation2()\n]);',
+          improvement: `Execute ${issue.count} operations in parallel`,
         });
         break;
         
@@ -808,12 +808,12 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_for_of',
           description: 'Use for...of loop for sequential async operations',
-          code: `for (const item of items) {\n  await processItem(item);\n}`
+          code: 'for (const item of items) {\n  await processItem(item);\n}',
         });
         optimizations.push({
           type: 'use_promise_all',
           description: 'Use Promise.all for parallel async operations',
-          code: `await Promise.all(items.map(item => processItem(item)));`
+          code: 'await Promise.all(items.map(item => processItem(item)));',
         });
         break;
         
@@ -821,14 +821,14 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_async_function',
           description: 'Use async function instead of Promise constructor',
-          code: `async function operation() {\n  const result = await asyncCall();\n  return result;\n}`
+          code: 'async function operation() {\n  const result = await asyncCall();\n  return result;\n}',
         });
         break;
     }
     
     return {
       optimizations,
-      priority: issue.type === 'sequential_awaits' ? 'high' : 'medium'
+      priority: issue.type === 'sequential_awaits' ? 'high' : 'medium',
     };
   }
 
@@ -863,7 +863,7 @@ class PerformanceOptimizer extends EventEmitter {
                     if (this.isSimilarCall(path.node, innerPath.node)) {
                       count++;
                     }
-                  }
+                  },
                 });
                 
                 if (count > 1) {
@@ -872,7 +872,7 @@ class PerformanceOptimizer extends EventEmitter {
                     operation: property.name,
                     count,
                     location: path.node.loc,
-                    description: `${property.name} called ${count} times with similar data`
+                    description: `${property.name} called ${count} times with similar data`,
                   });
                 }
               }
@@ -890,11 +890,11 @@ class PerformanceOptimizer extends EventEmitter {
               functionName: path.node.id?.name,
               complexity,
               location: path.node.loc,
-              description: 'Pure function with high complexity could benefit from memoization'
+              description: 'Pure function with high complexity could benefit from memoization',
             });
           }
         }
-      }
+      },
     });
     
     // Check for repeated function calls
@@ -905,7 +905,7 @@ class PerformanceOptimizer extends EventEmitter {
           signature,
           count: calls.length,
           location: calls[0].node.loc,
-          description: `Function called ${calls.length} times with same signature`
+          description: `Function called ${calls.length} times with same signature`,
         });
       }
     }
@@ -933,7 +933,7 @@ class PerformanceOptimizer extends EventEmitter {
   }
 
   isPureFunction(path) {
-    let isPure = true;
+    const isPure = true;
     let hasSideEffects = false;
     
     path.traverse({
@@ -959,7 +959,7 @@ class PerformanceOptimizer extends EventEmitter {
       },
       UpdateExpression() {
         hasSideEffects = true;
-      }
+      },
     });
     
     return !hasSideEffects;
@@ -972,16 +972,16 @@ class PerformanceOptimizer extends EventEmitter {
       'IfStatement|ConditionalExpression|SwitchCase': {
         enter() {
           complexity++;
-        }
+        },
       },
       'ForStatement|WhileStatement|DoWhileStatement': {
         enter() {
           complexity += 2;
-        }
+        },
       },
       CallExpression() {
         complexity++;
-      }
+      },
     }, null, { noScope: true });
     
     return complexity;
@@ -996,7 +996,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'cache_result',
           description: 'Cache computation result',
           code: `const cached${issue.operation} = data.${issue.operation}(...);\n// Use cached result instead of recomputing`,
-          improvement: `Avoid ${issue.count - 1} redundant computations`
+          improvement: `Avoid ${issue.count - 1} redundant computations`,
         });
         break;
         
@@ -1005,7 +1005,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'add_memoization',
           description: 'Add memoization to function',
           code: `const memoized${issue.functionName} = memoize(${issue.functionName});`,
-          improvement: 'Cache results for repeated calls with same arguments'
+          improvement: 'Cache results for repeated calls with same arguments',
         });
         break;
         
@@ -1013,15 +1013,15 @@ class PerformanceOptimizer extends EventEmitter {
         strategies.push({
           type: 'cache_calls',
           description: 'Cache function call results',
-          code: `const cache = new Map();\nfunction getCached(key) {\n  if (!cache.has(key)) {\n    cache.set(key, expensiveOperation(key));\n  }\n  return cache.get(key);\n}`,
-          improvement: `Reduce ${issue.count} calls to 1 + cache lookups`
+          code: 'const cache = new Map();\nfunction getCached(key) {\n  if (!cache.has(key)) {\n    cache.set(key, expensiveOperation(key));\n  }\n  return cache.get(key);\n}',
+          improvement: `Reduce ${issue.count} calls to 1 + cache lookups`,
         });
         break;
     }
     
     return {
       strategies,
-      estimatedImprovement: this.estimateCachingImprovement(issue)
+      estimatedImprovement: this.estimateCachingImprovement(issue),
     };
   }
 
@@ -1044,7 +1044,7 @@ class PerformanceOptimizer extends EventEmitter {
                 p.isForStatement() || p.isWhileStatement() || 
                 p.isDoWhileStatement() || 
                 (p.isCallExpression() && t.isMemberExpression(p.node.callee) && 
-                 ['forEach', 'map', 'filter'].includes(p.node.callee.property?.name))
+                 ['forEach', 'map', 'filter'].includes(p.node.callee.property?.name)),
               );
               
               if (inLoop) {
@@ -1052,7 +1052,7 @@ class PerformanceOptimizer extends EventEmitter {
                   type: 'n_plus_one',
                   method: property.name,
                   location: path.node.loc,
-                  description: 'Database query inside loop (N+1 problem)'
+                  description: 'Database query inside loop (N+1 problem)',
                 });
               }
             }
@@ -1062,7 +1062,7 @@ class PerformanceOptimizer extends EventEmitter {
               const args = path.node.arguments;
               if (args.length > 0 && t.isObjectExpression(args[0])) {
                 const fields = args[0].properties.map(p => 
-                  t.isIdentifier(p.key) ? p.key.name : null
+                  t.isIdentifier(p.key) ? p.key.name : null,
                 ).filter(Boolean);
                 
                 if (fields.length > 0) {
@@ -1070,7 +1070,7 @@ class PerformanceOptimizer extends EventEmitter {
                     type: 'potential_missing_index',
                     fields,
                     location: path.node.loc,
-                    description: `Query on fields: ${fields.join(', ')}`
+                    description: `Query on fields: ${fields.join(', ')}`,
                   });
                 }
               }
@@ -1089,7 +1089,7 @@ class PerformanceOptimizer extends EventEmitter {
                 if (this.isDatabaseQuery(innerPath.node)) {
                   queries.push(innerPath);
                 }
-              }
+              },
             });
             
             if (queries.length > 3) {
@@ -1097,12 +1097,12 @@ class PerformanceOptimizer extends EventEmitter {
                 type: 'multiple_queries',
                 count: queries.length,
                 location: parent.node.loc,
-                description: `${queries.length} database queries in single function`
+                description: `${queries.length} database queries in single function`,
               });
             }
           }
         }
-      }
+      },
     });
     
     return issues;
@@ -1128,14 +1128,14 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_join',
           description: 'Use JOIN or populate to fetch related data',
-          code: `const results = await Model.find().populate('relatedField');`,
-          improvement: 'Reduce N+1 queries to single query'
+          code: 'const results = await Model.find().populate(\'relatedField\');',
+          improvement: 'Reduce N+1 queries to single query',
         });
         optimizations.push({
           type: 'batch_loading',
           description: 'Load all data upfront',
-          code: `const ids = items.map(item => item.id);\nconst related = await RelatedModel.find({ id: { $in: ids } });`,
-          improvement: 'Single query instead of N queries'
+          code: 'const ids = items.map(item => item.id);\nconst related = await RelatedModel.find({ id: { $in: ids } });',
+          improvement: 'Single query instead of N queries',
         });
         break;
         
@@ -1144,7 +1144,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'add_index',
           description: `Consider adding index on: ${issue.fields.join(', ')}`,
           code: `db.collection.createIndex({ ${issue.fields.map(f => `${f}: 1`).join(', ')} });`,
-          improvement: 'Faster query execution'
+          improvement: 'Faster query execution',
         });
         break;
         
@@ -1152,19 +1152,19 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'aggregate_queries',
           description: 'Combine multiple queries using aggregation',
-          improvement: `Reduce ${issue.count} queries to fewer operations`
+          improvement: `Reduce ${issue.count} queries to fewer operations`,
         });
         optimizations.push({
           type: 'use_transactions',
           description: 'Use database transactions for consistency',
-          code: `const session = await mongoose.startSession();\nawait session.withTransaction(async () => {\n  // Multiple operations\n});`
+          code: 'const session = await mongoose.startSession();\nawait session.withTransaction(async () => {\n  // Multiple operations\n});',
         });
         break;
     }
     
     return {
       optimizations,
-      priority: issue.type === 'n_plus_one' ? 'critical' : 'high'
+      priority: issue.type === 'n_plus_one' ? 'critical' : 'high',
     };
   }
 
@@ -1190,14 +1190,14 @@ class PerformanceOptimizer extends EventEmitter {
               type: 'namespace_import',
               library: source,
               location: path.node.loc,
-              description: `Importing entire ${source} library`
+              description: `Importing entire ${source} library`,
             });
           } else if (specifiers.some(s => t.isImportDefaultSpecifier(s))) {
             issues.push({
               type: 'default_import',
               library: source,
               location: path.node.loc,
-              description: `Default import from ${source} may include unnecessary code`
+              description: `Default import from ${source} may include unnecessary code`,
             });
           }
         }
@@ -1211,7 +1211,7 @@ class PerformanceOptimizer extends EventEmitter {
           issues.push({
             type: 'dynamic_import',
             location: path.node.loc,
-            description: 'Dynamic import found - ensure it\'s necessary'
+            description: 'Dynamic import found - ensure it\'s necessary',
           });
         }
         
@@ -1220,10 +1220,10 @@ class PerformanceOptimizer extends EventEmitter {
           issues.push({
             type: 'commonjs_require',
             location: path.node.loc,
-            description: 'CommonJS require may not tree-shake well'
+            description: 'CommonJS require may not tree-shake well',
           });
         }
-      }
+      },
     });
     
     // Check for duplicate imports
@@ -1233,7 +1233,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'duplicate_imports',
           source,
           count: importNodes.length,
-          description: `${source} imported ${importNodes.length} times`
+          description: `${source} imported ${importNodes.length} times`,
         });
       }
     }
@@ -1250,7 +1250,7 @@ class PerformanceOptimizer extends EventEmitter {
       'three',
       'antd',
       'material-ui',
-      '@material-ui/core'
+      '@material-ui/core',
     ];
     
     return largeLibraries.some(lib => source.includes(lib));
@@ -1265,7 +1265,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'named_imports',
           description: 'Use named imports instead of namespace import',
           code: `import { specificFunction } from '${issue.library}';`,
-          improvement: 'Enable tree-shaking to reduce bundle size'
+          improvement: 'Enable tree-shaking to reduce bundle size',
         });
         break;
         
@@ -1274,8 +1274,8 @@ class PerformanceOptimizer extends EventEmitter {
           optimizations.push({
             type: 'modular_import',
             description: 'Import specific lodash modules',
-            code: `import debounce from 'lodash/debounce';`,
-            improvement: 'Import only what you need'
+            code: 'import debounce from \'lodash/debounce\';',
+            improvement: 'Import only what you need',
           });
         }
         break;
@@ -1285,7 +1285,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'consolidate_imports',
           description: 'Combine duplicate imports',
           code: `import { func1, func2, func3 } from '${issue.source}';`,
-          improvement: 'Cleaner code and potential optimization'
+          improvement: 'Cleaner code and potential optimization',
         });
         break;
         
@@ -1293,15 +1293,15 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_esm',
           description: 'Use ES modules for better tree-shaking',
-          code: `import module from 'module-name';`,
-          improvement: 'Better optimization and tree-shaking'
+          code: 'import module from \'module-name\';',
+          improvement: 'Better optimization and tree-shaking',
         });
         break;
     }
     
     return {
       optimizations,
-      estimatedSizeReduction: this.estimateBundleSizeReduction(issue)
+      estimatedSizeReduction: this.estimateBundleSizeReduction(issue),
     };
   }
 
@@ -1320,14 +1320,14 @@ class PerformanceOptimizer extends EventEmitter {
             t.isIdentifier(path.node.callee.property, { name: 'setState' })) {
           
           const inLoop = path.findParent(p => 
-            p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement()
+            p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement(),
           );
           
           if (inLoop) {
             issues.push({
               type: 'setState_in_loop',
               location: path.node.loc,
-              description: 'Multiple setState calls in loop cause unnecessary re-renders'
+              description: 'Multiple setState calls in loop cause unnecessary re-renders',
             });
           }
         }
@@ -1346,7 +1346,7 @@ class PerformanceOptimizer extends EventEmitter {
                 type: 'missing_memo',
                 componentName,
                 location: funcParent.node.loc,
-                description: 'Component could benefit from React.memo'
+                description: 'Component could benefit from React.memo',
               });
             }
           }
@@ -1365,12 +1365,12 @@ class PerformanceOptimizer extends EventEmitter {
                 type: 'inline_function_prop',
                 propName: attr.name.name,
                 location: attr.loc,
-                description: 'Inline function prop causes unnecessary re-renders'
+                description: 'Inline function prop causes unnecessary re-renders',
               });
             }
           }
         }
-      }
+      },
     });
     
     return issues;
@@ -1391,7 +1391,7 @@ class PerformanceOptimizer extends EventEmitter {
               t.isJSXFragment(returnPath.node.argument)) {
             returnsJSX = true;
           }
-        }
+        },
       });
       
       return returnsJSX;
@@ -1431,7 +1431,7 @@ class PerformanceOptimizer extends EventEmitter {
             hasSideEffects = true;
           }
         }
-      }
+      },
     });
     
     return hasProps && !hasSideEffects;
@@ -1445,8 +1445,8 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'batch_state_updates',
           description: 'Batch state updates outside loop',
-          code: `const updates = [];\nfor (...) {\n  updates.push(...);\n}\nthis.setState({ items: updates });`,
-          improvement: 'Single re-render instead of multiple'
+          code: 'const updates = [];\nfor (...) {\n  updates.push(...);\n}\nthis.setState({ items: updates });',
+          improvement: 'Single re-render instead of multiple',
         });
         break;
         
@@ -1455,7 +1455,7 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'add_react_memo',
           description: 'Wrap component in React.memo',
           code: `const ${issue.componentName} = React.memo(function ${issue.componentName}(props) {\n  // component code\n});`,
-          improvement: 'Prevent unnecessary re-renders'
+          improvement: 'Prevent unnecessary re-renders',
         });
         break;
         
@@ -1464,14 +1464,14 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'use_callback',
           description: 'Use useCallback for function props',
           code: `const handle${issue.propName} = useCallback(() => {\n  // handler code\n}, [dependencies]);`,
-          improvement: 'Stable function reference'
+          improvement: 'Stable function reference',
         });
         break;
     }
     
     return {
       optimizations,
-      priority: 'medium'
+      priority: 'medium',
     };
   }
 
@@ -1483,14 +1483,14 @@ class PerformanceOptimizer extends EventEmitter {
         // Check for string concatenation in loops
         if (path.node.operator === '+') {
           const inLoop = path.findParent(p => 
-            p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement()
+            p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement(),
           );
           
           if (inLoop && (t.isStringLiteral(path.node.left) || t.isStringLiteral(path.node.right))) {
             issues.push({
               type: 'string_concat_in_loop',
               location: path.node.loc,
-              description: 'String concatenation in loop is inefficient'
+              description: 'String concatenation in loop is inefficient',
             });
           }
         }
@@ -1512,7 +1512,7 @@ class PerformanceOptimizer extends EventEmitter {
                         innerPath.node.callee.property?.name === property.name) {
                       count++;
                     }
-                  }
+                  },
                 });
                 
                 if (count > 2) {
@@ -1521,14 +1521,14 @@ class PerformanceOptimizer extends EventEmitter {
                     operation: property.name,
                     count,
                     location: path.node.loc,
-                    description: `${property.name} called ${count} times`
+                    description: `${property.name} called ${count} times`,
                   });
                 }
               }
             }
           }
         }
-      }
+      },
     });
     
     return issues;
@@ -1542,8 +1542,8 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_array_join',
           description: 'Use array and join for string building',
-          code: `const parts = [];\nfor (...) {\n  parts.push(stringPart);\n}\nconst result = parts.join('');`,
-          improvement: 'More efficient string concatenation'
+          code: 'const parts = [];\nfor (...) {\n  parts.push(stringPart);\n}\nconst result = parts.join(\'\');',
+          improvement: 'More efficient string concatenation',
         });
         break;
         
@@ -1552,14 +1552,14 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'cache_result',
           description: `Cache ${issue.operation} result`,
           code: `const processed = str.${issue.operation}(...);\n// Reuse processed instead of calling again`,
-          improvement: `Avoid ${issue.count - 1} redundant operations`
+          improvement: `Avoid ${issue.count - 1} redundant operations`,
         });
         break;
     }
     
     return {
       optimizations,
-      priority: 'low'
+      priority: 'low',
     };
   }
 
@@ -1574,7 +1574,7 @@ class PerformanceOptimizer extends EventEmitter {
             type: 'large_object_literal',
             size: path.node.properties.length,
             location: path.node.loc,
-            description: 'Large object literal may impact performance'
+            description: 'Large object literal may impact performance',
           });
         }
       },
@@ -1593,7 +1593,7 @@ class PerformanceOptimizer extends EventEmitter {
             type: 'deep_property_access',
             depth,
             location: path.node.loc,
-            description: `Deep property access (${depth} levels)`
+            description: `Deep property access (${depth} levels)`,
           });
         }
       },
@@ -1608,7 +1608,7 @@ class PerformanceOptimizer extends EventEmitter {
               ['keys', 'values', 'entries'].includes(property.name)) {
             
             const inLoop = path.findParent(p => 
-              p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement()
+              p.isForStatement() || p.isWhileStatement() || p.isDoWhileStatement(),
             );
             
             if (inLoop) {
@@ -1616,12 +1616,12 @@ class PerformanceOptimizer extends EventEmitter {
                 type: 'object_iteration_in_loop',
                 method: property.name,
                 location: path.node.loc,
-                description: `Object.${property.name} in loop creates intermediate array`
+                description: `Object.${property.name} in loop creates intermediate array`,
               });
             }
           }
         }
-      }
+      },
     });
     
     return issues;
@@ -1635,8 +1635,8 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'use_map',
           description: 'Consider using Map for large key-value stores',
-          code: `const map = new Map([\n  ['key1', value1],\n  ['key2', value2]\n]);`,
-          improvement: 'Better performance for frequent updates'
+          code: 'const map = new Map([\n  [\'key1\', value1],\n  [\'key2\', value2]\n]);',
+          improvement: 'Better performance for frequent updates',
         });
         break;
         
@@ -1644,13 +1644,13 @@ class PerformanceOptimizer extends EventEmitter {
         optimizations.push({
           type: 'cache_reference',
           description: 'Cache intermediate references',
-          code: `const intermediate = obj.level1.level2;\nconst value = intermediate.level3.level4;`,
-          improvement: 'Reduce property lookup overhead'
+          code: 'const intermediate = obj.level1.level2;\nconst value = intermediate.level3.level4;',
+          improvement: 'Reduce property lookup overhead',
         });
         optimizations.push({
           type: 'flatten_structure',
           description: 'Consider flattening data structure',
-          improvement: 'Simpler and faster access'
+          improvement: 'Simpler and faster access',
         });
         break;
         
@@ -1659,20 +1659,20 @@ class PerformanceOptimizer extends EventEmitter {
           type: 'cache_iteration',
           description: `Cache Object.${issue.method} result`,
           code: `const ${issue.method} = Object.${issue.method}(obj);\nfor (...) {\n  // Use cached ${issue.method}\n}`,
-          improvement: 'Avoid creating array multiple times'
+          improvement: 'Avoid creating array multiple times',
         });
         break;
     }
     
     return {
       optimizations,
-      priority: issue.type === 'large_object_literal' ? 'medium' : 'low'
+      priority: issue.type === 'large_object_literal' ? 'medium' : 'low',
     };
   }
 
   generateOptimizationExample(complexity) {
     if (complexity.loopDepth >= 2) {
-      return `// Instead of nested loops O(n²):\nfor (const item1 of array1) {\n  for (const item2 of array2) {\n    if (item1.id === item2.id) { ... }\n  }\n}\n\n// Use a Map for O(n):\nconst map = new Map(array2.map(item => [item.id, item]));\nfor (const item1 of array1) {\n  const item2 = map.get(item1.id);\n  if (item2) { ... }\n}`;
+      return '// Instead of nested loops O(n²):\nfor (const item1 of array1) {\n  for (const item2 of array2) {\n    if (item1.id === item2.id) { ... }\n  }\n}\n\n// Use a Map for O(n):\nconst map = new Map(array2.map(item => [item.id, item]));\nfor (const item1 of array1) {\n  const item2 = map.get(item1.id);\n  if (item2) { ... }\n}';
     }
     return '';
   }
@@ -1682,8 +1682,8 @@ class PerformanceOptimizer extends EventEmitter {
       high_complexity: {
         'O(n²)': '10-100x faster for large datasets',
         'O(n³)': '100-1000x faster for large datasets',
-        'O(2^n)': 'Exponential improvement'
-      }
+        'O(2^n)': 'Exponential improvement',
+      },
     };
     
     if (issue.type === 'high_complexity' && issue.complexity.notation) {
@@ -1697,7 +1697,7 @@ class PerformanceOptimizer extends EventEmitter {
     const savings = {
       large_array: `~${(issue.size * 8 / 1024 / 1024).toFixed(1)}MB`,
       concat_in_loop: 'Reduces intermediate array allocations',
-      unnecessary_copy: 'Saves memory equal to array size'
+      unnecessary_copy: 'Saves memory equal to array size',
     };
     
     return savings[issue.type] || 'Memory savings depend on data size';
@@ -1715,11 +1715,11 @@ class PerformanceOptimizer extends EventEmitter {
       namespace_import: {
         lodash: '~500KB to ~5KB per function',
         moment: '~300KB to ~50KB with date-fns',
-        rxjs: '~200KB to ~20KB with proper imports'
+        rxjs: '~200KB to ~20KB with proper imports',
       },
       default_import: {
-        lodash: '~70KB to ~5KB per function'
-      }
+        lodash: '~70KB to ~5KB per function',
+      },
     };
     
     if (reductions[issue.type]?.[issue.library]) {
@@ -1772,7 +1772,7 @@ class PerformanceOptimizer extends EventEmitter {
     return {
       executionTime: 0,
       memoryUsage: 0,
-      cpuUsage: 0
+      cpuUsage: 0,
     };
   }
 
@@ -1781,7 +1781,7 @@ class PerformanceOptimizer extends EventEmitter {
     const result = {
       success: false,
       changes: [],
-      error: null
+      error: null,
     };
     
     try {
@@ -1793,14 +1793,14 @@ class PerformanceOptimizer extends EventEmitter {
       result.success = true;
       result.changes.push({
         type: optimization.type,
-        description: optimization.description
+        description: optimization.description,
       });
       
       this.optimizationHistory.push({
         filePath,
         optimization,
         timestamp: new Date().toISOString(),
-        result
+        result,
       });
       
     } catch (error) {
@@ -1817,11 +1817,11 @@ class PerformanceOptimizer extends EventEmitter {
         filesAnalyzed: this.performanceMetrics.size,
         totalIssues: 0,
         criticalIssues: 0,
-        optimizationsApplied: this.optimizationHistory.length
+        optimizationsApplied: this.optimizationHistory.length,
       },
       byCategory: {},
       topIssues: [],
-      recommendations: []
+      recommendations: [],
     };
     
     // Aggregate metrics
@@ -1835,13 +1835,13 @@ class PerformanceOptimizer extends EventEmitter {
         if (!report.byCategory[category]) {
           report.byCategory[category] = {
             count: 0,
-            issues: []
+            issues: [],
           };
         }
         report.byCategory[category].count++;
         report.byCategory[category].issues.push({
           file: file.replace(this.rootPath, '.'),
-          ...issue
+          ...issue,
         });
       }
     }
@@ -1851,7 +1851,7 @@ class PerformanceOptimizer extends EventEmitter {
     for (const [file, metrics] of this.performanceMetrics) {
       allIssues.push(...metrics.issues.map(i => ({
         file: file.replace(this.rootPath, '.'),
-        ...i
+        ...i,
       })));
     }
     
@@ -1875,7 +1875,7 @@ class PerformanceOptimizer extends EventEmitter {
       recommendations.push({
         category: 'algorithm',
         recommendation: 'Consider algorithm optimization training for the team',
-        priority: 'high'
+        priority: 'high',
       });
     }
     
@@ -1883,7 +1883,7 @@ class PerformanceOptimizer extends EventEmitter {
       recommendations.push({
         category: 'async',
         recommendation: 'Review async/await patterns and consider using Promise.all',
-        priority: 'medium'
+        priority: 'medium',
       });
     }
     
@@ -1891,7 +1891,7 @@ class PerformanceOptimizer extends EventEmitter {
       recommendations.push({
         category: 'memory',
         recommendation: 'Implement memory profiling in development',
-        priority: 'medium'
+        priority: 'medium',
       });
     }
     

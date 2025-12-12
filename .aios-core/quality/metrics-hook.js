@@ -41,8 +41,8 @@ async function recordPreCommitMetrics(result) {
       findingsCount: result.findingsCount || 0,
       metadata: {
         triggeredBy: 'hook',
-        ...result.metadata
-      }
+        ...result.metadata,
+      },
     });
   } catch (error) {
     // Don't fail the commit if metrics recording fails
@@ -89,8 +89,8 @@ async function recordPRReviewMetrics(result) {
       quinn: result.quinn,
       metadata: {
         triggeredBy: 'pr',
-        ...result.metadata
-      }
+        ...result.metadata,
+      },
     });
   } catch (error) {
     console.warn(`[metrics] Warning: Failed to record PR review metrics: ${error.message}`);
@@ -126,8 +126,8 @@ async function recordHumanReviewMetrics(result) {
       findingsCount: result.findingsCount || 0,
       metadata: {
         triggeredBy: 'manual',
-        ...result.metadata
-      }
+        ...result.metadata,
+      },
     });
   } catch (error) {
     console.warn(`[metrics] Warning: Failed to record human review metrics: ${error.message}`);
@@ -171,7 +171,7 @@ async function withPreCommitMetrics(checkFn) {
     passed: result.passed,
     durationMs,
     findingsCount: result.findingsCount || 0,
-    metadata: result.metadata
+    metadata: result.metadata,
   });
 
   return result;
@@ -191,18 +191,18 @@ async function getQuickSummary() {
       layer1: {
         passRate: metrics.layers.layer1.passRate,
         lastRun: metrics.layers.layer1.lastRun,
-        totalRuns: metrics.layers.layer1.totalRuns
+        totalRuns: metrics.layers.layer1.totalRuns,
       },
       layer2: {
         passRate: metrics.layers.layer2.passRate,
         autoCatchRate: metrics.layers.layer2.autoCatchRate,
-        totalRuns: metrics.layers.layer2.totalRuns
+        totalRuns: metrics.layers.layer2.totalRuns,
       },
       layer3: {
         passRate: metrics.layers.layer3.passRate,
-        totalRuns: metrics.layers.layer3.totalRuns
+        totalRuns: metrics.layers.layer3.totalRuns,
       },
-      historyCount: metrics.history.length
+      historyCount: metrics.history.length,
     };
   } catch (error) {
     return null;
@@ -225,7 +225,7 @@ if (require.main === module) {
         const result = await recordPreCommitMetrics({
           passed,
           durationMs: duration,
-          findingsCount: findings
+          findingsCount: findings,
         });
 
         if (result) {
@@ -256,5 +256,5 @@ module.exports = {
   recordPRReviewMetrics,
   recordHumanReviewMetrics,
   withPreCommitMetrics,
-  getQuickSummary
+  getQuickSummary,
 };

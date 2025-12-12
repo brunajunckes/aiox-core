@@ -54,7 +54,7 @@ async function migrateModule(moduleData, moduleName, aiosCoreDir, options = {}) 
     module: moduleName,
     migratedFiles: [],
     errors: [],
-    totalSize: 0
+    totalSize: 0,
   };
 
   const moduleDir = path.join(aiosCoreDir, moduleName);
@@ -69,7 +69,7 @@ async function migrateModule(moduleData, moduleName, aiosCoreDir, options = {}) 
           source: file.sourcePath,
           target: targetPath,
           size: file.size,
-          dryRun: true
+          dryRun: true,
         });
       } else {
         // Actually copy the file
@@ -78,7 +78,7 @@ async function migrateModule(moduleData, moduleName, aiosCoreDir, options = {}) 
         result.migratedFiles.push({
           source: file.sourcePath,
           target: targetPath,
-          size: file.size
+          size: file.size,
         });
       }
 
@@ -87,13 +87,13 @@ async function migrateModule(moduleData, moduleName, aiosCoreDir, options = {}) 
       if (verbose) {
         onProgress({
           phase: 'file',
-          message: `    → ${file.relativePath}`
+          message: `    → ${file.relativePath}`,
         });
       }
     } catch (error) {
       result.errors.push({
         file: file.relativePath,
-        error: error.message
+        error: error.message,
       });
     }
   }
@@ -112,13 +112,13 @@ async function executeMigration(plan, options = {}) {
     verbose = false,
     dryRun = false,
     onProgress = () => {},
-    cleanupOriginals = true
+    cleanupOriginals = true,
   } = options;
 
   if (!plan.canMigrate) {
     return {
       success: false,
-      error: plan.error || plan.message
+      error: plan.error || plan.message,
     };
   }
 
@@ -129,7 +129,7 @@ async function executeMigration(plan, options = {}) {
     totalFiles: 0,
     totalSize: 0,
     errors: [],
-    cleanedUp: []
+    cleanedUp: [],
   };
 
   // Phase 1: Create module directories
@@ -147,27 +147,27 @@ async function executeMigration(plan, options = {}) {
       result.modules[moduleName] = {
         files: 0,
         size: 0,
-        skipped: true
+        skipped: true,
       };
       continue;
     }
 
     onProgress({
       phase: 'module',
-      message: `✓ Migrating ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} module (${moduleData.files.length} files)`
+      message: `✓ Migrating ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} module (${moduleData.files.length} files)`,
     });
 
     const moduleResult = await migrateModule(
       moduleData,
       moduleName,
       plan.aiosCoreDir,
-      { verbose, onProgress, dryRun }
+      { verbose, onProgress, dryRun },
     );
 
     result.modules[moduleName] = {
       files: moduleResult.migratedFiles.length,
       size: moduleResult.totalSize,
-      errors: moduleResult.errors
+      errors: moduleResult.errors,
     };
 
     result.totalFiles += moduleResult.migratedFiles.length;
@@ -182,7 +182,7 @@ async function executeMigration(plan, options = {}) {
   if (plan.uncategorized.length > 0 && !dryRun) {
     onProgress({
       phase: 'uncategorized',
-      message: `Handling ${plan.uncategorized.length} uncategorized files...`
+      message: `Handling ${plan.uncategorized.length} uncategorized files...`,
     });
 
     for (const file of plan.uncategorized) {
@@ -194,7 +194,7 @@ async function executeMigration(plan, options = {}) {
       } catch (error) {
         result.errors.push({
           file: file.relativePath,
-          error: error.message
+          error: error.message,
         });
       }
     }
@@ -229,7 +229,7 @@ async function executeMigration(plan, options = {}) {
         result.errors.push({
           type: 'cleanup',
           path: dir,
-          error: error.message
+          error: error.message,
         });
       }
     }
@@ -250,7 +250,7 @@ async function saveMigrationState(projectRoot, state) {
   const statePath = path.join(projectRoot, '.aios-migration-state.json');
   await fs.promises.writeFile(statePath, JSON.stringify({
     ...state,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   }, null, 2));
 }
 
@@ -288,5 +288,5 @@ module.exports = {
   executeMigration,
   saveMigrationState,
   loadMigrationState,
-  clearMigrationState
+  clearMigrationState,
 };

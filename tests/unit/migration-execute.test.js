@@ -13,7 +13,7 @@ const {
   executeMigration,
   saveMigrationState,
   loadMigrationState,
-  clearMigrationState
+  clearMigrationState,
 } = require('../../.aios-core/cli/commands/migrate/execute');
 const { analyzeMigrationPlan } = require('../../.aios-core/cli/commands/migrate/analyze');
 
@@ -66,8 +66,8 @@ describe('Migration Execute Module', () => {
         files: [{
           sourcePath: path.join(aiosCoreDir, 'agents', 'dev.md'),
           relativePath: path.join('agents', 'dev.md'),
-          size: 5
-        }]
+          size: 5,
+        }],
       };
 
       const result = await migrateModule(moduleData, 'development', aiosCoreDir);
@@ -86,8 +86,8 @@ describe('Migration Execute Module', () => {
         files: [{
           sourcePath: path.join(aiosCoreDir, 'agents', 'dev.md'),
           relativePath: path.join('agents', 'dev.md'),
-          size: 5
-        }]
+          size: 5,
+        }],
       };
 
       const result = await migrateModule(moduleData, 'development', aiosCoreDir, { dryRun: true });

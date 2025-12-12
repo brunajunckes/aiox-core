@@ -148,11 +148,11 @@ function formatMCPSection(mcpResults) {
   const icon = healthyMCPs === totalMCPs
     ? chalk.green('✅')
     : healthyMCPs > 0
-    ? chalk.yellow('⚠️')
-    : chalk.red('❌');
+      ? chalk.yellow('⚠️')
+      : chalk.red('❌');
 
   const lines = [
-    `${icon} ${chalk.bold('MCP Installation')} (${healthyMCPs}/${totalMCPs} healthy${warningMCPs > 0 ? `, ${warningMCPs} warnings` : ''}${failedMCPs > 0 ? `, ${failedMCPs} failed` : ''})`
+    `${icon} ${chalk.bold('MCP Installation')} (${healthyMCPs}/${totalMCPs} healthy${warningMCPs > 0 ? `, ${warningMCPs} warnings` : ''}${failedMCPs > 0 ? `, ${failedMCPs} failed` : ''})`,
   ];
 
   healthChecks.forEach(health => {
@@ -201,7 +201,7 @@ function formatDependenciesSection(depsResults) {
   const icon = allSuccess ? chalk.green('✅') : chalk.yellow('⚠️');
 
   const lines = [
-    `${icon} ${chalk.bold('Dependencies')}`
+    `${icon} ${chalk.bold('Dependencies')}`,
   ];
 
   depsResults.checks.forEach(check => {
@@ -241,22 +241,22 @@ function formatOverallStatus(validationResults) {
   switch (status) {
     case 'success':
       return chalk.bold.green(
-        `Overall Status: ✅ SUCCESS${warningCount > 0 ? ` (${warningCount} warning${warningCount !== 1 ? 's' : ''})` : ''}`
+        `Overall Status: ✅ SUCCESS${warningCount > 0 ? ` (${warningCount} warning${warningCount !== 1 ? 's' : ''})` : ''}`,
       );
 
     case 'warning':
       return chalk.bold.yellow(
-        `Overall Status: ⚠️  SUCCESS WITH WARNINGS (${warningCount} warning${warningCount !== 1 ? 's' : ''})`
+        `Overall Status: ⚠️  SUCCESS WITH WARNINGS (${warningCount} warning${warningCount !== 1 ? 's' : ''})`,
       );
 
     case 'partial':
       return chalk.bold.yellow(
-        `Overall Status: ⚠️  PARTIAL SUCCESS (${errorCount} error${errorCount !== 1 ? 's' : ''}, ${warningCount} warning${warningCount !== 1 ? 's' : ''})`
+        `Overall Status: ⚠️  PARTIAL SUCCESS (${errorCount} error${errorCount !== 1 ? 's' : ''}, ${warningCount} warning${warningCount !== 1 ? 's' : ''})`,
       );
 
     case 'failed':
       return chalk.bold.red(
-        `Overall Status: ❌ FAILED (${errorCount} error${errorCount !== 1 ? 's' : ''})`
+        `Overall Status: ❌ FAILED (${errorCount} error${errorCount !== 1 ? 's' : ''})`,
       );
 
     default:
@@ -265,5 +265,5 @@ function formatOverallStatus(validationResults) {
 }
 
 module.exports = {
-  generateReport
+  generateReport,
 };

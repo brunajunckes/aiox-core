@@ -14,12 +14,12 @@ const {
   trackTest,
   updateMetrics,
   completeDecisionLogging,
-  getCurrentContext
+  getCurrentContext,
 } = require('../../.aios-core/development/scripts/decision-recorder');
 
 // Mock decision-log-generator
 jest.mock('../../.aios-core/development/scripts/decision-log-generator', () => ({
-  generateDecisionLog: jest.fn().mockResolvedValue('.ai/decision-log-test.md')
+  generateDecisionLog: jest.fn().mockResolvedValue('.ai/decision-log-test.md'),
 }));
 
 describe('decision-recorder', () => {
@@ -71,7 +71,7 @@ describe('decision-recorder', () => {
         reason: 'Test reason',
         alternatives: ['Alt 1', 'Alt 2'],
         type: 'library-choice',
-        priority: 'high'
+        priority: 'high',
       });
 
       expect(decision).toBeDefined();
@@ -85,7 +85,7 @@ describe('decision-recorder', () => {
 
       const decision = recordDecision({
         description: 'Test',
-        reason: 'Test'
+        reason: 'Test',
       });
 
       expect(decision).toBeNull();
@@ -119,7 +119,7 @@ describe('decision-recorder', () => {
       trackTest({
         name: 'api.test.js',
         passed: true,
-        duration: 125
+        duration: 125,
       });
 
       const context = getCurrentContext();
@@ -139,7 +139,7 @@ describe('decision-recorder', () => {
 
       updateMetrics({
         agentLoadTime: 200,
-        taskExecutionTime: 5000
+        taskExecutionTime: 5000,
       });
 
       const context = getCurrentContext();
@@ -172,7 +172,7 @@ describe('decision-recorder', () => {
         status: 'completed',
         decisions: expect.any(Array),
         filesModified: expect.any(Array),
-        testsRun: expect.any(Array)
+        testsRun: expect.any(Array),
       }));
     });
 
@@ -251,7 +251,7 @@ describe('decision-recorder', () => {
 
       // Initialize
       await initializeDecisionLogging('dev', 'docs/stories/story-6.1.2.6.2.md', {
-        agentLoadTime: 150
+        agentLoadTime: 150,
       });
 
       // Record decisions during execution
@@ -260,7 +260,7 @@ describe('decision-recorder', () => {
         reason: 'Better error handling and interceptors',
         alternatives: ['Fetch API', 'Got library'],
         type: 'library-choice',
-        priority: 'medium'
+        priority: 'medium',
       });
 
       recordDecision({
@@ -268,7 +268,7 @@ describe('decision-recorder', () => {
         reason: 'Simple state sharing without Redux',
         alternatives: ['Redux', 'Zustand'],
         type: 'architecture',
-        priority: 'high'
+        priority: 'high',
       });
 
       // Track files

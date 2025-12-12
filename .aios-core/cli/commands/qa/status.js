@@ -139,7 +139,7 @@ function getStatusIcon(status) {
     'layer2-complete': '🟡',
     'layer3-pending': '⏳',
     'passed': '✅',
-    'unknown': '❓'
+    'unknown': '❓',
   };
   return icons[status] || '❓';
 }
@@ -158,7 +158,7 @@ function formatOverallStatus(status) {
     'layer2-complete': 'Layer 2 Complete',
     'layer3-pending': 'Awaiting Human Review',
     'passed': 'All Gates Passed',
-    'unknown': 'Unknown'
+    'unknown': 'Unknown',
   };
   return statusMap[status] || status;
 }
@@ -191,5 +191,5 @@ function formatTimeAgo(date) {
 }
 
 module.exports = {
-  createStatusCommand
+  createStatusCommand,
 };

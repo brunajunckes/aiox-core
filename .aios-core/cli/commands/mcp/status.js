@@ -12,17 +12,17 @@ const { Command } = require('commander');
 const {
   globalConfigExists,
   listServers,
-  readGlobalConfig
+  readGlobalConfig,
 } = require('../../../core/mcp/global-config-manager');
 const {
   checkLinkStatus,
-  LINK_STATUS
+  LINK_STATUS,
 } = require('../../../core/mcp/symlink-manager');
 const {
   getGlobalConfigPath,
   getGlobalMcpDir,
   getOSInfo,
-  getLinkType
+  getLinkType,
 } = require('../../../core/mcp/os-detector');
 const { detectProjectConfig } = require('../../../core/mcp/config-migrator');
 
@@ -66,7 +66,7 @@ async function executeStatus(options) {
         exists: globalExists,
         path: getGlobalConfigPath(),
         version: globalConfig?.version || null,
-        servers: serverList
+        servers: serverList,
       },
       project: {
         path: projectRoot,
@@ -74,12 +74,12 @@ async function executeStatus(options) {
         linkPath: linkStatus.linkPath,
         linkTarget: linkStatus.target || null,
         hasLocalConfig: projectConfig.found,
-        localConfigPath: projectConfig.path
+        localConfigPath: projectConfig.path,
       },
       os: {
         type: osInfo.type,
-        linkType: getLinkType()
-      }
+        linkType: getLinkType(),
+      },
     };
     console.log(JSON.stringify(jsonOutput, null, 2));
     return;
@@ -109,21 +109,21 @@ async function executeStatus(options) {
 
   switch (linkStatus.status) {
     case LINK_STATUS.LINKED:
-      console.log(`  Status: ✅ Linked to global`);
+      console.log('  Status: ✅ Linked to global');
       console.log(`  Target: ${linkStatus.target}`);
       console.log(`  Type: ${linkStatus.type}`);
       break;
     case LINK_STATUS.NOT_LINKED:
-      console.log(`  Status: ⚪ Not linked`);
+      console.log('  Status: ⚪ Not linked');
       console.log('  Run "aios mcp link" to link project to global config');
       break;
     case LINK_STATUS.BROKEN:
-      console.log(`  Status: 🔴 Broken link`);
+      console.log('  Status: 🔴 Broken link');
       console.log(`  Target: ${linkStatus.target}`);
       console.log('  Run "aios mcp link --force" to fix');
       break;
     case LINK_STATUS.DIRECTORY:
-      console.log(`  Status: 📁 Local directory (not linked)`);
+      console.log('  Status: 📁 Local directory (not linked)');
       if (projectConfig.found) {
         console.log(`  Local config: ${projectConfig.serverCount} servers`);
         console.log('  Run "aios mcp link --migrate" to use global config');
@@ -179,5 +179,5 @@ async function executeStatus(options) {
 
 module.exports = {
   createStatusCommand,
-  executeStatus
+  executeStatus,
 };

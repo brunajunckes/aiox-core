@@ -115,8 +115,8 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         schema_version: '2.0',
         executable_knowledge: {
           helpers: [],
-          validators: [] // Empty validators array
-        }
+          validators: [], // Empty validators array
+        },
       };
 
       const validator = new ToolValidationHelper(mockTool.executable_knowledge);
@@ -131,9 +131,9 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         id: 'mock-complex-undefined',
         schema_version: '2.0',
         executable_knowledge: {
-          helpers: []
+          helpers: [],
           // validators not defined
-        }
+        },
       };
 
       const validator = new ToolValidationHelper(mockTool.executable_knowledge);
@@ -149,8 +149,8 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         schema_version: '2.0',
         executable_knowledge: {
           helpers: [],
-          validators: null // Explicitly null
-        }
+          validators: null, // Explicitly null
+        },
       };
 
       const validator = new ToolValidationHelper(mockTool.executable_knowledge);
@@ -202,7 +202,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
       await expect(async () => {
         await validator.validateBatch([
           { command: 'cmd1', args: { a: 1 } },
-          { command: 'cmd2', args: { b: 2 } }
+          { command: 'cmd2', args: { b: 2 } },
         ]);
       }).not.toThrow();
     });
@@ -214,7 +214,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
 
       const commands = [
         'create', 'update', 'delete', 'list', 'get',
-        'execute', 'run', 'start', 'stop', 'configure'
+        'execute', 'run', 'start', 'stop', 'configure',
       ];
 
       for (const command of commands) {
@@ -232,7 +232,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         { command: 'update', args: { id: '123', data: { name: 'updated' } } },
         { command: 'delete', args: { id: '456' } },
         { command: 'list', args: { filter: 'active' } },
-        { command: 'get', args: { id: '789' } }
+        { command: 'get', args: { id: '789' } },
       ];
 
       for (const { command, args } of testCases) {
@@ -250,7 +250,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         { command: 'create', args: { name: 'item2' } },
         { command: 'update', args: { id: '1', name: 'updated' } },
         { command: 'delete', args: { id: '2' } },
-        { command: 'list', args: {} }
+        { command: 'list', args: {} },
       ];
 
       const results = await validator.validateBatch(operations);
@@ -272,7 +272,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         { validators: [] },
         {},
         undefined,
-        null
+        null,
       ];
 
       for (const execKnowledge of scenarios) {
@@ -297,7 +297,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
       const result = await validator.validate('pr-create', {
         title: 'Test PR',
         body: 'Test body',
-        base: 'main'
+        base: 'main',
       });
 
       expect(result.valid).toBe(true);
@@ -315,7 +315,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
         results.push({
           tool: toolName,
           hasExecKnowledge: !!tool.executable_knowledge,
-          validationResult: result
+          validationResult: result,
         });
       }
 
@@ -345,7 +345,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
 
       const operations = Array.from({ length: 100 }, (_, i) => ({
         command: `cmd${i}`,
-        args: { index: i }
+        args: { index: i },
       }));
 
       const start = Date.now();
@@ -360,7 +360,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
       const validator = new ToolValidationHelper(null);
 
       const promises = Array.from({ length: 50 }, (_, i) =>
-        validator.validate(`command${i}`, { data: i })
+        validator.validate(`command${i}`, { data: i }),
       );
 
       const start = Date.now();
@@ -377,7 +377,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
       const report = {
         v1_tools: [],
         validation_errors: [],
-        performance_issues: []
+        performance_issues: [],
       };
 
       // Test all v1.0 simple tools
@@ -393,20 +393,20 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
           name: toolName,
           has_exec_knowledge: !!tool.executable_knowledge,
           validation_passed: result.valid,
-          duration_ms: duration
+          duration_ms: duration,
         });
 
         if (!result.valid) {
           report.validation_errors.push({
             tool: toolName,
-            errors: result.errors
+            errors: result.errors,
           });
         }
 
         if (duration > 1) {
           report.performance_issues.push({
             tool: toolName,
-            duration_ms: duration
+            duration_ms: duration,
           });
         }
       }
@@ -426,7 +426,7 @@ describeIntegration('Backward Compatibility - No-Validator Pass-Through', () => 
       console.log(`  v1.0 Tools Tested: ${report.v1_tools.length}`);
       console.log(`  All Validations Passed: ${report.validation_errors.length === 0}`);
       console.log(`  All Performance OK: ${report.performance_issues.length === 0}`);
-      console.log(`  Average Duration: <1ms (instant)`);
+      console.log('  Average Duration: <1ms (instant)');
     });
   });
 });

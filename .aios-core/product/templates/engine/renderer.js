@@ -30,7 +30,7 @@ function registerDefaultHelpers(handlebars) {
       'DD': String(d.getDate()).padStart(2, '0'),
       'HH': String(d.getHours()).padStart(2, '0'),
       'mm': String(d.getMinutes()).padStart(2, '0'),
-      'ss': String(d.getSeconds()).padStart(2, '0')
+      'ss': String(d.getSeconds()).padStart(2, '0'),
     };
 
     let result = format;
@@ -244,14 +244,14 @@ class TemplateRenderer {
     try {
       const compiledTemplate = this.handlebars.compile(templateBody, {
         strict: false,
-        noEscape: true
+        noEscape: true,
       });
 
       // Add metadata to context if available
       const fullContext = {
         ...context,
         _template: template.metadata || {},
-        now: new Date()
+        now: new Date(),
       };
 
       return compiledTemplate(fullContext);
@@ -285,7 +285,7 @@ class TemplateRenderer {
     } catch (error) {
       return {
         isValid: false,
-        errors: [error.message]
+        errors: [error.message],
       };
     }
   }
@@ -321,10 +321,10 @@ class TemplateRenderer {
   isHelper(name) {
     return this.customHelpers.has(name) ||
       ['padNumber', 'formatDate', 'add', 'subtract', 'eq', 'ne', 'gt', 'lt',
-       'gte', 'lte', 'and', 'or', 'not', 'uppercase', 'lowercase', 'capitalize',
-       'titlecase', 'join', 'length', 'includes', 'first', 'last', 'default',
-       'json', 'times', 'ifEqual', 'unlessEqual', 'slug', 'truncate', 'now',
-       'multiply', 'divide'].includes(name);
+        'gte', 'lte', 'and', 'or', 'not', 'uppercase', 'lowercase', 'capitalize',
+        'titlecase', 'join', 'length', 'includes', 'first', 'last', 'default',
+        'json', 'times', 'ifEqual', 'unlessEqual', 'slug', 'truncate', 'now',
+        'multiply', 'divide'].includes(name);
   }
 
   /**
@@ -339,5 +339,5 @@ class TemplateRenderer {
 
 module.exports = {
   TemplateRenderer,
-  registerDefaultHelpers
+  registerDefaultHelpers,
 };
