@@ -35,13 +35,13 @@ describeIntegration('Greeting Performance Tests', () => {
       persona_profile: {
         greeting_levels: {
           minimal: '🤖 TestAgent ready',
-          named: '🤖 TestAgent (Tester) ready'
-        }
+          named: '🤖 TestAgent (Tester) ready',
+        },
       },
       commands: [
         { name: 'help', visibility: ['full', 'quick', 'key'] },
-        { name: 'test', visibility: ['full'] }
-      ]
+        { name: 'test', visibility: ['full'] },
+      ],
     };
 
     // Setup fast mocks
@@ -49,12 +49,12 @@ describeIntegration('Greeting Performance Tests', () => {
     GitConfigDetector.prototype.get = jest.fn().mockReturnValue({
       configured: true,
       type: 'github',
-      branch: 'main'
+      branch: 'main',
     });
     loadProjectStatus.mockResolvedValue({
       branch: 'main',
       modifiedFiles: [],
-      isGitRepo: true
+      isGitRepo: true,
     });
   });
 
@@ -135,7 +135,7 @@ describeIntegration('Greeting Performance Tests', () => {
 
       // Mock slow operation to trigger fallback
       loadProjectStatus.mockImplementation(() =>
-        new Promise(resolve => setTimeout(resolve, 200))
+        new Promise(resolve => setTimeout(resolve, 200)),
       );
 
       for (let i = 0; i < ITERATIONS; i++) {
@@ -192,7 +192,7 @@ function calculateStats(times) {
     p99: percentile(sorted, 99),
     mean: mean(sorted),
     min: sorted[0],
-    max: sorted[sorted.length - 1]
+    max: sorted[sorted.length - 1],
   };
 }
 

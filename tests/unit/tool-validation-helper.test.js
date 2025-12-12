@@ -17,8 +17,8 @@ describe('ToolValidationHelper', () => {
             (function() {
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ];
 
       const helper = new ToolValidationHelper(validators);
@@ -30,7 +30,7 @@ describe('ToolValidationHelper', () => {
       const validators = [
         { validates: 'valid', function: 'function() {}' },
         { validates: 'no-function' }, // Missing function
-        { function: 'function() {}' } // Missing validates
+        { function: 'function() {}' }, // Missing validates
       ];
 
       const helper = new ToolValidationHelper(validators);
@@ -42,7 +42,7 @@ describe('ToolValidationHelper', () => {
 
       helper.addValidator({
         validates: 'dynamic-command',
-        function: '(function() { return { valid: true, errors: [] }; })();'
+        function: '(function() { return { valid: true, errors: [] }; })();',
       });
 
       expect(helper.hasValidator('dynamic-command')).toBe(true);
@@ -50,7 +50,7 @@ describe('ToolValidationHelper', () => {
 
     test('should throw error when adding duplicate validator', () => {
       const helper = new ToolValidationHelper([
-        { validates: 'existing', function: 'function() {}' }
+        { validates: 'existing', function: 'function() {}' },
       ]);
 
       expect(() => {
@@ -60,12 +60,12 @@ describe('ToolValidationHelper', () => {
 
     test('should replace existing validator', () => {
       const helper = new ToolValidationHelper([
-        { validates: 'replaceable', function: '(function() { return { valid: true, errors: [] }; })();' }
+        { validates: 'replaceable', function: '(function() { return { valid: true, errors: [] }; })();' },
       ]);
 
       helper.replaceValidator({
         validates: 'replaceable',
-        function: '(function() { return { valid: false, errors: ["replaced"] }; })();'
+        function: '(function() { return { valid: false, errors: ["replaced"] }; })();',
       });
 
       expect(helper.hasValidator('replaceable')).toBe(true);
@@ -73,7 +73,7 @@ describe('ToolValidationHelper', () => {
 
     test('should remove validator', () => {
       const helper = new ToolValidationHelper([
-        { validates: 'removable', function: 'function() {}' }
+        { validates: 'removable', function: 'function() {}' },
       ]);
 
       const removed = helper.removeValidator('removable');
@@ -84,7 +84,7 @@ describe('ToolValidationHelper', () => {
     test('should clear all validators', () => {
       const helper = new ToolValidationHelper([
         { validates: 'validator1', function: 'function() {}' },
-        { validates: 'validator2', function: 'function() {}' }
+        { validates: 'validator2', function: 'function() {}' },
       ]);
 
       helper.clearValidators();
@@ -104,8 +104,8 @@ describe('ToolValidationHelper', () => {
               }
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('create_item', { name: 'Test', type: 'item' });
@@ -124,8 +124,8 @@ describe('ToolValidationHelper', () => {
               }
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('create_item', { name: 'Test' });
@@ -152,14 +152,14 @@ describe('ToolValidationHelper', () => {
 
               return { valid: errors.length === 0, errors };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('update_item', {
         id: '123',
         priority: 5,
-        tags: 'not-array'
+        tags: 'not-array',
       });
 
       expect(result.valid).toBe(false);
@@ -172,8 +172,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'bad-format',
-          function: '(function() { return { valid: "yes" }; })();' // Invalid format
-        }
+          function: '(function() { return { valid: "yes" }; })();', // Invalid format
+        },
       ]);
 
       const result = await helper.validate('bad-format', {});
@@ -196,8 +196,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'validated_command',
-          function: '(function() { return { valid: false, errors: ["fail"] }; })();'
-        }
+          function: '(function() { return { valid: false, errors: ["fail"] }; })();',
+        },
       ]);
 
       const validatedResult = await helper.validate('validated_command', {});
@@ -217,8 +217,8 @@ describe('ToolValidationHelper', () => {
             (function() {
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('fast_command', {});
@@ -240,8 +240,8 @@ describe('ToolValidationHelper', () => {
               }
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       await helper.validate('slow_command', {});
@@ -258,8 +258,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'timed_command',
-          function: '(function() { return { valid: true, errors: [] }; })();'
-        }
+          function: '(function() { return { valid: true, errors: [] }; })();',
+        },
       ]);
 
       const result = await helper.validate('timed_command', {});
@@ -282,8 +282,8 @@ describe('ToolValidationHelper', () => {
               }
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('timeout_test', {});
@@ -304,8 +304,8 @@ describe('ToolValidationHelper', () => {
               }
               return { valid: true, errors: [] };
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('quick_validator', {});
@@ -327,8 +327,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'syntax-error',
-          function: 'function invalid( { // Invalid syntax'
-        }
+          function: 'function invalid( { // Invalid syntax',
+        },
       ]);
 
       const result = await helper.validate('syntax-error', {});
@@ -344,8 +344,8 @@ describe('ToolValidationHelper', () => {
             (function() {
               throw new Error("Intentional error");
             })();
-          `
-        }
+          `,
+        },
       ]);
 
       const result = await helper.validate('runtime-error', {});
@@ -357,8 +357,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'returns-string',
-          function: '(function() { return "not an object"; })();'
-        }
+          function: '(function() { return "not an object"; })();',
+        },
       ]);
 
       const result = await helper.validate('returns-string', {});
@@ -370,8 +370,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'returns-null',
-          function: '(function() { return null; })();'
-        }
+          function: '(function() { return null; })();',
+        },
       ]);
 
       const result = await helper.validate('returns-null', {});
@@ -383,8 +383,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'error-format',
-          function: '(function() { return { valid: false, errors: "single error" }; })();'
-        }
+          function: '(function() { return { valid: false, errors: "single error" }; })();',
+        },
       ]);
 
       const result = await helper.validate('error-format', {});
@@ -397,18 +397,18 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'cmd1',
-          function: '(function() { return { valid: true, errors: [] }; })();'
+          function: '(function() { return { valid: true, errors: [] }; })();',
         },
         {
           validates: 'cmd2',
-          function: '(function() { return { valid: false, errors: ["cmd2 failed"] }; })();'
-        }
+          function: '(function() { return { valid: false, errors: ["cmd2 failed"] }; })();',
+        },
       ]);
 
       const results = await helper.validateBatch([
         { command: 'cmd1', args: {} },
         { command: 'cmd2', args: {} },
-        { command: 'cmd3', args: {} } // No validator
+        { command: 'cmd3', args: {} }, // No validator
       ]);
 
       expect(results).toHaveLength(3);
@@ -431,10 +431,10 @@ describe('ToolValidationHelper', () => {
         {
           validates: 'create_user',
           checks: [
-            { required_fields: ['name', 'email'] }
+            { required_fields: ['name', 'email'] },
           ],
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const result = helper.validateDeclarative('create_user', { name: 'John' });
@@ -447,10 +447,10 @@ describe('ToolValidationHelper', () => {
         {
           validates: 'create_user',
           checks: [
-            { required_fields: ['name', 'email'] }
+            { required_fields: ['name', 'email'] },
           ],
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const result = helper.validateDeclarative('create_user', { name: 'John', email: 'john@example.com' });
@@ -462,8 +462,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'no_checks',
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const result = helper.validateDeclarative('no_checks', {});
@@ -480,8 +480,8 @@ describe('ToolValidationHelper', () => {
           validates: 'test_command',
           language: 'javascript',
           checks: [{ required_fields: ['id'] }],
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const info = helper.getValidatorInfo('test_command');
@@ -490,7 +490,7 @@ describe('ToolValidationHelper', () => {
         validates: 'test_command',
         language: 'javascript',
         checks: [{ required_fields: ['id'] }],
-        hasFunction: true
+        hasFunction: true,
       });
     });
 
@@ -504,8 +504,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'minimal',
-          function: 'function() {}'
-        }
+          function: 'function() {}',
+        },
       ]);
 
       const info = helper.getValidatorInfo('minimal');
@@ -516,7 +516,7 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         { validates: 'validator1', function: 'function() {}' },
         { validates: 'validator2', function: 'function() {}' },
-        { validates: 'validator3', function: 'function() {}' }
+        { validates: 'validator3', function: 'function() {}' },
       ]);
 
       const stats = helper.getStats();
@@ -533,8 +533,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'dispose-test',
-          function: '(function() { return { valid: true, errors: [] }; })();'
-        }
+          function: '(function() { return { valid: true, errors: [] }; })();',
+        },
       ]);
 
       const result = await helper.validate('dispose-test', {});
@@ -546,8 +546,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'fail-dispose',
-          function: '(function() { throw new Error("test error"); })();'
-        }
+          function: '(function() { throw new Error("test error"); })();',
+        },
       ]);
 
       const result = await helper.validate('fail-dispose', {});
@@ -559,8 +559,8 @@ describe('ToolValidationHelper', () => {
       const helper = new ToolValidationHelper([
         {
           validates: 'timeout-dispose',
-          function: '(function() { while(true) {} })();'
-        }
+          function: '(function() { while(true) {} })();',
+        },
       ]);
 
       const result = await helper.validate('timeout-dispose', {});

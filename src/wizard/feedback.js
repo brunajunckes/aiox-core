@@ -22,7 +22,7 @@ function createSpinner(text, options = {}) {
     text,
     color: 'cyan',
     spinner: 'dots',
-    ...options
+    ...options,
   });
 }
 
@@ -84,7 +84,7 @@ function createProgressBar(total, options = {}) {
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
     hideCursor: true,
-    ...options
+    ...options,
   }, cliProgress.Presets.shades_classic);
 
   progressBar.start(total, 0, { task: 'Initializing...' });
@@ -213,6 +213,6 @@ module.exports = {
   showCompletion,
   showSection,
   showCancellation,
-  estimateTimeRemaining
+  estimateTimeRemaining,
 };
 

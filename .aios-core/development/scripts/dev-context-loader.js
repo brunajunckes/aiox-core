@@ -44,7 +44,7 @@ class DevContextLoader {
       return {
         status: 'no_files',
         loadTime: Date.now() - startTime,
-        files: []
+        files: [],
       };
     }
 
@@ -60,7 +60,7 @@ class DevContextLoader {
       files,
       filesCount: files.length,
       totalLines: files.reduce((sum, f) => sum + (f.linesCount || 0), 0),
-      cacheHits: files.filter(f => f.cached).length
+      cacheHits: files.filter(f => f.cached).length,
     };
   }
 
@@ -118,7 +118,7 @@ class DevContextLoader {
             path: filePath,
             content,
             linesCount,
-            cached: false
+            cached: false,
           };
         } else {
           // Summary load
@@ -129,7 +129,7 @@ class DevContextLoader {
             linesCount,
             summaryLines: summary.split('\n').length,
             cached: false,
-            note: 'Use *load-full to load complete file'
+            note: 'Use *load-full to load complete file',
           };
         }
 
@@ -143,7 +143,7 @@ class DevContextLoader {
         results.push({
           path: filePath,
           error: error.message,
-          cached: false
+          cached: false,
         });
       }
     }
@@ -181,7 +181,7 @@ class DevContextLoader {
       ...preview,
       '```',
       '',
-      `...and ${Math.max(0, lines.length - 100)} more lines`
+      `...and ${Math.max(0, lines.length - 100)} more lines`,
     ];
 
     return summary.join('\n');

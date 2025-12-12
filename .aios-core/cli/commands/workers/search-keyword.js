@@ -37,7 +37,7 @@ function levenshteinDistance(a, b) {
         matrix[i][j] = Math.min(
           matrix[i - 1][j - 1] + 1, // substitution
           matrix[i][j - 1] + 1,     // insertion
-          matrix[i - 1][j] + 1      // deletion
+          matrix[i - 1][j] + 1,      // deletion
         );
       }
     }
@@ -182,8 +182,8 @@ function buildSearchFields(worker) {
       worker.subcategory,
       ...(worker.tags || []),
       ...(worker.inputs || []),
-      ...(worker.outputs || [])
-    ].filter(Boolean).join(' ')
+      ...(worker.outputs || []),
+    ].filter(Boolean).join(' '),
   };
 }
 
@@ -265,7 +265,7 @@ async function searchKeyword(query) {
       results.push({
         ...worker,
         score: Math.round(Math.min(bestScore, 100)),
-        matchType: matchType
+        matchType: matchType,
       });
     }
   }
@@ -292,7 +292,7 @@ async function searchByTags(tags) {
         results.push({
           ...worker,
           score: 100,
-          matchType: 'tag-exact'
+          matchType: 'tag-exact',
         });
       }
     }
@@ -306,5 +306,5 @@ module.exports = {
   searchByTags,
   fuzzyMatchScore,
   levenshteinDistance,
-  buildSearchFields
+  buildSearchFields,
 };

@@ -16,7 +16,7 @@ class ModificationRiskAssessment {
       low: { min: 0, max: 3 },
       medium: { min: 3, max: 6 },
       high: { min: 6, max: 8 },
-      critical: { min: 8, max: 10 }
+      critical: { min: 8, max: 10 },
     };
   }
 
@@ -34,7 +34,7 @@ class ModificationRiskAssessment {
         includeMitigations: options.includeMitigations !== false,
         assessmentDepth: options.assessmentDepth || 'comprehensive', 
         modificationType: options.modificationType || 'modify',
-        ...options
+        ...options,
       };
 
       // Analyze risk factors across multiple dimensions
@@ -54,7 +54,7 @@ class ModificationRiskAssessment {
         targetComponent,
         riskDimensions,
         criticalIssues,
-        config
+        config,
       );
       
       // Generate risk timeline and impact projection
@@ -62,14 +62,14 @@ class ModificationRiskAssessment {
         targetComponent,
         riskDimensions,
         analysisData,
-        config
+        config,
       );
 
       const assessment = {
         assessmentId: assessmentId,
         targetComponent: {
           path: targetComponent.path,
-          type: targetComponent.type
+          type: targetComponent.type,
         },
         modificationType: config.modificationType,
         overallRisk: overallRisk.level,
@@ -82,8 +82,8 @@ class ModificationRiskAssessment {
         assessmentMetadata: {
           threshold: config.riskThreshold,
           depth: config.assessmentDepth,
-          timestamp: new Date().toISOString()
-        }
+          timestamp: new Date().toISOString(),
+        },
       };
 
       // Store assessment for tracking
@@ -92,10 +92,10 @@ class ModificationRiskAssessment {
         componentPath: targetComponent.path,
         riskLevel: overallRisk.level,
         riskScore: overallRisk.score,
-        timestamp: assessment.assessmentMetadata.timestamp
+        timestamp: assessment.assessmentMetadata.timestamp,
       });
 
-      console.log(chalk.green(`✅ Risk assessment completed`));
+      console.log(chalk.green('✅ Risk assessment completed'));
       console.log(chalk.gray(`   Overall risk: ${this.formatRiskLevel(overallRisk.level)}`));
       console.log(chalk.gray(`   Critical issues: ${criticalIssues.length}`));
       console.log(chalk.gray(`   Recommendations: ${recommendations.length}`));
@@ -120,7 +120,7 @@ class ModificationRiskAssessment {
       security_risk: await this.assessSecurityRisk(targetComponent, config),
       compatibility_risk: await this.assessCompatibilityRisk(targetComponent, analysisData, config),
       rollback_risk: await this.assessRollbackRisk(targetComponent, config),
-      testing_risk: await this.assessTestingRisk(targetComponent, analysisData)
+      testing_risk: await this.assessTestingRisk(targetComponent, analysisData),
     };
 
     return dimensions;
@@ -134,7 +134,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk from component dependencies and dependents'
+      description: 'Risk from component dependencies and dependents',
     };
 
     if (!dependencyImpact) {
@@ -172,7 +172,7 @@ class ModificationRiskAssessment {
 
     // Framework core dependencies are high risk
     const frameworkCoreComponents = dependencyImpact.affectedComponents.filter(comp => 
-      comp.path.includes('aios-core') && comp.impactScore >= 7
+      comp.path.includes('aios-core') && comp.impactScore >= 7,
     ).length;
 
     if (frameworkCoreComponents > 0) {
@@ -194,7 +194,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk from change propagation through system'
+      description: 'Risk from change propagation through system',
     };
 
     if (!propagationAnalysis) {
@@ -256,7 +256,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk from structural component changes'
+      description: 'Risk from structural component changes',
     };
 
     // Component type risk
@@ -329,7 +329,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk to operational stability and performance'
+      description: 'Risk to operational stability and performance',
     };
 
     // Production usage risk
@@ -382,7 +382,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Security-related modification risks'
+      description: 'Security-related modification risks',
     };
 
     // File system access
@@ -434,7 +434,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk to backward and forward compatibility'
+      description: 'Risk to backward and forward compatibility',
     };
 
     // API changes
@@ -480,7 +480,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk and difficulty of rolling back changes'
+      description: 'Risk and difficulty of rolling back changes',
     };
 
     // Complex changes are harder to rollback
@@ -531,7 +531,7 @@ class ModificationRiskAssessment {
       score: 0,
       factors: [],
       severity: 'low',
-      description: 'Risk from insufficient or outdated testing'
+      description: 'Risk from insufficient or outdated testing',
     };
 
     // Check if component has tests
@@ -581,7 +581,7 @@ class ModificationRiskAssessment {
       security_risk: 0.15,
       compatibility_risk: 0.1,
       rollback_risk: 0.05,
-      testing_risk: 0.05
+      testing_risk: 0.05,
     };
 
     let weightedScore = 0;
@@ -599,7 +599,7 @@ class ModificationRiskAssessment {
     
     return {
       score: roundedScore,
-      level: this.scoresToRiskLevel(roundedScore)
+      level: this.scoresToRiskLevel(roundedScore),
     };
   }
 
@@ -617,7 +617,7 @@ class ModificationRiskAssessment {
           severity: 'critical',
           score: riskData.score,
           description: riskData.description,
-          factors: riskData.factors
+          factors: riskData.factors,
         });
       }
     }
@@ -629,7 +629,7 @@ class ModificationRiskAssessment {
         severity: 'critical',
         score: 9,
         description: 'Critical components affected by modification',
-        factors: [`${analysisData.dependencyImpact.impactCategories.critical.length} critical dependencies`]
+        factors: [`${analysisData.dependencyImpact.impactCategories.critical.length} critical dependencies`],
       });
     }
 
@@ -639,7 +639,7 @@ class ModificationRiskAssessment {
         severity: 'critical',  
         score: 8,
         description: 'Multiple critical propagation paths detected',
-        factors: [`${analysisData.propagationAnalysis.criticalPaths.length} critical paths`]
+        factors: [`${analysisData.propagationAnalysis.criticalPaths.length} critical paths`],
       });
     }
 
@@ -659,7 +659,7 @@ class ModificationRiskAssessment {
           severity: riskData.severity,
           score: riskData.score,
           description: riskData.description,
-          factors: riskData.factors
+          factors: riskData.factors,
         });
       }
     }
@@ -683,9 +683,9 @@ class ModificationRiskAssessment {
           'Review all critical issues before proceeding',
           'Implement additional safeguards for high-risk areas',
           'Consider staged rollout or additional testing',
-          'Ensure comprehensive rollback plan is in place'
+          'Ensure comprehensive rollback plan is in place',
         ],
-        risk_reduction: 'high'
+        risk_reduction: 'high',
       });
     }
 
@@ -699,9 +699,9 @@ class ModificationRiskAssessment {
           'Review all affected components before modification',
           'Implement gradual rollout to minimize impact',
           'Ensure dependent components have adequate tests',
-          'Create communication plan for affected teams'
+          'Create communication plan for affected teams',
         ],
-        risk_reduction: 'medium'
+        risk_reduction: 'medium',
       });
     }
 
@@ -715,9 +715,9 @@ class ModificationRiskAssessment {
           'Implement change in phases to limit propagation',
           'Add circuit breakers for cascading effects',
           'Monitor propagation paths during rollout',
-          'Prepare targeted rollback for each propagation level'
+          'Prepare targeted rollback for each propagation level',
         ],
-        risk_reduction: 'medium'
+        risk_reduction: 'medium',
       });
     }
 
@@ -731,9 +731,9 @@ class ModificationRiskAssessment {
           'Conduct security review of modifications',
           'Validate input handling and sanitization',
           'Review access controls and permissions',
-          'Test security boundaries and edge cases'
+          'Test security boundaries and edge cases',
         ],
-        risk_reduction: 'high'
+        risk_reduction: 'high',
       });
     }
 
@@ -747,9 +747,9 @@ class ModificationRiskAssessment {
           'Add comprehensive unit tests before modification',
           'Implement integration tests for component interactions',
           'Add end-to-end tests for critical workflows',
-          'Set up monitoring and alerting for post-modification validation'
+          'Set up monitoring and alerting for post-modification validation',
         ],
-        risk_reduction: 'medium'
+        risk_reduction: 'medium',
       });
     }
 
@@ -763,9 +763,9 @@ class ModificationRiskAssessment {
           'Create step-by-step rollback procedures',
           'Test rollback process in staging environment',
           'Prepare data backup and restoration procedures',
-          'Document rollback decision criteria and triggers'
+          'Document rollback decision criteria and triggers',
         ],
-        risk_reduction: 'medium'
+        risk_reduction: 'medium',
       });
     }
 
@@ -779,9 +779,9 @@ class ModificationRiskAssessment {
           'Provide migration guide for dependent components',
           'Implement deprecation warnings in advance',
           'Offer alternative component recommendations',
-          'Establish sunset timeline with clear milestones'
+          'Establish sunset timeline with clear milestones',
         ],
-        risk_reduction: 'high'
+        risk_reduction: 'high',
       });
     }
 
@@ -797,7 +797,7 @@ class ModificationRiskAssessment {
       short_term_risks: [],
       long_term_risks: [],
       risk_timeline: [],
-      risk_evolution: {}
+      risk_evolution: {},
     };
 
     // Immediate risks (0-24 hours)
@@ -806,7 +806,7 @@ class ModificationRiskAssessment {
         risk: 'operational_disruption',
         probability: 'medium',
         impact: 'high',
-        description: 'Immediate operational impact from component changes'
+        description: 'Immediate operational impact from component changes',
       });
     }
 
@@ -815,7 +815,7 @@ class ModificationRiskAssessment {
         risk: 'security_vulnerability',
         probability: 'low',
         impact: 'critical',
-        description: 'Potential security vulnerabilities from modification'
+        description: 'Potential security vulnerabilities from modification',
       });
     }
 
@@ -825,7 +825,7 @@ class ModificationRiskAssessment {
         risk: 'dependency_failures',
         probability: 'medium',
         impact: 'high',
-        description: 'Dependent components may fail after modification'
+        description: 'Dependent components may fail after modification',
       });
     }
 
@@ -834,7 +834,7 @@ class ModificationRiskAssessment {
         risk: 'cascading_effects',
         probability: 'medium',
         impact: 'medium',
-        description: 'Cascading effects may emerge in dependent systems'
+        description: 'Cascading effects may emerge in dependent systems',
       });
     }
 
@@ -844,7 +844,7 @@ class ModificationRiskAssessment {
         risk: 'compatibility_degradation',
         probability: 'low',
         impact: 'medium',
-        description: 'Long-term compatibility issues may emerge'
+        description: 'Long-term compatibility issues may emerge',
       });
     }
 
@@ -854,7 +854,7 @@ class ModificationRiskAssessment {
       { time: 'T+1h', event: 'Immediate effects manifest', risk_level: riskDimensions.operational_risk?.score || 0 },
       { time: 'T+24h', event: 'Dependency effects emerge', risk_level: riskDimensions.dependency_risk?.score || 0 },
       { time: 'T+1w', event: 'Propagation effects stabilize', risk_level: riskDimensions.propagation_risk?.score || 0 },
-      { time: 'T+1m', event: 'Long-term stability assessment', risk_level: Math.max(riskDimensions.compatibility_risk?.score || 0, 2) }
+      { time: 'T+1m', event: 'Long-term stability assessment', risk_level: Math.max(riskDimensions.compatibility_risk?.score || 0, 2) },
     ];
 
     projection.risk_timeline = riskEvents;
@@ -864,7 +864,7 @@ class ModificationRiskAssessment {
       peak_risk_period: 'T+1h to T+24h',
       stabilization_period: 'T+1w',
       risk_decay_rate: this.calculateRiskDecayRate(riskDimensions),
-      monitoring_period: this.calculateMonitoringPeriod(riskDimensions)
+      monitoring_period: this.calculateMonitoringPeriod(riskDimensions),
     };
 
     return projection;
@@ -877,7 +877,7 @@ class ModificationRiskAssessment {
     const possibleTestPaths = [
       path.join(this.rootPath, 'tests', 'unit', component.type, `${component.name}.test.js`),
       path.join(this.rootPath, 'tests', 'integration', component.type, `${component.name}.integration.test.js`),
-      path.join(this.rootPath, 'test', `${component.name}.test.js`)
+      path.join(this.rootPath, 'test', `${component.name}.test.js`),
     ];
 
     for (const testPath of possibleTestPaths) {
@@ -911,7 +911,7 @@ class ModificationRiskAssessment {
       low: chalk.green,
       medium: chalk.yellow,
       high: chalk.red,
-      critical: chalk.red.bold
+      critical: chalk.red.bold,
     };
     return colors[riskLevel] ? colors[riskLevel](riskLevel.toUpperCase()) : riskLevel;
   }
@@ -945,7 +945,7 @@ class ModificationRiskAssessment {
       total_assessments: this.assessmentHistory.length,
       risk_distribution: this.calculateRiskDistribution(),
       recent_assessments: this.assessmentHistory.slice(-10),
-      average_risk_score: this.calculateAverageRiskScore()
+      average_risk_score: this.calculateAverageRiskScore(),
     };
   }
 

@@ -33,20 +33,20 @@ const MCP_CONFIGS = {
     healthCheck: {
       type: 'navigation',
       timeout: 30000,
-      description: 'Navigate to blank page test'
+      description: 'Navigate to blank page test',
     },
     getConfig: (platform) => {
       if (platform === 'win32') {
         return {
           command: 'cmd',
-          args: ['/c', 'npx', '-y', '@modelcontextprotocol/server-puppeteer']
+          args: ['/c', 'npx', '-y', '@modelcontextprotocol/server-puppeteer'],
         };
       }
       return {
         command: 'npx',
-        args: ['-y', '@modelcontextprotocol/server-puppeteer']
+        args: ['-y', '@modelcontextprotocol/server-puppeteer'],
       };
-    }
+    },
   },
 
   context7: {
@@ -57,7 +57,7 @@ const MCP_CONFIGS = {
     healthCheck: {
       type: 'config-validation',
       timeout: 5000,
-      description: 'Configuration validation'
+      description: 'Configuration validation',
     },
     getConfig: (platform) => {
       // Use npx/stdio transport for reliable local execution
@@ -65,14 +65,14 @@ const MCP_CONFIGS = {
       if (platform === 'win32') {
         return {
           command: 'cmd',
-          args: ['/c', 'npx', '-y', '@upstash/context7-mcp']
+          args: ['/c', 'npx', '-y', '@upstash/context7-mcp'],
         };
       }
       return {
         command: 'npx',
-        args: ['-y', '@upstash/context7-mcp']
+        args: ['-y', '@upstash/context7-mcp'],
       };
-    }
+    },
   },
 
   exa: {
@@ -85,7 +85,7 @@ const MCP_CONFIGS = {
     healthCheck: {
       type: 'api-test',
       timeout: 10000,
-      description: 'Web search test'
+      description: 'Web search test',
     },
     getConfig: (platform, apiKey) => {
       const tools = '--tools=web_search_exa,research_paper_search,company_research,crawling,competitor_finder,linkedin_search,wikipedia_search_exa,github_search';
@@ -95,18 +95,18 @@ const MCP_CONFIGS = {
           command: 'cmd',
           args: ['/c', 'npx', '-y', 'exa-mcp-server', tools],
           env: {
-            EXA_API_KEY: apiKey || '${EXA_API_KEY}'
-          }
+            EXA_API_KEY: apiKey || '${EXA_API_KEY}',
+          },
         };
       }
       return {
         command: 'npx',
         args: ['-y', 'exa-mcp-server', tools],
         env: {
-          EXA_API_KEY: apiKey || '${EXA_API_KEY}'
-        }
+          EXA_API_KEY: apiKey || '${EXA_API_KEY}',
+        },
       };
-    }
+    },
   },
 
   'desktop-commander': {
@@ -117,21 +117,21 @@ const MCP_CONFIGS = {
     healthCheck: {
       type: 'file-access',
       timeout: 5000,
-      description: 'File system access test'
+      description: 'File system access test',
     },
     getConfig: (platform) => {
       if (platform === 'win32') {
         return {
           command: 'cmd',
-          args: ['/c', 'npx', '-y', '@wonderwhy-er/desktop-commander']
+          args: ['/c', 'npx', '-y', '@wonderwhy-er/desktop-commander'],
         };
       }
       return {
         command: 'npx',
-        args: ['-y', '@wonderwhy-er/desktop-commander']
+        args: ['-y', '@wonderwhy-er/desktop-commander'],
       };
-    }
-  }
+    },
+  },
 };
 
 /**
@@ -149,7 +149,7 @@ async function installProjectMCPs(options = {}) {
     selectedMCPs = ['browser', 'context7', 'exa', 'desktop-commander'],
     projectPath = process.cwd(),
     apiKeys = {},
-    onProgress = () => {}
+    onProgress = () => {},
   } = options;
 
   const platform = process.platform;
@@ -157,7 +157,7 @@ async function installProjectMCPs(options = {}) {
     success: false,
     installedMCPs: {},
     configPath: path.join(projectPath, '.mcp.json'),
-    errors: []
+    errors: [],
   };
 
   // Create .aios directory for logs
@@ -283,7 +283,7 @@ async function installNpmPackage(packageName, projectPath, logPath) {
     // Note: This may fail if package doesn't support --version flag
     await execAsync(`npx -y ${packageName} --version`, {
       cwd: projectPath,
-      timeout: 10000
+      timeout: 10000,
     });
 
     await appendLog(logPath, `[${new Date().toISOString()}] [SUCCESS] Package ${packageName} validated`);
@@ -326,7 +326,7 @@ async function addMCPToConfig(mcpId, config, configPath) {
   await fse.writeFile(
     configPath,
     JSON.stringify(mcpConfig, null, 2) + '\n',
-    'utf8'
+    'utf8',
   );
 }
 
@@ -355,7 +355,7 @@ function displayInstallationStatus(results) {
     const mcpConfig = MCP_CONFIGS[mcpId];
     const icon = result.status === 'success' ? chalk.green('✓')
       : result.status === 'warning' ? chalk.yellow('⚠️')
-      : chalk.red('❌');
+        : chalk.red('❌');
 
     console.log(`  ${icon} ${mcpConfig.name}: ${result.message}`);
   }
@@ -371,7 +371,7 @@ function displayInstallationStatus(results) {
   }
 
   console.log(chalk.gray(`📁 Configuration: ${results.configPath}`));
-  console.log(chalk.gray(`📋 Installation log: .aios/install-log.txt`));
+  console.log(chalk.gray('📋 Installation log: .aios/install-log.txt'));
   console.log('');
 }
  
@@ -379,5 +379,5 @@ function displayInstallationStatus(results) {
 module.exports = {
   installProjectMCPs,
   displayInstallationStatus,
-  MCP_CONFIGS
+  MCP_CONFIGS,
 };

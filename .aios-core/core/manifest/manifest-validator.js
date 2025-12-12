@@ -150,8 +150,8 @@ class ManifestValidator {
         valid: 0,
         invalid: 0,
         missing: [],
-        orphan: []
-      }
+        orphan: [],
+      },
     };
 
     try {
@@ -159,7 +159,7 @@ class ManifestValidator {
       const [agents, workers, tasks] = await Promise.all([
         this.validateManifest('agents.csv', this.getAgentsSchema()),
         this.validateManifest('workers.csv', this.getWorkersSchema()),
-        this.validateManifest('tasks.csv', this.getTasksSchema())
+        this.validateManifest('tasks.csv', this.getTasksSchema()),
       ]);
 
       results.agents = agents;
@@ -197,7 +197,7 @@ class ManifestValidator {
       warnings: [],
       rowCount: 0,
       missingFiles: [],
-      orphanFiles: []
+      orphanFiles: [],
     };
 
     try {
@@ -258,7 +258,7 @@ class ManifestValidator {
             result.missingFiles.push({
               id: row.id,
               path: row.file_path,
-              line: row._lineNumber
+              line: row._lineNumber,
             });
             result.valid = false; // Missing files invalidate the manifest
           }
@@ -316,7 +316,7 @@ class ManifestValidator {
         if (!csvContent.includes(relPath)) {
           result.orphanFiles.push({
             path: relPath,
-            file
+            file,
           });
         }
       }
@@ -333,7 +333,7 @@ class ManifestValidator {
     return {
       required: ['id', 'name', 'version', 'status', 'file_path'],
       optional: ['archetype', 'icon', 'when_to_use'],
-      sourceDir: '.aios-core/development/agents'
+      sourceDir: '.aios-core/development/agents',
     };
   }
 
@@ -345,7 +345,7 @@ class ManifestValidator {
     return {
       required: ['id', 'name', 'category', 'file_path', 'status'],
       optional: ['subcategory', 'executor_types', 'tags'],
-      sourceDir: null // Workers come from registry
+      sourceDir: null, // Workers come from registry
     };
   }
 
@@ -357,7 +357,7 @@ class ManifestValidator {
     return {
       required: ['id', 'name', 'category', 'file_path', 'status'],
       optional: ['format', 'has_elicitation'],
-      sourceDir: '.aios-core/development/tasks'
+      sourceDir: '.aios-core/development/tasks',
     };
   }
 
@@ -425,5 +425,5 @@ module.exports = {
   createManifestValidator,
   parseCSV,
   parseCSVLine,
-  parseCSVContent
+  parseCSVContent,
 };

@@ -21,7 +21,7 @@ const mockWorkers = [
     category: 'data',
     subcategory: 'transformation',
     tags: ['etl', 'json', 'csv'],
-    path: '.aios-core/tasks/json-csv-transformer.md'
+    path: '.aios-core/tasks/json-csv-transformer.md',
   },
   {
     id: 'csv-json-transformer',
@@ -29,7 +29,7 @@ const mockWorkers = [
     category: 'data',
     subcategory: 'transformation',
     tags: ['etl', 'json', 'csv'],
-    path: '.aios-core/tasks/csv-json-transformer.md'
+    path: '.aios-core/tasks/csv-json-transformer.md',
   },
   {
     id: 'json-validator',
@@ -37,7 +37,7 @@ const mockWorkers = [
     category: 'data',
     subcategory: 'validation',
     tags: ['validation', 'schema', 'json'],
-    path: '.aios-core/tasks/json-validator.md'
+    path: '.aios-core/tasks/json-validator.md',
   },
   {
     id: 'unit-test-runner',
@@ -45,7 +45,7 @@ const mockWorkers = [
     category: 'testing',
     subcategory: 'unit',
     tags: ['testing', 'unit', 'jest'],
-    path: '.aios-core/tasks/unit-test-runner.md'
+    path: '.aios-core/tasks/unit-test-runner.md',
   },
   {
     id: 'api-generator',
@@ -53,8 +53,8 @@ const mockWorkers = [
     category: 'code',
     subcategory: 'generation',
     tags: ['api', 'rest', 'openapi'],
-    path: '.aios-core/tasks/api-generator.md'
-  }
+    path: '.aios-core/tasks/api-generator.md',
+  },
 ];
 
 describe('Group Workers', () => {
@@ -114,8 +114,8 @@ describe('Tree Formatter', () => {
 
   test('formatTree includes usage hints', () => {
     const output = formatTree(mockWorkers, {});
-    expect(output).toContain("aios workers info <id>");
-    expect(output).toContain("aios workers search <query>");
+    expect(output).toContain('aios workers info <id>');
+    expect(output).toContain('aios workers search <query>');
   });
 
   test('formatTree shows verbose debug when enabled', () => {
@@ -159,7 +159,7 @@ describe('Table Formatter', () => {
       totalItems: 25,
       totalPages: 3,
       startIndex: 11,
-      endIndex: 20
+      endIndex: 20,
     };
     const output = formatTable(mockWorkers, { pagination });
     expect(output).toContain('11-20 of 25');
@@ -198,7 +198,7 @@ describe('JSON Formatter', () => {
       page: 1,
       limit: 10,
       totalItems: 50,
-      totalPages: 5
+      totalPages: 5,
     };
     const output = formatJSON(mockWorkers, { pagination });
     const parsed = JSON.parse(output);
@@ -227,7 +227,7 @@ describe('Count Formatter', () => {
   test('formatCount shows total count', () => {
     const categories = {
       data: { count: 3, subcategories: ['transformation', 'validation'] },
-      testing: { count: 1, subcategories: ['unit'] }
+      testing: { count: 1, subcategories: ['unit'] },
     };
     const output = formatCount(categories, 4, {});
     expect(output).toContain('Total: 4 workers');
@@ -236,7 +236,7 @@ describe('Count Formatter', () => {
   test('formatCount shows category counts', () => {
     const categories = {
       data: { count: 3, subcategories: ['transformation', 'validation'] },
-      testing: { count: 1, subcategories: ['unit'] }
+      testing: { count: 1, subcategories: ['unit'] },
     };
     const output = formatCount(categories, 4, {});
     expect(output).toContain('DATA');
@@ -247,7 +247,7 @@ describe('Count Formatter', () => {
 
   test('formatCount shows subcategories in verbose mode', () => {
     const categories = {
-      data: { count: 3, subcategories: ['transformation', 'validation'] }
+      data: { count: 3, subcategories: ['transformation', 'validation'] },
     };
     const output = formatCount(categories, 3, { verbose: true });
     expect(output).toContain('transformation');
@@ -336,7 +336,7 @@ describe('Pagination', () => {
       endIndex: 20,
       totalItems: 50,
       page: 2,
-      totalPages: 5
+      totalPages: 5,
     };
     const output = formatPaginationInfo(pagination);
     expect(output).toContain('11-20 of 50');
@@ -348,7 +348,7 @@ describe('Pagination', () => {
       page: 2,
       totalPages: 5,
       hasPrevPage: true,
-      hasNextPage: true
+      hasNextPage: true,
     };
     const output = formatPaginationHint(pagination);
     expect(output).toContain('--page=1');
@@ -389,7 +389,7 @@ describe('Performance Requirements', () => {
     category: ['data', 'testing', 'code', 'template'][i % 4],
     subcategory: ['transformation', 'validation', 'unit', 'generation'][i % 4],
     tags: ['tag1', 'tag2', 'tag3'],
-    path: `.aios-core/tasks/worker-${i}.md`
+    path: `.aios-core/tasks/worker-${i}.md`,
   }));
 
   test('formatTree handles 200+ workers under 100ms', () => {

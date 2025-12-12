@@ -15,7 +15,7 @@ describe('HumanReviewOrchestrator', () => {
   beforeEach(() => {
     orchestrator = new HumanReviewOrchestrator({
       statusPath: '.aios/qa-status-test.json',
-      reviewRequestsPath: '.aios/human-review-requests-test'
+      reviewRequestsPath: '.aios/human-review-requests-test',
     });
   });
 
@@ -52,8 +52,8 @@ describe('HumanReviewOrchestrator', () => {
         pass: false,
         results: [
           { check: 'lint', pass: false, message: 'Lint errors found' },
-          { check: 'test', pass: true, message: 'Tests passed' }
-        ]
+          { check: 'test', pass: true, message: 'Tests passed' },
+        ],
       };
       const result = orchestrator.checkLayerPassed(layerResult, 'Layer 1');
       expect(result.pass).toBe(false);
@@ -72,8 +72,8 @@ describe('HumanReviewOrchestrator', () => {
       const layerResult = {
         results: [
           { check: 'lint', pass: false, message: 'Errors found' },
-          { check: 'test', pass: false, message: 'Tests failed', error: 'AssertionError' }
-        ]
+          { check: 'test', pass: false, message: 'Tests failed', error: 'AssertionError' },
+        ],
       };
       const issues = orchestrator.extractIssues(layerResult);
       expect(issues).toHaveLength(2);
@@ -105,7 +105,7 @@ describe('HumanReviewOrchestrator', () => {
       const layerCheck = {
         pass: false,
         reason: 'Lint errors',
-        issues: [{ check: 'lint', message: '5 errors' }]
+        issues: [{ check: 'lint', message: '5 errors' }],
       };
       const result = orchestrator.block(layerCheck, 'layer1', Date.now());
 
@@ -119,7 +119,7 @@ describe('HumanReviewOrchestrator', () => {
       const layerCheck = {
         pass: false,
         reason: 'CodeRabbit issues',
-        issues: []
+        issues: [],
       };
       const result = orchestrator.block(layerCheck, 'layer2', Date.now());
 
@@ -132,7 +132,7 @@ describe('HumanReviewOrchestrator', () => {
   describe('generateFixRecommendations', () => {
     it('should generate lint fix recommendation', () => {
       const layerCheck = {
-        issues: [{ check: 'lint', message: 'Errors found', severity: 'HIGH' }]
+        issues: [{ check: 'lint', message: 'Errors found', severity: 'HIGH' }],
       };
       const recs = orchestrator.generateFixRecommendations(layerCheck);
       expect(recs[0].suggestion).toContain('npm run lint:fix');
@@ -140,7 +140,7 @@ describe('HumanReviewOrchestrator', () => {
 
     it('should generate test fix recommendation', () => {
       const layerCheck = {
-        issues: [{ check: 'test', message: 'Tests failed', severity: 'CRITICAL' }]
+        issues: [{ check: 'test', message: 'Tests failed', severity: 'CRITICAL' }],
       };
       const recs = orchestrator.generateFixRecommendations(layerCheck);
       expect(recs[0].suggestion).toContain('npm test');
@@ -148,7 +148,7 @@ describe('HumanReviewOrchestrator', () => {
 
     it('should generate coderabbit fix recommendation', () => {
       const layerCheck = {
-        issues: [{ check: 'coderabbit', message: 'Issues found', severity: 'HIGH' }]
+        issues: [{ check: 'coderabbit', message: 'Issues found', severity: 'HIGH' }],
       };
       const recs = orchestrator.generateFixRecommendations(layerCheck);
       expect(recs[0].suggestion).toContain('CodeRabbit');
@@ -204,8 +204,8 @@ describe('HumanReviewOrchestrator', () => {
         pass: true,
         results: [
           { check: 'lint', pass: true, message: 'No errors' },
-          { check: 'test', pass: true, message: 'All passed' }
-        ]
+          { check: 'test', pass: true, message: 'All passed' },
+        ],
       };
       const summary = orchestrator.generateAutomatedSummary(layer1Result, {});
 
@@ -217,8 +217,8 @@ describe('HumanReviewOrchestrator', () => {
       const layer2Result = {
         pass: true,
         results: [
-          { check: 'coderabbit', pass: true, issues: { critical: 0, high: 2, medium: 5 } }
-        ]
+          { check: 'coderabbit', pass: true, issues: { critical: 0, high: 2, medium: 5 } },
+        ],
       };
       const summary = orchestrator.generateAutomatedSummary({}, layer2Result);
 
@@ -236,7 +236,7 @@ describe('HumanReviewOrchestrator', () => {
     it('should add time per primary focus area', () => {
       const focusAreas = {
         primary: [{ area: 'security' }, { area: 'architecture' }],
-        secondary: []
+        secondary: [],
       };
       expect(orchestrator.estimateReviewTime(focusAreas)).toBe(20);
     });
@@ -244,7 +244,7 @@ describe('HumanReviewOrchestrator', () => {
     it('should add half time per secondary focus area', () => {
       const focusAreas = {
         primary: [],
-        secondary: [{ area: 'ux' }, { area: 'performance' }]
+        secondary: [{ area: 'ux' }, { area: 'performance' }],
       };
       expect(orchestrator.estimateReviewTime(focusAreas)).toBe(15);
     });

@@ -25,11 +25,11 @@ describe('Formatter Integration', () => {
     mockAgent = {
       id: 'dev',
       name: 'Dex',
-      title: 'Full Stack Developer'
+      title: 'Full Stack Developer',
     };
 
     mockTask = {
-      name: 'develop-story'
+      name: 'develop-story',
     };
 
     mockResults = {
@@ -46,7 +46,7 @@ describe('Formatter Integration', () => {
 All tests passing.`,
       tests: { passed: 50, total: 50 },
       coverage: 85,
-      linting: { status: '✅ Clean' }
+      linting: { status: '✅ Clean' },
     };
 
     // Mock dev agent file

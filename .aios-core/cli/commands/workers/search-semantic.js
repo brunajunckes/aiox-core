@@ -53,13 +53,13 @@ async function getEmbedding(text) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: 'text-embedding-3-small',
-        input: text
+        input: text,
       }),
-      signal: controller.signal
+      signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
@@ -126,7 +126,7 @@ async function loadWorkerEmbeddings() {
   // Check for pre-computed embeddings file
   const embeddingsPath = path.join(
     process.cwd(),
-    '.aios-core/core/registry/worker-embeddings.json'
+    '.aios-core/core/registry/worker-embeddings.json',
   );
 
   if (fs.existsSync(embeddingsPath)) {
@@ -184,7 +184,7 @@ function buildSearchText(worker) {
     worker.subcategory || '',
     ...(worker.tags || []),
     ...(worker.inputs || []),
-    ...(worker.outputs || [])
+    ...(worker.outputs || []),
   ].filter(Boolean).join(' ');
 }
 
@@ -213,7 +213,7 @@ async function searchSemantic(query) {
         results.push({
           ...data.worker,
           score: score,
-          matchType: 'semantic'
+          matchType: 'semantic',
         });
       }
     } else {
@@ -223,7 +223,7 @@ async function searchSemantic(query) {
         results.push({
           ...data.worker,
           score: 50, // Default score for keyword matches
-          matchType: 'keyword-fallback'
+          matchType: 'keyword-fallback',
         });
       }
     }
@@ -268,7 +268,7 @@ async function precomputeEmbeddings() {
   // Save to file
   const embeddingsPath = path.join(
     process.cwd(),
-    '.aios-core/core/registry/worker-embeddings.json'
+    '.aios-core/core/registry/worker-embeddings.json',
   );
 
   const data = {
@@ -276,7 +276,7 @@ async function precomputeEmbeddings() {
     generated: new Date().toISOString(),
     model: 'text-embedding-3-small',
     count: computed,
-    embeddings: embeddings
+    embeddings: embeddings,
   };
 
   fs.writeFileSync(embeddingsPath, JSON.stringify(data, null, 2));
@@ -289,5 +289,5 @@ module.exports = {
   getEmbedding,
   cosineSimilarity,
   precomputeEmbeddings,
-  buildSearchText
+  buildSearchText,
 };

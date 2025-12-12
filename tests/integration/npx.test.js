@@ -36,7 +36,7 @@ describeIntegration('npx Execution', () => {
       expect(packageJson.files).toContain('index.js');
       // Note: .aios-core/ should be included if it exists
       const hasAiosCore = packageJson.files.some(f => 
-        f === '.aios-core/' || f === 'aios-core/'
+        f === '.aios-core/' || f === 'aios-core/',
       );
       expect(hasAiosCore).toBe(true);
     });

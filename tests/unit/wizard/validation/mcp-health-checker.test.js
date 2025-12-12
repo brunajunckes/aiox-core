@@ -21,16 +21,16 @@ describe('MCP Health Checker', () => {
       fs.readFileSync.mockReturnValue(JSON.stringify({
         mcpServers: {
           browser: { command: 'npx', args: ['-y', '@modelcontextprotocol/server-puppeteer'] },
-          context7: { command: 'npx', args: ['-y', '@upstash/context7-mcp'] }
-        }
+          context7: { command: 'npx', args: ['-y', '@upstash/context7-mcp'] },
+        },
       }));
 
       const mcpContext = {
         installedMCPs: {
           browser: { status: 'success' },
-          context7: { status: 'success' }
+          context7: { status: 'success' },
         },
-        configPath: '.mcp.json'
+        configPath: '.mcp.json',
       };
 
       // When
@@ -46,7 +46,7 @@ describe('MCP Health Checker', () => {
     it('should skip health checks when no MCPs installed', async () => {
       // Given
       const mcpContext = {
-        installedMCPs: {}
+        installedMCPs: {},
       };
 
       // When
@@ -64,9 +64,9 @@ describe('MCP Health Checker', () => {
 
       const mcpContext = {
         installedMCPs: {
-          browser: { status: 'success' }
+          browser: { status: 'success' },
         },
-        configPath: '.mcp.json'
+        configPath: '.mcp.json',
       };
 
       // When
@@ -76,9 +76,9 @@ describe('MCP Health Checker', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'MCP_CONFIG_MISSING'
-          })
-        ])
+            code: 'MCP_CONFIG_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -87,14 +87,14 @@ describe('MCP Health Checker', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         mcpServers: {
-          browser: { command: 'npx', args: [] }
-        }
+          browser: { command: 'npx', args: [] },
+        },
       }));
 
       const mcpContext = {
         installedMCPs: {
-          browser: { status: 'failed', error: 'Installation error' }
-        }
+          browser: { status: 'failed', error: 'Installation error' },
+        },
       };
 
       // When
@@ -112,15 +112,15 @@ describe('MCP Health Checker', () => {
       fs.readFileSync.mockReturnValue(JSON.stringify({
         mcpServers: {
           browser: { command: 'npx' },
-          exa: { command: 'npx', env: { EXA_API_KEY: 'test-key-123' } }
-        }
+          exa: { command: 'npx', env: { EXA_API_KEY: 'test-key-123' } },
+        },
       }));
 
       const mcpContext = {
         installedMCPs: {
           browser: { status: 'success' },
-          exa: { status: 'success' }
-        }
+          exa: { status: 'success' },
+        },
       };
 
       // When
@@ -136,14 +136,14 @@ describe('MCP Health Checker', () => {
       fs.existsSync.mockReturnValue(true);
       fs.readFileSync.mockReturnValue(JSON.stringify({
         mcpServers: {
-          browser: { command: 'npx' }
-        }
+          browser: { command: 'npx' },
+        },
       }));
 
       const mcpContext = {
         installedMCPs: {
-          browser: { status: 'success' }
-        }
+          browser: { status: 'success' },
+        },
       };
 
       // When
@@ -163,8 +163,8 @@ describe('MCP Health Checker', () => {
 
       const mcpContext = {
         installedMCPs: {
-          browser: { status: 'success' }
-        }
+          browser: { status: 'success' },
+        },
       };
 
       // When
@@ -174,9 +174,9 @@ describe('MCP Health Checker', () => {
       expect(result.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'MCP_HEALTH_CHECK_ERROR'
-          })
-        ])
+            code: 'MCP_HEALTH_CHECK_ERROR',
+          }),
+        ]),
       );
     });
   });
@@ -186,7 +186,7 @@ describe('MCP Health Checker', () => {
       // Given
       const mcpConfig = {
         command: 'npx',
-        args: ['-y', '@modelcontextprotocol/server-puppeteer']
+        args: ['-y', '@modelcontextprotocol/server-puppeteer'],
       };
 
       // When
@@ -202,7 +202,7 @@ describe('MCP Health Checker', () => {
       // Given
       const mcpConfig = {
         command: 'npx',
-        args: ['-y', '@upstash/context7-mcp']
+        args: ['-y', '@upstash/context7-mcp'],
       };
 
       // When
@@ -218,8 +218,8 @@ describe('MCP Health Checker', () => {
       const mcpConfig = {
         command: 'npx',
         env: {
-          EXA_API_KEY: 'your-api-key-here'
-        }
+          EXA_API_KEY: 'your-api-key-here',
+        },
       };
 
       // When
@@ -236,8 +236,8 @@ describe('MCP Health Checker', () => {
       const mcpConfig = {
         command: 'npx',
         env: {
-          EXA_API_KEY: 'your-actual-exa-api-key'
-        }
+          EXA_API_KEY: 'your-actual-exa-api-key',
+        },
       };
 
       // When
@@ -253,7 +253,7 @@ describe('MCP Health Checker', () => {
       // Given
       const mcpConfig = {
         command: 'npx',
-        args: ['-y', '@desktopcommander/server']
+        args: ['-y', '@desktopcommander/server'],
       };
 
       // When

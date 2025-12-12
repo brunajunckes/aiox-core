@@ -18,32 +18,32 @@ class CapabilityAnalyzer {
     this.categories = {
       error_handling: {
         weight: 0.2,
-        metrics: ['try_catch_coverage', 'error_context', 'retry_logic', 'graceful_degradation']
+        metrics: ['try_catch_coverage', 'error_context', 'retry_logic', 'graceful_degradation'],
       },
       performance: {
         weight: 0.15,
-        metrics: ['async_operations', 'caching', 'algorithm_efficiency', 'resource_usage']
+        metrics: ['async_operations', 'caching', 'algorithm_efficiency', 'resource_usage'],
       },
       modularity: {
         weight: 0.15,
-        metrics: ['function_size', 'coupling', 'cohesion', 'reusability']
+        metrics: ['function_size', 'coupling', 'cohesion', 'reusability'],
       },
       testing: {
         weight: 0.2,
-        metrics: ['test_coverage', 'test_quality', 'edge_cases', 'mocking_strategy']
+        metrics: ['test_coverage', 'test_quality', 'edge_cases', 'mocking_strategy'],
       },
       documentation: {
         weight: 0.1,
-        metrics: ['jsdoc_coverage', 'inline_comments', 'readme_quality', 'examples']
+        metrics: ['jsdoc_coverage', 'inline_comments', 'readme_quality', 'examples'],
       },
       security: {
         weight: 0.1,
-        metrics: ['input_validation', 'sanitization', 'auth_checks', 'audit_trail']
+        metrics: ['input_validation', 'sanitization', 'auth_checks', 'audit_trail'],
       },
       user_experience: {
         weight: 0.1,
-        metrics: ['feedback_quality', 'error_messages', 'progress_tracking', 'help_text']
-      }
+        metrics: ['feedback_quality', 'error_messages', 'progress_tracking', 'help_text'],
+      },
     };
   }
 
@@ -63,7 +63,7 @@ class CapabilityAnalyzer {
       categories: {},
       improvement_opportunities: [],
       strengths: [],
-      weaknesses: []
+      weaknesses: [],
     };
 
     // Analyze each category
@@ -78,13 +78,13 @@ class CapabilityAnalyzer {
         analysis.strengths.push({
           category,
           score: categoryAnalysis.score,
-          highlights: categoryAnalysis.highlights
+          highlights: categoryAnalysis.highlights,
         });
       } else if (categoryAnalysis.score < 6) {
         analysis.weaknesses.push({
           category,
           score: categoryAnalysis.score,
-          issues: categoryAnalysis.issues
+          issues: categoryAnalysis.issues,
         });
       }
       
@@ -113,7 +113,7 @@ class CapabilityAnalyzer {
       metrics: {},
       issues: [],
       highlights: [],
-      opportunities: []
+      opportunities: [],
     };
 
     // Analyze each metric
@@ -125,7 +125,7 @@ class CapabilityAnalyzer {
         analysis.issues.push({
           metric,
           score: metricResult.score,
-          description: metricResult.description
+          description: metricResult.description,
         });
         
         // Generate improvement opportunity
@@ -136,14 +136,14 @@ class CapabilityAnalyzer {
             description: metricResult.improvement,
             impact: (10 - metricResult.score) * categoryDef.weight,
             effort: metricResult.effort || 'medium',
-            risk: metricResult.risk || 'low'
+            risk: metricResult.risk || 'low',
           });
         }
       } else if (metricResult.score >= 8) {
         analysis.highlights.push({
           metric,
           score: metricResult.score,
-          description: metricResult.description
+          description: metricResult.description,
         });
       }
     }
@@ -179,14 +179,14 @@ class CapabilityAnalyzer {
     const files = await this.getJavaScriptFiles(basePath || this.coreDir);
     let totalFunctions = 0;
     let functionsWithTryCatch = 0;
-    let asyncWithoutTryCatch = [];
+    const asyncWithoutTryCatch = [];
 
     for (const file of files) {
       try {
         const content = await fs.readFile(file, 'utf-8');
         const ast = parse(content, {
           sourceType: 'module',
-          plugins: ['jsx']
+          plugins: ['jsx'],
         });
 
         traverse(ast, {
@@ -198,7 +198,7 @@ class CapabilityAnalyzer {
             path.traverse({
               TryStatement() {
                 hasTryCatch = true;
-              }
+              },
             });
 
             if (hasTryCatch) {
@@ -206,10 +206,10 @@ class CapabilityAnalyzer {
             } else if (isAsync) {
               asyncWithoutTryCatch.push({
                 file: path.relative(this.rootPath, file),
-                line: path.node.loc?.start.line
+                line: path.node.loc?.start.line,
               });
             }
-          }
+          },
         });
       } catch (error) {
         // Skip files that can't be parsed
@@ -227,7 +227,7 @@ class CapabilityAnalyzer {
         : null,
       effort: asyncWithoutTryCatch.length > 10 ? 'high' : 'medium',
       risk: 'low',
-      details: { asyncWithoutTryCatch: asyncWithoutTryCatch.slice(0, 5) }
+      details: { asyncWithoutTryCatch: asyncWithoutTryCatch.slice(0, 5) },
     };
   }
 
@@ -239,7 +239,7 @@ class CapabilityAnalyzer {
     const files = await this.getJavaScriptFiles(basePath || this.coreDir);
     let totalErrors = 0;
     let contextualErrors = 0;
-    let poorErrors = [];
+    const poorErrors = [];
 
     for (const file of files) {
       try {
@@ -254,7 +254,7 @@ class CapabilityAnalyzer {
           } else {
             poorErrors.push({
               file: path.relative(this.rootPath, file),
-              error: match.substring(0, 50)
+              error: match.substring(0, 50),
             });
           }
         });
@@ -274,7 +274,7 @@ class CapabilityAnalyzer {
         : null,
       effort: 'low',
       risk: 'low',
-      details: { poorErrors: poorErrors.slice(0, 5) }
+      details: { poorErrors: poorErrors.slice(0, 5) },
     };
   }
 
@@ -286,7 +286,7 @@ class CapabilityAnalyzer {
     const files = await this.getJavaScriptFiles(basePath || this.coreDir);
     let retryPatterns = 0;
     let networkOperations = 0;
-    let missingRetry = [];
+    const missingRetry = [];
 
     for (const file of files) {
       try {
@@ -305,7 +305,7 @@ class CapabilityAnalyzer {
         if (networkOps.length > 0 && !content.match(/retry|retries|attempt/i)) {
           missingRetry.push({
             file: path.relative(this.rootPath, file),
-            operations: networkOps.length
+            operations: networkOps.length,
           });
         }
       } catch (error) {
@@ -323,7 +323,7 @@ class CapabilityAnalyzer {
         : null,
       effort: 'medium',
       risk: 'low',
-      details: { missingRetry: missingRetry.slice(0, 5) }
+      details: { missingRetry: missingRetry.slice(0, 5) },
     };
   }
 
@@ -346,7 +346,7 @@ class CapabilityAnalyzer {
       affectedFiles: [],
       estimatedImpact: 0,
       estimatedEffort: 0,
-      riskLevel: 'low'
+      riskLevel: 'low',
     };
 
     // Filter opportunities based on request and constraints
@@ -393,7 +393,7 @@ class CapabilityAnalyzer {
       modifications: [],
       tests: [],
       impact: opportunity.impact,
-      risk: opportunity.risk
+      risk: opportunity.risk,
     };
 
     // Generate specific modifications based on metric
@@ -407,7 +407,7 @@ class CapabilityAnalyzer {
               file: location.file,
               line: location.line,
               type: 'wrap_in_try_catch',
-              description: 'Add try-catch block to async function'
+              description: 'Add try-catch block to async function',
             });
           }
         }
@@ -422,7 +422,7 @@ class CapabilityAnalyzer {
               file: error.file,
               type: 'enhance_error_message',
               description: 'Add context to error message',
-              pattern: error.error
+              pattern: error.error,
             });
           }
         }
@@ -432,7 +432,7 @@ class CapabilityAnalyzer {
         // Generic improvement
         change.modifications.push({
           type: 'generic_improvement',
-          description: opportunity.description
+          description: opportunity.description,
         });
     }
 
@@ -440,7 +440,7 @@ class CapabilityAnalyzer {
     change.tests = change.files.map(file => ({
       file: file.replace('.js', '.test.js'),
       type: 'unit',
-      coverage: 'new_functionality'
+      coverage: 'new_functionality',
     }));
 
     return change;
@@ -527,7 +527,7 @@ class CapabilityAnalyzer {
       description: `${metric} analysis not yet implemented`,
       improvement: `Implement ${metric} analysis and improvements`,
       effort: 'medium',
-      risk: 'low'
+      risk: 'low',
     };
   }
 }

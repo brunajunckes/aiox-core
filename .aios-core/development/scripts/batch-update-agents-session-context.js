@@ -16,7 +16,7 @@ const AGENTS_TO_UPDATE = [
   'data-engineer.md',
   'devops.md',
   'aios-master.md',
-  'ux-design-expert.md'
+  'ux-design-expert.md',
 ];
 
 const AGENTS_DIR = path.join(process.cwd(), '.aios-core', 'agents');
@@ -30,20 +30,20 @@ async function updateAgent(agentFile) {
     let content = await fs.readFile(filePath, 'utf8');
 
     // Pattern 1: Update activation-instructions
-    const activationPattern = /(- STEP 2\.5: Load project status.*\n)(  - STEP 3: Greet user)/s;
-    const activationReplacement = `$1  - STEP 2.6: Load session context using .aios-core/scripts/session-context-loader.js to detect previous agent and workflow state\n$2`;
+    const activationPattern = /(- STEP 2\.5: Load project status.*\n)( {2}- STEP 3: Greet user)/s;
+    const activationReplacement = '$1  - STEP 2.6: Load session context using .aios-core/scripts/session-context-loader.js to detect previous agent and workflow state\n$2';
 
     content = content.replace(activationPattern, activationReplacement);
 
     // Pattern 2: Add STEP 3.6 after STEP 3.5
-    const step36Pattern = /(- STEP 3\.5: Introduce yourself.*\n)(  - STEP 4: Display project status)/s;
-    const step36Replacement = `$1  - STEP 3.6: Display session context if available (from STEP 2.6) showing previous agent and recent commands\n$2`;
+    const step36Pattern = /(- STEP 3\.5: Introduce yourself.*\n)( {2}- STEP 4: Display project status)/s;
+    const step36Replacement = '$1  - STEP 3.6: Display session context if available (from STEP 2.6) showing previous agent and recent commands\n$2';
 
     content = content.replace(step36Pattern, step36Replacement);
 
     // Pattern 3: Add *session-info command to Utilities section
-    const utilitiesPattern = /(# Utilities\n)(  - (?:guide|help|exit))/;
-    const utilitiesReplacement = `$1  - session-info: Show current session details (agent history, commands)\n$2`;
+    const utilitiesPattern = /(# Utilities\n)( {2}- (?:guide|help|exit))/;
+    const utilitiesReplacement = '$1  - session-info: Show current session details (agent history, commands)\n$2';
 
     content = content.replace(utilitiesPattern, utilitiesReplacement);
 

@@ -20,7 +20,7 @@ const agentElicitationSteps = [
             return 'Name must be lowercase with hyphens only (e.g., data-analyst)';
           }
           return true;
-        }
+        },
       },
       {
         type: 'input',
@@ -31,16 +31,16 @@ const agentElicitationSteps = [
           type: 'fromAnswer',
           source: 'agentName',
           transform: (name) => name.split('-').map(w => 
-            w.charAt(0).toUpperCase() + w.slice(1)
-          ).join(' ')
-        }
+            w.charAt(0).toUpperCase() + w.slice(1),
+          ).join(' '),
+        },
       },
       {
         type: 'input',
         name: 'agentIcon',
         message: 'Choose an emoji icon for this agent',
         examples: ['📊', '🔍', '📋', '🚀', '🛡️'],
-        default: '🤖'
+        default: '🤖',
       },
       {
         type: 'input',
@@ -49,11 +49,11 @@ const agentElicitationSteps = [
         examples: [
           'Use for data analysis and visualization tasks',
           'Use for code review and quality assurance',
-          'Use for project planning and tracking'
-        ]
-      }
+          'Use for project planning and tracking',
+        ],
+      },
     ],
-    required: ['agentName', 'agentTitle', 'whenToUse']
+    required: ['agentName', 'agentTitle', 'whenToUse'],
   },
   
   {
@@ -68,8 +68,8 @@ const agentElicitationSteps = [
         examples: [
           'Expert Data Scientist & Analytics Specialist',
           'Senior Software Engineer & Code Quality Expert',
-          'Agile Project Manager & Scrum Master'
-        ]
+          'Agile Project Manager & Scrum Master',
+        ],
       },
       {
         type: 'input',
@@ -78,9 +78,9 @@ const agentElicitationSteps = [
         examples: [
           'analytical, precise, data-driven',
           'thorough, constructive, detail-oriented',
-          'organized, proactive, collaborative'
+          'organized, proactive, collaborative',
         ],
-        default: 'professional, helpful, focused'
+        default: 'professional, helpful, focused',
       },
       {
         type: 'input',
@@ -89,8 +89,8 @@ const agentElicitationSteps = [
         examples: [
           'A data expert who transforms raw data into actionable insights',
           'A code quality guardian who ensures best practices',
-          'A project orchestrator who keeps teams aligned and productive'
-        ]
+          'A project orchestrator who keeps teams aligned and productive',
+        ],
       },
       {
         type: 'list',
@@ -102,17 +102,17 @@ const agentElicitationSteps = [
           'Process and workflow',
           'Quality and standards',
           'Communication and documentation',
-          'Other (specify)'
-        ]
+          'Other (specify)',
+        ],
       },
       {
         type: 'input',
         name: 'personaFocusCustom',
         message: 'Specify the focus area:',
-        when: (answers) => answers.personaFocus === 'Other (specify)'
-      }
+        when: (answers) => answers.personaFocus === 'Other (specify)',
+      },
     ],
-    required: ['personaRole', 'personaStyle', 'personaIdentity']
+    required: ['personaRole', 'personaStyle', 'personaIdentity'],
   },
   
   {
@@ -131,15 +131,15 @@ const agentElicitationSteps = [
           { name: 'suggest - Provide recommendations', value: 'suggest' },
           { name: 'explain - Explain concepts or code', value: 'explain' },
           { name: 'validate - Check for errors/issues', value: 'validate' },
-          { name: 'report - Generate reports', value: 'report' }
+          { name: 'report - Generate reports', value: 'report' },
         ],
-        default: ['analyze', 'create', 'suggest']
+        default: ['analyze', 'create', 'suggest'],
       },
       {
         type: 'confirm',
         name: 'addCustomCommands',
         message: 'Would you like to add custom commands?',
-        default: false
+        default: false,
       },
       {
         type: 'input',
@@ -147,9 +147,9 @@ const agentElicitationSteps = [
         message: 'Enter custom commands (comma-separated, format: "name:description"):',
         when: (answers) => answers.addCustomCommands,
         examples: ['optimize:Optimize performance', 'debug:Debug issues'],
-        filter: (input) => input.split(',').map(cmd => cmd.trim())
-      }
-    ]
+        filter: (input) => input.split(',').map(cmd => cmd.trim()),
+      },
+    ],
   },
   
   {
@@ -165,8 +165,8 @@ const agentElicitationSteps = [
           { name: 'Tasks - Reusable task workflows', value: 'tasks' },
           { name: 'Templates - Document/code templates', value: 'templates' },
           { name: 'Checklists - Quality checklists', value: 'checklists' },
-          { name: 'Data - Reference data files', value: 'data' }
-        ]
+          { name: 'Data - Reference data files', value: 'data' },
+        ],
       },
       {
         type: 'input',
@@ -174,7 +174,7 @@ const agentElicitationSteps = [
         message: 'Enter task dependencies (comma-separated):',
         when: (answers) => answers.dependencyTypes.includes('tasks'),
         examples: ['analyze-data.md', 'generate-report.md'],
-        filter: (input) => input ? input.split(',').map(t => t.trim()) : []
+        filter: (input) => input ? input.split(',').map(t => t.trim()) : [],
       },
       {
         type: 'input',
@@ -182,9 +182,9 @@ const agentElicitationSteps = [
         message: 'Enter template dependencies (comma-separated):',
         when: (answers) => answers.dependencyTypes.includes('templates'),
         examples: ['report-template.md', 'analysis-template.yaml'],
-        filter: (input) => input ? input.split(',').map(t => t.trim()) : []
-      }
-    ]
+        filter: (input) => input ? input.split(',').map(t => t.trim()) : [],
+      },
+    ],
   },
   
   {
@@ -201,23 +201,23 @@ const agentElicitationSteps = [
           { name: 'Standard - Default permissions', value: 'standard' },
           { name: 'Elevated - Additional capabilities', value: 'elevated' },
           { name: 'Restricted - Limited access', value: 'restricted' },
-          { name: 'Custom - Define specific permissions', value: 'custom' }
+          { name: 'Custom - Define specific permissions', value: 'custom' },
         ],
-        default: 'standard'
+        default: 'standard',
       },
       {
         type: 'confirm',
         name: 'requireAuthorization',
         message: 'Should this agent require special authorization to activate?',
         default: false,
-        when: (answers) => answers.securityLevel !== 'standard'
+        when: (answers) => answers.securityLevel !== 'standard',
       },
       {
         type: 'confirm',
         name: 'enableAuditLogging',
         message: 'Enable audit logging for this agent\'s operations?',
         default: true,
-        when: (answers) => answers.securityLevel !== 'standard'
+        when: (answers) => answers.securityLevel !== 'standard',
       },
       {
         type: 'checkbox',
@@ -231,10 +231,10 @@ const agentElicitationSteps = [
           'execute_commands',
           'network_access',
           'memory_access',
-          'manifest_update'
-        ]
-      }
-    ]
+          'manifest_update',
+        ],
+      },
+    ],
   },
   
   {
@@ -246,7 +246,7 @@ const agentElicitationSteps = [
         type: 'confirm',
         name: 'enableMemoryLayer',
         message: 'Enable memory layer integration?',
-        default: true
+        default: true,
       },
       {
         type: 'input',
@@ -255,18 +255,18 @@ const agentElicitationSteps = [
         examples: [
           'Always validate data before processing',
           'Follow security best practices',
-          'Provide clear explanations'
+          'Provide clear explanations',
         ],
-        filter: (input) => input ? input.split(',').map(p => p.trim()) : []
+        filter: (input) => input ? input.split(',').map(p => p.trim()) : [],
       },
       {
         type: 'input',
         name: 'customActivationInstructions',
         message: 'Any special activation instructions? (optional)',
-        examples: ['Load specific context on activation', 'Initialize connections']
-      }
-    ]
-  }
+        examples: ['Load specific context on activation', 'Initialize connections'],
+      },
+    ],
+  },
 ];
 
 module.exports = agentElicitationSteps;

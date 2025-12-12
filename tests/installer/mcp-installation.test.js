@@ -14,7 +14,7 @@ const { exec } = require('child_process');
 
 // Mock child_process exec to avoid real npx calls
 jest.mock('child_process', () => ({
-  exec: jest.fn()
+  exec: jest.fn(),
 }));
 
 const { installProjectMCPs, displayInstallationStatus, MCP_CONFIGS } = require('../../bin/modules/mcp-installer');
@@ -152,7 +152,7 @@ describe('MCP Installation Module', () => {
       const result = await installProjectMCPs({
         selectedMCPs: ['browser'],
         projectPath: tempDir,
-        onProgress: () => {}
+        onProgress: () => {},
       });
 
       expect(fs.existsSync(mcpPath)).toBe(true);
@@ -164,7 +164,7 @@ describe('MCP Installation Module', () => {
 
       await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       const content = fs.readFileSync(mcpPath, 'utf8');
@@ -180,15 +180,15 @@ describe('MCP Installation Module', () => {
       // Create initial config
       const initialConfig = {
         mcpServers: {
-          custom: { command: 'test' }
-        }
+          custom: { command: 'test' },
+        },
       };
       fs.writeFileSync(mcpPath, JSON.stringify(initialConfig, null, 2));
 
       // Install MCPs
       await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       const content = fs.readFileSync(mcpPath, 'utf8');
@@ -208,7 +208,7 @@ describe('MCP Installation Module', () => {
       // Install MCPs
       await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       expect(fs.existsSync(backupPath)).toBe(true);
@@ -222,7 +222,7 @@ describe('MCP Installation Module', () => {
       const result = await installProjectMCPs({
         selectedMCPs: ['browser', 'context7', 'exa', 'desktop-commander'],
         projectPath: tempDir,
-        apiKeys: { EXA_API_KEY: 'test-key' }
+        apiKeys: { EXA_API_KEY: 'test-key' },
       });
 
       expect(result.success).toBeDefined();
@@ -237,7 +237,7 @@ describe('MCP Installation Module', () => {
 
       await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       expect(fs.existsSync(logPath)).toBe(true);
@@ -253,7 +253,7 @@ describe('MCP Installation Module', () => {
         projectPath: tempDir,
         onProgress: (status) => {
           progressCalls.push(status);
-        }
+        },
       });
 
       expect(progressCalls.length).toBeGreaterThan(0);
@@ -263,7 +263,7 @@ describe('MCP Installation Module', () => {
     test('should handle empty MCP selection', async () => {
       const result = await installProjectMCPs({
         selectedMCPs: [],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       expect(result.installedMCPs).toEqual({});
@@ -272,7 +272,7 @@ describe('MCP Installation Module', () => {
     test('should reject unknown MCP ID', async () => {
       const result = await installProjectMCPs({
         selectedMCPs: ['unknown-mcp'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       expect(result.success).toBe(false);
@@ -284,7 +284,7 @@ describe('MCP Installation Module', () => {
     test('should run health checks for installed MCPs', async () => {
       const result = await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       const browserStatus = result.installedMCPs.browser;
@@ -297,7 +297,7 @@ describe('MCP Installation Module', () => {
       // They validate configuration rather than actually testing MCP servers
       const result = await installProjectMCPs({
         selectedMCPs: ['browser'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       const browserStatus = result.installedMCPs.browser;
@@ -311,7 +311,7 @@ describe('MCP Installation Module', () => {
 
       await installProjectMCPs({
         selectedMCPs: ['unknown-mcp'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       if (fs.existsSync(errorLogPath)) {
@@ -323,7 +323,7 @@ describe('MCP Installation Module', () => {
     test('should include errors in result', async () => {
       const result = await installProjectMCPs({
         selectedMCPs: ['unknown-mcp'],
-        projectPath: tempDir
+        projectPath: tempDir,
       });
 
       expect(result.errors).toBeDefined();
@@ -336,10 +336,10 @@ describe('MCP Installation Module', () => {
       const result = {
         success: true,
         installedMCPs: {
-          browser: { status: 'success', message: 'Installed' }
+          browser: { status: 'success', message: 'Installed' },
         },
         configPath: '/test/.mcp.json',
-        errors: []
+        errors: [],
       };
 
       expect(() => {
@@ -353,10 +353,10 @@ describe('MCP Installation Module', () => {
         installedMCPs: {
           browser: { status: 'success', message: 'Installed' },
           exa: { status: 'warning', message: 'Timeout' },
-          'desktop-commander': { status: 'failed', message: 'Error' }
+          'desktop-commander': { status: 'failed', message: 'Error' },
         },
         configPath: '/test/.mcp.json',
-        errors: []
+        errors: [],
       };
 
       expect(() => {
@@ -372,7 +372,7 @@ describe('MCP Installation Module', () => {
       await installProjectMCPs({
         selectedMCPs: ['exa'],
         projectPath: tempDir,
-        apiKeys: { EXA_API_KEY: 'my-test-key' }
+        apiKeys: { EXA_API_KEY: 'my-test-key' },
       });
 
       const content = fs.readFileSync(mcpPath, 'utf8');
@@ -387,7 +387,7 @@ describe('MCP Installation Module', () => {
       await installProjectMCPs({
         selectedMCPs: ['exa'],
         projectPath: tempDir,
-        apiKeys: {}
+        apiKeys: {},
       });
 
       const content = fs.readFileSync(mcpPath, 'utf8');

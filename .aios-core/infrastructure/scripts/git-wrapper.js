@@ -28,7 +28,7 @@ class GitWrapper {
       const args = command.split(' ');
       const { stdout, stderr } = await execa(this.gitPath, args, {
         cwd: this.rootPath,
-        ...options
+        ...options,
       });
 
       if (stderr && !options.ignoreStderr) {
@@ -145,7 +145,7 @@ class GitWrapper {
 
       // Note: execa handles arguments array directly
       const { stdout } = await execa(this.gitPath, commitArgs, {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
 
       return stdout.trim();
@@ -177,7 +177,7 @@ ${JSON.stringify(metadata, null, 2)}`;
         clean: !output,
         modified: [],
         staged: [],
-        untracked: []
+        untracked: [],
       };
 
       if (!output) return status;
@@ -213,7 +213,7 @@ ${JSON.stringify(metadata, null, 2)}`;
         const [hash, ...messageParts] = line.split(' ');
         return {
           hash,
-          message: messageParts.join(' ')
+          message: messageParts.join(' '),
         };
       });
     } catch (error) {
@@ -249,19 +249,19 @@ ${JSON.stringify(metadata, null, 2)}`;
       }
 
       const { stdout } = await execa(this.gitPath, mergeArgs, {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
 
       return {
         success: true,
-        output: stdout.trim()
+        output: stdout.trim(),
       };
     } catch (error) {
       const conflicts = await this.getConflicts();
       return {
         success: false,
         conflicts,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -297,7 +297,7 @@ ${JSON.stringify(metadata, null, 2)}`;
       }
 
       const { stdout } = await execa(this.gitPath, pushArgs, {
-        cwd: this.rootPath
+        cwd: this.rootPath,
       });
 
       return stdout.trim();
@@ -412,7 +412,7 @@ ${JSON.stringify(metadata, null, 2)}`;
     }
 
     const { stdout } = await execa(this.gitPath, fetchArgs, {
-      cwd: this.rootPath
+      cwd: this.rootPath,
     });
 
     return stdout.trim();
@@ -433,7 +433,7 @@ ${JSON.stringify(metadata, null, 2)}`;
     }
 
     const { stdout } = await execa(this.gitPath, pullArgs, {
-      cwd: this.rootPath
+      cwd: this.rootPath,
     });
 
     return stdout.trim();

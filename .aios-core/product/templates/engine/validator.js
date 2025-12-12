@@ -30,7 +30,7 @@ class TemplateValidator {
       allErrors: true,
       verbose: true,
       strict: false,
-      validateFormats: true
+      validateFormats: true,
     });
 
     // Add format validators
@@ -49,22 +49,22 @@ class TemplateValidator {
   registerCustomFormats() {
     // Semantic version format
     this.ajv.addFormat('semver', {
-      validate: (str) => /^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$/.test(str)
+      validate: (str) => /^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?(\+[a-zA-Z0-9.]+)?$/.test(str),
     });
 
     // Slug format (URL-safe string)
     this.ajv.addFormat('slug', {
-      validate: (str) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(str)
+      validate: (str) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(str),
     });
 
     // Story ID format (e.g., "3.6", "12.1")
     this.ajv.addFormat('story-id', {
-      validate: (str) => /^\d+\.\d+$/.test(str)
+      validate: (str) => /^\d+\.\d+$/.test(str),
     });
 
     // Epic ID format (e.g., "EPIC-S3")
     this.ajv.addFormat('epic-id', {
-      validate: (str) => /^EPIC-[A-Z0-9]+$/.test(str)
+      validate: (str) => /^EPIC-[A-Z0-9]+$/.test(str),
     });
   }
 
@@ -80,7 +80,7 @@ class TemplateValidator {
 
     // Handle versioned schema aliases (e.g., prd-v2 -> prd-v2.schema.json)
     const schemaAliases = {
-      'prd-v2': 'prd-v2'
+      'prd-v2': 'prd-v2',
     };
 
     const schemaName = schemaAliases[templateType] || templateType;
@@ -140,14 +140,14 @@ class TemplateValidator {
       return {
         isValid: true,
         errors: [],
-        data
+        data,
       };
     }
 
     return {
       isValid: false,
       errors: this.formatErrors(validate.errors),
-      data
+      data,
     };
   }
 
@@ -190,7 +190,7 @@ class TemplateValidator {
 
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -272,7 +272,7 @@ class TemplateValidator {
     return {
       complete: missing.length === 0,
       found,
-      missing
+      missing,
     };
   }
 
@@ -290,5 +290,5 @@ class TemplateValidator {
 }
 
 module.exports = {
-  TemplateValidator
+  TemplateValidator,
 };

@@ -72,5 +72,5 @@ module.exports = {
 
   // Version info
   version: '2.0.0',
-  moduleName: 'core'
+  moduleName: 'core',
 };

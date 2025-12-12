@@ -42,7 +42,7 @@ class GreetingPreferenceManager {
       throw new Error(
         `Invalid preference: "${preference}". ` +
         `Valid options: ${validOptions}. ` +
-        `Examples: "auto" (session-aware), "minimal" (always minimal), "named" (always named), "archetypal" (always archetypal)`
+        'Examples: "auto" (session-aware), "minimal" (always minimal), "named" (always named), "archetypal" (always archetypal)',
       );
     }
 

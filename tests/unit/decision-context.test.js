@@ -9,7 +9,7 @@
 const {
   DecisionContext,
   DECISION_TYPES,
-  PRIORITY_LEVELS
+  PRIORITY_LEVELS,
 } = require('../../.aios-core/development/scripts/decision-context');
 
 describe('DecisionContext', () => {
@@ -60,7 +60,7 @@ describe('DecisionContext', () => {
         reason: 'Better error handling',
         alternatives: ['Fetch API', 'Got library'],
         type: 'library-choice',
-        priority: 'medium'
+        priority: 'medium',
       });
 
       expect(decision).toMatchObject({
@@ -69,7 +69,7 @@ describe('DecisionContext', () => {
         reason: 'Better error handling',
         alternatives: ['Fetch API', 'Got library'],
         type: 'library-choice',
-        priority: 'medium'
+        priority: 'medium',
       });
 
       expect(context.decisions).toHaveLength(1);
@@ -80,7 +80,7 @@ describe('DecisionContext', () => {
       const decision = context.recordDecision({
         description: 'Simple decision',
         reason: 'Only one option',
-        alternatives: []
+        alternatives: [],
       });
 
       expect(decision.alternatives).toEqual([]);
@@ -89,7 +89,7 @@ describe('DecisionContext', () => {
     it('should use default type and priority if not provided', () => {
       const decision = context.recordDecision({
         description: 'Decision without classification',
-        reason: 'Some reason'
+        reason: 'Some reason',
       });
 
       expect(decision.type).toBe('architecture');
@@ -102,7 +102,7 @@ describe('DecisionContext', () => {
       const decision = context.recordDecision({
         description: 'Test decision',
         reason: 'Test reason',
-        type: 'invalid-type'
+        type: 'invalid-type',
       });
 
       expect(decision.type).toBe('architecture'); // Fallback to default
@@ -117,7 +117,7 @@ describe('DecisionContext', () => {
       const decision = context.recordDecision({
         description: 'Test decision',
         reason: 'Test reason',
-        priority: 'invalid-priority'
+        priority: 'invalid-priority',
       });
 
       expect(decision.priority).toBe('medium'); // Fallback to default
@@ -130,7 +130,7 @@ describe('DecisionContext', () => {
       const decision = context.recordDecision({
         description: 'Test',
         reason: 'Test',
-        alternatives: 'not an array'
+        alternatives: 'not an array',
       });
 
       expect(decision.alternatives).toEqual([]);
@@ -140,7 +140,7 @@ describe('DecisionContext', () => {
       const disabledContext = new DecisionContext('dev', 'story.md', { enabled: false });
       const decision = disabledContext.recordDecision({
         description: 'Test',
-        reason: 'Test'
+        reason: 'Test',
       });
 
       expect(decision).toBeNull();
@@ -192,7 +192,7 @@ describe('DecisionContext', () => {
       context.trackTest({
         name: 'api.test.js',
         passed: true,
-        duration: 125
+        duration: 125,
       });
 
       expect(context.testsRun).toHaveLength(1);
@@ -201,7 +201,7 @@ describe('DecisionContext', () => {
         passed: true,
         duration: 125,
         error: null,
-        timestamp: 1700000000000
+        timestamp: 1700000000000,
       });
     });
 
@@ -210,7 +210,7 @@ describe('DecisionContext', () => {
         name: 'broken.test.js',
         passed: false,
         duration: 50,
-        error: 'Assertion failed'
+        error: 'Assertion failed',
       });
 
       const test = context.testsRun[0];
@@ -221,7 +221,7 @@ describe('DecisionContext', () => {
     it('should handle missing duration', () => {
       context.trackTest({
         name: 'test.js',
-        passed: true
+        passed: true,
       });
 
       expect(context.testsRun[0].duration).toBe(0);
@@ -239,7 +239,7 @@ describe('DecisionContext', () => {
     it('should update metrics', () => {
       context.updateMetrics({
         agentLoadTime: 150,
-        taskExecutionTime: 60000
+        taskExecutionTime: 60000,
       });
 
       expect(context.metrics.agentLoadTime).toBe(150);
@@ -249,7 +249,7 @@ describe('DecisionContext', () => {
     it('should merge new metrics with existing', () => {
       context.metrics.agentLoadTime = 100;
       context.updateMetrics({
-        taskExecutionTime: 5000
+        taskExecutionTime: 5000,
       });
 
       expect(context.metrics.agentLoadTime).toBe(100);
@@ -294,7 +294,7 @@ describe('DecisionContext', () => {
     it('should return context as plain object', () => {
       context.recordDecision({
         description: 'Test decision',
-        reason: 'Test reason'
+        reason: 'Test reason',
       });
       context.trackFile('src/test.js', 'created');
       context.trackTest({ name: 'test.js', passed: true, duration: 100 });
@@ -311,7 +311,7 @@ describe('DecisionContext', () => {
         filesModified: expect.any(Array),
         testsRun: expect.any(Array),
         metrics: expect.any(Object),
-        commitBefore: expect.any(String)
+        commitBefore: expect.any(String),
       });
 
       expect(obj.decisions).toHaveLength(1);
@@ -340,7 +340,7 @@ describe('DecisionContext', () => {
         testsPassed: 1,
         testsFailed: 1,
         duration: 60000,
-        status: 'completed'
+        status: 'completed',
       });
     });
 

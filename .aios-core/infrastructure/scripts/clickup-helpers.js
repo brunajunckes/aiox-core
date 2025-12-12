@@ -30,7 +30,7 @@ async function getClickUpTool() {
     return {
       updateTask: global.mcp__clickup__update_task,
       createComment: global.mcp__clickup__create_task_comment,
-      getTask: global.mcp__clickup__get_task
+      getTask: global.mcp__clickup__get_task,
     };
   }
 }
@@ -60,13 +60,13 @@ async function updateStoryStatus(taskId, newStatus) {
       taskId: taskId,
       custom_fields: [
         {
-          id: "story-status",
-          value: mappedStatus
-        }
-      ]
+          id: 'story-status',
+          value: mappedStatus,
+        },
+      ],
     });
 
-    console.log(`✅ Story status updated successfully`);
+    console.log('✅ Story status updated successfully');
   } catch (error) {
     console.error(`Error updating story status for ${taskId}:`, error);
     throw new Error(`Failed to update story status: ${error.message}`);
@@ -98,10 +98,10 @@ async function updateEpicStatus(epicTaskId, newStatus) {
 
     await tool.updateTask({
       taskId: epicTaskId,
-      status: newStatus  // Native field for Epics
+      status: newStatus,  // Native field for Epics
     });
 
-    console.log(`✅ Epic status updated successfully`);
+    console.log('✅ Epic status updated successfully');
   } catch (error) {
     console.error(`Error updating Epic status for ${epicTaskId}:`, error);
     throw new Error(`Failed to update Epic status: ${error.message}`);
@@ -124,10 +124,10 @@ async function updateTaskDescription(taskId, markdown) {
 
     await tool.updateTask({
       taskId: taskId,
-      markdown_description: markdown
+      markdown_description: markdown,
     });
 
-    console.log(`✅ Task description updated successfully`);
+    console.log('✅ Task description updated successfully');
   } catch (error) {
     console.error(`Error updating task description for ${taskId}:`, error);
     throw new Error(`Failed to update task description: ${error.message}`);
@@ -150,10 +150,10 @@ async function addTaskComment(taskId, comment) {
 
     await tool.createComment({
       taskId: taskId,
-      commentText: comment
+      commentText: comment,
     });
 
-    console.log(`✅ Changelog comment added successfully`);
+    console.log('✅ Changelog comment added successfully');
   } catch (error) {
     console.error(`Error adding comment to task ${taskId}:`, error);
     throw new Error(`Failed to add task comment: ${error.message}`);
@@ -179,7 +179,7 @@ async function verifyEpicExists(epicNum) {
     // Search for Epic by tag in workspace
     // Using getWorkspaceTasks to find Epic with specific tag
     const result = await tool.getWorkspaceTasks({
-      tags: [`epic-${epicNum}`]
+      tags: [`epic-${epicNum}`],
     });
 
     if (!result || !result.tasks || result.tasks.length === 0) {
@@ -191,7 +191,7 @@ async function verifyEpicExists(epicNum) {
       task.tags &&
       task.tags.includes('epic') &&
       task.tags.includes(`epic-${epicNum}`) &&
-      ['Planning', 'In Progress'].includes(task.status)
+      ['Planning', 'In Progress'].includes(task.status),
     );
 
     if (epics.length === 0) {
@@ -208,7 +208,7 @@ async function verifyEpicExists(epicNum) {
     return {
       found: true,
       epicTaskId: epic.id,
-      epic: epic
+      epic: epic,
     };
 
   } catch (error) {
@@ -222,5 +222,5 @@ module.exports = {
   updateEpicStatus,
   updateTaskDescription,
   addTaskComment,
-  verifyEpicExists
+  verifyEpicExists,
 };

@@ -11,7 +11,7 @@ const {
   validateYamlSyntax,
   validateCoreConfigStructure,
   validatePath,
-  sanitizeInput
+  sanitizeInput,
 } = require('../../src/config/validation/config-validator');
 
 describe('Configuration Validator', () => {
@@ -182,7 +182,7 @@ project:
         project: { type: 'GREENFIELD' },
         qa: { qaLocation: 'docs/qa' },
         prd: { prdFile: 'docs/prd.md' },
-        architecture: { architectureFile: 'docs/architecture.md' }
+        architecture: { architectureFile: 'docs/architecture.md' },
       };
 
       const result = validateCoreConfigStructure(config);
@@ -192,7 +192,7 @@ project:
 
     it('should reject missing required fields', () => {
       const config = {
-        project: { type: 'GREENFIELD' }
+        project: { type: 'GREENFIELD' },
         // Missing qa, prd, architecture
       };
 
@@ -207,7 +207,7 @@ project:
         project: { type: 'INVALID_TYPE' },
         qa: {},
         prd: {},
-        architecture: {}
+        architecture: {},
       };
 
       const result = validateCoreConfigStructure(config);
@@ -221,7 +221,7 @@ project:
         qa: {},
         prd: {},
         architecture: {},
-        ide: { selected: 'not-an-array' } // Should be array
+        ide: { selected: 'not-an-array' }, // Should be array
       };
 
       const result = validateCoreConfigStructure(config);
@@ -236,7 +236,7 @@ project:
         '/absolute/path/to/file',
         'relative/path/to/file',
         'C:\\Windows\\Path\\File.txt',
-        './current/directory'
+        './current/directory',
       ];
 
       paths.forEach(p => {
@@ -263,7 +263,7 @@ project:
         'path/with<angle>brackets',
         'path/with|pipe',
         'path/with"quote',
-        'path/with?question'
+        'path/with?question',
       ];
 
       invalidPaths.forEach(p => {

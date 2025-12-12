@@ -24,7 +24,7 @@ const colors = {
   red: '\x1b[31m',
   yellow: '\x1b[33m',
   cyan: '\x1b[36m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 };
 
 /**
@@ -38,7 +38,7 @@ const validationRules = [
       return content.includes('## Execution Modes') || 
              content.includes('# Execution Modes');
     },
-    message: 'Missing "Execution Modes" section'
+    message: 'Missing "Execution Modes" section',
   },
   {
     id: 2,
@@ -49,7 +49,7 @@ const validationRules = [
              content.includes('responsavel_type:') &&
              content.includes('atomic_layer:');
     },
-    message: 'Task Definition incomplete (missing task, responsável, responsavel_type, or atomic_layer)'
+    message: 'Task Definition incomplete (missing task, responsável, responsavel_type, or atomic_layer)',
   },
   {
     id: 3,
@@ -58,7 +58,7 @@ const validationRules = [
       return content.includes('**Entrada:**') && 
              content.includes('**Saída:**');
     },
-    message: 'Missing Entrada or Saída sections'
+    message: 'Missing Entrada or Saída sections',
   },
   {
     id: 4,
@@ -68,7 +68,7 @@ const validationRules = [
              content.includes('post-conditions:') &&
              content.includes('acceptance-criteria:');
     },
-    message: 'Checklist not restructured (missing pre-conditions, post-conditions, or acceptance-criteria)'
+    message: 'Checklist not restructured (missing pre-conditions, post-conditions, or acceptance-criteria)',
   },
   {
     id: 5,
@@ -79,7 +79,7 @@ const validationRules = [
       const hasValidation = content.includes('validação:') || content.includes('validation:');
       return hasType && hasBlocker && hasValidation;
     },
-    message: 'Checklist items missing required fields (tipo, blocker, validação)'
+    message: 'Checklist items missing required fields (tipo, blocker, validação)',
   },
   {
     id: 6,
@@ -89,7 +89,7 @@ const validationRules = [
              content.includes('**Tools:**') ||
              content.includes('- N/A') && content.toLowerCase().includes('tool');
     },
-    message: 'Missing Tools section'
+    message: 'Missing Tools section',
   },
   {
     id: 7,
@@ -99,7 +99,7 @@ const validationRules = [
              content.includes('**Scripts:**') ||
              content.includes('- N/A') && content.toLowerCase().includes('script');
     },
-    message: 'Missing Scripts section'
+    message: 'Missing Scripts section',
   },
   {
     id: 8,
@@ -109,7 +109,7 @@ const validationRules = [
              content.includes('**Performance:**') ||
              (content.includes('duration_expected:') && content.includes('cost_estimated:'));
     },
-    message: 'Missing Performance section or required metrics (duration_expected, cost_estimated)'
+    message: 'Missing Performance section or required metrics (duration_expected, cost_estimated)',
   },
   {
     id: 9,
@@ -118,7 +118,7 @@ const validationRules = [
       return (content.includes('## Error Handling') || content.includes('**Error Handling:**')) &&
              (content.includes('strategy:') || content.includes('Strategy:'));
     },
-    message: 'Missing Error Handling section or strategy not defined'
+    message: 'Missing Error Handling section or strategy not defined',
   },
   {
     id: 10,
@@ -128,7 +128,7 @@ const validationRules = [
              content.includes('story:') &&
              content.includes('version:');
     },
-    message: 'Missing Metadata section or required fields (story, version)'
+    message: 'Missing Metadata section or required fields (story, version)',
   },
   {
     id: 11,
@@ -140,8 +140,8 @@ const validationRules = [
              content.includes('Metrics') ||
              content.includes('task-execution-report');
     },
-    message: 'Output template markers not found (Duration, Tokens, Metrics)'
-  }
+    message: 'Output template markers not found (Duration, Tokens, Metrics)',
+  },
 ];
 
 /**
@@ -156,7 +156,7 @@ function validateTask(filePath) {
     path: filePath,
     compliant: true,
     passed: [],
-    failed: []
+    failed: [],
   };
 
   try {
@@ -170,13 +170,13 @@ function validateTask(filePath) {
       if (passed) {
         result.passed.push({
           id: rule.id,
-          name: rule.name
+          name: rule.name,
         });
       } else {
         result.failed.push({
           id: rule.id,
           name: rule.name,
-          message: rule.message
+          message: rule.message,
         });
         result.compliant = false;
       }
@@ -247,7 +247,7 @@ function validateAllTasks() {
     total: results.length,
     compliant: compliantCount,
     nonCompliant: nonCompliantCount,
-    results
+    results,
   };
 }
 

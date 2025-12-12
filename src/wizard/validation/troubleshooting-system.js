@@ -18,15 +18,15 @@ const TROUBLESHOOTING_DATABASE = {
     causes: [
       'Environment configuration step failed',
       'File creation permissions issue',
-      '.env accidentally deleted'
+      '.env accidentally deleted',
     ],
     solutions: [
       'Re-run wizard: npx @allfluence/aios@latest init',
       'Manually create .env from template: cp .env.example .env',
-      'Check file permissions in project directory'
+      'Check file permissions in project directory',
     ],
     docs: 'https://docs.allfluence.com/installation/environment',
-    priority: 'critical'
+    priority: 'critical',
   },
 
   CORE_CONFIG_MISSING: {
@@ -34,15 +34,15 @@ const TROUBLESHOOTING_DATABASE = {
     causes: [
       'Environment configuration step failed',
       '.aios-core directory missing',
-      'File creation failed'
+      'File creation failed',
     ],
     solutions: [
       'Re-run wizard: npx @allfluence/aios@latest init',
       'Check .aios-core directory exists',
-      'Manually create from template'
+      'Manually create from template',
     ],
     docs: 'https://docs.allfluence.com/configuration/core-config',
-    priority: 'high'
+    priority: 'high',
   },
 
   MCP_HEALTH_CHECK_FAILED: {
@@ -51,17 +51,17 @@ const TROUBLESHOOTING_DATABASE = {
       'API key missing or invalid',
       'Network connectivity issues',
       'MCP service temporarily unavailable',
-      'Package not installed correctly'
+      'Package not installed correctly',
     ],
     solutions: [
       'Verify API key in .env file',
       'Test network: curl https://api.service.com/health',
       'Retry MCP installation: npm run install:mcps',
       'Check MCP service status',
-      'Verify npx can access package: npx -y [package-name] --version'
+      'Verify npx can access package: npx -y [package-name] --version',
     ],
     docs: 'https://docs.allfluence.com/mcps/troubleshooting',
-    priority: 'medium'
+    priority: 'medium',
   },
 
   ALL_MCP_HEALTH_CHECKS_FAILED: {
@@ -70,17 +70,17 @@ const TROUBLESHOOTING_DATABASE = {
       'Network connectivity issue',
       'MCPs not installed correctly',
       'Configuration file corrupted',
-      'API keys not configured'
+      'API keys not configured',
     ],
     solutions: [
       'Check internet connection',
       'Re-run MCP installation',
       'Verify .mcp.json syntax',
       'Configure API keys in .env',
-      'Delete .mcp.json and reinstall'
+      'Delete .mcp.json and reinstall',
     ],
     docs: 'https://docs.allfluence.com/mcps/troubleshooting',
-    priority: 'high'
+    priority: 'high',
   },
 
   GITIGNORE_CRITICAL_MISSING: {
@@ -88,15 +88,15 @@ const TROUBLESHOOTING_DATABASE = {
     causes: [
       '.gitignore not created during setup',
       '.gitignore manually edited incorrectly',
-      'Git not initialized'
+      'Git not initialized',
     ],
     solutions: [
       'Add missing entries to .gitignore',
       'Copy from template: .env, node_modules, *.key, *.pem',
-      'Initialize git if needed: git init'
+      'Initialize git if needed: git init',
     ],
     docs: 'https://docs.allfluence.com/security/gitignore',
-    priority: 'high'
+    priority: 'high',
   },
 
   DEPS_INSTALL_FAILED: {
@@ -105,17 +105,17 @@ const TROUBLESHOOTING_DATABASE = {
       'Network connectivity issues',
       'Package manager not installed',
       'npm/yarn registry unavailable',
-      'Disk space insufficient'
+      'Disk space insufficient',
     ],
     solutions: [
       'Check internet connection',
       'Verify package manager installed: npm --version',
       'Clear cache: npm cache clean --force',
       'Try different package manager: yarn or pnpm',
-      'Check disk space: df -h (Unix) or dir (Windows)'
+      'Check disk space: df -h (Unix) or dir (Windows)',
     ],
     docs: 'https://docs.allfluence.com/installation/dependencies',
-    priority: 'critical'
+    priority: 'critical',
   },
 
   CRITICAL_DEPS_MISSING: {
@@ -123,47 +123,47 @@ const TROUBLESHOOTING_DATABASE = {
     causes: [
       'Dependency installation incomplete',
       'node_modules corrupted',
-      'Package installation failed silently'
+      'Package installation failed silently',
     ],
     solutions: [
       'Delete node_modules: rm -rf node_modules',
       'Delete lock file: rm package-lock.json',
       'Reinstall: npm install',
-      'Try clean install: npm ci'
+      'Try clean install: npm ci',
     ],
     docs: 'https://docs.allfluence.com/installation/dependencies',
-    priority: 'high'
+    priority: 'high',
   },
 
   VULNERABILITIES_FOUND: {
     problem: 'Security vulnerabilities found in dependencies',
     causes: [
       'Outdated packages with known vulnerabilities',
-      'Transitive dependencies with security issues'
+      'Transitive dependencies with security issues',
     ],
     solutions: [
       'Run: npm audit fix',
       'Run: npm audit fix --force (if needed)',
       'Update packages: npm update',
-      'Review: npm audit for details'
+      'Review: npm audit for details',
     ],
     docs: 'https://docs.npmjs.com/cli/v8/commands/npm-audit',
-    priority: 'medium'
+    priority: 'medium',
   },
 
   ENV_PERMISSIONS_INSECURE: {
     problem: '.env file permissions too permissive',
     causes: [
       'File created with default permissions',
-      'Permissions not set during installation'
+      'Permissions not set during installation',
     ],
     solutions: [
       'Run: chmod 600 .env',
-      'Verify: ls -la .env'
+      'Verify: ls -la .env',
     ],
     docs: 'https://docs.allfluence.com/security/file-permissions',
-    priority: 'medium'
-  }
+    priority: 'medium',
+  },
 };
 
 /**
@@ -218,8 +218,8 @@ async function offerTroubleshooting(errors) {
       type: 'confirm',
       name: 'viewLogs',
       message: 'Would you like to see installation logs for more details?',
-      default: false
-    }
+      default: false,
+    },
   ]);
 
   if (viewLogs) {
@@ -237,8 +237,8 @@ async function offerTroubleshooting(errors) {
       type: 'confirm',
       name: 'openDocs',
       message: 'Would you like to open the troubleshooting documentation?',
-      default: false
-    }
+      default: false,
+    },
   ]);
 
   if (openDocs) {
@@ -265,7 +265,7 @@ function displayTroubleshooting(code, troubleshooting, errorInstances) {
     critical: chalk.red('🔴'),
     high: chalk.yellow('🟡'),
     medium: chalk.blue('🔵'),
-    low: chalk.gray('⚪')
+    low: chalk.gray('⚪'),
   }[troubleshooting.priority] || '⚪';
 
   console.log(chalk.bold(`${priorityIcon} ${troubleshooting.problem}`));
@@ -342,5 +342,5 @@ function displayGenericTroubleshooting(code, errorInstances) {
 
 module.exports = {
   offerTroubleshooting,
-  TROUBLESHOOTING_DATABASE
+  TROUBLESHOOTING_DATABASE,
 };

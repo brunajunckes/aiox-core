@@ -46,7 +46,7 @@ class Layer1PreCommit extends BaseLayer {
         check: 'layer1',
         pass: true,
         skipped: true,
-        message: 'Layer 1 disabled'
+        message: 'Layer 1 disabled',
       });
       this.stopTimer();
       return this.getSummary();
@@ -136,7 +136,7 @@ class Layer1PreCommit extends BaseLayer {
         output: verbose ? result.stdout : undefined,
         message: pass
           ? `Lint passed (${errorCount} errors, ${warningCount} warnings)`
-          : `Lint failed (${errorCount} errors, ${warningCount} warnings)`
+          : `Lint failed (${errorCount} errors, ${warningCount} warnings)`,
       };
 
       if (verbose) {
@@ -150,7 +150,7 @@ class Layer1PreCommit extends BaseLayer {
         check: 'lint',
         pass: false,
         error: error.message,
-        message: `Lint error: ${error.message}`
+        message: `Lint error: ${error.message}`,
       };
     }
   }
@@ -201,13 +201,13 @@ class Layer1PreCommit extends BaseLayer {
           passed,
           failed,
           skipped,
-          total: passed + failed + skipped
+          total: passed + failed + skipped,
         },
         coverage,
         duration: result.duration,
         message: pass
           ? `Tests passed (${passed} passed, ${failed} failed)`
-          : `Tests failed (${passed} passed, ${failed} failed)`
+          : `Tests failed (${passed} passed, ${failed} failed)`,
       };
 
       if (verbose) {
@@ -225,7 +225,7 @@ class Layer1PreCommit extends BaseLayer {
         check: 'test',
         pass: false,
         error: error.message,
-        message: `Test error: ${error.message}`
+        message: `Test error: ${error.message}`,
       };
     }
   }
@@ -260,7 +260,7 @@ class Layer1PreCommit extends BaseLayer {
         exitCode: result.exitCode,
         errors: errorCount,
         duration: result.duration,
-        message: pass ? 'Type check passed' : `Type check failed (${errorCount} errors)`
+        message: pass ? 'Type check passed' : `Type check failed (${errorCount} errors)`,
       };
 
       if (verbose) {
@@ -274,7 +274,7 @@ class Layer1PreCommit extends BaseLayer {
         check: 'typecheck',
         pass: false,
         error: error.message,
-        message: `TypeCheck error: ${error.message}`
+        message: `TypeCheck error: ${error.message}`,
       };
     }
   }
@@ -294,7 +294,7 @@ class Layer1PreCommit extends BaseLayer {
       const options = {
         shell: true,
         cwd: process.cwd(),
-        env: { ...process.env, FORCE_COLOR: '1' }
+        env: { ...process.env, FORCE_COLOR: '1' },
       };
 
       const child = spawn(cmd, args, options);
@@ -321,7 +321,7 @@ class Layer1PreCommit extends BaseLayer {
           exitCode,
           stdout,
           stderr,
-          duration: Date.now() - startTime
+          duration: Date.now() - startTime,
         });
       });
 

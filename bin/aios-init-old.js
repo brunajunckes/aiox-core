@@ -30,7 +30,7 @@ function resolveAiosCoreModule(modulePath) {
       `Cannot find AIOS Core module: ${modulePath}\n` +
       `Searched: ${aiosCoreModule}\n` +
       `__dirname: ${__dirname}\n` +
-      `Please ensure aios-fullstack is installed correctly.`
+      'Please ensure aios-fullstack is installed correctly.',
     );
   }
 
@@ -68,7 +68,7 @@ function updateGitIgnore(mode, projectRoot) {
       'outputs/minds/',
       '.aios-installation-config.yaml',
       '# End AIOS-FullStack auto-managed section',
-      ''
+      '',
     ];
 
     // Check if rules already exist
@@ -138,11 +138,11 @@ async function init() {
         description: 'AIOS-FullStack project',
         main: 'index.js',
         scripts: {
-          test: 'echo "Error: no test specified" && exit 1'
+          test: 'echo "Error: no test specified" && exit 1',
         },
         keywords: [],
         author: '',
-        license: 'ISC'
+        license: 'ISC',
       };
       fs.writeFileSync(packageJsonPath, JSON.stringify(defaultPackage, null, 2));
       console.log('✓ package.json created\n');
@@ -159,7 +159,7 @@ async function init() {
         packageName: packageJson.name,
         packageVersion: packageJson.version,
         repositoryUrl: 'local-repository', // No remote yet
-        frameworkLocation: path.join(__dirname, '..')
+        frameworkLocation: path.join(__dirname, '..'),
       };
       console.log('✓ Project context created (no remote origin yet)\n');
     }
@@ -179,35 +179,35 @@ async function init() {
       choices: [
         {
           name: '1. Desenvolvendo o próprio framework AIOS-FullStack',
-          value: 'framework-development'
+          value: 'framework-development',
         },
         {
           name: '2. Usando AIOS-FullStack em um projeto',
-          value: 'project-development'
-        }
-      ]
-    }
+          value: 'project-development',
+        },
+      ],
+    },
   ]);
 
   // Create installation config
   const config = {
     installation: {
       mode: answers.mode,
-      detected_at: new Date().toISOString()
+      detected_at: new Date().toISOString(),
     },
     repository: {
       url: context.repositoryUrl,
-      auto_detect: true
+      auto_detect: true,
     },
     framework: {
       source: answers.mode === 'framework-development' ? 'local' : 'npm',
       version: context.packageVersion,
-      location: context.frameworkLocation
+      location: context.frameworkLocation,
     },
     git_ignore_rules: {
       mode: answers.mode,
-      ignore_framework_files: answers.mode === 'project-development'
-    }
+      ignore_framework_files: answers.mode === 'project-development',
+    },
   };
 
   // Save config
@@ -229,22 +229,22 @@ async function init() {
       choices: [
         {
           name: '1. ClickUp (requires API token)',
-          value: 'clickup'
+          value: 'clickup',
         },
         {
           name: '2. GitHub Projects (uses existing gh auth)',
-          value: 'github-projects'
+          value: 'github-projects',
         },
         {
           name: '3. Jira (requires API token)',
-          value: 'jira'
+          value: 'jira',
         },
         {
           name: '4. None (local YAML files only)',
-          value: 'local'
-        }
-      ]
-    }
+          value: 'local',
+        },
+      ],
+    },
   ]);
 
   const pmTool = pmToolAnswer.pmTool;
@@ -288,9 +288,9 @@ async function init() {
         { name: '1. Claude Code (recommended)', value: 'claude' },
         { name: '2. Windsurf', value: 'windsurf' },
         { name: '3. Cursor', value: 'cursor' },
-        { name: '4. Skip IDE setup', value: 'none' }
-      ]
-    }
+        { name: '4. Skip IDE setup', value: 'none' },
+      ],
+    },
   ]);
 
   // Step 5: Copy AIOS Core files
@@ -312,7 +312,7 @@ async function init() {
     const ideRulesMap = {
       'claude': { source: 'claude-rules.md', target: '.claude/CLAUDE.md' },
       'windsurf': { source: 'windsurf-rules.md', target: '.windsurf/rules.md' },
-      'cursor': { source: 'cursor-rules.md', target: '.cursor/rules.md' }
+      'cursor': { source: 'cursor-rules.md', target: '.cursor/rules.md' },
     };
 
     const ideConfig = ideRulesMap[ideAnswer.ide];
@@ -335,7 +335,7 @@ async function init() {
 
   if (fs.existsSync(sourceExpansionDir)) {
     const packs = fs.readdirSync(sourceExpansionDir).filter(f =>
-      fs.statSync(path.join(sourceExpansionDir, f)).isDirectory()
+      fs.statSync(path.join(sourceExpansionDir, f)).isDirectory(),
     );
     availablePacks.push(...packs);
   }
@@ -348,9 +348,9 @@ async function init() {
         message: 'Select expansion packs to install:',
         choices: [
           ...availablePacks.map(pack => ({ name: pack, value: pack })),
-          { name: 'None (skip)', value: '__none__' }
-        ]
-      }
+          { name: 'None (skip)', value: '__none__' },
+        ],
+      },
     ]);
 
     if (expansionAnswer.packs.length > 0 && !expansionAnswer.packs.includes('__none__')) {
@@ -396,20 +396,20 @@ async function collectPMConfig(pmTool, projectRoot) {
           type: 'input',
           name: 'team_id',
           message: 'ClickUp Team ID:',
-          validate: input => input.length > 0 || 'Team ID is required'
+          validate: input => input.length > 0 || 'Team ID is required',
         },
         {
           type: 'input',
           name: 'space_id',
           message: 'ClickUp Space ID:',
-          validate: input => input.length > 0 || 'Space ID is required'
+          validate: input => input.length > 0 || 'Space ID is required',
         },
         {
           type: 'input',
           name: 'list_id',
           message: 'ClickUp List ID (for stories):',
-          validate: input => input.length > 0 || 'List ID is required'
-        }
+          validate: input => input.length > 0 || 'List ID is required',
+        },
       ]);
 
       console.log('\n📝 Note: Set CLICKUP_API_TOKEN environment variable with your API token');
@@ -418,7 +418,7 @@ async function collectPMConfig(pmTool, projectRoot) {
         api_token: '${CLICKUP_API_TOKEN}',
         team_id: answers.team_id,
         space_id: answers.space_id,
-        list_id: answers.list_id
+        list_id: answers.list_id,
       };
     }
 
@@ -428,21 +428,21 @@ async function collectPMConfig(pmTool, projectRoot) {
           type: 'input',
           name: 'org',
           message: 'GitHub Organization or Username:',
-          validate: input => input.length > 0 || 'Organization is required'
+          validate: input => input.length > 0 || 'Organization is required',
         },
         {
           type: 'number',
           name: 'project_number',
           message: 'GitHub Project Number:',
-          validate: input => input > 0 || 'Project number must be positive'
-        }
+          validate: input => input > 0 || 'Project number must be positive',
+        },
       ]);
 
       console.log('\n📝 Note: GitHub Projects uses existing "gh auth" authentication');
 
       return {
         org: answers.org,
-        project_number: answers.project_number
+        project_number: answers.project_number,
       };
     }
 
@@ -452,20 +452,20 @@ async function collectPMConfig(pmTool, projectRoot) {
           type: 'input',
           name: 'base_url',
           message: 'Jira Base URL (e.g., https://yourcompany.atlassian.net):',
-          validate: input => input.startsWith('http') || 'Must be a valid URL'
+          validate: input => input.startsWith('http') || 'Must be a valid URL',
         },
         {
           type: 'input',
           name: 'project_key',
           message: 'Jira Project Key (e.g., AIOS):',
-          validate: input => input.length > 0 || 'Project key is required'
+          validate: input => input.length > 0 || 'Project key is required',
         },
         {
           type: 'input',
           name: 'email',
           message: 'Jira Account Email:',
-          validate: input => input.includes('@') || 'Must be a valid email'
-        }
+          validate: input => input.includes('@') || 'Must be a valid email',
+        },
       ]);
 
       console.log('\n📝 Note: Set JIRA_API_TOKEN environment variable with your API token');
@@ -474,7 +474,7 @@ async function collectPMConfig(pmTool, projectRoot) {
         base_url: answers.base_url,
         project_key: answers.project_key,
         email: answers.email,
-        api_token: '${JIRA_API_TOKEN}'
+        api_token: '${JIRA_API_TOKEN}',
       };
     }
 
@@ -512,13 +512,13 @@ function savePMConfig(pmTool, config, projectRoot) {
     pm_tool: {
       type: pmTool,
       configured_at: new Date().toISOString(),
-      config: config
+      config: config,
     },
     sync_behavior: {
       auto_sync_on_status_change: true,
       create_tasks_on_story_creation: false,
-      bidirectional_sync: false
-    }
+      bidirectional_sync: false,
+    },
   };
 
   const configPath = path.join(projectRoot, '.aios-pm-config.yaml');

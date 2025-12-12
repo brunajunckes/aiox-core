@@ -20,7 +20,7 @@ const taskElicitationSteps = [
             return 'ID must be lowercase with hyphens only';
           }
           return true;
-        }
+        },
       },
       {
         type: 'input',
@@ -31,24 +31,24 @@ const taskElicitationSteps = [
           type: 'fromAnswer',
           source: 'taskId',
           transform: (id) => id.split('-').map(w => 
-            w.charAt(0).toUpperCase() + w.slice(1)
-          ).join(' ')
-        }
+            w.charAt(0).toUpperCase() + w.slice(1),
+          ).join(' '),
+        },
       },
       {
         type: 'input',
         name: 'agentName',
         message: 'Which agent will own this task?',
-        examples: ['data-analyst', 'report-generator', 'code-reviewer']
+        examples: ['data-analyst', 'report-generator', 'code-reviewer'],
       },
       {
         type: 'input',
         name: 'taskDescription',
         message: 'Describe the task purpose (2-3 sentences):',
-        validate: (input) => input.length > 10 || 'Please provide a meaningful description'
-      }
+        validate: (input) => input.length > 10 || 'Please provide a meaningful description',
+      },
     ],
-    required: ['taskId', 'taskTitle', 'agentName', 'taskDescription']
+    required: ['taskId', 'taskTitle', 'agentName', 'taskDescription'],
   },
 
   {
@@ -59,14 +59,14 @@ const taskElicitationSteps = [
         type: 'confirm',
         name: 'requiresContext',
         message: 'Does this task require specific context or input?',
-        default: true
+        default: true,
       },
       {
         type: 'input',
         name: 'contextDescription',
         message: 'What context/input is required?',
         when: (answers) => answers.requiresContext,
-        examples: ['Data file path and format', 'Project configuration', 'User preferences']
+        examples: ['Data file path and format', 'Project configuration', 'User preferences'],
       },
       {
         type: 'checkbox',
@@ -79,16 +79,16 @@ const taskElicitationSteps = [
           'Configuration loaded',
           'Previous task completed',
           'User authentication',
-          'Network connectivity'
-        ]
+          'Network connectivity',
+        ],
       },
       {
         type: 'input',
         name: 'customPrerequisites',
         message: 'Any additional prerequisites? (comma-separated):',
-        filter: (input) => input ? input.split(',').map(p => p.trim()) : []
-      }
-    ]
+        filter: (input) => input ? input.split(',').map(p => p.trim()) : [],
+      },
+    ],
   },
 
   {
@@ -99,7 +99,7 @@ const taskElicitationSteps = [
         type: 'confirm',
         name: 'isInteractive',
         message: 'Is this an interactive task (requires user input)?',
-        default: false
+        default: false,
       },
       {
         type: 'list',
@@ -109,9 +109,9 @@ const taskElicitationSteps = [
           { name: 'Sequential - Steps run in order', value: 'sequential' },
           { name: 'Conditional - Steps depend on conditions', value: 'conditional' },
           { name: 'Iterative - Steps may repeat', value: 'iterative' },
-          { name: 'Parallel - Some steps run simultaneously', value: 'parallel' }
+          { name: 'Parallel - Some steps run simultaneously', value: 'parallel' },
         ],
-        default: 'sequential'
+        default: 'sequential',
       },
       {
         type: 'input',
@@ -122,9 +122,9 @@ const taskElicitationSteps = [
           const num = parseInt(input);
           return (num > 0 && num <= 10) || 'Please enter a number between 1 and 10';
         },
-        filter: (input) => parseInt(input)
-      }
-    ]
+        filter: (input) => parseInt(input),
+      },
+    ],
   },
 
   {
@@ -137,7 +137,7 @@ const taskElicitationSteps = [
         message: 'This will be handled dynamically based on stepCount',
         // Note: In implementation, this would generate dynamic questions
         // based on the stepCount from previous step
-      }
+      },
     ],
     validators: [
       {
@@ -145,9 +145,9 @@ const taskElicitationSteps = [
         validate: (_answers) => {
           // This would be implemented to collect step details
           return true;
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
 
   {
@@ -158,7 +158,7 @@ const taskElicitationSteps = [
         type: 'input',
         name: 'outputDescription',
         message: 'What does this task output/produce?',
-        examples: ['Analysis report in markdown', 'Validated data file', 'Test results summary']
+        examples: ['Analysis report in markdown', 'Validated data file', 'Test results summary'],
       },
       {
         type: 'list',
@@ -172,14 +172,14 @@ const taskElicitationSteps = [
           'HTML',
           'File(s)',
           'Console output',
-          'Other'
-        ]
+          'Other',
+        ],
       },
       {
         type: 'input',
         name: 'outputFormatCustom',
         message: 'Specify the output format:',
-        when: (answers) => answers.outputFormat === 'Other'
+        when: (answers) => answers.outputFormat === 'Other',
       },
       {
         type: 'checkbox',
@@ -191,11 +191,11 @@ const taskElicitationSteps = [
           'Validation checks passed',
           'Performance within limits',
           'User confirmation received',
-          'Tests passed'
-        ]
-      }
+          'Tests passed',
+        ],
+      },
     ],
-    required: ['outputDescription']
+    required: ['outputDescription'],
   },
 
   {
@@ -210,9 +210,9 @@ const taskElicitationSteps = [
           { name: 'Fail fast - Stop on first error', value: 'fail-fast' },
           { name: 'Collect errors - Continue and report all', value: 'collect' },
           { name: 'Retry - Attempt recovery', value: 'retry' },
-          { name: 'Fallback - Use alternative approach', value: 'fallback' }
+          { name: 'Fallback - Use alternative approach', value: 'fallback' },
         ],
-        default: 'fail-fast'
+        default: 'fail-fast',
       },
       {
         type: 'input',
@@ -223,7 +223,7 @@ const taskElicitationSteps = [
         validate: (input) => {
           const num = parseInt(input);
           return (num > 0 && num <= 5) || 'Please enter 1-5';
-        }
+        },
       },
       {
         type: 'checkbox',
@@ -236,10 +236,10 @@ const taskElicitationSteps = [
           'Network timeout',
           'Resource busy',
           'Validation failed',
-          'Dependency missing'
-        ]
-      }
-    ]
+          'Dependency missing',
+        ],
+      },
+    ],
   },
 
   {
@@ -251,7 +251,7 @@ const taskElicitationSteps = [
         type: 'confirm',
         name: 'enableSecurityChecks',
         message: 'Enable security validation for inputs?',
-        default: true
+        default: true,
       },
       {
         type: 'checkbox',
@@ -264,18 +264,18 @@ const taskElicitationSteps = [
           'Command injection prevention',
           'File type validation',
           'Size limits',
-          'Rate limiting'
+          'Rate limiting',
         ],
-        default: ['Input sanitization', 'Path traversal prevention']
+        default: ['Input sanitization', 'Path traversal prevention'],
       },
       {
         type: 'confirm',
         name: 'enableExamples',
         message: 'Would you like to add usage examples?',
-        default: false
-      }
-    ]
-  }
+        default: false,
+      },
+    ],
+  },
 ];
 
 module.exports = taskElicitationSteps;

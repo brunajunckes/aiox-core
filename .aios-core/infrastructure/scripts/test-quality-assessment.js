@@ -49,7 +49,7 @@ class TestQualityAssessment {
       metrics: {},
       issues: [],
       recommendations: [],
-      estimatedCoverage: 0
+      estimatedCoverage: 0,
     };
 
     try {
@@ -98,7 +98,7 @@ class TestQualityAssessment {
       quality_distribution: {},
       common_issues: [],
       suite_recommendations: [],
-      file_assessments: {}
+      file_assessments: {},
     };
 
     console.log(chalk.blue(`📋 Assessing test suite quality (${testFiles.length} files)`));
@@ -134,7 +134,7 @@ class TestQualityAssessment {
     // Save suite assessment
     await this.saveSuiteAssessment(suiteAssessment);
 
-    console.log(chalk.green(`✅ Test suite assessment completed`));
+    console.log(chalk.green('✅ Test suite assessment completed'));
     console.log(chalk.gray(`   Overall score: ${suiteAssessment.overall_suite_score.toFixed(1)}/10`));
     console.log(chalk.gray(`   Files assessed: ${testFiles.length}`));
     console.log(chalk.gray(`   Common issues: ${suiteAssessment.common_issues.length}`));
@@ -167,7 +167,7 @@ class TestQualityAssessment {
       
       // Framework usage
       framework_usage: this.analyzeFrameworkUsage(_content),
-      mock_quality: this.analyzeMockQuality(_content)
+      mock_quality: this.analyzeMockQuality(_content),
     };
 
     return metrics;
@@ -241,7 +241,7 @@ class TestQualityAssessment {
       should_pattern: /should\s+/i,
       can_pattern: /can\s+/i,
       when_pattern: /when\s+/i,
-      given_pattern: /given\s+/i
+      given_pattern: /given\s+/i,
     };
     
     for (const name of testNames) {
@@ -291,7 +291,7 @@ class TestQualityAssessment {
       array: content.match(/\.toHaveLength\(|\.toContain\(|\.toContainEqual\(/g) || [],
       object: content.match(/\.toHaveProperty\(|\.toMatchObject\(/g) || [],
       error: content.match(/\.toThrow\(|\.rejects\.|\.resolves\./g) || [],
-      custom: content.match(/\.toMatch\(|\.toMatchSnapshot\(/g) || []
+      custom: content.match(/\.toMatch\(|\.toMatchSnapshot\(/g) || [],
     };
     
     const totalAssertions = Object.values(assertions).reduce((sum, arr) => sum + arr.length, 0);
@@ -329,7 +329,7 @@ class TestQualityAssessment {
       error_cases: content.match(/should\s+.*(?:throw|fail|error|reject)/gi) || [],
       edge_cases: content.match(/should\s+.*(?:empty|null|undefined|zero|negative|boundary|limit)/gi) || [],
       async_cases: content.match(/async\s*\(|await\s+/g) || [],
-      integration: content.match(/integration|end.to.end|e2e/gi) || []
+      integration: content.match(/integration|end.to.end|e2e/gi) || [],
     };
     
     // Count covered scenario types
@@ -364,7 +364,7 @@ class TestQualityAssessment {
       boundary_values: /\b(?:min|max|first|last|boundary|limit)\b/gi,
       negative_cases: /\b(?:negative|invalid|malformed|corrupt)\b/gi,
       large_values: /\b(?:large|huge|maximum|overflow)\b/gi,
-      concurrent: /\b(?:concurrent|parallel|race|async)\b/gi
+      concurrent: /\b(?:concurrent|parallel|race|async)\b/gi,
     };
     
     let edgeCasesFound = 0;
@@ -513,7 +513,7 @@ class TestQualityAssessment {
       timeouts: content.match(/setTimeout|setInterval/g) || [],
       dates: content.match(/new Date\(\)|Date\.now\(\)/g) || [],
       random: content.match(/Math\.random\(\)|Math\.floor.*random/g) || [],
-      external_deps: content.match(/fetch\(|axios\.|http\./g) || []
+      external_deps: content.match(/fetch\(|axios\.|http\./g) || [],
     };
     
     const totalFlakyPatterns = Object.values(flakyPatterns).reduce((sum, arr) => sum + arr.length, 0);
@@ -547,7 +547,7 @@ class TestQualityAssessment {
       file_io: content.match(/fs\.|readFile|writeFile/g) || [],
       network: content.match(/fetch\(|axios\.|http\./g) || [],
       heavy_computation: content.match(/for\s*\([^)]*1000|while\s*\(/g) || [],
-      large_objects: content.match(/Array\(\d{3,}\)|new Array\(\d{3,}\)/g) || []
+      large_objects: content.match(/Array\(\d{3,}\)|new Array\(\d{3,}\)/g) || [],
     };
     
     const totalExpensiveOps = Object.values(expensiveOps).reduce((sum, arr) => sum + arr.length, 0);
@@ -608,7 +608,7 @@ class TestQualityAssessment {
     const mocks = {
       jest_mocks: content.match(/jest\.mock\(|jest\.fn\(\)|mockImplementation/g) || [],
       sinon_mocks: content.match(/sinon\.mock\(|sinon\.spy\(|sinon\.stub\(/g) || [],
-      vitest_mocks: content.match(/vi\.mock\(|vi\.fn\(\)|mockImplementation/g) || []
+      vitest_mocks: content.match(/vi\.mock\(|vi\.fn\(\)|mockImplementation/g) || [],
     };
     
     const totalMocks = Object.values(mocks).reduce((sum, arr) => sum + arr.length, 0);
@@ -654,7 +654,7 @@ class TestQualityAssessment {
     }, {});
     
     const mostCommon = Object.keys(commonIndent).reduce((a, b) => 
-      commonIndent[a] > commonIndent[b] ? a : b
+      commonIndent[a] > commonIndent[b] ? a : b,
     );
     
     const consistent = indentations.filter(indent => indent % mostCommon === 0).length;
@@ -746,7 +746,7 @@ class TestQualityAssessment {
       reliability: 0.05,
       performance: 0.03,
       framework_usage: 0.01,
-      mock_quality: 0.01
+      mock_quality: 0.01,
     };
 
     let totalScore = 0;
@@ -786,7 +786,7 @@ class TestQualityAssessment {
         category: 'organization',
         severity: 'medium',
         message: 'Poor test organization - missing describe blocks or setup/teardown',
-        suggestion: 'Use describe blocks to group related tests and add beforeEach/afterEach for setup'
+        suggestion: 'Use describe blocks to group related tests and add beforeEach/afterEach for setup',
       });
     }
 
@@ -796,7 +796,7 @@ class TestQualityAssessment {
         category: 'naming',
         severity: 'medium',
         message: 'Poor test naming - tests should clearly describe what they verify',
-        suggestion: 'Use descriptive test names that explain the expected behavior'
+        suggestion: 'Use descriptive test names that explain the expected behavior',
       });
     }
 
@@ -806,7 +806,7 @@ class TestQualityAssessment {
         category: 'assertions',
         severity: 'high',
         message: 'Weak assertions - too many generic or few specific assertions',
-        suggestion: 'Use specific assertions like toEqual() instead of toBeTruthy()'
+        suggestion: 'Use specific assertions like toEqual() instead of toBeTruthy()',
       });
     }
 
@@ -816,7 +816,7 @@ class TestQualityAssessment {
         category: 'coverage',
         severity: 'high',
         message: 'Limited test coverage - missing error cases or edge cases',
-        suggestion: 'Add tests for error conditions, edge cases, and different input scenarios'
+        suggestion: 'Add tests for error conditions, edge cases, and different input scenarios',
       });
     }
 
@@ -826,7 +826,7 @@ class TestQualityAssessment {
         category: 'edge_cases',
         severity: 'medium',
         message: 'Insufficient edge case coverage',
-        suggestion: 'Add tests for null/undefined values, empty inputs, and boundary conditions'
+        suggestion: 'Add tests for null/undefined values, empty inputs, and boundary conditions',
       });
     }
 
@@ -836,7 +836,7 @@ class TestQualityAssessment {
         category: 'reliability',
         severity: 'high',
         message: 'Tests may be flaky due to timing, randomness, or external dependencies',
-        suggestion: 'Mock external dependencies and use deterministic test data'
+        suggestion: 'Mock external dependencies and use deterministic test data',
       });
     }
 
@@ -859,7 +859,7 @@ class TestQualityAssessment {
         priority: 'high',
         category: 'assertions',
         action: 'Improve assertion specificity',
-        details: 'Replace generic assertions with specific ones that verify exact expected values'
+        details: 'Replace generic assertions with specific ones that verify exact expected values',
       });
     }
 
@@ -868,7 +868,7 @@ class TestQualityAssessment {
         priority: 'high',
         category: 'coverage',
         action: 'Expand test scenarios',
-        details: 'Add tests for error handling, async operations, and integration scenarios'
+        details: 'Add tests for error handling, async operations, and integration scenarios',
       });
     }
 
@@ -877,7 +877,7 @@ class TestQualityAssessment {
         priority: 'medium',
         category: 'maintainability',
         action: 'Reduce code duplication',
-        details: 'Extract common test setup into helper functions or use test factories'
+        details: 'Extract common test setup into helper functions or use test factories',
       });
     }
 
@@ -886,7 +886,7 @@ class TestQualityAssessment {
         priority: 'medium',
         category: 'isolation',
         action: 'Improve test isolation',
-        details: 'Ensure tests can run independently by using proper setup/teardown'
+        details: 'Ensure tests can run independently by using proper setup/teardown',
       });
     }
 
@@ -946,7 +946,7 @@ class TestQualityAssessment {
         priority: 'high',
         type: 'overall_quality',
         message: 'Test suite quality is below acceptable standards',
-        action: 'Focus on improving test organization, assertions, and coverage breadth'
+        action: 'Focus on improving test organization, assertions, and coverage breadth',
       });
     }
     
@@ -958,7 +958,7 @@ class TestQualityAssessment {
         priority: 'high',
         type: 'poor_quality_files',
         message: `${poorQualityFiles} files have poor test quality`,
-        action: 'Prioritize refactoring tests with quality ratings of "poor" or "very_poor"'
+        action: 'Prioritize refactoring tests with quality ratings of "poor" or "very_poor"',
       });
     }
     
@@ -967,7 +967,7 @@ class TestQualityAssessment {
         priority: 'medium',
         type: 'systematic_issues',
         message: 'Multiple files share common quality issues',
-        action: 'Address systematic issues across the test suite with consistent patterns'
+        action: 'Address systematic issues across the test suite with consistent patterns',
       });
     }
     
@@ -1002,14 +1002,14 @@ class TestQualityAssessment {
         assessment_id: assessmentId,
         timestamp: suiteAssessment.assessed_at,
         overall_score: suiteAssessment.overall_suite_score,
-        test_files: suiteAssessment.test_files
+        test_files: suiteAssessment.test_files,
       });
 
       // Save updated history
       const historyFile = path.join(this.qualityReportsDir, 'quality-history.json');
       const historyData = {
         last_updated: new Date().toISOString(),
-        quality_history: this.qualityHistory.slice(-20) // Keep last 20 assessments
+        quality_history: this.qualityHistory.slice(-20), // Keep last 20 assessments
       };
       await fs.writeFile(historyFile, JSON.stringify(historyData, null, 2));
 
@@ -1031,7 +1031,7 @@ class TestQualityAssessment {
         naming_quality: 5.0,
         assertion_quality: 6.0,
         test_coverage_breadth: 5.0,
-        reliability: 6.0
+        reliability: 6.0,
       },
       target_scores: {
         overall: 8.5,
@@ -1039,14 +1039,14 @@ class TestQualityAssessment {
         naming_quality: 7.5,
         assertion_quality: 8.5,
         test_coverage_breadth: 8.0,
-        reliability: 8.5
+        reliability: 8.5,
       },
       quality_thresholds: {
         excellent: 9.0,
         good: 7.5,
         fair: 6.0,
-        poor: 4.0
-      }
+        poor: 4.0,
+      },
     };
   }
 
@@ -1073,7 +1073,7 @@ class TestQualityAssessment {
       trend,
       difference: difference.toFixed(1),
       current_score: lastScore,
-      assessment_count: recent.length
+      assessment_count: recent.length,
     };
   }
 }

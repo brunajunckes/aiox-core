@@ -123,5 +123,5 @@ EXA_REDACTED
 
 module.exports = {
   generateEnvContent,
-  generateEnvExample
+  generateEnvExample,
 };

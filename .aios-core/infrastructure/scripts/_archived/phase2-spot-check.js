@@ -25,7 +25,7 @@ const PHASE2_TODOS = [
   { pattern: /\*\*Error:\*\* \{TODO: error type\}/, description: 'Common Error placeholder' },
   { pattern: /\*\*Cause:\*\* \{TODO: why it happens\}/, description: 'Error Cause placeholder' },
   { pattern: /\*\*Resolution:\*\* \{TODO: how to fix\}/, description: 'Error Resolution placeholder' },
-  { pattern: /\*\*Recovery:\*\* \{TODO: automated recovery steps\}/, description: 'Error Recovery placeholder' }
+  { pattern: /\*\*Recovery:\*\* \{TODO: automated recovery steps\}/, description: 'Error Recovery placeholder' },
 ];
 
 // Get all task files
@@ -76,7 +76,7 @@ function validateTaskFile(filename) {
   return {
     filename,
     passed: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -97,7 +97,7 @@ function main() {
     sampleSize: sample.length,
     passed: 0,
     failed: 0,
-    details: []
+    details: [],
   };
   
   sample.forEach((filename, index) => {

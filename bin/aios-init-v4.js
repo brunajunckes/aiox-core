@@ -44,7 +44,7 @@ function resolveAiosCoreModule(modulePath) {
     throw new Error(
       `Cannot find AIOS Core module: ${modulePath}\n` +
       `Searched: ${aiosCoreModule}\n` +
-      `Please ensure aios-fullstack is installed correctly.`
+      'Please ensure aios-fullstack is installed correctly.',
     );
   }
 
@@ -106,7 +106,7 @@ async function main() {
         scripts: { test: 'echo "Error: no test specified" && exit 1' },
         keywords: [],
         author: '',
-        license: 'ISC'
+        license: 'ISC',
       };
       fs.writeFileSync(packageJsonPath, JSON.stringify(defaultPackage, null, 2));
       console.log(chalk.green('✓') + ' package.json created');
@@ -125,7 +125,7 @@ async function main() {
         packageName: packageJson.name,
         packageVersion: packageJson.version,
         repositoryUrl: 'local-repository',
-        frameworkLocation: path.join(__dirname, '..')
+        frameworkLocation: path.join(__dirname, '..'),
       };
     }
   }
@@ -143,35 +143,35 @@ async function main() {
       choices: [
         {
           name: '  Using AIOS in a project ' + chalk.gray('(Framework files added to .gitignore)'),
-          value: 'project-development'
+          value: 'project-development',
         },
         {
           name: '  Developing AIOS framework itself ' + chalk.gray('(Framework files are source code)'),
-          value: 'framework-development'
-        }
-      ]
-    }
+          value: 'framework-development',
+        },
+      ],
+    },
   ]);
 
   // Save installation config
   const config = {
     installation: {
       mode: installMode,
-      detected_at: new Date().toISOString()
+      detected_at: new Date().toISOString(),
     },
     repository: {
       url: context.repositoryUrl,
-      auto_detect: true
+      auto_detect: true,
     },
     framework: {
       source: installMode === 'framework-development' ? 'local' : 'npm',
       version: context.packageVersion,
-      location: context.frameworkLocation
+      location: context.frameworkLocation,
     },
     git_ignore_rules: {
       mode: installMode,
-      ignore_framework_files: installMode === 'project-development'
-    }
+      ignore_framework_files: installMode === 'project-development',
+    },
   };
 
   const configPath = path.join(context.projectRoot, '.aios-installation-config.yaml');
@@ -191,9 +191,9 @@ async function main() {
         { name: '  None (local YAML files only) ' + chalk.gray('- Recommended'), value: 'local' },
         { name: '  ClickUp ' + chalk.gray('- Requires API token'), value: 'clickup' },
         { name: '  GitHub Projects ' + chalk.gray('- Uses gh auth'), value: 'github-projects' },
-        { name: '  Jira ' + chalk.gray('- Requires API token'), value: 'jira' }
-      ]
-    }
+        { name: '  Jira ' + chalk.gray('- Requires API token'), value: 'jira' },
+      ],
+    },
   ]);
 
   // Save PM config
@@ -214,15 +214,15 @@ async function main() {
         { name: '  Claude Code ' + chalk.blue('(v1.0)') + chalk.gray(' - Recommended'), value: 'claude' },
         { name: '  Windsurf ' + chalk.blue('(v1.0)'), value: 'windsurf' },
         { name: '  Cursor ' + chalk.blue('(v0.43)'), value: 'cursor' },
-        { name: '  Skip IDE setup', value: 'none' }
+        { name: '  Skip IDE setup', value: 'none' },
       ],
       validate: function(answer) {
         if (answer.length < 1) {
           return 'You must choose at least one option.';
         }
         return true;
-      }
-    }
+      },
+    },
   ]);
 
   // Step 4: Copy AIOS Core files
@@ -245,7 +245,7 @@ async function main() {
     const ideRulesMap = {
       'claude': { source: 'claude-rules.md', target: '.claude/CLAUDE.md' },
       'windsurf': { source: 'windsurf-rules.md', target: '.windsurf/rules.md' },
-      'cursor': { source: 'cursor-rules.md', target: '.cursor/rules.md' }
+      'cursor': { source: 'cursor-rules.md', target: '.cursor/rules.md' },
     };
 
     for (const ide of ides) {
@@ -269,7 +269,7 @@ async function main() {
 
   if (fs.existsSync(sourceExpansionDir)) {
     const packs = fs.readdirSync(sourceExpansionDir).filter(f =>
-      fs.statSync(path.join(sourceExpansionDir, f)).isDirectory()
+      fs.statSync(path.join(sourceExpansionDir, f)).isDirectory(),
     );
     availablePacks.push(...packs);
   }
@@ -287,9 +287,9 @@ async function main() {
         message: chalk.white('Select expansion packs to install (optional)'),
         choices: availablePacks.map(pack => ({
           name: '  ' + pack,
-          value: pack
-        }))
-      }
+          value: pack,
+        })),
+      },
     ]);
 
     if (expansionPacks.length > 0) {
@@ -348,7 +348,7 @@ function updateGitIgnore(mode, projectRoot) {
       'outputs/minds/',
       '.aios-installation-config.yaml',
       '# End AIOS-FullStack auto-managed section',
-      ''
+      '',
     ];
 
     const hasFrameworkSection = gitignore.includes('# AIOS-FullStack Framework Files');
@@ -368,13 +368,13 @@ function savePMConfig(pmTool, config, projectRoot) {
     pm_tool: {
       type: pmTool,
       configured_at: new Date().toISOString(),
-      config: config
+      config: config,
     },
     sync_behavior: {
       auto_sync_on_status_change: true,
       create_tasks_on_story_creation: false,
-      bidirectional_sync: false
-    }
+      bidirectional_sync: false,
+    },
   };
 
   const configPath = path.join(projectRoot, '.aios-pm-config.yaml');

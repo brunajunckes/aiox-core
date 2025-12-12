@@ -101,7 +101,7 @@ function createShowCommand() {
           const layerNames = {
             1: 'Pre-commit',
             2: 'PR Automation',
-            3: 'Human Review'
+            3: 'Human Review',
           };
 
           console.log(`\n📋 Layer ${layerNum}: ${layerNames[layerNum]}`);
@@ -205,5 +205,5 @@ function createShowCommand() {
 }
 
 module.exports = {
-  createShowCommand
+  createShowCommand,
 };

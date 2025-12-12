@@ -20,78 +20,78 @@ const REPORT_FILE = path.join(process.cwd(), '.ai', 'task-3.1-3.2-3.3-phase3-rep
 const TOOLS_BY_CATEGORY = {
   CREATE: [
     { tool: 'component-generator', purpose: 'Generate new components from templates', source: '.aios-core/scripts/component-generator.js' },
-    { tool: 'file-system', purpose: 'File creation and validation', source: 'Node.js fs module' }
+    { tool: 'file-system', purpose: 'File creation and validation', source: 'Node.js fs module' },
   ],
   MODIFY: [
     { tool: 'file-system', purpose: 'File reading, modification, and backup', source: 'Node.js fs module' },
-    { tool: 'ast-parser', purpose: 'Parse and modify code safely', source: '.aios-core/utils/ast-parser.js' }
+    { tool: 'ast-parser', purpose: 'Parse and modify code safely', source: '.aios-core/utils/ast-parser.js' },
   ],
   ANALYZE: [
     { tool: 'code-analyzer', purpose: 'Static code analysis and metrics', source: '.aios-core/utils/code-analyzer.js' },
-    { tool: 'file-system', purpose: 'Recursive directory traversal', source: 'Node.js fs module' }
+    { tool: 'file-system', purpose: 'Recursive directory traversal', source: 'Node.js fs module' },
   ],
   VALIDATE: [
     { tool: 'validation-engine', purpose: 'Rule-based validation and reporting', source: '.aios-core/utils/validation-engine.js' },
-    { tool: 'schema-validator', purpose: 'JSON/YAML schema validation', source: 'ajv or similar' }
+    { tool: 'schema-validator', purpose: 'JSON/YAML schema validation', source: 'ajv or similar' },
   ],
   EXECUTE: [
     { tool: 'task-runner', purpose: 'Task execution and orchestration', source: '.aios-core/core/task-runner.js' },
-    { tool: 'logger', purpose: 'Execution logging and error tracking', source: '.aios-core/utils/logger.js' }
+    { tool: 'logger', purpose: 'Execution logging and error tracking', source: '.aios-core/utils/logger.js' },
   ],
   DATABASE: [
     { tool: 'neo4j-driver', purpose: 'Neo4j database connection and query execution', source: 'npm: neo4j-driver' },
-    { tool: 'query-validator', purpose: 'Cypher query syntax validation', source: '.aios-core/utils/db-query-validator.js' }
+    { tool: 'query-validator', purpose: 'Cypher query syntax validation', source: '.aios-core/utils/db-query-validator.js' },
   ],
   DOCUMENTATION: [
     { tool: 'markdown-renderer', purpose: 'Markdown parsing and rendering', source: 'npm: marked or similar' },
-    { tool: 'template-engine', purpose: 'Document template processing', source: '.aios-core/product/templates/' }
+    { tool: 'template-engine', purpose: 'Document template processing', source: '.aios-core/product/templates/' },
   ],
   SECURITY: [
     { tool: 'security-scanner', purpose: 'Static security analysis and vulnerability detection', source: 'npm: eslint-plugin-security or similar' },
-    { tool: 'dependency-checker', purpose: 'Check for vulnerable dependencies', source: 'npm audit or snyk' }
+    { tool: 'dependency-checker', purpose: 'Check for vulnerable dependencies', source: 'npm audit or snyk' },
   ],
   INIT: [
     { tool: 'project-scaffolder', purpose: 'Generate project structure and config', source: '.aios-core/scripts/project-scaffolder.js' },
-    { tool: 'config-manager', purpose: 'Initialize configuration files', source: '.aios-core/utils/config-manager.js' }
+    { tool: 'config-manager', purpose: 'Initialize configuration files', source: '.aios-core/utils/config-manager.js' },
   ],
   ROLLBACK: [
     { tool: 'backup-manager', purpose: 'Backup and restore operations', source: '.aios-core/utils/backup-manager.js' },
-    { tool: 'version-control', purpose: 'Git operations for rollback', source: 'npm: simple-git' }
-  ]
+    { tool: 'version-control', purpose: 'Git operations for rollback', source: 'npm: simple-git' },
+  ],
 };
 
 // Scripts templates by task category
 const SCRIPTS_BY_CATEGORY = {
   CREATE: [
-    { script: 'create-component.js', purpose: 'Component creation workflow', language: 'JavaScript', location: '.aios-core/scripts/create-component.js' }
+    { script: 'create-component.js', purpose: 'Component creation workflow', language: 'JavaScript', location: '.aios-core/scripts/create-component.js' },
   ],
   MODIFY: [
-    { script: 'modify-file.js', purpose: 'Safe file modification with backup', language: 'JavaScript', location: '.aios-core/scripts/modify-file.js' }
+    { script: 'modify-file.js', purpose: 'Safe file modification with backup', language: 'JavaScript', location: '.aios-core/scripts/modify-file.js' },
   ],
   ANALYZE: [
-    { script: 'analyze-codebase.js', purpose: 'Codebase analysis and reporting', language: 'JavaScript', location: '.aios-core/scripts/analyze-codebase.js' }
+    { script: 'analyze-codebase.js', purpose: 'Codebase analysis and reporting', language: 'JavaScript', location: '.aios-core/scripts/analyze-codebase.js' },
   ],
   VALIDATE: [
-    { script: 'run-validation.js', purpose: 'Execute validation rules and generate report', language: 'JavaScript', location: '.aios-core/scripts/run-validation.js' }
+    { script: 'run-validation.js', purpose: 'Execute validation rules and generate report', language: 'JavaScript', location: '.aios-core/scripts/run-validation.js' },
   ],
   EXECUTE: [
-    { script: 'execute-task.js', purpose: 'Generic task execution wrapper', language: 'JavaScript', location: '.aios-core/scripts/execute-task.js' }
+    { script: 'execute-task.js', purpose: 'Generic task execution wrapper', language: 'JavaScript', location: '.aios-core/scripts/execute-task.js' },
   ],
   DATABASE: [
-    { script: 'db-query.js', purpose: 'Execute Neo4j queries with error handling', language: 'JavaScript', location: '.aios-core/scripts/db-query.js' }
+    { script: 'db-query.js', purpose: 'Execute Neo4j queries with error handling', language: 'JavaScript', location: '.aios-core/scripts/db-query.js' },
   ],
   DOCUMENTATION: [
-    { script: 'generate-docs.js', purpose: 'Documentation generation from templates', language: 'JavaScript', location: '.aios-core/scripts/generate-docs.js' }
+    { script: 'generate-docs.js', purpose: 'Documentation generation from templates', language: 'JavaScript', location: '.aios-core/scripts/generate-docs.js' },
   ],
   SECURITY: [
-    { script: 'security-scan.js', purpose: 'Run security scans and generate reports', language: 'JavaScript', location: '.aios-core/scripts/security-scan.js' }
+    { script: 'security-scan.js', purpose: 'Run security scans and generate reports', language: 'JavaScript', location: '.aios-core/scripts/security-scan.js' },
   ],
   INIT: [
-    { script: 'init-project.js', purpose: 'Project initialization workflow', language: 'JavaScript', location: '.aios-core/scripts/init-project.js' }
+    { script: 'init-project.js', purpose: 'Project initialization workflow', language: 'JavaScript', location: '.aios-core/scripts/init-project.js' },
   ],
   ROLLBACK: [
-    { script: 'rollback-changes.js', purpose: 'Rollback to previous state', language: 'JavaScript', location: '.aios-core/scripts/rollback-changes.js' }
-  ]
+    { script: 'rollback-changes.js', purpose: 'Rollback to previous state', language: 'JavaScript', location: '.aios-core/scripts/rollback-changes.js' },
+  ],
 };
 
 // Validation logic templates by task category
@@ -106,7 +106,7 @@ const VALIDATION_TEMPLATES = {
     DOCUMENTATION: 'Template exists; source data available',
     SECURITY: 'Scanner available; target accessible; rules configured',
     INIT: 'Directory is empty or force flag set; config valid',
-    ROLLBACK: 'Backup exists; rollback target valid'
+    ROLLBACK: 'Backup exists; rollback target valid',
   },
   postCondition: {
     CREATE: 'Resource created successfully; validation passed; no errors logged',
@@ -118,7 +118,7 @@ const VALIDATION_TEMPLATES = {
     DOCUMENTATION: 'Documentation generated; format valid; links working',
     SECURITY: 'Scan completed; vulnerabilities reported; no scan errors',
     INIT: 'Project initialized; config files created; structure valid',
-    ROLLBACK: 'State restored; integrity verified; no data loss'
+    ROLLBACK: 'State restored; integrity verified; no data loss',
   },
   acceptanceCriterion: {
     CREATE: 'Resource exists and is valid; no duplicate resources created',
@@ -130,8 +130,8 @@ const VALIDATION_TEMPLATES = {
     DOCUMENTATION: 'Documentation readable; examples work; links valid',
     SECURITY: 'No critical vulnerabilities; all checks passed',
     INIT: 'Project structure correct; all config files valid',
-    ROLLBACK: 'Original state restored; no residual changes'
-  }
+    ROLLBACK: 'Original state restored; no residual changes',
+  },
 };
 
 // Determine task category from filename
@@ -146,7 +146,7 @@ function getTaskCategory(filename) {
     DOCUMENTATION: ['doc-', 'index-'],
     SECURITY: ['security-'],
     INIT: ['init-', 'setup-'],
-    ROLLBACK: ['undo-', 'rollback-']
+    ROLLBACK: ['undo-', 'rollback-'],
   };
   
   for (const [category, prefixes] of Object.entries(categories)) {
@@ -198,7 +198,7 @@ function processTaskFile(filename) {
   
   let content = fs.readFileSync(filePath, 'utf8');
   let modified = false;
-  let todosResolved = { tools: 0, scripts: 0, validation: 0 };
+  const todosResolved = { tools: 0, scripts: 0, validation: 0 };
   
   // Determine task category
   const category = getTaskCategory(filename);
@@ -206,7 +206,7 @@ function processTaskFile(filename) {
   const scripts = SCRIPTS_BY_CATEGORY[category] || [];
   
   // Task 3.1: Resolve Tools section
-  const toolsPattern = /- \*\*Tool:\*\* N\/A\n  - \*\*Purpose:\*\* \{TODO: what this tool does\}\n  - \*\*Source:\*\* \{TODO: where to find it\}/;
+  const toolsPattern = /- \*\*Tool:\*\* N\/A\n {2}- \*\*Purpose:\*\* \{TODO: what this tool does\}\n {2}- \*\*Source:\*\* \{TODO: where to find it\}/;
   if (toolsPattern.test(content)) {
     content = content.replace(toolsPattern, formatToolsSection(tools));
     modified = true;
@@ -214,7 +214,7 @@ function processTaskFile(filename) {
   }
   
   // Task 3.2: Resolve Scripts section
-  const scriptsPattern = /- \*\*Script:\*\* N\/A\n  - \*\*Purpose:\*\* \{TODO: what this script does\}\n  - \*\*Language:\*\* \{TODO: JavaScript \| Python \| Bash\}\n  - \*\*Location:\*\* \{TODO: file path\}/;
+  const scriptsPattern = /- \*\*Script:\*\* N\/A\n {2}- \*\*Purpose:\*\* \{TODO: what this script does\}\n {2}- \*\*Language:\*\* \{TODO: JavaScript \| Python \| Bash\}\n {2}- \*\*Location:\*\* \{TODO: file path\}/;
   if (scriptsPattern.test(content)) {
     content = content.replace(scriptsPattern, formatScriptsSection(scripts));
     modified = true;
@@ -222,7 +222,7 @@ function processTaskFile(filename) {
   }
   
   // Task 3.3: Resolve Pre-Conditions validation
-  const preCondPattern = /- \[ \] \{TODO: condition description\}\n    tipo: pre-condition\n    blocker: true\n    validação: \|\n      \{TODO: validation logic\}\n    error_message: "\{TODO: error message\}"/g;
+  const preCondPattern = /- \[ \] \{TODO: condition description\}\n {4}tipo: pre-condition\n {4}blocker: true\n {4}validação: \|\n {6}\{TODO: validation logic\}\n {4}error_message: "\{TODO: error message\}"/g;
   const preCondValidation = VALIDATION_TEMPLATES.preCondition[category] || 'Prerequisites validated';
   const preCondReplacement = `- [ ] ${preCondValidation}
     tipo: pre-condition
@@ -239,7 +239,7 @@ function processTaskFile(filename) {
   }
   
   // Task 3.3: Resolve Post-Conditions validation
-  const postCondPattern = /- \[ \] \{TODO: verification step\}\n    tipo: post-condition\n    blocker: true\n    validação: \|\n      \{TODO: validation logic\}\n    error_message: "\{TODO: error message\}"/g;
+  const postCondPattern = /- \[ \] \{TODO: verification step\}\n {4}tipo: post-condition\n {4}blocker: true\n {4}validação: \|\n {6}\{TODO: validation logic\}\n {4}error_message: "\{TODO: error message\}"/g;
   const postCondValidation = VALIDATION_TEMPLATES.postCondition[category] || 'Task completed successfully';
   const postCondReplacement = `- [ ] ${postCondValidation}
     tipo: post-condition
@@ -256,7 +256,7 @@ function processTaskFile(filename) {
   }
   
   // Task 3.3: Resolve Acceptance Criteria validation
-  const acceptancePattern = /- \[ \] \{TODO: acceptance criterion\}\n    tipo: acceptance-criterion\n    blocker: true\n    validação: \|\n      \{TODO: validation logic\}\n    error_message: "\{TODO: error message\}"/g;
+  const acceptancePattern = /- \[ \] \{TODO: acceptance criterion\}\n {4}tipo: acceptance-criterion\n {4}blocker: true\n {4}validação: \|\n {6}\{TODO: validation logic\}\n {4}error_message: "\{TODO: error message\}"/g;
   const acceptanceValidation = VALIDATION_TEMPLATES.acceptanceCriterion[category] || 'Acceptance criteria met';
   const acceptanceReplacement = `- [ ] ${acceptanceValidation}
     tipo: acceptance-criterion
@@ -281,7 +281,7 @@ function processTaskFile(filename) {
     skipped: false,
     modified,
     category,
-    todosResolved
+    todosResolved,
   };
 }
 
@@ -310,10 +310,10 @@ function main() {
       tools: 0,
       scripts: 0,
       validation: 0,
-      total: 0
+      total: 0,
     },
     tasksByCategory: {},
-    details: []
+    details: [],
   };
   
   // Process each file
@@ -346,7 +346,7 @@ function main() {
       
       results.details.push({
         filename,
-        ...result
+        ...result,
       });
     }
   });
@@ -358,12 +358,12 @@ function main() {
   console.log(`Processed: ${results.processed}`);
   console.log(`Skipped: ${results.skipped}`);
   console.log(`Modified: ${results.modified}`);
-  console.log(`\nTODOs Resolved:`);
+  console.log('\nTODOs Resolved:');
   console.log(`  Tools descriptions: ${results.todosCounts.tools}`);
   console.log(`  Scripts descriptions: ${results.todosCounts.scripts}`);
   console.log(`  Validation logic: ${results.todosCounts.validation}`);
   console.log(`  TOTAL: ${results.todosCounts.total}`);
-  console.log(`\nTasks by Category:`);
+  console.log('\nTasks by Category:');
   Object.entries(results.tasksByCategory).forEach(([cat, count]) => {
     console.log(`  ${cat}: ${count} tasks`);
   });

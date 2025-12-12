@@ -79,7 +79,7 @@ class AgentConfigLoader {
       config_sections: ['dataLocation'],
       files_loaded: [],
       lazy_loading: {},
-      performance_target: '<150ms'
+      performance_target: '<150ms',
     };
   }
 
@@ -143,7 +143,7 @@ class AgentConfigLoader {
         loadTime,
         configSize: totalSize,
         cacheHit,
-        sectionsLoaded
+        sectionsLoaded,
       });
 
       this.logPerformance(loadTime);
@@ -155,7 +155,7 @@ class AgentConfigLoader {
       loadTime,
       configSize: totalSize,
       sectionsLoaded,
-      cacheHit
+      cacheHit,
     };
   }
 
@@ -227,7 +227,7 @@ class AgentConfigLoader {
         return {
           content: cached.content,
           size: cached.size,
-          fromCache: true
+          fromCache: true,
         };
       }
     }
@@ -247,7 +247,7 @@ class AgentConfigLoader {
       return {
         content,
         size,
-        fromCache: false
+        fromCache: false,
       };
     } catch (error) {
       console.warn(`⚠️ Failed to load file ${filePath}: ${error.message}`);
@@ -255,7 +255,7 @@ class AgentConfigLoader {
         content: null,
         size: 0,
         fromCache: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -286,7 +286,7 @@ class AgentConfigLoader {
     console.log(`🔄 Preloading config for @${this.agentId}...`);
 
     await this.load(coreConfig, {
-      trackPerformance: false
+      trackPerformance: false,
     });
 
     console.log(`✅ Config preloaded for @${this.agentId}`);
@@ -344,7 +344,7 @@ class AgentConfigLoader {
       
       // Validate structure
       if (!agentDef.agent || !agentDef.agent.id) {
-        throw new Error(`Invalid agent definition: missing agent.id`);
+        throw new Error('Invalid agent definition: missing agent.id');
       }
       
       // Normalize and validate
@@ -353,7 +353,7 @@ class AgentConfigLoader {
       // Cache
       AgentConfigLoader.agentDefCache.set(cacheKey, {
         definition: normalized,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
       
       return normalized;
@@ -443,14 +443,14 @@ class AgentConfigLoader {
         greeting_levels: {
           minimal: `${agent.icon} ${agent.id} Agent ready`,
           named: `${agent.icon} ${agent.name} ready`,
-          archetypal: `${agent.icon} ${agent.name} ready`
-        }
+          archetypal: `${agent.icon} ${agent.name} ready`,
+        },
       };
     } else if (!agentDef.persona_profile.greeting_levels) {
       agentDef.persona_profile.greeting_levels = {
         minimal: `${agent.icon} ${agent.id} Agent ready`,
         named: `${agent.icon} ${agent.name} ready`,
-        archetypal: `${agent.icon} ${agent.name} ready`
+        archetypal: `${agent.icon} ${agent.name} ready`,
       };
     }
     // Note: If greeting_levels already exists in YAML, we keep it as-is (don't overwrite)
@@ -473,7 +473,7 @@ class AgentConfigLoader {
   async loadComplete(coreConfig, options = {}) {
     const [config, definition] = await Promise.all([
       this.load(coreConfig, options),
-      this.loadAgentDefinition(options)
+      this.loadAgentDefinition(options),
     ]);
     
     return {
@@ -481,7 +481,7 @@ class AgentConfigLoader {
       definition,
       agent: definition.agent,
       persona_profile: definition.persona_profile,
-      commands: definition.commands || []
+      commands: definition.commands || [],
     };
   }
 
@@ -532,7 +532,7 @@ async function preloadAgents(agentIds, coreConfig) {
     agentIds.map(agentId => {
       const loader = new AgentConfigLoader(agentId);
       return loader.preload(coreConfig);
-    })
+    }),
   );
 
   const duration = Date.now() - startTime;
@@ -543,7 +543,7 @@ module.exports = {
   AgentConfigLoader,
   loadAgentConfig,
   preloadAgents,
-  loadAgentRequirements
+  loadAgentRequirements,
 };
 
 // CLI support
@@ -570,7 +570,7 @@ if (require.main === module) {
           const loader = new AgentConfigLoader(agentId);
           const result = await loader.load(coreConfig);
 
-          console.log(`\n📊 Results:`);
+          console.log('\n📊 Results:');
           console.log(`   Load Time: ${result.loadTime}ms`);
           console.log(`   Config Size: ${(result.configSize / 1024).toFixed(2)} KB`);
           console.log(`   Cache Hit: ${result.cacheHit ? 'Yes' : 'No'}`);
@@ -581,7 +581,7 @@ if (require.main === module) {
         case 'preload':
           const agents = agentId ? [agentId] : [
             'aios-master', 'dev', 'qa', 'architect', 'po', 'pm', 'sm',
-            'analyst', 'ux-expert', 'data-engineer', 'devops', 'db-sage', 'security'
+            'analyst', 'ux-expert', 'data-engineer', 'devops', 'db-sage', 'security',
           ];
 
           await preloadAgents(agents, coreConfig);

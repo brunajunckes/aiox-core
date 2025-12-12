@@ -59,7 +59,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
   describeIntegration('format-oauth-scopes', () => {
     test('should format single service scope', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['drive']
+        services: ['drive'],
       });
 
       expect(result).toEqual(['https://www.googleapis.com/auth/drive']);
@@ -67,19 +67,19 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should format multiple service scopes', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['drive', 'docs', 'sheets']
+        services: ['drive', 'docs', 'sheets'],
       });
 
       expect(result).toEqual([
         'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/documents',
-        'https://www.googleapis.com/auth/spreadsheets'
+        'https://www.googleapis.com/auth/spreadsheets',
       ]);
     });
 
     test('should handle drive.file scope (file-specific access)', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['drive.file']
+        services: ['drive.file'],
       });
 
       expect(result).toEqual(['https://www.googleapis.com/auth/drive.file']);
@@ -87,7 +87,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle gmail.send scope', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['gmail.send']
+        services: ['gmail.send'],
       });
 
       expect(result).toEqual(['https://www.googleapis.com/auth/gmail.send']);
@@ -95,7 +95,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle calendar scope', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['calendar']
+        services: ['calendar'],
       });
 
       expect(result).toEqual(['https://www.googleapis.com/auth/calendar']);
@@ -103,18 +103,18 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should filter out unknown services', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['drive', 'unknown-service', 'sheets']
+        services: ['drive', 'unknown-service', 'sheets'],
       });
 
       expect(result).toEqual([
         'https://www.googleapis.com/auth/drive',
-        'https://www.googleapis.com/auth/spreadsheets'
+        'https://www.googleapis.com/auth/spreadsheets',
       ]);
     });
 
     test('should return empty array for non-array input', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: 'drive'
+        services: 'drive',
       });
 
       expect(result).toEqual([]);
@@ -122,7 +122,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return empty array for null input', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: null
+        services: null,
       });
 
       expect(result).toEqual([]);
@@ -130,7 +130,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle all supported services', async () => {
       const result = await executor.execute('format-oauth-scopes', {
-        services: ['drive', 'drive.file', 'docs', 'sheets', 'calendar', 'gmail.send']
+        services: ['drive', 'drive.file', 'docs', 'sheets', 'calendar', 'gmail.send'],
       });
 
       expect(result).toHaveLength(6);
@@ -146,7 +146,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
   describeIntegration('parse-drive-file-id', () => {
     test('should return ID as-is if no slashes', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'abc123xyz789'
+        input: 'abc123xyz789',
       });
 
       expect(result).toBe('abc123xyz789');
@@ -154,7 +154,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should extract ID from standard Drive URL', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view'
+        input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view',
       });
 
       expect(result).toBe('1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms');
@@ -162,7 +162,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should extract ID from Drive URL without view parameter', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/'
+        input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/',
       });
 
       expect(result).toBe('1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms');
@@ -170,7 +170,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should extract ID from open URL format', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'https://drive.google.com/open?id=1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
+        input: 'https://drive.google.com/open?id=1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
       });
 
       expect(result).toBe('1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms');
@@ -178,7 +178,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return null for invalid URL format', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'https://example.com/not-a-drive-url'
+        input: 'https://example.com/not-a-drive-url',
       });
 
       expect(result).toBeNull();
@@ -186,7 +186,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return null for null input', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: null
+        input: null,
       });
 
       expect(result).toBeNull();
@@ -194,7 +194,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return null for empty string', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: ''
+        input: '',
       });
 
       expect(result).toBeNull();
@@ -202,7 +202,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle file IDs with hyphens and underscores', async () => {
       const result = await executor.execute('parse-drive-file-id', {
-        input: 'file_id-with_special-chars123'
+        input: 'file_id-with_special-chars123',
       });
 
       expect(result).toBe('file_id-with_special-chars123');
@@ -213,7 +213,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should format date with time', async () => {
       const result = await executor.execute('format-calendar-datetime', {
         date: '2024-01-15',
-        time: '14:30'
+        time: '14:30',
       });
 
       expect(result).toBe('2024-01-15T14:30:00');
@@ -223,7 +223,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
       const result = await executor.execute('format-calendar-datetime', {
         date: '2024-01-15',
         time: '14:30',
-        timezone: 'America/New_York'
+        timezone: 'America/New_York',
       });
 
       expect(result).toBe('2024-01-15T14:30:00-05:00');
@@ -231,7 +231,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return ISO string if already formatted', async () => {
       const result = await executor.execute('format-calendar-datetime', {
-        datetime: '2024-01-15T14:30:00Z'
+        datetime: '2024-01-15T14:30:00Z',
       });
 
       expect(result).toBe('2024-01-15T14:30:00Z');
@@ -240,7 +240,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should handle all-day events', async () => {
       const result = await executor.execute('format-calendar-datetime', {
         date: '2024-01-15',
-        allDay: true
+        allDay: true,
       });
 
       expect(result).toBe('2024-01-15');
@@ -249,7 +249,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should default to UTC if no timezone', async () => {
       const result = await executor.execute('format-calendar-datetime', {
         date: '2024-01-15',
-        time: '14:30'
+        time: '14:30',
       });
 
       expect(result).toContain('2024-01-15T14:30:00');
@@ -257,7 +257,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle ISO datetime input', async () => {
       const result = await executor.execute('format-calendar-datetime', {
-        datetime: '2024-01-15T14:30:00-08:00'
+        datetime: '2024-01-15T14:30:00-08:00',
       });
 
       expect(result).toBe('2024-01-15T14:30:00-08:00');
@@ -267,7 +267,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
   describeIntegration('build-gmail-query', () => {
     test('should build query with from parameter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        from: 'sender@example.com'
+        from: 'sender@example.com',
       });
 
       expect(result).toBe('from:sender@example.com');
@@ -275,7 +275,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should build query with to parameter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        to: 'recipient@example.com'
+        to: 'recipient@example.com',
       });
 
       expect(result).toBe('to:recipient@example.com');
@@ -283,7 +283,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should build query with subject', async () => {
       const result = await executor.execute('build-gmail-query', {
-        subject: 'important meeting'
+        subject: 'important meeting',
       });
 
       expect(result).toBe('subject:"important meeting"');
@@ -292,7 +292,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should combine multiple parameters with AND', async () => {
       const result = await executor.execute('build-gmail-query', {
         from: 'boss@company.com',
-        subject: 'urgent'
+        subject: 'urgent',
       });
 
       expect(result).toBe('from:boss@company.com subject:urgent');
@@ -300,7 +300,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle hasAttachment filter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        hasAttachment: true
+        hasAttachment: true,
       });
 
       expect(result).toBe('has:attachment');
@@ -308,7 +308,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle isUnread filter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        isUnread: true
+        isUnread: true,
       });
 
       expect(result).toBe('is:unread');
@@ -316,7 +316,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle label filter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        label: 'Work'
+        label: 'Work',
       });
 
       expect(result).toBe('label:Work');
@@ -324,7 +324,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle after date filter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        after: '2024/01/01'
+        after: '2024/01/01',
       });
 
       expect(result).toBe('after:2024/01/01');
@@ -332,7 +332,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle before date filter', async () => {
       const result = await executor.execute('build-gmail-query', {
-        before: '2024/12/31'
+        before: '2024/12/31',
       });
 
       expect(result).toBe('before:2024/12/31');
@@ -346,7 +346,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         hasAttachment: true,
         isUnread: true,
         after: '2024/01/01',
-        label: 'Important'
+        label: 'Important',
       });
 
       expect(result).toContain('from:team@company.com');
@@ -366,7 +366,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should handle OR operator', async () => {
       const result = await executor.execute('build-gmail-query', {
-        from: ['user1@example.com', 'user2@example.com']
+        from: ['user1@example.com', 'user2@example.com'],
       });
 
       expect(result).toBe('from:(user1@example.com OR user2@example.com)');
@@ -376,7 +376,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
   describeIntegration('parse-sheet-range', () => {
     test('should parse simple range', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'A1:B2'
+        range: 'A1:B2',
       });
 
       expect(result).toEqual({
@@ -386,13 +386,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: 1,
         startCol: 'A',
         endRow: 2,
-        endCol: 'B'
+        endCol: 'B',
       });
     });
 
     test('should parse range with sheet name', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'Sheet1!A1:B2'
+        range: 'Sheet1!A1:B2',
       });
 
       expect(result).toEqual({
@@ -402,13 +402,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: 1,
         startCol: 'A',
         endRow: 2,
-        endCol: 'B'
+        endCol: 'B',
       });
     });
 
     test('should parse range with quoted sheet name', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: "'Sheet Name'!A1:B2"
+        range: "'Sheet Name'!A1:B2",
       });
 
       expect(result).toEqual({
@@ -418,13 +418,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: 1,
         startCol: 'A',
         endRow: 2,
-        endCol: 'B'
+        endCol: 'B',
       });
     });
 
     test('should parse single cell', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'A1'
+        range: 'A1',
       });
 
       expect(result).toEqual({
@@ -434,13 +434,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: 1,
         startCol: 'A',
         endRow: 1,
-        endCol: 'A'
+        endCol: 'A',
       });
     });
 
     test('should parse column range', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'A:C'
+        range: 'A:C',
       });
 
       expect(result).toEqual({
@@ -450,13 +450,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: null,
         startCol: 'A',
         endRow: null,
-        endCol: 'C'
+        endCol: 'C',
       });
     });
 
     test('should parse row range', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: '1:10'
+        range: '1:10',
       });
 
       expect(result).toEqual({
@@ -466,13 +466,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         startRow: 1,
         startCol: null,
         endRow: 10,
-        endCol: null
+        endCol: null,
       });
     });
 
     test('should handle multi-letter columns', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'AA1:ZZ100'
+        range: 'AA1:ZZ100',
       });
 
       expect(result.startCol).toBe('AA');
@@ -483,7 +483,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should return null for invalid range', async () => {
       const result = await executor.execute('parse-sheet-range', {
-        range: 'invalid-range-format'
+        range: 'invalid-range-format',
       });
 
       expect(result).toBeNull();
@@ -493,7 +493,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
   describeIntegration('validate-permission-level', () => {
     test('should validate reader permission', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'reader'
+        permission: 'reader',
       });
 
       expect(result).toBe(true);
@@ -501,7 +501,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should validate writer permission', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'writer'
+        permission: 'writer',
       });
 
       expect(result).toBe(true);
@@ -509,7 +509,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should validate commenter permission', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'commenter'
+        permission: 'commenter',
       });
 
       expect(result).toBe(true);
@@ -517,7 +517,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should validate owner permission', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'owner'
+        permission: 'owner',
       });
 
       expect(result).toBe(true);
@@ -525,7 +525,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should reject invalid permission', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'admin'
+        permission: 'admin',
       });
 
       expect(result).toBe(false);
@@ -533,7 +533,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should be case-sensitive', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: 'Reader'
+        permission: 'Reader',
       });
 
       expect(result).toBe(false);
@@ -541,7 +541,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should reject empty string', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: ''
+        permission: '',
       });
 
       expect(result).toBe(false);
@@ -549,7 +549,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
     test('should reject null', async () => {
       const result = await executor.execute('validate-permission-level', {
-        permission: null
+        permission: null,
       });
 
       expect(result).toBe(false);
@@ -560,20 +560,20 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should format attachment with filename and data', async () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'document.pdf',
-        data: 'base64encodeddata'
+        data: 'base64encodeddata',
       });
 
       expect(result).toEqual({
         filename: 'document.pdf',
         mimeType: 'application/pdf',
-        data: 'base64encodeddata'
+        data: 'base64encodeddata',
       });
     });
 
     test('should infer mimeType from file extension', async () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'image.png',
-        data: 'imagedata'
+        data: 'imagedata',
       });
 
       expect(result.mimeType).toBe('image/png');
@@ -585,13 +585,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
         { filename: 'sheet.xlsx', expectedMime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
         { filename: 'photo.jpg', expectedMime: 'image/jpeg' },
         { filename: 'video.mp4', expectedMime: 'video/mp4' },
-        { filename: 'archive.zip', expectedMime: 'application/zip' }
+        { filename: 'archive.zip', expectedMime: 'application/zip' },
       ];
 
       for (const test of tests) {
         const result = await executor.execute('format-email-attachment', {
           filename: test.filename,
-          data: 'data'
+          data: 'data',
         });
 
         expect(result.mimeType).toBe(test.expectedMime);
@@ -602,7 +602,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'data.bin',
         data: 'binarydata',
-        mimeType: 'application/octet-stream'
+        mimeType: 'application/octet-stream',
       });
 
       expect(result.mimeType).toBe('application/octet-stream');
@@ -611,7 +611,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should default to octet-stream for unknown extensions', async () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'file.unknown',
-        data: 'data'
+        data: 'data',
       });
 
       expect(result.mimeType).toBe('application/octet-stream');
@@ -620,7 +620,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should handle files without extension', async () => {
       const result = await executor.execute('format-email-attachment', {
         filename: 'README',
-        data: 'textdata'
+        data: 'textdata',
       });
 
       expect(result.mimeType).toBe('application/octet-stream');
@@ -629,13 +629,13 @@ describeIntegration('Google Workspace Tool Helpers', () => {
     test('should handle Drive file URL', async () => {
       const result = await executor.execute('format-email-attachment', {
         driveFileId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-        filename: 'shared-doc.pdf'
+        filename: 'shared-doc.pdf',
       });
 
       expect(result).toEqual({
         driveFileId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
         filename: 'shared-doc.pdf',
-        mimeType: 'application/pdf'
+        mimeType: 'application/pdf',
       });
     });
 
@@ -644,7 +644,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
 
       const result = await executor.execute('format-email-attachment', {
         filename: 'large.pdf',
-        data: largeData
+        data: largeData,
       });
 
       expect(result.error).toBe('Attachment exceeds 25MB limit');
@@ -659,7 +659,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
       for (let i = 0; i < iterations; i++) {
         const start = Date.now();
         await executor.execute('format-oauth-scopes', {
-          services: ['drive', 'docs', 'sheets']
+          services: ['drive', 'docs', 'sheets'],
         });
         const duration = Date.now() - start;
         durations.push(duration);
@@ -686,7 +686,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
           hasAttachment: true,
           isUnread: true,
           after: '2024/01/01',
-          label: 'Important'
+          label: 'Important',
         });
         const duration = Date.now() - start;
         durations.push(duration);
@@ -703,7 +703,7 @@ describeIntegration('Google Workspace Tool Helpers', () => {
       for (let i = 0; i < iterations; i++) {
         const start = Date.now();
         await executor.execute('parse-drive-file-id', {
-          input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view'
+          input: 'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view',
         });
         const duration = Date.now() - start;
         durations.push(duration);

@@ -34,14 +34,14 @@ class BasicInputValidator {
       /eval\s*\(/i,
       /Function\s*\(/i,
       /<script/i,
-      /javascript:/i
+      /javascript:/i,
     ];
 
     for (const pattern of dangerousPatterns) {
       if (pattern.test(String(input))) {
         return {
           valid: false,
-          errors: [{ message: 'Potentially unsafe input detected' }]
+          errors: [{ message: 'Potentially unsafe input detected' }],
         };
       }
     }
@@ -72,7 +72,7 @@ function isSafePattern(pattern) {
       /\(\.\*\)\+/,               // (.*)+  - catastrophic backtracking
       /\(\.\+\)\*/,               // (.+)* - catastrophic backtracking
       /\(\.\*\)\*/,               // (.*)* - catastrophic backtracking
-      /\(\?\!/                    // Negative lookahead (can be slow)
+      /\(\?\!/,                    // Negative lookahead (can be slow)
     ];
 
     for (const reDoSPattern of reDoSPatterns) {
@@ -112,7 +112,7 @@ class ElicitationEngine {
       answers: {},
       currentStep: 0,
       options,
-      saveSession: options.saveSession || false
+      saveSession: options.saveSession || false,
     };
 
     // Set currentSession to track session state for completeSession
@@ -122,7 +122,7 @@ class ElicitationEngine {
       this.sessionFile = path.join(
         process.cwd(),
         '.aios-sessions',
-        `${componentType}-${Date.now()}.json`
+        `${componentType}-${Date.now()}.json`,
       );
       await fs.ensureDir(path.dirname(this.sessionFile));
     }
@@ -189,7 +189,7 @@ class ElicitationEngine {
         type: 'confirm',
         name: '_showHelp',
         message: 'Would you like to see help for this step?',
-        default: false
+        default: false,
       });
     }
 
@@ -358,7 +358,7 @@ class ElicitationEngine {
 
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -447,7 +447,7 @@ class ElicitationEngine {
       completedSteps: this.sessionData.currentStep + 1,
       answers: Object.keys(this.sessionData.answers).length,
       duration: this.sessionData.startTime ?
-        Date.now() - new Date(this.sessionData.startTime).getTime() : 0
+        Date.now() - new Date(this.sessionData.startTime).getTime() : 0,
     };
   }
 

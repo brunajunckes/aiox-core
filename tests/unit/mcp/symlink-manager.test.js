@@ -17,7 +17,7 @@ jest.mock('child_process');
 jest.mock('../../../.aios-core/core/mcp/os-detector', () => ({
   isWindows: jest.fn(),
   getGlobalMcpDir: jest.fn(),
-  getLinkType: jest.fn()
+  getLinkType: jest.fn(),
 }));
 
 const {
@@ -27,7 +27,7 @@ const {
   getLinkTarget,
   checkLinkStatus,
   createLink,
-  removeLink
+  removeLink,
 } = require('../../../.aios-core/core/mcp/symlink-manager');
 
 const osDetector = require('../../../.aios-core/core/mcp/os-detector');
@@ -69,7 +69,7 @@ describe('Symlink Manager', () => {
   describe('isLink', () => {
     it('should return true for symlink', () => {
       fs.lstatSync.mockReturnValue({
-        isSymbolicLink: () => true
+        isSymbolicLink: () => true,
       });
 
       expect(isLink('/some/path')).toBe(true);
@@ -77,7 +77,7 @@ describe('Symlink Manager', () => {
 
     it('should return false for regular directory', () => {
       fs.lstatSync.mockReturnValue({
-        isSymbolicLink: () => false
+        isSymbolicLink: () => false,
       });
       osDetector.isWindows.mockReturnValue(false);
 
@@ -139,7 +139,7 @@ describe('Symlink Manager', () => {
     it('should return LINKED when properly linked', () => {
       fs.existsSync.mockReturnValue(true);
       fs.lstatSync.mockReturnValue({
-        isSymbolicLink: () => true
+        isSymbolicLink: () => true,
       });
       fs.readlinkSync.mockReturnValue(mockGlobalMcpDir);
 
@@ -152,7 +152,7 @@ describe('Symlink Manager', () => {
     it('should return DIRECTORY for regular directory', () => {
       fs.existsSync.mockReturnValue(true);
       fs.lstatSync.mockReturnValue({
-        isSymbolicLink: () => false
+        isSymbolicLink: () => false,
       });
       osDetector.isWindows.mockReturnValue(false);
 
@@ -233,7 +233,7 @@ describe('Symlink Manager', () => {
         // Verify mklink /J was called (the key behavior for Windows)
         expect(execSync).toHaveBeenCalledWith(
           expect.stringContaining('mklink /J'),
-          expect.any(Object)
+          expect.any(Object),
         );
       });
     });
@@ -298,7 +298,7 @@ describe('Symlink Manager', () => {
         expect(result.success).toBe(true);
         expect(execSync).toHaveBeenCalledWith(
           expect.stringContaining('rmdir'),
-          expect.any(Object)
+          expect.any(Object),
         );
       });
     });

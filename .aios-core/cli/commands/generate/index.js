@@ -40,7 +40,7 @@ async function generateDocument(templateType, options) {
 
   const engine = new Engine({
     interactive: !options.nonInteractive,
-    baseDir: options.baseDir || process.cwd()
+    baseDir: options.baseDir || process.cwd(),
   });
 
   // Validate template type
@@ -64,7 +64,7 @@ async function generateDocument(templateType, options) {
     const result = await engine.generate(templateType, context, {
       validate: !options.skipValidation,
       save: options.save,
-      outputPath: options.output
+      outputPath: options.output,
     });
 
     // Output result
@@ -218,5 +218,5 @@ module.exports = {
   createGenerateCommand,
   generateDocument,
   listTemplates,
-  showTemplateInfo
+  showTemplateInfo,
 };

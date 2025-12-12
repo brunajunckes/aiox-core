@@ -10,7 +10,7 @@ try {
   console.log('Test 1: Loading infrastructure module...');
   const infra = require('../index');
   const exportCount = Object.keys(infra).length;
-  console.log(`  ✓ Module loaded successfully`);
+  console.log('  ✓ Module loaded successfully');
   console.log(`  ✓ ${exportCount} exports available\n`);
 
   // Test 2: Verify key exports exist (these are core and should always load)
@@ -21,11 +21,11 @@ try {
     'TemplateEngine',
     'resolveTool',
     'SecurityChecker',
-    'TestGenerator'
+    'TestGenerator',
   ];
 
   let coreLoaded = 0;
-  let coreMissing = [];
+  const coreMissing = [];
 
   for (const exp of coreExports) {
     if (infra[exp]) {
@@ -51,7 +51,7 @@ try {
     'Quality': ['CodeQualityImprover', 'RefactoringSuggester', 'ImprovementEngine', 'ImprovementValidator', 'ModificationValidator'],
     'Utilities': ['ConflictResolver', 'DocumentationSynchronizer', 'resolveTool', 'UsageAnalytics', 'loadProjectStatus', 'formatStatusDisplay', 'VisualImpactGenerator', 'AtomicLayerClassifier'],
     'System': ['BackupManager', 'TransactionManager', 'RepositoryDetector', 'ApprovalWorkflow'],
-    'Config': ['ConfigCache', 'ConfigLoader', 'OutputFormatter', 'YamlValidator']
+    'Config': ['ConfigCache', 'ConfigLoader', 'OutputFormatter', 'YamlValidator'],
   };
 
   let totalAvailable = 0;

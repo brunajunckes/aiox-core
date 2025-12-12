@@ -38,7 +38,7 @@ const utilities = [
   
   // Transaction & Validation (2)
   'transaction-manager',
-  'validate-filenames'
+  'validate-filenames',
 ];
 
 const loadResults = {};
@@ -77,7 +77,7 @@ try {
   const output = execSync('node outputs/architecture-map/schemas/validate-tool-references.js', {
     cwd: path.join(__dirname, '../..'),
     encoding: 'utf8',
-    stdio: 'pipe'
+    stdio: 'pipe',
   });
   console.log('✅ Reference validation passed');
   console.log(_output);
@@ -95,7 +95,7 @@ try {
   const output = execSync('node outputs/architecture-map/schemas/detect-gaps.js', {
     cwd: path.join(__dirname, '../..'),
     encoding: 'utf8',
-    stdio: 'pipe'
+    stdio: 'pipe',
   });
   
   // Check for util-* pattern matches in output
@@ -120,7 +120,7 @@ const agents = [
   { name: 'qa', path: 'aios-fullstack/aios-core/agents/qa.md' },
   { name: 'po', path: 'aios-fullstack/aios-core/agents/po.md' },
   { name: 'github-devops', path: '.aios-core/agents/github-devops.md' },
-  { name: 'dev', path: 'aios-fullstack/aios-core/agents/dev.md' }
+  { name: 'dev', path: 'aios-fullstack/aios-core/agents/dev.md' },
 ];
 
 let agentCheckCount = 0;
@@ -154,7 +154,7 @@ try {
     cwd: path.join(__dirname, '../..'),
     encoding: 'utf8',
     stdio: 'pipe',
-    timeout: 30000
+    timeout: 30000,
   });
   console.log('✅ Relationship synthesis completed');
   console.log('   Master relationship map regenerated successfully');
@@ -171,10 +171,10 @@ console.log('\n' + '='.repeat(60));
 console.log('\n📊 TEST SUITE SUMMARY\n');
 console.log('-'.repeat(60));
 console.log(`Test 1 (Utility Load):     ${loadedCount}/${utilities.length} (${loadPassRate}%)`);
-console.log(`Test 2 (Reference Valid):  Executed`);
-console.log(`Test 3 (Gap Detection):    Executed - Verify 0 gaps`);
+console.log('Test 2 (Reference Valid):  Executed');
+console.log('Test 3 (Gap Detection):    Executed - Verify 0 gaps');
 console.log(`Test 4 (Agent Load):       ${agentCheckCount}/${agents.length} agents verified`);
-console.log(`Test 5 (Relationship):     Executed`);
+console.log('Test 5 (Relationship):     Executed');
 console.log('-'.repeat(60));
 
 if (loadedCount === utilities.length && agentCheckCount === agents.length) {

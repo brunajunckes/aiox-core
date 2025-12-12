@@ -186,7 +186,7 @@ const moduleExports = {
   ConfigCache,
   ConfigLoader,
   OutputFormatter,
-  YamlValidator
+  YamlValidator,
 };
 
 // Remove null exports for cleaner API

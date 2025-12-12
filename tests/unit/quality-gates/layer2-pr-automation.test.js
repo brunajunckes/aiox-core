@@ -15,12 +15,12 @@ describe('Layer2PRAutomation', () => {
       coderabbit: {
         enabled: true,
         blockOn: ['CRITICAL'],
-        warnOn: ['HIGH']
+        warnOn: ['HIGH'],
       },
       quinn: {
         enabled: true,
-        autoReview: true
-      }
+        autoReview: true,
+      },
     });
   });
 
@@ -35,7 +35,7 @@ describe('Layer2PRAutomation', () => {
     it('should create layer with custom config', () => {
       const customLayer = new Layer2PRAutomation({
         enabled: false,
-        coderabbit: { enabled: false }
+        coderabbit: { enabled: false },
       });
       expect(customLayer.enabled).toBe(false);
       expect(customLayer.coderabbit.enabled).toBe(false);
@@ -92,7 +92,7 @@ describe('Layer2PRAutomation', () => {
         exitCode: 0,
         stdout: 'HIGH: Minor issue\nMEDIUM: Suggestion',
         stderr: '',
-        duration: 5000
+        duration: 5000,
       });
 
       const result = await layer.runCodeRabbit();
@@ -107,7 +107,7 @@ describe('Layer2PRAutomation', () => {
         exitCode: 0,
         stdout: 'CRITICAL: Security vulnerability',
         stderr: '',
-        duration: 5000
+        duration: 5000,
       });
 
       const result = await layer.runCodeRabbit();
@@ -118,7 +118,7 @@ describe('Layer2PRAutomation', () => {
 
     it('should handle graceful degradation when not installed', async () => {
       layer.runCommand = jest.fn().mockRejectedValue(
-        new Error('command not found')
+        new Error('command not found'),
       );
 
       const result = await layer.runCodeRabbit();
@@ -144,7 +144,7 @@ describe('Layer2PRAutomation', () => {
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       await layer.execute();

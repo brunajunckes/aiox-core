@@ -30,8 +30,8 @@ class VisualImpactGenerator {
         critical: '🔴',
         high: '🟠', 
         medium: '🟡',
-        low: '🟢'
-      }
+        low: '🟢',
+      },
     });
 
     this.visualTemplates.set('dependency_graph', {
@@ -46,8 +46,8 @@ class VisualImpactGenerator {
         critical: '‼️',
         high: '❗',
         medium: '⚠️',
-        low: 'ℹ️'
-      }
+        low: 'ℹ️',
+      },
     });
   }
 
@@ -58,7 +58,7 @@ class VisualImpactGenerator {
     const visualId = `visual-${Date.now()}`;
     
     try {
-      console.log(chalk.blue(`🎨 Generating visual impact representation...`));
+      console.log(chalk.blue('🎨 Generating visual impact representation...'));
       
       const config = {
         format: options.format || 'visual',
@@ -66,13 +66,13 @@ class VisualImpactGenerator {
         maxNodes: options.maxNodes || 50,
         showDetails: options.showDetails !== false,
         colorScheme: options.colorScheme || 'default',
-        ...options
+        ...options,
       };
 
       const visualization = {
         visualId: visualId,
         format: config.format,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       // Generate different visualization types based on format
@@ -110,10 +110,10 @@ class VisualImpactGenerator {
         targetComponent: impactReport.targetComponent.path,
         format: config.format,
         componentsVisualized: impactReport.dependencyAnalysis.affectedComponents.length,
-        timestamp: visualization.timestamp
+        timestamp: visualization.timestamp,
       });
 
-      console.log(chalk.green(`✅ Visual impact representation generated`));
+      console.log(chalk.green('✅ Visual impact representation generated'));
       console.log(chalk.gray(`   Format: ${config.format}`));
       console.log(chalk.gray(`   Components visualized: ${impactReport.dependencyAnalysis.affectedComponents.length}`));
 
@@ -517,13 +517,13 @@ class VisualImpactGenerator {
         visualizationType: 'impact_analysis',
         targetComponent: impactReport.targetComponent,
         generatedAt: new Date().toISOString(),
-        riskLevel: impactReport.riskAssessment.overallRisk
+        riskLevel: impactReport.riskAssessment.overallRisk,
       },
       nodes: this.generateNodes(impactReport),
       edges: this.generateEdges(impactReport), 
       clusters: this.generateClusters(impactReport),
       riskHeatmap: this.generateRiskHeatmap(impactReport, config),
-      timeline: this.generateTimelineData(impactReport)
+      timeline: this.generateTimelineData(impactReport),
     };
   }
 
@@ -535,20 +535,20 @@ class VisualImpactGenerator {
       target: {
         name: impactReport.targetComponent.path,
         type: impactReport.targetComponent.type,
-        modification: impactReport.modificationType
+        modification: impactReport.modificationType,
       },
       metrics: {
         overall_risk: impactReport.riskAssessment.overallRisk,
         risk_score: impactReport.riskAssessment.riskScore,
         affected_components: impactReport.summary.affectedComponents,
         propagation_depth: impactReport.summary.propagationDepth,
-        critical_issues: impactReport.summary.criticalIssues
+        critical_issues: impactReport.summary.criticalIssues,
       },
       distribution: {
         risk_levels: this.calculateRiskDistribution(impactReport),
         component_types: this.calculateComponentTypeDistribution(impactReport),
-        impact_categories: this.calculateImpactCategoryDistribution(impactReport)
-      }
+        impact_categories: this.calculateImpactCategoryDistribution(impactReport),
+      },
     };
   }
 
@@ -559,7 +559,7 @@ class VisualImpactGenerator {
     const map = {
       target: impactReport.targetComponent.path,
       relationships: [],
-      clusters: []
+      clusters: [],
     };
 
     // Direct relationships
@@ -569,7 +569,7 @@ class VisualImpactGenerator {
         target: component.path,
         type: component.dependencyType || 'dependency',
         impact: component.impactScore,
-        risk: component.severity
+        risk: component.severity,
       });
     });
 
@@ -581,7 +581,7 @@ class VisualImpactGenerator {
           target: effect.affectedComponent,
           type: 'propagation',
           impact: effect.impact,
-          confidence: effect.confidence
+          confidence: effect.confidence,
         });
       });
     }
@@ -600,7 +600,7 @@ class VisualImpactGenerator {
         id: `cluster_${type}`,
         type: type,
         components: components,
-        size: components.length
+        size: components.length,
       });
     });
 
@@ -614,7 +614,7 @@ class VisualImpactGenerator {
     const heatmap = {
       dimensions: [],
       components: [],
-      riskMatrix: []
+      riskMatrix: [],
     };
 
     // Risk dimensions from risk assessment
@@ -624,7 +624,7 @@ class VisualImpactGenerator {
           name: dimension,
           score: data.score,
           severity: data.severity,
-          description: data.description
+          description: data.description,
         });
       });
     }
@@ -636,7 +636,7 @@ class VisualImpactGenerator {
         type: component.type,
         impactScore: component.impactScore,
         severity: component.severity,
-        riskLevel: this.scoresToRiskLevel(component.impactScore)
+        riskLevel: this.scoresToRiskLevel(component.impactScore),
       });
     });
 
@@ -656,7 +656,7 @@ class VisualImpactGenerator {
       critical: affectedComponents.filter(c => c.impactScore >= 9),
       high: affectedComponents.filter(c => c.impactScore >= 7 && c.impactScore < 9),
       medium: affectedComponents.filter(c => c.impactScore >= 4 && c.impactScore < 7),
-      low: affectedComponents.filter(c => c.impactScore < 4)
+      low: affectedComponents.filter(c => c.impactScore < 4),
     };
 
     Object.entries(byImpact).forEach(([level, components]) => {
@@ -668,8 +668,8 @@ class VisualImpactGenerator {
             name: c.path,
             type: c.type,
             score: c.impactScore,
-            reason: c.reason
-          }))
+            reason: c.reason,
+          })),
         };
         tree.children.push(levelNode);
       }
@@ -749,7 +749,7 @@ class VisualImpactGenerator {
       componentType: impactReport.targetComponent.type,
       label: impactReport.targetComponent.path,
       risk: impactReport.riskAssessment.overallRisk,
-      modification: impactReport.modificationType
+      modification: impactReport.modificationType,
     });
 
     // Affected component nodes
@@ -761,7 +761,7 @@ class VisualImpactGenerator {
         label: component.path,
         impact: component.impactScore,
         severity: component.severity,
-        reason: component.reason
+        reason: component.reason,
       });
     });
 
@@ -778,7 +778,7 @@ class VisualImpactGenerator {
         target: component.path,
         type: 'dependency',
         impact: component.impactScore,
-        dependencyType: component.dependencyType
+        dependencyType: component.dependencyType,
       });
     });
 
@@ -790,7 +790,7 @@ class VisualImpactGenerator {
           target: effect.affectedComponent,
           type: 'propagation',
           impact: effect.impact,
-          confidence: effect.confidence
+          confidence: effect.confidence,
         });
       });
     }
@@ -815,7 +815,7 @@ class VisualImpactGenerator {
         id: type,
         label: `${type} components`,
         nodes: components,
-        color: this.getTypeColor(type)
+        color: this.getTypeColor(type),
       });
     });
 
@@ -831,7 +831,7 @@ class VisualImpactGenerator {
           time: event.time,
           event: event.event,
           riskLevel: event.risk_level,
-          description: `Risk level: ${event.risk_level}/10`
+          description: `Risk level: ${event.risk_level}/10`,
         });
       });
     }
@@ -847,7 +847,7 @@ class VisualImpactGenerator {
       workflow: '🔄',
       task: '⚡',
       util: '🔧',
-      unknown: '📄'
+      unknown: '📄',
     };
     return icons[type] || icons.unknown;
   }
@@ -857,7 +857,7 @@ class VisualImpactGenerator {
       critical: '🔴',
       high: '🟠',
       medium: '🟡',
-      low: '🟢'
+      low: '🟢',
     };
     return icons[severity] || '⚪';
   }
@@ -867,7 +867,7 @@ class VisualImpactGenerator {
       critical: '🚨',
       high: '⚠️',
       medium: '📋',
-      low: 'ℹ️'
+      low: 'ℹ️',
     };
     return icons[priority] || '📋';
   }
@@ -878,7 +878,7 @@ class VisualImpactGenerator {
       workflow: '#48bb78',
       task: '#ed8936',
       util: '#9f7aea',
-      unknown: '#718096'
+      unknown: '#718096',
     };
     return colors[type] || colors.unknown;
   }
@@ -919,7 +919,7 @@ class VisualImpactGenerator {
       critical: categories.critical?.length || 0,
       high: categories.high?.length || 0,
       medium: categories.medium?.length || 0,
-      low: categories.low?.length || 0
+      low: categories.low?.length || 0,
     };
   }
 
@@ -932,7 +932,7 @@ class VisualImpactGenerator {
     components.forEach(component => {
       const row = {
         component: component.path,
-        scores: {}
+        scores: {},
       };
       
       dimensions.forEach(dimension => {
@@ -1040,7 +1040,7 @@ class VisualImpactGenerator {
       total_visualizations: this.generationHistory.length,
       cached_visualizations: this.visualCache.size,
       format_distribution: this.calculateFormatDistribution(),
-      recent_generations: this.generationHistory.slice(-10)
+      recent_generations: this.generationHistory.slice(-10),
     };
   }
 

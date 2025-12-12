@@ -75,8 +75,8 @@ class TestTemplateSystem {
       {
         qualityLevel: config.qualityLevel,
         mockLevel: config.mockLevel,
-        coverageTarget: config.coverageTarget
-      }
+        coverageTarget: config.coverageTarget,
+      },
     );
 
     const templateData = {
@@ -86,8 +86,8 @@ class TestTemplateSystem {
       metadata: {
         generatedAt: new Date().toISOString(),
         generator: 'AIOS Test Template System',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
 
     return await this.renderTemplate(_template, templateData);
@@ -107,8 +107,8 @@ class TestTemplateSystem {
       metadata: {
         created: new Date().toISOString(),
         author: options.author || 'system',
-        description: options.description || 'Custom test template'
-      }
+        description: options.description || 'Custom test template',
+      },
     };
 
     try {
@@ -162,8 +162,8 @@ class TestTemplateSystem {
       utilities: this.generateUtilityTemplates(componentType, testType, _framework, options),
       metadata: {
         generated: new Date().toISOString(),
-        options: options
-      }
+        options: options,
+      },
     };
 
     return template;
@@ -183,7 +183,7 @@ class TestTemplateSystem {
       teardown: this.renderTeardown(template.teardown, data),
       mocks: this.renderMocks(template.mocks, data),
       utilities: this.renderUtilities(template.utilities, data),
-      metadata: this.renderMetadata(template.metadata, data)
+      metadata: this.renderMetadata(template.metadata, data),
     });
 
     // Format and clean up
@@ -202,7 +202,7 @@ class TestTemplateSystem {
         imports: {
           testFramework: '',
           assertions: '',
-          mocks: 'jest'
+          mocks: 'jest',
         },
         syntax: {
           describe: 'describe',
@@ -214,7 +214,7 @@ class TestTemplateSystem {
           beforeAll: 'beforeAll',
           afterAll: 'afterAll',
           mock: 'jest.mock',
-          spyOn: 'jest.spyOn'
+          spyOn: 'jest.spyOn',
         },
         fileTemplate: `{{imports}}
 
@@ -230,14 +230,14 @@ describe('{{component.name}}', () => {
 
 {{utilities}}
 
-{{metadata}}`
+{{metadata}}`,
       },
       mocha: {
         name: 'Mocha',
         imports: {
           testFramework: "const { describe, it, beforeEach, afterEach } = require('mocha');",
           assertions: "const { expect } = require('chai');",
-          mocks: "const sinon = require('sinon');"
+          mocks: "const sinon = require('sinon');",
         },
         syntax: {
           describe: 'describe',
@@ -249,7 +249,7 @@ describe('{{component.name}}', () => {
           beforeAll: 'before',
           afterAll: 'after',
           mock: 'sinon.mock',
-          spyOn: 'sinon.spy'
+          spyOn: 'sinon.spy',
         },
         fileTemplate: `{{imports}}
 
@@ -267,14 +267,14 @@ describe('{{component.name}}', function() {
 
 {{utilities}}
 
-{{metadata}}`
+{{metadata}}`,
       },
       vitest: {
         name: 'Vitest',
         imports: {
           testFramework: "import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';",
           assertions: '',
-          mocks: ''
+          mocks: '',
         },
         syntax: {
           describe: 'describe',
@@ -286,7 +286,7 @@ describe('{{component.name}}', function() {
           beforeAll: 'beforeAll',
           afterAll: 'afterAll',
           mock: 'vi.mock',
-          spyOn: 'vi.spyOn'
+          spyOn: 'vi.spyOn',
         },
         fileTemplate: `{{imports}}
 
@@ -302,8 +302,8 @@ describe('{{component.name}}', () => {
 
 {{utilities}}
 
-{{metadata}}`
-      }
+{{metadata}}`,
+      },
     };
   }
 
@@ -316,67 +316,67 @@ describe('{{component.name}}', () => {
         imports: [
           "const fs = require('fs').promises;",
           "const path = require('path');",
-          "const yaml = require('js-yaml');"
+          "const yaml = require('js-yaml');",
         ],
         setup: {
           variables: [
             'let agentPath;',
             'let agentContent;',
-            'let agentConfig;'
+            'let agentConfig;',
           ],
           beforeEach: [
             "agentPath = path.join(__dirname, '../../../aios-core/agents/{{component.name}}.md');",
             "agentContent = await fs.readFile(agentPath, 'utf-8');",
-            "const yamlMatch = agentContent.match(/^---\\s*\\n([\\s\\S]*?)\\n---/);",
-            "agentConfig = yamlMatch ? yaml.load(yamlMatch[1]) : {};"
-          ]
+            'const yamlMatch = agentContent.match(/^---\\s*\\n([\\s\\S]*?)\\n---/);',
+            'agentConfig = yamlMatch ? yaml.load(yamlMatch[1]) : {};',
+          ],
         },
         testCases: {
           basic: [
             {
               name: 'should have valid YAML frontmatter',
               assertions: [
-                "expect(agentConfig).toBeDefined();",
+                'expect(agentConfig).toBeDefined();',
                 "expect(agentConfig.name).toBe('{{component.name}}');",
-                "expect(agentConfig.type).toBe('agent');"
-              ]
+                "expect(agentConfig.type).toBe('agent');",
+              ],
             },
             {
               name: 'should have required sections',
               assertions: [
                 "expect(agentContent).toContain('## Purpose');",
                 "expect(agentContent).toContain('## Capabilities');",
-                "expect(agentContent).toContain('## Usage');"
-              ]
-            }
+                "expect(agentContent).toContain('## Usage');",
+              ],
+            },
           ],
           validation: [
             {
               name: 'should validate agent configuration',
               assertions: [
-                "expect(agentConfig.version).toMatch(/^\\d+\\.\\d+\\.\\d+$/);",
-                "expect(agentConfig.capabilities).toBeInstanceOf(Array);",
-                "expect(agentConfig.capabilities.length).toBeGreaterThan(0);"
-              ]
-            }
-          ]
-        }
+                'expect(agentConfig.version).toMatch(/^\\d+\\.\\d+\\.\\d+$/);',
+                'expect(agentConfig.capabilities).toBeInstanceOf(Array);',
+                'expect(agentConfig.capabilities.length).toBeGreaterThan(0);',
+              ],
+            },
+          ],
+        },
       },
       task: {
         imports: [
           "const fs = require('fs').promises;",
-          "const path = require('path');"
+          "const path = require('path');",
         ],
         setup: {
           variables: [
             'let taskPath;',
             'let taskContent;',
-            'let TaskClass;'
+            'let TaskClass;',
           ],
           beforeEach: [
             "taskPath = path.join(__dirname, '../../../aios-core/tasks/{{component.name}}.md');",
-            "taskContent = await fs.readFile(taskPath, 'utf-8');"
-          ]
+            "taskContent = await fs.readFile(taskPath, 'utf-8');",
+          ],
         },
         testCases: {
           basic: [
@@ -385,120 +385,120 @@ describe('{{component.name}}', () => {
               assertions: [
                 "expect(taskContent).toContain('# {{component.name}}');",
                 "expect(taskContent).toContain('## Purpose');",
-                "expect(taskContent).toContain('## Implementation');"
-              ]
+                "expect(taskContent).toContain('## Implementation');",
+              ],
             },
             {
               name: 'should have implementation code',
               assertions: [
                 "expect(taskContent).toContain('class');",
-                "expect(taskContent).toContain('async execute(');"
-              ]
-            }
+                "expect(taskContent).toContain('async execute(');",
+              ],
+            },
           ],
           execution: [
             {
               name: 'should execute task successfully',
-              setup: "const taskInstance = new TaskClass();",
+              setup: 'const taskInstance = new TaskClass();',
               assertions: [
                 "const result = await taskInstance.execute(['test-param']);",
-                "expect(result).toBeDefined();",
-                "expect(result.success).toBe(true);"
-              ]
-            }
-          ]
-        }
+                'expect(result).toBeDefined();',
+                'expect(result.success).toBe(true);',
+              ],
+            },
+          ],
+        },
       },
       workflow: {
         imports: [
           "const fs = require('fs').promises;",
           "const path = require('path');",
-          "const yaml = require('js-yaml');"
+          "const yaml = require('js-yaml');",
         ],
         setup: {
           variables: [
             'let workflowPath;',
-            'let workflowConfig;'
+            'let workflowConfig;',
           ],
           beforeEach: [
             "workflowPath = path.join(__dirname, '../../../aios-core/workflows/{{component.name}}.yaml');",
             "const workflowContent = await fs.readFile(workflowPath, 'utf-8');",
-            "workflowConfig = yaml.load(workflowContent);"
-          ]
+            'workflowConfig = yaml.load(workflowContent);',
+          ],
         },
         testCases: {
           basic: [
             {
               name: 'should have valid workflow structure',
               assertions: [
-                "expect(workflowConfig).toBeDefined();",
+                'expect(workflowConfig).toBeDefined();',
                 "expect(workflowConfig.name).toBe('{{component.name}}');",
-                "expect(workflowConfig.steps).toBeInstanceOf(Array);"
-              ]
+                'expect(workflowConfig.steps).toBeInstanceOf(Array);',
+              ],
             },
             {
               name: 'should have required metadata',
               assertions: [
-                "expect(workflowConfig.version).toBeDefined();",
-                "expect(workflowConfig.description).toBeDefined();",
-                "expect(workflowConfig.steps.length).toBeGreaterThan(0);"
-              ]
-            }
+                'expect(workflowConfig.version).toBeDefined();',
+                'expect(workflowConfig.description).toBeDefined();',
+                'expect(workflowConfig.steps.length).toBeGreaterThan(0);',
+              ],
+            },
           ],
           validation: [
             {
               name: 'should validate workflow steps',
               assertions: [
-                "workflowConfig.steps.forEach(step => {",
-                "  expect(step.name).toBeDefined();",
-                "  expect(step.action).toBeDefined();",
-                "});"
-              ]
-            }
-          ]
-        }
+                'workflowConfig.steps.forEach(step => {',
+                '  expect(step.name).toBeDefined();',
+                '  expect(step.action).toBeDefined();',
+                '});',
+              ],
+            },
+          ],
+        },
       },
       util: {
         imports: [
-          "const path = require('path');"
+          "const path = require('path');",
         ],
         setup: {
           variables: [
             'let UtilClass;',
-            'let utilInstance;'
+            'let utilInstance;',
           ],
           beforeEach: [
             "UtilClass = require('../../../aios-core/scripts/{{component.name}}');",
-            "utilInstance = new UtilClass();"
-          ]
+            'utilInstance = new UtilClass();',
+          ],
         },
         testCases: {
           basic: [
             {
               name: 'should instantiate correctly',
               assertions: [
-                "expect(utilInstance).toBeDefined();",
-                "expect(utilInstance.constructor.name).toBe('{{componentClass}}');"
-              ]
+                'expect(utilInstance).toBeDefined();',
+                "expect(utilInstance.constructor.name).toBe('{{componentClass}}');",
+              ],
             },
             {
               name: 'should have required methods',
               assertions: [
-                "expect(typeof utilInstance.initialize).toBe('function');"
-              ]
-            }
+                "expect(typeof utilInstance.initialize).toBe('function');",
+              ],
+            },
           ],
           functionality: [
             {
               name: 'should initialize successfully',
               assertions: [
-                "const result = await utilInstance.initialize();",
-                "expect(result).toBeTruthy();"
-              ]
-            }
-          ]
-        }
-      }
+                'const result = await utilInstance.initialize();',
+                'expect(result).toBeTruthy();',
+              ],
+            },
+          ],
+        },
+      },
     };
   }
 
@@ -512,7 +512,7 @@ describe('{{component.name}}', () => {
     const imports = [
       frameworkConfig.imports.testFramework,
       frameworkConfig.imports.assertions,
-      frameworkConfig.imports.mocks
+      frameworkConfig.imports.mocks,
     ].filter(imp => imp);
 
     // Add component-specific imports
@@ -524,13 +524,13 @@ describe('{{component.name}}', () => {
     if (testType === 'integration') {
       imports.push(
         "const request = require('supertest');",
-        "const { setupTestDB, teardownTestDB } = require('../../helpers/db-helper');"
+        "const { setupTestDB, teardownTestDB } = require('../../helpers/db-helper');",
       );
     }
 
     if (testType === 'e2e') {
       imports.push(
-        "const { setupTestEnvironment, cleanupTestEnvironment } = require('../../helpers/e2e-helper');"
+        "const { setupTestEnvironment, cleanupTestEnvironment } = require('../../helpers/e2e-helper');",
       );
     }
 
@@ -547,7 +547,7 @@ describe('{{component.name}}', () => {
       beforeAll: [],
       beforeEach: [],
       afterEach: [],
-      afterAll: []
+      afterAll: [],
     };
 
     // Add component-specific setup
@@ -601,7 +601,7 @@ describe('{{component.name}}', () => {
     if (testCases.length === 0) {
       testCases.push({
         name: 'should be defined',
-        assertions: ["expect({{component.name}}).toBeDefined();"]
+        assertions: ['expect({{component.name}}).toBeDefined();'],
       });
     }
 
@@ -614,7 +614,7 @@ describe('{{component.name}}', () => {
   generateTeardown(componentType, testType, _framework, options) {
     const teardown = {
       afterEach: [],
-      afterAll: []
+      afterAll: [],
     };
 
     // Add component-specific teardown
@@ -636,7 +636,7 @@ describe('{{component.name}}', () => {
       mocks.push({
         type: 'module',
         target: 'fs',
-        implementation: "{ promises: { readFile: jest.fn(), writeFile: jest.fn() } }"
+        implementation: '{ promises: { readFile: jest.fn(), writeFile: jest.fn() } }',
       });
     }
 
@@ -646,7 +646,7 @@ describe('{{component.name}}', () => {
         mocks.push({
           type: 'module',
           target: 'js-yaml',
-          implementation: "{ load: jest.fn(), dump: jest.fn() }"
+          implementation: '{ load: jest.fn(), dump: jest.fn() }',
         });
       }
     }
@@ -672,7 +672,7 @@ describe('{{component.name}}', () => {
     capabilities: ['test'],
     ...overrides
   };
-}`
+}`,
       });
     }
 
@@ -684,7 +684,7 @@ describe('{{component.name}}', () => {
     testId: 'test-' + Date.now(),
     cleanup: []
   };
-}`
+}`,
       });
     }
 
@@ -887,7 +887,7 @@ afterAll(async () => {
       componentType,
       testType,
       _framework,
-      baseStructure: this.frameworks[framework].fileTemplate
+      baseStructure: this.frameworks[framework].fileTemplate,
     };
   }
 

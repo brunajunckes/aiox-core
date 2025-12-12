@@ -18,7 +18,7 @@ const {
   showCompletion,
   showSection,
   showCancellation,
-  estimateTimeRemaining
+  estimateTimeRemaining,
 } = require('../../src/wizard/feedback');
 
 // Mock ora and cli-progress
@@ -55,8 +55,8 @@ describe('feedback', () => {
         expect.objectContaining({
           text: 'Loading...',
           color: 'cyan',
-          spinner: 'dots'
-        })
+          spinner: 'dots',
+        }),
       );
     });
 
@@ -69,8 +69,8 @@ describe('feedback', () => {
       expect(ora).toHaveBeenCalledWith(
         expect.objectContaining({
           text: 'Loading...',
-          color: 'red'
-        })
+          color: 'red',
+        }),
       );
     });
   });
@@ -108,7 +108,7 @@ describe('feedback', () => {
       const mockBar = {
         start: jest.fn(),
         update: jest.fn(),
-        stop: jest.fn()
+        stop: jest.fn(),
       };
       cliProgress.SingleBar.mockImplementation(() => mockBar);
 
@@ -121,7 +121,7 @@ describe('feedback', () => {
       const mockBar = {
         start: jest.fn(),
         update: jest.fn(),
-        stop: jest.fn()
+        stop: jest.fn(),
       };
 
       updateProgress(mockBar, 5, 'Processing...');
@@ -133,7 +133,7 @@ describe('feedback', () => {
       const mockBar = {
         start: jest.fn(),
         update: jest.fn(),
-        stop: jest.fn()
+        stop: jest.fn(),
       };
 
       completeProgress(mockBar);
@@ -165,7 +165,7 @@ describe('feedback', () => {
       showCancellation();
       expect(console.log).toHaveBeenCalled();
       expect(console.log.mock.calls.some(call => 
-        call[0].includes('cancelled')
+        call[0].includes('cancelled'),
       )).toBe(true);
     });
   });

@@ -15,7 +15,7 @@ const {
   formatInfoJSON,
   formatInfoYAML,
   formatNotFoundError,
-  wrapText
+  wrapText,
 } = require('../../.aios-core/cli/commands/workers/formatters/info-formatter');
 const { findSuggestions, findRelatedWorkers } = require('../../.aios-core/cli/commands/workers/info');
 const { levenshteinDistance } = require('../../.aios-core/cli/commands/workers/search-keyword');
@@ -36,18 +36,18 @@ const mockWorker = {
   performance: {
     avgDuration: '50ms',
     cacheable: true,
-    parallelizable: true
+    parallelizable: true,
   },
   agents: ['dev'],
   metadata: {
     source: 'development',
-    addedVersion: '1.0.0'
-  }
+    addedVersion: '1.0.0',
+  },
 };
 
 const mockRelatedWorkers = [
   { id: 'csv-json-transformer', name: 'CSV to JSON Transformer' },
-  { id: 'json-validator', name: 'JSON Schema Validator' }
+  { id: 'json-validator', name: 'JSON Schema Validator' },
 ];
 
 describe('Info Formatter - Pretty Output', () => {
@@ -179,7 +179,7 @@ describe('Not Found Error Formatter', () => {
   test('formatNotFoundError includes suggestions', () => {
     const suggestions = [
       { id: 'json-validator' },
-      { id: 'json-transformer' }
+      { id: 'json-transformer' },
     ];
     const output = formatNotFoundError('json-validtor', suggestions);
     expect(output).toContain('Did you mean');

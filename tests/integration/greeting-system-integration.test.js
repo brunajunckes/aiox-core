@@ -29,7 +29,7 @@ describeIntegration('Unified Greeting System Integration', () => {
         
         try {
           const { stdout, stderr } = await execPromise(
-            `node .aios-core/development/scripts/generate-greeting.js ${agentId}`
+            `node .aios-core/development/scripts/generate-greeting.js ${agentId}`,
           );
           
           // Verify output contains expected elements
@@ -61,7 +61,7 @@ describeIntegration('Unified Greeting System Integration', () => {
         console.log(`  ⏱️ Generation time: ${duration}ms (target: <${PERFORMANCE_TARGET_MS}ms)`);
         
         if (duration > PERFORMANCE_TARGET_MS) {
-          console.log(`  ⚠️ Performance degradation detected`);
+          console.log('  ⚠️ Performance degradation detected');
         }
         
         // Soft assertion - log warning but don't fail
@@ -80,7 +80,7 @@ describeIntegration('Unified Greeting System Integration', () => {
       const fs = require('fs');
       
       const coreConfig = yaml.parse(
-        fs.readFileSync('.aios-core/core-config.yaml', 'utf8')
+        fs.readFileSync('.aios-core/core-config.yaml', 'utf8'),
       );
       
       const loader = new AgentConfigLoader('qa');
@@ -118,16 +118,16 @@ describeIntegration('Unified Greeting System Integration', () => {
         persona_profile: {
           greeting_levels: {
             minimal: '🧪 test ready',
-            named: '🧪 Test Agent ready'
-          }
+            named: '🧪 Test Agent ready',
+          },
         },
         persona: {
-          role: 'Test Engineer'
+          role: 'Test Engineer',
         },
         commands: [
           { name: 'help', description: 'Show help' },
-          { name: 'test', description: 'Run tests' }
-        ]
+          { name: 'test', description: 'Run tests' },
+        ],
       };
       
       const mockContext = {
@@ -135,8 +135,8 @@ describeIntegration('Unified Greeting System Integration', () => {
         projectStatus: {
           branch: 'main',
           modifiedFiles: 0,
-          recentCommit: 'Initial commit'
-        }
+          recentCommit: 'Initial commit',
+        },
       };
       
       const builder = new GreetingBuilder();
@@ -157,7 +157,7 @@ describeIntegration('Unified Greeting System Integration', () => {
       const fs = require('fs');
       
       const coreConfig = yaml.parse(
-        fs.readFileSync('.aios-core/core-config.yaml', 'utf8')
+        fs.readFileSync('.aios-core/core-config.yaml', 'utf8'),
       );
       
       const loader = new AgentConfigLoader('qa');
@@ -184,7 +184,7 @@ describeIntegration('Unified Greeting System Integration', () => {
       
       try {
         const { stdout } = await execPromise(
-          'node .aios-core/development/scripts/generate-greeting.js nonexistent-agent 2>&1'
+          'node .aios-core/development/scripts/generate-greeting.js nonexistent-agent 2>&1',
         );
         
         // Should still produce output (fallback)
@@ -194,7 +194,7 @@ describeIntegration('Unified Greeting System Integration', () => {
         // Even on error, should have output
         assert.ok(
           error.stdout && error.stdout.includes('ready'),
-          'Should provide fallback even on error'
+          'Should provide fallback even on error',
         );
       }
     });
@@ -212,14 +212,14 @@ if (require.main === module) {
       fn: async () => {
         const { stdout } = await execPromise('node .aios-core/development/scripts/generate-greeting.js qa 2>&1');
         return stdout.includes('Quinn') || stdout.includes('ready');
-      }
+      },
     },
     {
       name: 'Generate greeting for Dev agent',
       fn: async () => {
         const { stdout } = await execPromise('node .aios-core/development/scripts/generate-greeting.js dev 2>&1');
         return stdout.includes('Dex') || stdout.includes('ready');
-      }
+      },
     },
     {
       name: 'Performance within limits',
@@ -229,8 +229,8 @@ if (require.main === module) {
         const duration = Date.now() - start;
         console.log(`    ⏱️ Duration: ${duration}ms`);
         return duration < 500;
-      }
-    }
+      },
+    },
   ];
   
   let passed = 0;

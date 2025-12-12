@@ -19,7 +19,7 @@ jest.mock('../../.aios-core/core/session/context-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/git-config-detector');
 jest.mock('../../.aios-core/infrastructure/scripts/project-status-loader', () => ({
   loadProjectStatus: jest.fn(),
-  formatStatusDisplay: jest.fn()
+  formatStatusDisplay: jest.fn(),
 }));
 
 const GreetingBuilder = require('../../.aios-core/development/scripts/greeting-builder');
@@ -48,9 +48,9 @@ describe('GreetingPreferenceManager', () => {
         greeting: {
           preference: 'auto',
           contextDetection: true,
-          sessionDetection: 'hybrid'
-        }
-      }
+          sessionDetection: 'hybrid',
+        },
+      },
     };
   });
 
@@ -201,9 +201,9 @@ describe('GreetingBuilder with Preferences', () => {
         greeting_levels: {
           minimal: '💻 dev Agent ready',
           named: '💻 Dex (Builder) ready',
-          archetypal: '💻 Dex the Builder ready to innovate!'
-        }
-      }
+          archetypal: '💻 Dex the Builder ready to innovate!',
+        },
+      },
     };
   });
 
@@ -235,7 +235,7 @@ describe('GreetingBuilder with Preferences', () => {
       const agentWithoutLevels = {
         name: 'Test',
         id: 'test',
-        icon: '🤖'
+        icon: '🤖',
       };
       
       const greeting = builder.buildFixedLevelGreeting(agentWithoutLevels, 'minimal');
@@ -250,9 +250,9 @@ describe('GreetingBuilder with Preferences', () => {
         icon: '🤖',
         persona_profile: {
           greeting_levels: {
-            named: '🤖 Test ready'
-          }
-        }
+            named: '🤖 Test ready',
+          },
+        },
       };
       
       const greeting = builder.buildFixedLevelGreeting(agentPartialLevels, 'minimal');

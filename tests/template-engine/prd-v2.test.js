@@ -19,13 +19,13 @@ const path = require('path');
 
 // Mock inquirer for non-interactive tests
 jest.mock('inquirer', () => ({
-  prompt: jest.fn().mockResolvedValue({})
+  prompt: jest.fn().mockResolvedValue({}),
 }));
 
 const {
   TemplateEngine,
   TemplateLoader,
-  TemplateValidator
+  TemplateValidator,
 } = require('../../.aios-core/product/templates/engine');
 
 describe('PRD Template v2.0 (Story 3.7)', () => {
@@ -45,7 +45,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
     problemStatement: 'This is a detailed problem statement that describes what problem we are solving for users. It needs to be at least 50 characters long.',
     goals: [
       'Goal 1: Improve user experience',
-      'Goal 2: Increase efficiency'
+      'Goal 2: Increase efficiency',
     ],
     userStories: [
       {
@@ -53,45 +53,45 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         actor: 'New User',
         action: 'register for an account',
         benefit: 'I can access the system features',
-        criteria: ['Email must be valid', 'Password must be at least 8 characters']
-      }
+        criteria: ['Email must be valid', 'Password must be at least 8 characters'],
+      },
     ],
     functionalRequirements: [
       {
         title: 'User Authentication',
         description: 'System must support email/password authentication',
-        priority: 'P0'
-      }
+        priority: 'P0',
+      },
     ],
     nonFunctionalRequirements: [
       {
         category: 'Performance',
-        requirement: 'Page load time must be under 2 seconds'
-      }
+        requirement: 'Page load time must be under 2 seconds',
+      },
     ],
     successMetrics: [
       {
         metric: 'User Adoption',
         target: '1000 users in 3 months',
-        method: 'Analytics tracking'
-      }
+        method: 'Analytics tracking',
+      },
     ],
     milestones: [
       {
         name: 'MVP Release',
-        date: '2025-03-01'
-      }
+        date: '2025-03-01',
+      },
     ],
     risks: [
       {
         risk: 'Technical complexity',
         impact: 'High',
         probability: 'Medium',
-        mitigation: 'Early prototyping and POC'
-      }
+        mitigation: 'Early prototyping and POC',
+      },
     ],
     includeUIUX: false,
-    isBrownfield: false
+    isBrownfield: false,
   };
 
   beforeEach(() => {
@@ -99,7 +99,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
       baseDir,
       templatesDir,
       schemasDir,
-      interactive: false
+      interactive: false,
     });
     validator = new TemplateValidator({ schemasDir });
     jest.clearAllMocks();
@@ -150,9 +150,9 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         includeUIUX: true,
         userFlows: [
           'User opens app → Login screen → Dashboard',
-          'Dashboard → Create item → Review → Submit'
+          'Dashboard → Create item → Review → Submit',
         ],
-        designConsiderations: 'The design should follow Material Design guidelines with a focus on accessibility and mobile-first approach.'
+        designConsiderations: 'The design should follow Material Design guidelines with a focus on accessibility and mobile-first approach.',
       };
 
       const result = await engine.generate('prd-v2', contextWithUIUX);
@@ -169,7 +169,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         ...validContext,
         includeUIUX: true,
         userFlows: ['Flow 1', 'Flow 2', 'Flow 3'],
-        designConsiderations: 'Design considerations text for the product interface.'
+        designConsiderations: 'Design considerations text for the product interface.',
       };
 
       const result = await engine.generate('prd-v2', contextWithUIUX);
@@ -189,9 +189,9 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         integrationPoints: [
           'User authentication API',
           'Payment processing service',
-          'Legacy database'
+          'Legacy database',
         ],
-        migrationStrategy: 'We will use a strangler fig pattern to gradually migrate functionality from the monolith to microservices.'
+        migrationStrategy: 'We will use a strangler fig pattern to gradually migrate functionality from the monolith to microservices.',
       };
 
       const result = await engine.generate('prd-v2', contextWithBrownfield);
@@ -212,7 +212,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
         integrationPoints: ['API 1', 'API 2', 'Database'],
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
       };
 
       const result = await engine.generate('prd-v2', contextWithBrownfield);
@@ -237,7 +237,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
     test('should fail validation when problemStatement is too short', async () => {
       const invalidContext = {
         ...validContext,
-        problemStatement: 'Too short'
+        problemStatement: 'Too short',
       };
 
       const result = await validator.validate(invalidContext, 'prd-v2');
@@ -249,7 +249,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
     test('should fail validation when goals array is empty', async () => {
       const invalidContext = {
         ...validContext,
-        goals: []
+        goals: [],
       };
 
       const result = await validator.validate(invalidContext, 'prd-v2');
@@ -265,8 +265,8 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
           risk: 'Some risk',
           impact: 'Invalid',
           probability: 'High',
-          mitigation: 'Some mitigation'
-        }]
+          mitigation: 'Some mitigation',
+        }],
       };
 
       const result = await validator.validate(invalidContext, 'prd-v2');
@@ -339,8 +339,8 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         functionalRequirements: [{
           title: 'Test',
           description: 'Test description',
-          priority: 'P5' // Invalid - should be P0-P3
-        }]
+          priority: 'P5', // Invalid - should be P0-P3
+        }],
       };
 
       const result = await validator.validate(invalidContext, 'prd-v2');
@@ -353,7 +353,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
     test('should provide clear error message for minimum length violation', async () => {
       const invalidContext = {
         ...validContext,
-        problemStatement: 'Short' // Less than 50 characters
+        problemStatement: 'Short', // Less than 50 characters
       };
 
       const result = await validator.validate(invalidContext, 'prd-v2');
@@ -368,7 +368,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
       const invalidContext = {
         ...validContext,
         includeUIUX: true,
-        designConsiderations: 'Design considerations text for the product interface.'
+        designConsiderations: 'Design considerations text for the product interface.',
         // userFlows is missing
       };
 
@@ -382,7 +382,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
       const invalidContext = {
         ...validContext,
         includeUIUX: true,
-        userFlows: ['Flow 1', 'Flow 2']
+        userFlows: ['Flow 1', 'Flow 2'],
         // designConsiderations is missing
       };
 
@@ -397,7 +397,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         ...validContext,
         includeUIUX: true,
         userFlows: ['User opens app → Login screen → Dashboard'],
-        designConsiderations: 'Design considerations text for the product interface.'
+        designConsiderations: 'Design considerations text for the product interface.',
       };
 
       const result = await validator.validate(validUIUXContext, 'prd-v2');
@@ -418,7 +418,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         ...validContext,
         isBrownfield: true,
         integrationPoints: ['API 1'],
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
         // existingSystemAnalysis is missing
       };
 
@@ -433,7 +433,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         ...validContext,
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
         // integrationPoints is missing
       };
 
@@ -448,7 +448,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         ...validContext,
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
-        integrationPoints: ['API 1']
+        integrationPoints: ['API 1'],
         // migrationStrategy is missing
       };
 
@@ -464,7 +464,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
         integrationPoints: ['API 1', 'API 2'],
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
       };
 
       const result = await validator.validate(validBrownfieldContext, 'prd-v2');
@@ -489,7 +489,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
         integrationPoints: ['API 1', 'API 2'],
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
       };
 
       const result = await engine.generate('prd-v2', fullContext);
@@ -507,7 +507,7 @@ describe('PRD Template v2.0 (Story 3.7)', () => {
         isBrownfield: true,
         existingSystemAnalysis: 'Existing system analysis text that must be at least 50 characters long.',
         integrationPoints: ['API 1', 'API 2'],
-        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.'
+        migrationStrategy: 'Migration strategy text that must be at least 50 characters long for validation.',
       };
 
       const result = await validator.validate(fullContext, 'prd-v2');

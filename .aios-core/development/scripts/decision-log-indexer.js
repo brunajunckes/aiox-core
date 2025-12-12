@@ -27,8 +27,8 @@ async function loadConfig() {
       decisionLogging: {
         enabled: true,
         location: '.ai/',
-        indexFile: 'decision-logs-index.md'
-      }
+        indexFile: 'decision-logs-index.md',
+      },
     };
   }
 }
@@ -63,7 +63,7 @@ async function parseLogMetadata(logPath) {
       status: statusMatch ? statusMatch[1] : 'unknown',
       duration: executionTimeMatch ? executionTimeMatch[1] : '0s',
       decisionCount: decisionsMatch ? parseInt(decisionsMatch[1]) : 0,
-      logPath: path.normalize(logPath)
+      logPath: path.normalize(logPath),
     };
   } catch (error) {
     console.error(`Error parsing log metadata from ${logPath}:`, error);
@@ -180,7 +180,7 @@ async function addToIndex(logPath) {
               status: cells[3],
               duration: cells[4],
               decisionCount: parseInt(cells[5]) || 0,
-              logPath: cells[6].match(/\[View\]\((.+)\)/)?.[1] || ''
+              logPath: cells[6].match(/\[View\]\((.+)\)/)?.[1] || '',
             };
           })
           .filter(m => m !== null);
@@ -280,5 +280,5 @@ module.exports = {
   addToIndex,
   rebuildIndex,
   parseLogMetadata,
-  generateIndexContent
+  generateIndexContent,
 };

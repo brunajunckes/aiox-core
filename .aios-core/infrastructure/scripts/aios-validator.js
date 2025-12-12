@@ -22,7 +22,7 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   cyan: '\x1b[36m',
-  bold: '\x1b[1m'
+  bold: '\x1b[1m',
 };
 
 function printHeader(message) {
@@ -68,7 +68,7 @@ async function validateStoryFile(storyPath) {
       '# Story',
       '## Problem Statement',
       '## Proposed Solution',
-      '## Acceptance Criteria'
+      '## Acceptance Criteria',
     ];
 
     for (const section of requiredSections) {
@@ -106,7 +106,7 @@ async function runESLint(files = []) {
 
     execaSync('npx', ['eslint', filePattern, '--cache', '--cache-location', '.eslintcache'], {
       stdio: 'pipe',
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
 
     printSuccess('ESLint validation passed');
@@ -139,7 +139,7 @@ async function runTypeScript() {
   try {
     execaSync('npx', ['tsc', '--noEmit'], {
       stdio: 'pipe',
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
 
     printSuccess('TypeScript validation passed');
@@ -198,14 +198,14 @@ async function validate(options = {}) {
   const {
     type = 'all',
     files = [],
-    storyPath = null
+    storyPath = null,
   } = options;
 
   printHeader(`AIOS-FullStack Validation: ${type}`);
 
   const results = {
     success: true,
-    errors: []
+    errors: [],
   };
 
   try {
@@ -264,7 +264,7 @@ async function validate(options = {}) {
     printError(`Validation system error: ${error.message}`);
     return {
       success: false,
-      errors: [`System error: ${error.message}`]
+      errors: [`System error: ${error.message}`],
     };
   }
 }
@@ -290,5 +290,5 @@ module.exports = {
   validateStoryFile,
   runESLint,
   runTypeScript,
-  validateYAML
+  validateYAML,
 };

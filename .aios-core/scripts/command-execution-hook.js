@@ -47,14 +47,14 @@ async function updateSessionAfterCommand(agentId, commandName, options = {}) {
     await fs.mkdir(SESSION_DIR, { recursive: true });
     
     // Load current session or create new
-    let session = await loadSession();
+    const session = await loadSession();
     
     // Update command history
     const commandEntry = {
       command: commandName,
       agent: agentId,
       timestamp: Date.now(),
-      success: options.result !== undefined ? !options.result.error : true
+      success: options.result !== undefined ? !options.result.error : true,
     };
     
     session.commandHistory = session.commandHistory || [];
@@ -75,7 +75,7 @@ async function updateSessionAfterCommand(agentId, commandName, options = {}) {
       session.agentTransitions.push({
         from: options.previousAgent,
         to: agentId,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }
     
@@ -95,7 +95,7 @@ async function updateSessionAfterCommand(agentId, commandName, options = {}) {
       sessionType: 'new',
       currentAgent: agentId,
       commandHistory: [],
-      lastUpdated: Date.now()
+      lastUpdated: Date.now(),
     };
   }
 }
@@ -116,7 +116,7 @@ async function loadSession() {
         sessionType: 'new',
         commandHistory: [],
         createdAt: Date.now(),
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       };
     }
     throw error;
@@ -132,7 +132,7 @@ async function saveSession(session) {
   await fs.writeFile(
     SESSION_FILE,
     JSON.stringify(session, null, 2),
-    'utf8'
+    'utf8',
   );
 }
 
@@ -173,7 +173,7 @@ async function getCurrentSession() {
       sessionType: 'new',
       commandHistory: [],
       createdAt: Date.now(),
-      lastUpdated: Date.now()
+      lastUpdated: Date.now(),
     };
   }
 }
@@ -196,6 +196,6 @@ async function clearSession() {
 module.exports = {
   updateSessionAfterCommand,
   getCurrentSession,
-  clearSession
+  clearSession,
 };
 

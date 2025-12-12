@@ -31,7 +31,7 @@ const configCache = {
   full: null,
   sections: {},
   lastLoad: null,
-  TTL: 5 * 60 * 1000  // 5 minutes
+  TTL: 5 * 60 * 1000,  // 5 minutes
 };
 
 /**
@@ -50,7 +50,7 @@ const agentRequirements = {
   'aios-master': ['frameworkDocsLocation', 'projectDocsLocation', 'devLoadAlwaysFiles', 'lazyLoading', 'registry', 'expansionPacks', 'toolConfigurations'],
   'ux-expert': ['frameworkDocsLocation', 'projectDocsLocation', 'devLoadAlwaysFiles', 'lazyLoading', 'toolConfigurations'],
   'db-sage': ['frameworkDocsLocation', 'projectDocsLocation', 'devLoadAlwaysFiles', 'lazyLoading', 'toolConfigurations', 'pvMindContext', 'hybridOpsConfig'],
-  security: ['frameworkDocsLocation', 'projectDocsLocation', 'devLoadAlwaysFiles', 'lazyLoading', 'toolConfigurations']
+  security: ['frameworkDocsLocation', 'projectDocsLocation', 'devLoadAlwaysFiles', 'lazyLoading', 'toolConfigurations'],
 };
 
 /**
@@ -60,7 +60,7 @@ const ALWAYS_LOADED = [
   'frameworkDocsLocation',
   'projectDocsLocation',
   'devLoadAlwaysFiles',
-  'lazyLoading'
+  'lazyLoading',
 ];
 
 /**
@@ -71,7 +71,7 @@ const performanceMetrics = {
   cacheHits: 0,
   cacheMisses: 0,
   avgLoadTime: 0,
-  totalLoadTime: 0
+  totalLoadTime: 0,
 };
 
 /**
@@ -222,7 +222,7 @@ function getPerformanceMetrics() {
     cacheHitRate: performanceMetrics.loads > 0
       ? ((performanceMetrics.cacheHits / performanceMetrics.loads) * 100).toFixed(1) + '%'
       : '0%',
-    avgLoadTimeMs: Math.round(performanceMetrics.avgLoadTime)
+    avgLoadTimeMs: Math.round(performanceMetrics.avgLoadTime),
   };
 }
 
@@ -238,7 +238,7 @@ async function validateAgentConfig(agentId) {
   const config = await loadFullConfig();
 
   const missingSections = requiredSections.filter(
-    section => config[section] === undefined
+    section => config[section] === undefined,
   );
 
   return {
@@ -246,7 +246,7 @@ async function validateAgentConfig(agentId) {
     agentId,
     requiredSections,
     missingSections,
-    availableSections: Object.keys(config)
+    availableSections: Object.keys(config),
   };
 }
 
@@ -273,5 +273,5 @@ module.exports = {
   validateAgentConfig,
   getConfigSection,
   agentRequirements,
-  ALWAYS_LOADED
+  ALWAYS_LOADED,
 };

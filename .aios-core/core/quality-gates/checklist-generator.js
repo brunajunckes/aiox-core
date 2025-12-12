@@ -59,7 +59,7 @@ class ChecklistGenerator {
         text: 'General code quality and standards compliance',
         category: 'general',
         priority: 'low',
-        checked: false
+        checked: false,
       });
     }
 
@@ -69,8 +69,8 @@ class ChecklistGenerator {
       generatedAt: new Date().toISOString(),
       items: items.map((item, index) => ({
         ...item,
-        order: index + 1
-      }))
+        order: index + 1,
+      })),
     };
   }
 
@@ -85,36 +85,36 @@ class ChecklistGenerator {
         text: 'Changes align with documented architecture decisions',
         category: 'architecture',
         priority: 'high',
-        checked: false
+        checked: false,
       },
       {
         id: 'security-review',
         text: 'No security vulnerabilities introduced (OWASP Top 10)',
         category: 'security',
         priority: 'critical',
-        checked: false
+        checked: false,
       },
       {
         id: 'performance-impact',
         text: 'Performance impact assessed and acceptable',
         category: 'performance',
         priority: 'medium',
-        checked: false
+        checked: false,
       },
       {
         id: 'documentation-updated',
         text: 'Relevant documentation updated or created',
         category: 'documentation',
         priority: 'medium',
-        checked: false
+        checked: false,
       },
       {
         id: 'backward-compatibility',
         text: 'Backward compatibility maintained (or breaking changes documented)',
         category: 'compatibility',
         priority: 'high',
-        checked: false
-      }
+        checked: false,
+      },
     ];
   }
 
@@ -133,7 +133,7 @@ class ChecklistGenerator {
         text: `Test changes reviewed for coverage (${fileCategories.tests.length} test files)`,
         category: 'testing',
         priority: 'high',
-        checked: false
+        checked: false,
       });
     }
 
@@ -143,7 +143,7 @@ class ChecklistGenerator {
         text: `Configuration changes validated (${fileCategories.configs.length} config files)`,
         category: 'configuration',
         priority: 'high',
-        checked: false
+        checked: false,
       });
     }
 
@@ -153,7 +153,7 @@ class ChecklistGenerator {
         text: `Agent definition changes reviewed (${fileCategories.agents.length} agent files)`,
         category: 'agents',
         priority: 'high',
-        checked: false
+        checked: false,
       });
     }
 
@@ -163,7 +163,7 @@ class ChecklistGenerator {
         text: `API changes reviewed for breaking changes (${fileCategories.api.length} API files)`,
         category: 'api',
         priority: 'critical',
-        checked: false
+        checked: false,
       });
     }
 
@@ -173,7 +173,7 @@ class ChecklistGenerator {
         text: `Database migrations reviewed (${fileCategories.database.length} migration files)`,
         category: 'database',
         priority: 'critical',
-        checked: false
+        checked: false,
       });
     }
 
@@ -190,23 +190,23 @@ class ChecklistGenerator {
       tests: files.filter((f) => f.includes('test') || f.includes('spec')),
       configs: files.filter((f) =>
         f.endsWith('.yaml') || f.endsWith('.yml') || f.endsWith('.json') ||
-        f.includes('config') || f.includes('.env')
+        f.includes('config') || f.includes('.env'),
       ),
       agents: files.filter((f) =>
-        f.includes('agents/') || f.includes('agent')
+        f.includes('agents/') || f.includes('agent'),
       ),
       api: files.filter((f) =>
-        f.includes('/api/') || f.includes('routes') || f.includes('endpoints')
+        f.includes('/api/') || f.includes('routes') || f.includes('endpoints'),
       ),
       database: files.filter((f) =>
-        f.includes('migration') || f.includes('schema') || f.includes('database')
+        f.includes('migration') || f.includes('schema') || f.includes('database'),
       ),
       docs: files.filter((f) =>
-        f.endsWith('.md') || f.includes('/docs/')
+        f.endsWith('.md') || f.includes('/docs/'),
       ),
       source: files.filter((f) =>
-        f.endsWith('.js') || f.endsWith('.ts') || f.endsWith('.jsx') || f.endsWith('.tsx')
-      )
+        f.endsWith('.js') || f.endsWith('.ts') || f.endsWith('.jsx') || f.endsWith('.tsx'),
+      ),
     };
   }
 
@@ -225,7 +225,7 @@ class ChecklistGenerator {
           text: `Review ${layer.checks.warnings} warnings from ${layer.layer}`,
           category: 'quality',
           priority: 'medium',
-          checked: false
+          checked: false,
         });
       }
 
@@ -237,7 +237,7 @@ class ChecklistGenerator {
             text: `Address ${result.issues.high} HIGH severity issues from CodeRabbit`,
             category: 'quality',
             priority: 'high',
-            checked: false
+            checked: false,
           });
         }
       });
@@ -260,7 +260,7 @@ class ChecklistGenerator {
       text: `All acceptance criteria for ${storyId} verified`,
       category: 'story',
       priority: 'critical',
-      checked: false
+      checked: false,
     });
 
     // Infer story type from ID pattern
@@ -271,7 +271,7 @@ class ChecklistGenerator {
         text: 'Implementation follows modular architecture guidelines',
         category: 'architecture',
         priority: 'high',
-        checked: false
+        checked: false,
       });
     }
 
@@ -285,12 +285,12 @@ class ChecklistGenerator {
    */
   format(checklist) {
     const lines = [
-      `# Strategic Review Checklist`,
+      '# Strategic Review Checklist',
       `Story: ${checklist.storyId || 'N/A'}`,
       `Generated: ${checklist.generatedAt}`,
       '',
       '## Review Items',
-      ''
+      '',
     ];
 
     const byCategory = {};

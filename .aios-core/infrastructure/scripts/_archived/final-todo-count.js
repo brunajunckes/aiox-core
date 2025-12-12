@@ -16,7 +16,7 @@ const REPORT_FILE = path.join(process.cwd(), '.ai', 'final-todo-count-report.jso
 // All TODO patterns to search for
 const TODO_PATTERNS = [
   { pattern: /\{TODO:/g, description: 'Generic TODO placeholder' },
-  { pattern: /todo:/gi, description: 'Lowercase todo' }
+  { pattern: /todo:/gi, description: 'Lowercase todo' },
 ];
 
 // Get all task files
@@ -52,7 +52,7 @@ function countTodosInFile(filename) {
             todos.push({
               line: lineNum,
               match: match,
-              context: context.trim()
+              context: context.trim(),
             });
             break;
           }
@@ -64,7 +64,7 @@ function countTodosInFile(filename) {
   return {
     filename,
     todoCount,
-    todos: todos.slice(0, 10) // Limit to first 10 for report brevity
+    todos: todos.slice(0, 10), // Limit to first 10 for report brevity
   };
 }
 
@@ -81,7 +81,7 @@ function main() {
     totalFiles: allFiles.length,
     filesWithTodos: 0,
     totalTodos: 0,
-    details: []
+    details: [],
   };
   
   allFiles.forEach((filename, index) => {

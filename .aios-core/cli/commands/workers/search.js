@@ -109,7 +109,7 @@ async function executeSearch(query, options) {
     // Apply filters
     results = applyFilters(results, {
       category: options.category,
-      tags: tags
+      tags: tags,
     });
 
     // Calculate and sort by scores
@@ -128,7 +128,7 @@ async function executeSearch(query, options) {
       query: trimmedQuery,
       duration: duration,
       searchMethod: searchMethod,
-      verbose: options.verbose
+      verbose: options.verbose,
     });
 
     console.log(output);
@@ -150,5 +150,5 @@ async function executeSearch(query, options) {
 
 module.exports = {
   createSearchCommand,
-  executeSearch
+  executeSearch,
 };

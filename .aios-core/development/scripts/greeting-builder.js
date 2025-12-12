@@ -57,7 +57,7 @@ class GreetingBuilder {
       // Use session-aware logic (Story 6.1.2.5)
       const greetingPromise = this._buildContextualGreeting(agent, context);
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Greeting timeout')), GREETING_TIMEOUT)
+        setTimeout(() => reject(new Error('Greeting timeout')), GREETING_TIMEOUT),
       );
 
       return await Promise.race([greetingPromise, timeoutPromise]);
@@ -111,7 +111,7 @@ class GreetingBuilder {
     if (sessionType === 'workflow' && context.lastCommands && !contextSection) {
       const suggestions = this.workflowNavigator.getNextSteps(
         context.lastCommands,
-        { agentId: agent.id }
+        { agentId: agent.id },
       );
       if (suggestions && suggestions.length > 0) {
         sections.push(this.buildWorkflowSuggestions(suggestions));
@@ -408,7 +408,7 @@ class GreetingBuilder {
     return {
       storyId: currentStory,
       storyFile: storyFile,
-      hasStory: !!currentStory && currentStory !== 'EPIC-SPLIT-IMPLEMENTATION-COMPLETE'
+      hasStory: !!currentStory && currentStory !== 'EPIC-SPLIT-IMPLEMENTATION-COMPLETE',
     };
   }
 
@@ -424,7 +424,7 @@ class GreetingBuilder {
       { regex: /generate-greeting\.js/, priority: 1, desc: 'do **`generate-greeting.js`**', category: 'script' },
       { regex: /session-context-loader\.js/, priority: 1, desc: 'do **`session-context-loader.js`**', category: 'script' },
       { regex: /agents\/.*\.md/, priority: 1, desc: 'das definições de agentes', category: 'agent' },
-      { regex: /\.md$/, priority: 2, desc: 'dos arquivos de documentação', category: 'doc' }
+      { regex: /\.md$/, priority: 2, desc: 'dos arquivos de documentação', category: 'doc' },
     ];
 
     // Find matching key files (avoid duplicates)
@@ -453,7 +453,7 @@ class GreetingBuilder {
 
     return { 
       keyFiles: topFiles, 
-      summary: `${topFiles[0].desc} e ${topFiles[1].desc}` 
+      summary: `${topFiles[0].desc} e ${topFiles[1].desc}`, 
     };
   }
 
@@ -463,7 +463,7 @@ class GreetingBuilder {
       'dev': 'implementar as funcionalidades',
       'pm': 'sincronizar o progresso',
       'po': 'validar os requisitos',
-      'sm': 'coordenar o desenvolvimento'
+      'sm': 'coordenar o desenvolvimento',
     };
     
     return actions[agentId] || 'continuar o trabalho';

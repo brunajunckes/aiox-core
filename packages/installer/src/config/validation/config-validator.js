@@ -46,7 +46,7 @@ function validateEnvFormat(content) {
 
   return {
     valid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -127,7 +127,7 @@ function validateYamlSyntax(content) {
     return {
       valid: false,
       error: `YAML syntax error: ${error.message}`,
-      parsed: null
+      parsed: null,
     };
   }
 }
@@ -171,7 +171,7 @@ function validateCoreConfigStructure(config) {
 
   return {
     valid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -239,5 +239,5 @@ module.exports = {
   validateYamlSyntax,
   validateCoreConfigStructure,
   validatePath,
-  sanitizeInput
+  sanitizeInput,
 };

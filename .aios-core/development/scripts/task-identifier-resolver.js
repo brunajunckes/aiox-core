@@ -50,7 +50,7 @@ function processTaskFile(filename) {
   }
   
   // Read file content
-  let content = fs.readFileSync(filePath, 'utf8');
+  const content = fs.readFileSync(filePath, 'utf8');
   
   // Check if TODO exists
   if (!TODO_PATTERN.test(content)) {
@@ -66,7 +66,7 @@ function processTaskFile(filename) {
   // Replace TODO with actual identifier
   const updatedContent = content.replace(
     TODO_PATTERN,
-    `task: ${taskIdentifier}`
+    `task: ${taskIdentifier}`,
   );
   
   // Write updated content
@@ -75,7 +75,7 @@ function processTaskFile(filename) {
   return {
     processed: true,
     filename,
-    identifier: taskIdentifier
+    identifier: taskIdentifier,
   };
 }
 
@@ -94,7 +94,7 @@ function main() {
   const results = {
     processed: [],
     skipped: [],
-    errors: []
+    errors: [],
   };
   
   // Process each file

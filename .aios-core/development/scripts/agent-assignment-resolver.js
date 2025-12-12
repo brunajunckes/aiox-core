@@ -30,7 +30,7 @@ const AGENT_MAPPINGS = {
   'ux-': 'Uma (Empathizer)',
   'db-': 'Dara (Sage)',
   'github-devops-': 'Gage (Automator)',
-  'data-engineer-': 'Dara (Sage)'
+  'data-engineer-': 'Dara (Sage)',
 };
 
 // Generic task mappings (tasks without clear prefix)
@@ -94,7 +94,7 @@ const GENERIC_TASK_MAPPINGS = {
   'test-as-user.md': 'Quinn (Guardian)',
   'undo-last.md': 'Dex (Builder)',
   'update-manifest.md': 'Dex (Builder)',
-  'validate-next-story.md': 'Quinn (Guardian)'
+  'validate-next-story.md': 'Quinn (Guardian)',
 };
 
 // Utility: Determine agent for task based on filename
@@ -125,7 +125,7 @@ function processTaskFile(filename) {
   }
   
   // Read file content
-  let content = fs.readFileSync(filePath, 'utf8');
+  const content = fs.readFileSync(filePath, 'utf8');
   
   // Check if TODO exists
   if (!TODO_PATTERN.test(content)) {
@@ -139,14 +139,14 @@ function processTaskFile(filename) {
     return { 
       needsReview: true, 
       filename,
-      reason: 'No clear agent mapping found'
+      reason: 'No clear agent mapping found',
     };
   }
   
   // Replace TODO with actual agent
   const updatedContent = content.replace(
     TODO_PATTERN,
-    `responsável: ${agent}`
+    `responsável: ${agent}`,
   );
   
   // Write updated content
@@ -155,7 +155,7 @@ function processTaskFile(filename) {
   return {
     processed: true,
     filename,
-    agent
+    agent,
   };
 }
 
@@ -175,7 +175,7 @@ function main() {
     processed: [],
     skipped: [],
     needsReview: [],
-    errors: []
+    errors: [],
   };
   
   // Process each file

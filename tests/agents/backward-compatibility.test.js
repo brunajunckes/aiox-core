@@ -55,7 +55,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
         results.push({
           id: agentId,
           hasTools: !!config.dependencies?.tools,
-          config
+          config,
         });
       }
 
@@ -152,7 +152,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
 
     test('agents without tools can still be loaded and parsed', async () => {
       const configs = await Promise.all(
-        agentsWithoutTools.map(id => loadAgentYaml(_id))
+        agentsWithoutTools.map(id => loadAgentYaml(_id)),
       );
 
       configs.forEach((config, index) => {
@@ -246,7 +246,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
           agentId: config.agent.id,
           name: config.agent.name,
           tools: getAgentTools(config),
-          commands: config.commands
+          commands: config.commands,
         };
       };
 
@@ -267,14 +267,14 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
     test('agent system handles mixed agents (with and without tools)', async () => {
       const results = {
         withTools: [],
-        withoutTools: []
+        withoutTools: [],
       };
 
       for (const agentId of agentsWithTools) {
         const config = await loadAgentYaml(agentId);
         results.withTools.push({
           id: agentId,
-          toolCount: getAgentTools(config)?.length || 0
+          toolCount: getAgentTools(config)?.length || 0,
         });
       }
 
@@ -282,7 +282,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
         const config = await loadAgentYaml(agentId);
         results.withoutTools.push({
           id: agentId,
-          toolCount: getAgentTools(config)?.length || 0
+          toolCount: getAgentTools(config)?.length || 0,
         });
       }
 
@@ -322,7 +322,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
         agents_with_tools: [],
         agents_without_tools: [],
         errors: [],
-        structure_issues: []
+        structure_issues: [],
       };
 
       const allAgents = [...agentsWithTools, ...agentsWithoutTools];
@@ -338,7 +338,7 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
             has_tools_field: !!tools,
             tool_count: tools?.length || 0,
             has_dependencies: !!config.dependencies,
-            has_commands: !!config.commands
+            has_commands: !!config.commands,
           };
 
           if (tools) {
@@ -351,14 +351,14 @@ describeIntegration('Agent Backward Compatibility - Missing Tools Field', () => 
           if (!config.agent || !config.agent.id) {
             report.structure_issues.push({
               agent: agentId,
-              issue: 'Missing agent.id'
+              issue: 'Missing agent.id',
             });
           }
 
         } catch (error) {
           report.errors.push({
             agent: agentId,
-            error: error.message
+            error: error.message,
           });
         }
       }

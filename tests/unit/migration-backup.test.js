@@ -15,7 +15,7 @@ const {
   createBackup,
   verifyBackup,
   findLatestBackup,
-  listBackups
+  listBackups,
 } = require('../../.aios-core/cli/commands/migrate/backup');
 
 /**

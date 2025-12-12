@@ -25,7 +25,7 @@ function quickTest(utilityFile) {
     loadable: false,
     exports: [],
     errors: [],
-    recommendation: ''
+    recommendation: '',
   };
 
   try {

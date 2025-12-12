@@ -14,7 +14,7 @@ const {
   analyzeMigrationPlan,
   formatSize,
   formatMigrationPlan,
-  analyzeImports
+  analyzeImports,
 } = require('../../.aios-core/cli/commands/migrate/analyze');
 
 describe('Migration Analyze Module', () => {

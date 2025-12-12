@@ -47,8 +47,8 @@ function onCommandComplete(agent, command, result, context) {
         branch: context.branch || '',
         epic: context.epic || '',
         lastCommand: command,
-        lastAgent: agent
-      }
+        lastAgent: agent,
+      },
     }, SESSION_STATE_PATH);
   } catch (error) {
     // Graceful degradation - hook failures must not break command execution
@@ -68,7 +68,7 @@ function detectWorkflowState(command, result) {
     'validate-story-draft': { workflow: 'story_development', state: 'validated' },
     'develop': { workflow: 'story_development', state: 'in_development' },
     'review-qa': { workflow: 'story_development', state: 'qa_reviewed' },
-    'create-epic': { workflow: 'epic_creation', state: 'epic_created' }
+    'create-epic': { workflow: 'epic_creation', state: 'epic_created' },
   };
 
   return stateMap[command] || null;
@@ -92,5 +92,5 @@ function registerHook(agentFramework) {
 module.exports = {
   onCommandComplete,
   registerHook,
-  detectWorkflowState
+  detectWorkflowState,
 };

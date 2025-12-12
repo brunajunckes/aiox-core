@@ -15,10 +15,10 @@ const ToolValidationHelper = require('../../common/utils/tool-validation-helper'
  */
 describe('Tools System Performance Benchmarks', () => {
   let testToolsDir;
-  let benchmarkResults = {
+  const benchmarkResults = {
     toolResolution: { cached: [], uncached: [] },
     validation: [],
-    helpers: []
+    helpers: [],
   };
 
   beforeAll(async () => {
@@ -53,8 +53,8 @@ describe('Tools System Performance Benchmarks', () => {
                 }
                 return { valid: errors.length === 0, errors };
               })();
-            `
-          }
+            `,
+          },
         ],
         helpers: [
           {
@@ -73,10 +73,10 @@ describe('Tools System Performance Benchmarks', () => {
                   timestamp: Date.now()
                 };
               })();
-            `
-          }
-        ]
-      }
+            `,
+          },
+        ],
+      },
     };
 
     await fs.writeJSON(path.join(testToolsDir, 'benchmark_tool.yaml'), benchmarkTool);

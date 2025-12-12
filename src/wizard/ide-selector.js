@@ -55,8 +55,8 @@ async function selectIDEs() {
       message: colors.primary('Select IDE(s) for AIOS configuration:') + colors.dim('\n  (Use spacebar to select, enter to confirm)'),
       choices: getIDEChoices(),
       validate: validateIDESelection,
-      pageSize: 10
-    }
+      pageSize: 10,
+    },
   ]);
 
   return selectedIDEs;
@@ -73,12 +73,12 @@ function getIDESelectionQuestion() {
     message: colors.primary('Select IDE(s) for AIOS configuration:') + colors.dim('\n  (Use spacebar to select, enter to confirm)'),
     choices: getIDEChoices(),
     validate: validateIDESelection,
-    pageSize: 10
+    pageSize: 10,
   };
 }
 
 module.exports = {
   selectIDEs,
   validateIDESelection,
-  getIDESelectionQuestion
+  getIDESelectionQuestion,
 };

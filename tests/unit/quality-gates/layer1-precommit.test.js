@@ -16,8 +16,8 @@ describe('Layer1PreCommit', () => {
       checks: {
         lint: { enabled: true, command: 'npm run lint' },
         test: { enabled: true, command: 'npm test' },
-        typecheck: { enabled: true, command: 'npm run typecheck' }
-      }
+        typecheck: { enabled: true, command: 'npm run typecheck' },
+      },
     });
   });
 
@@ -35,8 +35,8 @@ describe('Layer1PreCommit', () => {
         enabled: false,
         failFast: false,
         checks: {
-          lint: { enabled: false }
-        }
+          lint: { enabled: false },
+        },
       });
       expect(customLayer.enabled).toBe(false);
       expect(customLayer.failFast).toBe(false);
@@ -59,7 +59,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 0,
         stdout: '0 errors\n0 warnings',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       const result = await layer.execute({ verbose: false });
@@ -77,7 +77,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 0,
         stdout: '0 errors, 5 warnings',
         stderr: '',
-        duration: 1000
+        duration: 1000,
       });
 
       const result = await layer.runLint();
@@ -93,7 +93,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 1,
         stdout: '3 errors, 2 warnings',
         stderr: '',
-        duration: 1000
+        duration: 1000,
       });
 
       const result = await layer.runLint();
@@ -109,7 +109,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 0,
         stdout: '10 pass, 0 fail, 2 skip',
         stderr: '',
-        duration: 5000
+        duration: 5000,
       });
 
       const result = await layer.runTests();
@@ -126,7 +126,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 1,
         stdout: '8 pass, 2 fail',
         stderr: '',
-        duration: 5000
+        duration: 5000,
       });
 
       const result = await layer.runTests();
@@ -142,7 +142,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 0,
         stdout: '',
         stderr: '',
-        duration: 2000
+        duration: 2000,
       });
 
       const result = await layer.runTypeCheck();
@@ -157,7 +157,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 1,
         stdout: '',
         stderr: '5 errors found',
-        duration: 2000
+        duration: 2000,
       });
 
       const result = await layer.runTypeCheck();
@@ -173,7 +173,7 @@ describe('Layer1PreCommit', () => {
         exitCode: 0,
         stdout: '0 errors',
         stderr: '',
-        duration: 100
+        duration: 100,
       });
 
       await layer.execute();

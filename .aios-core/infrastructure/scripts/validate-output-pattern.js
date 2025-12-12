@@ -37,7 +37,7 @@ class OutputPatternValidator {
 
     return {
       valid: errors.length === 0,
-      errors: errors
+      errors: errors,
     };
   }
 
@@ -53,7 +53,7 @@ class OutputPatternValidator {
       'Header': /^## 📊 Task Execution Report/m,
       'Status': /^### Status/m,
       'Output': /^### Output/m,
-      'Metrics': /^### Metrics/m
+      'Metrics': /^### Metrics/m,
     };
 
     for (const section of requiredSections) {
@@ -62,7 +62,7 @@ class OutputPatternValidator {
         errors.push({
           type: 'missing_section',
           section: section,
-          message: `❌ Validation Error: Missing required section '${section}'. Required sections: Header, Status, Output, Metrics`
+          message: `❌ Validation Error: Missing required section '${section}'. Required sections: Header, Status, Output, Metrics`,
         });
       }
     }
@@ -110,7 +110,7 @@ class OutputPatternValidator {
       errors.push({
         type: 'missing_field',
         field: 'Duration',
-        message: `❌ Validation Error: Duration field not found. Expected on line 7. Expected format: **Duration:** {value}`
+        message: '❌ Validation Error: Duration field not found. Expected on line 7. Expected format: **Duration:** {value}',
       });
     } else if (actualDurationLine !== expectedDurationLine) {
       errors.push({
@@ -118,7 +118,7 @@ class OutputPatternValidator {
         field: 'Duration',
         expectedLine: expectedDurationLine + 1,
         actualLine: actualDurationLine + 1,
-        message: `❌ Validation Error: Duration must appear on line ${expectedDurationLine + 1}, but found on line ${actualDurationLine + 1}. Expected format: **Duration:** {value}`
+        message: `❌ Validation Error: Duration must appear on line ${expectedDurationLine + 1}, but found on line ${actualDurationLine + 1}. Expected format: **Duration:** {value}`,
       });
     }
 
@@ -127,7 +127,7 @@ class OutputPatternValidator {
       errors.push({
         type: 'missing_field',
         field: 'Tokens',
-        message: `❌ Validation Error: Tokens Used field not found. Expected on line 8. Expected format: **Tokens Used:** {value} total`
+        message: '❌ Validation Error: Tokens Used field not found. Expected on line 8. Expected format: **Tokens Used:** {value} total',
       });
     } else if (actualTokensLine !== expectedTokensLine) {
       errors.push({
@@ -135,7 +135,7 @@ class OutputPatternValidator {
         field: 'Tokens',
         expectedLine: expectedTokensLine + 1,
         actualLine: actualTokensLine + 1,
-        message: `❌ Validation Error: Tokens must appear on line ${expectedTokensLine + 1}, but found on line ${actualTokensLine + 1}. Expected format: **Tokens Used:** {value} total`
+        message: `❌ Validation Error: Tokens must appear on line ${expectedTokensLine + 1}, but found on line ${actualTokensLine + 1}. Expected format: **Tokens Used:** {value} total`,
       });
     }
   }
@@ -152,7 +152,7 @@ class OutputPatternValidator {
       'Header': /^## 📊 Task Execution Report/m,
       'Status': /^### Status/m,
       'Output': /^### Output/m,
-      'Metrics': /^### Metrics/m
+      'Metrics': /^### Metrics/m,
     };
 
     const positions = {};
@@ -168,7 +168,7 @@ class OutputPatternValidator {
       if (positions['Status'] > positions['Output']) {
         errors.push({
           type: 'wrong_order',
-          message: '❌ Validation Error: Status section must appear before Output section. Expected order: Header → Status → Output → Metrics'
+          message: '❌ Validation Error: Status section must appear before Output section. Expected order: Header → Status → Output → Metrics',
         });
       }
     }
@@ -185,7 +185,7 @@ class OutputPatternValidator {
           errors.push({
             type: 'wrong_order',
             section: section,
-            message: `❌ Validation Error: Metrics section must be last, but found '${section}' after it. Expected order: Header → Status → Output → Metrics`
+            message: `❌ Validation Error: Metrics section must be last, but found '${section}' after it. Expected order: Header → Status → Output → Metrics`,
           });
           break;
         }

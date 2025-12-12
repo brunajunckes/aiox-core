@@ -11,7 +11,7 @@ const {
   generateSeedData,
   generateLayer1Run,
   generateLayer2Run,
-  generateLayer3Run
+  generateLayer3Run,
 } = require('../../../.aios-core/quality/seed-metrics');
 
 describe('Seed Metrics Generator', () => {
@@ -180,7 +180,7 @@ describe('Seed Metrics Generator', () => {
       for (let i = 0; i < 10; i++) {
         const metrics = generateSeedData({
           days: 14,
-          weekendReduction: true
+          weekendReduction: true,
         });
 
         metrics.history.forEach((r) => {

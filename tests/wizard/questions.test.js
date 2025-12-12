@@ -11,7 +11,7 @@ const {
   getMCPQuestions,
   getEnvironmentQuestions,
   buildQuestionSequence,
-  getQuestionById
+  getQuestionById,
 } = require('../../src/wizard/questions');
 
 describeIntegration('questions', () => {

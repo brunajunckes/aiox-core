@@ -34,7 +34,7 @@ function createCleanupCommand() {
 
         // Count records that would be removed
         const toRemove = metrics.history.filter(
-          (r) => new Date(r.timestamp).getTime() <= cutoff
+          (r) => new Date(r.timestamp).getTime() <= cutoff,
         );
 
         if (options.dryRun) {
@@ -87,5 +87,5 @@ function createCleanupCommand() {
 }
 
 module.exports = {
-  createCleanupCommand
+  createCleanupCommand,
 };

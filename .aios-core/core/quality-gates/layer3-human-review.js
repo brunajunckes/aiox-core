@@ -51,7 +51,7 @@ class Layer3HumanReview extends BaseLayer {
         check: 'layer3',
         pass: true,
         skipped: true,
-        message: 'Layer 3 disabled'
+        message: 'Layer 3 disabled',
       });
       this.stopTimer();
       return this.getSummary();
@@ -101,7 +101,7 @@ class Layer3HumanReview extends BaseLayer {
       const checklist = await this.checklistGenerator.generate({
         storyId,
         changedFiles,
-        layers: context.previousLayers || []
+        layers: context.previousLayers || [],
       });
 
       const result = {
@@ -109,7 +109,7 @@ class Layer3HumanReview extends BaseLayer {
         pass: true,
         items: checklist.items.length,
         checklist,
-        message: `Checklist generated (${checklist.items.length} items)`
+        message: `Checklist generated (${checklist.items.length} items)`,
       };
 
       if (verbose) {
@@ -128,7 +128,7 @@ class Layer3HumanReview extends BaseLayer {
         check: 'checklist',
         pass: false,
         error: error.message,
-        message: `Checklist error: ${error.message}`
+        message: `Checklist error: ${error.message}`,
       };
     }
   }
@@ -165,7 +165,7 @@ class Layer3HumanReview extends BaseLayer {
         pass: true,
         reviewer,
         strategy: this.assignmentStrategy,
-        message: `Assigned to ${reviewer}`
+        message: `Assigned to ${reviewer}`,
       };
 
       if (verbose) {
@@ -179,7 +179,7 @@ class Layer3HumanReview extends BaseLayer {
         pass: true, // Don't block on assignment errors
         reviewer: this.defaultReviewer,
         error: error.message,
-        message: `Defaulted to ${this.defaultReviewer}: ${error.message}`
+        message: `Defaulted to ${this.defaultReviewer}: ${error.message}`,
       };
     }
   }
@@ -199,7 +199,7 @@ class Layer3HumanReview extends BaseLayer {
       '.aios-core/core/': '@architect',
       'tests/': '@qa',
       'src/': '@dev',
-      '.github/': '@devops'
+      '.github/': '@devops',
     };
 
     // Count matches for each reviewer
@@ -281,7 +281,7 @@ class Layer3HumanReview extends BaseLayer {
             signedOff: true,
             reviewer: signoff.reviewer,
             timestamp: signoff.timestamp,
-            message: `Signed off by ${signoff.reviewer}`
+            message: `Signed off by ${signoff.reviewer}`,
           };
         }
       }
@@ -295,7 +295,7 @@ class Layer3HumanReview extends BaseLayer {
         pass: !this.requireSignoff, // Pass if sign-off not required
         signedOff: false,
         required: this.requireSignoff,
-        message: this.requireSignoff ? 'Awaiting sign-off' : 'Sign-off optional'
+        message: this.requireSignoff ? 'Awaiting sign-off' : 'Sign-off optional',
       };
     } catch (error) {
       return {
@@ -303,7 +303,7 @@ class Layer3HumanReview extends BaseLayer {
         pass: !this.requireSignoff,
         signedOff: false,
         error: error.message,
-        message: `Sign-off check error: ${error.message}`
+        message: `Sign-off check error: ${error.message}`,
       };
     }
   }
@@ -330,7 +330,7 @@ class Layer3HumanReview extends BaseLayer {
 
     status.signoffs[storyId] = {
       reviewer,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     await fs.mkdir(path.dirname(statusPath), { recursive: true });
@@ -340,7 +340,7 @@ class Layer3HumanReview extends BaseLayer {
       success: true,
       storyId,
       reviewer,
-      timestamp: status.signoffs[storyId].timestamp
+      timestamp: status.signoffs[storyId].timestamp,
     };
   }
 }

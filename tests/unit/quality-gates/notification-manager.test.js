@@ -15,7 +15,7 @@ describe('NotificationManager', () => {
   beforeEach(() => {
     notificationManager = new NotificationManager({
       notificationsPath: '.aios/notifications-test',
-      channels: ['console'] // Only console for tests
+      channels: ['console'], // Only console for tests
     });
   });
 
@@ -72,28 +72,28 @@ describe('NotificationManager', () => {
         automatedSummary: {
           layer1: {
             checks: [
-              { check: 'lint', status: 'passed', message: 'No errors' }
-            ]
+              { check: 'lint', status: 'passed', message: 'No errors' },
+            ],
           },
           layer2: {
             coderabbit: {
-              issues: { critical: 0, high: 2, medium: 5 }
-            }
-          }
+              issues: { critical: 0, high: 2, medium: 5 },
+            },
+          },
         },
         focusAreas: {
           primary: [
             {
               area: 'security',
               reason: 'Auth files modified',
-              questions: ['Is input validation comprehensive?']
-            }
+              questions: ['Is input validation comprehensive?'],
+            },
           ],
           secondary: [
-            { area: 'ux', reason: 'UI changes' }
-          ]
+            { area: 'ux', reason: 'UI changes' },
+          ],
         },
-        skipAreas: ['syntax', 'formatting']
+        skipAreas: ['syntax', 'formatting'],
       };
 
       const content = notificationManager.formatReviewRequestContent(reviewRequest);
@@ -116,12 +116,12 @@ describe('NotificationManager', () => {
           layer1: {
             checks: [
               { check: 'lint', status: 'passed', message: 'Clean' },
-              { check: 'test', status: 'passed', message: 'All pass' }
-            ]
-          }
+              { check: 'test', status: 'passed', message: 'All pass' },
+            ],
+          },
         },
         focusAreas: { primary: [], secondary: [] },
-        skipAreas: []
+        skipAreas: [],
       };
 
       const content = notificationManager.formatReviewRequestContent(reviewRequest);
@@ -137,11 +137,11 @@ describe('NotificationManager', () => {
         stoppedAt: 'layer1',
         reason: 'Lint errors found',
         issues: [
-          { severity: 'HIGH', check: 'lint', message: '5 errors' }
+          { severity: 'HIGH', check: 'lint', message: '5 errors' },
         ],
         fixFirst: [
-          { issue: 'Lint errors', suggestion: 'Run npm run lint:fix' }
-        ]
+          { issue: 'Lint errors', suggestion: 'Run npm run lint:fix' },
+        ],
       };
 
       const content = notificationManager.formatBlockingContent(blockResult);
@@ -158,8 +158,8 @@ describe('NotificationManager', () => {
         reason: 'CodeRabbit issues',
         issues: [],
         fixFirst: [
-          { issue: 'Critical issues', suggestion: 'Review CodeRabbit feedback' }
-        ]
+          { issue: 'Critical issues', suggestion: 'Review CodeRabbit feedback' },
+        ],
       };
 
       const content = notificationManager.formatBlockingContent(blockResult);
@@ -178,8 +178,8 @@ describe('NotificationManager', () => {
         completedAt: '2025-12-03T12:00:00Z',
         actualTime: 25,
         reviewResult: {
-          comments: 'LGTM! Good architecture.'
-        }
+          comments: 'LGTM! Good architecture.',
+        },
       };
 
       const content = notificationManager.formatCompletionContent(completedRequest);
@@ -200,9 +200,9 @@ describe('NotificationManager', () => {
           comments: 'Needs refactoring',
           requestedChanges: [
             'Split the service into smaller modules',
-            'Add unit tests for edge cases'
-          ]
-        }
+            'Add unit tests for edge cases',
+          ],
+        },
       };
 
       const content = notificationManager.formatCompletionContent(completedRequest);
@@ -221,8 +221,8 @@ describe('NotificationManager', () => {
         createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
         estimatedTime: 15,
         focusAreas: {
-          primary: [{ area: 'security' }]
-        }
+          primary: [{ area: 'security' }],
+        },
       };
 
       const content = notificationManager.formatReminderContent(reviewRequest);
@@ -243,7 +243,7 @@ describe('NotificationManager', () => {
         subject: 'Test Subject',
         recipient: '@dev',
         timestamp: new Date().toISOString(),
-        content: 'Test content'
+        content: 'Test content',
       };
 
       const results = await notificationManager.sendThroughChannels(notification);
@@ -261,7 +261,7 @@ describe('NotificationManager', () => {
         subject: 'Test',
         recipient: '@dev',
         timestamp: new Date().toISOString(),
-        content: 'Test'
+        content: 'Test',
       };
 
       const results = await notificationManager.sendThroughChannels(notification);
@@ -275,7 +275,7 @@ describe('NotificationManager', () => {
     beforeEach(() => {
       // Mock file operations
       notificationManager.sendThroughChannels = jest.fn().mockResolvedValue({
-        console: { success: true }
+        console: { success: true },
       });
       notificationManager.saveNotification = jest.fn().mockResolvedValue();
     });
@@ -288,7 +288,7 @@ describe('NotificationManager', () => {
         expiresAt: '2025-12-04',
         automatedSummary: {},
         focusAreas: { primary: [] },
-        skipAreas: []
+        skipAreas: [],
       };
 
       const result = await notificationManager.sendReviewRequest(reviewRequest);
@@ -303,7 +303,7 @@ describe('NotificationManager', () => {
   describe('sendBlockingNotification', () => {
     beforeEach(() => {
       notificationManager.sendThroughChannels = jest.fn().mockResolvedValue({
-        console: { success: true }
+        console: { success: true },
       });
       notificationManager.saveNotification = jest.fn().mockResolvedValue();
     });
@@ -313,7 +313,7 @@ describe('NotificationManager', () => {
         stoppedAt: 'layer1',
         reason: 'Failed',
         issues: [],
-        fixFirst: []
+        fixFirst: [],
       };
 
       const result = await notificationManager.sendBlockingNotification(blockResult);
@@ -326,7 +326,7 @@ describe('NotificationManager', () => {
   describe('sendCompletionNotification', () => {
     beforeEach(() => {
       notificationManager.sendThroughChannels = jest.fn().mockResolvedValue({
-        console: { success: true }
+        console: { success: true },
       });
       notificationManager.saveNotification = jest.fn().mockResolvedValue();
     });
@@ -336,7 +336,7 @@ describe('NotificationManager', () => {
         id: 'hr-test',
         status: 'approved',
         reviewer: '@dev',
-        completedAt: new Date().toISOString()
+        completedAt: new Date().toISOString(),
       };
 
       const result = await notificationManager.sendCompletionNotification(completedRequest);
@@ -349,7 +349,7 @@ describe('NotificationManager', () => {
         id: 'hr-test',
         status: 'changes_requested',
         reviewer: '@dev',
-        completedAt: new Date().toISOString()
+        completedAt: new Date().toISOString(),
       };
 
       const result = await notificationManager.sendCompletionNotification(completedRequest);
@@ -361,7 +361,7 @@ describe('NotificationManager', () => {
   describe('sendReminder', () => {
     beforeEach(() => {
       notificationManager.sendThroughChannels = jest.fn().mockResolvedValue({
-        console: { success: true }
+        console: { success: true },
       });
       notificationManager.saveNotification = jest.fn().mockResolvedValue();
     });
@@ -373,7 +373,7 @@ describe('NotificationManager', () => {
         createdAt: new Date().toISOString(),
         expiresAt: new Date().toISOString(),
         estimatedTime: 15,
-        focusAreas: { primary: [] }
+        focusAreas: { primary: [] },
       };
 
       const result = await notificationManager.sendReminder(reviewRequest);

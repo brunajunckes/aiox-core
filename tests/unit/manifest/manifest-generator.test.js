@@ -14,7 +14,7 @@ const {
   ManifestGenerator,
   createManifestGenerator,
   escapeCSV,
-  parseYAMLFromMarkdown
+  parseYAMLFromMarkdown,
 } = require('../../../.aios-core/core/manifest/manifest-generator');
 
 describe('ManifestGenerator', () => {

@@ -177,5 +177,5 @@ module.exports = {
   getPMAdapter,
   clearAdapterCache,
   getPMToolType,
-  isPMToolConfigured
+  isPMToolConfigured,
 };

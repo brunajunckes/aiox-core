@@ -20,7 +20,7 @@ const {
   trackTest,
   updateMetrics,
   completeDecisionLogging,
-  getCurrentContext
+  getCurrentContext,
 } = require('../../.aios-core/development/scripts/decision-recorder');
 
 describeIntegration('Decision Logging + Yolo Mode Integration', () => {
@@ -61,7 +61,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
     it('should complete full workflow with decision logging', async () => {
       // Simulate yolo mode start
       const context = await initializeDecisionLogging('dev', testStoryPath, {
-        agentLoadTime: 150
+        agentLoadTime: 150,
       });
 
       expect(context).toBeDefined();
@@ -75,7 +75,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         reason: 'Better error handling and interceptor support',
         alternatives: ['Fetch API', 'Got library', 'node-fetch'],
         type: 'library-choice',
-        priority: 'medium'
+        priority: 'medium',
       });
 
       expect(decision1).toBeDefined();
@@ -88,7 +88,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         reason: 'Simple state sharing without Redux overhead',
         alternatives: ['Redux', 'Zustand', 'Jotai'],
         type: 'architecture',
-        priority: 'high'
+        priority: 'high',
       });
 
       expect(decision2).toBeDefined();
@@ -104,18 +104,18 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       trackTest({
         name: 'api.test.js',
         passed: true,
-        duration: 125
+        duration: 125,
       });
 
       trackTest({
         name: 'context.test.js',
         passed: true,
-        duration: 85
+        duration: 85,
       });
 
       // Update metrics
       updateMetrics({
-        taskExecutionTime: 300000 // 5 minutes
+        taskExecutionTime: 300000, // 5 minutes
       });
 
       // Complete yolo mode - generate log
@@ -147,8 +147,8 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       expect(logContent).toContain('high');
 
       // Verify files are tracked (OS-agnostic path matching)
-      expect(logContent).toMatch(/src[\/\\]api[\/\\]client\.js/);
-      expect(logContent).toMatch(/src[\/\\]context[\/\\]AppContext\.js/);
+      expect(logContent).toMatch(/src[/\\]api[/\\]client\.js/);
+      expect(logContent).toMatch(/src[/\\]context[/\\]AppContext\.js/);
       expect(logContent).toContain('package.json');
 
       // Verify tests are tracked
@@ -174,14 +174,14 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
 
     it('should handle decision logging disabled gracefully', async () => {
       const context = await initializeDecisionLogging('dev', testStoryPath, {
-        enabled: false
+        enabled: false,
       });
 
       expect(context).toBeNull();
 
       const decision = recordDecision({
         description: 'Test decision',
-        reason: 'Test reason'
+        reason: 'Test reason',
       });
 
       expect(decision).toBeNull();
@@ -199,7 +199,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         { type: 'architecture', priority: 'high', desc: 'Architecture decision' },
         { type: 'algorithm', priority: 'medium', desc: 'Algorithm decision' },
         { type: 'error-handling', priority: 'low', desc: 'Error handling decision' },
-        { type: 'testing-strategy', priority: 'medium', desc: 'Testing decision' }
+        { type: 'testing-strategy', priority: 'medium', desc: 'Testing decision' },
       ];
 
       decisionTypes.forEach(({ type, priority, desc }) => {
@@ -208,7 +208,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
           reason: `Because ${type}`,
           alternatives: ['Alt 1', 'Alt 2'],
           type,
-          priority
+          priority,
         });
 
         expect(decision.type).toBe(type);
@@ -230,7 +230,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       const fileOperations = [
         { path: 'src/new-file.js', action: 'created' },
         { path: 'src/existing-file.js', action: 'modified' },
-        { path: 'src/old-file.js', action: 'deleted' }
+        { path: 'src/old-file.js', action: 'deleted' },
       ];
 
       fileOperations.forEach(({ path: filePath, action }) => {
@@ -255,14 +255,14 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       trackTest({
         name: 'passing-test.js',
         passed: true,
-        duration: 100
+        duration: 100,
       });
 
       trackTest({
         name: 'failing-test.js',
         passed: false,
         duration: 50,
-        error: 'Assertion failed: expected true to be false'
+        error: 'Assertion failed: expected true to be false',
       });
 
       const logPath = await completeDecisionLogging(testStoryId, 'completed');
@@ -313,7 +313,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       recordDecision({
         description: 'Test decision',
         reason: 'Test reason',
-        alternatives: []
+        alternatives: [],
       });
 
       await completeDecisionLogging(testStoryId, 'completed');
@@ -337,7 +337,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         recordDecision({
           description: `Decision ${i}`,
           reason: `Reason ${i}`,
-          alternatives: []
+          alternatives: [],
         });
       }
 
@@ -359,7 +359,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         recordDecision({
           description: `Decision ${i}`,
           reason: 'Performance test',
-          alternatives: ['Alt 1', 'Alt 2']
+          alternatives: ['Alt 1', 'Alt 2'],
         });
       }
 
@@ -373,7 +373,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
         trackTest({
           name: `test-${i}.js`,
           passed: true,
-          duration: 100
+          duration: 100,
         });
       }
 
@@ -399,7 +399,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
 
       const decision = recordDecision({
         description: 'Test',
-        reason: 'Test'
+        reason: 'Test',
       });
 
       expect(decision).toBeNull();
@@ -414,7 +414,7 @@ describeIntegration('Decision Logging + Yolo Mode Integration', () => {
       recordDecision({
         description: 'Failed decision',
         reason: 'Something went wrong',
-        alternatives: []
+        alternatives: [],
       });
 
       const logPath = await completeDecisionLogging(testStoryId, 'failed');

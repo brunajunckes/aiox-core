@@ -15,21 +15,21 @@ class UsageAnalytics {
       imports: [
         /require\(['"`]([^'"`]+)['"`]\)/g,
         /import .* from ['"`]([^'"`]+)['"`]/g,
-        /import\(['"`]([^'"`]+)['"`]\)/g
+        /import\(['"`]([^'"`]+)['"`]\)/g,
       ],
       taskCalls: [
         /\*([a-zA-Z-]+)/g,
-        /executeTask\(['"`]([^'"`]+)['"`]\)/g
+        /executeTask\(['"`]([^'"`]+)['"`]\)/g,
       ],
       agentReferences: [
         /aios-developer/g,
         /meta-agent/g,
-        /@agent\s+([a-zA-Z-]+)/g
+        /@agent\s+([a-zA-Z-]+)/g,
       ],
       utilCalls: [
         /require\(['"`]\.\.\/utils\/([^'"`]+)['"`]\)/g,
-        /from ['"`]\.\.\/utils\/([^'"`]+)['"`]/g
-      ]
+        /from ['"`]\.\.\/utils\/([^'"`]+)['"`]/g,
+      ],
     };
   }
 
@@ -46,7 +46,7 @@ class UsageAnalytics {
       usage_trends: {},
       cross_references: {},
       efficiency_score: 0,
-      recommendations: []
+      recommendations: [],
     };
 
     try {
@@ -99,7 +99,7 @@ class UsageAnalytics {
       last_used: null,
       usage_frequency: 'never',
       dependency_depth: 0,
-      integration_points: []
+      integration_points: [],
     };
 
     try {
@@ -125,7 +125,7 @@ class UsageAnalytics {
       // Cache the result
       this.usageCache.set(cacheKey, {
         timestamp: Date.now(),
-        data: usage
+        data: usage,
       });
 
       return usage;
@@ -143,7 +143,7 @@ class UsageAnalytics {
     const references = {
       count: 0,
       files: [],
-      locations: []
+      locations: [],
     };
 
     try {
@@ -151,7 +151,7 @@ class UsageAnalytics {
         path.join(this.rootPath, 'aios-core'),
         path.join(this.rootPath, 'tests'),
         path.join(this.rootPath, 'docs'),
-        path.join(this.rootPath, 'examples')
+        path.join(this.rootPath, 'examples'),
       ];
 
       for (const searchPath of searchPaths) {
@@ -231,7 +231,7 @@ class UsageAnalytics {
             file: relativePath,
             line: loc.line,
             context: loc.context,
-            type: loc.type
+            type: loc.type,
           });
         });
       }
@@ -252,7 +252,7 @@ class UsageAnalytics {
     const agentPatterns = [
       new RegExp(`@agent\\s+${component.id}`, 'gi'),
       new RegExp(`agent:\\s*['"\`]${component.id}['"\`]`, 'gi'),
-      new RegExp(`${component.name}`, 'gi')
+      new RegExp(`${component.name}`, 'gi'),
     ];
 
     lines.forEach((line, index) => {
@@ -263,7 +263,7 @@ class UsageAnalytics {
           results.locations.push({
             line: index + 1,
             context: line.trim(),
-            type: 'agent_reference'
+            type: 'agent_reference',
           });
         }
       });
@@ -283,7 +283,7 @@ class UsageAnalytics {
     const taskPatterns = [
       new RegExp(`\\*${component.id}`, 'gi'),
       new RegExp(`executeTask\\(['"\`]${component.id}['"\`]\\)`, 'gi'),
-      new RegExp(`task:\\s*['"\`]${component.id}['"\`]`, 'gi')
+      new RegExp(`task:\\s*['"\`]${component.id}['"\`]`, 'gi'),
     ];
 
     lines.forEach((line, index) => {
@@ -294,7 +294,7 @@ class UsageAnalytics {
           results.locations.push({
             line: index + 1,
             context: line.trim(),
-            type: 'task_call'
+            type: 'task_call',
           });
         }
       });
@@ -314,7 +314,7 @@ class UsageAnalytics {
     const workflowPatterns = [
       new RegExp(`workflow:\\s*['"\`]${component.id}['"\`]`, 'gi'),
       new RegExp(`${component.id}\\.yaml`, 'gi'),
-      new RegExp(`${component.name}`, 'gi')
+      new RegExp(`${component.name}`, 'gi'),
     ];
 
     lines.forEach((line, index) => {
@@ -325,7 +325,7 @@ class UsageAnalytics {
           results.locations.push({
             line: index + 1,
             context: line.trim(),
-            type: 'workflow_reference'
+            type: 'workflow_reference',
           });
         }
       });
@@ -345,7 +345,7 @@ class UsageAnalytics {
     const utilPatterns = [
       new RegExp(`require\\(['"\`][^'"\`]*${component.id}['"\`]\\)`, 'gi'),
       new RegExp(`from ['"\`][^'"\`]*${component.id}['"\`]`, 'gi'),
-      new RegExp(`import.*${component.id}`, 'gi')
+      new RegExp(`import.*${component.id}`, 'gi'),
     ];
 
     lines.forEach((line, index) => {
@@ -356,7 +356,7 @@ class UsageAnalytics {
           results.locations.push({
             line: index + 1,
             context: line.trim(),
-            type: 'utility_import'
+            type: 'utility_import',
           });
         }
       });
@@ -382,7 +382,7 @@ class UsageAnalytics {
         results.locations.push({
           line: index + 1,
           context: line.trim(),
-          type: 'generic_mention'
+          type: 'generic_mention',
         });
       }
     });
@@ -432,7 +432,7 @@ class UsageAnalytics {
       file: filePath,
       context_type: this.determineContextType(filePath),
       usage_pattern: this.identifyUsagePattern(content, component),
-      complexity: this.calculateUsageComplexity(content, component)
+      complexity: this.calculateUsageComplexity(content, component),
     };
   }
 
@@ -447,7 +447,7 @@ class UsageAnalytics {
     return Math.round(
       (usage.direct_references * directWeight +
        usage.indirect_references * indirectWeight +
-       usage.referencing_files.length * fileWeight) * 10
+       usage.referencing_files.length * fileWeight) * 10,
     ) / 10;
   }
 
@@ -497,7 +497,7 @@ class UsageAnalytics {
         component_id: id,
         popularity_score: usage.popularity_score,
         direct_references: usage.direct_references,
-        referencing_files: usage.referencing_files.length
+        referencing_files: usage.referencing_files.length,
       }))
       .sort((a, b) => b.popularity_score - a.popularity_score);
   }
@@ -511,7 +511,7 @@ class UsageAnalytics {
       .map(([id, usage]) => ({
         component_id: id,
         type: usage.type,
-        last_modified: usage.last_used
+        last_modified: usage.last_used,
       }));
   }
 
@@ -525,7 +525,7 @@ class UsageAnalytics {
         component_id: id,
         type: usage.type,
         popularity_score: usage.popularity_score,
-        usage_frequency: usage.usage_frequency
+        usage_frequency: usage.usage_frequency,
       }))
       .sort((a, b) => b.popularity_score - a.popularity_score)
       .slice(0, 10);
@@ -565,7 +565,7 @@ class UsageAnalytics {
         type: 'cleanup',
         priority: 'medium',
         message: `Consider reviewing ${usage.unused_components.length} unused components for potential removal`,
-        components: usage.unused_components.map(c => c.component_id)
+        components: usage.unused_components.map(c => c.component_id),
       });
     }
 
@@ -577,7 +577,7 @@ class UsageAnalytics {
           type: 'optimization',
           priority: 'high',
           message: `Component '${topHotspot.component_id}' is heavily used - consider optimization or caching`,
-          component: topHotspot.component_id
+          component: topHotspot.component_id,
         });
       }
     }
@@ -588,7 +588,7 @@ class UsageAnalytics {
         type: 'architecture',
         priority: 'medium',
         message: `Framework efficiency is ${usage.efficiency_score}% - consider component consolidation`,
-        score: usage.efficiency_score
+        score: usage.efficiency_score,
       });
     }
 

@@ -20,7 +20,7 @@ const workflowElicitationSteps = [
             return 'ID must be lowercase with hyphens only';
           }
           return true;
-        }
+        },
       },
       {
         type: 'input',
@@ -31,15 +31,15 @@ const workflowElicitationSteps = [
           type: 'fromAnswer',
           source: 'workflowId',
           transform: (id) => id.split('-').map(w => 
-            w.charAt(0).toUpperCase() + w.slice(1)
-          ).join(' ')
-        }
+            w.charAt(0).toUpperCase() + w.slice(1),
+          ).join(' '),
+        },
       },
       {
         type: 'input',
         name: 'workflowDescription',
         message: 'Describe the workflow purpose:',
-        validate: (input) => input.length > 20 || 'Please provide a detailed description'
+        validate: (input) => input.length > 20 || 'Please provide a detailed description',
       },
       {
         type: 'list',
@@ -49,12 +49,12 @@ const workflowElicitationSteps = [
           { name: 'Sequential - Steps run one after another', value: 'sequential' },
           { name: 'Parallel - Multiple steps can run simultaneously', value: 'parallel' },
           { name: 'Conditional - Steps depend on conditions', value: 'conditional' },
-          { name: 'Hybrid - Mix of sequential and parallel', value: 'hybrid' }
+          { name: 'Hybrid - Mix of sequential and parallel', value: 'hybrid' },
         ],
-        default: 'sequential'
-      }
+        default: 'sequential',
+      },
     ],
-    required: ['workflowId', 'workflowName', 'workflowDescription', 'workflowType']
+    required: ['workflowId', 'workflowName', 'workflowDescription', 'workflowType'],
   },
 
   {
@@ -71,9 +71,9 @@ const workflowElicitationSteps = [
           { name: 'Event - System event', value: 'event' },
           { name: 'Webhook - External trigger', value: 'webhook' },
           { name: 'File - File system change', value: 'file' },
-          { name: 'Completion - After another workflow', value: 'completion' }
+          { name: 'Completion - After another workflow', value: 'completion' },
         ],
-        default: ['manual']
+        default: ['manual'],
       },
       {
         type: 'input',
@@ -81,7 +81,7 @@ const workflowElicitationSteps = [
         message: 'Enter schedule pattern (cron format):',
         when: (answers) => answers.triggerTypes.includes('schedule'),
         examples: ['0 9 * * *', '*/30 * * * *', '0 0 * * SUN'],
-        default: '0 9 * * *'
+        default: '0 9 * * *',
       },
       {
         type: 'input',
@@ -89,9 +89,9 @@ const workflowElicitationSteps = [
         message: 'Which events trigger this workflow? (comma-separated):',
         when: (answers) => answers.triggerTypes.includes('event'),
         examples: ['file.created', 'task.completed', 'error.detected'],
-        filter: (input) => input ? input.split(',').map(e => e.trim()) : []
-      }
-    ]
+        filter: (input) => input ? input.split(',').map(e => e.trim()) : [],
+      },
+    ],
   },
 
   {
@@ -102,7 +102,7 @@ const workflowElicitationSteps = [
         type: 'confirm',
         name: 'hasInputs',
         message: 'Does this workflow require input parameters?',
-        default: true
+        default: true,
       },
       {
         type: 'input',
@@ -114,7 +114,7 @@ const workflowElicitationSteps = [
           const num = parseInt(input);
           return (num > 0 && num <= 10) || 'Please enter 1-10';
         },
-        filter: (input) => parseInt(input)
+        filter: (input) => parseInt(input),
       },
       // Note: Dynamic input collection would be implemented here
       {
@@ -122,9 +122,9 @@ const workflowElicitationSteps = [
         name: 'validateInputs',
         message: 'Add input validation rules?',
         when: (answers) => answers.hasInputs,
-        default: true
-      }
-    ]
+        default: true,
+      },
+    ],
   },
 
   {
@@ -140,7 +140,7 @@ const workflowElicitationSteps = [
           const num = parseInt(input);
           return (num > 0 && num <= 20) || 'Please enter 1-20';
         },
-        filter: (input) => parseInt(input)
+        filter: (input) => parseInt(input),
       },
       {
         type: 'list',
@@ -149,12 +149,12 @@ const workflowElicitationSteps = [
         choices: [
           { name: 'Quick mode - Basic step info only', value: 'quick' },
           { name: 'Detailed mode - Full step configuration', value: 'detailed' },
-          { name: 'Import - Use existing task definitions', value: 'import' }
+          { name: 'Import - Use existing task definitions', value: 'import' },
         ],
-        default: 'quick'
+        default: 'quick',
       },
       // Note: Dynamic step collection would be implemented here
-    ]
+    ],
   },
 
   {
@@ -166,14 +166,14 @@ const workflowElicitationSteps = [
         type: 'confirm',
         name: 'hasStepDependencies',
         message: 'Do steps have dependencies on other steps?',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'allowParallel',
         message: 'Can some steps run in parallel?',
         when: (answers) => answers.workflowType !== 'sequential',
-        default: true
+        default: true,
       },
       {
         type: 'input',
@@ -184,9 +184,9 @@ const workflowElicitationSteps = [
         validate: (input) => {
           const num = parseInt(input);
           return (num > 0 && num <= 10) || 'Please enter 1-10';
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
 
   {
@@ -201,15 +201,15 @@ const workflowElicitationSteps = [
           { name: 'Abort - Stop entire workflow on error', value: 'abort' },
           { name: 'Continue - Log error and continue', value: 'continue' },
           { name: 'Rollback - Undo completed steps', value: 'rollback' },
-          { name: 'Compensate - Run compensation steps', value: 'compensate' }
+          { name: 'Compensate - Run compensation steps', value: 'compensate' },
         ],
-        default: 'abort'
+        default: 'abort',
       },
       {
         type: 'confirm',
         name: 'enableNotifications',
         message: 'Send notifications on workflow events?',
-        default: true
+        default: true,
       },
       {
         type: 'checkbox',
@@ -222,11 +222,11 @@ const workflowElicitationSteps = [
           'Workflow failed',
           'Step failed',
           'Waiting for input',
-          'Performance threshold exceeded'
+          'Performance threshold exceeded',
         ],
-        default: ['Workflow failed', 'Workflow completed']
-      }
-    ]
+        default: ['Workflow failed', 'Workflow completed'],
+      },
+    ],
   },
 
   {
@@ -238,7 +238,7 @@ const workflowElicitationSteps = [
         name: 'outputDescription',
         message: 'What does this workflow produce?',
         examples: ['Processed data files', 'Deployment status report', 'Quality metrics'],
-        validate: (input) => input.length > 10 || 'Please describe the output'
+        validate: (input) => input.length > 10 || 'Please describe the output',
       },
       {
         type: 'checkbox',
@@ -251,17 +251,17 @@ const workflowElicitationSteps = [
           'Logs',
           'Notifications',
           'Database updates',
-          'API responses'
-        ]
+          'API responses',
+        ],
       },
       {
         type: 'confirm',
         name: 'saveOutputs',
         message: 'Should outputs be saved for later reference?',
-        default: true
-      }
+        default: true,
+      },
     ],
-    required: ['outputDescription']
+    required: ['outputDescription'],
   },
 
   {
@@ -272,7 +272,7 @@ const workflowElicitationSteps = [
         type: 'confirm',
         name: 'requireAuth',
         message: 'Require authorization to run this workflow?',
-        default: false
+        default: false,
       },
       {
         type: 'checkbox',
@@ -285,15 +285,15 @@ const workflowElicitationSteps = [
           'analyst',
           'reviewer',
           'operator',
-          'viewer'
+          'viewer',
         ],
-        default: ['admin', 'developer']
+        default: ['admin', 'developer'],
       },
       {
         type: 'confirm',
         name: 'enableAuditLog',
         message: 'Enable audit logging for this workflow?',
-        default: true
+        default: true,
       },
       {
         type: 'checkbox',
@@ -304,12 +304,12 @@ const workflowElicitationSteps = [
           'Mask credentials in logs',
           'Validate all inputs',
           'Sandbox execution',
-          'Rate limiting'
+          'Rate limiting',
         ],
-        when: (answers) => answers.requireAuth
-      }
-    ]
-  }
+        when: (answers) => answers.requireAuth,
+      },
+    ],
+  },
 ];
 
 module.exports = workflowElicitationSteps;

@@ -61,5 +61,5 @@ Examples:
 }
 
 module.exports = {
-  createMetricsCommand
+  createMetricsCommand,
 };

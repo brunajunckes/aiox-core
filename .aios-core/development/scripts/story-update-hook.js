@@ -20,7 +20,7 @@ function detectChanges(oldContent, newContent) {
     tasksCompleted: [],
     filesAdded: [],
     devNotesAdded: false,
-    acceptanceCriteriaChanged: false
+    acceptanceCriteriaChanged: false,
   };
 
   // Parse frontmatter to get status
@@ -31,13 +31,13 @@ function detectChanges(oldContent, newContent) {
     changes.status = {
       changed: true,
       from: oldStatus,
-      to: newStatus
+      to: newStatus,
     };
   } else {
     changes.status = {
       changed: false,
       from: oldStatus,
-      to: newStatus
+      to: newStatus,
     };
   }
 
@@ -48,7 +48,7 @@ function detectChanges(oldContent, newContent) {
   newTasks.forEach(task => {
     if (task.completed) {
       const wasCompleted = oldTasks.some(
-        oldTask => oldTask.text === task.text && oldTask.completed
+        oldTask => oldTask.text === task.text && oldTask.completed,
       );
       if (!wasCompleted) {
         changes.tasksCompleted.push(task.text);
@@ -104,7 +104,7 @@ function extractTasks(content) {
   const taskMatches = content.matchAll(/^- \[([ x])\] (.+)$/gm);
   return Array.from(taskMatches).map(match => ({
     completed: match[1] === 'x',
-    text: match[2]
+    text: match[2],
   }));
 }
 
@@ -152,25 +152,25 @@ function generateChangelog(changes) {
   }
 
   if (changes.tasksCompleted.length > 0) {
-    markdown += `- Completed tasks:\n`;
+    markdown += '- Completed tasks:\n';
     changes.tasksCompleted.forEach(task => {
       markdown += `  • ${task}\n`;
     });
   }
 
   if (changes.filesAdded.length > 0) {
-    markdown += `- Files added:\n`;
+    markdown += '- Files added:\n';
     changes.filesAdded.forEach(file => {
       markdown += `  • ${file}\n`;
     });
   }
 
   if (changes.devNotesAdded) {
-    markdown += `- Dev notes updated\n`;
+    markdown += '- Dev notes updated\n';
   }
 
   if (changes.acceptanceCriteriaChanged) {
-    markdown += `- Acceptance criteria modified\n`;
+    markdown += '- Acceptance criteria modified\n';
   }
 
   return markdown;
@@ -255,5 +255,5 @@ module.exports = {
   detectChanges,
   generateChangelog,
   syncStoryToClickUp,
-  updateFrontmatterTimestamp
+  updateFrontmatterTimestamp,
 };

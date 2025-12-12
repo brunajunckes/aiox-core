@@ -66,7 +66,7 @@ function parseYAMLFromMarkdown(content) {
 function extractAgentSection(yamlContent) {
   try {
     // Find agent: block and extract key fields using regex
-    const agentMatch = yamlContent.match(/^agent:\s*\n((?:  .+\n)*)/m);
+    const agentMatch = yamlContent.match(/^agent:\s*\n((?: {2}.+\n)*)/m);
     if (!agentMatch) return null;
 
     const agentLines = agentMatch[1];
@@ -79,7 +79,7 @@ function extractAgentSection(yamlContent) {
     const whenToUseMatch = agentLines.match(/whenToUse:\s*(.+)/);
 
     // Find persona_profile section
-    const personaMatch = yamlContent.match(/persona_profile:\s*\n(?:  .+\n)*/m);
+    const personaMatch = yamlContent.match(/persona_profile:\s*\n(?: {2}.+\n)*/m);
     let archetype = null;
     if (personaMatch) {
       const archetypeMatch = personaMatch[0].match(/archetype:\s*(.+)/);
@@ -93,9 +93,9 @@ function extractAgentSection(yamlContent) {
           id: idMatch ? idMatch[1].trim() : null,
           title: titleMatch ? titleMatch[1].trim() : null,
           icon: iconMatch ? iconMatch[1].trim() : null,
-          whenToUse: whenToUseMatch ? whenToUseMatch[1].trim() : null
+          whenToUse: whenToUseMatch ? whenToUseMatch[1].trim() : null,
         },
-        persona_profile: archetype ? { archetype } : null
+        persona_profile: archetype ? { archetype } : null,
       };
     }
   } catch (e) {
@@ -127,7 +127,7 @@ class ManifestGenerator {
       workers: null,
       tasks: null,
       errors: [],
-      duration: 0
+      duration: 0,
     };
 
     try {
@@ -138,7 +138,7 @@ class ManifestGenerator {
       const [agents, workers, tasks] = await Promise.all([
         this.generateAgentsManifest(),
         this.generateWorkersManifest(),
-        this.generateTasksManifest()
+        this.generateTasksManifest(),
       ]);
 
       results.agents = agents;
@@ -186,7 +186,7 @@ class ManifestGenerator {
               version: this.version,
               status: 'active',
               file_path: `.aios-core/development/agents/${file}`,
-              when_to_use: agent.whenToUse || ''
+              when_to_use: agent.whenToUse || '',
             });
           }
         } catch (e) {
@@ -199,7 +199,7 @@ class ManifestGenerator {
       const rows = agents.map(a =>
         [a.id, a.name, a.archetype, a.icon, a.version, a.status, a.file_path, a.when_to_use]
           .map(escapeCSV)
-          .join(',')
+          .join(','),
       );
 
       const csvContent = [header, ...rows].join('\n');
@@ -209,7 +209,7 @@ class ManifestGenerator {
         success: true,
         count: agents.length,
         path: outputPath,
-        errors
+        errors,
       };
 
     } catch (error) {
@@ -217,7 +217,7 @@ class ManifestGenerator {
         success: false,
         count: 0,
         path: outputPath,
-        errors: [error.message]
+        errors: [error.message],
       };
     }
   }
@@ -242,7 +242,7 @@ class ManifestGenerator {
         executor_types: (w.executorTypes || []).join(';'),
         tags: (w.tags || []).join(';'),
         file_path: w.path,
-        status: 'active'
+        status: 'active',
       }));
 
       // Generate CSV content
@@ -250,7 +250,7 @@ class ManifestGenerator {
       const rows = workers.map(w =>
         [w.id, w.name, w.category, w.subcategory, w.executor_types, w.tags, w.file_path, w.status]
           .map(escapeCSV)
-          .join(',')
+          .join(','),
       );
 
       const csvContent = [header, ...rows].join('\n');
@@ -260,7 +260,7 @@ class ManifestGenerator {
         success: true,
         count: workers.length,
         path: outputPath,
-        errors: []
+        errors: [],
       };
 
     } catch (error) {
@@ -268,7 +268,7 @@ class ManifestGenerator {
         success: false,
         count: 0,
         path: outputPath,
-        errors: [error.message]
+        errors: [error.message],
       };
     }
   }
@@ -296,7 +296,7 @@ class ManifestGenerator {
 
           const taskId = file.replace('.md', '');
           let taskName = taskId.split('-').map(w =>
-            w.charAt(0).toUpperCase() + w.slice(1)
+            w.charAt(0).toUpperCase() + w.slice(1),
           ).join(' ');
 
           let category = 'general';
@@ -335,7 +335,7 @@ class ManifestGenerator {
             format,
             has_elicitation: hasElicitation,
             file_path: `.aios-core/development/tasks/${file}`,
-            status: 'active'
+            status: 'active',
           });
 
         } catch (e) {
@@ -348,7 +348,7 @@ class ManifestGenerator {
       const rows = tasks.map(t =>
         [t.id, t.name, t.category, t.format, t.has_elicitation, t.file_path, t.status]
           .map(escapeCSV)
-          .join(',')
+          .join(','),
       );
 
       const csvContent = [header, ...rows].join('\n');
@@ -358,7 +358,7 @@ class ManifestGenerator {
         success: true,
         count: tasks.length,
         path: outputPath,
-        errors
+        errors,
       };
 
     } catch (error) {
@@ -366,7 +366,7 @@ class ManifestGenerator {
         success: false,
         count: 0,
         path: outputPath,
-        errors: [error.message]
+        errors: [error.message],
       };
     }
   }
@@ -382,5 +382,5 @@ module.exports = {
   createManifestGenerator,
   escapeCSV,
   parseYAMLFromMarkdown,
-  extractAgentSection
+  extractAgentSection,
 };

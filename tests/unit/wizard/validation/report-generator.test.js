@@ -19,33 +19,33 @@ describe('Report Generator', () => {
           files: {
             success: true,
             checks: [
-              { component: 'IDE Config', status: 'success', message: 'Created' }
+              { component: 'IDE Config', status: 'success', message: 'Created' },
             ],
             errors: [],
-            warnings: []
+            warnings: [],
           },
           configs: {
             success: true,
             checks: [],
             errors: [],
-            warnings: []
+            warnings: [],
           },
           mcps: {
             success: true,
             healthChecks: [],
             errors: [],
-            warnings: []
+            warnings: [],
           },
           dependencies: {
             success: true,
             checks: [],
             errors: [],
-            warnings: []
-          }
+            warnings: [],
+          },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -64,13 +64,13 @@ describe('Report Generator', () => {
           files: { success: true, checks: [], errors: [], warnings: [] },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [
-          { component: 'mcps', severity: 'medium', message: 'MCP health check timeout' }
+          { component: 'mcps', severity: 'medium', message: 'MCP health check timeout' },
         ],
-        overallStatus: 'warning'
+        overallStatus: 'warning',
       };
 
       // When
@@ -88,13 +88,13 @@ describe('Report Generator', () => {
           files: { success: false, checks: [], errors: [], warnings: [] },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [
-          { component: 'files', severity: 'critical', message: '.env file missing' }
+          { component: 'files', severity: 'critical', message: '.env file missing' },
         ],
         warnings: [],
-        overallStatus: 'failed'
+        overallStatus: 'failed',
       };
 
       // When
@@ -113,15 +113,15 @@ describe('Report Generator', () => {
           files: { success: true, checks: [], errors: [], warnings: [] },
           configs: { success: false, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [
-          { component: 'configs', severity: 'high', message: 'YAML parse error' }
+          { component: 'configs', severity: 'high', message: 'YAML parse error' },
         ],
         warnings: [
-          { component: 'dependencies', severity: 'low', message: '3 vulnerabilities' }
+          { component: 'dependencies', severity: 'low', message: '3 vulnerabilities' },
         ],
-        overallStatus: 'partial'
+        overallStatus: 'partial',
       };
 
       // When
@@ -142,18 +142,18 @@ describe('Report Generator', () => {
             success: true,
             checks: [
               { component: 'IDE Config', file: '.cursor/settings.json', status: 'success', message: 'Created' },
-              { component: 'Environment', file: '.env', status: 'success', message: 'Created' }
+              { component: 'Environment', file: '.env', status: 'success', message: 'Created' },
             ],
             errors: [],
-            warnings: []
+            warnings: [],
           },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -174,18 +174,18 @@ describe('Report Generator', () => {
             success: true,
             checks: [
               { component: 'Environment', file: '.env', status: 'success', message: 'Validated (5 variables)' },
-              { component: 'Core Config', file: 'core-config.yaml', status: 'success', message: 'Valid YAML' }
+              { component: 'Core Config', file: 'core-config.yaml', status: 'success', message: 'Valid YAML' },
             ],
             errors: [],
-            warnings: []
+            warnings: [],
           },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -208,16 +208,16 @@ describe('Report Generator', () => {
             healthChecks: [
               { mcp: 'browser', status: 'success', message: 'Healthy', responseTime: 250 },
               { mcp: 'context7', status: 'success', message: 'Healthy', responseTime: 180 },
-              { mcp: 'exa', status: 'warning', message: 'Timeout', responseTime: 5000 }
+              { mcp: 'exa', status: 'warning', message: 'Timeout', responseTime: 5000 },
             ],
             errors: [],
-            warnings: []
+            warnings: [],
           },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -241,15 +241,15 @@ describe('Report Generator', () => {
           dependencies: {
             success: true,
             checks: [
-              { component: 'Dependencies', status: 'success', message: '247 packages installed' }
+              { component: 'Dependencies', status: 'success', message: '247 packages installed' },
             ],
             errors: [],
-            warnings: []
-          }
+            warnings: [],
+          },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -270,11 +270,11 @@ describe('Report Generator', () => {
             files: { success: true, checks: [], errors: [], warnings: [] },
             configs: { success: true, checks: [], errors: [], warnings: [] },
             mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-            dependencies: { success: true, checks: [], errors: [], warnings: [] }
+            dependencies: { success: true, checks: [], errors: [], warnings: [] },
           },
           errors: [],
           warnings: [],
-          overallStatus: status
+          overallStatus: status,
         };
 
         // When
@@ -293,14 +293,14 @@ describe('Report Generator', () => {
           files: { success: true, checks: [], errors: [], warnings: [] },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [
           { component: 'mcps', severity: 'low', message: 'Warning 1' },
-          { component: 'deps', severity: 'medium', message: 'Warning 2' }
+          { component: 'deps', severity: 'medium', message: 'Warning 2' },
         ],
-        overallStatus: 'warning'
+        overallStatus: 'warning',
       };
 
       // When
@@ -319,14 +319,14 @@ describe('Report Generator', () => {
           files: { success: true, checks: [], errors: [], warnings: [] },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [
           { component: 'files', severity: 'critical', message: 'Error 1' },
-          { component: 'configs', severity: 'high', message: 'Error 2' }
+          { component: 'configs', severity: 'high', message: 'Error 2' },
         ],
         warnings: [],
-        overallStatus: 'failed'
+        overallStatus: 'failed',
       };
 
       // When
@@ -345,11 +345,11 @@ describe('Report Generator', () => {
           files: { success: true, checks: [], errors: [], warnings: [] },
           configs: { success: true, checks: [], errors: [], warnings: [] },
           mcps: { success: true, healthChecks: [], errors: [], warnings: [] },
-          dependencies: { success: true, checks: [], errors: [], warnings: [] }
+          dependencies: { success: true, checks: [], errors: [], warnings: [] },
         },
         errors: [],
         warnings: [],
-        overallStatus: 'success'
+        overallStatus: 'success',
       };
 
       // When
@@ -365,7 +365,7 @@ describe('Report Generator', () => {
         components: {},
         errors: [],
         warnings: [],
-        overallStatus: 'unknown'
+        overallStatus: 'unknown',
       };
 
       // When

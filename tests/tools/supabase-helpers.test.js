@@ -62,20 +62,20 @@ describeIntegration('Supabase Tool Helpers', () => {
   describeIntegration('build-select-query', () => {
     test('should build simple SELECT query', async () => {
       const result = await executor.execute('build-select-query', {
-        table: 'posts'
+        table: 'posts',
       });
 
       expect(result).toEqual({
         query: 'SELECT * FROM posts',
         requiresRLS: true,
-        hint: 'Ensure RLS policies are enabled on this table'
+        hint: 'Ensure RLS policies are enabled on this table',
       });
     });
 
     test('should build SELECT with specific columns', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'users',
-        columns: ['id', 'email', 'name']
+        columns: ['id', 'email', 'name'],
       });
 
       expect(result.query).toBe('SELECT id, email, name FROM users');
@@ -85,7 +85,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should build SELECT with WHERE clause', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'posts',
-        where: { user_id: 'abc123', published: true }
+        where: { user_id: 'abc123', published: true },
       });
 
       expect(result.query).toContain('SELECT * FROM posts WHERE');
@@ -96,7 +96,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should build SELECT with ORDER BY', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'posts',
-        orderBy: 'created_at DESC'
+        orderBy: 'created_at DESC',
       });
 
       expect(result.query).toBe('SELECT * FROM posts ORDER BY created_at DESC');
@@ -105,7 +105,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should build SELECT with LIMIT', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'posts',
-        limit: 10
+        limit: 10,
       });
 
       expect(result.query).toBe('SELECT * FROM posts LIMIT 10');
@@ -117,7 +117,7 @@ describeIntegration('Supabase Tool Helpers', () => {
         columns: ['id', 'title'],
         where: { published: true },
         orderBy: 'created_at DESC',
-        limit: 5
+        limit: 5,
       });
 
       expect(result.query).toBe('SELECT id, title FROM posts WHERE published = true ORDER BY created_at DESC LIMIT 5');
@@ -126,7 +126,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should skip RLS check when requested', async () => {
       const result = await executor.execute('build-select-query', {
         table: 'posts',
-        checkRLS: false
+        checkRLS: false,
       });
 
       expect(result.requiresRLS).toBe(false);
@@ -144,7 +144,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should build INSERT query', async () => {
       const result = await executor.execute('build-insert-query', {
         table: 'posts',
-        data: { title: 'Test Post', content: 'Content here' }
+        data: { title: 'Test Post', content: 'Content here' },
       });
 
       expect(result.query).toContain('INSERT INTO posts');
@@ -157,7 +157,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('build-insert-query', {
         table: 'posts',
         data: { title: 'Test' },
-        returning: 'id'
+        returning: 'id',
       });
 
       expect(result.query).toContain('RETURNING id');
@@ -167,7 +167,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('build-insert-query', {
         table: 'posts',
         data: { title: 'Test' },
-        returning: true
+        returning: true,
       });
 
       expect(result.query).toContain('RETURNING *');
@@ -176,7 +176,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should handle numeric values', async () => {
       const result = await executor.execute('build-insert-query', {
         table: 'products',
-        data: { name: 'Widget', price: 19.99, stock: 100 }
+        data: { name: 'Widget', price: 19.99, stock: 100 },
       });
 
       expect(result.query).toContain("VALUES ('Widget', 19.99, 100)");
@@ -184,7 +184,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should return error for missing table', async () => {
       const result = await executor.execute('build-insert-query', {
-        data: { title: 'Test' }
+        data: { title: 'Test' },
       });
 
       expect(result).toEqual({ error: 'Table name is required' });
@@ -192,7 +192,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should return error for missing data', async () => {
       const result = await executor.execute('build-insert-query', {
-        table: 'posts'
+        table: 'posts',
       });
 
       expect(result).toEqual({ error: 'Data object is required' });
@@ -204,7 +204,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
         data: { title: 'Updated Title' },
-        where: { id: '123' }
+        where: { id: '123' },
       });
 
       expect(result.query).toContain('UPDATE posts SET');
@@ -217,7 +217,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
         data: { title: 'New Title', published: true },
-        where: { id: '123' }
+        where: { id: '123' },
       });
 
       expect(result.query).toContain("title = 'New Title'");
@@ -228,7 +228,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
         data: { views: 100 },
-        where: { user_id: 'abc', published: true }
+        where: { user_id: 'abc', published: true },
       });
 
       expect(result.query).toContain("user_id = 'abc'");
@@ -240,7 +240,7 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         data: { title: 'Updated' },
         where: { id: '123' },
-        returning: 'id, title'
+        returning: 'id, title',
       });
 
       expect(result.query).toContain('RETURNING id, title');
@@ -251,7 +251,7 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         data: { title: 'Updated' },
         where: { id: '123' },
-        returning: true
+        returning: true,
       });
 
       expect(result.query).toContain('RETURNING *');
@@ -260,7 +260,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should return error for missing table', async () => {
       const result = await executor.execute('build-update-query', {
         data: { title: 'Test' },
-        where: { id: '123' }
+        where: { id: '123' },
       });
 
       expect(result).toEqual({ error: 'Table name is required' });
@@ -269,7 +269,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should return error for missing data', async () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
-        where: { id: '123' }
+        where: { id: '123' },
       });
 
       expect(result).toEqual({ error: 'Data object is required' });
@@ -278,7 +278,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should return error for missing where', async () => {
       const result = await executor.execute('build-update-query', {
         table: 'posts',
-        data: { title: 'Test' }
+        data: { title: 'Test' },
       });
 
       expect(result).toEqual({ error: 'WHERE condition is required for UPDATE' });
@@ -291,10 +291,10 @@ describeIntegration('Supabase Tool Helpers', () => {
         policy: {
           name: 'user_posts_policy',
           using: 'auth.uid() = user_id',
-          withCheck: 'auth.uid() = user_id'
+          withCheck: 'auth.uid() = user_id',
         },
         table: 'posts',
-        operation: 'ALL'
+        operation: 'ALL',
       });
 
       expect(result.valid).toBe(true);
@@ -305,10 +305,10 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: {
           name: 'read_policy',
-          using: 'auth.uid() IS NOT NULL'
+          using: 'auth.uid() IS NOT NULL',
         },
         table: 'posts',
-        operation: 'SELECT'
+        operation: 'SELECT',
       });
 
       expect(result.valid).toBe(true);
@@ -317,7 +317,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should fail without policy object', async () => {
       const result = await executor.execute('validate-rls-policy', {
         table: 'posts',
-        operation: 'SELECT'
+        operation: 'SELECT',
       });
 
       expect(result.valid).toBe(false);
@@ -328,7 +328,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: { using: 'true' },
         table: 'posts',
-        operation: 'SELECT'
+        operation: 'SELECT',
       });
 
       expect(result.valid).toBe(false);
@@ -338,7 +338,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should fail without table', async () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: { name: 'test_policy' },
-        operation: 'SELECT'
+        operation: 'SELECT',
       });
 
       expect(result.valid).toBe(false);
@@ -348,7 +348,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should fail without operation', async () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: { name: 'test_policy' },
-        table: 'posts'
+        table: 'posts',
       });
 
       expect(result.valid).toBe(false);
@@ -359,7 +359,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: { name: 'test_policy' },
         table: 'posts',
-        operation: 'INVALID'
+        operation: 'INVALID',
       });
 
       expect(result.valid).toBe(false);
@@ -370,7 +370,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: { name: 'test_policy' },
         table: 'posts',
-        operation: 'SELECT'
+        operation: 'SELECT',
       });
 
       expect(result.valid).toBe(false);
@@ -381,10 +381,10 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-rls-policy', {
         policy: {
           name: 'insert_policy',
-          using: 'auth.uid() IS NOT NULL'
+          using: 'auth.uid() IS NOT NULL',
         },
         table: 'posts',
-        operation: 'INSERT'
+        operation: 'INSERT',
       });
 
       expect(result.valid).toBe(false);
@@ -395,14 +395,14 @@ describeIntegration('Supabase Tool Helpers', () => {
   describeIntegration('format-realtime-subscription', () => {
     test('should format basic subscription', async () => {
       const result = await executor.execute('format-realtime-subscription', {
-        table: 'posts'
+        table: 'posts',
       });
 
       expect(result.channel).toBe('public:posts');
       expect(result.config).toEqual({
         event: 'INSERT,UPDATE,DELETE',
         schema: 'public',
-        table: 'posts'
+        table: 'posts',
       });
       expect(result.example).toContain('.channel(');
     });
@@ -410,7 +410,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should format subscription with specific event', async () => {
       const result = await executor.execute('format-realtime-subscription', {
         table: 'posts',
-        event: 'INSERT'
+        event: 'INSERT',
       });
 
       expect(result.config.event).toBe('INSERT');
@@ -419,7 +419,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should format subscription with multiple events', async () => {
       const result = await executor.execute('format-realtime-subscription', {
         table: 'posts',
-        event: ['INSERT', 'UPDATE']
+        event: ['INSERT', 'UPDATE'],
       });
 
       expect(result.config.event).toBe('INSERT,UPDATE');
@@ -428,7 +428,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should format subscription with custom schema', async () => {
       const result = await executor.execute('format-realtime-subscription', {
         table: 'posts',
-        schema: 'private'
+        schema: 'private',
       });
 
       expect(result.channel).toBe('private:posts');
@@ -438,7 +438,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should format subscription with filter', async () => {
       const result = await executor.execute('format-realtime-subscription', {
         table: 'posts',
-        filter: 'user_id=eq.123'
+        filter: 'user_id=eq.123',
       });
 
       expect(result.config.filter).toBe('user_id=eq.123');
@@ -457,8 +457,8 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         hasRLS: true,
         policies: [
-          { name: 'user_policy', using: 'auth.uid() = user_id' }
-        ]
+          { name: 'user_policy', using: 'auth.uid() = user_id' },
+        ],
       });
 
       expect(result.rlsEnabled).toBe(true);
@@ -469,7 +469,7 @@ describeIntegration('Supabase Tool Helpers', () => {
     test('should warn about disabled RLS', async () => {
       const result = await executor.execute('validate-table-permissions', {
         table: 'posts',
-        hasRLS: false
+        hasRLS: false,
       });
 
       expect(result.rlsEnabled).toBe(false);
@@ -482,7 +482,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('validate-table-permissions', {
         table: 'posts',
         hasRLS: true,
-        policies: []
+        policies: [],
       });
 
       expect(result.rlsEnabled).toBe(true);
@@ -495,8 +495,8 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         hasRLS: true,
         policies: [
-          { name: 'all_access', using: 'true' }
-        ]
+          { name: 'all_access', using: 'true' },
+        ],
       });
 
       expect(result.warnings).toContain("Policy 'all_access' allows access to all rows");
@@ -507,8 +507,8 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         hasRLS: true,
         policies: [
-          { name: 'all_access', using: '(true)' }
-        ]
+          { name: 'all_access', using: '(true)' },
+        ],
       });
 
       expect(result.warnings).toContain("Policy 'all_access' allows access to all rows");
@@ -519,8 +519,8 @@ describeIntegration('Supabase Tool Helpers', () => {
         table: 'posts',
         hasRLS: true,
         policies: [
-          { name: 'unrestricted', operation: 'ALL', using: 'true' }
-        ]
+          { name: 'unrestricted', operation: 'ALL', using: 'true' },
+        ],
       });
 
       expect(result.warnings).toContain("Policy 'unrestricted' allows all operations without restrictions");
@@ -538,8 +538,8 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('parse-postgres-error', {
         error: {
           message: 'duplicate key value violates unique constraint',
-          code: '23505'
-        }
+          code: '23505',
+        },
       });
 
       expect(result.message).toBe('duplicate key value violates unique constraint');
@@ -549,7 +549,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should parse foreign key violation', async () => {
       const result = await executor.execute('parse-postgres-error', {
-        error: { code: '23503' }
+        error: { code: '23503' },
       });
 
       expect(result.hint).toBe('Foreign key constraint violation');
@@ -557,7 +557,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should parse not null violation', async () => {
       const result = await executor.execute('parse-postgres-error', {
-        error: { code: '23502' }
+        error: { code: '23502' },
       });
 
       expect(result.hint).toBe('Not null constraint violation');
@@ -565,7 +565,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should parse table not found', async () => {
       const result = await executor.execute('parse-postgres-error', {
-        error: { code: '42P01' }
+        error: { code: '42P01' },
       });
 
       expect(result.hint).toBe('Table does not exist');
@@ -573,7 +573,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should parse column not found', async () => {
       const result = await executor.execute('parse-postgres-error', {
-        error: { code: '42703' }
+        error: { code: '42703' },
       });
 
       expect(result.hint).toBe('Column does not exist');
@@ -581,7 +581,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should parse permission denied with RLS hint', async () => {
       const result = await executor.execute('parse-postgres-error', {
-        error: { code: '42501' }
+        error: { code: '42501' },
       });
 
       expect(result.hint).toBe('Permission denied - check RLS policies and user authentication');
@@ -592,8 +592,8 @@ describeIntegration('Supabase Tool Helpers', () => {
       const result = await executor.execute('parse-postgres-error', {
         error: {
           message: 'permission denied for table posts',
-          code: '42501'
-        }
+          code: '42501',
+        },
       });
 
       expect(result.rlsHint).toBe('Ensure user is authenticated and RLS policy allows this operation');
@@ -603,7 +603,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const query = 'SELECT * FROM posts WHERE user_id = $1';
       const result = await executor.execute('parse-postgres-error', {
         error: { message: 'Error occurred' },
-        query: query
+        query: query,
       });
 
       expect(result.context).toContain('Query:');
@@ -614,7 +614,7 @@ describeIntegration('Supabase Tool Helpers', () => {
       const longQuery = 'SELECT * FROM table WHERE ' + 'x = 1 AND '.repeat(50);
       const result = await executor.execute('parse-postgres-error', {
         error: { message: 'Error' },
-        query: longQuery
+        query: longQuery,
       });
 
       expect(result.context.length).toBeLessThan(150);
@@ -631,7 +631,7 @@ describeIntegration('Supabase Tool Helpers', () => {
   describeIntegration('generate-migration-name', () => {
     test('should generate migration name with timestamp', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: 'add user authentication'
+        description: 'add user authentication',
       });
 
       expect(result.name).toMatch(/^\d{14}_add_user_authentication$/);
@@ -641,7 +641,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should convert to snake_case', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: 'Create Users Table'
+        description: 'Create Users Table',
       });
 
       expect(result.description).toBe('create_users_table');
@@ -650,7 +650,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should remove special characters', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: 'add user@email & phone#'
+        description: 'add user@email & phone#',
       });
 
       expect(result.description).toBe('add_user_email_phone');
@@ -658,7 +658,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should handle multiple spaces', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: 'add    multiple    spaces'
+        description: 'add    multiple    spaces',
       });
 
       expect(result.description).toBe('add_multiple_spaces');
@@ -666,7 +666,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should trim leading/trailing underscores', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: '__test__'
+        description: '__test__',
       });
 
       expect(result.description).toBe('test');
@@ -674,7 +674,7 @@ describeIntegration('Supabase Tool Helpers', () => {
 
     test('should include example usage', async () => {
       const result = await executor.execute('generate-migration-name', {
-        description: 'test migration'
+        description: 'test migration',
       });
 
       expect(result.example).toContain('apply_migration');
@@ -700,7 +700,7 @@ describeIntegration('Supabase Tool Helpers', () => {
           columns: ['id', 'title'],
           where: { published: true },
           orderBy: 'created_at DESC',
-          limit: 10
+          limit: 10,
         });
         const duration = Date.now() - start;
         durations.push(duration);

@@ -22,7 +22,7 @@ const DECISION_TYPES = {
   'testing-strategy': 'Test approach and coverage decisions',
   'performance': 'Performance optimization choices',
   'security': 'Security implementation decisions',
-  'database': 'Data model and query optimization'
+  'database': 'Data model and query optimization',
 };
 
 /**
@@ -32,7 +32,7 @@ const PRIORITY_LEVELS = {
   'critical': 'High-impact architectural decisions with long-term consequences',
   'high': 'Significant technical choices affecting multiple components',
   'medium': 'Standard implementation decisions with local impact',
-  'low': 'Minor preference decisions with minimal impact'
+  'low': 'Minor preference decisions with minimal impact',
 };
 
 /**
@@ -63,7 +63,7 @@ class DecisionContext {
     this.testsRun = [];
     this.metrics = {
       agentLoadTime: options.agentLoadTime || 0,
-      taskExecutionTime: 0
+      taskExecutionTime: 0,
     };
 
     // Capture git commit for rollback (AC5)
@@ -105,7 +105,7 @@ class DecisionContext {
       reason,
       alternatives: Array.isArray(alternatives) ? alternatives : [],
       type,
-      priority
+      priority,
     };
 
     this.decisions.push(decision);
@@ -125,7 +125,7 @@ class DecisionContext {
 
     // Avoid duplicates - update existing entry if path already tracked
     const existingIndex = this.filesModified.findIndex(f =>
-      (typeof f === 'string' ? f : f.path) === normalizedPath
+      (typeof f === 'string' ? f : f.path) === normalizedPath,
     );
 
     if (existingIndex >= 0) {
@@ -156,7 +156,7 @@ class DecisionContext {
       passed,
       duration: duration || 0,
       error: error || null,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -199,7 +199,7 @@ class DecisionContext {
       filesModified: this.filesModified,
       testsRun: this.testsRun,
       metrics: this.metrics,
-      commitBefore: this.commitBefore
+      commitBefore: this.commitBefore,
     };
   }
 
@@ -216,7 +216,7 @@ class DecisionContext {
       testsPassed: this.testsRun.filter(t => t.passed).length,
       testsFailed: this.testsRun.filter(t => !t.passed).length,
       duration: this.endTime ? this.endTime - this.startTime : Date.now() - this.startTime,
-      status: this.status
+      status: this.status,
     };
   }
 }
@@ -224,5 +224,5 @@ class DecisionContext {
 module.exports = {
   DecisionContext,
   DECISION_TYPES,
-  PRIORITY_LEVELS
+  PRIORITY_LEVELS,
 };

@@ -43,7 +43,7 @@ describe('ContextDetector', () => {
       test('should detect existing session with conversation history', () => {
         const conversation = [
           { content: 'Hello' },
-          { content: 'How are you?' }
+          { content: 'How are you?' },
         ];
         const result = detector.detectSessionType(conversation);
         expect(result).toBe('existing');
@@ -53,7 +53,7 @@ describe('ContextDetector', () => {
         const conversation = [
           { content: '*validate-story-draft story-6.1.md' },
           { content: 'Story validated!' },
-          { content: '*develop story-6.1.md' }
+          { content: '*develop story-6.1.md' },
         ];
         const result = detector.detectSessionType(conversation);
         expect(result).toBe('workflow');
@@ -63,7 +63,7 @@ describe('ContextDetector', () => {
         const conversation = [
           { content: '*create-epic Epic 6' },
           { content: '*create-story Story 6.1' },
-          { content: '*validate-story-draft story-6.1.md' }
+          { content: '*validate-story-draft story-6.1.md' },
         ];
         const result = detector.detectSessionType(conversation);
         expect(result).toBe('workflow');
@@ -72,7 +72,7 @@ describe('ContextDetector', () => {
       test('should detect workflow session with backlog management pattern', () => {
         const conversation = [
           { content: '*backlog-review' },
-          { content: '*backlog-prioritize' }
+          { content: '*backlog-prioritize' },
         ];
         const result = detector.detectSessionType(conversation);
         expect(result).toBe('workflow');
@@ -82,7 +82,7 @@ describe('ContextDetector', () => {
         const conversation = [
           { content: 'Regular text without commands' },
           { content: '*help' },
-          { content: 'More regular text' }
+          { content: 'More regular text' },
         ];
         const result = detector.detectSessionType(conversation);
         expect(result).toBe('existing');
@@ -99,7 +99,7 @@ describe('ContextDetector', () => {
         const sessionData = {
           sessionId: 'test-session',
           lastActivity: Date.now(),
-          lastCommands: ['help', 'status']
+          lastCommands: ['help', 'status'],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -112,7 +112,7 @@ describe('ContextDetector', () => {
           sessionId: 'test-session',
           lastActivity: Date.now(),
           workflowActive: 'story_development',
-          lastCommands: ['validate-story-draft', 'develop']
+          lastCommands: ['validate-story-draft', 'develop'],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -124,7 +124,7 @@ describe('ContextDetector', () => {
         const sessionData = {
           sessionId: 'test-session',
           lastActivity: Date.now() - (2 * 60 * 60 * 1000), // 2 hours ago
-          lastCommands: ['help']
+          lastCommands: ['help'],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -143,7 +143,7 @@ describe('ContextDetector', () => {
         const sessionData = {
           sessionId: 'test-session',
           lastActivity: Date.now(),
-          lastCommands: []
+          lastCommands: [],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -159,14 +159,14 @@ describe('ContextDetector', () => {
           sessionId: 'test-session',
           lastActivity: Date.now(),
           workflowActive: 'story_development',
-          lastCommands: ['validate-story-draft', 'develop']
+          lastCommands: ['validate-story-draft', 'develop'],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
         // Conversation indicates existing (no workflow)
         const conversation = [
           { content: 'Hello' },
-          { content: '*help' }
+          { content: '*help' },
         ];
 
         const result = detector.detectSessionType(conversation, testSessionFile);
@@ -177,7 +177,7 @@ describe('ContextDetector', () => {
         const sessionData = {
           sessionId: 'test-session',
           lastActivity: Date.now(),
-          lastCommands: ['help', 'status']
+          lastCommands: ['help', 'status'],
         };
         fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -193,7 +193,7 @@ describe('ContextDetector', () => {
         { content: '*help' },
         { content: '*validate-story-draft story.md' },
         { content: 'Some text' },
-        { content: '*develop story.md' }
+        { content: '*develop story.md' },
       ];
 
       const commands = detector._extractCommands(conversation);
@@ -202,7 +202,7 @@ describe('ContextDetector', () => {
 
     test('should limit to last 10 commands', () => {
       const conversation = Array(15).fill(null).map((_, i) => ({
-        content: `*command-${i}`
+        content: `*command-${i}`,
       }));
 
       const commands = detector._extractCommands(conversation);
@@ -213,7 +213,7 @@ describe('ContextDetector', () => {
     test('should handle messages without commands', () => {
       const conversation = [
         { content: 'Hello' },
-        { content: 'How are you?' }
+        { content: 'How are you?' },
       ];
 
       const commands = detector._extractCommands(conversation);
@@ -226,7 +226,7 @@ describe('ContextDetector', () => {
       const state = {
         sessionId: 'test-123',
         lastCommands: ['help', 'status'],
-        workflowActive: 'story_development'
+        workflowActive: 'story_development',
       };
 
       detector.updateSessionState(state, testSessionFile);
@@ -240,7 +240,7 @@ describe('ContextDetector', () => {
 
     test('should generate session ID if not provided', () => {
       const state = {
-        lastCommands: ['help']
+        lastCommands: ['help'],
       };
 
       detector.updateSessionState(state, testSessionFile);
@@ -268,7 +268,7 @@ describe('ContextDetector', () => {
       const sessionData = {
         sessionId: 'test-session',
         lastActivity: Date.now() - (2 * 60 * 60 * 1000), // 2 hours ago
-        lastCommands: ['help']
+        lastCommands: ['help'],
       };
       fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 
@@ -281,7 +281,7 @@ describe('ContextDetector', () => {
       const sessionData = {
         sessionId: 'test-session',
         lastActivity: Date.now(), // Current time
-        lastCommands: ['help']
+        lastCommands: ['help'],
       };
       fs.writeFileSync(testSessionFile, JSON.stringify(sessionData), 'utf8');
 

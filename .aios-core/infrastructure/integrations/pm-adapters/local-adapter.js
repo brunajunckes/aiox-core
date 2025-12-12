@@ -45,7 +45,7 @@ class LocalAdapter extends PMAdapter {
       if (!fs.existsSync(storyPath)) {
         return {
           success: false,
-          error: `Story file not found: ${storyPath}`
+          error: `Story file not found: ${storyPath}`,
         };
       }
 
@@ -56,7 +56,7 @@ class LocalAdapter extends PMAdapter {
       if (!frontmatterMatch) {
         return {
           success: false,
-          error: 'Invalid story file: missing YAML frontmatter'
+          error: 'Invalid story file: missing YAML frontmatter',
         };
       }
 
@@ -65,7 +65,7 @@ class LocalAdapter extends PMAdapter {
       if (!story || !story.id) {
         return {
           success: false,
-          error: 'Invalid story file: missing id field in frontmatter'
+          error: 'Invalid story file: missing id field in frontmatter',
         };
       }
 
@@ -74,14 +74,14 @@ class LocalAdapter extends PMAdapter {
       // Return success - file path is the "URL"
       return {
         success: true,
-        url: `file://${path.resolve(storyPath)}`
+        url: `file://${path.resolve(storyPath)}`,
       };
 
     } catch (error) {
       console.error('❌ Error validating local story:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -100,7 +100,7 @@ class LocalAdapter extends PMAdapter {
 
     return {
       success: true,
-      updates: null  // No updates from external source
+      updates: null,  // No updates from external source
     };
   }
 
@@ -117,7 +117,7 @@ class LocalAdapter extends PMAdapter {
     if (!storyData || !storyData.id) {
       return {
         success: false,
-        error: 'Story data missing required field: id'
+        error: 'Story data missing required field: id',
       };
     }
 
@@ -125,7 +125,7 @@ class LocalAdapter extends PMAdapter {
 
     return {
       success: true,
-      url: null  // No external URL in local mode
+      url: null,  // No external URL in local mode
     };
   }
 
@@ -143,7 +143,7 @@ class LocalAdapter extends PMAdapter {
     console.log(`✅ Story ${storyId} status updated to ${status} (local)`);
 
     return {
-      success: true
+      success: true,
     };
   }
 
@@ -159,7 +159,7 @@ class LocalAdapter extends PMAdapter {
     console.log('✅ Local-only mode: No PM tool connection needed');
 
     return {
-      success: true
+      success: true,
     };
   }
 

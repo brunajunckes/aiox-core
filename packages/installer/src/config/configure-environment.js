@@ -7,7 +7,7 @@
  * @module configure-environment
  */
 
-/* eslint-disable no-console */
+ 
 // Console statements are intentional for user feedback during installation
 
 const fs = require('fs-extra');
@@ -20,7 +20,7 @@ const {
   validateApiKeyFormat,
   validateYamlSyntax,
   validateCoreConfigStructure,
-  sanitizeInput
+  sanitizeInput,
 } = require('./validation/config-validator');
 
 /**
@@ -40,7 +40,7 @@ async function configureEnvironment(options = {}) {
     projectType = 'GREENFIELD',
     selectedIDEs = [],
     mcpServers = [],
-    skipPrompts = false
+    skipPrompts = false,
   } = options;
 
   const results = {
@@ -48,7 +48,7 @@ async function configureEnvironment(options = {}) {
     envExampleCreated: false,
     coreConfigCreated: false,
     gitignoreUpdated: false,
-    errors: []
+    errors: [],
   };
 
   try {
@@ -59,7 +59,7 @@ async function configureEnvironment(options = {}) {
     if (envExists && !skipPrompts) {
       const shouldBackup = await confirm({
         message: 'Found existing .env file. Create backup before overwriting?',
-        initialValue: true
+        initialValue: true,
       });
 
       if (shouldBackup) {
@@ -117,7 +117,7 @@ async function configureEnvironment(options = {}) {
       projectType,
       selectedIDEs,
       mcpServers,
-      aiosVersion: '2.1.0'
+      aiosVersion: '2.1.0',
     });
 
     // Validate YAML syntax
@@ -162,7 +162,7 @@ async function collectApiKeys() {
       const sanitized = sanitizeInput(value);
       const validation = validateApiKeyFormat(sanitized, 'openai');
       return validation.valid ? undefined : validation.error;
-    }
+    },
   });
 
   if (openaiKey && typeof openaiKey === 'string') {
@@ -180,7 +180,7 @@ async function collectApiKeys() {
       const sanitized = sanitizeInput(value);
       const validation = validateApiKeyFormat(sanitized, 'anthropic');
       return validation.valid ? undefined : validation.error;
-    }
+    },
   });
 
   if (anthropicKey && typeof anthropicKey === 'string') {
@@ -198,7 +198,7 @@ async function collectApiKeys() {
       const sanitized = sanitizeInput(value);
       const validation = validateApiKeyFormat(sanitized);
       return validation.valid ? undefined : validation.error;
-    }
+    },
   });
 
   if (clickupKey && typeof clickupKey === 'string') {
@@ -216,7 +216,7 @@ async function collectApiKeys() {
       const sanitized = sanitizeInput(value);
       const validation = validateApiKeyFormat(sanitized, 'github');
       return validation.valid ? undefined : validation.error;
-    }
+    },
   });
 
   if (githubToken && typeof githubToken === 'string') {
@@ -234,7 +234,7 @@ async function collectApiKeys() {
       const sanitized = sanitizeInput(value);
       const validation = validateApiKeyFormat(sanitized);
       return validation.valid ? undefined : validation.error;
-    }
+    },
   });
 
   if (exaKey && typeof exaKey === 'string') {
@@ -268,7 +268,7 @@ async function updateGitignore(targetDir) {
     'Dependencies': ['node_modules/', 'node_modules'],
     'Build & Logs': ['dist/', 'build/', '*.log', 'logs/'],
     'IDE & OS': ['.DS_Store', 'Thumbs.db', '.idea/', '*.swp'],
-    'AIOS Local': ['.aios-core/local/', '.claude/settings.local.json', '.aios/install-log.txt']
+    'AIOS Local': ['.aios-core/local/', '.claude/settings.local.json', '.aios/install-log.txt'],
   };
 
   const lines = gitignoreContent.split('\n').map(line => line.trim());
@@ -308,5 +308,5 @@ async function updateGitignore(targetDir) {
 module.exports = {
   configureEnvironment,
   collectApiKeys,
-  updateGitignore
+  updateGitignore,
 };

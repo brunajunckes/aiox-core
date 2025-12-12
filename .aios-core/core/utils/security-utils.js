@@ -22,7 +22,7 @@ function validatePath(filePath, options = {}) {
   const result = {
     valid: true,
     normalized: null,
-    errors: []
+    errors: [],
   };
 
   // Check for null/undefined input
@@ -136,7 +136,7 @@ function validateJSON(jsonString, options = {}) {
   const result = {
     valid: true,
     data: null,
-    error: null
+    error: null,
   };
 
   // Check for null/undefined input
@@ -245,7 +245,7 @@ class RateLimiter {
       allowed,
       remaining,
       resetTime,
-      retryAfter: allowed ? 0 : Math.ceil((resetTime - now) / 1000)
+      retryAfter: allowed ? 0 : Math.ceil((resetTime - now) / 1000),
     };
   }
 
@@ -329,5 +329,5 @@ module.exports = {
   RateLimiter,
   safePath,
   isSafeString,
-  getObjectDepth
+  getObjectDepth,
 };

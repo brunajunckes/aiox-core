@@ -84,7 +84,7 @@ async function executeInfo(id, options) {
     const output = formatInfo(worker, {
       format: options.format,
       relatedWorkers,
-      verbose: options.verbose
+      verbose: options.verbose,
     });
 
     console.log(output);
@@ -190,5 +190,5 @@ module.exports = {
   createInfoCommand,
   executeInfo,
   findSuggestions,
-  findRelatedWorkers
+  findRelatedWorkers,
 };

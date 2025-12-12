@@ -26,7 +26,7 @@ const IMPORT_PATTERNS = {
   dynamicImport: /import\s*\(\s*['"`](\.[^'"`]+)['"`]\s*\)/g,
 
   // /// <reference path="./path" />
-  tsReference: /\/\/\/\s*<reference\s+path=['"`](\.[^'"`]+)['"`]\s*\/>/g
+  tsReference: /\/\/\/\s*<reference\s+path=['"`](\.[^'"`]+)['"`]\s*\/>/g,
 };
 
 /**
@@ -77,7 +77,7 @@ async function scanFileImports(filePath) {
         fullMatch: match[0],
         importPath: match[1],
         index: match.index,
-        length: match[0].length
+        length: match[0].length,
       });
     }
   }
@@ -111,7 +111,7 @@ function transformImportPath(importPath, currentFileModule, currentFilePath, tra
 
     const parts = importPath.split('/');
     let upCount = 0;
-    let restParts = [];
+    const restParts = [];
 
     for (const part of parts) {
       if (part === '..') {
@@ -175,7 +175,7 @@ async function updateFileImports(filePath, transformMap, fileModule, options = {
     imports: [],
     updated: 0,
     unchanged: 0,
-    errors: []
+    errors: [],
   };
 
   try {
@@ -186,14 +186,14 @@ async function updateFileImports(filePath, transformMap, fileModule, options = {
     for (const imp of imports) {
       const relativePath = path.relative(
         path.dirname(filePath).split('.aios-core')[1]?.slice(1) || '',
-        ''
+        '',
       );
 
       const newPath = transformImportPath(
         imp.importPath,
         fileModule,
         filePath,
-        transformMap
+        transformMap,
       );
 
       if (newPath && newPath !== imp.importPath) {
@@ -206,7 +206,7 @@ async function updateFileImports(filePath, transformMap, fileModule, options = {
         result.imports.push({
           old: imp.importPath,
           new: newPath,
-          type: imp.type
+          type: imp.type,
         });
         result.updated++;
       } else {
@@ -245,7 +245,7 @@ async function updateAllImports(aiosCoreDir, plan, options = {}) {
     filesModified: 0,
     importsUpdated: 0,
     errors: [],
-    details: []
+    details: [],
   };
 
   onProgress({ phase: 'scan', message: 'Scanning for import statements...' });
@@ -268,7 +268,7 @@ async function updateAllImports(aiosCoreDir, plan, options = {}) {
         file,
         transformMap,
         moduleName,
-        { dryRun, verbose }
+        { dryRun, verbose },
       );
 
       if (updateResult.modified) {
@@ -280,7 +280,7 @@ async function updateAllImports(aiosCoreDir, plan, options = {}) {
       if (updateResult.errors.length > 0) {
         result.errors.push(...updateResult.errors.map(e => ({
           file,
-          error: e
+          error: e,
         })));
       }
 
@@ -288,7 +288,7 @@ async function updateAllImports(aiosCoreDir, plan, options = {}) {
         result.details.push(updateResult);
         onProgress({
           phase: 'file',
-          message: `  → ${path.relative(aiosCoreDir, file)} (${updateResult.updated} imports)`
+          message: `  → ${path.relative(aiosCoreDir, file)} (${updateResult.updated} imports)`,
         });
       }
     }
@@ -296,7 +296,7 @@ async function updateAllImports(aiosCoreDir, plan, options = {}) {
 
   onProgress({
     phase: 'complete',
-    message: `Found ${result.importsUpdated} imports to update`
+    message: `Found ${result.importsUpdated} imports to update`,
   });
 
   return result;
@@ -334,7 +334,7 @@ async function verifyImports(aiosCoreDir) {
     valid: true,
     totalImports: 0,
     brokenImports: [],
-    warnings: []
+    warnings: [],
   };
 
   const modules = ['core', 'development', 'product', 'infrastructure'];
@@ -372,7 +372,7 @@ async function verifyImports(aiosCoreDir) {
               file: path.relative(aiosCoreDir, file),
               import: imp.importPath,
               type: imp.type,
-              resolvedPath
+              resolvedPath,
             });
             result.valid = false;
           }
@@ -392,5 +392,5 @@ module.exports = {
   updateFileImports,
   updateAllImports,
   getJsFiles,
-  verifyImports
+  verifyImports,
 };

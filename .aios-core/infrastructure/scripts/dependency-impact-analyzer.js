@@ -58,7 +58,7 @@ class DependencyImpactAnalyzer {
         includeTests: options.includeTests || false,
         excludeExternal: options.excludeExternal || false,
         modificationType: options.modificationType || 'modify',
-        ...options
+        ...options,
       };
 
       // Determine analysis depth
@@ -72,14 +72,14 @@ class DependencyImpactAnalyzer {
         targetComponent, 
         directDependents, 
         maxDepth, 
-        config
+        config,
       );
       
       // Calculate impact scores for each affected component
       const scoredComponents = await this.calculateImpactScores(
         targetComponent, 
         affectedComponents, 
-        config
+        config,
       );
       
       // Categorize impact by severity
@@ -89,14 +89,14 @@ class DependencyImpactAnalyzer {
       const recommendations = await this.generateDependencyRecommendations(
         targetComponent, 
         scoredComponents, 
-        config
+        config,
       );
 
       const result = {
         analysisId: analysisId,
         targetComponent: {
           path: targetComponent.path,
-          type: targetComponent.type
+          type: targetComponent.type,
         },
         analysisConfig: config,
         affectedComponents: scoredComponents,
@@ -107,15 +107,15 @@ class DependencyImpactAnalyzer {
           directDependents: directDependents.length,
           highImpactComponents: scoredComponents.filter(c => c.impactScore >= 8).length,
           mediumImpactComponents: scoredComponents.filter(c => c.impactScore >= 5 && c.impactScore < 8).length,
-          lowImpactComponents: scoredComponents.filter(c => c.impactScore < 5).length
+          lowImpactComponents: scoredComponents.filter(c => c.impactScore < 5).length,
         },
-        analysisTimestamp: new Date().toISOString()
+        analysisTimestamp: new Date().toISOString(),
       };
 
       // Cache analysis results
       this.analysisCache.set(analysisId, result);
       
-      console.log(chalk.green(`✅ Dependency analysis completed`));
+      console.log(chalk.green('✅ Dependency analysis completed'));
       console.log(chalk.gray(`   Affected components: ${result.statistics.totalComponents}`));
       console.log(chalk.gray(`   High impact: ${result.statistics.highImpactComponents}`));
       
@@ -172,7 +172,7 @@ class DependencyImpactAnalyzer {
         path: relativePath,
         type: componentType,
         dependencies: dependencies,
-        lastAnalyzed: new Date().toISOString()
+        lastAnalyzed: new Date().toISOString(),
       });
       
     } catch (error) {
@@ -188,7 +188,7 @@ class DependencyImpactAnalyzer {
       internal: [],
       external: [],
       framework: [],
-      tests: []
+      tests: [],
     };
 
     // Extract require statements
@@ -253,7 +253,7 @@ class DependencyImpactAnalyzer {
     for (const [componentPath, componentData] of this.dependencyGraph) {
       const allDeps = [
         ...componentData.dependencies.internal,
-        ...componentData.dependencies.framework
+        ...componentData.dependencies.framework,
       ];
 
       for (const dep of allDeps) {
@@ -264,7 +264,7 @@ class DependencyImpactAnalyzer {
         this.reverseDependencyGraph.get(dep).push({
           path: componentPath,
           type: componentData.type,
-          dependencyType: componentData.dependencies.internal.includes(dep) ? 'internal' : 'framework'
+          dependencyType: componentData.dependencies.internal.includes(dep) ? 'internal' : 'framework',
         });
       }
     }
@@ -279,7 +279,7 @@ class DependencyImpactAnalyzer {
         path: componentPath,
         type: componentData.type,
         dependencies: componentData.dependencies,
-        dependents: this.reverseDependencyGraph.get(componentPath) || []
+        dependents: this.reverseDependencyGraph.get(componentPath) || [],
       });
     }
   }
@@ -306,7 +306,7 @@ class DependencyImpactAnalyzer {
         dependents.push({
           path: componentPath,
           type: componentData.type,
-          dependencyType: 'reference'
+          dependencyType: 'reference',
         });
       }
     }
@@ -357,7 +357,7 @@ class DependencyImpactAnalyzer {
       const impactScore = await this.calculateComponentImpactScore(
         targetComponent, 
         component, 
-        config
+        config,
       );
       
       scoredComponents.push({
@@ -365,7 +365,7 @@ class DependencyImpactAnalyzer {
         impactScore: impactScore.score,
         impactFactors: impactScore.factors,
         severity: this.categorizeImpactSeverity(impactScore.score),
-        reason: impactScore.primaryReason
+        reason: impactScore.primaryReason,
       });
     }
     
@@ -381,7 +381,7 @@ class DependencyImpactAnalyzer {
       componentCriticality: 0,
       modificationRisk: 0,
       propagationDepth: 0,
-      usageFrequency: 0
+      usageFrequency: 0,
     };
 
     // Factor 1: Dependency type weight
@@ -422,7 +422,7 @@ class DependencyImpactAnalyzer {
     return {
       score: normalizedScore,
       factors: factors,
-      primaryReason: primaryReason
+      primaryReason: primaryReason,
     };
   }
 
@@ -497,7 +497,7 @@ class DependencyImpactAnalyzer {
       critical: scoredComponents.filter(c => c.impactScore >= 9),
       high: scoredComponents.filter(c => c.impactScore >= 7 && c.impactScore < 9),
       medium: scoredComponents.filter(c => c.impactScore >= 4 && c.impactScore < 7),
-      low: scoredComponents.filter(c => c.impactScore < 4)
+      low: scoredComponents.filter(c => c.impactScore < 4),
     };
   }
 
@@ -527,7 +527,7 @@ class DependencyImpactAnalyzer {
         title: 'Review Critical Impact Components',
         description: `${criticalComponents.length} components have critical dependency on the target. Consider gradual migration or deprecation strategy.`,
         affectedComponents: criticalComponents.slice(0, 5).map(c => c.path),
-        actionRequired: true
+        actionRequired: true,
       });
     }
     
@@ -538,7 +538,7 @@ class DependencyImpactAnalyzer {
         title: 'Update High Impact Components',
         description: `${highImpactComponents.length} components require updates to maintain compatibility.`,
         affectedComponents: highImpactComponents.slice(0, 5).map(c => c.path),
-        actionRequired: true
+        actionRequired: true,
       });
     }
     
@@ -553,8 +553,8 @@ class DependencyImpactAnalyzer {
           'Create migration guide for dependent components',
           'Implement deprecation warnings in advance',
           'Provide alternative component recommendations',
-          'Test all dependent components after removal'
-        ]
+          'Test all dependent components after removal',
+        ],
       });
     }
     
@@ -567,8 +567,8 @@ class DependencyImpactAnalyzer {
         suggestedActions: [
           'Review and update component interfaces',
           'Update documentation for API changes',
-          'Run comprehensive testing on dependent components'
-        ]
+          'Run comprehensive testing on dependent components',
+        ],
       });
     }
 
@@ -582,8 +582,8 @@ class DependencyImpactAnalyzer {
         suggestedActions: [
           'Run full integration test suite',
           'Perform regression testing on affected components',
-          'Consider staged rollout approach'
-        ]
+          'Consider staged rollout approach',
+        ],
       });
     }
 
@@ -645,7 +645,7 @@ class DependencyImpactAnalyzer {
       new RegExp(`${componentName}`, 'i'),
       new RegExp(`${componentType}[_-]?name.*${componentName}`, 'i'),
       new RegExp(`require.*${componentName}`, 'i'),
-      new RegExp(`import.*${componentName}`, 'i')
+      new RegExp(`import.*${componentName}`, 'i'),
     ];
     
     return patterns.some(pattern => pattern.test(content));
@@ -695,7 +695,7 @@ class DependencyImpactAnalyzer {
                          comp.dependencies.external.length;
         return sum + totalDeps;
       }, 0) / this.dependencyGraph.size,
-      cachedAnalyses: this.analysisCache.size
+      cachedAnalyses: this.analysisCache.size,
     };
   }
 }

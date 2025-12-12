@@ -72,7 +72,7 @@ function formatTable(results, options = {}) {
   });
 
   // Footer
-  output += `\nUse 'aios workers info <id>' for details.`;
+  output += '\nUse \'aios workers info <id>\' for details.';
 
   // Verbose info
   if (verbose) {
@@ -97,7 +97,7 @@ function formatJSON(results, options = {}) {
     subcategory: result.subcategory || null,
     tags: result.tags || [],
     score: result.score,
-    path: result.path
+    path: result.path,
   }));
 
   return JSON.stringify(output, null, 2);
@@ -118,13 +118,13 @@ function formatYAML(results, options = {}) {
     subcategory: result.subcategory || null,
     tags: result.tags || [],
     score: result.score,
-    path: result.path
+    path: result.path,
   }));
 
   return yaml.dump(output, {
     indent: 2,
     lineWidth: 120,
-    noRefs: true
+    noRefs: true,
   });
 }
 
@@ -164,14 +164,14 @@ function formatWorkerDetails(worker) {
   }
 
   if (worker.inputs && worker.inputs.length > 0) {
-    output += `\n📥 Inputs:\n`;
+    output += '\n📥 Inputs:\n';
     worker.inputs.forEach(input => {
       output += `   • ${input}\n`;
     });
   }
 
   if (worker.outputs && worker.outputs.length > 0) {
-    output += `\n📤 Outputs:\n`;
+    output += '\n📤 Outputs:\n';
     worker.outputs.forEach(out => {
       output += `   • ${out}\n`;
     });
@@ -185,7 +185,7 @@ function formatWorkerDetails(worker) {
   }
 
   if (worker.performance) {
-    output += `\n⏱️  Performance:\n`;
+    output += '\n⏱️  Performance:\n';
     if (worker.performance.avgDuration) {
       output += `   • Avg Duration: ${worker.performance.avgDuration}\n`;
     }
@@ -228,5 +228,5 @@ module.exports = {
   formatYAML,
   formatWorkerDetails,
   formatCategories,
-  truncate
+  truncate,
 };

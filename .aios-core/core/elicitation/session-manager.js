@@ -44,8 +44,8 @@ class ElicitationSessionManager {
       metadata: {
         ...metadata,
         user: process.env.USER || 'unknown',
-        hostname: require('os').hostname()
-      }
+        hostname: require('os').hostname(),
+      },
     };
 
     this.activeSession = session;
@@ -136,7 +136,7 @@ class ElicitationSessionManager {
             updated: session.updated,
             status: session.status,
             progress: session.totalSteps > 0 ?
-              Math.round((session.currentStep / session.totalSteps) * 100) : 0
+              Math.round((session.currentStep / session.totalSteps) * 100) : 0,
           });
         } catch (error) {
           // Skip invalid session files
@@ -166,7 +166,7 @@ class ElicitationSessionManager {
       completedSteps: Object.keys(session.answers).length,
       remainingSteps: session.totalSteps - session.currentStep,
       percentComplete: session.totalSteps > 0 ?
-        Math.round((session.currentStep / session.totalSteps) * 100) : 0
+        Math.round((session.currentStep / session.totalSteps) * 100) : 0,
     };
 
     return resumeInfo;

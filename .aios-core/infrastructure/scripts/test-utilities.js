@@ -27,7 +27,7 @@ async function countIntegrationReferences(utilityName) {
   const searchDirs = [
     '.aios-core/agents',
     '.aios-core/tasks',
-    'expansion-packs'
+    'expansion-packs',
   ];
 
   let totalCount = 0;
@@ -38,7 +38,7 @@ async function countIntegrationReferences(utilityName) {
     try {
       const { stdout } = await execPromise(
         `grep -r "${basename}" ${dir} 2>/dev/null | wc -l`,
-        { shell: '/bin/bash' }
+        { shell: '/bin/bash' },
       );
       totalCount += parseInt(stdout.trim()) || 0;
     } catch (_error) {
@@ -62,7 +62,7 @@ async function testUtility(utilityFile) {
     testPassed: null,
     errors: [],
     integrationCount: 0,
-    recommendation: ''
+    recommendation: '',
   };
 
   try {
@@ -180,7 +180,7 @@ async function runAudit() {
     fixable: fixable.length,
     deprecated: deprecated.length,
     unknown: unknown.length,
-    results
+    results,
   };
 }
 

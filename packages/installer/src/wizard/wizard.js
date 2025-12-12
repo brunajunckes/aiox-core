@@ -63,7 +63,7 @@ async function confirmProjectType(detectedType) {
     'GREENFIELD': 'New project - AIOS will create complete structure',
     'BROWNFIELD': 'Existing project - AIOS will integrate with current setup',
     'EXISTING_AIOS': 'AIOS already installed - Would you like to update or reinstall?',
-    'UNKNOWN': 'Unknown project type - Manual selection required'
+    'UNKNOWN': 'Unknown project type - Manual selection required',
   };
   
   console.log(`Project Type: ${detectedType}`);
@@ -88,6 +88,6 @@ function getProjectType(targetDir) {
 module.exports = {
   runWizard,
   confirmProjectType,
-  getProjectType
+  getProjectType,
 };
 

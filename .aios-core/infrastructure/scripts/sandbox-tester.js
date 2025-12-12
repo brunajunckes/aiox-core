@@ -100,7 +100,7 @@ class SandboxTester {
 
         // Check if excluded
         const isExcluded = exclude.some(pattern =>
-          relativePath.includes(pattern) || entry.name === pattern
+          relativePath.includes(pattern) || entry.name === pattern,
         );
 
         if (isExcluded) continue;
@@ -158,7 +158,7 @@ class SandboxTester {
   async runTests(options = {}) {
     const {
       testCommand = 'npm test',
-      timeout = 60000
+      timeout = 60000,
     } = options;
 
     try {
@@ -174,14 +174,14 @@ class SandboxTester {
 
       return {
         success: true,
-        output
+        output,
       };
     } catch (error) {
       return {
         success: false,
         error: error.message,
         stdout: error.stdout || '',
-        stderr: error.stderr || ''
+        stderr: error.stderr || '',
       };
     }
   }
@@ -192,7 +192,7 @@ class SandboxTester {
   async runLint(options = {}) {
     const {
       lintCommand = 'npm run lint',
-      timeout = 30000
+      timeout = 30000,
     } = options;
 
     try {
@@ -208,14 +208,14 @@ class SandboxTester {
 
       return {
         success: true,
-        output
+        output,
       };
     } catch (error) {
       return {
         success: false,
         error: error.message,
         stdout: error.stdout || '',
-        stderr: error.stderr || ''
+        stderr: error.stderr || '',
       };
     }
   }
@@ -231,8 +231,8 @@ class SandboxTester {
       checks: {
         syntax: { passed: false, errors: [] },
         structure: { passed: false, errors: [] },
-        dependencies: { passed: false, errors: [] }
-      }
+        dependencies: { passed: false, errors: [] },
+      },
     };
 
     try {
@@ -253,14 +253,14 @@ class SandboxTester {
         const filePath = path.join(this.sandboxPath, file);
         try {
           await execa('node', ['--check', filePath], {
-            encoding: 'utf8'
+            encoding: 'utf8',
           });
           validation.checks.syntax.passed = true;
         } catch (error) {
           validation.success = false;
           validation.checks.syntax.errors.push({
             file,
-            error: error.message
+            error: error.message,
           });
         }
       }
@@ -314,8 +314,8 @@ class SandboxTester {
         filesRemoved: [],
         metrics: {
           original: {},
-          sandbox: {}
-        }
+          sandbox: {},
+        },
       };
 
       // Get file lists
@@ -323,10 +323,10 @@ class SandboxTester {
       const sandboxFiles = await this.getProjectFiles(this.sandboxPath);
 
       const originalSet = new Set(originalFiles.map(f =>
-        path.relative(originalPath, f)
+        path.relative(originalPath, f),
       ));
       const sandboxSet = new Set(sandboxFiles.map(f =>
-        path.relative(this.sandboxPath, f)
+        path.relative(this.sandboxPath, f),
       ));
 
       // Find changes
@@ -336,11 +336,11 @@ class SandboxTester {
         } else {
           const originalContent = await fs.readFile(
             path.join(originalPath, file),
-            'utf-8'
+            'utf-8',
           );
           const sandboxContent = await fs.readFile(
             path.join(this.sandboxPath, file),
-            'utf-8'
+            'utf-8',
           );
 
           if (originalContent !== sandboxContent) {
@@ -357,10 +357,10 @@ class SandboxTester {
 
       // Collect metrics
       comparison.metrics.original = {
-        fileCount: originalFiles.length
+        fileCount: originalFiles.length,
       };
       comparison.metrics.sandbox = {
-        fileCount: sandboxFiles.length
+        fileCount: sandboxFiles.length,
       };
 
       if (this.verbose) {
@@ -384,7 +384,7 @@ class SandboxTester {
       runTests = true,
       runLint = true,
       compareWithOriginal = false,
-      originalPath = null
+      originalPath = null,
     } = options;
 
     const results = {
@@ -393,7 +393,7 @@ class SandboxTester {
       tests: null,
       lint: null,
       comparison: null,
-      errors: []
+      errors: [],
     };
 
     try {
@@ -458,7 +458,7 @@ class SandboxTester {
         encoding: 'utf8',
         env: { ...process.env, CI: 'true', NODE_ENV: 'test' },
         all: true,
-        reject: false
+        reject: false,
       });
 
       if (this.verbose && stdout) {
@@ -531,7 +531,7 @@ class SandboxTester {
         fileCount: files.length,
         totalSize,
         fileTypes,
-        sizeFormatted: this.formatBytes(totalSize)
+        sizeFormatted: this.formatBytes(totalSize),
       };
     } catch (error) {
       throw new Error(`Failed to get stats: ${error.message}`);
@@ -572,7 +572,7 @@ class SandboxTester {
       return {
         timestamp: new Date().toISOString(),
         stats,
-        files: fileContents
+        files: fileContents,
       };
     } catch (error) {
       throw new Error(`Failed to create snapshot: ${error.message}`);
@@ -593,7 +593,7 @@ class SandboxTester {
       for (const entry of entries) {
         await fs.rm(path.join(this.sandboxPath, entry), {
           recursive: true,
-          force: true
+          force: true,
         });
       }
 

@@ -95,10 +95,10 @@ class PersonalizedOutputFormatter {
         greeting_levels: {
           minimal: 'Agent ready',
           named: 'Agent ready',
-          archetypal: 'Agent ready'
+          archetypal: 'Agent ready',
         },
-        signature_closing: '— Agent'
-      }
+        signature_closing: '— Agent',
+      },
     };
   }
 
@@ -128,7 +128,7 @@ class PersonalizedOutputFormatter {
         metrics,
         '',
         '---',
-        signature
+        signature,
       ].join('\n');
 
       const duration = Number(process.hrtime.bigint() - startTime) / 1000000; // Convert to ms

@@ -32,8 +32,8 @@ class MigrationGenerator {
       metadata: {
         auto_generated: true,
         generator_version: '1.0.0',
-        migration_type: options.migrationType || 'auto'
-      }
+        migration_type: options.migrationType || 'auto',
+      },
     };
 
     try {
@@ -77,7 +77,7 @@ class MigrationGenerator {
         operations: migrationScript.operations.length,
         estimated_duration: migrationScript.estimated_duration,
         risk_level: migrationScript.risk_level,
-        prerequisites: migrationScript.prerequisites.length
+        prerequisites: migrationScript.prerequisites.length,
       };
 
     } catch (error) {
@@ -102,7 +102,7 @@ class MigrationGenerator {
           target: newFile.path,
           content: newFile.content || null,
           template: newFile.template || null,
-          order: 10
+          order: 10,
         });
       }
 
@@ -115,7 +115,7 @@ class MigrationGenerator {
             target: modifiedFile.path,
             changes: modifiedFile.changes,
             backup_original: true,
-            order: 20
+            order: 20,
           });
         } else {
           operations.push({
@@ -124,7 +124,7 @@ class MigrationGenerator {
             target: modifiedFile.path,
             reason: 'Complex changes require manual intervention',
             guidance: modifiedFile.migration_guidance,
-            order: 15
+            order: 15,
           });
         }
       }
@@ -136,7 +136,7 @@ class MigrationGenerator {
           description: `Archive deprecated file: ${deletedFile.path}`,
           target: deletedFile.path,
           archive_location: `.aios/deprecated/${deletedFile.path}`,
-          order: 30
+          order: 30,
         });
       }
 
@@ -148,7 +148,7 @@ class MigrationGenerator {
           source: movedFile.from,
           target: movedFile.to,
           update_references: true,
-          order: 25
+          order: 25,
         });
       }
     }
@@ -162,7 +162,7 @@ class MigrationGenerator {
           target: configChange.file,
           changes: configChange.changes,
           merge_strategy: configChange.merge_strategy || 'smart_merge',
-          order: 5
+          order: 5,
         });
       }
     }
@@ -177,7 +177,7 @@ class MigrationGenerator {
           package: newDep.name,
           version: newDep.version,
           dev: newDep.dev || false,
-          order: 1
+          order: 1,
         });
       }
 
@@ -190,7 +190,7 @@ class MigrationGenerator {
           from_version: updatedDep.from,
           to_version: updatedDep.to,
           breaking_changes: updatedDep.breaking_changes || [],
-          order: 2
+          order: 2,
         });
       }
 
@@ -201,7 +201,7 @@ class MigrationGenerator {
           description: `Remove deprecated dependency: ${removedDep.name}`,
           package: removedDep.name,
           replacement: removedDep.replacement,
-          order: 35
+          order: 35,
         });
       }
     }
@@ -215,7 +215,7 @@ class MigrationGenerator {
           category: breakingChange.category,
           migration_steps: breakingChange.migration_steps,
           affected_components: breakingChange.affected_components,
-          order: 40
+          order: 40,
         });
       }
     }
@@ -228,7 +228,7 @@ class MigrationGenerator {
           description: `Migrate storage: ${storageChange.description}`,
           migration_type: storageChange.type,
           data_transformations: storageChange.transformations,
-          order: 45
+          order: 45,
         });
       }
     }
@@ -251,7 +251,7 @@ class MigrationGenerator {
           type: 'delete_file',
           description: `Remove file created during migration: ${newFile.path}`,
           target: newFile.path,
-          order: 10
+          order: 10,
         });
       }
 
@@ -262,7 +262,7 @@ class MigrationGenerator {
           description: `Restore original file: ${modifiedFile.path}`,
           target: modifiedFile.path,
           backup_source: `${modifiedFile.path}.migration-backup`,
-          order: 20
+          order: 20,
         });
       }
 
@@ -273,7 +273,7 @@ class MigrationGenerator {
           description: `Restore archived file: ${deletedFile.path}`,
           source: `.aios/deprecated/${deletedFile.path}`,
           target: deletedFile.path,
-          order: 30
+          order: 30,
         });
       }
 
@@ -285,7 +285,7 @@ class MigrationGenerator {
           source: movedFile.to,
           target: movedFile.from,
           update_references: true,
-          order: 25
+          order: 25,
         });
       }
     }
@@ -297,7 +297,7 @@ class MigrationGenerator {
           type: 'uninstall_dependency',
           description: `Remove dependency added during migration: ${newDep.name}`,
           package: newDep.name,
-          order: 35
+          order: 35,
         });
       }
 
@@ -308,7 +308,7 @@ class MigrationGenerator {
           package: updatedDep.name,
           from_version: updatedDep.to,
           to_version: updatedDep.from,
-          order: 36
+          order: 36,
         });
       }
 
@@ -318,7 +318,7 @@ class MigrationGenerator {
           description: `Reinstall removed dependency: ${removedDep.name}`,
           package: removedDep.name,
           version: removedDep.version,
-          order: 37
+          order: 37,
         });
       }
     }
@@ -341,8 +341,8 @@ class MigrationGenerator {
         'node_version_compatibility',
         'disk_space_available',
         'memory_requirements',
-        'permission_checks'
-      ]
+        'permission_checks',
+      ],
     });
 
     // File integrity checks
@@ -352,8 +352,8 @@ class MigrationGenerator {
         description: 'Verify file integrity before migration',
         files: [
           ...(changes.files.modified || []).map(f => f.path),
-          ...(changes.files.moved || []).map(f => f.from)
-        ]
+          ...(changes.files.moved || []).map(f => f.from),
+        ],
       });
     }
 
@@ -362,7 +362,7 @@ class MigrationGenerator {
       checks.push({
         type: 'dependency_compatibility',
         description: 'Check dependency compatibility',
-        dependencies: changes.dependencies.updated || []
+        dependencies: changes.dependencies.updated || [],
       });
     }
 
@@ -370,7 +370,7 @@ class MigrationGenerator {
     checks.push({
       type: 'backup_verification',
       description: 'Ensure backup is created and valid',
-      backup_targets: this.getBackupTargets(changes)
+      backup_targets: this.getBackupTargets(changes),
     });
 
     // Custom validation based on breaking changes
@@ -381,7 +381,7 @@ class MigrationGenerator {
             type: 'custom_validation',
             description: `Validate ${breakingChange.description}`,
             validation_script: breakingChange.validation,
-            critical: true
+            critical: true,
           });
         }
       }
@@ -401,7 +401,7 @@ class MigrationGenerator {
       type: 'version_check',
       description: 'Verify current framework version',
       required_version: changes.from_version,
-      validation: 'exact_match'
+      validation: 'exact_match',
     });
 
     // Backup requirement
@@ -409,7 +409,7 @@ class MigrationGenerator {
       type: 'backup_creation',
       description: 'Create full system backup before migration',
       backup_scope: 'full',
-      verification_required: true
+      verification_required: true,
     });
 
     // Clean working directory
@@ -419,8 +419,8 @@ class MigrationGenerator {
       requirements: [
         'no_uncommitted_changes',
         'no_untracked_files',
-        'up_to_date_with_remote'
-      ]
+        'up_to_date_with_remote',
+      ],
     });
 
     // Dependency installations
@@ -431,8 +431,8 @@ class MigrationGenerator {
         requirements: [
           'npm_registry_accessible',
           'sufficient_disk_space',
-          'write_permissions'
-        ]
+          'write_permissions',
+        ],
       });
     }
 
@@ -443,7 +443,7 @@ class MigrationGenerator {
           prerequisites.push({
             type: 'component_prerequisite',
             description: `Prerequisites for ${breakingChange.description}`,
-            requirements: breakingChange.prerequisites
+            requirements: breakingChange.prerequisites,
           });
         }
       }
@@ -466,8 +466,8 @@ class MigrationGenerator {
         'framework_initialization',
         'component_loading',
         'basic_operations',
-        'configuration_validity'
-      ]
+        'configuration_validity',
+      ],
     });
 
     // Performance verification
@@ -477,8 +477,8 @@ class MigrationGenerator {
       benchmarks: [
         'startup_time',
         'memory_usage',
-        'operation_latency'
-      ]
+        'operation_latency',
+      ],
     });
 
     // Update documentation
@@ -486,7 +486,7 @@ class MigrationGenerator {
       tasks.push({
         type: 'documentation_update',
         description: 'Update project documentation',
-        files: changes.documentation_updates
+        files: changes.documentation_updates,
       });
     }
 
@@ -497,8 +497,8 @@ class MigrationGenerator {
       targets: [
         '.aios/migration-temp',
         '*.migration-backup',
-        '.aios/migration-logs'
-      ]
+        '.aios/migration-logs',
+      ],
     });
 
     // Version recording
@@ -506,7 +506,7 @@ class MigrationGenerator {
       type: 'version_recording',
       description: 'Record successful migration',
       update_version_info: true,
-      migration_log: true
+      migration_log: true,
     });
 
     return tasks;
@@ -523,17 +523,17 @@ class MigrationGenerator {
         added: [],
         modified: [],
         removed: [],
-        moved: []
+        moved: [],
       },
       dependencies: {
         added: [],
         updated: [],
-        removed: []
+        removed: [],
       },
       configuration: [],
       breaking_changes: toVersionInfo.breaking_changes || [],
       api_changes: toVersionInfo.api_changes || [],
-      storage: []
+      storage: [],
     };
 
     // Compare component modifications
@@ -547,7 +547,7 @@ class MigrationGenerator {
           path: component.file_path,
           type: 'component',
           component_type: component.type,
-          template: component.template
+          template: component.template,
         });
       }
     }
@@ -561,7 +561,7 @@ class MigrationGenerator {
           type: 'component',
           migration_type: this.determineMigrationType(fromComponent, toComponent),
           changes: toComponent.changes || [],
-          migration_guidance: this.generateMigrationGuidance(fromComponent, toComponent)
+          migration_guidance: this.generateMigrationGuidance(fromComponent, toComponent),
         });
       }
     }
@@ -572,7 +572,7 @@ class MigrationGenerator {
         changes.files.removed.push({
           path: component.file_path,
           type: 'component',
-          reason: 'deprecated'
+          reason: 'deprecated',
         });
       }
     }
@@ -597,7 +597,7 @@ class MigrationGenerator {
       update_configuration: 2,
       breaking_change: 10,
       migrate_storage: 15,
-      manual_review: 30
+      manual_review: 30,
     };
 
     for (const operation of operations) {
@@ -672,7 +672,7 @@ class MigrationGenerator {
       version,
       components_modified: [],
       breaking_changes: [],
-      api_changes: []
+      api_changes: [],
     };
   }
 
@@ -738,41 +738,41 @@ class MigrationGenerator {
         create_file: {
           description: 'Create new file from template or content',
           parameters: ['target', 'content', 'template'],
-          rollback: 'delete_file'
+          rollback: 'delete_file',
         },
         update_file: {
           description: 'Update existing file with changes',
           parameters: ['target', 'changes', 'backup_original'],
-          rollback: 'restore_backup'
+          rollback: 'restore_backup',
         },
         move_file: {
           description: 'Move or rename file',
           parameters: ['source', 'target', 'update_references'],
-          rollback: 'move_file_reverse'
+          rollback: 'move_file_reverse',
         },
         archive_file: {
           description: 'Archive file to deprecated location',
           parameters: ['target', 'archive_location'],
-          rollback: 'restore_file'
-        }
+          rollback: 'restore_file',
+        },
       },
       dependency_operations: {
         install_dependency: {
           description: 'Install new npm dependency',
           parameters: ['package', 'version', 'dev'],
-          rollback: 'uninstall_dependency'
+          rollback: 'uninstall_dependency',
         },
         update_dependency: {
           description: 'Update existing dependency',
           parameters: ['package', 'from_version', 'to_version'],
-          rollback: 'downgrade_dependency'
+          rollback: 'downgrade_dependency',
         },
         remove_dependency: {
           description: 'Remove deprecated dependency',
           parameters: ['package', 'replacement'],
-          rollback: 'reinstall_dependency'
-        }
-      }
+          rollback: 'reinstall_dependency',
+        },
+      },
     };
   }
 }

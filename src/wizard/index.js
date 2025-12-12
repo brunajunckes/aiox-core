@@ -14,7 +14,7 @@ const { buildQuestionSequence } = require('./questions');
 const {
   showWelcome,
   showCompletion,
-  showCancellation
+  showCancellation,
 } = require('./feedback');
 const { generateIDEConfigs, showSuccessSummary } = require('./ide-config-generator');
 const { getIDEConfig } = require('../config/ide-configs');
@@ -25,7 +25,7 @@ const { installProjectMCPs } = require('../../bin/modules/mcp-installer');
 const {
   validateInstallation,
   displayValidationReport,
-  provideTroubleshooting
+  provideTroubleshooting,
 } = require('./validation');
 
 /**
@@ -89,8 +89,8 @@ function setupCancellationHandler() {
         type: 'confirm',
         name: 'confirmCancel',
         message: 'Are you sure you want to cancel installation?',
-        default: false
-      }
+        default: false,
+      },
     ]);
 
     if (confirmCancel) {
@@ -150,7 +150,7 @@ async function runWizard() {
         targetDir: process.cwd(),
         onProgress: (status) => {
           // Silent progress - spinner handles feedback
-        }
+        },
       });
 
       if (aiosCoreResult.success) {
@@ -175,7 +175,7 @@ async function runWizard() {
       const possibleSourceDirs = [
         path.join(__dirname, '..', '..', 'expansion-packs'),
         path.join(__dirname, '..', '..', '..', 'expansion-packs'),
-        path.join(process.cwd(), 'node_modules', 'aios-fullstack', 'expansion-packs')
+        path.join(process.cwd(), 'node_modules', 'aios-fullstack', 'expansion-packs'),
       ];
 
       let sourceExpansionDir = null;
@@ -216,7 +216,7 @@ async function runWizard() {
         answers.expansionPacksResult = {
           installed: installedPacks,
           failed: failedPacks,
-          targetDir: targetExpansionDir
+          targetDir: targetExpansionDir,
         };
 
         if (installedPacks.length > 0) {
@@ -290,7 +290,7 @@ async function runWizard() {
                   for (const agentFile of agentFiles) {
                     await fse.copy(
                       path.join(packAgentsDir, agentFile),
-                      path.join(targetFolder, agentFile)
+                      path.join(targetFolder, agentFile),
                     );
                   }
                 }
@@ -311,16 +311,16 @@ async function runWizard() {
         projectType: answers.projectType || 'greenfield',
         selectedIDEs: answers.selectedIDEs || [],
         mcpServers: answers.mcpServers || [],
-        skipPrompts: false  // Interactive mode
+        skipPrompts: false,  // Interactive mode
       });
 
       if (envResult.envCreated && envResult.coreConfigCreated) {
         console.log('\n✅ Environment configuration complete!');
-        console.log(`  - .env file created`);
-        console.log(`  - .env.example file created`);
-        console.log(`  - .aios-core/core-config.yaml created`);
+        console.log('  - .env file created');
+        console.log('  - .env.example file created');
+        console.log('  - .aios-core/core-config.yaml created');
         if (envResult.gitignoreUpdated) {
-          console.log(`  - .gitignore updated`);
+          console.log('  - .gitignore updated');
         }
       }
 
@@ -338,8 +338,8 @@ async function runWizard() {
           type: 'confirm',
           name: 'continueWithoutEnv',
           message: 'Continue installation without environment configuration?',
-          default: false
-        }
+          default: false,
+        },
       ]);
 
       if (!continueWithoutEnv) {
@@ -375,7 +375,7 @@ async function runWizard() {
       try {
         const depsResult = await installDependencies({
           packageManager: detectedPM,
-          projectPath: projectPath
+          projectPath: projectPath,
         });
 
         if (depsResult.success) {
@@ -397,15 +397,15 @@ async function runWizard() {
               type: 'confirm',
               name: 'retryDeps',
               message: 'Retry dependency installation?',
-              default: true
-            }
+              default: true,
+            },
           ]);
 
           if (retryDeps) {
             // Recursive retry with exponential backoff (built into installDependencies)
             const retryResult = await installDependencies({
               packageManager: answers.packageManager,
-              projectPath: projectPath
+              projectPath: projectPath,
             });
 
             if (retryResult.success) {
@@ -444,7 +444,7 @@ async function runWizard() {
             } else {
               console.log(`  ${status.message}`);
             }
-          }
+          },
         });
 
         if (mcpResult.success) {
@@ -477,19 +477,19 @@ async function runWizard() {
             ideConfigs: ideConfigResult?.files || [],
             env: '.env',
             coreConfig: '.aios-core/core-config.yaml',
-            mcpConfig: '.mcp.json'
+            mcpConfig: '.mcp.json',
           },
           configs: {
             env: answers.envResult,
             mcps: answers.mcpResult,
-            coreConfig: '.aios-core/core-config.yaml'
+            coreConfig: '.aios-core/core-config.yaml',
           },
           mcps: answers.mcpResult,
-          dependencies: answers.depsResult
+          dependencies: answers.depsResult,
         },
         (status) => {
           console.log(`  [${status.step}] ${status.message}`);
-        }
+        },
       );
 
       // Display validation report
@@ -545,6 +545,6 @@ async function runWizard() {
  */
 
 module.exports = {
-  runWizard
+  runWizard,
 };
 

@@ -29,14 +29,14 @@ class FocusAreaRecommender {
       'security',
       'ux',
       'performance',
-      'data-integrity'
+      'data-integrity',
     ];
     this.skipAreas = config.skipAreas || [
       'syntax',
       'formatting',
       'simple-logic',
       'naming-conventions',
-      'import-order'
+      'import-order',
     ];
   }
 
@@ -53,7 +53,7 @@ class FocusAreaRecommender {
       secondary: [],
       skip: this.skipAreas,
       summary: '',
-      highlightedAspects: []
+      highlightedAspects: [],
     };
 
     // Analyze changed files
@@ -82,7 +82,7 @@ class FocusAreaRecommender {
       categories: {},
       patterns: [],
       highlights: [],
-      riskLevel: 'low'
+      riskLevel: 'low',
     };
 
     const categoryPatterns = [
@@ -90,56 +90,56 @@ class FocusAreaRecommender {
         pattern: /\.(api|routes|endpoints)\./i,
         category: 'api',
         highlight: 'API endpoint changes detected',
-        risk: 'high'
+        risk: 'high',
       },
       {
         pattern: /auth|login|password|token|jwt|session/i,
         category: 'security',
         highlight: 'Security-sensitive code changes',
-        risk: 'critical'
+        risk: 'critical',
       },
       {
         pattern: /database|migration|schema|model/i,
         category: 'data-integrity',
         highlight: 'Database/data model changes',
-        risk: 'high'
+        risk: 'high',
       },
       {
         pattern: /component|page|view|ui|layout/i,
         category: 'ux',
         highlight: 'UI/UX component changes',
-        risk: 'medium'
+        risk: 'medium',
       },
       {
         pattern: /service|handler|controller|manager/i,
         category: 'business-logic',
         highlight: 'Business logic changes',
-        risk: 'high'
+        risk: 'high',
       },
       {
         pattern: /config|settings|env|yaml|json/i,
         category: 'configuration',
         highlight: 'Configuration changes',
-        risk: 'medium'
+        risk: 'medium',
       },
       {
         pattern: /core|base|abstract|interface/i,
         category: 'architecture',
         highlight: 'Core architecture changes',
-        risk: 'critical'
+        risk: 'critical',
       },
       {
         pattern: /agent|workflow|task|orchestrat/i,
         category: 'aios-core',
         highlight: 'AIOS framework changes',
-        risk: 'high'
+        risk: 'high',
       },
       {
         pattern: /cache|performance|optimi/i,
         category: 'performance',
         highlight: 'Performance-related changes',
-        risk: 'medium'
-      }
+        risk: 'medium',
+      },
     ];
 
     // Analyze each file
@@ -181,7 +181,7 @@ class FocusAreaRecommender {
       'architecture',
       'data-integrity',
       'business-logic',
-      'api'
+      'api',
     ];
 
     // Add categories based on file analysis
@@ -191,7 +191,7 @@ class FocusAreaRecommender {
           area: cat,
           reason: `${fileAnalysis.categories[cat].length} file(s) in ${cat} area modified`,
           files: fileAnalysis.categories[cat].slice(0, 5),
-          questions: this.getReviewQuestions(cat)
+          questions: this.getReviewQuestions(cat),
         });
       }
     });
@@ -207,8 +207,8 @@ class FocusAreaRecommender {
             reason: `${coderabbitResult.issues.high} HIGH severity issues from CodeRabbit`,
             questions: [
               'Are the HIGH severity issues acceptable tradeoffs?',
-              'Do these issues indicate deeper architectural problems?'
-            ]
+              'Do these issues indicate deeper architectural problems?',
+            ],
           });
         }
       }
@@ -235,7 +235,7 @@ class FocusAreaRecommender {
         secondary.push({
           area: cat,
           reason: `${fileAnalysis.categories[cat].length} file(s) modified`,
-          files: fileAnalysis.categories[cat].slice(0, 3)
+          files: fileAnalysis.categories[cat].slice(0, 3),
         });
       }
     });
@@ -255,55 +255,55 @@ class FocusAreaRecommender {
         'Are authentication and authorization properly implemented?',
         'Is sensitive data properly encrypted/protected?',
         'Are there any potential injection vulnerabilities?',
-        'Is input validation comprehensive?'
+        'Is input validation comprehensive?',
       ],
       architecture: [
         'Does this align with our architectural principles?',
         'Are dependencies properly managed?',
         'Is the separation of concerns maintained?',
-        'Will this scale appropriately?'
+        'Will this scale appropriately?',
       ],
       'data-integrity': [
         'Are database migrations reversible?',
         'Is data validation comprehensive?',
         'Are there potential data consistency issues?',
-        'Is the schema design appropriate?'
+        'Is the schema design appropriate?',
       ],
       'business-logic': [
         'Does this correctly implement the business requirements?',
         'Are edge cases handled appropriately?',
         'Is the logic testable and maintainable?',
-        'Are business rules properly enforced?'
+        'Are business rules properly enforced?',
       ],
       api: [
         'Is the API design consistent with existing endpoints?',
         'Are breaking changes properly documented?',
         'Is error handling comprehensive?',
-        'Is the API versioned appropriately?'
+        'Is the API versioned appropriately?',
       ],
       ux: [
         'Is the user experience consistent?',
         'Are accessibility requirements met?',
         'Is the interface responsive?',
-        'Are error states handled gracefully?'
+        'Are error states handled gracefully?',
       ],
       performance: [
         'Are there potential performance bottlenecks?',
         'Is caching used appropriately?',
         'Are expensive operations optimized?',
-        'Is the memory footprint acceptable?'
+        'Is the memory footprint acceptable?',
       ],
       'aios-core': [
         'Does this follow AIOS framework patterns?',
         'Is backward compatibility maintained?',
         'Are agent/task contracts preserved?',
-        'Is the change properly documented?'
-      ]
+        'Is the change properly documented?',
+      ],
     };
 
     return questionBank[category] || [
       'Is this change necessary and well-implemented?',
-      'Are there any potential issues or risks?'
+      'Are there any potential issues or risks?',
     ];
   }
 
@@ -344,10 +344,10 @@ class FocusAreaRecommender {
     const highAreas = ['business-logic', 'api'];
 
     const hasCritical = recommendations.primary.some((p) =>
-      criticalAreas.includes(p.area)
+      criticalAreas.includes(p.area),
     );
     const hasHigh = recommendations.primary.some((p) =>
-      highAreas.includes(p.area)
+      highAreas.includes(p.area),
     );
 
     if (hasCritical) return 'P0';

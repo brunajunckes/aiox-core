@@ -15,7 +15,7 @@ const TREE = {
   branch: '├──',
   lastBranch: '└──',
   vertical: '│',
-  empty: '   '
+  empty: '   ',
 };
 
 /**
@@ -33,7 +33,7 @@ function groupWorkers(workers) {
     if (!groups[category]) {
       groups[category] = {
         count: 0,
-        subcategories: {}
+        subcategories: {},
       };
     }
 
@@ -155,5 +155,5 @@ function capitalize(str) {
 module.exports = {
   formatTree,
   formatTreeCollapsed,
-  groupWorkers
+  groupWorkers,
 };

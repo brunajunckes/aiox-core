@@ -224,7 +224,7 @@ describe('detectProjectType', () => {
       
       expect(() => detectProjectType('/test/denied')).toThrow('Failed to detect project type');
       expect(console.error).toHaveBeenCalledWith(
-        expect.stringContaining('[detect-project-type] Error detecting project type')
+        expect.stringContaining('[detect-project-type] Error detecting project type'),
       );
     });
 

@@ -24,7 +24,7 @@ const colors = {
   green: '\x1b[32m',
   yellow: '\x1b[33m',
   cyan: '\x1b[36m',
-  reset: '\x1b[0m'
+  reset: '\x1b[0m',
 };
 
 /**
@@ -204,7 +204,7 @@ updated_at: ${new Date().toISOString().split('T')[0]}
 \`\`\`
 
 ---
-`
+`,
 };
 
 /**
@@ -223,7 +223,7 @@ function analyzeMissingSections(content) {
     scripts: !(content.includes('## Scripts') || content.includes('**Scripts:**')),
     errorHandling: !(content.includes('## Error Handling') && content.includes('strategy:')),
     performance: !(content.includes('duration_expected:') && content.includes('cost_estimated:')),
-    metadata: !(content.includes('## Metadata') && content.includes('story:') && content.includes('version:'))
+    metadata: !(content.includes('## Metadata') && content.includes('story:') && content.includes('version:')),
   };
 
   return checks;

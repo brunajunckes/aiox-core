@@ -23,7 +23,7 @@ const LINK_STATUS = {
   NOT_LINKED: 'not_linked',
   BROKEN: 'broken',
   DIRECTORY: 'directory',
-  ERROR: 'error'
+  ERROR: 'error',
 };
 
 /**
@@ -66,7 +66,7 @@ function isWindowsJunction(linkPath) {
     const result = execSync(`fsutil reparsepoint query "${linkPath}"`, {
       encoding: 'utf8',
       windowsHide: true,
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
     return result.includes('Symbolic Link') || result.includes('Mount Point');
   } catch (error) {
@@ -103,7 +103,7 @@ function getWindowsJunctionTarget(linkPath) {
     const result = execSync(`fsutil reparsepoint query "${linkPath}"`, {
       encoding: 'utf8',
       windowsHide: true,
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
 
     // Parse the target from fsutil output
@@ -144,7 +144,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
       linkPath,
       globalPath,
       type: getLinkType(),
-      message: 'Tools directory does not exist'
+      message: 'Tools directory does not exist',
     };
   }
 
@@ -155,7 +155,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
       linkPath,
       globalPath,
       type: getLinkType(),
-      message: 'MCP link does not exist'
+      message: 'MCP link does not exist',
     };
   }
 
@@ -182,7 +182,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
           globalPath,
           target,
           type: getLinkType(),
-          message: 'Linked to global MCP config'
+          message: 'Linked to global MCP config',
         };
       } else {
         return {
@@ -191,7 +191,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
           globalPath,
           target,
           type: getLinkType(),
-          message: `Link points to different location: ${target}`
+          message: `Link points to different location: ${target}`,
         };
       }
     }
@@ -201,7 +201,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
       linkPath,
       globalPath,
       type: getLinkType(),
-      message: 'Could not resolve link target'
+      message: 'Could not resolve link target',
     };
   }
 
@@ -211,7 +211,7 @@ function checkLinkStatus(projectRoot = process.cwd()) {
     linkPath,
     globalPath,
     type: getLinkType(),
-    message: 'Path exists as regular directory (not linked)'
+    message: 'Path exists as regular directory (not linked)',
   };
 }
 
@@ -232,7 +232,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
       success: false,
       error: 'Global MCP directory does not exist. Run "aios mcp setup" first.',
       linkPath,
-      globalPath
+      globalPath,
     };
   }
 
@@ -246,7 +246,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
         success: false,
         error: `Could not create tools directory: ${error.message}`,
         linkPath,
-        globalPath
+        globalPath,
       };
     }
   }
@@ -261,7 +261,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
       alreadyLinked: true,
       linkPath,
       globalPath,
-      type: getLinkType()
+      type: getLinkType(),
     };
   }
 
@@ -273,7 +273,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
         error: 'Path already exists. Use --force to overwrite.',
         status: status.status,
         linkPath,
-        globalPath
+        globalPath,
       };
     }
 
@@ -290,7 +290,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
             error: `Existing config backed up to ${backupPath}. Run with --migrate to merge configs.`,
             linkPath,
             globalPath,
-            backup: backupPath
+            backup: backupPath,
           };
         }
         fs.rmSync(linkPath, { recursive: true });
@@ -303,7 +303,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
         success: false,
         error: `Could not remove existing path: ${error.message}`,
         linkPath,
-        globalPath
+        globalPath,
       };
     }
   }
@@ -314,7 +314,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
       // Use mklink /J for Windows junction
       execSync(`mklink /J "${linkPath}" "${globalPath}"`, {
         windowsHide: true,
-        stdio: ['pipe', 'pipe', 'pipe']
+        stdio: ['pipe', 'pipe', 'pipe'],
       });
     } else {
       // Use fs.symlinkSync for Unix (type 'dir' for directory symlinks)
@@ -328,7 +328,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
         success: true,
         linkPath,
         globalPath,
-        type: getLinkType()
+        type: getLinkType(),
       };
     } else {
       return {
@@ -336,7 +336,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
         error: 'Link created but verification failed',
         linkPath,
         globalPath,
-        status: verifyStatus.status
+        status: verifyStatus.status,
       };
     }
   } catch (error) {
@@ -347,7 +347,7 @@ function createLink(projectRoot = process.cwd(), options = {}) {
       globalPath,
       hint: isWindows()
         ? 'Try running as Administrator or enable Developer Mode'
-        : 'Check directory permissions'
+        : 'Check directory permissions',
     };
   }
 }
@@ -365,7 +365,7 @@ function removeLink(projectRoot = process.cwd()) {
     return {
       success: true,
       alreadyRemoved: true,
-      linkPath
+      linkPath,
     };
   }
 
@@ -373,7 +373,7 @@ function removeLink(projectRoot = process.cwd()) {
     return {
       success: false,
       error: 'Path is a directory, not a link. Cannot remove.',
-      linkPath
+      linkPath,
     };
   }
 
@@ -382,7 +382,7 @@ function removeLink(projectRoot = process.cwd()) {
       // Remove junction using rmdir
       execSync(`rmdir "${linkPath}"`, {
         windowsHide: true,
-        stdio: ['pipe', 'pipe', 'pipe']
+        stdio: ['pipe', 'pipe', 'pipe'],
       });
     } else {
       fs.unlinkSync(linkPath);
@@ -390,13 +390,13 @@ function removeLink(projectRoot = process.cwd()) {
 
     return {
       success: true,
-      linkPath
+      linkPath,
     };
   } catch (error) {
     return {
       success: false,
       error: `Could not remove link: ${error.message}`,
-      linkPath
+      linkPath,
     };
   }
 }
@@ -409,5 +409,5 @@ module.exports = {
   getLinkTarget,
   checkLinkStatus,
   createLink,
-  removeLink
+  removeLink,
 };

@@ -65,8 +65,8 @@ describeIntegration('n8n Tool Helpers', () => {
           finished: true,
           startedAt: '2024-01-15T10:00:00Z',
           finishedAt: '2024-01-15T10:05:00Z',
-          mode: 'manual'
-        }
+          mode: 'manual',
+        },
       });
 
       expect(result).toEqual({
@@ -74,7 +74,7 @@ describeIntegration('n8n Tool Helpers', () => {
         status: 'finished',
         startedAt: '2024-01-15T10:00:00Z',
         finishedAt: '2024-01-15T10:05:00Z',
-        mode: 'manual'
+        mode: 'manual',
       });
     });
 
@@ -85,8 +85,8 @@ describeIntegration('n8n Tool Helpers', () => {
           finished: false,
           stoppedAt: '2024-01-15T10:03:00Z',
           startedAt: '2024-01-15T10:00:00Z',
-          mode: 'manual'
-        }
+          mode: 'manual',
+        },
       });
 
       expect(result).toEqual({
@@ -94,7 +94,7 @@ describeIntegration('n8n Tool Helpers', () => {
         status: 'stopped',
         startedAt: '2024-01-15T10:00:00Z',
         finishedAt: undefined,
-        mode: 'manual'
+        mode: 'manual',
       });
     });
 
@@ -104,8 +104,8 @@ describeIntegration('n8n Tool Helpers', () => {
           id: 'exec_789',
           finished: false,
           startedAt: '2024-01-15T10:00:00Z',
-          mode: 'trigger'
-        }
+          mode: 'trigger',
+        },
       });
 
       expect(result).toEqual({
@@ -113,7 +113,7 @@ describeIntegration('n8n Tool Helpers', () => {
         status: 'running',
         startedAt: '2024-01-15T10:00:00Z',
         finishedAt: undefined,
-        mode: 'trigger'
+        mode: 'trigger',
       });
     });
 
@@ -129,31 +129,31 @@ describeIntegration('n8n Tool Helpers', () => {
       const result = await executor.execute('validate-node-connections', {
         nodes: [
           { name: 'Start', type: 'n8n-nodes-base.start' },
-          { name: 'HTTP Request', type: 'n8n-nodes-base.httpRequest' }
+          { name: 'HTTP Request', type: 'n8n-nodes-base.httpRequest' },
         ],
         connections: {
           'Start': {
-            main: [[{ node: 'HTTP Request', type: 'main', index: 0 }]]
-          }
-        }
+            main: [[{ node: 'HTTP Request', type: 'main', index: 0 }]],
+          },
+        },
       });
 
       expect(result).toEqual({
         valid: true,
-        errors: []
+        errors: [],
       });
     });
 
     test('should detect missing source node', async () => {
       const result = await executor.execute('validate-node-connections', {
         nodes: [
-          { name: 'Start', type: 'n8n-nodes-base.start' }
+          { name: 'Start', type: 'n8n-nodes-base.start' },
         ],
         connections: {
           'NonExistent': {
-            main: [[{ node: 'Start', type: 'main', index: 0 }]]
-          }
-        }
+            main: [[{ node: 'Start', type: 'main', index: 0 }]],
+          },
+        },
       });
 
       expect(result.valid).toBe(false);
@@ -163,13 +163,13 @@ describeIntegration('n8n Tool Helpers', () => {
     test('should detect missing target node', async () => {
       const result = await executor.execute('validate-node-connections', {
         nodes: [
-          { name: 'Start', type: 'n8n-nodes-base.start' }
+          { name: 'Start', type: 'n8n-nodes-base.start' },
         ],
         connections: {
           'Start': {
-            main: [[{ node: 'MissingTarget', type: 'main', index: 0 }]]
-          }
-        }
+            main: [[{ node: 'MissingTarget', type: 'main', index: 0 }]],
+          },
+        },
       });
 
       expect(result.valid).toBe(false);
@@ -178,7 +178,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should fail with missing nodes', async () => {
       const result = await executor.execute('validate-node-connections', {
-        connections: {}
+        connections: {},
       });
 
       expect(result.valid).toBe(false);
@@ -187,7 +187,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should fail with missing connections', async () => {
       const result = await executor.execute('validate-node-connections', {
-        nodes: []
+        nodes: [],
       });
 
       expect(result.valid).toBe(false);
@@ -204,16 +204,16 @@ describeIntegration('n8n Tool Helpers', () => {
             {
               name: 'Webhook',
               type: 'n8n-nodes-base.webhook',
-              parameters: { path: '/test' }
-            }
-          ]
-        }
+              parameters: { path: '/test' },
+            },
+          ],
+        },
       });
 
       expect(result).toEqual({
         formatted: true,
         data: { input: 'test' },
-        triggerNode: 'Webhook'
+        triggerNode: 'Webhook',
       });
     });
 
@@ -225,16 +225,16 @@ describeIntegration('n8n Tool Helpers', () => {
             {
               name: 'Start',
               type: 'n8n-nodes-base.start',
-              parameters: {}
-            }
-          ]
-        }
+              parameters: {},
+            },
+          ],
+        },
       });
 
       expect(result).toEqual({
         formatted: true,
         data: { key: 'value' },
-        triggerNode: 'Start'
+        triggerNode: 'Start',
       });
     });
 
@@ -246,26 +246,26 @@ describeIntegration('n8n Tool Helpers', () => {
             {
               name: 'HTTP Request',
               type: 'n8n-nodes-base.httpRequest',
-              parameters: {}
-            }
-          ]
-        }
+              parameters: {},
+            },
+          ],
+        },
       });
 
       expect(result).toEqual({
         formatted: false,
-        data: { test: true }
+        data: { test: true },
       });
     });
 
     test('should handle missing workflow data', async () => {
       const result = await executor.execute('format-workflow-data', {
-        data: { sample: 'data' }
+        data: { sample: 'data' },
       });
 
       expect(result).toEqual({
         formatted: false,
-        data: { sample: 'data' }
+        data: { sample: 'data' },
       });
     });
 
@@ -274,7 +274,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
       expect(result).toEqual({
         formatted: false,
-        data: {}
+        data: {},
       });
     });
   });
@@ -286,35 +286,35 @@ describeIntegration('n8n Tool Helpers', () => {
           message: 'HTTP request failed',
           node: 'HTTP Request',
           timestamp: '2024-01-15T10:05:00Z',
-          stack: 'Error: HTTP request failed\n  at Node.execute'
-        }
+          stack: 'Error: HTTP request failed\n  at Node.execute',
+        },
       });
 
       expect(result).toEqual({
         message: 'HTTP request failed',
         node: 'HTTP Request',
         timestamp: '2024-01-15T10:05:00Z',
-        stack: 'Error: HTTP request failed\n  at Node.execute'
+        stack: 'Error: HTTP request failed\n  at Node.execute',
       });
     });
 
     test('should parse error with defaults', async () => {
       const result = await executor.execute('parse-execution-error', {
         error: {},
-        execution: { stoppedAt: '2024-01-15T10:05:00Z' }
+        execution: { stoppedAt: '2024-01-15T10:05:00Z' },
       });
 
       expect(result).toEqual({
         message: 'Unknown error',
         node: 'unknown',
         timestamp: '2024-01-15T10:05:00Z',
-        stack: null
+        stack: null,
       });
     });
 
     test('should return null for missing error', async () => {
       const result = await executor.execute('parse-execution-error', {
-        execution: {}
+        execution: {},
       });
 
       expect(result).toBeNull();
@@ -324,7 +324,7 @@ describeIntegration('n8n Tool Helpers', () => {
   describeIntegration('validate-credential-type', () => {
     test('should validate httpBasicAuth', async () => {
       const result = await executor.execute('validate-credential-type', {
-        type: 'httpBasicAuth'
+        type: 'httpBasicAuth',
       });
 
       expect(result).toBe(true);
@@ -332,7 +332,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should validate oAuth2Api', async () => {
       const result = await executor.execute('validate-credential-type', {
-        type: 'oAuth2Api'
+        type: 'oAuth2Api',
       });
 
       expect(result).toBe(true);
@@ -340,7 +340,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should validate apiKey', async () => {
       const result = await executor.execute('validate-credential-type', {
-        type: 'apiKey'
+        type: 'apiKey',
       });
 
       expect(result).toBe(true);
@@ -364,7 +364,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should reject invalid credential type', async () => {
       const result = await executor.execute('validate-credential-type', {
-        type: 'invalidType'
+        type: 'invalidType',
       });
 
       expect(result).toBe(false);
@@ -376,11 +376,11 @@ describeIntegration('n8n Tool Helpers', () => {
       const result = await executor.execute('build-workflow-structure', {
         name: 'Test Workflow',
         nodes: [
-          { name: 'Start', type: 'n8n-nodes-base.start' }
+          { name: 'Start', type: 'n8n-nodes-base.start' },
         ],
         connections: {
-          'Start': { main: [[{ node: 'End' }]] }
-        }
+          'Start': { main: [[{ node: 'End' }]] },
+        },
       });
 
       expect(result).toEqual({
@@ -389,13 +389,13 @@ describeIntegration('n8n Tool Helpers', () => {
         connections: { 'Start': { main: [[{ node: 'End' }]] } },
         active: false,
         settings: {},
-        staticData: null
+        staticData: null,
       });
     });
 
     test('should build workflow with defaults', async () => {
       const result = await executor.execute('build-workflow-structure', {
-        name: 'Simple Workflow'
+        name: 'Simple Workflow',
       });
 
       expect(result).toEqual({
@@ -404,17 +404,17 @@ describeIntegration('n8n Tool Helpers', () => {
         connections: {},
         active: false,
         settings: {},
-        staticData: null
+        staticData: null,
       });
     });
 
     test('should return error for missing name', async () => {
       const result = await executor.execute('build-workflow-structure', {
-        nodes: []
+        nodes: [],
       });
 
       expect(result).toEqual({
-        error: 'Workflow name is required'
+        error: 'Workflow name is required',
       });
     });
   });
@@ -424,11 +424,11 @@ describeIntegration('n8n Tool Helpers', () => {
       const result = await executor.execute('calculate-workflow-complexity', {
         nodes: [
           { name: 'Start', type: 'n8n-nodes-base.start' },
-          { name: 'HTTP', type: 'n8n-nodes-base.httpRequest' }
+          { name: 'HTTP', type: 'n8n-nodes-base.httpRequest' },
         ],
         connections: {
-          'Start': { main: [[{ node: 'HTTP' }]] }
-        }
+          'Start': { main: [[{ node: 'HTTP' }]] },
+        },
       });
 
       expect(result.complexity).toBe(3); // 2 nodes + 0.5 connection (rounded)
@@ -443,17 +443,17 @@ describeIntegration('n8n Tool Helpers', () => {
           { name: 'Start', type: 'n8n-nodes-base.start' },
           { name: 'IF', type: 'n8n-nodes-base.if' },
           { name: 'Action1', type: 'n8n-nodes-base.httpRequest' },
-          { name: 'Action2', type: 'n8n-nodes-base.httpRequest' }
+          { name: 'Action2', type: 'n8n-nodes-base.httpRequest' },
         ],
         connections: {
           'Start': { main: [[{ node: 'IF' }]] },
           'IF': {
             main: [
               [{ node: 'Action1' }],
-              [{ node: 'Action2' }]
-            ]
-          }
-        }
+              [{ node: 'Action2' }],
+            ],
+          },
+        },
       });
 
       expect(result.complexity).toBe(8); // 4 nodes + 1.5 connections + 2 for IF node = 7.5, rounded to 8
@@ -465,11 +465,11 @@ describeIntegration('n8n Tool Helpers', () => {
       const result = await executor.execute('calculate-workflow-complexity', {
         nodes: [
           { name: 'Start', type: 'n8n-nodes-base.start' },
-          { name: 'Switch', type: 'n8n-nodes-base.switch' }
+          { name: 'Switch', type: 'n8n-nodes-base.switch' },
         ],
         connections: {
-          'Start': { main: [[{ node: 'Switch' }]] }
-        }
+          'Start': { main: [[{ node: 'Switch' }]] },
+        },
       });
 
       expect(result.complexity).toBe(5); // 2 nodes + 0.5 connection + 2 for switch
@@ -479,9 +479,9 @@ describeIntegration('n8n Tool Helpers', () => {
     test('should calculate complexity with function node', async () => {
       const result = await executor.execute('calculate-workflow-complexity', {
         nodes: [
-          { name: 'Function', type: 'n8n-nodes-base.function' }
+          { name: 'Function', type: 'n8n-nodes-base.function' },
         ],
-        connections: {}
+        connections: {},
       });
 
       expect(result.complexity).toBe(3); // 1 node + 2 for function
@@ -490,7 +490,7 @@ describeIntegration('n8n Tool Helpers', () => {
 
     test('should return zero complexity for missing nodes', async () => {
       const result = await executor.execute('calculate-workflow-complexity', {
-        connections: {}
+        connections: {},
       });
 
       expect(result).toEqual({ complexity: 0 });
@@ -507,11 +507,11 @@ describeIntegration('n8n Tool Helpers', () => {
         await executor.execute('validate-node-connections', {
           nodes: [
             { name: 'Start', type: 'n8n-nodes-base.start' },
-            { name: 'End', type: 'n8n-nodes-base.httpRequest' }
+            { name: 'End', type: 'n8n-nodes-base.httpRequest' },
           ],
           connections: {
-            'Start': { main: [[{ node: 'End' }]] }
-          }
+            'Start': { main: [[{ node: 'End' }]] },
+          },
         });
         const duration = Date.now() - start;
         durations.push(duration);

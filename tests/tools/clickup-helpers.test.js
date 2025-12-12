@@ -62,10 +62,10 @@ describeIntegration('ClickUp Tool Helpers', () => {
         response: {
           custom_fields: [
             { name: 'Priority', value: 'High' },
-            { name: 'Estimate', value: 1000 }
-          ]
+            { name: 'Estimate', value: 1000 },
+          ],
         },
-        fieldName: 'Priority'
+        fieldName: 'Priority',
       });
 
       expect(result).toEqual({ name: 'Priority', value: 'High' });
@@ -75,10 +75,10 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('extract-custom-field', {
         response: {
           custom_fields: [
-            { name: 'Priority', value: 'High' }
-          ]
+            { name: 'Priority', value: 'High' },
+          ],
         },
-        fieldName: 'NonExistent'
+        fieldName: 'NonExistent',
       });
 
       expect(result).toBeNull();
@@ -87,7 +87,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should return null if response missing custom_fields', async () => {
       const result = await executor.execute('extract-custom-field', {
         response: {},
-        fieldName: 'Priority'
+        fieldName: 'Priority',
       });
 
       expect(result).toBeNull();
@@ -96,7 +96,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should return null if response is null', async () => {
       const result = await executor.execute('extract-custom-field', {
         response: null,
-        fieldName: 'Priority'
+        fieldName: 'Priority',
       });
 
       expect(result).toBeNull();
@@ -108,10 +108,10 @@ describeIntegration('ClickUp Tool Helpers', () => {
           custom_fields: [
             { name: 'Field1', value: 'A' },
             { name: 'Field2', value: 'B' },
-            { name: 'Field3', value: 'C' }
-          ]
+            { name: 'Field3', value: 'C' },
+          ],
         },
-        fieldName: 'Field2'
+        fieldName: 'Field2',
       });
 
       expect(result).toEqual({ name: 'Field2', value: 'B' });
@@ -121,7 +121,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
   describeIntegration('format-assignee-for-create', () => {
     test('should return array as-is', async () => {
       const result = await executor.execute('format-assignee-for-create', {
-        assignees: [456, 789]
+        assignees: [456, 789],
       });
 
       expect(result).toEqual([456, 789]);
@@ -129,7 +129,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should convert single number to array', async () => {
       const result = await executor.execute('format-assignee-for-create', {
-        assignees: 456
+        assignees: 456,
       });
 
       expect(result).toEqual([456]);
@@ -137,7 +137,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return empty array if assignees is null', async () => {
       const result = await executor.execute('format-assignee-for-create', {
-        assignees: null
+        assignees: null,
       });
 
       expect(result).toEqual([]);
@@ -151,7 +151,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return empty array for invalid types', async () => {
       const result = await executor.execute('format-assignee-for-create', {
-        assignees: 'invalid'
+        assignees: 'invalid',
       });
 
       expect(result).toEqual([]);
@@ -162,52 +162,52 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should format with both add and remove arrays', async () => {
       const result = await executor.execute('format-assignee-for-update', {
         add: [999, 888],
-        remove: [456]
+        remove: [456],
       });
 
       expect(result).toEqual({
         add: [999, 888],
-        rem: [456]
+        rem: [456],
       });
     });
 
     test('should format with only add', async () => {
       const result = await executor.execute('format-assignee-for-update', {
-        add: [111, 222]
+        add: [111, 222],
       });
 
       expect(result).toEqual({
-        add: [111, 222]
+        add: [111, 222],
       });
     });
 
     test('should format with only remove', async () => {
       const result = await executor.execute('format-assignee-for-update', {
-        remove: [333]
+        remove: [333],
       });
 
       expect(result).toEqual({
-        rem: [333]
+        rem: [333],
       });
     });
 
     test('should convert single number add to array', async () => {
       const result = await executor.execute('format-assignee-for-update', {
-        add: 999
+        add: 999,
       });
 
       expect(result).toEqual({
-        add: [999]
+        add: [999],
       });
     });
 
     test('should convert single number remove to array', async () => {
       const result = await executor.execute('format-assignee-for-update', {
-        remove: 456
+        remove: 456,
       });
 
       expect(result).toEqual({
-        rem: [456]
+        rem: [456],
       });
     });
 
@@ -223,8 +223,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
           event: 'taskCreated',
-          payload: {}
-        }
+          payload: {},
+        },
       });
 
       expect(result).toBe('standard');
@@ -234,8 +234,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
           webhook_id: 'abc123',
-          data: {}
-        }
+          data: {},
+        },
       });
 
       expect(result).toBe('webhook_variant');
@@ -245,9 +245,9 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
           history_items: [
-            { field: 'status', before: 'todo', after: 'done' }
-          ]
-        }
+            { field: 'status', before: 'todo', after: 'done' },
+          ],
+        },
       });
 
       expect(result).toBe('history_items');
@@ -256,8 +256,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should return unknown for invalid payload', async () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
-          random_field: 'value'
-        }
+          random_field: 'value',
+        },
       });
 
       expect(result).toBe('unknown');
@@ -265,7 +265,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return unknown for null payload', async () => {
       const result = await executor.execute('parse-webhook-type', {
-        payload: null
+        payload: null,
       });
 
       expect(result).toBe('unknown');
@@ -275,8 +275,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('parse-webhook-type', {
         payload: {
           event: 'taskCreated',
-          webhook_id: 'abc123'
-        }
+          webhook_id: 'abc123',
+        },
       });
 
       expect(result).toBe('standard');
@@ -288,8 +288,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('extract-webhook-payload', {
         webhook: {
           event: 'taskCreated',
-          payload: { task: { id: '123' } }
-        }
+          payload: { task: { id: '123' } },
+        },
       });
 
       expect(result).toEqual({ task: { id: '123' } });
@@ -301,10 +301,10 @@ describeIntegration('ClickUp Tool Helpers', () => {
           webhook_id: 'abc123',
           data: {
             webhook: {
-              payload: { task: { id: '456' } }
-            }
-          }
-        }
+              payload: { task: { id: '456' } },
+            },
+          },
+        },
       });
 
       expect(result).toEqual({ task: { id: '456' } });
@@ -313,12 +313,12 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should extract from history_items format', async () => {
       const historyItems = {
         history_items: [
-          { field: 'status', before: 'todo', after: 'done' }
-        ]
+          { field: 'status', before: 'todo', after: 'done' },
+        ],
       };
 
       const result = await executor.execute('extract-webhook-payload', {
-        webhook: historyItems
+        webhook: historyItems,
       });
 
       expect(result).toEqual(historyItems);
@@ -327,8 +327,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should return null for unrecognized format', async () => {
       const result = await executor.execute('extract-webhook-payload', {
         webhook: {
-          random_field: 'value'
-        }
+          random_field: 'value',
+        },
       });
 
       expect(result).toBeNull();
@@ -336,7 +336,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return null if webhook is null', async () => {
       const result = await executor.execute('extract-webhook-payload', {
-        webhook: null
+        webhook: null,
       });
 
       expect(result).toBeNull();
@@ -352,12 +352,12 @@ describeIntegration('ClickUp Tool Helpers', () => {
                 task: {
                   id: '789',
                   name: 'Test Task',
-                  status: { status: 'in progress' }
-                }
-              }
-            }
-          }
-        }
+                  status: { status: 'in progress' },
+                },
+              },
+            },
+          },
+        },
       });
 
       expect(result.task.id).toBe('789');
@@ -371,8 +371,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
         timeEntries: [
           { duration: 3600000 },
           { duration: 1800000 },
-          { duration: 900000 }
-        ]
+          { duration: 900000 },
+        ],
       });
 
       expect(result).toBe(6300000);
@@ -381,8 +381,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should handle single entry', async () => {
       const result = await executor.execute('calculate-time-tracking-total', {
         timeEntries: [
-          { duration: 5000 }
-        ]
+          { duration: 5000 },
+        ],
       });
 
       expect(result).toBe(5000);
@@ -390,7 +390,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should handle empty array', async () => {
       const result = await executor.execute('calculate-time-tracking-total', {
-        timeEntries: []
+        timeEntries: [],
       });
 
       expect(result).toBe(0);
@@ -401,8 +401,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
         timeEntries: [
           { duration: 1000 },
           { id: 'entry2' },
-          { duration: 2000 }
-        ]
+          { duration: 2000 },
+        ],
       });
 
       expect(result).toBe(3000);
@@ -410,7 +410,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return 0 for null timeEntries', async () => {
       const result = await executor.execute('calculate-time-tracking-total', {
-        timeEntries: null
+        timeEntries: null,
       });
 
       expect(result).toBe(0);
@@ -418,7 +418,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
 
     test('should return 0 for non-array timeEntries', async () => {
       const result = await executor.execute('calculate-time-tracking-total', {
-        timeEntries: 'invalid'
+        timeEntries: 'invalid',
       });
 
       expect(result).toBe(0);
@@ -428,8 +428,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
       const result = await executor.execute('calculate-time-tracking-total', {
         timeEntries: [
           { duration: 36000000 },
-          { duration: 72000000 }
-        ]
+          { duration: 72000000 },
+        ],
       });
 
       expect(result).toBe(108000000);
@@ -440,72 +440,72 @@ describeIntegration('ClickUp Tool Helpers', () => {
     test('should format with id and value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-123',
-        value: 'High Priority'
+        value: 'High Priority',
       });
 
       expect(result).toEqual({
         id: 'field-uuid-123',
-        value: 'High Priority'
+        value: 'High Priority',
       });
     });
 
     test('should handle numeric value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-456',
-        value: 1000
+        value: 1000,
       });
 
       expect(result).toEqual({
         id: 'field-uuid-456',
-        value: 1000
+        value: 1000,
       });
     });
 
     test('should handle boolean value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-789',
-        value: true
+        value: true,
       });
 
       expect(result).toEqual({
         id: 'field-uuid-789',
-        value: true
+        value: true,
       });
     });
 
     test('should handle null value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-abc',
-        value: null
+        value: null,
       });
 
       expect(result).toEqual({
         id: 'field-uuid-abc',
-        value: null
+        value: null,
       });
     });
 
     test('should handle array value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-def',
-        value: ['option1', 'option2']
+        value: ['option1', 'option2'],
       });
 
       expect(result).toEqual({
         id: 'field-uuid-def',
-        value: ['option1', 'option2']
+        value: ['option1', 'option2'],
       });
     });
 
     test('should handle object value', async () => {
       const result = await executor.execute('format-custom-field-update', {
         fieldId: 'field-uuid-ghi',
-        value: { nested: 'object' }
+        value: { nested: 'object' },
       });
 
       expect(result).toEqual({
         id: 'field-uuid-ghi',
-        value: { nested: 'object' }
+        value: { nested: 'object' },
       });
     });
   });
@@ -518,7 +518,7 @@ describeIntegration('ClickUp Tool Helpers', () => {
       for (let i = 0; i < iterations; i++) {
         const start = Date.now();
         await executor.execute('format-assignee-for-create', {
-          assignees: [456, 789]
+          assignees: [456, 789],
         });
         const duration = Date.now() - start;
         durations.push(duration);
@@ -543,8 +543,8 @@ describeIntegration('ClickUp Tool Helpers', () => {
             { duration: 3600000 },
             { duration: 1800000 },
             { duration: 900000 },
-            { duration: 600000 }
-          ]
+            { duration: 600000 },
+          ],
         });
         const duration = Date.now() - start;
         durations.push(duration);

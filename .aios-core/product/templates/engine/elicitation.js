@@ -24,7 +24,7 @@ function mapQuestionType(type) {
     choice: 'list',
     multichoice: 'checkbox',
     password: 'password',
-    array: 'input'
+    array: 'input',
   };
 
   return typeMap[type] || 'input';
@@ -41,7 +41,7 @@ function createQuestion(variable, context = {}) {
     type: mapQuestionType(variable.type),
     name: variable.name,
     message: variable.prompt,
-    default: context[variable.name] ?? variable.default
+    default: context[variable.name] ?? variable.default,
   };
 
   // Add choices for choice/multichoice types
@@ -150,7 +150,7 @@ class VariableElicitation {
       dbdr: 'docs/decisions/dbdr-*.md',
       story: 'docs/stories/**/story-*.md',
       epic: 'docs/epics/epic-*.md',
-      task: 'docs/tasks/task-*.md'
+      task: 'docs/tasks/task-*.md',
     };
 
     const pattern = patterns[docType] || `**/${docType}-*.md`;
@@ -268,7 +268,7 @@ class VariableElicitation {
 
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -294,5 +294,5 @@ class VariableElicitation {
 module.exports = {
   VariableElicitation,
   createQuestion,
-  mapQuestionType
+  mapQuestionType,
 };

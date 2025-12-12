@@ -20,28 +20,28 @@ const TASKS_DIR = path.join(__dirname, '../tasks');
 const PERFORMANCE_BY_LAYER = {
   'Atom': {
     duration: '0.5-2 min (estimated)',
-    cost: '$0.0001-0.0005'
+    cost: '$0.0001-0.0005',
   },
   'Molecule': {
     duration: '2-5 min (estimated)',
-    cost: '$0.001-0.003'
+    cost: '$0.001-0.003',
   },
   'Organism': {
     duration: '5-15 min (estimated)',
-    cost: '$0.003-0.010'
+    cost: '$0.003-0.010',
   },
   'Template': {
     duration: '3-8 min (estimated)',
-    cost: '$0.002-0.005'
+    cost: '$0.002-0.005',
   },
   'Strategy': {
     duration: '5-20 min (estimated)',
-    cost: '$0.003-0.015'
+    cost: '$0.003-0.015',
   },
   'Config': {
     duration: '2-10 min (estimated)',
-    cost: '$0.001-0.008'
-  }
+    cost: '$0.001-0.008',
+  },
 };
 
 // Error strategy based on task type
@@ -60,7 +60,7 @@ const ERROR_STRATEGIES = {
     'github-devops-github-pr-automation.md',
     'pr-automation.md',
     'release-management.md',
-    'integrate-expansion-pack.md'
+    'integrate-expansion-pack.md',
   ],
   // Fallback: Degradable features, alternative approaches
   'fallback': [
@@ -76,7 +76,7 @@ const ERROR_STRATEGIES = {
     'security-scan.md',
     'db-analyze-hotpaths.md',
     'db-schema-audit.md',
-    'qa-nfr-assess.md'
+    'qa-nfr-assess.md',
   ],
   // Abort: Critical operations, data integrity
   'abort': [
@@ -90,8 +90,8 @@ const ERROR_STRATEGIES = {
     'db-policy-apply.md',
     'dev-develop-story.md',
     'qa-gate.md',
-    'execute-checklist.md'
-  ]
+    'execute-checklist.md',
+  ],
 };
 
 // Default to retry for tasks not explicitly mapped
@@ -127,7 +127,7 @@ function processTaskFile(filename) {
   if (!atomicLayer || !PERFORMANCE_BY_LAYER[atomicLayer]) {
     return { 
       skipped: true, 
-      reason: `atomic layer not found or invalid: ${atomicLayer}` 
+      reason: `atomic layer not found or invalid: ${atomicLayer}`, 
     };
   }
   
@@ -137,7 +137,7 @@ function processTaskFile(filename) {
   if (content.includes('duration_expected: {TODO: X minutes}')) {
     content = content.replace(
       /duration_expected: \{TODO: X minutes\}/g,
-      `duration_expected: ${PERFORMANCE_BY_LAYER[atomicLayer].duration}`
+      `duration_expected: ${PERFORMANCE_BY_LAYER[atomicLayer].duration}`,
     );
     modified = true;
   }
@@ -146,7 +146,7 @@ function processTaskFile(filename) {
   if (content.includes('cost_estimated: {TODO: $X}')) {
     content = content.replace(
       /cost_estimated: \{TODO: \$X\}/g,
-      `cost_estimated: ${PERFORMANCE_BY_LAYER[atomicLayer].cost}`
+      `cost_estimated: ${PERFORMANCE_BY_LAYER[atomicLayer].cost}`,
     );
     modified = true;
   }
@@ -156,7 +156,7 @@ function processTaskFile(filename) {
   if (content.includes('**Strategy:** {TODO: Fail-fast | Graceful degradation | Retry with backoff}')) {
     content = content.replace(
       /\*\*Strategy:\*\* \{TODO: Fail-fast \| Graceful degradation \| Retry with backoff\}/g,
-      `**Strategy:** ${errorStrategy}`
+      `**Strategy:** ${errorStrategy}`,
     );
     modified = true;
   }
@@ -174,7 +174,7 @@ function processTaskFile(filename) {
     atomicLayer,
     duration: PERFORMANCE_BY_LAYER[atomicLayer].duration,
     cost: PERFORMANCE_BY_LAYER[atomicLayer].cost,
-    errorStrategy
+    errorStrategy,
   };
 }
 
@@ -197,8 +197,8 @@ function main() {
     stats: {
       durationsSet: 0,
       costsSet: 0,
-      strategiesSet: 0
-    }
+      strategiesSet: 0,
+    },
   };
   
   // Process each file

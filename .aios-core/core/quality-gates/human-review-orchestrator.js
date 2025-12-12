@@ -63,7 +63,7 @@ class HumanReviewOrchestrator {
     const reviewRequest = await this.generateHumanReviewRequest(
       prContext,
       layer1Result,
-      layer2Result
+      layer2Result,
     );
 
     // Step 4: Send notification to human reviewer
@@ -80,8 +80,8 @@ class HumanReviewOrchestrator {
       reviewRequest,
       layers: {
         layer1: layer1Check,
-        layer2: layer2Check
-      }
+        layer2: layer2Check,
+      },
     };
   }
 
@@ -97,7 +97,7 @@ class HumanReviewOrchestrator {
         pass: false,
         layer: layerName,
         reason: `${layerName} not executed`,
-        issues: []
+        issues: [],
       };
     }
 
@@ -112,7 +112,7 @@ class HumanReviewOrchestrator {
       checksPassed: layerResult.checks?.passed || 0,
       checksFailed: layerResult.checks?.failed || 0,
       reason: pass ? `${layerName} passed` : `${layerName} failed`,
-      issues
+      issues,
     };
   }
 
@@ -132,7 +132,7 @@ class HumanReviewOrchestrator {
           check: result.check,
           message: result.message,
           severity: this.determineSeverity(result),
-          details: result.error || result.details || null
+          details: result.error || result.details || null,
         });
       }
     });
@@ -164,7 +164,7 @@ class HumanReviewOrchestrator {
   block(layerCheck, stoppedAt, startTime) {
     const blockMessages = {
       layer1: 'Fix linting, tests, and type errors before human review',
-      layer2: 'Fix CodeRabbit and Quinn issues before human review'
+      layer2: 'Fix CodeRabbit and Quinn issues before human review',
     };
 
     return {
@@ -175,7 +175,7 @@ class HumanReviewOrchestrator {
       message: blockMessages[stoppedAt] || 'Fix issues before proceeding',
       reason: layerCheck.reason,
       issues: layerCheck.issues,
-      fixFirst: this.generateFixRecommendations(layerCheck)
+      fixFirst: this.generateFixRecommendations(layerCheck),
     };
   }
 
@@ -191,7 +191,7 @@ class HumanReviewOrchestrator {
       const rec = {
         issue: issue.message,
         severity: issue.severity,
-        suggestion: null
+        suggestion: null,
       };
 
       switch (issue.check) {
@@ -232,7 +232,7 @@ class HumanReviewOrchestrator {
     const focusAreas = await this.focusRecommender.recommend({
       prContext,
       layer1Result,
-      layer2Result
+      layer2Result,
     });
 
     // Generate summary from automated reviews
@@ -248,7 +248,7 @@ class HumanReviewOrchestrator {
       estimatedTime: this.estimateReviewTime(focusAreas),
       reviewer: await this.assignReviewer(prContext),
       status: 'pending',
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours
     };
   }
 
@@ -262,13 +262,13 @@ class HumanReviewOrchestrator {
     const summary = {
       layer1: {
         status: layer1Result?.pass ? 'passed' : 'failed',
-        checks: []
+        checks: [],
       },
       layer2: {
         status: layer2Result?.pass ? 'passed' : 'failed',
         coderabbit: null,
-        quinn: null
-      }
+        quinn: null,
+      },
     };
 
     // Layer 1 summary
@@ -277,7 +277,7 @@ class HumanReviewOrchestrator {
         summary.layer1.checks.push({
           check: r.check,
           status: r.pass ? 'passed' : (r.skipped ? 'skipped' : 'failed'),
-          message: r.message
+          message: r.message,
         });
       });
     }
@@ -288,7 +288,7 @@ class HumanReviewOrchestrator {
       summary.layer2.coderabbit = {
         status: coderabbitResult.pass ? 'passed' : (coderabbitResult.skipped ? 'skipped' : 'issues_found'),
         issues: coderabbitResult.issues || { critical: 0, high: 0, medium: 0, low: 0 },
-        details: coderabbitResult.details?.slice(0, 5) || [] // Top 5 issues
+        details: coderabbitResult.details?.slice(0, 5) || [], // Top 5 issues
       };
     }
 
@@ -299,7 +299,7 @@ class HumanReviewOrchestrator {
         status: quinnResult.pass ? 'passed' : (quinnResult.skipped ? 'skipped' : 'issues_found'),
         suggestions: quinnResult.suggestions || 0,
         blocking: quinnResult.blocking || 0,
-        details: quinnResult.details?.slice(0, 5) || [] // Top 5 suggestions
+        details: quinnResult.details?.slice(0, 5) || [], // Top 5 suggestions
       };
     }
 
@@ -371,13 +371,13 @@ class HumanReviewOrchestrator {
     // Only allow alphanumeric, hyphens, underscores, and dots
     const validIdPattern = /^[A-Za-z0-9_.-]+$/;
     if (!validIdPattern.test(id)) {
-      throw new Error(`Invalid request ID: contains disallowed characters`);
+      throw new Error('Invalid request ID: contains disallowed characters');
     }
 
     // Ensure the ID doesn't resolve outside the intended directory
     const sanitizedId = path.basename(id);
     if (sanitizedId !== id) {
-      throw new Error(`Invalid request ID: path traversal detected`);
+      throw new Error('Invalid request ID: path traversal detected');
     }
 
     return id;
@@ -403,7 +403,7 @@ class HumanReviewOrchestrator {
 
     const requestPath = path.join(
       this.reviewRequestsPath,
-      `${validatedId}.json`
+      `${validatedId}.json`,
     );
 
     // Additional containment check
@@ -441,7 +441,7 @@ class HumanReviewOrchestrator {
         createdAt: reviewRequest.createdAt,
         reviewer: reviewRequest.reviewer,
         status: reviewRequest.status,
-        estimatedTime: reviewRequest.estimatedTime
+        estimatedTime: reviewRequest.estimatedTime,
       };
 
       // Update reviewer index for round-robin
@@ -475,7 +475,7 @@ class HumanReviewOrchestrator {
         if (file.endsWith('.json')) {
           const content = await fs.readFile(
             path.join(this.reviewRequestsPath, file),
-            'utf8'
+            'utf8',
           );
           const request = JSON.parse(content);
           if (request.status === 'pending') {

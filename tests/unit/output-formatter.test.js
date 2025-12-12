@@ -26,11 +26,11 @@ describe('PersonalizedOutputFormatter', () => {
     mockAgent = {
       id: 'dev',
       name: 'Dex',
-      title: 'Full Stack Developer'
+      title: 'Full Stack Developer',
     };
 
     mockTask = {
-      name: 'develop-story'
+      name: 'develop-story',
     };
 
     mockResults = {
@@ -42,7 +42,7 @@ describe('PersonalizedOutputFormatter', () => {
       output: 'Task completed successfully.',
       tests: { passed: 12, total: 12 },
       coverage: 87,
-      linting: { status: '✅ Clean' }
+      linting: { status: '✅ Clean' },
     };
 
     // Mock agent file content
@@ -204,7 +204,7 @@ persona_profile:
     test('graceful degradation if vocabulary missing', () => {
       const agentWithoutVocab = {
         id: 'test',
-        name: 'Test'
+        name: 'Test',
       };
 
       const mockContent = `# test
@@ -259,7 +259,7 @@ persona_profile:
       { id: 'ux-design-expert', name: 'Uma', archetype: 'Empathizer', tone: 'empathetic' },
       { id: 'data-engineer', name: 'Dara', archetype: 'Engineer', tone: 'pragmatic' },
       { id: 'devops', name: 'Gage', archetype: 'Operator', tone: 'pragmatic' },
-      { id: 'aios-master', name: 'Orion', archetype: 'Orchestrator', tone: 'collaborative' }
+      { id: 'aios-master', name: 'Orion', archetype: 'Orchestrator', tone: 'collaborative' },
     ];
 
     agents.forEach(agent => {
@@ -284,7 +284,7 @@ persona_profile:
         const formatter = new PersonalizedOutputFormatter(
           { id: agent.id, name: agent.name },
           mockTask,
-          mockResults
+          mockResults,
         );
         const output = formatter.format();
 

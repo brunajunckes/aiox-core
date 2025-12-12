@@ -16,7 +16,7 @@ const {
   writeGlobalConfig,
   globalConfigExists,
   createGlobalStructure,
-  createGlobalConfig
+  createGlobalConfig,
 } = require('./global-config-manager');
 const { getProjectMcpPath, checkLinkStatus, LINK_STATUS, createLink } = require('./symlink-manager');
 
@@ -27,7 +27,7 @@ const { getProjectMcpPath, checkLinkStatus, LINK_STATUS, createLink } = require(
 const MIGRATION_OPTION = {
   MIGRATE: 'migrate',
   KEEP_PROJECT: 'keep_project',
-  MERGE: 'merge'
+  MERGE: 'merge',
 };
 
 /**
@@ -40,7 +40,7 @@ function detectProjectConfig(projectRoot = process.cwd()) {
     path.join(projectRoot, '.aios-core', 'tools', 'mcp', 'global-config.json'),
     path.join(projectRoot, '.aios-core', 'mcp.json'),
     path.join(projectRoot, '.claude', 'mcp.json'),
-    path.join(projectRoot, 'mcp.json')
+    path.join(projectRoot, 'mcp.json'),
   ];
 
   for (const configPath of possiblePaths) {
@@ -53,7 +53,7 @@ function detectProjectConfig(projectRoot = process.cwd()) {
           found: true,
           path: configPath,
           config,
-          serverCount: config.servers ? Object.keys(config.servers).length : 0
+          serverCount: config.servers ? Object.keys(config.servers).length : 0,
         };
       } catch (error) {
         // Continue to next path
@@ -74,7 +74,7 @@ function detectProjectConfig(projectRoot = process.cwd()) {
           path: claudeConfigPath,
           config: { servers: config.mcpServers, version: '1.0' },
           serverCount: Object.keys(config.mcpServers).length,
-          isLegacyFormat: true
+          isLegacyFormat: true,
         };
       }
     } catch (error) {
@@ -86,7 +86,7 @@ function detectProjectConfig(projectRoot = process.cwd()) {
     found: false,
     path: null,
     config: null,
-    serverCount: 0
+    serverCount: 0,
   };
 }
 
@@ -134,7 +134,7 @@ function analyzeMigration(projectRoot = process.cwd()) {
     message,
     projectConfig,
     hasGlobalConfig,
-    linkStatus
+    linkStatus,
   };
 }
 
@@ -151,7 +151,7 @@ function mergeServers(existing = {}, incoming = {}, options = {}) {
     kept: Object.keys(existing).length,
     added: 0,
     skipped: 0,
-    conflicts: []
+    conflicts: [],
   };
 
   for (const [name, config] of Object.entries(incoming)) {
@@ -188,7 +188,7 @@ function executeMigration(projectRoot = process.cwd(), option = MIGRATION_OPTION
     return {
       success: true,
       message: 'Already linked to global config.',
-      action: 'none'
+      action: 'none',
     };
   }
 
@@ -197,7 +197,7 @@ function executeMigration(projectRoot = process.cwd(), option = MIGRATION_OPTION
     return {
       success: true,
       message: 'Keeping project-level config. No changes made.',
-      action: 'none'
+      action: 'none',
     };
   }
 
@@ -207,7 +207,7 @@ function executeMigration(projectRoot = process.cwd(), option = MIGRATION_OPTION
     serversMigrated: 0,
     linkCreated: false,
     backupPath: null,
-    errors: []
+    errors: [],
   };
 
   try {
@@ -246,7 +246,7 @@ function executeMigration(projectRoot = process.cwd(), option = MIGRATION_OPTION
       const mergeResult = mergeServers(
         globalConfig.servers,
         projectServers,
-        { overwrite: options.overwrite }
+        { overwrite: options.overwrite },
       );
 
       globalConfig.servers = mergeResult.servers;
@@ -285,14 +285,14 @@ function executeMigration(projectRoot = process.cwd(), option = MIGRATION_OPTION
     return {
       success: results.errors.length === 0,
       results,
-      errors: results.errors
+      errors: results.errors,
     };
   } catch (error) {
     results.errors.push(`Migration failed: ${error.message}`);
     return {
       success: false,
       results,
-      errors: results.errors
+      errors: results.errors,
     };
   }
 }
@@ -336,5 +336,5 @@ module.exports = {
   analyzeMigration,
   mergeServers,
   executeMigration,
-  restoreFromBackup
+  restoreFromBackup,
 };

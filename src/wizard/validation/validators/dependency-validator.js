@@ -27,7 +27,7 @@ async function validateDependencies(depsContext = {}) {
     success: true,
     checks: [],
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   try {
@@ -37,7 +37,7 @@ async function validateDependencies(depsContext = {}) {
       results.errors.push({
         severity: 'critical',
         message: 'Dependencies not installed - installation failed',
-        code: 'DEPS_INSTALL_FAILED'
+        code: 'DEPS_INSTALL_FAILED',
       });
       return results;
     }
@@ -68,7 +68,7 @@ async function validateDependencies(depsContext = {}) {
           component: 'Dependencies',
           file: 'node_modules',
           status: 'skipped',
-          message: 'No dependencies defined in package.json (greenfield project)'
+          message: 'No dependencies defined in package.json (greenfield project)',
         });
         return results;
       }
@@ -79,7 +79,7 @@ async function validateDependencies(depsContext = {}) {
         severity: 'critical',
         message: 'node_modules directory not found',
         file: nodeModulesPath,
-        code: 'NODE_MODULES_MISSING'
+        code: 'NODE_MODULES_MISSING',
       });
       return results;
     }
@@ -88,7 +88,7 @@ async function validateDependencies(depsContext = {}) {
       component: 'Dependencies',
       file: 'node_modules',
       status: 'success',
-      message: 'Directory exists'
+      message: 'Directory exists',
     });
 
     // Validate package.json integrity
@@ -109,7 +109,7 @@ async function validateDependencies(depsContext = {}) {
       severity: 'high',
       message: `Dependency validation failed: ${error.message}`,
       code: 'DEPS_VALIDATION_ERROR',
-      details: error.stack
+      details: error.stack,
     });
     results.success = false;
 
@@ -129,7 +129,7 @@ async function validatePackageJson(results) {
       severity: 'critical',
       message: 'package.json not found',
       file: packageJsonPath,
-      code: 'PACKAGE_JSON_MISSING'
+      code: 'PACKAGE_JSON_MISSING',
     });
     results.success = false;
     return;
@@ -143,7 +143,7 @@ async function validatePackageJson(results) {
         severity: 'medium',
         message: 'package.json has no dependencies',
         file: packageJsonPath,
-        code: 'NO_DEPENDENCIES'
+        code: 'NO_DEPENDENCIES',
       });
     }
 
@@ -151,14 +151,14 @@ async function validatePackageJson(results) {
       component: 'Package Manifest',
       file: packageJsonPath,
       status: 'success',
-      message: 'Valid JSON'
+      message: 'Valid JSON',
     });
   } catch (error) {
     results.errors.push({
       severity: 'high',
       message: `package.json parsing failed: ${error.message}`,
       file: packageJsonPath,
-      code: 'PACKAGE_JSON_PARSE_ERROR'
+      code: 'PACKAGE_JSON_PARSE_ERROR',
     });
     results.success = false;
   }
@@ -174,7 +174,7 @@ async function checkCriticalDependencies(results) {
     'chalk',
     'yaml',
     'fs-extra',
-    '@clack/prompts'
+    '@clack/prompts',
   ];
 
   const nodeModulesPath = path.join(process.cwd(), 'node_modules');
@@ -192,13 +192,13 @@ async function checkCriticalDependencies(results) {
       severity: 'high',
       message: `Critical dependencies missing: ${missingDeps.join(', ')}`,
       code: 'CRITICAL_DEPS_MISSING',
-      solution: 'Re-run dependency installation'
+      solution: 'Re-run dependency installation',
     });
   } else {
     results.checks.push({
       component: 'Critical Dependencies',
       status: 'success',
-      message: `All ${criticalDeps.length} critical dependencies installed`
+      message: `All ${criticalDeps.length} critical dependencies installed`,
     });
   }
 }
@@ -213,7 +213,7 @@ async function runSecurityAudit(results, packageManager = 'npm') {
 
     const { stdout } = await execAsync(auditCommand, {
       timeout: 10000,
-      cwd: process.cwd()
+      cwd: process.cwd(),
     });
 
     let auditResults;
@@ -234,13 +234,13 @@ async function runSecurityAudit(results, packageManager = 'npm') {
             severity: vulnerabilities.critical > 0 ? 'high' : 'medium',
             message: `${total} vulnerabilities found (${vulnerabilities.critical} critical, ${vulnerabilities.high} high, ${vulnerabilities.moderate} moderate, ${vulnerabilities.low} low)`,
             code: 'VULNERABILITIES_FOUND',
-            solution: `Run 'npm audit fix' to resolve`
+            solution: 'Run \'npm audit fix\' to resolve',
           });
         } else {
           results.checks.push({
             component: 'Security Audit',
             status: 'success',
-            message: 'No vulnerabilities found'
+            message: 'No vulnerabilities found',
           });
         }
       }
@@ -249,7 +249,7 @@ async function runSecurityAudit(results, packageManager = 'npm') {
       results.checks.push({
         component: 'Security Audit',
         status: 'skipped',
-        message: 'Yarn audit not implemented in validation'
+        message: 'Yarn audit not implemented in validation',
       });
     }
   } catch (error) {
@@ -271,7 +271,7 @@ async function runSecurityAudit(results, packageManager = 'npm') {
             severity: vulnerabilities.critical > 0 ? 'high' : 'medium',
             message: `${total} vulnerabilities found`,
             code: 'VULNERABILITIES_FOUND',
-            solution: `Run '${packageManager} audit fix' to resolve`
+            solution: `Run '${packageManager} audit fix' to resolve`,
           });
         }
       } catch {
@@ -279,7 +279,7 @@ async function runSecurityAudit(results, packageManager = 'npm') {
         results.checks.push({
           component: 'Security Audit',
           status: 'skipped',
-          message: 'Audit output could not be parsed'
+          message: 'Audit output could not be parsed',
         });
       }
     } else {
@@ -287,7 +287,7 @@ async function runSecurityAudit(results, packageManager = 'npm') {
       results.checks.push({
         component: 'Security Audit',
         status: 'skipped',
-        message: 'Audit failed to run'
+        message: 'Audit failed to run',
       });
     }
   }
@@ -316,18 +316,18 @@ async function countInstalledPackages(results, nodeModulesPath) {
     results.checks.push({
       component: 'Package Count',
       status: 'success',
-      message: `${packageCount} packages installed`
+      message: `${packageCount} packages installed`,
     });
   } catch {
     // Not critical if we can't count packages
     results.checks.push({
       component: 'Package Count',
       status: 'skipped',
-      message: 'Could not count packages'
+      message: 'Could not count packages',
     });
   }
 }
 
 module.exports = {
-  validateDependencies
+  validateDependencies,
 };

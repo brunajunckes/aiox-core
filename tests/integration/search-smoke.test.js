@@ -101,7 +101,7 @@ describe('Smoke Tests - Search CLI', () => {
       const filteredResults = applyFilters(results, { tags: [targetTag] });
 
       expect(filteredResults.every(r => r.tags && r.tags.some(t =>
-        t.toLowerCase().includes(targetTag.toLowerCase())
+        t.toLowerCase().includes(targetTag.toLowerCase()),
       ))).toBe(true);
 
       console.log(`SEARCH-05: Filtered by tag "${targetTag}" returned ${filteredResults.length} results`);

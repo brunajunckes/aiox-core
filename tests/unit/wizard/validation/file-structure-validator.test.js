@@ -24,7 +24,7 @@ describe('File Structure Validator', () => {
         ideConfigs: ['.cursor/settings.json', '.windsurf/settings.json'],
         env: '.env',
         coreConfig: '.aios-core/core-config.yaml',
-        mcpConfig: '.mcp.json'
+        mcpConfig: '.mcp.json',
       };
 
       // When
@@ -41,7 +41,7 @@ describe('File Structure Validator', () => {
       fs.existsSync.mockImplementation((path) => path !== '.env');
 
       const fileContext = {
-        env: '.env'
+        env: '.env',
       };
 
       // When
@@ -53,9 +53,9 @@ describe('File Structure Validator', () => {
         expect.arrayContaining([
           expect.objectContaining({
             severity: 'critical',
-            code: 'ENV_FILE_MISSING'
-          })
-        ])
+            code: 'ENV_FILE_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -64,7 +64,7 @@ describe('File Structure Validator', () => {
       fs.existsSync.mockImplementation((path) => path !== '.aios-core/core-config.yaml');
 
       const fileContext = {
-        coreConfig: '.aios-core/core-config.yaml'
+        coreConfig: '.aios-core/core-config.yaml',
       };
 
       // When
@@ -76,9 +76,9 @@ describe('File Structure Validator', () => {
         expect.arrayContaining([
           expect.objectContaining({
             severity: 'high',
-            code: 'CORE_CONFIG_MISSING'
-          })
-        ])
+            code: 'CORE_CONFIG_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -87,7 +87,7 @@ describe('File Structure Validator', () => {
       fs.existsSync.mockImplementation((path) => path !== '.mcp.json');
 
       const fileContext = {
-        mcpConfig: '.mcp.json'
+        mcpConfig: '.mcp.json',
       };
 
       // When
@@ -97,9 +97,9 @@ describe('File Structure Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'MCP_CONFIG_MISSING'
-          })
-        ])
+            code: 'MCP_CONFIG_MISSING',
+          }),
+        ]),
       );
     });
 
@@ -108,7 +108,7 @@ describe('File Structure Validator', () => {
       fs.existsSync.mockReturnValue(true);
 
       const fileContext = {
-        ideConfigs: ['.cursor/settings.json', '.windsurf/settings.json']
+        ideConfigs: ['.cursor/settings.json', '.windsurf/settings.json'],
       };
 
       // When
@@ -137,9 +137,9 @@ describe('File Structure Validator', () => {
         expect.arrayContaining([
           expect.objectContaining({
             severity: 'critical',
-            code: 'VALIDATION_ERROR'
-          })
-        ])
+            code: 'VALIDATION_ERROR',
+          }),
+        ]),
       );
     });
 
@@ -150,7 +150,7 @@ describe('File Structure Validator', () => {
 
       fs.existsSync.mockReturnValue(true);
       fs.statSync.mockReturnValue({
-        mode: parseInt('0644', 8) | (fs.constants?.S_IFREG || 0)
+        mode: parseInt('0644', 8) | (fs.constants?.S_IFREG || 0),
       });
 
       const fileContext = { env: '.env' };
@@ -162,9 +162,9 @@ describe('File Structure Validator', () => {
       expect(result.warnings).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            code: 'ENV_PERMISSIONS_INSECURE'
-          })
-        ])
+            code: 'ENV_PERMISSIONS_INSECURE',
+          }),
+        ]),
       );
 
       // Cleanup

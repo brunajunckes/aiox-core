@@ -50,8 +50,8 @@ describe('Tools System Integration', () => {
                   }
                   return { valid: errors.length === 0, errors };
                 })();
-              `
-            }
+              `,
+            },
           ],
           helpers: [
             {
@@ -66,10 +66,10 @@ describe('Tools System Integration', () => {
                     created: new Date().toISOString()
                   };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'create_task.yaml'), toolDef);
@@ -89,14 +89,14 @@ describe('Tools System Integration', () => {
 
       const validResult = await validator.validate('create_task', {
         title: 'Test Task',
-        priority: 2
+        priority: 2,
       });
       expect(validResult.valid).toBe(true);
       expect(validResult.errors).toEqual([]);
 
       const invalidResult = await validator.validate('create_task', {
         title: 'Test Task',
-        priority: 5 // Invalid priority
+        priority: 5, // Invalid priority
       });
       expect(invalidResult.valid).toBe(false);
       expect(invalidResult.errors).toContain('Priority must be between 1 and 4');
@@ -106,13 +106,13 @@ describe('Tools System Integration', () => {
 
       const result = await executor.execute('format_task', {
         title: 'integration test',
-        priority: 3
+        priority: 3,
       });
 
       expect(result).toMatchObject({
         title: 'INTEGRATION TEST',
         priority: 3,
-        status: 'pending'
+        status: 'pending',
       });
       expect(result.created).toBeDefined();
     });
@@ -138,8 +138,8 @@ describe('Tools System Integration', () => {
                   }
                   return { valid: true, errors: [] };
                 })();
-              `
-            }
+              `,
+            },
           ],
           helpers: [
             {
@@ -149,10 +149,10 @@ describe('Tools System Integration', () => {
                 (function() {
                   return { id: args.id, updated: true };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'update_item.yaml'), toolDef);
@@ -190,10 +190,10 @@ describe('Tools System Integration', () => {
                 (function() {
                   return { version: 'core', value: args.value };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'shared_tool.yaml'), coreTool);
@@ -215,22 +215,22 @@ describe('Tools System Integration', () => {
                 (function() {
                   return { version: 'expansion', value: args.value * 2 };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(
         path.join(testExpansionDir, 'test-pack/tools/shared_tool.yaml'),
-        expansionTool
+        expansionTool,
       );
 
       // 3. Configure resolver with expansion pack first (higher priority)
       toolResolver.clearCache();
       toolResolver.setSearchPaths([
         path.join(testExpansionDir, 'test-pack/tools'),
-        testToolsDir
+        testToolsDir,
       ]);
 
       // 4. Resolve tool - should get expansion pack version
@@ -259,10 +259,10 @@ describe('Tools System Integration', () => {
             {
               id: 'core_helper',
               language: 'javascript',
-              function: `(function() { return { source: 'core' }; })();`
-            }
-          ]
-        }
+              function: '(function() { return { source: \'core\' }; })();',
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'core_only_tool.yaml'), coreTool);
@@ -270,7 +270,7 @@ describe('Tools System Integration', () => {
       toolResolver.clearCache();
       toolResolver.setSearchPaths([
         path.join(testExpansionDir, 'test-pack/tools'), // No tool here
-        testToolsDir // Tool exists here
+        testToolsDir, // Tool exists here
       ]);
 
       const tool = await toolResolver.resolveTool('core_only_tool');
@@ -306,10 +306,10 @@ describe('Tools System Integration', () => {
                   }
                   return { valid: true, errors: [] };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       const tool2 = {
@@ -324,10 +324,10 @@ describe('Tools System Integration', () => {
             {
               id: 'update_helper',
               language: 'javascript',
-              function: `(function() { return { updated: true }; })();`
-            }
-          ]
-        }
+              function: '(function() { return { updated: true }; })();',
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'create_item.yaml'), tool1);
@@ -410,7 +410,7 @@ describe('Tools System Integration', () => {
                   }
                   return { valid: true, errors: [] };
                 })();
-              `
+              `,
             },
             {
               id: 'permission_validator',
@@ -426,8 +426,8 @@ describe('Tools System Integration', () => {
                   }
                   return { valid: true, errors: [] };
                 })();
-              `
-            }
+              `,
+            },
           ],
           helpers: [
             {
@@ -440,7 +440,7 @@ describe('Tools System Integration', () => {
                     count: args.data.length
                   };
                 })();
-              `
+              `,
             },
             {
               id: 'format_result',
@@ -453,10 +453,10 @@ describe('Tools System Integration', () => {
                     user: args.user
                   };
                 })();
-              `
-            }
-          ]
-        }
+              `,
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'complex_operation.yaml'), complexTool);
@@ -469,18 +469,18 @@ describe('Tools System Integration', () => {
 
       // Test input validation
       const inputValidation = await validator.validate('validate_input', {
-        data: [1, 2, 3]
+        data: [1, 2, 3],
       });
       expect(inputValidation.valid).toBe(true);
 
       // Test permission validation
       const permValidation = await validator.validate('validate_permission', {
-        user: { role: 'admin' }
+        user: { role: 'admin' },
       });
       expect(permValidation.valid).toBe(true);
 
       const permFailure = await validator.validate('validate_permission', {
-        user: { role: 'user' }
+        user: { role: 'user' },
       });
       expect(permFailure.valid).toBe(false);
 
@@ -489,7 +489,7 @@ describe('Tools System Integration', () => {
 
       // Execute data processing
       const processResult = await executor.execute('process_data', {
-        data: [1, 2, 3]
+        data: [1, 2, 3],
       });
       expect(processResult.processed).toEqual([2, 4, 6]);
       expect(processResult.count).toBe(3);
@@ -497,7 +497,7 @@ describe('Tools System Integration', () => {
       // Execute result formatting
       const formatResult = await executor.execute('format_result', {
         processedData: processResult.processed,
-        user: { role: 'admin', id: 123 }
+        user: { role: 'admin', id: 123 },
       });
       expect(formatResult.result).toEqual([2, 4, 6]);
       expect(formatResult.user).toEqual({ role: 'admin', id: 123 });
@@ -517,10 +517,10 @@ describe('Tools System Integration', () => {
             {
               id: 'cache_helper',
               language: 'javascript',
-              function: `(function() { return { cached: true }; })();`
-            }
-          ]
-        }
+              function: '(function() { return { cached: true }; })();',
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'cacheable_tool.yaml'), tool);
@@ -571,10 +571,10 @@ describe('Tools System Integration', () => {
               id: 'broken_validator',
               validates: 'test_command',
               language: 'javascript',
-              function: 'function invalid( { // Invalid syntax'
-            }
-          ]
-        }
+              function: 'function invalid( { // Invalid syntax',
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'invalid_validator_tool.yaml'), invalidTool);
@@ -603,10 +603,10 @@ describe('Tools System Integration', () => {
             {
               id: 'broken_helper',
               language: 'javascript',
-              function: 'throw new Error("Intentional error");'
-            }
-          ]
-        }
+              function: 'throw new Error("Intentional error");',
+            },
+          ],
+        },
       };
 
       await fs.writeJSON(path.join(testToolsDir, 'invalid_helper_tool.yaml'), invalidTool);

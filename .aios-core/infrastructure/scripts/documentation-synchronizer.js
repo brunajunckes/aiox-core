@@ -28,7 +28,7 @@ class DocumentationSynchronizer extends EventEmitter {
       docFormats: options.docFormats || ['.md', '.yaml', '.yml', '.json'],
       codeFormats: options.codeFormats || ['.js', '.jsx', '.ts', '.tsx'],
       syncStrategies: options.syncStrategies || ['jsdoc', 'markdown', 'schema', 'api', 'examples'],
-      ...options
+      ...options,
     };
     
     this.syncStrategies = new Map();
@@ -46,7 +46,7 @@ class DocumentationSynchronizer extends EventEmitter {
       description: 'Sync JSDoc comments with markdown documentation',
       detector: this.detectJSDocChanges.bind(this),
       synchronizer: this.syncJSDoc.bind(this),
-      priority: 'high'
+      priority: 'high',
     });
 
     // Markdown documentation
@@ -55,7 +55,7 @@ class DocumentationSynchronizer extends EventEmitter {
       description: 'Update markdown files with code changes',
       detector: this.detectMarkdownChanges.bind(this),
       synchronizer: this.syncMarkdown.bind(this),
-      priority: 'medium'
+      priority: 'medium',
     });
 
     // Schema synchronization
@@ -64,7 +64,7 @@ class DocumentationSynchronizer extends EventEmitter {
       description: 'Sync YAML/JSON schemas with code structures',
       detector: this.detectSchemaChanges.bind(this),
       synchronizer: this.syncSchema.bind(this),
-      priority: 'high'
+      priority: 'high',
     });
 
     // API documentation
@@ -73,7 +73,7 @@ class DocumentationSynchronizer extends EventEmitter {
       description: 'Update API documentation with endpoint changes',
       detector: this.detectAPIChanges.bind(this),
       synchronizer: this.syncAPI.bind(this),
-      priority: 'high'
+      priority: 'high',
     });
 
     // Code examples
@@ -82,7 +82,7 @@ class DocumentationSynchronizer extends EventEmitter {
       description: 'Update code examples in documentation',
       detector: this.detectExampleChanges.bind(this),
       synchronizer: this.syncExamples.bind(this),
-      priority: 'medium'
+      priority: 'medium',
     });
   }
 
@@ -96,7 +96,7 @@ class DocumentationSynchronizer extends EventEmitter {
       
       this.emit('initialized', {
         documentationFiles: this.documentationIndex.size,
-        syncedComponents: this.syncedComponents.size
+        syncedComponents: this.syncedComponents.size,
       });
       
     } catch (error) {
@@ -118,7 +118,7 @@ class DocumentationSynchronizer extends EventEmitter {
           content,
           metadata,
           lastSync: null,
-          linkedComponents: []
+          linkedComponents: [],
         });
       } catch (error) {
         console.warn(`Failed to index documentation: ${docFile}`, error);
@@ -170,7 +170,7 @@ class DocumentationSynchronizer extends EventEmitter {
       codeBlocks: [],
       schemas: [],
       apis: [],
-      lastModified: null
+      lastModified: null,
     };
     
     const ext = path.extname(filePath);
@@ -193,7 +193,7 @@ class DocumentationSynchronizer extends EventEmitter {
           language: match[1] || 'text',
           code: match[2].trim(),
           startIndex: match.index,
-          endIndex: match.index + match[0].length
+          endIndex: match.index + match[0].length,
         });
       }
       
@@ -203,7 +203,7 @@ class DocumentationSynchronizer extends EventEmitter {
         if (match[2].endsWith('.js') || match[2].endsWith('.ts')) {
           metadata.linkedFiles.push({
             text: match[1],
-            path: match[2]
+            path: match[2],
           });
         }
       }
@@ -237,7 +237,7 @@ class DocumentationSynchronizer extends EventEmitter {
           docPath: docPath,
           type: relationship.type,
           lastSync: null,
-          syncStrategies: relationship.strategies
+          syncStrategies: relationship.strategies,
         });
         
         docInfo.linkedComponents.push(relationship.codePath);
@@ -258,7 +258,7 @@ class DocumentationSynchronizer extends EventEmitter {
         relationships.push({
           codePath,
           type: 'same-name',
-          strategies: ['jsdoc', 'examples']
+          strategies: ['jsdoc', 'examples'],
         });
       }
     }
@@ -270,7 +270,7 @@ class DocumentationSynchronizer extends EventEmitter {
         relationships.push({
           codePath,
           type: 'referenced',
-          strategies: ['jsdoc', 'api', 'examples']
+          strategies: ['jsdoc', 'api', 'examples'],
         });
       }
     }
@@ -278,7 +278,7 @@ class DocumentationSynchronizer extends EventEmitter {
     // Strategy 3: Agent/Task/Workflow documentation
     if (docPath.includes('agents') || docPath.includes('tasks') || docPath.includes('workflows')) {
       const componentType = docPath.includes('agents') ? 'agent' :
-                          docPath.includes('tasks') ? 'task' : 'workflow';
+        docPath.includes('tasks') ? 'task' : 'workflow';
       
       // Find manifest file
       const manifestPath = path.join(docDir, 'manifest.yaml');
@@ -286,7 +286,7 @@ class DocumentationSynchronizer extends EventEmitter {
         relationships.push({
           codePath: manifestPath,
           type: componentType,
-          strategies: ['schema', 'markdown']
+          strategies: ['schema', 'markdown'],
         });
       }
     }
@@ -322,20 +322,20 @@ class DocumentationSynchronizer extends EventEmitter {
             componentPath,
             component.docPath,
             detected,
-            options
+            options,
           );
           
           changes.push({
             strategy: strategyName,
             changes: result.changes,
-            success: result.success
+            success: result.success,
           });
         }
       } catch (error) {
         changes.push({
           strategy: strategyName,
           error: error.message,
-          success: false
+          success: false,
         });
       }
     }
@@ -350,13 +350,13 @@ class DocumentationSynchronizer extends EventEmitter {
       componentPath,
       docPath: component.docPath,
       changes,
-      success: changes.every(c => c.success)
+      success: changes.every(c => c.success),
     });
     
     this.emit('synchronized', {
       componentPath,
       docPath: component.docPath,
-      changes
+      changes,
     });
     
     return changes;
@@ -377,7 +377,7 @@ class DocumentationSynchronizer extends EventEmitter {
         const docSection = this.findDocumentationSection(
           docContent,
           jsdoc.name,
-          jsdoc.type
+          jsdoc.type,
         );
         
         if (docSection) {
@@ -389,7 +389,7 @@ class DocumentationSynchronizer extends EventEmitter {
               name: jsdoc.name,
               jsdoc,
               docSection,
-              diff
+              diff,
             });
           }
         } else {
@@ -397,7 +397,7 @@ class DocumentationSynchronizer extends EventEmitter {
           changes.push({
             type: 'jsdoc-new',
             name: jsdoc.name,
-            jsdoc
+            jsdoc,
           });
         }
       }
@@ -415,7 +415,7 @@ class DocumentationSynchronizer extends EventEmitter {
       const ast = parser.parse(codeContent, {
         sourceType: 'module',
         plugins: ['jsx', 'typescript'],
-        attachComment: true
+        attachComment: true,
       });
       
       traverse(ast, {
@@ -441,7 +441,7 @@ class DocumentationSynchronizer extends EventEmitter {
               }
             }
           }
-        }
+        },
       });
     } catch (error) {
       console.error(`Error parsing code: ${error.message}`);
@@ -456,11 +456,11 @@ class DocumentationSynchronizer extends EventEmitter {
       params: [],
       returns: null,
       examples: [],
-      tags: {}
+      tags: {},
     };
     
     const lines = commentText.split('\n').map(line => 
-      line.trim().replace(/^\* ?/, '')
+      line.trim().replace(/^\* ?/, ''),
     );
     
     let currentSection = 'description';
@@ -473,7 +473,7 @@ class DocumentationSynchronizer extends EventEmitter {
           currentParam = {
             type: paramMatch[1],
             name: paramMatch[2],
-            description: paramMatch[3] || ''
+            description: paramMatch[3] || '',
           };
           jsdoc.params.push(currentParam);
           currentSection = 'param';
@@ -483,7 +483,7 @@ class DocumentationSynchronizer extends EventEmitter {
         if (returnMatch) {
           jsdoc.returns = {
             type: returnMatch[1],
-            description: returnMatch[2] || ''
+            description: returnMatch[2] || '',
           };
           currentSection = 'returns';
         }
@@ -517,7 +517,7 @@ class DocumentationSynchronizer extends EventEmitter {
   async syncJSDoc(codePath, docPath, changes, options = {}) {
     const result = {
       changes: [],
-      success: true
+      success: true,
     };
     
     try {
@@ -531,25 +531,25 @@ class DocumentationSynchronizer extends EventEmitter {
             docContent,
             change.name,
             change.jsdoc,
-            change.docSection
+            change.docSection,
           );
           
           result.changes.push({
             type: 'updated',
             name: change.name,
-            description: `Updated documentation for ${change.name}`
+            description: `Updated documentation for ${change.name}`,
           });
         } else if (change.type === 'jsdoc-new') {
           // Add new documentation section
           docContent = this.addDocumentationSection(
             docContent,
-            change.jsdoc
+            change.jsdoc,
           );
           
           result.changes.push({
             type: 'added',
             name: change.name,
-            description: `Added documentation for ${change.name}`
+            description: `Added documentation for ${change.name}`,
           });
         }
       }
@@ -573,7 +573,7 @@ class DocumentationSynchronizer extends EventEmitter {
       new RegExp(`^#+\\s*${name}\\s*$`, 'gm'),
       new RegExp(`^#+\\s*\\W?${name}\\(`, 'gm'),
       new RegExp(`^#+\\s*class\\s+${name}`, 'gm'),
-      new RegExp(`^#+\\s*function\\s+${name}`, 'gm')
+      new RegExp(`^#+\\s*function\\s+${name}`, 'gm'),
     ];
     
     for (const pattern of patterns) {
@@ -594,7 +594,7 @@ class DocumentationSynchronizer extends EventEmitter {
           startIndex,
           endIndex,
           content: docContent.substring(startIndex, endIndex),
-          headerLevel
+          headerLevel,
         };
       }
     }
@@ -622,7 +622,7 @@ class DocumentationSynchronizer extends EventEmitter {
     if (apiMatch) {
       // Find the end of the API section
       const nextSectionMatch = /^#{1,2}\s/gm.exec(
-        docContent.substring(apiMatch.index + apiMatch[0].length)
+        docContent.substring(apiMatch.index + apiMatch[0].length),
       );
       
       const insertIndex = nextSectionMatch ? 
@@ -692,7 +692,7 @@ class DocumentationSynchronizer extends EventEmitter {
           changes.push({
             type: 'command-pattern',
             oldPattern: docCommandPattern,
-            newPattern: commandPattern
+            newPattern: commandPattern,
           });
         }
       }
@@ -707,7 +707,7 @@ class DocumentationSynchronizer extends EventEmitter {
             changes.push({
               type: 'code-block',
               block,
-              referenced
+              referenced,
             });
           }
         }
@@ -722,7 +722,7 @@ class DocumentationSynchronizer extends EventEmitter {
   async syncMarkdown(codePath, docPath, changes, options = {}) {
     const result = {
       changes: [],
-      success: true
+      success: true,
     };
     
     try {
@@ -734,24 +734,24 @@ class DocumentationSynchronizer extends EventEmitter {
           // Update command pattern
           docContent = docContent.replace(
             change.oldPattern,
-            change.newPattern
+            change.newPattern,
           );
           
           result.changes.push({
             type: 'command-pattern',
-            description: 'Updated command pattern'
+            description: 'Updated command pattern',
           });
         } else if (change.type === 'code-block') {
           // Update code block
           docContent = this.updateCodeBlock(
             docContent,
             change.block,
-            change.referenced.newCode
+            change.referenced.newCode,
           );
           
           result.changes.push({
             type: 'code-block',
-            description: 'Updated code example'
+            description: 'Updated code example',
           });
         }
       }
@@ -784,7 +784,7 @@ class DocumentationSynchronizer extends EventEmitter {
         code: match[2].trim(),
         startIndex: match.index,
         endIndex: match.index + match[0].length,
-        fullMatch: match[0]
+        fullMatch: match[0],
       });
     }
     
@@ -828,7 +828,7 @@ class DocumentationSynchronizer extends EventEmitter {
           if (!documented) {
             changes.push({
               type: 'schema-field-new',
-              field
+              field,
             });
           }
         }
@@ -843,7 +843,7 @@ class DocumentationSynchronizer extends EventEmitter {
   async syncSchema(codePath, docPath, changes, options = {}) {
     const result = {
       changes: [],
-      success: true
+      success: true,
     };
     
     try {
@@ -857,7 +857,7 @@ class DocumentationSynchronizer extends EventEmitter {
           
           result.changes.push({
             type: 'schema-field',
-            description: `Added documentation for field: ${change.field.name}`
+            description: `Added documentation for field: ${change.field.name}`,
           });
         }
       }
@@ -886,7 +886,7 @@ class DocumentationSynchronizer extends EventEmitter {
           path: fieldPath,
           type: typeof value,
           required: obj.required?.includes(key),
-          description: value.description || ''
+          description: value.description || '',
         });
         
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
@@ -918,19 +918,19 @@ class DocumentationSynchronizer extends EventEmitter {
         // Compare routes
         for (const route of routes) {
           const documented = documentedRoutes.find(
-            r => r.method === route.method && r.path === route.path
+            r => r.method === route.method && r.path === route.path,
           );
           
           if (!documented) {
             changes.push({
               type: 'api-route-new',
-              route
+              route,
             });
           } else if (this.routeChanged(route, documented)) {
             changes.push({
               type: 'api-route-update',
               route,
-              documented
+              documented,
             });
           }
         }
@@ -953,7 +953,7 @@ class DocumentationSynchronizer extends EventEmitter {
       routes.push({
         method: match[1].toUpperCase(),
         path: match[2],
-        lineNumber: codeContent.substring(0, match.index).split('\n').length
+        lineNumber: codeContent.substring(0, match.index).split('\n').length,
       });
     }
     
@@ -964,7 +964,7 @@ class DocumentationSynchronizer extends EventEmitter {
       routes.push({
         method: match[1].toUpperCase(),
         path: match[2],
-        lineNumber: codeContent.substring(0, match.index).split('\n').length
+        lineNumber: codeContent.substring(0, match.index).split('\n').length,
       });
     }
     
@@ -974,7 +974,7 @@ class DocumentationSynchronizer extends EventEmitter {
   async syncAPI(codePath, docPath, changes, options = {}) {
     const result = {
       changes: [],
-      success: true
+      success: true,
     };
     
     try {
@@ -988,19 +988,19 @@ class DocumentationSynchronizer extends EventEmitter {
           
           result.changes.push({
             type: 'api-route',
-            description: `Added documentation for ${change.route.method} ${change.route.path}`
+            description: `Added documentation for ${change.route.method} ${change.route.path}`,
           });
         } else if (change.type === 'api-route-update') {
           // Update existing route documentation
           docContent = this.updateAPIRouteDoc(
             docContent,
             change.route,
-            change.documented
+            change.documented,
           );
           
           result.changes.push({
             type: 'api-route',
-            description: `Updated documentation for ${change.route.method} ${change.route.path}`
+            description: `Updated documentation for ${change.route.method} ${change.route.path}`,
           });
         }
       }
@@ -1034,7 +1034,7 @@ class DocumentationSynchronizer extends EventEmitter {
             changes.push({
               type: 'example-invalid',
               block,
-              validation
+              validation,
             });
           }
         }
@@ -1049,7 +1049,7 @@ class DocumentationSynchronizer extends EventEmitter {
   async syncExamples(codePath, docPath, changes, options = {}) {
     const result = {
       changes: [],
-      success: true
+      success: true,
     };
     
     try {
@@ -1061,19 +1061,19 @@ class DocumentationSynchronizer extends EventEmitter {
           // Update invalid example
           const updatedExample = await this.updateExample(
             change.block.code,
-            change.validation
+            change.validation,
           );
           
           if (updatedExample) {
             docContent = this.updateCodeBlock(
               docContent,
               change.block,
-              updatedExample
+              updatedExample,
             );
             
             result.changes.push({
               type: 'example',
-              description: 'Updated code example'
+              description: 'Updated code example',
             });
           }
         }
@@ -1095,7 +1095,7 @@ class DocumentationSynchronizer extends EventEmitter {
     const validation = {
       valid: true,
       errors: [],
-      warnings: []
+      warnings: [],
     };
     
     try {
@@ -1103,7 +1103,7 @@ class DocumentationSynchronizer extends EventEmitter {
       const ast = parser.parse(exampleCode, {
         sourceType: 'module',
         plugins: ['jsx', 'typescript'],
-        errorRecovery: true
+        errorRecovery: true,
       });
       
       // Check for undefined references
@@ -1118,10 +1118,10 @@ class DocumentationSynchronizer extends EventEmitter {
             validation.warnings.push({
               type: 'undefined-reference',
               name,
-              line: path.node.loc?.start.line
+              line: path.node.loc?.start.line,
             });
           }
-        }
+        },
       });
       
       if (validation.errors.length > 0) {
@@ -1132,7 +1132,7 @@ class DocumentationSynchronizer extends EventEmitter {
       validation.valid = false;
       validation.errors.push({
         type: 'parse-error',
-        message: error.message
+        message: error.message,
       });
     }
     
@@ -1164,7 +1164,7 @@ class DocumentationSynchronizer extends EventEmitter {
           if (syncResult.length > 0) {
             changes.push({
               componentPath,
-              syncResult
+              syncResult,
             });
           }
         }
@@ -1185,11 +1185,11 @@ class DocumentationSynchronizer extends EventEmitter {
         totalComponents: this.syncedComponents.size,
         totalDocumentation: this.documentationIndex.size,
         syncHistory: this.syncHistory.length,
-        lastSync: this.syncHistory[this.syncHistory.length - 1]?.timestamp
+        lastSync: this.syncHistory[this.syncHistory.length - 1]?.timestamp,
       },
       components: [],
       documentation: [],
-      recentSync: this.syncHistory.slice(-10)
+      recentSync: this.syncHistory.slice(-10),
     };
     
     // Component details
@@ -1199,7 +1199,7 @@ class DocumentationSynchronizer extends EventEmitter {
         docPath: component.docPath.replace(this.rootPath, '.'),
         type: component.type,
         lastSync: component.lastSync,
-        strategies: component.syncStrategies
+        strategies: component.syncStrategies,
       });
     }
     
@@ -1209,7 +1209,7 @@ class DocumentationSynchronizer extends EventEmitter {
         path: path.replace(this.rootPath, '.'),
         title: doc.metadata.title,
         linkedComponents: doc.linkedComponents.length,
-        lastSync: doc.lastSync
+        lastSync: doc.lastSync,
       });
     }
     
@@ -1273,7 +1273,7 @@ class DocumentationSynchronizer extends EventEmitter {
       return {
         changed: true,
         matchRatio,
-        newCode: this.findSimilarCode(codeBlock, actualCode)
+        newCode: this.findSimilarCode(codeBlock, actualCode),
       };
     }
     
@@ -1294,7 +1294,7 @@ class DocumentationSynchronizer extends EventEmitter {
       // Simple table extraction - could be improved
       tables.push({
         content: match[0],
-        fields: [] // Would need to parse table properly
+        fields: [], // Would need to parse table properly
       });
     }
     
@@ -1331,7 +1331,7 @@ class DocumentationSynchronizer extends EventEmitter {
       routes.push({
         method: match[1],
         path: match[2],
-        startIndex: match.index
+        startIndex: match.index,
       });
     }
     
@@ -1348,16 +1348,16 @@ class DocumentationSynchronizer extends EventEmitter {
     const apiSection = /^##\s*API/m.exec(docContent);
     
     const routeDoc = `\n\n### ${route.method} ${route.path}\n\n` +
-                    `Description of the endpoint.\n\n` +
-                    `**Parameters:**\n` +
-                    `- None\n\n` +
-                    `**Response:**\n` +
-                    `\`\`\`json\n{\n  // Response structure\n}\n\`\`\`\n`;
+                    'Description of the endpoint.\n\n' +
+                    '**Parameters:**\n' +
+                    '- None\n\n' +
+                    '**Response:**\n' +
+                    '```json\n{\n  // Response structure\n}\n```\n';
     
     if (apiSection) {
       // Find insertion point
       const nextSection = /^##\s/m.exec(
-        docContent.substring(apiSection.index + apiSection[0].length)
+        docContent.substring(apiSection.index + apiSection[0].length),
       );
       
       const insertIndex = nextSection ? 

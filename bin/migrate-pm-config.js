@@ -27,8 +27,8 @@ function detectExistingPMTool() {
         api_token: '${CLICKUP_API_TOKEN}',
         team_id: process.env.CLICKUP_TEAM_ID || '',
         space_id: process.env.CLICKUP_SPACE_ID || '',
-        list_id: process.env.CLICKUP_LIST_ID || ''
-      }
+        list_id: process.env.CLICKUP_LIST_ID || '',
+      },
     };
   }
 
@@ -42,8 +42,8 @@ function detectExistingPMTool() {
         base_url: process.env.JIRA_BASE_URL,
         api_token: '${JIRA_API_TOKEN}',
         email: process.env.JIRA_EMAIL || '',
-        project_key: process.env.JIRA_PROJECT_KEY || 'AIOS'
-      }
+        project_key: process.env.JIRA_PROJECT_KEY || 'AIOS',
+      },
     };
   }
 
@@ -61,8 +61,8 @@ function detectExistingPMTool() {
           type: 'github-projects',
           config: {
             org: process.env.GITHUB_ORG || '',
-            project_number: parseInt(process.env.GITHUB_PROJECT_NUMBER) || 0
-          }
+            project_number: parseInt(process.env.GITHUB_PROJECT_NUMBER) || 0,
+          },
         };
       }
     }
@@ -82,13 +82,13 @@ function savePMConfig(pmToolData, projectRoot) {
       type: pmToolData.type,
       configured_at: new Date().toISOString(),
       config: pmToolData.config,
-      migrated_from_env: true
+      migrated_from_env: true,
     },
     sync_behavior: {
       auto_sync_on_status_change: true,
       create_tasks_on_story_creation: false,
-      bidirectional_sync: false
-    }
+      bidirectional_sync: false,
+    },
   };
 
   const configPath = path.join(projectRoot, '.aios-pm-config.yaml');
@@ -149,7 +149,7 @@ async function migrate() {
     console.log('');
 
     // Validate required fields
-    let missingFields = [];
+    const missingFields = [];
 
     if (detected.type === 'clickup') {
       if (!detected.config.team_id) missingFields.push('CLICKUP_TEAM_ID');

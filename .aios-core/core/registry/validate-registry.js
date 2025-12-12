@@ -29,7 +29,7 @@ const SMOKE_TESTS = {
       } catch (error) {
         return { passed: false, error: `JSON parse failed: ${error.message}` };
       }
-    }
+    },
   },
   'REG-02': {
     name: 'Schema Valid',
@@ -43,12 +43,12 @@ const SMOKE_TESTS = {
       if (!valid) {
         return {
           passed: false,
-          error: `Schema validation failed`,
-          details: validate.errors.slice(0, 5)
+          error: 'Schema validation failed',
+          details: validate.errors.slice(0, 5),
         };
       }
       return { passed: true };
-    }
+    },
   },
   'REG-03': {
     name: 'Worker Count',
@@ -61,9 +61,9 @@ const SMOKE_TESTS = {
       }
       return {
         passed: false,
-        error: `Expected 97+ workers, found ${count}`
+        error: `Expected 97+ workers, found ${count}`,
       };
-    }
+    },
   },
   'REG-04': {
     name: 'Paths Exist',
@@ -85,9 +85,9 @@ const SMOKE_TESTS = {
       return {
         passed: false,
         error: `${missing.length} paths not found`,
-        details: missing.slice(0, 10)
+        details: missing.slice(0, 10),
       };
-    }
+    },
   },
   'REG-05': {
     name: 'IDs Unique',
@@ -109,9 +109,9 @@ const SMOKE_TESTS = {
       return {
         passed: false,
         error: `${duplicates.length} duplicate IDs found`,
-        details: duplicates
+        details: duplicates,
       };
-    }
+    },
   },
   'REG-06': {
     name: 'Load Performance',
@@ -126,10 +126,10 @@ const SMOKE_TESTS = {
       }
       return {
         passed: false,
-        error: `Load time ${loadTime}ms exceeds 500ms limit`
+        error: `Load time ${loadTime}ms exceeds 500ms limit`,
       };
-    }
-  }
+    },
+  },
 };
 
 /**
@@ -163,16 +163,16 @@ async function runSmokeTests(registryPath, schemaPath, baseDir) {
       const result = await testDef.test(ctx);
       results[testId] = {
         ...testDef,
-        ...result
+        ...result,
       };
 
       if (result.passed) {
-        console.log(`  Result: PASSED`);
+        console.log('  Result: PASSED');
         if (result.details) {
           console.log(`  Details: ${JSON.stringify(result.details)}`);
         }
       } else {
-        console.log(`  Result: FAILED`);
+        console.log('  Result: FAILED');
         console.log(`  Error: ${result.error}`);
         if (result.details) {
           console.log(`  Details: ${JSON.stringify(result.details).slice(0, 200)}`);
@@ -185,12 +185,12 @@ async function runSmokeTests(registryPath, schemaPath, baseDir) {
         }
       }
     } catch (error) {
-      console.log(`  Result: ERROR`);
+      console.log('  Result: ERROR');
       console.log(`  Error: ${error.message}`);
       results[testId] = {
         ...testDef,
         passed: false,
-        error: error.message
+        error: error.message,
       };
       if (testDef.priority === 'P0') {
         p0Failed = true;
@@ -213,7 +213,7 @@ async function runSmokeTests(registryPath, schemaPath, baseDir) {
     allPassed: !p0Failed && !p1Failed,
     p0Failed,
     p1Failed,
-    results
+    results,
   };
 }
 
@@ -336,5 +336,5 @@ if (require.main === module) {
 module.exports = {
   runSmokeTests,
   validateFields,
-  SMOKE_TESTS
+  SMOKE_TESTS,
 };
