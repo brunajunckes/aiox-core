@@ -172,10 +172,12 @@ function getTargetBranch(sourceBranch, deploymentConfig) {
  * @returns {boolean} True if matches
  */
 function matchesBranchPattern(branchName, pattern) {
-  // Convert glob pattern to regex
+  // Escape regex metacharacters first, then convert glob wildcards
+  // Order matters: escape special chars, then convert * and ?
   const regexPattern = pattern
-    .replace(/\*/g, '.*')
-    .replace(/\?/g, '.');
+    .replace(/[.+^${}()|[\]\\]/g, '\\$&') // Escape regex metacharacters (except * and ?)
+    .replace(/\*/g, '.*') // Convert glob * to regex .*
+    .replace(/\?/g, '.'); // Convert glob ? to regex .
 
   const regex = new RegExp(`^${regexPattern}$`);
   return regex.test(branchName);

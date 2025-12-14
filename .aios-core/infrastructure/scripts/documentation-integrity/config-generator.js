@@ -68,6 +68,21 @@ const DEFAULT_DEPLOYMENT_CONFIG = {
 };
 
 /**
+ * Escapes a string for use in YAML double-quoted strings
+ *
+ * @param {string} str - String to escape
+ * @returns {string} Escaped string safe for YAML
+ */
+function escapeYamlString(str) {
+  return String(str)
+    .replace(/\\/g, '\\\\') // Escape backslashes first
+    .replace(/"/g, '\\"') // Escape double quotes
+    .replace(/\n/g, '\\n') // Escape newlines
+    .replace(/\r/g, '\\r') // Escape carriage returns
+    .replace(/\t/g, '\\t'); // Escape tabs
+}
+
+/**
  * Formats an array as YAML list string for template substitution
  *
  * @param {Array} arr - Array to format
@@ -79,7 +94,7 @@ function formatArrayAsYaml(arr, indent = 4) {
     return '[]';
   }
   const spaces = ' '.repeat(indent);
-  const items = arr.map((item) => `\n${spaces}- "${String(item)}"`).join('');
+  const items = arr.map((item) => `\n${spaces}- "${escapeYamlString(item)}"`).join('');
   return items;
 }
 
@@ -108,7 +123,8 @@ function buildConfigContext(projectName, mode, deploymentConfig = {}, analysisRe
     // Branch configuration
     STAGING_BRANCH: isStaging ? config.stagingBranch : 'null',
     PRODUCTION_BRANCH: config.productionBranch,
-    DEFAULT_TARGET: isStaging ? config.stagingBranch : config.productionBranch,
+    // Use symbolic name ('staging'/'production') - deployment-config-loader resolves to actual branch
+    DEFAULT_TARGET: isStaging ? 'staging' : 'production',
 
     // Environment names
     STAGING_ENV_NAME: config.stagingEnvName,
@@ -343,6 +359,7 @@ module.exports = {
   buildDeploymentConfig,
   getDefaultDeploymentConfig,
   formatArrayAsYaml,
+  escapeYamlString,
   ConfigTemplates,
   DeploymentWorkflow,
   DeploymentPlatform,
