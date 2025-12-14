@@ -1,19 +1,19 @@
 # AIOS Source Tree Structure
 
-**Version:** 1.0
-**Last Updated:** 2025-01-15
+**Version:** 1.1
+**Last Updated:** 2025-12-14
 **Status:** Official Framework Standard
-**Migration Notice:** This document will migrate to `aios/aios-core` repository in Q2 2026 (see Decision 005)
+**Migration Notice:** This document will migrate to `SynkraAI/aios-core` repository in Q2 2026 (see Decision 005)
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Current Structure (aios-fullstack Brownfield)](#current-structure-aios-fullstack-brownfield)
+- [Current Structure (aios-core Brownfield)](#current-structure-aios-core-brownfield)
 - [Framework Core (.aios-core/)](#framework-core-aios-core)
 - [Documentation (docs/)](#documentation-docs)
-- [Expansion Packs](#expansion-packs)
+- [Squads System](#squads-system)
 - [Future Structure (Post-Migration Q2 2026)](#future-structure-post-migration-q2-2026)
 - [File Naming Conventions](#file-naming-conventions)
 - [Where to Put New Files](#where-to-put-new-files)
@@ -33,10 +33,10 @@ AIOS uses a **dual-layer architecture**:
 
 ---
 
-## Current Structure (aios-fullstack Brownfield)
+## Current Structure (aios-core Brownfield)
 
 ```
-aios-fullstack/                        # Root (brownfield project)
+aios-core/                             # Root (brownfield project)
 ├── .aios-core/                        # Framework core (portable)
 │   ├── core/                          # Framework essentials (v2.1)
 │   │   ├── config/                    # Configuration system
@@ -66,8 +66,8 @@ aios-fullstack/                        # Root (brownfield project)
 │   ├── qa/                            # QA reports
 │   └── prd/                           # Product requirements
 │
-├── expansion-packs/                   # Expansion packs
-│   └── hybrid-ops/                    # HybridOps expansion pack
+├── templates/                         # Project templates
+│   └── squad/                         # Squad template for extensions (see docs/guides/squads-guide.md)
 │
 ├── bin/                               # CLI executables
 │   ├── aios-fullstack.js              # Main CLI entry point
@@ -341,46 +341,80 @@ docs/
 
 ---
 
-## Expansion Packs
+## Squads System
+
+> **Note:** Squads replaced the legacy "expansion-packs" system in OSR-8. See [Squads Guide](../guides/squads-guide.md) for complete documentation.
+
+### Overview
+
+Squads are modular extensions that add specialized capabilities to AIOS. Unlike the deprecated expansion-packs, Squads follow a standardized template structure.
+
+### Squad Template Location
 
 ```
-expansion-packs/
-├── hybrid-ops/                        # HybridOps expansion pack
-│   ├── pack.yaml                      # Pack manifest
-│   ├── README.md                      # Pack documentation
-│   ├── agents/                        # Pack-specific agents
-│   │   ├── clickup-engineer-pv/
-│   │   ├── process-architect-pv/
-│   │   └── documentation-writer-pv/
-│   ├── tasks/                         # Pack-specific tasks
-│   │   └── ...
-│   ├── workflows/                     # Pack-specific workflows
-│   │   └── ...
-│   └── templates/                     # Pack-specific templates
-│       └── ...
-│
-└── [future-packs]/                    # Future expansion packs
-    ├── github-devops/                 # GitHub + Railway automation
-    ├── db-sage/                       # Supabase + PostgreSQL automation
-    └── coderabbit-workflow/           # CodeRabbit integration
+templates/squad/                       # Squad template for creating extensions
+├── squad.yaml                         # Squad manifest template
+├── package.json                       # NPM package template
+├── README.md                          # Documentation template
+├── LICENSE                            # License template
+├── .gitignore                         # Git ignore template
+├── agents/                            # Squad-specific agents
+│   └── example-agent.yaml
+├── tasks/                             # Squad-specific tasks
+│   └── example-task.yaml
+├── workflows/                         # Squad-specific workflows
+│   └── example-workflow.yaml
+├── templates/                         # Squad-specific templates
+│   └── example-template.md
+└── tests/                             # Squad tests
+    └── example-agent.test.js
 ```
 
-**Expansion Pack Structure:**
+### Creating a New Squad
+
+```bash
+# Future CLI (planned):
+npx create-aios-squad my-squad-name
+
+# Current method:
+cp -r templates/squad/ squads/my-squad-name/
+# Then customize squad.yaml and components
+```
+
+### Squad Manifest Structure
+
 ```yaml
-pack.yaml:
-  name: hybrid-ops
-  version: 1.0.0
-  description: HybridOps expansion pack
-  dependencies:
-    - aios-core: ">=1.0.0"
-  agents:
-    - clickup-engineer-pv
-    - process-architect-pv
-  tasks:
-    - sync-clickup
-  workflows:
-    - hybrid-ops-flow
+# squad.yaml
+name: my-custom-squad
+version: 1.0.0
+description: Description of what this squad does
+author: Your Name
+license: MIT
+
+# Components provided by this squad
+agents:
+  - custom-agent-1
+  - custom-agent-2
+
+tasks:
+  - custom-task-1
+
+workflows:
+  - custom-workflow-1
+
+# Dependencies
+dependencies:
+  aios-core: ">=2.1.0"
 ```
+
+### Migration from Expansion Packs
+
+| Legacy (Deprecated) | Current (Squads) |
+|---------------------|------------------|
+| `expansion-packs/` directory | `templates/squad/` template |
+| `expansionPacksLocation` config | `squadsTemplateLocation` config |
+| `pack.yaml` manifest | `squad.yaml` manifest |
+| Direct loading | Template-based creation |
 
 ---
 
@@ -388,7 +422,7 @@ pack.yaml:
 
 **Decision 005 defines 5 separate repositories:**
 
-### REPO 1: aios/aios-core (Commons Clause)
+### REPO 1: SynkraAI/aios-core (Commons Clause)
 
 ```
 aios-core/
@@ -425,11 +459,11 @@ aios-core/
     └── e2e/
 ```
 
-### REPO 2: aios/expansion-packs (MIT)
+### REPO 2: SynkraAI/squads (MIT)
 
 ```
-expansion-packs/
-├── verified/                          # AIOS-curated packs
+squads/
+├── verified/                          # AIOS-curated squads
 │   ├── github-devops/
 │   ├── db-sage/
 │   └── coderabbit-workflow/
@@ -439,15 +473,15 @@ expansion-packs/
 │   ├── sales-automation/
 │   └── ...
 │
-├── templates/                         # Pack templates
-│   ├── minimal-pack/
-│   └── agent-pack/
+├── templates/                         # Squad templates
+│   ├── minimal-squad/
+│   └── agent-squad/
 │
-└── tools/                             # Pack development tools
-    └── expansion-creator/
+└── tools/                             # Squad development tools
+    └── create-aios-squad/
 ```
 
-### REPO 3: aios/mcp-ecosystem (Apache 2.0)
+### REPO 3: SynkraAI/mcp-ecosystem (Apache 2.0)
 
 ```
 mcp-ecosystem/
@@ -467,7 +501,7 @@ mcp-ecosystem/
     └── cursor/
 ```
 
-### REPO 4: aios/certified-partners (Private)
+### REPO 4: SynkraAI/certified-partners (Private)
 
 ```
 certified-partners/
@@ -484,7 +518,7 @@ certified-partners/
     └── web/
 ```
 
-### REPO 5: aios/mmos (Private + NDA)
+### REPO 5: SynkraAI/mmos (Private + NDA)
 
 ```
 mmos/
@@ -600,9 +634,9 @@ Example: .aios-core/utils/performance-monitor.js
 Location: tests/{type}/{test-name}.test.js
 Example: tests/unit/agent-executor.test.js
 
-# I'm creating an expansion pack:
-Location: expansion-packs/{pack-name}/
-Example: expansion-packs/devops-automation/
+# I'm creating a squad:
+Location: Copy templates/squad/ to your squads directory
+Example: squads/devops-automation/ (customize from template)
 ```
 
 ---
@@ -655,6 +689,7 @@ outputs/                               # Runtime outputs (gitignored)
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 1.0 | 2025-01-15 | Initial source tree documentation | Aria (architect) |
+| 1.1 | 2025-12-14 | Updated org to SynkraAI, replaced expansion-packs with Squads system [Story 6.10] | Dex (dev) |
 
 ---
 

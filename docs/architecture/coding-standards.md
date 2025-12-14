@@ -1,9 +1,9 @@
 # AIOS Coding Standards
 
-**Version:** 1.0
-**Last Updated:** 2025-01-15
+**Version:** 1.1
+**Last Updated:** 2025-12-14
 **Status:** Official Framework Standard
-**Migration Notice:** This document will migrate to `aios/aios-core` repository in Q2 2026 (see Decision 005)
+**Migration Notice:** This document will migrate to `SynkraAI/aios-core` repository in Q2 2026 (see Decision 005)
 
 ---
 
@@ -866,6 +866,7 @@ All PRs automatically reviewed by CodeRabbit for:
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 1.0 | 2025-01-15 | Initial coding standards document | Aria (architect) |
+| 1.1 | 2025-12-14 | Updated migration notice to SynkraAI/aios-core [Story 6.10] | Dex (dev) |
 
 ---
 
