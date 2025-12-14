@@ -1,8 +1,16 @@
+> ⚠️ **DEPRECATED**: This file is maintained for backward compatibility only.
+>
+> **Official version:** [docs/framework/coding-standards.md](../framework/coding-standards.md)
+>
+> This file will be removed in Q2 2026 after full consolidation to `docs/framework/`.
+
+---
+
 # AIOS Coding Standards
 
 **Version:** 1.1
 **Last Updated:** 2025-12-14
-**Status:** Official Framework Standard
+**Status:** DEPRECATED - See docs/framework/coding-standards.md
 **Migration Notice:** This document will migrate to `SynkraAI/aios-core` repository in Q2 2026 (see Decision 005)
 
 ---

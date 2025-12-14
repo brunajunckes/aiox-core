@@ -2,7 +2,7 @@
 
 **Status:** Official Framework Standards
 **Created:** 2025-01-16 (Story 6.1.2.6)
-**Migration Target:** Q2 2026 → `aios/aios-core` repository
+**Migration Target:** Q2 2026 → `SynkraAI/aios-core` repository
 
 ---
 
@@ -26,12 +26,12 @@ This directory contains **official AIOS framework documentation** that defines s
 
 ## 🔄 Migration Notice
 
-**⚠️ IMPORTANT**: These documents will migrate to the `aios/aios-core` repository in **Q2 2026** as part of the repository restructuring initiative (Decision 005).
+**⚠️ IMPORTANT**: These documents are now in the `SynkraAI/aios-core` repository. The migration from the old `aios/aios-core` org was completed in December 2024 as part of OSR-9 (Rebranding).
 
 ### Migration Timeline
 
 - **Phase 1 (Q1 2026 - Story 6.1.2.6):** ✅ Framework docs separated into `docs/framework/`
-- **Phase 2 (Q2 2026):** Framework docs migrate to `aios/aios-core` repository
+- **Phase 2 (Q4 2024):** ✅ Repository migrated to `SynkraAI/aios-core` (OSR-9)
 - **Phase 3 (Q3 2026):** Old `docs/architecture/` copies removed from brownfield project
 
 ### Backward Compatibility
@@ -49,7 +49,7 @@ For backward compatibility, framework docs remain accessible at **both** locatio
 ### Framework Documentation (`docs/framework/`)
 - **Scope**: Portable across all AIOS projects
 - **Examples**: Coding standards, tech stack, source tree structure
-- **Lifecycle**: Lives in `aios/aios-core` repository (post-migration)
+- **Lifecycle**: Lives in `SynkraAI/aios-core` repository
 - **Changes**: Require framework-level approval
 
 ### Project Documentation (`docs/architecture/project-decisions/`)
@@ -87,6 +87,6 @@ For backward compatibility, framework docs remain accessible at **both** locatio
 
 ---
 
-**Last Updated**: 2025-01-16
+**Last Updated**: 2025-12-14
 **Maintainer**: AIOS Framework Team
 **Questions?** See [Epic 6.1 - Agent Identity System](../epics/epic-6.1-agent-identity-system.md)
