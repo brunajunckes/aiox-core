@@ -248,9 +248,22 @@ describe('Mode Detector', () => {
   });
 
   describe('mapLegacyTypeToMode', () => {
-    it('should map EXISTING_AIOS to FRAMEWORK_DEV', () => {
+    it('should map EXISTING_AIOS to BROWNFIELD by default (safer)', () => {
+      // Without context, EXISTING_AIOS defaults to BROWNFIELD (won't skip project setup)
       expect(mapLegacyTypeToMode(LegacyProjectType.EXISTING_AIOS)).toBe(
+        InstallationMode.BROWNFIELD,
+      );
+    });
+
+    it('should map EXISTING_AIOS to FRAMEWORK_DEV with isAiosCoreRepo context', () => {
+      expect(mapLegacyTypeToMode(LegacyProjectType.EXISTING_AIOS, { isAiosCoreRepo: true })).toBe(
         InstallationMode.FRAMEWORK_DEV,
+      );
+    });
+
+    it('should map EXISTING_AIOS to BROWNFIELD with non-aios-core context', () => {
+      expect(mapLegacyTypeToMode(LegacyProjectType.EXISTING_AIOS, { isAiosCoreRepo: false })).toBe(
+        InstallationMode.BROWNFIELD,
       );
     });
 

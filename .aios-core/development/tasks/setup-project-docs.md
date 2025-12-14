@@ -395,7 +395,7 @@ const { loadDeploymentConfig, validateDeploymentConfig } = require('./.aios-core
 const deployConfig = loadDeploymentConfig(targetDir);
 const validation = validateDeploymentConfig(deployConfig);
 
-if (validation.valid) {
+if (validation.isValid) {
   console.log('Configuration-Driven Architecture ready');
   console.log(`Workflow: ${deployConfig.workflow}`);
   console.log(`Platform: ${deployConfig.platform}`);

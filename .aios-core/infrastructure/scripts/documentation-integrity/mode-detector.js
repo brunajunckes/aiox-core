@@ -247,7 +247,11 @@ function isAiosCoreRepository(targetDir) {
       Array.isArray(packageJson.workspaces) && packageJson.workspaces.includes('packages/*');
 
     return hasWorkspaces && hasAiosMarker;
-  } catch {
+  } catch (error) {
+    // Log error for debugging but don't throw - return false for safety
+    if (process.env.AIOS_DEBUG) {
+      console.warn(`[mode-detector] Error checking aios-core repository: ${error.message}`);
+    }
     return false;
   }
 }
@@ -255,12 +259,32 @@ function isAiosCoreRepository(targetDir) {
 /**
  * Maps legacy project type to new installation mode
  *
+ * @deprecated Use detectInstallationMode().mode directly instead.
+ * This function cannot distinguish between FRAMEWORK_DEV and BROWNFIELD
+ * for EXISTING_AIOS legacy type (both use EXISTING_AIOS but with different modes).
+ * For accurate mode detection, use the mode property from detectInstallationMode().
+ *
  * @param {string} legacyType - Legacy project type (EXISTING_AIOS, GREENFIELD, etc.)
+ * @param {Object} [context] - Optional context for disambiguation
+ * @param {boolean} [context.isAiosCoreRepo] - True if this is the aios-core repository
  * @returns {string} New installation mode
  */
-function mapLegacyTypeToMode(legacyType) {
+function mapLegacyTypeToMode(legacyType, context = {}) {
+  // EXISTING_AIOS is ambiguous: it can be FRAMEWORK_DEV (aios-core repo)
+  // or BROWNFIELD (user project with AIOS installed)
+  if (legacyType === LegacyProjectType.EXISTING_AIOS) {
+    // Use context to disambiguate if provided
+    if (context.isAiosCoreRepo === true) {
+      return InstallationMode.FRAMEWORK_DEV;
+    }
+    if (context.isAiosCoreRepo === false) {
+      return InstallationMode.BROWNFIELD;
+    }
+    // Default to BROWNFIELD as it's safer (won't skip project setup)
+    return InstallationMode.BROWNFIELD;
+  }
+
   const mapping = {
-    [LegacyProjectType.EXISTING_AIOS]: InstallationMode.FRAMEWORK_DEV,
     [LegacyProjectType.GREENFIELD]: InstallationMode.GREENFIELD,
     [LegacyProjectType.BROWNFIELD]: InstallationMode.BROWNFIELD,
     [LegacyProjectType.UNKNOWN]: InstallationMode.UNKNOWN,
