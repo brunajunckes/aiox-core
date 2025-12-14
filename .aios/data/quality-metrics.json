@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastUpdated": "2025-12-14T18:17:58.342Z",
+  "lastUpdated": "2025-12-14T21:10:56.657Z",
   "retentionDays": 30,
   "layers": {
     "layer1": {
@@ -10,10 +10,10 @@
       "lastRun": "2025-12-12T20:26:34.928Z"
     },
     "layer2": {
-      "passRate": 0.8888888888888888,
-      "avgTimeMs": 153333,
-      "totalRuns": 27,
-      "lastRun": "2025-12-14T18:17:58.340Z",
+      "passRate": 0.8,
+      "avgTimeMs": 156000,
+      "totalRuns": 30,
+      "lastRun": "2025-12-14T21:10:56.655Z",
       "autoCatchRate": 0,
       "coderabbit": {
         "active": true,
@@ -938,6 +938,57 @@
         "lintResult": "failure",
         "typecheckResult": "success",
         "testResult": "success",
+        "storyResult": "success"
+      }
+    },
+    {
+      "timestamp": "2025-12-14T19:16:03.008Z",
+      "layer": 2,
+      "passed": false,
+      "durationMs": 180000,
+      "findingsCount": 0,
+      "metadata": {
+        "triggeredBy": "pr",
+        "prNumber": 4,
+        "branchName": "feat/story-6.9-documentation-integrity",
+        "author": "Pedrovaleriolopez",
+        "lintResult": "failure",
+        "typecheckResult": "success",
+        "testResult": "failure",
+        "storyResult": "success"
+      }
+    },
+    {
+      "timestamp": "2025-12-14T19:40:23.630Z",
+      "layer": 2,
+      "passed": false,
+      "durationMs": 180000,
+      "findingsCount": 0,
+      "metadata": {
+        "triggeredBy": "pr",
+        "prNumber": 4,
+        "branchName": "feat/story-6.9-documentation-integrity",
+        "author": "Pedrovaleriolopez",
+        "lintResult": "failure",
+        "typecheckResult": "success",
+        "testResult": "failure",
+        "storyResult": "success"
+      }
+    },
+    {
+      "timestamp": "2025-12-14T21:10:56.655Z",
+      "layer": 2,
+      "passed": false,
+      "durationMs": 180000,
+      "findingsCount": 0,
+      "metadata": {
+        "triggeredBy": "pr",
+        "prNumber": 4,
+        "branchName": "feat/story-6.9-documentation-integrity",
+        "author": "Pedrovaleriolopez",
+        "lintResult": "failure",
+        "typecheckResult": "success",
+        "testResult": "failure",
         "storyResult": "success"
       }
     }
