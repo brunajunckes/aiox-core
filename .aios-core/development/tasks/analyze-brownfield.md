@@ -27,44 +27,44 @@
 
 ```yaml
 task: analyzeBrownfield()
-responsável: architect (Architect)
-responsavel_type: Agente
+responsible: architect (Architect)
+responsible_type: Agent
 atomic_layer: Analysis
 
-**Entrada:**
-- campo: targetDir
-  tipo: string
-  origem: User Input or cwd
-  obrigatório: false
-  validação: Valid directory path with existing project
+inputs:
+- field: targetDir
+  type: string
+  source: User Input or cwd
+  required: false
+  validation: Valid directory path with existing project
 
-- campo: outputFormat
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: report|json|summary
+- field: outputFormat
+  type: string
+  source: User Input
+  required: false
+  validation: report|json|summary
 
-- campo: executionMode
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: yolo|interactive|pre-flight
+- field: executionMode
+  type: string
+  source: User Input
+  required: false
+  validation: yolo|interactive|pre-flight
 
-**Saída:**
-- campo: analysis
-  tipo: BrownfieldAnalysis
-  destino: Memory/Console
-  persistido: false
+outputs:
+- field: analysis
+  type: BrownfieldAnalysis
+  destination: Memory/Console
+  persisted: false
 
-- campo: report
-  tipo: string
-  destino: Console or File
-  persistido: optional
+- field: report
+  type: string
+  destination: Console or File
+  persisted: optional
 
-- campo: recommendations
-  tipo: array
-  destino: Memory
-  persistido: false
+- field: recommendations
+  type: array
+  destination: Memory
+  persisted: false
 ```
 
 ---
@@ -78,16 +78,16 @@ atomic_layer: Analysis
 ```yaml
 pre-conditions:
   - [ ] Target directory exists and contains a project
-    tipo: pre-condition
+    type: pre-condition
     blocker: true
-    validação: |
+    validation: |
       Check target directory exists and has project markers (package.json, go.mod, etc.)
     error_message: "Pre-condition failed: No project found in target directory"
 
   - [ ] Brownfield Analyzer module is available
-    tipo: pre-condition
+    type: pre-condition
     blocker: true
-    validação: |
+    validation: |
       Verify .aios-core/infrastructure/scripts/documentation-integrity/brownfield-analyzer.js exists
     error_message: "Pre-condition failed: Brownfield Analyzer module not found"
 ```
@@ -103,16 +103,16 @@ pre-conditions:
 ```yaml
 post-conditions:
   - [ ] Analysis completed with tech stack detection
-    tipo: post-condition
+    type: post-condition
     blocker: true
-    validação: |
+    validation: |
       Verify analysis.techStack is populated
     error_message: "Post-condition failed: Tech stack detection incomplete"
 
   - [ ] Merge strategy determined
-    tipo: post-condition
+    type: post-condition
     blocker: true
-    validação: |
+    validation: |
       Verify analysis.mergeStrategy is set
     error_message: "Post-condition failed: Merge strategy not determined"
 ```
@@ -128,23 +128,23 @@ post-conditions:
 ```yaml
 acceptance-criteria:
   - [ ] All project markers analyzed
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: true
-    validação: |
+    validation: |
       Assert tech stack, frameworks, standards, workflows analyzed
     error_message: "Acceptance criterion not met: Incomplete analysis"
 
   - [ ] Recommendations generated
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: true
-    validação: |
+    validation: |
       Assert analysis.recommendations has at least one item
     error_message: "Acceptance criterion not met: No recommendations generated"
 
   - [ ] Conflicts identified if present
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: false
-    validação: |
+    validation: |
       Assert potential conflicts flagged for review
     error_message: "Warning: Conflict detection may be incomplete"
 ```

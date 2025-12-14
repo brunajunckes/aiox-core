@@ -156,8 +156,12 @@ function getTargetBranch(sourceBranch, deploymentConfig) {
     }
   }
 
-  // Default target
-  return branches.default_target || branches.production_branch;
+  // Default target - resolve symbolic name to actual branch
+  const defaultTarget = branches.default_target || 'production';
+  if (defaultTarget === 'staging') {
+    return branches.staging_branch || branches.production_branch;
+  }
+  return branches.production_branch;
 }
 
 /**

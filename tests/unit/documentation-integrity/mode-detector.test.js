@@ -206,11 +206,23 @@ describe('Mode Detector', () => {
       expect(isAiosCoreRepository(tempDir)).toBe(true);
     });
 
-    it('should return true for package with workspaces pattern', () => {
+    it('should return false for generic monorepo with workspaces pattern only', () => {
+      // Generic monorepos should NOT be detected as aios-core
       fs.writeFileSync(
         path.join(tempDir, 'package.json'),
         JSON.stringify({ name: 'something', workspaces: ['packages/*'] }),
       );
+
+      expect(isAiosCoreRepository(tempDir)).toBe(false);
+    });
+
+    it('should return true for workspaces pattern with aios marker', () => {
+      // Workspaces + .aios-core/infrastructure marker = aios-core repo
+      fs.writeFileSync(
+        path.join(tempDir, 'package.json'),
+        JSON.stringify({ name: 'something', workspaces: ['packages/*'] }),
+      );
+      fs.mkdirSync(path.join(tempDir, '.aios-core', 'infrastructure'), { recursive: true });
 
       expect(isAiosCoreRepository(tempDir)).toBe(true);
     });
