@@ -1,9 +1,9 @@
 # AIOS Technology Stack
 
-**Version:** 1.0
-**Last Updated:** 2025-01-15
+**Version:** 1.1
+**Last Updated:** 2025-12-14
 **Status:** Official Framework Standard
-**Migration Notice:** This document will migrate to `aios/aios-core` repository in Q2 2026 (see Decision 005)
+**Migration Notice:** This document will migrate to `SynkraAI/aios-core` repository in Q2 2026 (see Decision 005)
 
 ---
 
@@ -442,7 +442,7 @@ describe('AgentExecutor', () => {
 
 ### Versioning & Release
 
-#### semantic-release (^22.0.0)
+#### semantic-release (^25.0.2)
 **Purpose:** Automated semantic versioning and releases
 **Usage:** Automatic NPM publishing, changelog generation
 
@@ -753,6 +753,7 @@ SUPABASE_ACCESS_TOKEN=xxx         # Supabase CLI auth
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
 | 1.0 | 2025-01-15 | Initial tech stack documentation | Aria (architect) |
+| 1.1 | 2025-12-14 | Updated migration notice to SynkraAI/aios-core, semantic-release to v25.0.2 [Story 6.10] | Dex (dev) |
 
 ---
 

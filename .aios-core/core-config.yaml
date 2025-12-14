@@ -1,6 +1,6 @@
 # ============================================
 # AIOS Core Configuration
-# Version: 2.2.0 (Story 6.10 - Documentation Cleanup)
+# Version: 2.3.0 (Story 6.11 - Framework Docs Consolidation)
 # Last Updated: 2025-12-14
 # ============================================
 
@@ -35,14 +35,21 @@ architecture:
 
 customTechnicalDocuments: null
 
+# Official framework documentation location (Story 6.11)
+# Prefer docs/framework/ for portable framework standards
+# docs/architecture/ contains project-specific analysis and decisions
 devLoadAlwaysFiles:
+  - docs/framework/coding-standards.md
+  - docs/framework/tech-stack.md
+  - docs/framework/source-tree.md
+
+# Fallback patterns for backward compatibility and alternative naming
+# These will be tried if the primary files above are not found
+devLoadAlwaysFilesFallback:
+  # Backward compatibility - old architecture location (deprecated)
   - docs/architecture/coding-standards.md
   - docs/architecture/tech-stack.md
   - docs/architecture/source-tree.md
-
-# Fallback patterns for Portuguese or alternative naming conventions
-# These will be tried if the primary files above are not found
-devLoadAlwaysFilesFallback:
   # Portuguese variants
   - docs/architecture/padroes-de-codigo.md
   - docs/architecture/pilha-tecnologica.md

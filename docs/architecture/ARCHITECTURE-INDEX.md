@@ -1,7 +1,7 @@
 # AIOS Architecture Documentation Index
 
-**Version:** 2.1.0
-**Last Updated:** 2025-12-09
+**Version:** 2.1.1
+**Last Updated:** 2025-12-14
 **Status:** Official Reference
 
 ---
@@ -9,6 +9,32 @@
 ## 📋 Document Navigation
 
 This index provides navigation to all architecture documentation for AIOS v2.1.
+
+> **Note:** Official framework documentation (coding-standards, tech-stack, source-tree) has been consolidated in `docs/framework/`. See [Framework README](../framework/README.md) for details.
+
+---
+
+## 📁 Directory Structure
+
+```
+docs/architecture/
+├── ARCHITECTURE-INDEX.md     # This file
+├── analysis/                 # Technical analysis documents
+│   ├── mcp-optimization-1mcp.md
+│   ├── mcp-context-optimization-strategy.md
+│   ├── mcp-solution-comparison-checklist.md
+│   ├── tools-system-analysis-log.md
+│   ├── tools-system-gap-analysis.md
+│   ├── expansion-packs-dependency-analysis.md
+│   ├── expansion-packs-structure-inventory.md
+│   ├── scripts-consolidation-analysis.md
+│   ├── subdirectory-migration-impact-analysis.md
+│   └── repository-strategy-analysis.md
+├── decisions/                # Architectural decisions (ADRs)
+├── [other docs]              # Project-specific documentation
+└── [deprecated]              # source-tree.md, coding-standards.md, tech-stack.md
+                              # (use docs/framework/ versions instead)
+```
 
 ---
 
@@ -28,10 +54,10 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 | Document | Description | Status |
 |----------|-------------|--------|
 | [MCP System Diagrams](./mcp-system-diagrams.md) | MCP architecture diagrams | ✅ Current |
-| [MCP Optimization (1MCP)](./mcp-optimization-1mcp.md) | Token optimization with 1MCP | ✅ Current |
+| [MCP Optimization (1MCP)](./analysis/mcp-optimization-1mcp.md) | Token optimization with 1MCP | ✅ Current |
 | [MCP API Keys Management](./mcp-api-keys-management.md) | API key management | ✅ Current |
-| [MCP Context Optimization](./mcp-context-optimization-strategy.md) | Context optimization | ✅ Current |
-| [MCP Solution Comparison](./mcp-solution-comparison-checklist.md) | Solution checklist | ✅ Current |
+| [MCP Context Optimization](./analysis/mcp-context-optimization-strategy.md) | Context optimization | ✅ Current |
+| [MCP Solution Comparison](./analysis/mcp-solution-comparison-checklist.md) | Solution checklist | ✅ Current |
 
 ### Agent System
 
@@ -46,15 +72,15 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 | Document | Description | Status |
 |----------|-------------|--------|
 | [Utility Integration Guide](./utility-integration-guide.md) | Utility integration | ✅ Current |
-| [Scripts Consolidation](./scripts-consolidation-analysis.md) | Scripts analysis | ✅ Current |
+| [Scripts Consolidation](./analysis/scripts-consolidation-analysis.md) | Scripts analysis | ✅ Current |
 | [Internal Tools Analysis](./internal-tools-analysis.md) | Tools analysis | ✅ Current |
 
 ### Squad System (formerly Expansion Packs)
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Expansion Packs Structure](./expansion-packs-structure-inventory.md) | Structure inventory | ⚠️ Update terminology |
-| [Expansion Packs Dependencies](./expansion-packs-dependency-analysis.md) | Dependency analysis | ⚠️ Update terminology |
+| [Expansion Packs Structure](./analysis/expansion-packs-structure-inventory.md) | Structure inventory | ⚠️ Update terminology |
+| [Expansion Packs Dependencies](./analysis/expansion-packs-dependency-analysis.md) | Dependency analysis | ⚠️ Update terminology |
 | [Architect Validation](./architect-expansion-pack-rearchitecture.md) | Rearchitecture | ⚠️ Update terminology |
 
 ### Migration & Strategy
@@ -62,8 +88,8 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 | Document | Description | Status |
 |----------|-------------|--------|
 | [Repository Migration Plan](./repository-migration-plan.md) | Migration execution plan | ✅ Current |
-| [Repository Strategy Analysis](./repository-strategy-analysis.md) | Strategy analysis | ✅ Current |
-| [Subdirectory Migration](./subdirectory-migration-impact-analysis.md) | Impact analysis | ✅ Current |
+| [Repository Strategy Analysis](./analysis/repository-strategy-analysis.md) | Strategy analysis | ✅ Current |
+| [Subdirectory Migration](./analysis/subdirectory-migration-impact-analysis.md) | Impact analysis | ✅ Current |
 | [Dependency Resolution](./dependency-resolution-plan.md) | Dependency resolution | ✅ Current |
 
 ### Special Topics
@@ -75,13 +101,22 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 | [Memory Layer](./memory-layer.md) | Memory system architecture | ✅ Current |
 | [Hybrid Ops PV Mind](./hybrid-ops-pv-mind-integration.md) | PV Mind integration | ✅ Current |
 
-### Reference Documents
+### Reference Documents (Official in docs/framework/)
 
 | Document | Description | Status |
 |----------|-------------|--------|
-| [Tech Stack](./tech-stack.md) | Technology decisions | ✅ Current |
-| [Coding Standards](./coding-standards.md) | Code standards | ✅ Current |
-| [Source Tree](./source-tree.md) | Project structure | ⚠️ Needs update |
+| [Tech Stack](../framework/tech-stack.md) | Technology decisions | ✅ Current |
+| [Coding Standards](../framework/coding-standards.md) | Code standards | ✅ Current |
+| [Source Tree](../framework/source-tree.md) | Project structure | ✅ Current |
+
+> **Note:** These are linked to `docs/framework/` which is the official location. The copies in `docs/architecture/` are deprecated.
+
+### Analysis Documents (analysis/)
+
+| Document | Description | Status |
+|----------|-------------|--------|
+| [Tools System Analysis](./analysis/tools-system-analysis-log.md) | Analysis log | 📦 Archive candidate |
+| [Tools System Gap Analysis](./analysis/tools-system-gap-analysis.md) | Gap analysis | 📦 Archive candidate |
 
 ### Legacy & Archived
 
@@ -89,8 +124,6 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 |----------|-------------|--------|
 | [Introduction](./introduction.md) | Original intro (v2.0) | 📦 Archive candidate |
 | [MVP Components](./mvp-components.md) | MVP components (v2.0) | 📦 Archive candidate |
-| [Tools System Analysis](./tools-system-analysis-log.md) | Analysis log | 📦 Archive candidate |
-| [Tools System Gap Analysis](./tools-system-gap-analysis.md) | Gap analysis | 📦 Archive candidate |
 | [Tools System Brownfield](./tools-system-brownfield.md) | Brownfield analysis | 📦 Archive candidate |
 | [Tools System Schema](./tools-system-schema-refinement.md) | Schema refinement | 📦 Archive candidate |
 | [Tools System Handoff](./tools-system-handoff.md) | Handoff notes | 📦 Archive candidate |
@@ -189,5 +222,5 @@ This index provides navigation to all architecture documentation for AIOS v2.1.
 
 ---
 
-**Last Updated:** 2025-12-09
+**Last Updated:** 2025-12-14
 **Maintainer:** @architect (Aria)
