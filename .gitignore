@@ -71,6 +71,8 @@ sync-*.sh                     # Agent sync scripts
 # AI assistant files
 CLAUDE.md
 .claude
+!.claude/CLAUDE.md
+!.claude/rules/
 .gemini
 
 # AI Session Artifacts (Story 6.1.2.6 - Decision Logging)
