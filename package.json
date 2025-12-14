@@ -1,12 +1,13 @@
 {
-  "name": "@aios/core",
-  "version": "2.1.0",
+  "name": "aios-core",
+  "version": "2.1.1",
   "description": "AIOS: AI-Orchestrated System for Full Stack Development - Core Framework",
   "main": "index.js",
   "module": "index.esm.js",
   "types": "index.d.ts",
   "bin": {
     "aios": "./bin/aios.js",
+    "aios-core": "./bin/aios.js",
     "aios-fullstack": "./bin/aios.js",
     "aios-fullstack-minimal": "./bin/aios-minimal.js",
     "aios-minimal": "./bin/aios-minimal.js"
@@ -23,11 +24,14 @@
   "files": [
     "bin/",
     "src/",
+    "scripts/",
     "packages/",
     "install/",
     "tools/",
     "templates/",
     ".aios-core/",
+    ".claude/CLAUDE.md",
+    ".claude/rules/",
     "common/",
     "expansion-packs/",
     "index.js",
@@ -49,6 +53,8 @@
     "setup": "npm run setup:github && npm run install:aios",
     "stories:index": "node .aios-core/scripts/story-index-generator.js docs/stories",
     "stories:backlog": "node .aios-core/scripts/backlog-manager.js generate docs/stories/backlog.md",
+    "stories:source-tree": "node .aios-core/infrastructure/scripts/source-tree-guardian/index.js --generate-manifest",
+    "validate:structure": "node .aios-core/infrastructure/scripts/source-tree-guardian/index.js",
     "format": "prettier --write \"**/*.md\"",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -117,12 +123,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allfluence/aios-core.git"
+    "url": "git+https://github.com/SynkraAI/aios-core.git"
   },
   "bugs": {
-    "url": "https://github.com/allfluence/aios-core/issues"
+    "url": "https://github.com/SynkraAI/aios-core/issues"
   },
-  "homepage": "https://github.com/allfluence/aios-core#readme",
+  "homepage": "https://github.com/SynkraAI/aios-core#readme",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
