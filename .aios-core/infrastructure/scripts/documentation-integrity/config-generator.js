@@ -68,6 +68,22 @@ const DEFAULT_DEPLOYMENT_CONFIG = {
 };
 
 /**
+ * Formats an array as YAML list string for template substitution
+ *
+ * @param {Array} arr - Array to format
+ * @param {number} [indent=4] - Number of spaces for indentation
+ * @returns {string} YAML-formatted array string
+ */
+function formatArrayAsYaml(arr, indent = 4) {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return '[]';
+  }
+  const spaces = ' '.repeat(indent);
+  const items = arr.map((item) => `\n${spaces}- "${String(item)}"`).join('');
+  return items;
+}
+
+/**
  * Builds config context from project info and deployment settings
  *
  * @param {string} projectName - Project name
@@ -148,6 +164,11 @@ function buildConfigContext(projectName, mode, deploymentConfig = {}, analysisRe
     MANUAL_REVIEW_ITEMS: analysisResults.manualReviewItems || [],
     CONFLICTS: analysisResults.conflicts || [],
     RECOMMENDATIONS: analysisResults.recommendations || [],
+
+    // Pre-formatted YAML arrays for template substitution (avoids Handlebars #each)
+    MANUAL_REVIEW_ITEMS_YAML: formatArrayAsYaml(analysisResults.manualReviewItems || []),
+    CONFLICTS_YAML: formatArrayAsYaml(analysisResults.conflicts || []),
+    RECOMMENDATIONS_YAML: formatArrayAsYaml(analysisResults.recommendations || []),
   };
 
   return context;
@@ -321,6 +342,7 @@ module.exports = {
   generateConfig,
   buildDeploymentConfig,
   getDefaultDeploymentConfig,
+  formatArrayAsYaml,
   ConfigTemplates,
   DeploymentWorkflow,
   DeploymentPlatform,

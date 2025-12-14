@@ -27,50 +27,50 @@
 
 ```yaml
 task: setupProjectDocs()
-responsável: dev (Developer)
-responsavel_type: Agente
+responsible: dev (Developer)
+responsible_type: Agent
 atomic_layer: Documentation
 
-**Entrada:**
-- campo: targetDir
-  tipo: string
-  origem: User Input or cwd
-  obrigatório: false
-  validação: Valid directory path
+inputs:
+- field: targetDir
+  type: string
+  source: User Input or cwd
+  required: false
+  validation: Valid directory path
 
-- campo: projectName
-  tipo: string
-  origem: User Input or package.json
-  obrigatório: false
-  validação: Non-empty string
+- field: projectName
+  type: string
+  source: User Input or package.json
+  required: false
+  validation: Non-empty string
 
-- campo: mode
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: greenfield|brownfield|framework-dev
+- field: mode
+  type: string
+  source: User Input
+  required: false
+  validation: greenfield|brownfield|framework-dev
 
-- campo: executionMode
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: yolo|interactive|pre-flight
+- field: executionMode
+  type: string
+  source: User Input
+  required: false
+  validation: yolo|interactive|pre-flight
 
-**Saída:**
-- campo: docs_generated
-  tipo: array
-  destino: .aios-core/docs/
-  persistido: true
+outputs:
+- field: docs_generated
+  type: array
+  destination: docs/architecture/
+  persisted: true
 
-- campo: core_config
-  tipo: file
-  destino: .aios-core/core-config.yaml
-  persistido: true
+- field: core_config
+  type: file
+  destination: .aios-core/core-config.yaml
+  persisted: true
 
-- campo: gitignore
-  tipo: file
-  destino: .gitignore
-  persistido: true
+- field: gitignore
+  type: file
+  destination: .gitignore
+  persisted: true
 ```
 
 ---
@@ -84,16 +84,16 @@ atomic_layer: Documentation
 ```yaml
 pre-conditions:
   - [ ] Target directory exists and is writable
-    tipo: pre-condition
+    type: pre-condition
     blocker: true
-    validação: |
+    validation: |
       Check target directory exists and has write permissions
     error_message: "Pre-condition failed: Target directory not accessible"
 
   - [ ] Documentation Integrity module is available
-    tipo: pre-condition
+    type: pre-condition
     blocker: true
-    validação: |
+    validation: |
       Verify .aios-core/infrastructure/scripts/documentation-integrity/index.js exists
     error_message: "Pre-condition failed: Documentation Integrity module not found"
 ```
@@ -108,17 +108,17 @@ pre-conditions:
 
 ```yaml
 post-conditions:
-  - [ ] Project docs created in .aios-core/docs/
-    tipo: post-condition
+  - [ ] Project docs created in docs/architecture/
+    type: post-condition
     blocker: true
-    validação: |
-      Verify source-tree.md, coding-standards.md, tech-stack.md exist
+    validation: |
+      Verify source-tree.md, coding-standards.md, tech-stack.md exist in docs/architecture/
     error_message: "Post-condition failed: Documentation files not created"
 
   - [ ] core-config.yaml created with valid deployment section
-    tipo: post-condition
+    type: post-condition
     blocker: true
-    validação: |
+    validation: |
       Verify .aios-core/core-config.yaml exists and has deployment configuration
     error_message: "Post-condition failed: core-config.yaml not properly configured"
 ```
@@ -134,23 +134,23 @@ post-conditions:
 ```yaml
 acceptance-criteria:
   - [ ] All documentation files generated from templates
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: true
-    validação: |
+    validation: |
       Assert docs contain project-specific content, not placeholders
     error_message: "Acceptance criterion not met: Docs contain unresolved placeholders"
 
   - [ ] .gitignore properly configured for project
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: true
-    validação: |
+    validation: |
       Assert .gitignore includes AIOS ignores and tech stack ignores
     error_message: "Acceptance criterion not met: .gitignore incomplete"
 
   - [ ] Configuration-Driven Architecture pattern applied
-    tipo: acceptance-criterion
+    type: acceptance-criterion
     blocker: true
-    validação: |
+    validation: |
       Assert core-config.yaml contains project-specific values
     error_message: "Acceptance criterion not met: core-config.yaml not configuration-driven"
 ```
@@ -341,9 +341,9 @@ console.log(`Generated ${result.filesCreated.length} documentation files`);
 
 | File | Purpose |
 |------|---------|
-| `.aios-core/docs/source-tree.md` | Project structure documentation |
-| `.aios-core/docs/coding-standards.md` | Coding conventions and patterns |
-| `.aios-core/docs/tech-stack.md` | Technology stack reference |
+| `docs/architecture/source-tree.md` | Project structure documentation |
+| `docs/architecture/coding-standards.md` | Coding conventions and patterns |
+| `docs/architecture/tech-stack.md` | Technology stack reference |
 
 ### 4. Generate Core Configuration
 
@@ -407,7 +407,7 @@ if (validation.valid) {
 ## Success Criteria
 
 - [ ] Installation mode correctly detected
-- [ ] Project documentation generated in `.aios-core/docs/`
+- [ ] Project documentation generated in `docs/architecture/`
 - [ ] `core-config.yaml` created with deployment section
 - [ ] `.gitignore` properly configured (created or merged)
 - [ ] Configuration passes validation
@@ -424,9 +424,9 @@ Mode: greenfield
 Project: my-awesome-app
 
 Generated Files:
-  ✓ .aios-core/docs/source-tree.md
-  ✓ .aios-core/docs/coding-standards.md
-  ✓ .aios-core/docs/tech-stack.md
+  ✓ docs/architecture/source-tree.md
+  ✓ docs/architecture/coding-standards.md
+  ✓ docs/architecture/tech-stack.md
   ✓ .aios-core/core-config.yaml
   ✓ .gitignore (created)
 

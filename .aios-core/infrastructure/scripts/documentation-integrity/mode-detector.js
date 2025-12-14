@@ -234,12 +234,19 @@ function isAiosCoreRepository(targetDir) {
 
   try {
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-    // Check for aios-core package name or workspaces pattern
-    const isAiosCore =
-      packageJson.name === '@aios/core' ||
-      packageJson.name === 'aios-core' ||
-      (Array.isArray(packageJson.workspaces) && packageJson.workspaces.includes('packages/*'));
-    return isAiosCore === true;
+
+    // Primary check: explicit aios-core package names
+    if (packageJson.name === '@aios/core' || packageJson.name === 'aios-core') {
+      return true;
+    }
+
+    // Secondary check: workspaces pattern + aios-specific marker file
+    // This prevents false positives for generic monorepos
+    const hasAiosMarker = fs.existsSync(path.join(targetDir, '.aios-core', 'infrastructure'));
+    const hasWorkspaces =
+      Array.isArray(packageJson.workspaces) && packageJson.workspaces.includes('packages/*');
+
+    return hasWorkspaces && hasAiosMarker;
   } catch {
     return false;
   }
