@@ -1,7 +1,7 @@
 # ============================================
-# AIOS-FULLSTACK Core Configuration
-# Version: 2.1.0 (Consolidated from analysis of 6 variants)
-# Last Updated: 2025-11-29
+# AIOS Core Configuration
+# Version: 2.2.0 (Story 6.10 - Documentation Cleanup)
+# Last Updated: 2025-12-14
 # ============================================
 
 # ============================================
@@ -65,7 +65,8 @@ toolsLocation: .aios-core/tools
 scriptsLocation: .aios-core/scripts
 dataLocation: .aios-core/data
 elicitationLocation: .aios-core/elicitation
-expansionPacksLocation: expansion-packs
+# Squads replaced expansion-packs in OSR-8 - see docs/guides/squads-guide.md
+squadsTemplateLocation: templates/squad
 mindsLocation: outputs/minds
 
 # ============================================
@@ -195,7 +196,7 @@ lazyLoading:
   enabled: true
   heavySections:
     - pvMindContext
-    - expansionPacks
+    - squads
     - registry
 
 git:
@@ -258,7 +259,7 @@ coderabbit_integration:
   wsl_config:
     distribution: Ubuntu
     installation_path: ~/.local/bin/coderabbit
-    working_directory: /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack
+    working_directory: /mnt/c/Users/AllFluence-User/Workspaces/AIOS/SynkraAI/aios-core
 
   # Self-healing configuration
   self_healing:
@@ -282,19 +283,20 @@ coderabbit_integration:
   # CLI commands (WSL wrapper for Windows)
   commands:
     qa_pre_review_uncommitted: |
-      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t uncommitted'
+      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/SynkraAI/aios-core && ~/.local/bin/coderabbit --prompt-only -t uncommitted'
     qa_story_review_committed: |
-      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/AIOS-V4/aios-fullstack && ~/.local/bin/coderabbit --prompt-only -t committed --base main'
+      wsl bash -c 'cd /mnt/c/Users/AllFluence-User/Workspaces/AIOS/SynkraAI/aios-core && ~/.local/bin/coderabbit --prompt-only -t committed --base main'
 
   report_location: docs/qa/coderabbit-reports/
 
 # ============================================
-# SECTION 10: Expansion Packs
+# SECTION 10: Squads System (replaced Expansion Packs in OSR-8)
+# See docs/guides/squads-guide.md for full documentation
 # ============================================
-expansionPacks:
-  location: expansion-packs
-  installed:
-    - hybrid-ops
+squads:
+  templateLocation: templates/squad
+  # Squads are created from template, not pre-installed
+  # Use: cp -r templates/squad/ squads/my-squad-name/
   autoLoad: false
 
 pvMindContext:
