@@ -1,8 +1,8 @@
 # Synkra AIOS: Framework Universal de Agentes IA 🚀
 
-[![Versão NPM](https://img.shields.io/npm/v/@synkra/aios-core.svg)](https://www.npmjs.com/package/@synkra/aios-core)
+[![Versão NPM](https://img.shields.io/npm/v/aios-core.svg)](https://www.npmjs.com/package/aios-core)
 [![Licença: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Versão Node.js](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Versão Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![Documentação](https://img.shields.io/badge/docs-disponível-orange.svg)](https://synkra.ai)
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-success.svg)](LICENSE)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -24,9 +24,11 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 
 ## Pré-requisitos
 
-- Node.js >=20.0.0
-- npm
-- GitHub CLI (necessário para colaboração em equipe)
+- Node.js >=18.0.0 (v20+ recomendado)
+- npm >=9.0.0
+- GitHub CLI (opcional, necessário para colaboração em equipe)
+
+> **Problemas de instalação?** Consulte o [Guia de Troubleshooting](docs/guides/installation-troubleshooting.md)
 
 **Guias específicos por plataforma:**
 - 📖 [Guia de Instalação para macOS](docs/installation/macos.md)
@@ -81,14 +83,14 @@ Isto facilita beneficiar-se das últimas melhorias, correções de bugs e novos 
 
 ```bash
 # Criar um novo projeto com assistente interativo moderno
-npx @synkra/aios-core init meu-projeto
+npx aios-core init meu-projeto
 
 # Ou instalar em projeto existente
 cd seu-projeto
-npx @synkra/aios-core install
+npx aios-core install
 
 # Ou usar uma versão específica
-npx @synkra/aios-core@latest init meu-projeto
+npx aios-core@latest init meu-projeto
 ```
 
 ### ✨ Assistente de Instalação Moderno
@@ -118,7 +120,7 @@ O Synkra AIOS agora inclui uma experiência de instalação interativa de últim
 
 > **É isso!** Sem clonar, sem configuração manual - apenas um comando e você está pronto para começar com uma experiência de instalação moderna e profissional.
 
-**Pré-requisitos**: [Node.js](https://nodejs.org) v18+ necessário (v20+ recomendado)
+**Pré-requisitos**: [Node.js](https://nodejs.org) v18+ necessário (v20+ recomendado) | [Troubleshooting](docs/guides/installation-troubleshooting.md)
 
 ### Atualizando uma Instalação Existente
 
@@ -164,27 +166,27 @@ O Synkra AIOS oferece uma CLI moderna e cross-platform com comandos intuitivos:
 
 ```bash
 # Gerenciamento de Projeto (com assistente interativo)
-npx @synkra/aios-core init <nome-projeto> [opções]
+npx aios-core init <nome-projeto> [opções]
   --force              Forçar criação em diretório não vazio
   --skip-install       Pular instalação de dependências npm
   --template <nome>    Usar template específico (default, minimal, enterprise)
 
 # Instalação e Configuração (com prompts modernos)
-npx @synkra/aios-core install [opções]
+npx aios-core install [opções]
   --force              Sobrescrever configuração existente
   --quiet              Saída mínima durante instalação
   --dry-run            Simular instalação sem modificar arquivos
 
 # Comandos do Sistema
-npx @synkra/aios-core --version   Exibir versão instalada
-npx @synkra/aios-core --help      Exibir ajuda detalhada
-npx @synkra/aios-core info        Exibir informações do sistema
-npx @synkra/aios-core doctor      Executar diagnósticos do sistema
-npx @synkra/aios-core doctor --fix Corrigir problemas detectados automaticamente
+npx aios-core --version   Exibir versão instalada
+npx aios-core --help      Exibir ajuda detalhada
+npx aios-core info        Exibir informações do sistema
+npx aios-core doctor      Executar diagnósticos do sistema
+npx aios-core doctor --fix Corrigir problemas detectados automaticamente
 
 # Manutenção
-npx @synkra/aios-core update      Atualizar para versão mais recente
-npx @synkra/aios-core uninstall   Remover Synkra AIOS
+npx aios-core update      Atualizar para versão mais recente
+npx aios-core uninstall   Remover Synkra AIOS
 ```
 
 **Recursos da CLI:**
@@ -199,7 +201,7 @@ npx @synkra/aios-core uninstall   Remover Synkra AIOS
 #### Instalação Interativa Completa
 
 ```bash
-$ npx @synkra/aios-core install
+$ npx aios-core install
 
 🚀 Synkra AIOS Installation
 
@@ -237,15 +239,15 @@ $ npx @synkra/aios-core install
 
 Next steps:
   cd my-awesome-project
-  @synkra/aios-core doctor     # Verify installation
-  @synkra/aios-core --help     # See available commands
+  aios-core doctor     # Verify installation
+  aios-core --help     # See available commands
 ```
 
 #### Instalação Silenciosa (CI/CD)
 
 ```bash
 # Instalação automatizada sem prompts
-$ npx @synkra/aios-core install --quiet --force
+$ npx aios-core install --quiet --force
 ✔ Synkra AIOS installed successfully
 ```
 
@@ -253,7 +255,7 @@ $ npx @synkra/aios-core install --quiet --force
 
 ```bash
 # Testar instalação sem modificar arquivos
-$ npx @synkra/aios-core install --dry-run
+$ npx aios-core install --dry-run
 
 [DRY RUN] Would create: ./my-project/
 [DRY RUN] Would copy: .aios-core/ (45 files)
@@ -265,7 +267,7 @@ $ npx @synkra/aios-core install --dry-run
 #### Diagnóstico do Sistema
 
 ```bash
-$ npx @synkra/aios-core doctor
+$ npx aios-core doctor
 
 🏥 AIOS System Diagnostics
 
@@ -294,9 +296,9 @@ Dependencies:
 #### Obter Ajuda
 
 ```bash
-$ npx @synkra/aios-core --help
+$ npx aios-core --help
 
-Usage: @synkra/aios-core [options] [command]
+Usage: aios-core [options] [command]
 
 Synkra AIOS: AI-Orchestrated System for Full Stack Development
 
@@ -311,7 +313,7 @@ Commands:
   doctor [options]             Run system diagnostics and health checks
   help [command]               display help for command
 
-Run '@synkra/aios-core <command> --help' for detailed information about each command.
+Run 'aios-core <command> --help' for detailed information about each command.
 ```
 
 ### Alternativa: Clonar e Construir
@@ -699,4 +701,4 @@ Veja também:
 
 ---
 
-**[⬆ Voltar ao topo](#@synkra/aios-core-framework-universal-de-agentes-ia-)**
+**[⬆ Voltar ao topo](#synkra-aios-framework-universal-de-agentes-ia-)**
