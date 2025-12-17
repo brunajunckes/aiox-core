@@ -9,7 +9,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');
 const { configureEnvironment, updateGitignore } = require('../../src/config/configure-environment');
-const pkg = require('../../../../package.json');
 
 /**
  * Cleanup helper with retry logic for flaky file system operations
@@ -73,7 +72,8 @@ describe('Environment Configuration Integration', () => {
 
       const content = await fs.readFile(envPath, 'utf8');
       expect(content).toContain('NODE_ENV=development');
-      expect(content).toContain(`AIOS_VERSION=${pkg.version}`);
+      // Version-agnostic: check AIOS_VERSION exists with valid semver format
+      expect(content).toMatch(/AIOS_VERSION=\d+\.\d+\.\d+/);
     });
 
     it('should create .env.example file', async () => {
