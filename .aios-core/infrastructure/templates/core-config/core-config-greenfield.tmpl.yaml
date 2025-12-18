@@ -89,6 +89,47 @@ deployment:
       production: ["production", "promotion"]
 
 # =============================================================================
+# GITHUB INTEGRATION
+# Pull Request and semantic-release configuration
+# =============================================================================
+github:
+  enabled: true
+  cli_required: false
+
+  # Pull Request Configuration
+  # Controls how @devops *create-pr generates PR titles
+  pr:
+    # Title format options:
+    # - "conventional": For semantic-release (feat: description [Story X.Y])
+    # - "story-first": Simple format ([Story X.Y] Description) - DEFAULT
+    # - "branch-based": Just branch name as title
+    title_format: {{PR_TITLE_FORMAT}}
+
+    include_story_id: true
+
+    # Only used when title_format: conventional
+    conventional_commits:
+      enabled: {{CONVENTIONAL_COMMITS_ENABLED}}
+      branch_type_map:
+        feature/: feat
+        feat/: feat
+        fix/: fix
+        bugfix/: fix
+        hotfix/: fix
+        docs/: docs
+        chore/: chore
+        refactor/: refactor
+        test/: test
+      default_type: feat
+
+    auto_assign_reviewers: false
+    draft_by_default: false
+
+  # Semantic Release (only for NPM packages)
+  semantic_release:
+    enabled: {{SEMANTIC_RELEASE_ENABLED}}
+
+# =============================================================================
 # AGENT CONFIGURATION
 # Agent-specific settings
 # =============================================================================
