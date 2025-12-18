@@ -237,9 +237,10 @@ class ElicitationSessionManager {
       case 'json':
         return JSON.stringify(session, null, 2);
 
-      case 'yaml':
+      case 'yaml': {
         const yaml = require('js-yaml');
         return yaml.dump(session);
+      }
 
       default:
         throw new Error(`Unsupported export format: ${format}`);

@@ -234,11 +234,12 @@ async function main() {
       await runWizard();
       break;
 
-    case 'init':
+    case 'init': {
       // Create new project
       const projectName = args[1];
       await initProject(projectName);
       break;
+    }
 
     case 'info':
       showInfo();
