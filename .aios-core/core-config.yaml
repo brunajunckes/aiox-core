@@ -267,6 +267,60 @@ github:
     pr_creation: true
     issue_management: true
 
+  # Pull Request Configuration
+  # Controls how @devops *create-pr generates PR titles and descriptions
+  pr:
+    # Title format options:
+    # - "conventional": Uses Conventional Commits format for semantic-release
+    #   Example: "feat(auth): implement OAuth login [Story 6.17]"
+    # - "story-first": Story ID first (legacy/simple projects)
+    #   Example: "[Story 6.17] Implement OAuth Login"
+    # - "branch-based": Converts branch name to title
+    #   Example: "Feature User Auth"
+    title_format: conventional  # Options: conventional | story-first | branch-based
+
+    # Include story ID in PR title when available
+    include_story_id: true
+
+    # Conventional commits mapping (only used when title_format: conventional)
+    # Maps branch prefixes to commit types
+    conventional_commits:
+      enabled: true
+      branch_type_map:
+        feature/: feat
+        feat/: feat
+        fix/: fix
+        bugfix/: fix
+        hotfix/: fix
+        docs/: docs
+        chore/: chore
+        refactor/: refactor
+        test/: test
+        perf/: perf
+        ci/: ci
+        style/: style
+        build/: build
+      default_type: feat
+
+    # Base branch for PRs (auto-detected if not set)
+    # base_branch: main
+
+    # Auto-assign reviewers based on story type
+    auto_assign_reviewers: false
+
+    # Draft PRs by default
+    draft_by_default: false
+
+  # Semantic Release Integration (Story 6.17)
+  # When enabled, PR titles follow Conventional Commits for automatic releases
+  semantic_release:
+    enabled: true  # Set to false if project doesn't use semantic-release
+    # Release types triggered by commit prefixes:
+    # - feat: → Minor release (2.3.0 → 2.4.0)
+    # - fix: → Patch release (2.3.0 → 2.3.1)
+    # - feat!: or BREAKING CHANGE: → Major release (2.3.0 → 3.0.0)
+    # - docs:, chore:, test:, etc. → No release
+
 # ============================================
 # SECTION 9: CodeRabbit Integration (Story 6.3.3)
 # MASTER TOGGLE: When enabled=false, ALL CodeRabbit behavior is disabled

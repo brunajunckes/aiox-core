@@ -262,85 +262,208 @@ function extractStoryInfo(storyPath) {
 }
 ```
 
-### Step 4: Generate PR Title (Conventional Commits Format)
+### Step 4: Generate PR Title (Configurable Format)
 
-> **CRITICAL for Semantic-Release:** PR titles MUST follow Conventional Commits format.
-> When merged via "Squash and merge", the PR title becomes the commit message that triggers releases.
+> **Configuration-Driven:** PR title format is controlled by `core-config.yaml` → `github.pr.title_format`
+> This allows each project to choose the format that matches their workflow.
 
 ```javascript
+const yaml = require('js-yaml');
+const fs = require('fs');
+const path = require('path');
+
 /**
- * Generate PR title in Conventional Commits format for semantic-release compatibility.
- *
- * Format: {type}({scope}): {description} [Story {id}]
- *
- * Examples:
- * - feat(auth): implement OAuth2 login [Story 6.17]
- * - fix(cli): resolve path parsing on Windows [Story 6.18]
- * - docs: update installation guide
+ * Load PR configuration from core-config.yaml
+ * @returns {Object} PR configuration with defaults
  */
-function generatePRTitle(branchName, storyInfo) {
-  // Detect commit type from branch prefix
-  const branchTypeMap = {
-    'feature/': 'feat',
-    'feat/': 'feat',
-    'fix/': 'fix',
-    'bugfix/': 'fix',
-    'hotfix/': 'fix',
-    'docs/': 'docs',
-    'chore/': 'chore',
-    'refactor/': 'refactor',
-    'test/': 'test',
-    'perf/': 'perf',
-    'ci/': 'ci',
-    'style/': 'style',
-    'build/': 'build'
+function loadPRConfig() {
+  const configPath = path.join(process.cwd(), '.aios-core', 'core-config.yaml');
+
+  // Default configuration (for projects without core-config)
+  const defaults = {
+    title_format: 'story-first',  // Safe default for most projects
+    include_story_id: true,
+    conventional_commits: {
+      enabled: false,
+      branch_type_map: {
+        'feature/': 'feat',
+        'feat/': 'feat',
+        'fix/': 'fix',
+        'bugfix/': 'fix',
+        'hotfix/': 'fix',
+        'docs/': 'docs',
+        'chore/': 'chore',
+        'refactor/': 'refactor',
+        'test/': 'test',
+        'perf/': 'perf',
+        'ci/': 'ci',
+        'style/': 'style',
+        'build/': 'build'
+      },
+      default_type: 'feat'
+    }
   };
 
-  let type = 'feat'; // default
-  for (const [prefix, commitType] of Object.entries(branchTypeMap)) {
+  try {
+    if (fs.existsSync(configPath)) {
+      const config = yaml.load(fs.readFileSync(configPath, 'utf8'));
+      return { ...defaults, ...config?.github?.pr };
+    }
+  } catch (error) {
+    console.warn('Could not load core-config.yaml, using defaults');
+  }
+
+  return defaults;
+}
+
+/**
+ * Generate PR title based on project configuration.
+ *
+ * Supported formats (configured in core-config.yaml → github.pr.title_format):
+ *
+ * 1. "conventional" - Conventional Commits format (for semantic-release)
+ *    Example: "feat(auth): implement OAuth login [Story 6.17]"
+ *
+ * 2. "story-first" - Story ID first (legacy/simple projects)
+ *    Example: "[Story 6.17] Implement OAuth Login"
+ *
+ * 3. "branch-based" - Branch name converted to title
+ *    Example: "Feature User Auth"
+ *
+ * @param {string} branchName - Current git branch name
+ * @param {Object} storyInfo - Story information (id, title)
+ * @returns {string} Formatted PR title
+ */
+function generatePRTitle(branchName, storyInfo) {
+  const config = loadPRConfig();
+  const format = config.title_format || 'story-first';
+
+  switch (format) {
+    case 'conventional':
+      return generateConventionalTitle(branchName, storyInfo, config);
+    case 'story-first':
+      return generateStoryFirstTitle(branchName, storyInfo, config);
+    case 'branch-based':
+      return generateBranchBasedTitle(branchName, storyInfo, config);
+    default:
+      return generateStoryFirstTitle(branchName, storyInfo, config);
+  }
+}
+
+/**
+ * Format: {type}({scope}): {description} [Story {id}]
+ * Used for: Projects with semantic-release automation
+ */
+function generateConventionalTitle(branchName, storyInfo, config) {
+  const typeMap = config.conventional_commits?.branch_type_map || {};
+  const defaultType = config.conventional_commits?.default_type || 'feat';
+
+  // Detect commit type from branch prefix
+  let type = defaultType;
+  for (const [prefix, commitType] of Object.entries(typeMap)) {
     if (branchName.startsWith(prefix)) {
       type = commitType;
       break;
     }
   }
 
-  // Extract scope from branch name if present (e.g., feat/auth/login -> scope=auth)
+  // Extract scope from branch name (e.g., feat/auth/login -> scope=auth)
   const scopeMatch = branchName.match(/^[a-z-]+\/([a-z-]+)\//);
   const scope = scopeMatch ? scopeMatch[1] : null;
   const scopeStr = scope ? `(${scope})` : '';
 
   // Generate description
   if (storyInfo && storyInfo.id && storyInfo.title) {
-    // Clean title: remove "Story X.Y:" prefix if present, lowercase first char
     let cleanTitle = storyInfo.title
       .replace(/^Story\s*\d+\.\d+[:\s-]*/i, '')
       .trim();
-
-    // Lowercase first character for conventional commit style
     cleanTitle = cleanTitle.charAt(0).toLowerCase() + cleanTitle.slice(1);
 
-    return `${type}${scopeStr}: ${cleanTitle} [Story ${storyInfo.id}]`;
+    const storyRef = config.include_story_id ? ` [Story ${storyInfo.id}]` : '';
+    return `${type}${scopeStr}: ${cleanTitle}${storyRef}`;
   }
 
   // Fallback: convert branch name to description
   const description = branchName
     .replace(/^(feature|feat|fix|bugfix|hotfix|docs|chore|refactor|test|perf|ci|style|build)\//, '')
-    .replace(/^[a-z-]+\//, '') // Remove scope if present
+    .replace(/^[a-z-]+\//, '')
     .replace(/-/g, ' ')
     .toLowerCase()
     .trim();
 
   return `${type}${scopeStr}: ${description}`;
 }
+
+/**
+ * Format: [Story {id}] {Title}
+ * Used for: Simple projects, legacy workflows, non-NPM projects
+ */
+function generateStoryFirstTitle(branchName, storyInfo, config) {
+  if (storyInfo && storyInfo.id && storyInfo.title) {
+    return `[Story ${storyInfo.id}] ${storyInfo.title}`;
+  }
+
+  // Fallback: convert branch name to title
+  return branchName
+    .replace(/^(feature|feat|fix|bugfix|hotfix|docs|chore|refactor|test|perf|ci|style|build)\//, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+/**
+ * Format: {Branch Name As Title}
+ * Used for: Minimal projects, quick iterations
+ */
+function generateBranchBasedTitle(branchName, storyInfo, config) {
+  const title = branchName
+    .replace(/^(feature|feat|fix|bugfix|hotfix|docs|chore|refactor|test|perf|ci|style|build)\//, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  if (config.include_story_id && storyInfo?.id) {
+    return `${title} [Story ${storyInfo.id}]`;
+  }
+
+  return title;
+}
 ```
 
-**Semantic-Release Trigger Rules:**
-| PR Title Prefix | Release Type | Example |
-|-----------------|--------------|---------|
-| `feat:` or `feat(scope):` | Minor (2.3.0 → 2.4.0) | `feat(auth): add SSO support` |
-| `fix:` or `fix(scope):` | Patch (2.3.0 → 2.3.1) | `fix(cli): resolve Windows paths` |
-| `feat!:` or `BREAKING CHANGE:` | Major (2.3.0 → 3.0.0) | `feat!: redesign API` |
-| `docs:`, `chore:`, `test:`, etc. | No release | `docs: update README` |
+## Configuration Reference
+
+Add to your project's `core-config.yaml`:
+
+```yaml
+github:
+  pr:
+    # Options: conventional | story-first | branch-based
+    title_format: conventional  # For semantic-release projects
+    # title_format: story-first  # For simple projects (default)
+
+    include_story_id: true
+
+    conventional_commits:
+      enabled: true
+      branch_type_map:
+        feature/: feat
+        fix/: fix
+        docs/: docs
+        # Add custom mappings as needed
+      default_type: feat
+
+  semantic_release:
+    enabled: true  # Set false if not using semantic-release
+```
+
+## Title Format Examples
+
+| Format | Branch | Story | Generated Title |
+|--------|--------|-------|-----------------|
+| `conventional` | `feature/user-auth` | 6.17: User Auth | `feat: user auth [Story 6.17]` |
+| `conventional` | `fix/cli/parsing` | 6.18: CLI Fix | `fix(cli): cLI fix [Story 6.18]` |
+| `story-first` | `feature/user-auth` | 6.17: User Auth | `[Story 6.17] User Auth` |
+| `story-first` | `fix/cli-bug` | - | `Cli Bug` |
+| `branch-based` | `feature/user-auth` | 6.17 | `User Auth [Story 6.17]` |
+| `branch-based` | `docs/readme` | - | `Readme` |
 
 ### Step 5: Generate PR Description
 
@@ -484,9 +607,15 @@ Called by `@github-devops` via `*create-pr` command.
 - PR description includes repository context
 - Base branch is correct (usually main/master)
 
-## Semantic-Release Integration
+## Semantic-Release Integration (Optional)
 
-**IMPORTANT:** When PRs are merged using "Squash and merge" on GitHub, the PR title becomes the merge commit message. This triggers semantic-release:
+> **Note:** This section only applies when `core-config.yaml` has:
+> - `github.pr.title_format: conventional`
+> - `github.semantic_release.enabled: true`
+>
+> Projects without semantic-release should use `title_format: story-first` (default).
+
+**When enabled:** PRs merged via "Squash and merge" use the PR title as commit message, triggering semantic-release:
 
 | Branch Pattern | Generated Title | Release |
 |---------------|-----------------|---------|
@@ -498,6 +627,34 @@ Called by `@github-devops` via `*create-pr` command.
 
 For breaking changes, manually edit the PR title to include `!`:
 - `feat!: redesign authentication API [Story 7.1]`
+
+## Configuration for Different Project Types
+
+### NPM Package with Semantic-Release (aios-core)
+```yaml
+github:
+  pr:
+    title_format: conventional
+  semantic_release:
+    enabled: true
+```
+
+### Simple Web App (no releases)
+```yaml
+github:
+  pr:
+    title_format: story-first  # [Story 6.17] Title
+  semantic_release:
+    enabled: false
+```
+
+### Quick Prototypes
+```yaml
+github:
+  pr:
+    title_format: branch-based  # Just branch name as title
+    include_story_id: false
+```
 
 ## Notes
 
