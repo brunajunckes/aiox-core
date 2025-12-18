@@ -10,6 +10,4 @@ tasks:
   - test-task
 
 config:
-  extends: default
-  settings:
-    testMode: true
+  extends: extend
