@@ -216,7 +216,7 @@ async function runTests(projectRoot, options = {}) {
   return new Promise((resolve) => {
     const result = {
       ran: false,
-      passed: false,
+      success: false,
       total: 0,
       passed: 0,
       failed: 0,

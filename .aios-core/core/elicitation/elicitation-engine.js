@@ -72,7 +72,7 @@ function isSafePattern(pattern) {
       /\(\.\*\)\+/,               // (.*)+  - catastrophic backtracking
       /\(\.\+\)\*/,               // (.+)* - catastrophic backtracking
       /\(\.\*\)\*/,               // (.*)* - catastrophic backtracking
-      /\(\?\!/,                    // Negative lookahead (can be slow)
+      /\(\?!/,                     // Negative lookahead (can be slow)
     ];
 
     for (const reDoSPattern of reDoSPatterns) {
@@ -271,16 +271,18 @@ class ElicitationEngine {
     const { type, source, transform } = smartDefaultConfig;
 
     switch (type) {
-      case 'fromAnswer':
+      case 'fromAnswer': {
         const value = this.sessionData.answers[source];
         return transform ? transform(value) : value;
+      }
 
       case 'generated':
         return this.generateDefault(smartDefaultConfig);
 
-      case 'conditional':
+      case 'conditional': {
         const condition = this.evaluateCondition(smartDefaultConfig.condition);
         return condition ? smartDefaultConfig.ifTrue : smartDefaultConfig.ifFalse;
+      }
 
       default:
         return undefined;
@@ -293,9 +295,10 @@ class ElicitationEngine {
    */
   generateDefault(config) {
     switch (config.generator) {
-      case 'kebabCase':
+      case 'kebabCase': {
         const source = this.sessionData.answers[config.source] || '';
         return source.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      }
 
       case 'timestamp':
         return new Date().toISOString();
@@ -373,13 +376,14 @@ class ElicitationEngine {
 
     if (typeof validator === 'object') {
       switch (validator.type) {
-        case 'regex':
+        case 'regex': {
           // Security: Validate pattern before RegExp construction to prevent ReDoS
           if (!isSafePattern(validator.pattern)) {
             return validator.message || 'Invalid or unsafe regex pattern';
           }
           const regex = new RegExp(validator.pattern);
           return regex.test(value) || validator.message;
+        }
 
         case 'length':
           if (validator.min && value.length < validator.min) {
@@ -390,9 +394,10 @@ class ElicitationEngine {
           }
           return true;
 
-        case 'unique':
+        case 'unique': {
           const exists = await this.checkExists(validator.path, value);
           return !exists || `${value} already exists`;
+        }
 
         default:
           return true;
