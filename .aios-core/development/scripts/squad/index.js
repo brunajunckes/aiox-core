@@ -17,6 +17,12 @@ const {
   ErrorCodes,
 } = require('./squad-loader');
 
+const {
+  SquadValidator,
+  ValidationErrorCodes,
+  TASK_REQUIRED_FIELDS,
+} = require('./squad-validator');
+
 module.exports = {
   // Squad Loader (SQS-2)
   SquadLoader,
@@ -25,8 +31,10 @@ module.exports = {
   DEFAULT_SQUADS_PATH,
   ErrorCodes,
 
-  // Squad Validator (SQS-3) - TODO: Implement in Story SQS-3
-  // SquadValidator,
+  // Squad Validator (SQS-3)
+  SquadValidator,
+  ValidationErrorCodes,
+  TASK_REQUIRED_FIELDS,
 
   // Squad Generator (SQS-4) - TODO: Implement in Story SQS-4
   // SquadGenerator,
