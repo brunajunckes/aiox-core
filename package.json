@@ -14,9 +14,7 @@
   "workspaces": [
     ".aios-core",
     "memory",
-    "security",
     "performance",
-    "telemetry",
     "packages/*"
   ],
   "files": [
