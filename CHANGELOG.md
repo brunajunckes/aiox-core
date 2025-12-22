@@ -7,60 +7,126 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+*Nothing unreleased at this time.*
+
+---
+
+## [2.2.3] - 2025-12-22
+
+### Highlights
+
+This release marks the **Open-Source Community Readiness** milestone, preparing AIOS for public contribution while introducing the **Squad System** for extensibility.
+
 ### Added
-- **Open-Source Community Readiness (Epic OSR)** - Legal foundation documentation (Story OSR-3)
-  - Created `PRIVACY.md` - Privacy policy (English)
-  - Created `PRIVACY-PT.md` - Política de privacidade (Português)
-  - Created `TERMS.md` - Terms of use (English)
-  - Created `TERMS-PT.md` - Termos de uso (Português)
-  - Updated `CHANGELOG.md` - Following Keep a Changelog format
-  - Updated `README.md` - Added bilingual legal section table
-  - Updated `CODE_OF_CONDUCT.md` - Added contact information
-  - All legal documents follow industry standard templates with PT-BR translations
 
-- **Agent Command Rationalization** - Consolidated and clarified agent commands for better usability (Story 6.1.2.3)
-  - Created 4 new consolidated task files:
-    - `.aios-core/tasks/security-audit.md` - Consolidates RLS audit + schema audit
-    - `.aios-core/tasks/analyze-performance.md` - Consolidates query explain + hotpaths + optimization
-    - `.aios-core/tasks/test-as-user.md` - Renamed from db-impersonate.md (clearer purpose)
-    - `.aios-core/tasks/setup-database.md` - Database-agnostic setup (was Supabase-only)
-  - Created migration and selection guides:
-    - `docs/guides/command-migration-guide.md` - v2.0→v3.0 migration timeline (6 months)
-    - `docs/guides/agent-selection-guide.md` - Quick reference for choosing agents
-  - Created analysis documentation:
-    - `docs/analysis/backward-compatibility-report.md` - Comprehensive compatibility testing (18/20 tests passed)
-    - `docs/analysis/command-inventory-report.md` - Full command audit (75 commands analyzed)
-    - `docs/analysis/agent-responsibility-matrix.md` - Clear boundary definitions for 4 agents
-    - `docs/analysis/aios-master-rationalization-plan.md` - Implementation plan (44→30 commands)
-    - `docs/analysis/data-engineer-rationalization-plan.md` - Implementation plan (31→28 commands)
-  - Files Modified:
-    - `.aios-core/agents/aios-master.md` - Command consolidation (44→30 commands, 32% reduction)
-    - `.aios-core/agents/data-engineer.md` - Command consolidation (31→28 commands, 9.7% reduction)
-    - `.aios-core/agents/architect.md` - Added "NOT for" delegation guidance in whenToUse
-    - `.aios-core/agents/analyst.md` - Added "NOT for" delegation guidance in whenToUse
-    - `.aios-core/agents/pm.md` - Added "NOT for" delegation guidance + epic/story delegation pattern
-    - `.aios-core/agents/sm.md` - Added "NOT for" delegation guidance + Git boundary clarification
-    - `.aios-core/agents/dev.md` - Renamed command: review-qa → apply-qa-fixes (4 occurrences)
-    - `.aios-core/agents/po.md` - Changed icon: ⚖️ → 🎯 Target (6 occurrences)
-  - Backward Compatibility: 100% maintained (all old task files preserved for 6-month deprecation period)
-  - Zero Breaking Changes: All workflows validated, no functionality lost
+#### Epic OSR: Open-Source Community Readiness (10 Stories)
 
-- **Dynamic Project Status Context** - All agents now display current project context on activation (Story 6.1.2.4)
+- **Legal Foundation** (OSR-3)
+  - `PRIVACY.md` / `PRIVACY-PT.md` - Privacy policies (EN/PT)
+  - `TERMS.md` / `TERMS-PT.md` - Terms of use (EN/PT)
+  - `CODE_OF_CONDUCT.md` - Community guidelines with contact info
+
+- **Community Process** (OSR-6)
+  - Feature request templates and triage process
+  - Issue labeling standards
+
+- **Public Roadmap** (OSR-7)
+  - Public roadmap documentation
+  - Community visibility into planned features
+
+- **Squads Guide** (OSR-8)
+  - Comprehensive guide for creating community squads
+  - Examples and best practices
+
+- **Rebranding to Synkra** (OSR-9)
+  - Brand investigation complete
+  - Namespace updated to SynkraAI
+
+- **Release Checklist** (OSR-10)
+  - GitHub configuration validated
+  - CodeQL security scanning active (30+ alerts addressed)
+  - Branch protection rules configured
+  - Smoke test passed on clean clone
+
+#### Epic SQS: Squad System Enhancement (Sprint 7)
+
+- **Squad Designer Agent** (SQS-9)
+  - New `@squad-creator` agent for guided squad creation
+  - Interactive wizard with `*create-squad` command
+  - AI-powered naming and structure suggestions
+
+- **Squad Loader Utility** (SQS-2)
+  - Local squad resolution from `./squads/` directory
+  - Simplified loading without complex caching
+
+- **Squad Validator + Schema** (SQS-3)
+  - JSON Schema for squad manifest validation
+  - `*validate-squad` command for compliance checking
+
+- **Squad Creator Tasks** (SQS-4)
+  - `*create-squad` - Interactive squad creation
+  - `*validate-squad` - Manifest validation
+  - `*list-squads` - Local squad discovery
+
+#### Infrastructure & Documentation
+
+- **Documentation Integrity System** (6.9)
+  - Automated cross-reference validation
+  - Link checking in CI pipeline
+
+- **MCP Governance Consolidation** (6.14)
+  - Unified MCP configuration rules
+  - `.claude/rules/mcp-usage.md` guidance
+
+- **Agent Config Path Fix** (6.15)
+  - Resolved path resolution issues across platforms
+
+- **Scripts Path Consolidation** (6.16)
+  - Standardized script locations under `.aios-core/scripts/`
+
+- **Semantic Release Automation** (6.17)
+  - Automated versioning on merge to main
+  - Conventional commit parsing
+  - Automatic CHANGELOG generation
+
+- **Agent Command Rationalization** (Story 6.1.2.3)
+  - Command consolidation: `aios-master` 44→30 commands (32% reduction)
+  - Command consolidation: `data-engineer` 31→28 commands (9.7% reduction)
+  - New consolidated tasks: `security-audit`, `analyze-performance`, `test-as-user`, `setup-database`
+  - Migration guide: `docs/guides/command-migration-guide.md`
+  - Agent selection guide: `docs/guides/agent-selection-guide.md`
+
+- **Dynamic Project Status Context** (Story 6.1.2.4)
   - Git branch, modified files, and recent commits shown in agent greetings
-  - Current story and epic detection from `docs/stories/` directory
-  - 60-second cache mechanism for optimal performance (<100ms first load, <10ms cached)
+  - Current story and epic detection from `docs/stories/`
+  - 60-second cache mechanism (<100ms first load, <10ms cached)
   - Cross-platform support (Windows/Linux/macOS)
-  - Graceful fallback for non-git projects
-  - Files Added:
-    - `.aios-core/scripts/project-status-loader.js` - Core status loader utility
-    - `.aios-core/tasks/init-project-status.md` - DevOps initialization task
-    - `.aios-core/scripts/__tests__/project-status-loader.test.js` - Jest unit tests
-    - `docs/guides/project-status-feature.md` - User guide and documentation
-  - Files Modified:
-    - `.aios-core/core-config.yaml` - Added projectStatus configuration section
-    - All 11 agent files - Updated activation-instructions (STEP 2.5) and greeting_levels
-    - `.aios-core/agents/devops.md` - Added *init-project-status command
-    - `.gitignore` - Added .aios/project-status.yaml cache file
+
+### Changed
+
+- **Agent Delegation Guidance** - All agents now include "NOT for" sections in `whenToUse`
+- **PR Title Format** - DevOps `*create-pr` now generates Conventional Commits format titles
+- **Scripts Location** - Consolidated under `.aios-core/scripts/` for consistency
+- **MCP Configuration** - Unified rules in `.claude/rules/mcp-usage.md`
+
+### Fixed
+
+- **Agent Config Paths** (6.15) - Resolved path resolution issues on Windows
+- **Script References** (6.16) - Fixed broken script imports across agents
+
+### Security
+
+- **CodeQL Scanning** - Active with 30+ alerts reviewed
+- **Branch Protection** - Enabled on main (1 approver, dismiss stale reviews)
+
+### Documentation
+
+- **Squads Guide** - Complete guide for community squad creation
+- **Feature Process** - Templates and triage workflow documented
+- **Public Roadmap** - Community visibility into planned features
+- **Legal Documents** - Privacy policy, Terms of Use (EN/PT)
+
+---
 
 ## [4.32.0] - 2025-11-12
 
