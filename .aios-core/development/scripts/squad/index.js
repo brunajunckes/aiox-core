@@ -9,6 +9,8 @@
  * @see {@link ./squad-generator.js} - Generate new squads (SQS-4)
  * @see {@link ./squad-designer.js} - Design squads from documentation (SQS-9)
  * @see {@link ./squad-migrator.js} - Migrate legacy squads to AIOS 2.1 (SQS-7)
+ * @see {@link ./squad-downloader.js} - Download squads from registry (SQS-6)
+ * @see {@link ./squad-publisher.js} - Publish squads to registry (SQS-6)
  */
 
 const {
@@ -50,6 +52,24 @@ const {
   MigratorErrorCodes,
 } = require('./squad-migrator');
 
+const {
+  SquadDownloader,
+  SquadDownloaderError,
+  DownloaderErrorCodes,
+  REGISTRY_URL,
+  GITHUB_API_BASE,
+} = require('./squad-downloader');
+
+const {
+  SquadPublisher,
+  SquadPublisherError,
+  PublisherErrorCodes,
+  AIOS_SQUADS_REPO,
+  SAFE_NAME_PATTERN,
+  sanitizeForShell,
+  isValidName,
+} = require('./squad-publisher');
+
 module.exports = {
   // Squad Loader (SQS-2)
   SquadLoader,
@@ -84,4 +104,20 @@ module.exports = {
   SquadMigrator,
   SquadMigratorError,
   MigratorErrorCodes,
+
+  // Squad Downloader (SQS-6)
+  SquadDownloader,
+  SquadDownloaderError,
+  DownloaderErrorCodes,
+  REGISTRY_URL,
+  GITHUB_API_BASE,
+
+  // Squad Publisher (SQS-6)
+  SquadPublisher,
+  SquadPublisherError,
+  PublisherErrorCodes,
+  AIOS_SQUADS_REPO,
+  SAFE_NAME_PATTERN,
+  sanitizeForShell,
+  isValidName,
 };
