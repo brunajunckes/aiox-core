@@ -3,63 +3,165 @@ task: Download Squad
 responsavel: "@squad-creator"
 responsavel_type: agent
 atomic_layer: task
-status: placeholder
+status: active
 sprint: 8
+story: SQS-6
 Entrada: |
-  - name: Nome do squad para baixar
-  - source: Fonte (aios-squads | synkra-api)
+  - squad_name: Nome do squad para baixar (obrigatório)
+  - version: Versão específica (opcional, default: latest)
+  - list: Flag para listar squads disponíveis (--list)
+  - overwrite: Flag para sobrescrever squad existente (--overwrite)
 Saida: |
   - squad_path: Caminho do squad baixado
-  - status: Sucesso ou erro
+  - manifest: Manifest do squad
+  - validation_result: Resultado da validação
 Checklist:
-  - "[ ] Implementar em Sprint 8 (SQS-5)"
+  - "[ ] Verificar se já existe localmente"
+  - "[ ] Buscar no registry.json"
+  - "[ ] Baixar arquivos do GitHub"
+  - "[ ] Extrair para ./squads/{name}/"
+  - "[ ] Validar squad baixado"
+  - "[ ] Exibir próximos passos"
 ---
 
 # *download-squad
 
-> **PLACEHOLDER** - Implementation scheduled for Sprint 8 (Story SQS-5)
+Downloads public squads from the aios-squads GitHub repository to use in your project.
 
-## Planned Functionality
+## Usage
 
-Downloads a public squad from the aios-squads repository or Synkra API marketplace.
-
-## Planned Usage
-
-```
+```bash
 @squad-creator
 
-*download-squad etl-squad
-# → Downloads from github.com/SynkraAI/aios-squads
+# List available squads
+*download-squad --list
 
-*download-squad premium-pack --source synkra-api
-# → Downloads from api.synkra.dev/squads (requires auth)
+# Download a squad
+*download-squad etl-squad
+
+# Download specific version
+*download-squad etl-squad@2.0.0
+
+# Overwrite existing
+*download-squad etl-squad --overwrite
 ```
 
-## Planned Features
+## Examples
 
-1. **Repository Source (Default)**
-   - Clone from github.com/SynkraAI/aios-squads
-   - Support specific versions via tags
-   - Validate squad before installation
+### List Available Squads
 
-2. **Synkra API Source**
-   - Download from api.synkra.dev/squads
-   - Support premium/paid squads
-   - Require authentication
+```
+*download-squad --list
 
-3. **Installation**
-   - Install to ./squads/{name}/
-   - Run validation after download
-   - Show usage instructions
+Available Squads (from aios-squads):
+
+Official:
+  ├── etl-squad@1.0.0 - ETL pipeline automation
+  ├── api-squad@1.2.0 - REST API development
+  └── devops-squad@1.0.0 - CI/CD automation
+
+Community:
+  ├── data-viz-squad@0.5.0 - Data visualization
+  └── ml-squad@0.3.0 - Machine learning pipelines
+```
+
+### Download Squad
+
+```
+*download-squad etl-squad
+
+Downloading: etl-squad@1.0.0
+  Source: github.com/SynkraAI/aios-squads/packages/etl-squad
+  Target: ./squads/etl-squad/
+
+✓ Downloaded 12 files
+✓ Validated successfully
+
+Squad installed! Next steps:
+  1. Review: cat squads/etl-squad/squad.yaml
+  2. Activate: @squad-creator *activate etl-squad
+```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--list` | List all available squads from registry |
+| `--version` | Download specific version (e.g., @2.0.0) |
+| `--overwrite` | Overwrite if squad already exists locally |
+| `--verbose` | Show detailed download progress |
+
+## How It Works
+
+```
+1. Fetch registry.json from aios-squads
+   ├── Contains official and community squads
+   └── Includes version and metadata
+
+2. Find requested squad
+   ├── Search official squads first
+   └── Then community squads
+
+3. Download via GitHub API
+   ├── Get directory listing
+   └── Download each file recursively
+
+4. Validate downloaded squad
+   ├── Run SquadValidator
+   └── Report warnings/errors
+
+5. Load manifest
+   └── Confirm installation
+```
+
+## Registry Structure
+
+The registry.json in aios-squads contains:
+
+```json
+{
+  "version": "1.0.0",
+  "squads": {
+    "official": [
+      {
+        "name": "etl-squad",
+        "version": "1.0.0",
+        "description": "ETL pipeline automation",
+        "author": "SynkraAI"
+      }
+    ],
+    "community": [
+      {
+        "name": "data-viz-squad",
+        "version": "0.5.0",
+        "description": "Data visualization",
+        "author": "community-member"
+      }
+    ]
+  }
+}
+```
+
+## Error Handling
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `SQUAD_NOT_FOUND` | Squad not in registry | Check available squads with --list |
+| `SQUAD_EXISTS` | Already downloaded | Use --overwrite flag |
+| `REGISTRY_FETCH_ERROR` | Network issue | Check connection |
+| `RATE_LIMIT` | GitHub API limit | Set GITHUB_TOKEN env var |
+
+## Implementation
+
+Uses `SquadDownloader` class from:
+- `.aios-core/development/scripts/squad/squad-downloader.js`
+
+## Related Tasks
+
+- `*validate-squad` - Validate downloaded squad
+- `*publish-squad` - Publish your squad to registry
+- `*create-squad` - Create new local squad
 
 ## Related Story
 
-- **SQS-5:** SquadSyncService (Sprint 8)
-- **SQS-6:** Registry Integration (Sprint 8)
-
-## Current Status
-
-This task is a placeholder. The full implementation will be done in Sprint 8.
-
-For now, manually clone squads from:
-- https://github.com/SynkraAI/aios-squads
+- **SQS-6:** Download & Publish Tasks (Sprint 8)
