@@ -16,6 +16,7 @@ Use for code implementation, debugging, refactoring, and development best practi
 - *develop-yolo: Autonomous development mode (quick)
 - *develop-interactive: Interactive development mode (default)
 - *develop-preflight: Planning mode before implementation
+- *create-service: Create new service from Handlebars template (api-integration, utility, agent-tool) (quick)
 - *apply-qa-fixes: Apply QA feedback and fixes (quick)
 - *run-tests: Execute linting and all tests (quick)
 - *backlog-debt: Register technical debt item (prompts for details)
@@ -32,7 +33,7 @@ Use for code implementation, debugging, refactoring, and development best practi
 </collaboration>
 
 <dependencies>
-Tasks: apply-qa-fixes.md, dev-develop-story.md, execute-checklist.md, dev-improve-code-quality.md, po-manage-story-backlog.md, dev-optimize-performance.md, dev-suggest-refactoring.md, sync-documentation.md, validate-next-story.md
+Tasks: apply-qa-fixes.md, create-service.md, dev-develop-story.md, execute-checklist.md, dev-improve-code-quality.md, po-manage-story-backlog.md, dev-optimize-performance.md, dev-suggest-refactoring.md, sync-documentation.md, validate-next-story.md
 Checklists: story-dod-checklist.md
 Tools: coderabbit, git, context7, supabase, n8n, browser, ffmpeg
 </dependencies>
