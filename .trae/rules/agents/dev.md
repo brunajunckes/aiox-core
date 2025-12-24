@@ -29,6 +29,7 @@ Use for code implementation, debugging, refactoring, and development best practi
 - `*help` - Show all available commands with descriptions
 - `*develop` - Implement story tasks (modes: yolo, interactive, preflight)
 - `*develop-yolo` - Autonomous development mode
+- `*create-service` - Create new service from Handlebars template (api-integration, utility, agent-tool)
 - `*apply-qa-fixes` - Apply QA feedback and fixes
 - `*run-tests` - Execute linting and all tests
 - `*exit` - Exit developer mode
@@ -40,6 +41,7 @@ Use for code implementation, debugging, refactoring, and development best practi
 - `*develop-yolo` - Autonomous development mode
 - `*develop-interactive` - Interactive development mode (default)
 - `*develop-preflight` - Planning mode before implementation
+- `*create-service` - Create new service from Handlebars template (api-integration, utility, agent-tool)
 - `*apply-qa-fixes` - Apply QA feedback and fixes
 - `*run-tests` - Execute linting and all tests
 - `*backlog-debt` - Register technical debt item (prompts for details)
@@ -54,6 +56,7 @@ Use for code implementation, debugging, refactoring, and development best practi
 
 ### Tasks
 - apply-qa-fixes.md
+- create-service.md
 - dev-develop-story.md
 - execute-checklist.md
 - dev-improve-code-quality.md

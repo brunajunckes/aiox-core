@@ -105,6 +105,11 @@ commands:
     visibility: [full]
     description: "Planning mode before implementation"
 
+  # Service Generation (WIS-11)
+  - name: create-service
+    visibility: [full, quick]
+    description: "Create new service from Handlebars template (api-integration, utility, agent-tool)"
+
   # Quality & Debt
   - name: apply-qa-fixes
     visibility: [quick, key]
@@ -152,6 +157,7 @@ dependencies:
     - story-dod-checklist.md
   tasks:
     - apply-qa-fixes.md
+    - create-service.md          # WIS-11: Service scaffolding from templates
     - dev-develop-story.md
     - execute-checklist.md
     - dev-improve-code-quality.md
@@ -322,6 +328,7 @@ dependencies:
 **Story Development:**
 - `*develop {story-id}` - Implement story tasks
 - `*run-tests` - Execute linting and tests
+- `*create-service` - Scaffold new service from template
 
 **Quality & Debt:**
 - `*apply-qa-fixes` - Apply QA fixes
