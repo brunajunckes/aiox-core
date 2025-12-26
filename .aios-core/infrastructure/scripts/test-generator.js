@@ -36,7 +36,7 @@ class TestGenerator {
       console.log(chalk.green('✅ Test generator initialized'));
       return true;
 
-    } catch (_error) {
+    } catch (error) {
       console.error(chalk.red(`Failed to initialize test generator: ${error.message}`));
       throw error;
     }
@@ -67,7 +67,7 @@ class TestGenerator {
       
       return processedContent;
 
-    } catch (_error) {
+    } catch (error) {
       this.updateGenerationStats(false, Date.now() - startTime);
       console.error(chalk.red(`Failed to generate test for ${component.name}: ${error.message}`));
       throw error;
@@ -95,7 +95,7 @@ class TestGenerator {
           test_count: testFile.test_count,
         });
 
-      } catch (_error) {
+      } catch (error) {
         errors.push({
           file_path: testFile.file_path,
           test_type: testFile.test_type,
@@ -167,7 +167,7 @@ class TestGenerator {
         enhancedContent = this.injectSetupTeardown(enhancedContent, setupTeardown);
       }
 
-    } catch (_error) {
+    } catch (error) {
       console.warn(chalk.yellow(`Failed to enhance test content: ${error.message}`));
       // Return base content if enhancement fails
     }
@@ -221,7 +221,7 @@ class TestGenerator {
         analysis.configuration = this.extractTaskConfig(content);
       }
 
-    } catch (_error) {
+    } catch (error) {
       console.warn(chalk.yellow(`Failed to analyze component ${component.id}: ${error.message}`));
     }
 
@@ -547,7 +547,7 @@ ${content}`;
         throw new Error('Unbalanced brackets in generated test');
       }
 
-    } catch (_error) {
+    } catch (error) {
       console.warn(chalk.yellow(`Test syntax validation warning: ${error.message}`));
     }
   }
@@ -723,7 +723,7 @@ ${content}`;
       try {
         const yaml = require('js-yaml');
         return yaml.load(yamlMatch[1]);
-      } catch (_error) {
+      } catch {
         return null;
       }
     }
@@ -734,7 +734,7 @@ ${content}`;
     try {
       const yaml = require('js-yaml');
       return yaml.load(content);
-    } catch (_error) {
+    } catch {
       return null;
     }
   }

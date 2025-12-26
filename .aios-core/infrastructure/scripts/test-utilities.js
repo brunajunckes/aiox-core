@@ -41,7 +41,7 @@ async function countIntegrationReferences(utilityName) {
         { shell: '/bin/bash' },
       );
       totalCount += parseInt(stdout.trim()) || 0;
-    } catch (_error) {
+    } catch {
       // Directory doesn't exist or grep failed - not a problem
     }
   }
@@ -98,7 +98,7 @@ async function testUtility(utilityFile) {
         : 'Keep but document usage';
     }
 
-  } catch (_error) {
+  } catch (error) {
     result.errors.push(error.message);
 
     // Classify error type
@@ -119,7 +119,7 @@ async function testUtility(utilityFile) {
     // Count integration even if broken
     try {
       result.integrationCount = await countIntegrationReferences(utilityFile);
-    } catch (_e) {
+    } catch {
       // Ignore counting errors
     }
   }

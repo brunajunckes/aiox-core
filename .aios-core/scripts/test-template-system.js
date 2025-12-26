@@ -34,7 +34,7 @@ class TestTemplateSystem {
       console.log(chalk.green('✅ Test template system initialized'));
       return true;
 
-    } catch (_error) {
+    } catch (error) {
       console.error(chalk.red(`Failed to initialize test template system: ${error.message}`));
       throw error;
     }
@@ -121,7 +121,7 @@ class TestTemplateSystem {
       console.log(chalk.green(`✅ Custom template created: ${templateName}`));
       return templateWrapper;
 
-    } catch (_error) {
+    } catch (error) {
       console.error(chalk.red(`Failed to create custom template: ${error.message}`));
       throw error;
     }
@@ -136,7 +136,7 @@ class TestTemplateSystem {
     try {
       const content = await fs.readFile(templatePath, 'utf-8');
       return JSON.parse(content);
-    } catch (_error) {
+    } catch {
       // Template file doesn't exist
       return null;
     }
@@ -837,14 +837,14 @@ afterAll(async () => {
           const templateKey = path.basename(templateFile, '.template.js');
           
           this.templateCache.set(templateKey, template);
-        } catch (_error) {
+        } catch (error) {
           console.warn(chalk.yellow(`Failed to load template ${templateFile}: ${error.message}`));
         }
       }
 
       console.log(chalk.gray(`Loaded ${this.templateCache.size} template(s)`));
 
-    } catch (_error) {
+    } catch (error) {
       console.warn(chalk.yellow(`Failed to load templates: ${error.message}`));
     }
   }
@@ -872,7 +872,7 @@ afterAll(async () => {
           templateFiles.push(path.join(this.templatesDir, entry.name));
         }
       }
-    } catch (_error) {
+    } catch {
       // Templates directory doesn't exist yet
     }
 

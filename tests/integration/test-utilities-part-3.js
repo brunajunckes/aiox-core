@@ -52,7 +52,7 @@ utilities.forEach(util => {
     loadResults[util] = 'PASS';
     loadedCount++;
     console.log(`   ✅ ${util}`);
-  } catch (_error) {
+  } catch (error) {
     loadResults[util] = `FAIL: ${error.message}`;
     failedCount++;
     console.log(`   ❌ ${util} - ${error.message}`);
@@ -80,8 +80,8 @@ try {
     stdio: 'pipe',
   });
   console.log('✅ Reference validation passed');
-  console.log(_output);
-} catch (_error) {
+  console.log(output);
+} catch {
   console.log('⚠️  Reference validation script execution issue (acceptable)');
   console.log('   Script may need path adjustment');
 }
@@ -103,12 +103,12 @@ try {
   
   if (hasUtilGaps) {
     console.log('❌ Gaps detected for Story 3.6 utilities');
-    console.log(_output);
+    console.log(output);
   } else {
     console.log('✅ Gap detection passed - 0 gaps for Story 3.6 utilities');
     console.log('   Verified: All 12 utilities properly integrated');
   }
-} catch (_error) {
+} catch (error) {
   console.log(`⚠️  Gap detection executed with issues: ${error.message}`);
 }
 
@@ -137,7 +137,7 @@ agents.forEach(agent => {
     } else {
       console.log(`   ⚠️  ${agent.name} - no YAML block found`);
     }
-  } catch (_error) {
+  } catch (error) {
     console.log(`   ❌ ${agent.name} - ${error.message}`);
   }
 });
@@ -158,7 +158,7 @@ try {
   });
   console.log('✅ Relationship synthesis completed');
   console.log('   Master relationship map regenerated successfully');
-} catch (_error) {
+} catch (error) {
   if (error.code === 'ETIMEDOUT') {
     console.log('⏱️  Relationship synthesis timeout (may still be running)');
   } else {
