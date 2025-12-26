@@ -106,6 +106,16 @@ commands:
     description: "Migrate legacy squad to AIOS 2.1 format"
     task: squad-creator-migrate.md
 
+  # Analysis & Extension (Sprint 14)
+  - name: analyze-squad
+    visibility: [full, quick, key]
+    description: "Analyze squad structure, coverage, and get improvement suggestions"
+    task: squad-creator-analyze.md
+  - name: extend-squad
+    visibility: [full, quick, key]
+    description: "Add new components (agents, tasks, templates, etc.) to existing squad"
+    task: squad-creator-extend.md
+
   # Distribution (Sprint 8 - Placeholders)
   - name: download-squad
     visibility: [full]
@@ -135,6 +145,8 @@ dependencies:
     - squad-creator-validate.md
     - squad-creator-list.md
     - squad-creator-migrate.md
+    - squad-creator-analyze.md
+    - squad-creator-extend.md
     - squad-creator-download.md
     - squad-creator-publish.md
     - squad-creator-sync-synkra.md
@@ -144,6 +156,8 @@ dependencies:
     - squad/squad-generator.js
     - squad/squad-designer.js
     - squad/squad-migrator.js
+    - squad/squad-analyzer.js
+    - squad/squad-extender.js
   schemas:
     - squad-schema.json
     - squad-design-schema.json
@@ -179,6 +193,14 @@ squad_distribution:
 - `*validate-squad {name}` - Validate existing squad
 - `*list-squads` - List local squads
 
+**Analysis & Extension (NEW):**
+- `*analyze-squad {name}` - Analyze squad structure and get suggestions
+- `*analyze-squad {name} --verbose` - Include file details in analysis
+- `*analyze-squad {name} --format markdown` - Output as markdown file
+- `*extend-squad {name}` - Add component interactively
+- `*extend-squad {name} --add agent --name my-agent` - Add agent directly
+- `*extend-squad {name} --add task --name my-task --agent lead-agent` - Add task with agent
+
 **Migration:**
 - `*migrate-squad {path}` - Migrate legacy squad to AIOS 2.1 format
 - `*migrate-squad {path} --dry-run` - Preview migration changes
@@ -212,6 +234,8 @@ Type `*help` to see all commands, or `*guide` for detailed usage.
 ### When to Use Me
 - **Designing squads from documentation** (PRDs, specs, requirements)
 - Creating new squads for your project
+- **Analyzing existing squads** for coverage and improvements
+- **Extending squads** with new components (agents, tasks, templates, etc.)
 - Validating existing squad structure
 - Preparing squads for distribution
 - Listing available local squads
@@ -238,6 +262,12 @@ Type `*help` to see all commands, or `*guide` for detailed usage.
    - Keep local (private)
    - Publish to aios-squads (public)
    - Sync to Synkra API (marketplace)
+
+**Option C: Continuous Improvement (For existing squads)**
+1. **Analyze squad** → `*analyze-squad my-squad`
+2. **Review suggestions** → Coverage metrics and improvement hints
+3. **Add components** → `*extend-squad my-squad`
+4. **Validate** → `*validate-squad my-squad`
 
 ### Squad Structure
 ```text
@@ -270,5 +300,3 @@ Type `*help` to see all commands, or `*guide` for detailed usage.
 - **@devops (Gage)** - Handles deployment
 
 ---
----
-*AIOS Agent - Synced from .aios-core/development/agents/squad-creator.md*

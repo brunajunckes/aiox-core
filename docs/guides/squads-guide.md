@@ -11,12 +11,13 @@ Complete guide for creating, validating, publishing, and managing Squads in AIOS
 3. [Squad Architecture](#squad-architecture)
 4. [Creating Squads](#creating-squads)
 5. [Squad Designer](#squad-designer)
-6. [Validating Squads](#validating-squads)
-7. [Publishing & Distribution](#publishing--distribution)
-8. [Migration from Legacy Format](#migration-from-legacy-format)
-9. [Squad Loader & Resolution](#squad-loader--resolution)
-10. [Troubleshooting](#troubleshooting)
-11. [FAQ](#faq)
+6. [Analyzing & Extending Squads](#analyzing--extending-squads) *(NEW)*
+7. [Validating Squads](#validating-squads)
+8. [Publishing & Distribution](#publishing--distribution)
+9. [Migration from Legacy Format](#migration-from-legacy-format)
+10. [Squad Loader & Resolution](#squad-loader--resolution)
+11. [Troubleshooting](#troubleshooting)
+12. [FAQ](#faq)
 
 ---
 
@@ -275,6 +276,187 @@ recommended_tasks:
     description: Process actor submission
     agent: casting-coordinator
     confidence: 0.88
+```
+
+---
+
+## Analyzing & Extending Squads
+
+After creating a squad, you can analyze its structure and extend it with new components using the `*analyze-squad` and `*extend-squad` commands.
+
+### Analyzing Squads
+
+```bash
+@squad-creator
+
+# Basic analysis
+*analyze-squad my-squad
+
+# Include file details
+*analyze-squad my-squad --verbose
+
+# Save to markdown file
+*analyze-squad my-squad --format markdown
+
+# Output as JSON
+*analyze-squad my-squad --format json
+```
+
+### Analysis Output
+
+```
+=== Squad Analysis: my-squad ===
+
+Overview
+  Name: my-squad
+  Version: 1.0.0
+  Author: Your Name
+
+Components
+  agents/ (2)
+    - lead-agent.md
+    - helper-agent.md
+  tasks/ (3)
+    - lead-agent-task1.md
+    - lead-agent-task2.md
+    - helper-agent-task1.md
+  workflows/ (0) <- Empty
+  checklists/ (0) <- Empty
+
+Coverage
+  Agents: [#####-----] 50% (1/2 with tasks)
+  Tasks: [########--] 80% (3 tasks)
+  Directories: [##--------] 25% (2/8 populated)
+
+Suggestions
+  1. [!] Add tasks for helper-agent (currently has only 1)
+  2. [*] Create workflows for common sequences
+  3. [-] Add checklists for validation
+
+Next: *extend-squad my-squad
+```
+
+### Extending Squads
+
+Add new components to existing squads with automatic manifest updates:
+
+```bash
+@squad-creator
+
+# Interactive mode (guided)
+*extend-squad my-squad
+
+# Direct mode - Add agent
+*extend-squad my-squad --add agent --name analytics-agent
+
+# Add task with agent linkage
+*extend-squad my-squad --add task --name process-data --agent lead-agent
+
+# Add workflow with story reference
+*extend-squad my-squad --add workflow --name daily-processing --story SQS-11
+
+# Add all component types
+*extend-squad my-squad --add template --name report-template
+*extend-squad my-squad --add tool --name data-validator
+*extend-squad my-squad --add checklist --name quality-checklist
+*extend-squad my-squad --add script --name migration-helper
+*extend-squad my-squad --add data --name config-data
+```
+
+### Interactive Extend Flow
+
+```
+@squad-creator
+*extend-squad my-squad
+
+? What would you like to add?
+  1. Agent - New agent persona
+  2. Task - New task for an agent
+  3. Workflow - Multi-step workflow
+  4. Checklist - Validation checklist
+  5. Template - Document template
+  6. Tool - Custom tool (JavaScript)
+  7. Script - Automation script
+  8. Data - Static data file (YAML)
+
+> 2
+
+? Task name: process-data
+? Which agent owns this task?
+  1. lead-agent
+  2. helper-agent
+> 1
+? Task description (optional): Process incoming data and generate output
+? Link to story? (leave blank to skip): SQS-11
+
+Creating task...
+  Created: tasks/lead-agent-process-data.md
+  Updated: squad.yaml (added to components.tasks)
+  Validation: PASS
+
+Next steps:
+  1. Edit tasks/lead-agent-process-data.md
+  2. Add entrada/saida/checklist
+  3. Run: *validate-squad my-squad
+```
+
+### Component Types
+
+| Type | Directory | Extension | Description |
+|------|-----------|-----------|-------------|
+| agent | agents/ | .md | Agent persona definition |
+| task | tasks/ | .md | Executable task workflow |
+| workflow | workflows/ | .yaml | Multi-step orchestration |
+| checklist | checklists/ | .md | Validation checklist |
+| template | templates/ | .md | Document generation template |
+| tool | tools/ | .js | Custom tool integration |
+| script | scripts/ | .js | Utility automation script |
+| data | data/ | .yaml | Static data configuration |
+
+### Continuous Improvement Workflow
+
+```bash
+# 1. Analyze current state
+*analyze-squad my-squad
+
+# 2. Review suggestions and coverage metrics
+
+# 3. Add missing components
+*extend-squad my-squad --add task --name new-task --agent lead-agent
+*extend-squad my-squad --add checklist --name quality-checklist
+
+# 4. Re-analyze to verify improvement
+*analyze-squad my-squad
+
+# 5. Validate before use
+*validate-squad my-squad
+```
+
+### Programmatic Usage
+
+```javascript
+const { SquadAnalyzer } = require('./.aios-core/development/scripts/squad/squad-analyzer');
+const { SquadExtender } = require('./.aios-core/development/scripts/squad/squad-extender');
+
+// Analyze squad
+const analyzer = new SquadAnalyzer({ squadsPath: './squads' });
+const analysis = await analyzer.analyze('my-squad');
+
+console.log('Coverage:', analysis.coverage);
+console.log('Suggestions:', analysis.suggestions);
+
+// Extend squad
+const extender = new SquadExtender({ squadsPath: './squads' });
+const result = await extender.addComponent('my-squad', {
+  type: 'task',
+  name: 'new-task',
+  agentId: 'lead-agent',
+  description: 'A new task',
+  storyId: 'SQS-11',
+});
+
+console.log('Created:', result.filePath);
+console.log('Manifest updated:', result.manifestUpdated);
 ```
 
 ---
@@ -638,4 +820,4 @@ npm test -- tests/squads/my-squad/
 
 *AIOS Squads: Equipes de AI agents trabalhando com você*
 
-**Version:** 2.0.0 | **Updated:** 2025-12-26 | **Story:** SQS-8
+**Version:** 2.1.0 | **Updated:** 2025-12-26 | **Stories:** SQS-8, SQS-11
