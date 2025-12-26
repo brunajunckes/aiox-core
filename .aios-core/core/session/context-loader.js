@@ -392,7 +392,7 @@ class SessionContextLoader {
           lastActivity: sessionState.lastActivity,
         };
       }
-    } catch (_error) {
+    } catch {
       // Ignore
     }
     return null;
@@ -409,7 +409,7 @@ class SessionContextLoader {
       const sessionState = this.loadSessionState();
       const history = sessionState.taskHistory || [];
       return history.slice(-limit);
-    } catch (_error) {
+    } catch {
       return [];
     }
   }

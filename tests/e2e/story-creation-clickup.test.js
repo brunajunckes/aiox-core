@@ -44,7 +44,7 @@ describeIntegration('End-to-End Story Creation with ClickUp Integration', () => 
     // Cleanup test files
     try {
       await fs.unlink(testStoryPath);
-    } catch (_error) {
+    } catch {
       // File may not exist, ignore
     }
   });

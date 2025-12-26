@@ -29,7 +29,7 @@ class TestQualityAssessment {
       console.log(chalk.green('✅ Test quality assessment initialized'));
       return true;
 
-    } catch (_error) {
+    } catch (error) {
       console.error(chalk.red(`Failed to initialize test quality assessment: ${error.message}`));
       throw error;
     }
@@ -81,7 +81,7 @@ class TestQualityAssessment {
       
       return assessment;
 
-    } catch (_error) {
+    } catch (error) {
       console.error(chalk.red(`Failed to assess test quality for ${testFilePath}: ${error.message}`));
       throw error;
     }
@@ -117,7 +117,7 @@ class TestQualityAssessment {
         allIssues.push(...assessment.issues);
         qualityRatings[assessment.quality_rating]++;
 
-      } catch (_error) {
+      } catch (error) {
         console.warn(chalk.yellow(`Failed to assess ${testFile}: ${error.message}`));
       }
     }
@@ -985,7 +985,7 @@ class TestQualityAssessment {
         const data = JSON.parse(await fs.readFile(historyFile, 'utf-8'));
         this.qualityHistory = data.quality_history || [];
       }
-    } catch (_error) {
+    } catch {
       // No existing data, start fresh
     }
   }
@@ -1015,7 +1015,7 @@ class TestQualityAssessment {
 
       console.log(chalk.gray(`Quality assessment saved: ${assessmentFile}`));
 
-    } catch (_error) {
+    } catch (error) {
       console.warn(chalk.yellow(`Failed to save quality assessment: ${error.message}`));
     }
   }

@@ -99,7 +99,7 @@ function isUserModified(filePath, expectedHash) {
   try {
     const currentHash = `sha256:${hashFile(filePath)}`;
     return !hashesMatch(currentHash, expectedHash);
-  } catch (_error) {
+  } catch {
     // If we can't hash, assume it's modified
     return true;
   }
