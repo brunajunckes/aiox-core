@@ -42,6 +42,8 @@
     ".test-temp",
     "**/*-tmpl.*",
     "**/*.tmpl.*",
+    "**/*-template.*",
+    ".aios-core/development/templates/**",
     ".aios-core.backup*/**",
     "aios-core.backup*/**",
     "aios-core-deprecated/**",
