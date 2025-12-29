@@ -230,24 +230,27 @@ test-sample-*.md
 # These are AllFluence-specific methodologies and business documents
 
 # Proprietary Process Mapping Frameworks (Pedro Valério methodology)
-# Agnostic process mapping frameworks - not part of aios-core
 docs/standards/
-docs/standards/AGNOSTIC-PROCESS-MAPPING-FRAMEWORK.md
-docs/standards/DECISION-TREE-GENERATOR-SYSTEM-PROMPT.md
-docs/standards/LATTICEWORK-PROCESS-MAPPING.md
 
-# Internal Business Decisions and Strategy (Executive summaries)
+# Internal Business Decisions and Strategy
 docs/one-pagers/
-docs/one-pagers/DECISION-*.md
 
-# Proprietary PRDs (contain internal methodology references)
-# Pedro Valério Mind - proprietary
-docs/prd/hybrid-ops-pv-mind-integration.md
+# Internal PRDs (product requirements - internal development plans)
+docs/prd/
 
-# Internal Roundtable Sessions
-docs/decisions/etl-roundtable-decisions.md
-docs/decisions/ROUNDTABLE-SESSION-SUMMARY-*.md
-docs/decisions/*-roundtable-*.md
+# Internal Decisions (business strategy, architecture decisions)
+docs/decisions/
+
+# Internal Development Stories (sprint backlogs, story tracking)
+# Users don't need development history - only documentation
+docs/stories/
+
+# Internal QA Reports and Assessments
+docs/qa/
+
+# Internal Epics (roadmap, partner strategies, business plans)
+# Contains sensitive info: partner names, financials, timelines
+docs/epics/
 
 # Squad Design Files (test artifacts)
 squads/.designs/
