@@ -87,7 +87,7 @@
     "sync:ide:windsurf": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync --ide windsurf",
     "sync:ide:trae": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync --ide trae",
     "prepublishOnly": "npm run generate:manifest && npm run validate:manifest",
-    "prepare": "echo 'Skipping husky - not needed for NPM publish'"
+    "prepare": "husky"
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",

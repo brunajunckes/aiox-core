@@ -62,6 +62,7 @@ git checkout -b feature/your-feature-name
 ```
 
 Branch naming conventions:
+
 - `feature/` - New features
 - `bugfix/` - Bug fixes
 - `docs/` - Documentation updates
@@ -75,6 +76,7 @@ All development is driven by stories in `docs/stories/`. See [Story-Driven Devel
 ### 3. Commit Changes
 
 Commits trigger the **pre-commit hook** which validates:
+
 - ✅ ESLint (code quality)
 - ✅ TypeScript (type checking)
 
@@ -84,6 +86,7 @@ git commit -m "feat: add new feature [Story X.X]"
 ```
 
 **Commit Message Format:**
+
 ```
 <type>: <description> [Story X.X]
 
@@ -95,6 +98,7 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 ### 4. Push Changes
 
 Push triggers the **pre-push hook** which validates:
+
 - ✅ Story checkbox completion
 - ✅ Story status consistency
 
@@ -109,6 +113,7 @@ gh pr create --title "feat: Add new feature" --body "Description of changes"
 ```
 
 The **CI/CD pipeline** will run:
+
 - ✅ ESLint validation
 - ✅ TypeScript type checking
 - ✅ Jest tests with coverage
@@ -123,16 +128,24 @@ AIOS implements a **Defense in Depth** strategy with 3 validation layers:
 **Purpose:** Catch issues before they're committed
 **Performance:** <5s
 **Tools:**
-- ESLint with caching
+
+- IDE Sync (auto-stages IDE command files)
+- lint-staged (ESLint + Prettier)
 - TypeScript incremental compilation
 
 **What it checks:**
+
+- IDE command file synchronization (agent definitions)
 - Code style consistency
 - Type errors
 - Syntax errors
 - Import issues
 
+**IDE Sync Auto-Stage:**
+The pre-commit hook automatically runs IDE sync to keep `.claude/commands/`, `.cursor/rules/`, and other IDE directories in sync with agent definitions in `.aios-core/development/agents/`. Changed files are auto-staged.
+
 **Skip if needed (NOT recommended):**
+
 ```bash
 git commit --no-verify
 ```
@@ -142,20 +155,23 @@ git commit --no-verify
 **Purpose:** Ensure story consistency before pushing
 **Performance:** <2s
 **Tools:**
+
 - Story checkbox validator
 
 **What it checks:**
+
 - Story checkbox completion vs status
 - Required story sections present
 - Status consistency
 
 **Example validation:**
+
 ```yaml
-status: "completed"
+status: 'completed'
 acceptance_criteria:
   - tasks:
-    - "[x] Task 1"  # Must be checked
-    - "[ ] Task 2"  # ❌ Error: incomplete but status=completed
+      - '[x] Task 1' # Must be checked
+      - '[ ] Task 2' # ❌ Error: incomplete but status=completed
 ```
 
 ### Layer 3: CI/CD (Cloud - Required for Merge)
@@ -165,6 +181,7 @@ acceptance_criteria:
 **Platform:** GitHub Actions
 
 **What it checks:**
+
 - All lint and type errors
 - Test suite passes
 - Code coverage ≥80%
@@ -275,6 +292,7 @@ npm test -- path/to/test.js
 ### What is a Story?
 
 Stories are YAML files in `docs/stories/` that define:
+
 - Feature requirements
 - Acceptance criteria
 - Implementation tasks
@@ -311,6 +329,7 @@ ready → in progress → Ready for Review → completed
 ```
 
 **Rules:**
+
 - Status `ready`: No tasks should be checked
 - Status `in progress`: Some tasks checked
 - Status `completed`: All tasks must be checked
@@ -320,11 +339,13 @@ ready → in progress → Ready for Review → completed
 ### Pre-commit Hook Fails
 
 **ESLint errors:**
+
 ```bash
 npm run lint -- --fix  # Auto-fix issues
 ```
 
 **TypeScript errors:**
+
 ```bash
 npm run typecheck  # See all errors
 ```
@@ -332,11 +353,13 @@ npm run typecheck  # See all errors
 ### Pre-push Hook Fails
 
 **Story validation errors:**
+
 ```bash
 node .aios-core/utils/aios-validator.js stories  # Check all stories
 ```
 
 **Fix story inconsistencies:**
+
 - Ensure checkboxes match status
 - Add missing required sections
 - Update dev_agent_record
@@ -344,11 +367,13 @@ node .aios-core/utils/aios-validator.js stories  # Check all stories
 ### CI Fails
 
 **Check CI logs:**
+
 ```bash
 gh pr checks  # View PR checks
 ```
 
 **Common fixes:**
+
 - Rebase on latest master
 - Fix test failures locally
 - Increase test coverage
@@ -359,12 +384,14 @@ gh pr checks  # View PR checks
 Want to extend AIOS with new functionality?
 
 See our [Squads Guide](docs/guides/squads-guide.md) for:
+
 - Squad structure and manifest format
 - Creating agents, tasks, and workflows
 - Testing and publishing your Squad
 - Integration guidelines
 
 ### Quick Links
+
 - [Squad Template](templates/squad/) - Start from a working template
 - [Example Squads](docs/guides/squad-examples/) - Learn from examples
 - [Squad Discussions](https://github.com/SynkraAI/aios-core/discussions/categories/ideas) - Share your Squad ideas
