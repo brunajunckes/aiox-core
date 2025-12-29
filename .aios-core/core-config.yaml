@@ -486,12 +486,9 @@ ideSync:
       path: .antigravity/rules/agents
       format: cursor-style
 
-  # Redirects for deprecated/renamed agents
-  redirects:
-    aios-developer: aios-master
-    aios-orchestrator: aios-master
-    db-sage: data-engineer
-    github-devops: devops
+  # Redirects disabled - deprecated agents removed from repository
+  # Users should use the current agent names directly
+  redirects: {}
 
   # Validation settings
   validation:
