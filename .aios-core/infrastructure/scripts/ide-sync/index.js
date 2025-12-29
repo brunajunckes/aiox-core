@@ -14,6 +14,7 @@
  *   --strict      - Exit with code 1 if drift detected (CI mode)
  *   --dry-run     - Preview changes without writing
  *   --verbose     - Show detailed output
+ *   --quiet       - Minimal output (for pre-commit hooks)
  */
 
 const fs = require('fs-extra');
@@ -210,20 +211,28 @@ async function commandSync(options) {
   const config = loadConfig(projectRoot);
 
   if (!config.enabled) {
-    console.log(`${colors.yellow}IDE sync is disabled in config${colors.reset}`);
+    if (!options.quiet) {
+      console.log(`${colors.yellow}IDE sync is disabled in config${colors.reset}`);
+    }
     return;
   }
 
-  console.log(`${colors.bright}${colors.blue}🔄 IDE Sync${colors.reset}`);
-  console.log('');
+  if (!options.quiet) {
+    console.log(`${colors.bright}${colors.blue}🔄 IDE Sync${colors.reset}`);
+    console.log('');
+  }
 
   // Parse all agents
   const agentsDir = path.join(projectRoot, config.source);
-  console.log(`${colors.dim}Source: ${agentsDir}${colors.reset}`);
+  if (!options.quiet) {
+    console.log(`${colors.dim}Source: ${agentsDir}${colors.reset}`);
+  }
 
   const agents = parseAllAgents(agentsDir);
-  console.log(`${colors.dim}Found ${agents.length} agents${colors.reset}`);
-  console.log('');
+  if (!options.quiet) {
+    console.log(`${colors.dim}Found ${agents.length} agents${colors.reset}`);
+    console.log('');
+  }
 
   // Filter IDEs if --ide flag specified
   let targetIdes = Object.entries(config.targets);
@@ -240,24 +249,24 @@ async function commandSync(options) {
   // Sync to each IDE
   for (const [ideName, ideConfig] of targetIdes) {
     if (!ideConfig.enabled) {
-      console.log(`${colors.dim}⏭️  ${ideName}: skipped (disabled)${colors.reset}`);
+      if (!options.quiet) {
+        console.log(`${colors.dim}⏭️  ${ideName}: skipped (disabled)${colors.reset}`);
+      }
       continue;
     }
 
-    console.log(`${colors.cyan}📁 Syncing ${ideName}...${colors.reset}`);
+    if (!options.quiet) {
+      console.log(`${colors.cyan}📁 Syncing ${ideName}...${colors.reset}`);
+    }
 
     const result = syncIde(agents, ideConfig, ideName, projectRoot, options);
     results.push(result);
 
     // Generate redirects for this IDE
-    const redirects = generateAllRedirects(
-      config.redirects,
-      result.targetDir,
-      ideConfig.format
-    );
+    const redirects = generateAllRedirects(config.redirects, result.targetDir, ideConfig.format);
     const redirectResult = writeRedirects(redirects, options.dryRun);
 
-    if (options.verbose) {
+    if (options.verbose && !options.quiet) {
       console.log(`   ${colors.dim}Target: ${result.targetDir}${colors.reset}`);
     }
 
@@ -265,37 +274,46 @@ async function commandSync(options) {
     const redirectCount = redirectResult.written.length;
     const errorCount = result.errors.length;
 
-    let status = `${colors.green}✓${colors.reset}`;
-    if (errorCount > 0) {
-      status = `${colors.yellow}⚠${colors.reset}`;
-    }
+    if (!options.quiet) {
+      let status = `${colors.green}✓${colors.reset}`;
+      if (errorCount > 0) {
+        status = `${colors.yellow}⚠${colors.reset}`;
+      }
 
-    console.log(
-      `   ${status} ${agentCount} agents, ${redirectCount} redirects${errorCount > 0 ? `, ${errorCount} errors` : ''}`
-    );
+      console.log(
+        `   ${status} ${agentCount} agents, ${redirectCount} redirects${errorCount > 0 ? `, ${errorCount} errors` : ''}`
+      );
 
-    if (options.verbose && result.errors.length > 0) {
-      for (const err of result.errors) {
-        console.log(`   ${colors.red}✗ ${err.agent}: ${err.error}${colors.reset}`);
+      if (options.verbose && result.errors.length > 0) {
+        for (const err of result.errors) {
+          console.log(`   ${colors.red}✗ ${err.agent}: ${err.error}${colors.reset}`);
+        }
       }
     }
   }
 
-  console.log('');
-
   // Summary
   const totalFiles = results.reduce((sum, r) => sum + r.files.length, 0);
-  const totalRedirects = Object.keys(config.redirects).length * targetIdes.filter(([, c]) => c.enabled).length;
+  const totalRedirects =
+    Object.keys(config.redirects).length * targetIdes.filter(([, c]) => c.enabled).length;
   const totalErrors = results.reduce((sum, r) => sum + r.errors.length, 0);
 
-  if (options.dryRun) {
-    console.log(`${colors.yellow}Dry run: ${totalFiles} agents + ${totalRedirects} redirects would be written${colors.reset}`);
-  } else {
-    console.log(`${colors.green}✅ Sync complete: ${totalFiles} agents + ${totalRedirects} redirects${colors.reset}`);
-  }
+  if (!options.quiet) {
+    console.log('');
 
-  if (totalErrors > 0) {
-    console.log(`${colors.yellow}⚠️  ${totalErrors} errors occurred${colors.reset}`);
+    if (options.dryRun) {
+      console.log(
+        `${colors.yellow}Dry run: ${totalFiles} agents + ${totalRedirects} redirects would be written${colors.reset}`
+      );
+    } else {
+      console.log(
+        `${colors.green}✅ Sync complete: ${totalFiles} agents + ${totalRedirects} redirects${colors.reset}`
+      );
+    }
+
+    if (totalErrors > 0) {
+      console.log(`${colors.yellow}⚠️  ${totalErrors} errors occurred${colors.reset}`);
+    }
   }
 }
 
@@ -387,6 +405,7 @@ function parseArgs() {
     strict: false,
     dryRun: false,
     verbose: false,
+    quiet: false,
   };
 
   for (let i = 1; i < args.length; i++) {
@@ -400,6 +419,8 @@ function parseArgs() {
       options.dryRun = true;
     } else if (arg === '--verbose' || arg === '-v') {
       options.verbose = true;
+    } else if (arg === '--quiet' || arg === '-q') {
+      options.quiet = true;
     }
   }
 
@@ -426,6 +447,7 @@ ${colors.bright}Options:${colors.reset}
   --strict       Exit with code 1 if drift detected (CI mode)
   --dry-run      Preview changes without writing files
   --verbose, -v  Show detailed output
+  --quiet, -q    Minimal output (for pre-commit hooks)
 
 ${colors.bright}Examples:${colors.reset}
   node ide-sync/index.js sync
@@ -465,7 +487,7 @@ async function main() {
 
 // Run if executed directly
 if (require.main === module) {
-  main().catch(error => {
+  main().catch((error) => {
     console.error(`${colors.red}Error: ${error.message}${colors.reset}`);
     process.exit(1);
   });
