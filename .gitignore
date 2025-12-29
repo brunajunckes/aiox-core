@@ -163,8 +163,9 @@ docs/ui-prompts.pdf
 # docs/stories/        - Story files (v2.1, v2.2, etc)
 # docs/qa/             - QA gates and reports
 # docs/architecture/   - Architecture decisions and reviews
-# docs/decisions/      - Decision logs and learnings
-# docs/standards/      - AIOS standards and guidelines
+# docs/decisions/      - Decision logs and learnings (except roundtables)
+# NOTE: docs/standards/ is IGNORED - contains proprietary methodology (see below)
+# NOTE: docs/one-pagers/ is IGNORED - contains internal business decisions (see below)
 
 # Windows reserved device names
 NUL
@@ -221,3 +222,47 @@ test-sample-*.md
 
 # ESLint cache
 .eslintcache
+
+# ============================================
+# PROPRIETARY/INTERNAL CONTENT (Story TD-5)
+# ============================================
+# Content that is NOT part of the public aios-core framework
+# These are AllFluence-specific methodologies and business documents
+
+# Proprietary Process Mapping Frameworks (Pedro Valério methodology)
+# Agnostic process mapping frameworks - not part of aios-core
+docs/standards/
+docs/standards/AGNOSTIC-PROCESS-MAPPING-FRAMEWORK.md
+docs/standards/DECISION-TREE-GENERATOR-SYSTEM-PROMPT.md
+docs/standards/LATTICEWORK-PROCESS-MAPPING.md
+
+# Internal Business Decisions and Strategy (Executive summaries)
+docs/one-pagers/
+docs/one-pagers/DECISION-*.md
+
+# Proprietary PRDs (contain internal methodology references)
+# Pedro Valério Mind - proprietary
+docs/prd/hybrid-ops-pv-mind-integration.md
+
+# Internal Roundtable Sessions
+docs/decisions/etl-roundtable-decisions.md
+docs/decisions/ROUNDTABLE-SESSION-SUMMARY-*.md
+docs/decisions/*-roundtable-*.md
+
+# Squad Design Files (test artifacts)
+squads/.designs/
+
+# ============================================
+# MCP/PLAYWRIGHT ARTIFACTS
+# ============================================
+# Screenshots and sensitive data from MCP tools
+.playwright-mcp/
+*.recovery-codes.txt
+npm-recovery-codes.txt
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+# Windows path-encoded temporary files (malformed path files)
+C:Users*
+*temp-catalog.txt
