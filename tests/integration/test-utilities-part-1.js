@@ -65,7 +65,7 @@ const AGENTS_TO_TEST = [
   'architect',
   'po',
   'pm',
-  // Note: github-devops is at .aios-core/agents/github-devops.md
+  'devops',
 ];
 
 // Test results
