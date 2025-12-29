@@ -264,6 +264,34 @@ squads/.designs/
 npm-recovery-codes.txt
 
 # ============================================
+# .AIOS-CORE INTERNAL/GENERATED FILES
+# ============================================
+
+# Deprecated documentation (superseded by V2.1-COMPLETE)
+.aios-core/docs/standards/AIOS-LIVRO-DE-OURO.md
+.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1.md
+.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1-SUMMARY.md
+.aios-core/docs/standards/AIOS-FRAMEWORK-MASTER.md
+.aios-core/docs/standards/V3-ARCHITECTURAL-DECISIONS.md
+
+# Duplicate docs (originals in .aios-core/core/docs/)
+.aios-core/docs/SHARD-TRANSLATION-GUIDE.md
+.aios-core/docs/component-creation-guide.md
+.aios-core/docs/template-syntax.md
+.aios-core/docs/troubleshooting-guide.md
+.aios-core/docs/session-update-pattern.md
+
+# Generated runtime files
+.aios-core/.session/
+.aios-core/.session/current-session.json
+
+# Generated manifests (created by framework)
+.aios-core/manifests/*.csv
+
+# Internal audit results
+.aios-core/infrastructure/tests/utilities-audit-results.json
+
+# ============================================
 # TEMPORARY FILES
 # ============================================
 # Windows path-encoded temporary files (malformed path files)
