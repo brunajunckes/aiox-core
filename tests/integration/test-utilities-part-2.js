@@ -58,11 +58,11 @@ const UTILITIES_TO_TEST = [
 
 // Agents to test
 const AGENTS_TO_TEST = [
-  'aios-developer',
+  'aios-master',
   'architect',
   'dev',
   'qa',
-  // Note: github-devops is at .aios-core/agents/github-devops.md
+  'devops',
 ];
 
 // Test results
