@@ -102,18 +102,16 @@ dependencies:
     - User experience and interface design
     - Usability research
 
-### Deprecated Agents (Backward Compatible)
+### Agent Naming History
 
-The following agent names redirect to their new locations:
+The following agents were renamed/merged (old names no longer available):
 
 - **db-sage** → **data-engineer** (renamed for consistency with persona)
 - **github-devops** → **devops** (renamed for broader scope)
 - **aios-developer** → **aios-master** (merged for unified framework operations)
 - **aios-orchestrator** → **aios-master** (merged for unified workflow coordination)
 
-Redirect files maintain backward compatibility in both:
-- `.aios-core/development/agents/` (framework source)
-- `.claude/commands/AIOS/agents/` (IDE integration)
+Please use the current agent names directly.
 
 ## Agent Files
 
