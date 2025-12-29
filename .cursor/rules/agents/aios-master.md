@@ -42,5 +42,4 @@
 **I orchestrate:**
 
 ---
-
-_AIOS Agent - Synced from .aios-core/development/agents/aios-master.md_
+*AIOS Agent - Synced from .aios-core/development/agents/aios-master.md*
