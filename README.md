@@ -33,6 +33,7 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 > **Problemas de instalação?** Consulte o [Guia de Troubleshooting](docs/guides/installation-troubleshooting.md)
 
 **Guias específicos por plataforma:**
+
 - 📖 [Guia de Instalação para macOS](docs/installation/macos.md)
 - 📖 Guia de Instalação para Windows (suporte integrado)
 - 📖 Guia de Instalação para Linux (suporte integrado)
@@ -56,7 +57,6 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 - **[Explorar usos não técnicos](#-além-do-desenvolvimento-de-software---squads)** → Escrita criativa, negócios, bem-estar, educação
 - **[Criar meus próprios agentes IA](#criando-seu-próprio-expansion-pack)** → Construir agentes para seu domínio
 - **[Navegar Squads prontos](squads/)** → Game dev, DevOps, infraestrutura e inspire-se com ideias e exemplos
-- **[Hybrid-Ops 2.0 Migration Guide](docs/migration-guide.md)** → Upgrade para PV Mode com cognitive architecture executável
 - **[Entender a arquitetura](docs/core-architecture.md)** → Mergulho técnico profundo
 - **[Juntar-se à comunidade](https://discord.gg/gk8jAdXWmj)** → Obter ajuda e compartilhar ideias
 
@@ -100,6 +100,7 @@ npx aios-core@latest init meu-projeto
 O Synkra AIOS agora inclui uma experiência de instalação interativa de última geração, inspirada em ferramentas modernas como Vite e Next.js:
 
 **Recursos do Instalador Interativo:**
+
 - 🎨 **Interface Moderna**: Prompts coloridos e visuais com @clack/prompts
 - ✅ **Validação em Tempo Real**: Feedback instantâneo sobre entradas inválidas
 - 🔄 **Indicadores de Progresso**: Spinners para operações longas (cópia de arquivos, instalação de deps)
@@ -138,15 +139,18 @@ npx github:SynkraAI/aios-core install
 O Synkra AIOS inclui regras pré-configuradas para IDE para melhorar sua experiência de desenvolvimento:
 
 #### Para Windsurf ou Cursor:
+
 1. Abra as configurações do seu IDE
 2. Navegue até **Global Rules** (Windsurf) ou **User Rules** (Cursor)
 3. Copie o conteúdo de `.windsurf/global-rules.md` ou `.cursor/global-rules.md`
 4. Cole na seção de regras e salve
 
 #### Para Claude Code:
+
 - ✅ Já configurado! O arquivo `.claude/CLAUDE.md` é carregado automaticamente
 
 Estas regras fornecem:
+
 - 🤖 Reconhecimento e integração de comandos de agentes
 - 📋 Fluxo de trabalho de desenvolvimento dirigido por histórias
 - ✅ Rastreamento automático de checkboxes
@@ -192,6 +196,7 @@ npx aios-core uninstall   Remover Synkra AIOS
 ```
 
 **Recursos da CLI:**
+
 - ✅ **Help System Abrangente**: `--help` em qualquer comando mostra documentação detalhada
 - ✅ **Validação de Entrada**: Feedback imediato sobre parâmetros inválidos
 - ✅ **Mensagens Coloridas**: Erros em vermelho, sucessos em verde, avisos em amarelo
@@ -357,16 +362,19 @@ O framework de linguagem natural do AIOS funciona em QUALQUER domínio. Os Squad
 O Synkra AIOS vem com 11 agentes especializados:
 
 ### Agentes Meta
+
 - **aios-master** - Agente mestre de orquestração (inclui capacidades de desenvolvimento de framework)
 - **aios-orchestrator** - Orquestrador de fluxo de trabalho e coordenação de equipe
 
 ### Agentes de Planejamento (Interface Web)
+
 - **analyst** - Especialista em análise de negócios e criação de PRD
 - **pm** (Product Manager) - Gerente de produto e priorização
 - **architect** - Arquiteto de sistema e design técnico
 - **ux-expert** - Design de experiência do usuário e usabilidade
 
 ### Agentes de Desenvolvimento (IDE)
+
 - **sm** (Scrum Master) - Gerenciamento de sprint e criação de histórias
 - **dev** - Desenvolvedor e implementação
 - **qa** - Garantia de qualidade e testes
@@ -401,6 +409,7 @@ O Synkra AIOS v1.0.0 inclui um sistema completo de mapeamento e visualização d
 ### 🎯 O Que é o Sistema de Mapeamento?
 
 Um **grafo de relacionamentos completo** de todos os componentes do framework:
+
 - 📦 **199 entidades mapeadas** (22 agents, 67 tasks, 27 templates, 9 checklists, 12 tools, 6 workflows, 54 utils, 2 data)
 - 🔗 **50 relacionamentos rastreados** (executes, uses_template, depends_on, imports, etc.)
 - 🔍 **7 categorias de gaps** detectadas automaticamente
@@ -430,6 +439,7 @@ neo4j-admin database import full \
 ```
 
 **Queries Prontos:**
+
 - 🔍 Encontrar dependências de um componente
 - 🧩 Analisar cadeias de relacionamentos
 - 📊 Estatísticas de conectividade
@@ -466,6 +476,7 @@ open outputs/architecture-map/visualization/index.html
 ```
 
 **Recursos do Dashboard:**
+
 - 🔍 Busca e filtros por tipo de entidade
 - 🎨 Visualização interativa do grafo (zoom, pan, drag)
 - 📊 Painel de detalhes de entidades
@@ -476,15 +487,15 @@ open outputs/architecture-map/visualization/index.html
 
 Sistema automatizado de detecção de gaps em **7 categorias**:
 
-| Categoria          | Descrição                                     | Status  |
-|--------------------|-----------------------------------------------|---------|
-| Broken References  | Referências a entidades inexistentes          | 17 gaps |
-| Orphaned Active    | Entidades ativas sem uso                      | 0 gaps ✅ |
-| Ambiguous Relations| Relacionamentos ambíguos                      | 5 gaps  |
-| Missing Docs       | Documentação faltante                         | 150 gaps|
-| Deprecated Active  | Componentes deprecated ainda em uso           | 0 gaps ✅ |
-| Incomplete Workflows| Workflows incompletos                        | 8 gaps  |
-| Tool Validation    | Ferramentas referenciadas mas não registradas | 12 gaps |
+| Categoria            | Descrição                                     | Status    |
+| -------------------- | --------------------------------------------- | --------- |
+| Broken References    | Referências a entidades inexistentes          | 17 gaps   |
+| Orphaned Active      | Entidades ativas sem uso                      | 0 gaps ✅ |
+| Ambiguous Relations  | Relacionamentos ambíguos                      | 5 gaps    |
+| Missing Docs         | Documentação faltante                         | 150 gaps  |
+| Deprecated Active    | Componentes deprecated ainda em uso           | 0 gaps ✅ |
+| Incomplete Workflows | Workflows incompletos                         | 8 gaps    |
+| Tool Validation      | Ferramentas referenciadas mas não registradas | 12 gaps   |
 
 **Total: 338 gaps rastreados** (88 Orphaned Active resolvidos no Epic 3.1!)
 
@@ -498,6 +509,7 @@ Sistema automatizado de detecção de gaps em **7 categorias**:
    - Previne regressões
 
 2. **Gap Detection Script**
+
    ```bash
    node outputs/architecture-map/schemas/detect-gaps.js
    ```
@@ -511,12 +523,14 @@ Sistema automatizado de detecção de gaps em **7 categorias**:
    ```bash
    node outputs/architecture-map/schemas/validate-tool-references.js
    ```
+
    - Valida ferramentas MCP/CLI/Local
    - Integração com Docker MCP Toolkit
 
 ### 📈 Epic 2 & 3 Achievements
 
 **Epic 2 - Architecture Mapping (100% Complete):**
+
 - ✅ 297 entidades catalogadas
 - ✅ 174 relacionamentos sintetizados
 - ✅ Neo4j/Mermaid/HTML exports prontos
@@ -524,6 +538,7 @@ Sistema automatizado de detecção de gaps em **7 categorias**:
 - ✅ Visualização interativa funcional
 
 **Epic 3 - Gap Remediation (62% Complete):**
+
 - ✅ **88 Orphaned Active gaps resolvidos** (Stories 3.1.1-3.1.4)
 - ✅ 54 utilities ativas documentadas em `core-config.yaml`
 - ✅ 19 utilities arquivadas com rationale
@@ -534,6 +549,7 @@ Sistema automatizado de detecção de gaps em **7 categorias**:
 ### 🚀 Quick Start
 
 **1. Explore o Sistema:**
+
 ```bash
 # Ver entidades e relacionamentos
 cat outputs/architecture-map/MASTER-RELATIONSHIP-MAP.json | jq '.metadata'
@@ -546,12 +562,14 @@ open outputs/architecture-map/visualization/index.html
 ```
 
 **2. Importe no Neo4j** (opcional):
+
 ```bash
 cd outputs/architecture-map/neo4j/
 cat SETUP-GUIDE.md  # Siga as instruções
 ```
 
 **3. Use Diagramas Mermaid:**
+
 ```bash
 # Copie qualquer .mmd para sua documentação
 cp outputs/architecture-map/mermaid/synthesis-layered-view.mmd docs/
@@ -618,17 +636,20 @@ O Synkra AIOS implementa um sistema de validação de múltiplas camadas para ga
 ### 🛡️ Defense in Depth - 3 Camadas de Validação
 
 **Camada 1: Pre-commit (Local - Rápida)**
+
 - ✅ ESLint - Qualidade de código
 - ✅ TypeScript - Verificação de tipos
 - ⚡ Performance: <5s
 - 💾 Cache habilitado
 
 **Camada 2: Pre-push (Local - Validação de Stories)**
+
 - ✅ Validação de checkboxes de histórias
 - ✅ Consistência de status
 - ✅ Seções obrigatórias
 
 **Camada 3: CI/CD (Cloud - Obrigatório para merge)**
+
 - ✅ Todos os testes
 - ✅ Cobertura de testes (80% mínimo)
 - ✅ Validações completas
@@ -663,6 +684,7 @@ node scripts/setup-branch-protection.js
 ```
 
 Requer:
+
 - GitHub CLI (gh) instalado e autenticado
 - Acesso de admin ao repositório
 
@@ -679,20 +701,21 @@ Para contribuir:
 5. Abra um Pull Request
 
 Veja também:
+
 - 📋 [Como Contribuir com Pull Requests](docs/how-to-contribute-with-pull-requests.md)
 - 📋 [Guia de Git Workflow](docs/git-workflow-guide.md)
 - 📋 [Checklist de Lançamento](docs/launch-checklist.md)
 
 ## 📄 Legal
 
-| Documento | English | Português |
-|-----------|---------|-----------|
-| **Licença** | [MIT License](LICENSE) | - |
-| **Privacidade** | [Privacy Policy](PRIVACY.md) | [Política de Privacidade](PRIVACY-PT.md) |
-| **Termos de Uso** | [Terms of Use](TERMS.md) | [Termos de Uso](TERMS-PT.md) |
-| **Código de Conduta** | [Code of Conduct](CODE_OF_CONDUCT.md) | - |
-| **Contribuição** | [Contributing](CONTRIBUTING.md) | - |
-| **Changelog** | [Version History](CHANGELOG.md) | - |
+| Documento             | English                               | Português                                |
+| --------------------- | ------------------------------------- | ---------------------------------------- |
+| **Licença**           | [MIT License](LICENSE)                | -                                        |
+| **Privacidade**       | [Privacy Policy](PRIVACY.md)          | [Política de Privacidade](PRIVACY-PT.md) |
+| **Termos de Uso**     | [Terms of Use](TERMS.md)              | [Termos de Uso](TERMS-PT.md)             |
+| **Código de Conduta** | [Code of Conduct](CODE_OF_CONDUCT.md) | -                                        |
+| **Contribuição**      | [Contributing](CONTRIBUTING.md)       | -                                        |
+| **Changelog**         | [Version History](CHANGELOG.md)       | -                                        |
 
 ## Reconhecimentos
 
