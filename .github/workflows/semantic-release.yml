@@ -80,6 +80,86 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Pre-flight Tag Validation
+        id: preflight
+        run: |
+          echo "## Pre-flight Tag Validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Get current version from package.json
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "📦 Current package.json version: v${PACKAGE_VERSION}"
+          echo "- Current package.json version: \`v${PACKAGE_VERSION}\`" >> $GITHUB_STEP_SUMMARY
+
+          # Check for reachable version tags from HEAD
+          echo ""
+          echo "🔍 Checking for reachable version tags from HEAD..."
+
+          REACHABLE_TAGS=""
+          for tag in $(git tag -l 'v*' | sort -V); do
+            if git merge-base --is-ancestor "$tag" HEAD 2>/dev/null; then
+              REACHABLE_TAGS="$REACHABLE_TAGS $tag"
+              echo "  ✅ $tag is reachable"
+            else
+              echo "  ⚠️  $tag is orphaned (not in current history)"
+            fi
+          done
+
+          if [ -z "$REACHABLE_TAGS" ]; then
+            echo ""
+            echo "🚨 CRITICAL: No version tags are reachable from HEAD!"
+            echo "   This may cause semantic-release to start from v1.0.0"
+            echo ""
+            echo "### ⚠️ WARNING: No reachable tags found!" >> $GITHUB_STEP_SUMMARY
+            echo "This may cause semantic-release to create v1.0.0 instead of the expected version." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Recommended action:** Create a baseline tag manually:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            echo "git tag v${PACKAGE_VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "git push origin v${PACKAGE_VERSION}" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+            # Fail if not dry-run to prevent version regression
+            if [ "${{ inputs.dry_run }}" != "true" ]; then
+              echo "❌ Failing to prevent version regression. Use dry_run=true to test, or create a baseline tag."
+              exit 1
+            fi
+          else
+            LATEST_REACHABLE=$(echo $REACHABLE_TAGS | tr ' ' '\n' | sort -V | tail -1)
+            echo ""
+            echo "✅ Latest reachable tag: $LATEST_REACHABLE"
+            echo "- Latest reachable tag: \`$LATEST_REACHABLE\`" >> $GITHUB_STEP_SUMMARY
+            echo "LATEST_TAG=$LATEST_REACHABLE" >> $GITHUB_OUTPUT
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: Dry-run Preview
+        if: inputs.dry_run != true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "🔍 Running dry-run to preview release..."
+          echo ""
+          npx semantic-release --dry-run 2>&1 | tee /tmp/dry-run.log || true
+
+          # Extract expected version from dry-run output
+          NEXT_VERSION=$(grep -oP "The next release version is \K[0-9]+\.[0-9]+\.[0-9]+" /tmp/dry-run.log || echo "")
+
+          if [ -n "$NEXT_VERSION" ]; then
+            echo ""
+            echo "📋 Dry-run complete. Next version will be: v${NEXT_VERSION}"
+            echo "### 📋 Release Preview" >> $GITHUB_STEP_SUMMARY
+            echo "- Next version: \`v${NEXT_VERSION}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo ""
+            echo "ℹ️  No new version detected (no releasable commits or already released)"
+            echo "### ℹ️ No Release Needed" >> $GITHUB_STEP_SUMMARY
+            echo "No releasable commits found since last release." >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
