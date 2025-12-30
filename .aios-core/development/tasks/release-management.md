@@ -5,7 +5,7 @@ agent: github-devops
 category: devops
 complexity: high
 tools:
-  - github-cli       # Create releases, tags, manage artifacts
+  - github-cli # Create releases, tags, manage artifacts
   - semantic-release # Automate versioning and changelog
 checklists:
   - github-devops-checklist.md
@@ -16,6 +16,7 @@ checklists:
 ## Purpose
 
 To automate the complete software release process, including:
+
 - Semantic versioning (major.minor.patch)
 - Changelog generation from commits
 - Git tagging
@@ -107,12 +108,23 @@ To automate the complete software release process, including:
    - Ensure branch is up-to-date with remote
    - Check CI status (must be passing unless skip_ci=true)
 
-2. **Analyze Commits Since Last Release**
+2. **🔴 CRITICAL: Validate Tag Reachability**
+   - Check which version tags are reachable from HEAD
+   - Run: `git merge-base --is-ancestor <tag> HEAD` for each tag
+   - **If NO tags are reachable** → semantic-release will create v1.0.0!
+   - This can happen after `git filter-repo` rewrites history
+   - **Resolution**: Create a baseline tag at current package.json version:
+     ```bash
+     git tag v$(node -p "require('./package.json').version")
+     git push origin v$(node -p "require('./package.json').version")
+     ```
+
+3. **Analyze Commits Since Last Release**
    - Get last version tag (e.g., `v2.1.2`)
    - Get commits since last tag: `git log v2.1.2..HEAD`
    - Parse commit messages (Conventional Commits)
 
-3. **Determine Version Bump**
+4. **Determine Version Bump**
    - If `release_type="auto"`:
      - **BREAKING CHANGE** in commits → **major** bump (2.1.2 → 3.0.0)
      - **feat:** commits → **minor** bump (2.1.2 → 2.2.0)
@@ -121,7 +133,7 @@ To automate the complete software release process, including:
    - Else: Use specified `release_type`
    - Calculate new version: `{major}.{minor}.{patch}`
 
-4. **Check Breaking Changes**
+5. **Check Breaking Changes**
    - Scan for `BREAKING CHANGE:` or `!` in commit messages
    - Extract breaking change descriptions
    - If found and major bump not planned → **WARN** user
@@ -142,25 +154,26 @@ To automate the complete software release process, including:
    - Prepend to CHANGELOG.md
 
    **Example Output (Conventional Commits format):**
+
    ```markdown
    ## [2.1.3] - 2025-11-13
-   
+
    ### ⚠️ Breaking Changes
-   
+
    - API endpoint `/v1/users` renamed to `/v2/users` (#42)
-   
+
    ### ✨ Features
-   
+
    - Add user authentication with OAuth2 (#38)
    - Implement rate limiting for API (#40)
-   
+
    ### 🐛 Bug Fixes
-   
+
    - Fix memory leak in database connection pool (#39)
    - Correct timezone handling in date filters (#41)
-   
+
    ### 📝 Documentation
-   
+
    - Update API documentation with new endpoints (#43)
    ```
 
@@ -213,6 +226,7 @@ To automate the complete software release process, including:
 12. **Publish to Package Registries** (if configured)
 
     **npm:**
+
     ```bash
     npm publish --access public
     # Or for scoped packages:
@@ -220,12 +234,14 @@ To automate the complete software release process, including:
     ```
 
     **PyPI:**
+
     ```bash
     python -m build
     twine upload dist/*
     ```
 
     **Docker Hub:**
+
     ```bash
     docker build -t user/image:{new_version} .
     docker push user/image:{new_version}
@@ -234,6 +250,7 @@ To automate the complete software release process, including:
     ```
 
     **GitHub Packages:**
+
     ```bash
     docker tag image:latest ghcr.io/user/repo:{new_version}
     docker push ghcr.io/user/repo:{new_version}
@@ -318,7 +335,7 @@ To automate the complete software release process, including:
 
 ### Release Notes Template
 
-```markdown
+````markdown
 # Release v{new_version}
 
 **Date**: {release_date}
@@ -350,7 +367,9 @@ Thank you to all contributors who made this release possible:
 
 \`\`\`bash
 npm install {package_name}@{new_version}
+
 # or
+
 pip install {package_name}=={new_version}
 \`\`\`
 
@@ -367,16 +386,19 @@ pip install {package_name}=={new_version}
 **Choose your execution mode:**
 
 ### 1. YOLO Mode - Fast, Autonomous (0-1 prompts)
+
 - Autonomous decision making with logging
 - Minimal user interaction
 - **Best for:** Simple, deterministic tasks
 
 ### 2. Interactive Mode - Balanced, Educational (5-10 prompts) **[DEFAULT]**
+
 - Explicit decision checkpoints
 - Educational explanations
 - **Best for:** Learning, complex decisions
 
 ### 3. Pre-Flight Planning - Comprehensive Upfront Planning
+
 - Task analysis phase (identify all ambiguities)
 - Zero ambiguity execution
 - **Best for:** Ambiguous requirements, critical work
@@ -428,6 +450,7 @@ atomic_layer: Organism
   destino: State management
   persistido: true
 ```
+````
 
 ---
 
@@ -530,6 +553,7 @@ token_usage: ~3,000-10,000 tokens
 ```
 
 **Optimization Notes:**
+
 - Break into smaller workflows; implement checkpointing; use async processing where possible
 
 ---
@@ -549,13 +573,14 @@ updated_at: 2025-11-17
 
 ---
 
-
 **Full Changelog**: {compare_url}
+
 ```
 
 ### Social Media Announcement Template
 
 ```
+
 🚀 {package_name} v{new_version} is out!
 
 {highlight_1}
@@ -567,7 +592,8 @@ Install: npm install {package_name}@{new_version}
 Release notes: {release_url}
 
 #opensource #release #{package_name}
-```
+
+````
 
 ## Tools
 
@@ -624,7 +650,7 @@ Release notes: {release_url}
 ```bash
 aios activate Otto  # github-devops agent
 aios release create --repo="." --type="auto"
-```
+````
 
 **Output**: Analyzes commits, determines version bump, creates release
 
@@ -677,6 +703,7 @@ For automatic versioning, follow **Conventional Commits** format:
 ```
 
 **Types:**
+
 - `feat:` - New feature (MINOR bump)
 - `fix:` - Bug fix (PATCH bump)
 - `docs:` - Documentation only
@@ -687,10 +714,12 @@ For automatic versioning, follow **Conventional Commits** format:
 - `chore:` - Maintenance tasks
 
 **Breaking Changes:**
+
 - Add `!` after type: `feat!: ...` (MAJOR bump)
 - Or add `BREAKING CHANGE:` in footer (MAJOR bump)
 
 **Examples:**
+
 ```
 feat(auth): add OAuth2 login support
 
@@ -718,6 +747,6 @@ Migration: Replace /v1/users with /v2/users in API calls.
 ---
 
 **Related Tasks:**
+
 - `ci-cd-configuration` - Set up CI to run before releases
 - `pr-automation` - Help users create PRs with proper commit formats
-
