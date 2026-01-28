@@ -4,7 +4,7 @@
 
 **Version:** 2.0
 **Last Updated:** 2025-12-05
-**Story:** [3.12 - Documentation Sprint 3](../stories/v2.1/sprint-3/story-3.12-documentation-sprint-3.md)
+**Story:** [3.12 - Documentation Sprint 3](../stories/v2.1/sprint-3/story-3.12-documentation-sprint-3.md) *(coming soon)*
 
 ---
 
@@ -453,7 +453,7 @@ console.log('Validation result:', validation);
 ## Related Documentation
 
 - [Quality Gates Guide](./quality-gates.md)
-- [Story 3.6: Template Engine Core](../stories/v2.1/sprint-3/story-3.6-template-engine-core.md)
+- [Story 3.6: Template Engine Core](../stories/v2.1/sprint-3/story-3.6-template-engine-core.md) *(coming soon)*
 
 ---
 

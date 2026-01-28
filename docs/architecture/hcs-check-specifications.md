@@ -886,7 +886,7 @@ async function runCheckWithTimeout(check, context) {
 - [ADR: HCS Architecture](./adr/adr-hcs-health-check-system.md)
 - [HCS Execution Modes](./hcs-execution-modes.md)
 - [HCS Self-Healing Specification](./hcs-self-healing-spec.md)
-- [Story HCS-2: Implementation](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Story HCS-2: Implementation](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

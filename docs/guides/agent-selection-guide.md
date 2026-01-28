@@ -110,8 +110,8 @@ Need deployment? → @github-devops
 ## Full Documentation
 
 For detailed boundaries and "NOT for" guidance, see:
-- `docs/analysis/agent-responsibility-matrix.md` - Complete boundary definitions
-- `docs/guides/command-migration-guide.md` - Command changes and migrations
+- `docs/analysis/agent-responsibility-matrix.md` *(coming soon)* - Complete boundary definitions
+- `docs/guides/command-migration-guide.md` *(coming soon)* - Command changes and migrations
 
 ---
 

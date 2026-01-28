@@ -507,8 +507,8 @@ All agents enforce:
 
 ## Related Documentation
 
-- [Workflow Diagram](../.claude/commands/hybridOps/docs/workflow-diagram.md) - Visual representation of 9-phase workflow
-- [Workflow YAML](../.claude/commands/hybridOps/workflows/hybrid-ops-pv.yaml) - Workflow orchestration configuration
+- [Workflow Diagram](../.claude/commands/hybridOps/docs/workflow-diagram.md) *(coming soon)* - Visual representation of 9-phase workflow
+- [Workflow YAML](../.claude/commands/hybridOps/workflows/hybrid-ops-pv.yaml) *(coming soon)* - Workflow orchestration configuration
 
 ---
 

@@ -29,9 +29,9 @@ For discussions, questions, and community interaction, visit our central hub:
 
 ### Quick Links
 
-- [Docker MCP Toolkit Setup](docs/docker-mcp-setup.md)
-- [Available Presets](presets/)
-- [IDE Integration Guide](docs/ide-integration.md)
+- [Docker MCP Toolkit Setup](docs/docker-mcp-setup.md) *(coming soon)*
+- [Available Presets](presets/) *(coming soon)*
+- [IDE Integration Guide](docs/ide-integration.md) *(coming soon)*
 - [Troubleshooting Guide](docs/troubleshooting.md)
 
 ### Proposing a New MCP Server

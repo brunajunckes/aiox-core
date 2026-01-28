@@ -88,4 +88,4 @@ matrix:
 
 - [isolated-vm#424 - Segmentation fault on Node 20 macos arm64](https://github.com/laverdet/isolated-vm/issues/424)
 - [isolated-vm releases](https://github.com/laverdet/isolated-vm/releases)
-- [Story TD-6](../../../docs/stories/v2.1/sprint-18/story-td-6-ci-stability.md)
+- [Story TD-6](../../../docs/stories/v2.1/sprint-18/story-td-6-ci-stability.md) *(coming soon)*

@@ -743,8 +743,8 @@ SUPABASE_ACCESS_TOKEN=xxx         # Supabase CLI auth
 
 - [Coding Standards](./coding-standards.md)
 - [Source Tree](./source-tree.md)
-- [Decision 005: Repository Restructuring](../decisions/decision-005-repository-restructuring-FINAL.md)
-- [Story 6.1.2.5: Contextual Agent Load System](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md)
+- [Decision 005: Repository Restructuring](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- [Story 6.1.2.5: Contextual Agent Load System](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
