@@ -9,6 +9,7 @@
 const ora = require('ora');
 const cliProgress = require('cli-progress');
 const { colors, status, headings } = require('../utils/aios-colors');
+const { t } = require('./i18n');
 
 /**
  * Create and start a spinner with AIOS styling
@@ -158,14 +159,14 @@ function showWelcome() {
  */
 function showCompletion() {
   console.log('\n' + headings.divider());
-  console.log(status.celebrate('🎉 Installation Complete!'));
+  console.log(status.celebrate(t('installComplete')));
   console.log('');
-  console.log(colors.success('Your AIOS project is ready! Time to build something amazing.'));
+  console.log(colors.success(t('readyToUse')));
   console.log('');
-  console.log(colors.info('Quick Start:'));
-  console.log(colors.dim('  • Talk to your AI agents: @dev, @qa, @architect'));
-  console.log(colors.dim('  • Create a story: @pm *create-story'));
-  console.log(colors.dim('  • Get help: @aios-master *help'));
+  console.log(colors.info(t('quickStart')));
+  console.log(colors.dim('  • ' + t('quickStartAgents')));
+  console.log(colors.dim('  • ' + t('quickStartStory')));
+  console.log(colors.dim('  • ' + t('quickStartHelp')));
   console.log(headings.divider() + '\n');
 }
 
@@ -182,8 +183,8 @@ function showSection(title) {
  * Show cancellation message
  */
 function showCancellation() {
-  console.log('\n' + colors.warning('Installation cancelled.'));
-  console.log(colors.info('Run `npx @synkra/aios-core@latest init` to try again.\n'));
+  console.log('\n' + colors.warning(t('cancelled')));
+  console.log(colors.info(t('tryAgain') + '\n'));
 }
 
 /**
