@@ -4,8 +4,8 @@
  * Story 1.4: IDE Selection
  * Tests complete flow from selection to config generation
  *
- * Synkra AIOS v2.1 supports 6 IDEs:
- * - Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, AntiGravity
+ * Synkra AIOS v2.1 supports 5 IDEs:
+ * - Claude Code, Cursor, Windsurf, GitHub Copilot, AntiGravity
  */
 
 const fs = require('fs-extra');
@@ -61,7 +61,7 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'brownfield',
         projectName: 'multi-ide-project',
-        selectedIDEs: ['cursor', 'windsurf', 'gemini-cli'],
+        selectedIDEs: ['cursor', 'windsurf', 'github-copilot'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
@@ -75,15 +75,17 @@ describe('Wizard IDE Flow Integration', () => {
       // Verify all config files exist
       expect(await fs.pathExists(path.join(testDir, '.cursor', 'rules.md'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.windsurfrules'))).toBe(true);
-      expect(await fs.pathExists(path.join(testDir, '.gemini', 'rules.md'))).toBe(true);
+      expect(await fs.pathExists(path.join(testDir, '.github', 'copilot-instructions.md'))).toBe(
+        true
+      );
 
       // Verify agent folders were created
       expect(await fs.pathExists(path.join(testDir, '.cursor', 'rules'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.windsurf', 'rules'))).toBe(true);
-      expect(await fs.pathExists(path.join(testDir, '.gemini', 'agents'))).toBe(true);
+      expect(await fs.pathExists(path.join(testDir, '.github', 'agents'))).toBe(true);
     });
 
-    it('should complete flow for all 6 IDEs', async () => {
+    it('should complete flow for all 5 IDEs', async () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'all-ides-project',
@@ -95,8 +97,8 @@ describe('Wizard IDE Flow Integration', () => {
       });
 
       expect(result.success).toBe(true);
-      // 6 config files + agent files for each IDE
-      expect(result.files.length).toBeGreaterThanOrEqual(6);
+      // 5 config files + agent files for each IDE
+      expect(result.files.length).toBeGreaterThanOrEqual(5);
 
       // Verify all config files and agent folders based on IDE configuration
       for (const ideKey of getIDEKeys()) {
@@ -116,7 +118,7 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'dir-test',
-        selectedIDEs: ['claude-code', 'cursor', 'gemini-cli', 'github-copilot', 'antigravity'],
+        selectedIDEs: ['claude-code', 'cursor', 'github-copilot', 'antigravity'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
@@ -128,7 +130,6 @@ describe('Wizard IDE Flow Integration', () => {
       // Verify directories created for IDEs that require them
       expect(await fs.pathExists(path.join(testDir, '.claude'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.cursor'))).toBe(true);
-      expect(await fs.pathExists(path.join(testDir, '.gemini'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.github'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.antigravity'))).toBe(true);
     });
@@ -202,7 +203,7 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'nested-test',
-        selectedIDEs: ['gemini-cli', 'github-copilot', 'antigravity'],
+        selectedIDEs: ['github-copilot', 'antigravity'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
@@ -212,7 +213,6 @@ describe('Wizard IDE Flow Integration', () => {
       expect(result.success).toBe(true);
 
       // Verify directories created
-      expect(await fs.pathExists(path.join(testDir, '.gemini'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.github'))).toBe(true);
       expect(await fs.pathExists(path.join(testDir, '.antigravity'))).toBe(true);
     });
@@ -221,7 +221,7 @@ describe('Wizard IDE Flow Integration', () => {
       const wizardState = {
         projectType: 'greenfield',
         projectName: 'format-test',
-        selectedIDEs: ['cursor', 'gemini-cli', 'antigravity'],
+        selectedIDEs: ['cursor', 'github-copilot', 'antigravity'],
       };
 
       const result = await generateIDEConfigs(wizardState.selectedIDEs, wizardState, {
@@ -236,8 +236,11 @@ describe('Wizard IDE Flow Integration', () => {
       const cursorContent = await fs.readFile(path.join(testDir, '.cursor', 'rules.md'), 'utf8');
       expect(typeof cursorContent).toBe('string');
 
-      const geminiContent = await fs.readFile(path.join(testDir, '.gemini', 'rules.md'), 'utf8');
-      expect(typeof geminiContent).toBe('string');
+      const copilotContent = await fs.readFile(
+        path.join(testDir, '.github', 'copilot-instructions.md'),
+        'utf8'
+      );
+      expect(typeof copilotContent).toBe('string');
 
       const antigravityContent = await fs.readFile(
         path.join(testDir, '.antigravity', 'rules.md'),
