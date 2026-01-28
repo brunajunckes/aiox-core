@@ -40,6 +40,10 @@ const TRANSLATIONS = {
     installComplete: 'Installation Complete!',
     readyToUse: 'Your AIOS project is ready.',
     nextSteps: 'Next steps:',
+    quickStart: 'Quick Start:',
+    quickStartAgents: 'Talk to your AI agents: @dev, @qa, @architect',
+    quickStartStory: 'Create a story: @pm *create-story',
+    quickStartHelp: 'Get help: @aios-master *help',
 
     // Cancellation
     cancelConfirm: 'Cancel installation?',
@@ -81,6 +85,10 @@ const TRANSLATIONS = {
     installComplete: 'Instalação Completa!',
     readyToUse: 'Seu projeto AIOS está pronto.',
     nextSteps: 'Próximos passos:',
+    quickStart: 'Início Rápido:',
+    quickStartAgents: 'Converse com seus agentes IA: @dev, @qa, @architect',
+    quickStartStory: 'Crie uma story: @pm *create-story',
+    quickStartHelp: 'Obtenha ajuda: @aios-master *help',
 
     // Cancellation
     cancelConfirm: 'Cancelar instalação?',
@@ -122,6 +130,10 @@ const TRANSLATIONS = {
     installComplete: '¡Instalación Completa!',
     readyToUse: 'Tu proyecto AIOS está listo.',
     nextSteps: 'Próximos pasos:',
+    quickStart: 'Inicio Rápido:',
+    quickStartAgents: 'Habla con tus agentes IA: @dev, @qa, @architect',
+    quickStartStory: 'Crea una story: @pm *create-story',
+    quickStartHelp: 'Obtén ayuda: @aios-master *help',
 
     // Cancellation
     cancelConfirm: '¿Cancelar instalación?',
