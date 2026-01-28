@@ -129,6 +129,7 @@ function isValidIDE(ideKey) {
  */
 function getIDEChoices() {
   const { colors } = require('../utils/aios-colors');
+  const { t } = require('../wizard/i18n');
 
   return getIDEKeys().map((key) => {
     const config = IDE_CONFIGS[key];
@@ -137,7 +138,7 @@ function getIDEChoices() {
     // Simplified format: just "IDE Name" with optional (Recommended) tag
     let displayName = config.name;
     if (isRecommended) {
-      displayName = colors.highlight(config.name) + colors.success(' (Recommended)');
+      displayName = colors.highlight(config.name) + colors.success(` (${t('recommended')})`);
     }
 
     return {

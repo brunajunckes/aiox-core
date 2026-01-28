@@ -45,6 +45,7 @@ const TRANSLATIONS = {
     cancelConfirm: 'Cancel installation?',
     cancelled: 'Installation cancelled.',
     tryAgain: 'Run `npx @synkra/aios-core init` to try again.',
+    continuing: 'Continuing installation...',
   },
 
   pt: {
@@ -85,6 +86,7 @@ const TRANSLATIONS = {
     cancelConfirm: 'Cancelar instalação?',
     cancelled: 'Instalação cancelada.',
     tryAgain: 'Execute `npx @synkra/aios-core init` para tentar novamente.',
+    continuing: 'Continuando instalação...',
   },
 
   es: {
@@ -125,6 +127,7 @@ const TRANSLATIONS = {
     cancelConfirm: '¿Cancelar instalación?',
     cancelled: 'Instalación cancelada.',
     tryAgain: 'Ejecute `npx @synkra/aios-core init` para intentar nuevamente.',
+    continuing: 'Continuando instalación...',
   },
 };
 
