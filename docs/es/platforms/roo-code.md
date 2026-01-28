@@ -494,7 +494,7 @@ R: Sí, los modos personalizados definidos en `.roomodes` persisten con tu proye
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline)
 - [Repositorio de GitHub](https://github.com/RooCodeInc/Roo-Code)
 - [Comunidad Discord](https://discord.gg/roocode)
-- [Guía de Plataforma AIOS](../README.md)
+- [Guía de Plataforma AIOS](../README.md) *(coming soon)*
 
 ---
 

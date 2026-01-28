@@ -469,7 +469,7 @@ R: La edición básica funciona sin conexión, pero las características de IA r
 
 - [Documentación de Windsurf](https://codeium.com/windsurf/docs)
 - [Comunidad Codeium](https://discord.gg/codeium)
-- [Guía de Plataforma AIOS](../README.md)
+- [Guía de Plataforma AIOS](../README.md) *(coming soon)*
 
 ---
 

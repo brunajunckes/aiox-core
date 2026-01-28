@@ -2,7 +2,7 @@
 
 # Stack de Tecnologia AIOS
 
-> 🌐 [EN](../../architecture/tech-stack.md) *(coming soon)* | **PT** | [ES](../../es/architecture/tech-stack.md)
+> 🌐 [EN](../../architecture/tech-stack.md) | **PT** | [ES](../../es/architecture/tech-stack.md)
 
 ---
 
@@ -759,8 +759,8 @@ SUPABASE_ACCESS_TOKEN=xxx         # Auth Supabase CLI
 
 - [Padrões de Codificação](./coding-standards.md)
 - [Árvore de Código](./source-tree.md)
-- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md)
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md)
+- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 

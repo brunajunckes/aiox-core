@@ -14,7 +14,7 @@
 
 **Versión:** 1.0
 **Última Actualización:** 2025-12-05
-**Story:** [3.11b - Quality Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md)
+**Story:** [3.11b - Quality Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 
@@ -357,8 +357,8 @@ La auto-actualización se pausa cuando:
 ## Documentación Relacionada
 
 - [Guía de Quality Gates](./quality-gates.md)
-- [Story 3.11a: Recolector de Métricas](../stories/v2.1/sprint-3/story-3.11a-metrics-collector.md)
-- [Story 3.11b: Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md)
+- [Story 3.11a: Recolector de Métricas](../stories/v2.1/sprint-3/story-3.11a-metrics-collector.md) *(coming soon)*
+- [Story 3.11b: Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 

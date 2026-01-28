@@ -2,7 +2,7 @@
 
 # Pesquisa de Workflow de Contribuição Externa
 
-> 🌐 [EN](../../architecture/contribution-workflow-research.md) *(coming soon)* | **PT** | [ES](../../es/architecture/contribution-workflow-research.md)
+> 🌐 [EN](../../architecture/contribution-workflow-research.md) | **PT** | [ES](../../es/architecture/contribution-workflow-research.md)
 
 ---
 

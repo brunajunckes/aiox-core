@@ -348,7 +348,7 @@
 
 - [Sistema de Módulos](./module-system.md) - Arquitectura detallada de módulos
 - [ARCHITECTURE-INDEX.md](./ARCHITECTURE-INDEX.md) - Índice completo de documentación
-- [AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md](../../.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md) - Guía completa del framework
+- [AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md](../../.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md) *(coming soon)* - Guía completa del framework
 
 ---
 

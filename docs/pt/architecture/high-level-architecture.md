@@ -2,7 +2,7 @@
 
 # Arquitetura de Alto Nível do AIOS v2.1
 
-> 🌐 [EN](../../architecture/high-level-architecture.md) *(coming soon)* | **PT** | [ES](../../es/architecture/high-level-architecture.md)
+> 🌐 [EN](../../architecture/high-level-architecture.md) | **PT** | [ES](../../es/architecture/high-level-architecture.md)
 
 ---
 
@@ -348,7 +348,7 @@
 
 - [Sistema de Módulos](./module-system.md) - Arquitetura detalhada dos módulos
 - [ARCHITECTURE-INDEX.md](./ARCHITECTURE-INDEX.md) - Índice completo da documentação
-- [AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md](../../.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md) - Guia completo do framework
+- [AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md](../../.aios-core/docs/standards/AIOS-LIVRO-DE-OURO-V2.1-COMPLETE.md) *(coming soon)* - Guia completo do framework
 
 ---
 

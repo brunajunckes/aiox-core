@@ -448,7 +448,7 @@ R: Plataforma mais nova, ativamente desenvolvida com recursos crescentes.
 - [Site Oficial do Trae](https://www.trae.ai/)
 - [Download Trae IDE](https://traeide.com/)
 - [Trae Agent (GitHub)](https://github.com/bytedance/trae-agent)
-- [Guia de Plataformas AIOS](../README.md)
+- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
 
 > **Nota:** O Trae é desenvolvido pela ByteDance. Como um fork do VS Code, a maioria das extensões do VS Code são compatíveis.
 

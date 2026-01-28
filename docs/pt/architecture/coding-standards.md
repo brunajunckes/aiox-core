@@ -2,7 +2,7 @@
 
 # Padrões de Codificação AIOS
 
-> 🌐 [EN](../../architecture/coding-standards.md) *(coming soon)* | **PT** | [ES](../../es/architecture/coding-standards.md)
+> 🌐 [EN](../../architecture/coding-standards.md) | **PT** | [ES](../../es/architecture/coding-standards.md)
 
 ---
 
@@ -889,8 +889,8 @@ Todos os PRs são automaticamente revisados pelo CodeRabbit para:
 **Documentos Relacionados:**
 - [Tech Stack](./tech-stack.md)
 - [Source Tree](./source-tree.md)
-- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md)
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md)
+- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 

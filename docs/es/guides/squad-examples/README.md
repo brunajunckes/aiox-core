@@ -43,7 +43,7 @@ Cada ejemplo incluye comentarios explicando:
 
 ## Crear el Tuyo Propio
 
-1. Comienza con la [Plantilla de Squad](../../../templates/squad/)
+1. Comienza con la [Plantilla de Squad](../../../templates/squad/) *(coming soon)*
 2. Consulta estos ejemplos para patrones
 3. Sigue la [Guía de Squads](../squads-guide.md)
 
@@ -54,7 +54,7 @@ Cada ejemplo incluye comentarios explicando:
 1. Crea tu ejemplo en este directorio
 2. Agrega comentarios claros explicando el patrón
 3. Actualiza este README con la descripción
-4. Envía un PR siguiendo [CONTRIBUTING.md](../../../CONTRIBUTING.md)
+4. Envía un PR siguiendo [CONTRIBUTING.md](../../../CONTRIBUTING.md) *(coming soon)*
 
 ---
 

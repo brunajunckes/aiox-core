@@ -2,7 +2,7 @@
 
 # Especificação de Auto-Recuperação do HCS
 
-> 🌐 [EN](../../architecture/hcs-self-healing-spec.md) *(coming soon)* | **PT** | [ES](../../es/architecture/hcs-self-healing-spec.md)
+> 🌐 [EN](../../architecture/hcs-self-healing-spec.md) | **PT** | [ES](../../es/architecture/hcs-self-healing-spec.md)
 
 ---
 
@@ -689,7 +689,7 @@ await healingLog.append({
 - [ADR: Arquitetura do HCS](./adr/adr-hcs-health-check-system.md)
 - [Modos de Execução do HCS](./hcs-execution-modes.md)
 - [Especificações de Verificação do HCS](./hcs-check-specifications.md)
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

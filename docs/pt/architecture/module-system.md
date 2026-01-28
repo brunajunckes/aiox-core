@@ -2,7 +2,7 @@
 
 # Arquitetura do Sistema de Módulos do AIOS
 
-> 🌐 [EN](../../architecture/module-system.md) *(coming soon)* | **PT** | [ES](../../es/architecture/module-system.md)
+> 🌐 [EN](../../architecture/module-system.md) | **PT** | [ES](../../es/architecture/module-system.md)
 
 ---
 
@@ -10,7 +10,7 @@
 
 **Versão:** 2.1.0
 **Última Atualização:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md)
+**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -365,7 +365,7 @@ aios migrate --from=2.0 --to=2.1
 aios migrate --validate
 ```
 
-Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) para instruções detalhadas.
+Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) *(coming soon)* para instruções detalhadas.
 
 ---
 
@@ -374,8 +374,8 @@ Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) para instruções deta
 - [Guia de Service Discovery](../guides/service-discovery.md)
 - [Guia de Quality Gates](../guides/quality-gates.md)
 - [Guia de Setup Global MCP](../guides/mcp-global-setup.md)
-- [Guia de Migração](../migration/v2.0-to-v2.1.md)
-- [ADR-002: Arquitetura Modular](decisions/ADR-002-migration-map.md)
+- [Guia de Migração](../migration/v2.0-to-v2.1.md) *(coming soon)*
+- [ADR-002: Arquitetura Modular](decisions/ADR-002-migration-map.md) *(coming soon)*
 
 ---
 

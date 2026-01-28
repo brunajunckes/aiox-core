@@ -2,7 +2,7 @@
 
 # Matriz de Responsabilidades dos Agentes - Melhorias Estratégicas do Epic 3
 
-> 🌐 [EN](../../architecture/agent-responsibility-matrix.md) *(coming soon)* | **PT** | [ES](../../es/architecture/agent-responsibility-matrix.md)
+> 🌐 [EN](../../architecture/agent-responsibility-matrix.md) | **PT** | [ES](../../es/architecture/agent-responsibility-matrix.md)
 
 ---
 

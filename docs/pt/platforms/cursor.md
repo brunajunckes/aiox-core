@@ -603,7 +603,7 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 
 ### Tutoriais
 - [Dicas e Truques do Cursor](https://cursor.com/tips)
-- [Guia de Integração AIOS](../README.md)
+- [Guia de Integração AIOS](../README.md) *(coming soon)*
 
 ---
 

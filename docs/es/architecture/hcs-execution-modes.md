@@ -502,8 +502,8 @@ async function runAllChecks() {
 - [ADR: Arquitectura HCS](./adr/adr-hcs-health-check-system.md)
 - [Especificación de Auto-reparación HCS](./hcs-self-healing-spec.md)
 - [Especificaciones de Verificaciones HCS](./hcs-check-specifications.md)
-- [Historia HCS-1: Investigación](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md)
-- [Historia HCS-2: Implementación](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Historia HCS-1: Investigación](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md) *(coming soon)*
+- [Historia HCS-2: Implementación](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

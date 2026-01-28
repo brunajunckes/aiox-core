@@ -91,12 +91,12 @@ Para compatibilidad hacia atrás, la documentación del framework permanece acce
 
 ## Documentos Relacionados
 
-- **Decisiones de Arquitectura**: [`docs/decisions/decision-005-repository-restructuring-FINAL.md`](../decisions/decision-005-repository-restructuring-FINAL.md)
-- **Historia de Migración**: [`docs/stories/aios migration/story-6.1.2.6-framework-config-system.md`](../stories/aios migration/story-6.1.2.6-framework-config-system.md)
-- **Documentación Específica del Proyecto**: [`docs/architecture/project-decisions/`](../architecture/project-decisions/)
+- **Decisiones de Arquitectura**: [`docs/decisions/decision-005-repository-restructuring-FINAL.md`](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- **Historia de Migración**: [`docs/stories/aios migration/story-6.1.2.6-framework-config-system.md`](../stories/aios migration/story-6.1.2.6-framework-config-system.md) *(coming soon)*
+- **Documentación Específica del Proyecto**: [`docs/architecture/project-decisions/`](../architecture/project-decisions/) *(coming soon)*
 
 ---
 
 **Última Actualización**: 2025-12-14
 **Mantenedor**: Equipo del Framework AIOS
-**¿Preguntas?** Ver [Epic 6.1 - Agent Identity System](../epics/epic-6.1-agent-identity-system.md)
+**¿Preguntas?** Ver [Epic 6.1 - Agent Identity System](../epics/epic-6.1-agent-identity-system.md) *(coming soon)*

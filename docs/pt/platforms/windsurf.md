@@ -467,7 +467,7 @@ R: Edição básica funciona offline, mas recursos de IA requerem internet.
 
 - [Documentação do Windsurf](https://codeium.com/windsurf/docs)
 - [Comunidade Codeium](https://discord.gg/codeium)
-- [Guia de Plataformas AIOS](../README.md)
+- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
 
 ---
 

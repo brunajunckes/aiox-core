@@ -887,8 +887,8 @@ Todos los PRs son revisados automaticamente por CodeRabbit para:
 **Documentos Relacionados:**
 - [Tech Stack](./tech-stack.md)
 - [Source Tree](./source-tree.md)
-- [Decision 005: Reestructuracion de Repositorio](../decisions/decision-005-repository-restructuring-FINAL.md)
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agentes](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md)
+- [Decision 005: Reestructuracion de Repositorio](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- [Story 6.1.2.5: Sistema de Carga Contextual de Agentes](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 

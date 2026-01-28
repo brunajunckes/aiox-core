@@ -172,5 +172,5 @@ The updater will:
 
 - [Main README](../../README.md)
 - [User Guide](../../aios-core/user-guide.md) *(coming soon)*
-- [Troubleshooting Guide](../../docs/troubleshooting.md) *(coming soon)*
+- [Troubleshooting Guide](../../docs/troubleshooting.md)
 - [Discord Community](https://discord.gg/gk8jAdXWmj)

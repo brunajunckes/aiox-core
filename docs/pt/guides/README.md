@@ -58,7 +58,7 @@ Use o agente DevOps: `@devops` e então `*setup-mcp-docker`
 |------|-----------|-------|---------|
 | **[Arquitetura do Sistema de Módulos](../architecture/module-system.md)** | Arquitetura modular v2.1 (4 módulos) | 15 min | Arquitetos, Desenvolvedores |
 | **[Guia de Service Discovery](./service-discovery.md)** | Descoberta de workers e API do registro | 10 min | Desenvolvedores |
-| **[Guia de Migração v2.0→v2.1](../migration/v2.0-to-v2.1.md)** | Instruções passo a passo de migração | 20 min | Todos os usuários atualizando |
+| **[Guia de Migração v2.0→v2.1](../migration/v2.0-to-v2.1.md)** *(coming soon)* | Instruções passo a passo de migração | 20 min | Todos os usuários atualizando |
 
 ### Configuração do Sistema
 
@@ -83,7 +83,7 @@ Use o agente DevOps: `@devops` e então `*setup-mcp-docker`
 → [`service-discovery.md`](./service-discovery.md) (10 min)
 
 **...migrar de v2.0 para v2.1**
-→ [`v2.0-to-v2.1.md`](../migration/v2.0-to-v2.1.md) (20 min)
+→ [`v2.0-to-v2.1.md`](../migration/v2.0-to-v2.1.md) *(coming soon)* (20 min)
 
 **...configurar quality gates**
 → [`quality-gates.md`](./quality-gates.md) (15 min)
@@ -118,7 +118,7 @@ Use o agente DevOps: `@devops` e então `*setup-mcp-docker`
 | [Guia de Quality Gates](./quality-gates.md) | ~600 | Completo |
 | [Guia do Quality Dashboard](./quality-dashboard.md) | ~350 | Completo |
 | [Template Engine v2](./template-engine-v2.md) | ~400 | Completo |
-| [Integração CodeRabbit](./coderabbit/) | ~1000 | Completo |
+| [Integração CodeRabbit](./coderabbit/) *(coming soon)* | ~1000 | Completo |
 
 ---
 

@@ -689,7 +689,7 @@ await healingLog.append({
 - [ADR: Arquitectura HCS](./adr/adr-hcs-health-check-system.md)
 - [Modos de Ejecución HCS](./hcs-execution-modes.md)
 - [Especificaciones de Verificaciones HCS](./hcs-check-specifications.md)
-- [Historia HCS-2: Implementación](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Historia HCS-2: Implementación](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

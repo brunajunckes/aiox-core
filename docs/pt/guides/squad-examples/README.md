@@ -43,7 +43,7 @@ Cada exemplo inclui comentarios explicando:
 
 ## Criando o Seu Proprio
 
-1. Comece com o [Template de Squad](../../../templates/squad/)
+1. Comece com o [Template de Squad](../../../templates/squad/) *(coming soon)*
 2. Use estes exemplos como referencia para padroes
 3. Siga o [Guia de Squads](../squads-guide.md)
 
@@ -54,7 +54,7 @@ Tem um padrao de squad util? Aceitamos contribuicoes!
 1. Crie seu exemplo neste diretorio
 2. Adicione comentarios claros explicando o padrao
 3. Atualize este README com a descricao
-4. Envie um PR seguindo o [CONTRIBUTING.md](../../../CONTRIBUTING.md)
+4. Envie um PR seguindo o [CONTRIBUTING.md](../../../CONTRIBUTING.md) *(coming soon)*
 
 ---
 

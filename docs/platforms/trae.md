@@ -1,6 +1,6 @@
 # AIOS Guide for Trae
 
-> 🌐 **EN** | [PT](../pt/platforms/trae.md) | [ES](../es/platforms/trae.md) *(coming soon)*
+> 🌐 **EN** | [PT](../pt/platforms/trae.md) | [ES](../es/platforms/trae.md)
 
 ---
 

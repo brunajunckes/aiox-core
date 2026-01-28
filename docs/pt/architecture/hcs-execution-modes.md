@@ -2,7 +2,7 @@
 
 # Especificação de Modos de Execução do HCS
 
-> 🌐 [EN](../../architecture/hcs-execution-modes.md) *(coming soon)* | **PT** | [ES](../../es/architecture/hcs-execution-modes.md)
+> 🌐 [EN](../../architecture/hcs-execution-modes.md) | **PT** | [ES](../../es/architecture/hcs-execution-modes.md)
 
 ---
 
@@ -502,8 +502,8 @@ async function runAllChecks() {
 - [ADR: Arquitetura do HCS](./adr/adr-hcs-health-check-system.md)
 - [Especificação de Auto-Recuperação do HCS](./hcs-self-healing-spec.md)
 - [Especificações de Verificação do HCS](./hcs-check-specifications.md)
-- [Story HCS-1: Investigação](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md)
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Story HCS-1: Investigação](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md) *(coming soon)*
+- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 
