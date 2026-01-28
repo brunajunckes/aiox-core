@@ -48,7 +48,7 @@ Use the DevOps agent: `@devops` then `*setup-mcp-docker`
 |-------|---------|------|----------|
 | **[Module System Architecture](../architecture/module-system.md)** | v2.1 modular architecture (4 modules) | 15 min | Architects, Developers |
 | **[Service Discovery Guide](./service-discovery.md)** | Worker discovery and registry API | 10 min | Developers |
-| **[Migration Guide v2.0→v2.1](../migration/v2.0-to-v2.1.md)** | Step-by-step migration instructions | 20 min | All users upgrading |
+| **Migration Guide v2.0→v2.1** *(coming soon)* | Step-by-step migration instructions | 20 min | All users upgrading |
 
 ### System Configuration
 
@@ -73,7 +73,7 @@ Use the DevOps agent: `@devops` then `*setup-mcp-docker`
 → [`service-discovery.md`](./service-discovery.md) (10 min)
 
 **...migrate from v2.0 to v2.1**
-→ [`v2.0-to-v2.1.md`](../migration/v2.0-to-v2.1.md) (20 min)
+→ See migration guide (coming soon)
 
 **...configure quality gates**
 → [`quality-gates.md`](./quality-gates.md) (15 min)
@@ -108,7 +108,7 @@ Use the DevOps agent: `@devops` then `*setup-mcp-docker`
 | [Quality Gates Guide](./quality-gates.md) | ~600 | Complete |
 | [Quality Dashboard Guide](./quality-dashboard.md) | ~350 | Complete |
 | [Template Engine v2](./template-engine-v2.md) | ~400 | Complete |
-| [CodeRabbit Integration](./coderabbit/) | ~1000 | Complete |
+| CodeRabbit Integration *(coming soon)* | ~1000 | Planned |
 
 ---
 

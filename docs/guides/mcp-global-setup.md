@@ -4,7 +4,7 @@
 
 **Version:** 2.1.1
 **Last Updated:** 2025-12-23
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md)
+**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -643,7 +643,7 @@ Create `.mcp.json` in project root to override global settings:
 ## Related Documentation
 
 - [Module System Architecture](../architecture/module-system.md)
-- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md)
+- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md) *(coming soon)*
 - [MCP Architecture Diagrams](../architecture/mcp-system-diagrams.md)
 
 ---

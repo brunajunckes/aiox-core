@@ -136,4 +136,4 @@ For branch protection on `main`:
 
 - [GitHub Actions Billing](https://docs.github.com/en/billing/managing-billing-for-github-actions)
 - [Semantic Release](https://semantic-release.gitbook.io/)
-- [Story 6.1: GitHub Actions Optimization](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md)
+- [Story 6.1: GitHub Actions Optimization](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md) *(coming soon)*

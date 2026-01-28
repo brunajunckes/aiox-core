@@ -4,7 +4,7 @@
 
 **Version:** 2.1.0
 **Last Updated:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md)
+**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -591,7 +591,7 @@ verbose:
 
 - [Module System Architecture](../architecture/module-system.md)
 - [Service Discovery Guide](./service-discovery.md)
-- [Story 2.10: Quality Gate Manager](../stories/v2.1/sprint-2/story-2.10-quality-gate-manager.md)
+- [Story 2.10: Quality Gate Manager](../stories/v2.1/sprint-2/story-2.10-quality-gate-manager.md) *(coming soon)*
 
 ---
 

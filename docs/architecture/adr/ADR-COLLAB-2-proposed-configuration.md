@@ -510,7 +510,7 @@ git push
 
 - [ADR-COLLAB-1-current-state-audit.md](./ADR-COLLAB-1-current-state-audit.md)
 - [contribution-workflow-research.md](../contribution-workflow-research.md)
-- [Story COLLAB-2: Implementation](../../stories/v2.1/sprint-15/story-collab-2-implementation.md) (follow-up)
+- [Story COLLAB-2: Implementation](../../stories/v2.1/sprint-15/story-collab-2-implementation.md) *(coming soon)* (follow-up)
 
 ---
 
