@@ -10,7 +10,8 @@
 const inquirer = require('inquirer');
 const path = require('path');
 const fse = require('fs-extra');
-const { buildQuestionSequence } = require('./questions');
+const { getLanguageQuestion, getProjectTypeQuestion, getIDEQuestions } = require('./questions');
+const { setLanguage, t } = require('./i18n');
 const { showWelcome, showCompletion, showCancellation } = require('./feedback');
 const { generateIDEConfigs, showSuccessSummary } = require('./ide-config-generator');
 const { getIDEConfig } = require('../config/ide-configs');
@@ -95,11 +96,12 @@ function setupCancellationHandler() {
     cancellationRequested = true;
 
     console.log('\n');
+    const { t: translate } = require('./i18n');
     const { confirmCancel } = await inquirer.prompt([
       {
         type: 'confirm',
         name: 'confirmCancel',
-        message: 'Are you sure you want to cancel installation?',
+        message: translate('cancelConfirm'),
         default: false,
       },
     ]);
@@ -109,7 +111,7 @@ function setupCancellationHandler() {
       process.exit(0);
     } else {
       cancellationRequested = false;
-      console.log('Continuing installation...\n');
+      console.log(translate('continuing') + '\n');
       // Note: inquirer will resume automatically
     }
   };
@@ -136,18 +138,26 @@ async function runWizard() {
     // Show welcome message with AIOS branding
     showWelcome();
 
-    // Build question sequence
-    const questions = buildQuestionSequence();
+    // Phase 1: Language selection (must be first to apply i18n)
+    const languageAnswer = await inquirer.prompt([getLanguageQuestion()]);
+    setLanguage(languageAnswer.language);
+
+    // Phase 2: Build remaining questions with i18n applied
+    const remainingQuestions = [getProjectTypeQuestion(), ...getIDEQuestions()];
 
     // Performance tracking (AC: < 100ms per question)
     const startTime = Date.now();
 
-    // Run wizard with inquirer
-    const answers = await inquirer.prompt(questions);
+    // Run wizard with remaining questions
+    const remainingAnswers = await inquirer.prompt(remainingQuestions);
+
+    // Merge all answers
+    const answers = { ...languageAnswer, ...remainingAnswers };
 
     // Log performance metrics
     const duration = Date.now() - startTime;
-    const avgTimePerQuestion = questions.length > 0 ? duration / questions.length : 0;
+    const totalQuestions = remainingQuestions.length + 1; // +1 for language question
+    const avgTimePerQuestion = totalQuestions > 0 ? duration / totalQuestions : 0;
 
     if (avgTimePerQuestion > 100) {
       console.warn(

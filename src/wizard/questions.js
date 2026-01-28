@@ -19,7 +19,7 @@ function getLanguageQuestion() {
   return {
     type: 'list',
     name: 'language',
-    message: '🌐 Language / Idioma / Idioma:',
+    message: '🌐 Language:',
     choices: getLanguageChoices(),
     default: 'en',
   };
@@ -27,7 +27,7 @@ function getLanguageQuestion() {
 
 /**
  * Get project type question (Story 1.3)
- * This is a placeholder - full implementation in Story 1.3
+ * Uses i18n for translation
  *
  * @returns {Object} Inquirer question object
  */
@@ -35,14 +35,14 @@ function getProjectTypeQuestion() {
   return {
     type: 'list',
     name: 'projectType',
-    message: colors.primary('What type of project are you setting up?'),
+    message: colors.primary(t('projectTypeQuestion')),
     choices: [
       {
-        name: colors.highlight('Greenfield') + colors.dim(' (new project from scratch)'),
+        name: colors.highlight(t('greenfield')) + colors.dim(` (${t('greenfieldDesc')})`),
         value: 'greenfield',
       },
       {
-        name: 'Brownfield' + colors.dim(' (existing project integration)'),
+        name: t('brownfield') + colors.dim(` (${t('brownfieldDesc')})`),
         value: 'brownfield',
       },
     ],
