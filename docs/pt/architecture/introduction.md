@@ -2,7 +2,7 @@
 
 # Introdução
 
-> 🌐 [EN](../../architecture/introduction.md) *(coming soon)* | **PT** | [ES](../../es/architecture/introduction.md)
+> 🌐 [EN](../../architecture/introduction.md) | **PT** | [ES](../../es/architecture/introduction.md)
 
 ---
 

@@ -751,7 +751,7 @@ Salve o JSON acima como `synkra-squads-api.postman_collection.json` e importe no
 
 - [Guia de Desenvolvimento de Squads](../guides/squads-guide.md)
 - [Contribuindo com Squads](../guides/contributing-squads.md)
-- [Agente @squad-creator](../../.aios-core/development/agents/squad-creator.md)
+- [Agente @squad-creator](../../.aios-core/development/agents/squad-creator.md) *(coming soon)*
 
 ---
 

@@ -2,7 +2,7 @@
 
 # Especificações de Verificação do HCS
 
-> 🌐 [EN](../../architecture/hcs-check-specifications.md) *(coming soon)* | **PT** | [ES](../../es/architecture/hcs-check-specifications.md)
+> 🌐 [EN](../../architecture/hcs-check-specifications.md) | **PT** | [ES](../../es/architecture/hcs-check-specifications.md)
 
 ---
 
@@ -893,7 +893,7 @@ async function runCheckWithTimeout(check, context) {
 - [ADR: Arquitetura do HCS](./adr/adr-hcs-health-check-system.md)
 - [Modos de Execução do HCS](./hcs-execution-modes.md)
 - [Especificação de Auto-Recuperação do HCS](./hcs-self-healing-spec.md)
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
+- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

@@ -28,7 +28,7 @@ For larger features that require design decisions:
 
 ### RFC Lifecycle
 
-1. **Draft**: Author writes RFC using our [RFC Template](/.github/RFC_TEMPLATE.md)
+1. **Draft**: Author writes RFC using our [RFC Template](/.github/RFC_TEMPLATE.md) *(coming soon)*
 2. **Under Review**: 2-week comment period
 3. **Decision**: Maintainers accept/reject
 4. **Implementation**: If accepted, implementation begins
@@ -89,4 +89,4 @@ Ask in GitHub Discussions or Discord.
 
 ---
 
-*See also: [Community Handbook](/COMMUNITY.md) | [Contributing Guide](/CONTRIBUTING.md)*
+*See also: [Community Handbook](/COMMUNITY.md) *(coming soon)* | [Contributing Guide](/CONTRIBUTING.md) *(coming soon)**

@@ -938,10 +938,10 @@ strategy:
 
 ## Referencias
 
-- **Story:** [2.2-git-workflow-implementation.yaml](../docs/stories/2.2-git-workflow-implementation.yaml)
-- **AIOS Validator:** [.aios-core/utils/aios-validator.js](../.aios-core/utils/aios-validator.js)
-- **CI Workflow:** [.github/workflows/ci.yml](../.github/workflows/ci.yml)
-- **Branch Protection Script:** [scripts/setup-branch-protection.js](../scripts/setup-branch-protection.js)
+- **Story:** [2.2-git-workflow-implementation.yaml](../docs/stories/2.2-git-workflow-implementation.yaml) *(coming soon)*
+- **AIOS Validator:** [.aios-core/utils/aios-validator.js](../.aios-core/utils/aios-validator.js) *(coming soon)*
+- **CI Workflow:** [.github/workflows/ci.yml](../.github/workflows/ci.yml) *(coming soon)*
+- **Branch Protection Script:** [scripts/setup-branch-protection.js](../scripts/setup-branch-protection.js) *(coming soon)*
 
 ---
 

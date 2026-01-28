@@ -2,7 +2,7 @@
 
 # Documento de Arquitetura Fullstack da Camada de Memória do AIOS (MVP - Completo)
 
-> 🌐 [EN](../../architecture/memory-layer.md) *(coming soon)* | **PT** | [ES](../../es/architecture/memory-layer.md)
+> 🌐 [EN](../../architecture/memory-layer.md) | **PT** | [ES](../../es/architecture/memory-layer.md)
 
 ---
 

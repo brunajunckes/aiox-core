@@ -166,7 +166,7 @@ O atualizador irá:
 
 1. Configure sua IDE (veja configuração específica por IDE acima)
 2. Execute `*help` no seu agente de IA para ver os comandos disponíveis
-3. Comece com o [Guia do Usuário](../../aios-core/user-guide.md)
+3. Comece com o [Guia do Usuário](../../aios-core/user-guide.md) *(coming soon)*
 4. Junte-se à nossa [Comunidade Discord](https://discord.gg/gk8jAdXWmj) para obter ajuda
 
 ## Requisitos de Sistema
@@ -179,6 +179,6 @@ O atualizador irá:
 ## Recursos Adicionais
 
 - [README Principal](../../README.md)
-- [Guia do Usuário](../../aios-core/user-guide.md)
-- [Guia de Solução de Problemas](../../docs/troubleshooting.md)
+- [Guia do Usuário](../../aios-core/user-guide.md) *(coming soon)*
+- [Guia de Solução de Problemas](../../docs/troubleshooting.md) *(coming soon)*
 - [Comunidade Discord](https://discord.gg/gk8jAdXWmj)

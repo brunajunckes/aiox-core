@@ -1,6 +1,6 @@
 # AIOS Guide for Roo Code
 
-> 🌐 **EN** | [PT](../pt/platforms/roo-code.md) | [ES](../es/platforms/roo-code.md) *(coming soon)*
+> 🌐 **EN** | [PT](../pt/platforms/roo-code.md) | [ES](../es/platforms/roo-code.md)
 
 ---
 

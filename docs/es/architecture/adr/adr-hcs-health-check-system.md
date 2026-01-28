@@ -361,10 +361,10 @@ tools/
 
 ### Referencias Internas
 
-- [Story 3.11: Quality Gates Dashboard](../stories/v2.1/sprint-3/story-3.11-quality-gates-dashboard.md)
-- [Story HCS-1: Investigacion](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md)
-- [Story HCS-2: Implementacion](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md)
-- [Estandares de Codigo](../framework/coding-standards.md)
+- [Story 3.11: Quality Gates Dashboard](../stories/v2.1/sprint-3/story-3.11-quality-gates-dashboard.md) *(coming soon)*
+- [Story HCS-1: Investigacion](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md) *(coming soon)*
+- [Story HCS-2: Implementacion](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
+- [Estandares de Codigo](../framework/coding-standards.md) *(coming soon)*
 
 ---
 

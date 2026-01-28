@@ -142,4 +142,4 @@ Para protección de rama en `main`:
 
 - [Facturación de GitHub Actions](https://docs.github.com/en/billing/managing-billing-for-github-actions)
 - [Semantic Release](https://semantic-release.gitbook.io/)
-- [Historia 6.1: Optimización de GitHub Actions](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md)
+- [Historia 6.1: Optimización de GitHub Actions](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md) *(coming soon)*

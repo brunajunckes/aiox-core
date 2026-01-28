@@ -1,6 +1,6 @@
 # AIOS Architecture Documentation Index
 
-> 🌐 [EN](../../architecture/ARCHITECTURE-INDEX.md) *(coming soon)* | **PT** | [ES](../../es/architecture/ARCHITECTURE-INDEX.md)
+> 🌐 [EN](../../architecture/ARCHITECTURE-INDEX.md) | **PT** | [ES](../../es/architecture/ARCHITECTURE-INDEX.md)
 
 ---
 

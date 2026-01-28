@@ -348,7 +348,7 @@ Fixes #
 
 ---
 
-_By submitting this PR, I confirm I have read the [Contribution Guidelines](../../CONTRIBUTING.md)_
+_By submitting this PR, I confirm I have read the [Contribution Guidelines](../../CONTRIBUTING.md) *(coming soon)*_
 ```
 
 **File:** `.github/PULL_REQUEST_TEMPLATE/task_contribution.md`
@@ -393,7 +393,7 @@ Fixes #
 
 ---
 
-_By submitting this PR, I confirm I have read the [Contribution Guidelines](../../CONTRIBUTING.md)_
+_By submitting this PR, I confirm I have read the [Contribution Guidelines](../../CONTRIBUTING.md) *(coming soon)*_
 ```
 
 ---

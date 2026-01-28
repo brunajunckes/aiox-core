@@ -14,7 +14,7 @@
 
 **Versão:** 2.1.1
 **Última Atualização:** 2025-12-23
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md)
+**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -653,7 +653,7 @@ Crie `.mcp.json` na raiz do projeto para sobrescrever configurações globais:
 ## Documentação Relacionada
 
 - [Arquitetura do Sistema de Módulos](../architecture/module-system.md)
-- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md)
+- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md) *(coming soon)*
 - [Diagramas de Arquitetura MCP](../architecture/mcp-system-diagrams.md)
 
 ---

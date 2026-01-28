@@ -2,7 +2,7 @@
 
 # Arquitetura de CI/CD
 
-> 🌐 [EN](../../architecture/ci-cd.md) *(coming soon)* | **PT** | [ES](../../es/architecture/ci-cd.md)
+> 🌐 [EN](../../architecture/ci-cd.md) | **PT** | [ES](../../es/architecture/ci-cd.md)
 
 ---
 
@@ -142,4 +142,4 @@ Para proteção de branch na `main`:
 
 - [Faturamento do GitHub Actions](https://docs.github.com/en/billing/managing-billing-for-github-actions)
 - [Semantic Release](https://semantic-release.gitbook.io/)
-- [Story 6.1: Otimização do GitHub Actions](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md)
+- [Story 6.1: Otimização do GitHub Actions](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md) *(coming soon)*

@@ -47,9 +47,9 @@ This repository hosts the **central community hub** for all AIOS projects.
 
 We welcome contributions! Check out our:
 
-- 📖 [Contributing Guide](CONTRIBUTING.md)
-- 📜 [Code of Conduct](CODE_OF_CONDUCT.md)
-- 🏗️ [Coding Standards](docs/architecture/coding-standards.md)
+- 📖 [Contributing Guide](CONTRIBUTING.md) *(coming soon)*
+- 📜 [Code of Conduct](CODE_OF_CONDUCT.md) *(coming soon)*
+- 🏗️ [Coding Standards](docs/architecture/coding-standards.md) *(coming soon)*
 - 🏷️ [Good First Issues](https://github.com/SynkraAI/aios-core/labels/good-first-issue)
 
 ---

@@ -1,6 +1,6 @@
 # AIOS Guide for Windsurf
 
-> 🌐 **EN** | [PT](../pt/platforms/windsurf.md) | [ES](../es/platforms/windsurf.md) *(coming soon)*
+> 🌐 **EN** | [PT](../pt/platforms/windsurf.md) | [ES](../es/platforms/windsurf.md)
 
 ---
 

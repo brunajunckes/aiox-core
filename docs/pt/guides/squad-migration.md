@@ -335,7 +335,7 @@ console.log(result);
 
 - [Guia de Desenvolvimento de Squad](./squads-guide.md)
 - [Guia de Contribuição de Squads](./contributing-squads.md)
-- [Agente @squad-creator](../../.aios-core/development/agents/squad-creator.md)
+- [Agente @squad-creator](../../.aios-core/development/agents/squad-creator.md) *(coming soon)*
 
 ---
 

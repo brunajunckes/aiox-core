@@ -1,6 +1,6 @@
 # AIOS Guide for Cline
 
-> 🌐 **EN** | [PT](../pt/platforms/cline.md) | [ES](../es/platforms/cline.md) *(coming soon)*
+> 🌐 **EN** | [PT](../pt/platforms/cline.md) | [ES](../es/platforms/cline.md)
 
 ---
 

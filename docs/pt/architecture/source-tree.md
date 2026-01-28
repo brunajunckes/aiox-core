@@ -2,7 +2,7 @@
 
 # Estrutura da Árvore de Código AIOS
 
-> 🌐 [EN](../../architecture/source-tree.md) *(coming soon)* | **PT** | [ES](../../es/architecture/source-tree.md)
+> 🌐 [EN](../../architecture/source-tree.md) | **PT** | [ES](../../es/architecture/source-tree.md)
 
 ---
 
@@ -695,8 +695,8 @@ outputs/                               # Saídas em runtime (gitignored)
 
 - [Padrões de Codificação](./coding-standards.md)
 - [Tech Stack](./tech-stack.md)
-- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md)
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md)
+- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
+- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 

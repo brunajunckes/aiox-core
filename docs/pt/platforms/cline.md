@@ -459,7 +459,7 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 
 - [GitHub do Cline](https://github.com/cline/cline)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
-- [Guia de Plataformas AIOS](../README.md)
+- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
 
 ---
 

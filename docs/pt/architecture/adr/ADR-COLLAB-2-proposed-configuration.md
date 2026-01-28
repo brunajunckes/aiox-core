@@ -346,7 +346,7 @@ Fixes #
 
 ---
 
-_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md)_
+_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md) *(coming soon)*_
 ```
 
 **Arquivo:** `.github/PULL_REQUEST_TEMPLATE/task_contribution.md`
@@ -391,7 +391,7 @@ Fixes #
 
 ---
 
-_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md)_
+_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md) *(coming soon)*_
 ```
 
 ---
@@ -512,7 +512,7 @@ git push
 
 - [ADR-COLLAB-1-current-state-audit.md](./ADR-COLLAB-1-current-state-audit.md)
 - [contribution-workflow-research.md](../contribution-workflow-research.md)
-- [Story COLLAB-2: Implementação](../../stories/v2.1/sprint-15/story-collab-2-implementation.md) (follow-up)
+- [Story COLLAB-2: Implementação](../../stories/v2.1/sprint-15/story-collab-2-implementation.md) *(coming soon)* (follow-up)
 
 ---
 

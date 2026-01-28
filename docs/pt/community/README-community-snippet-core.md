@@ -47,9 +47,9 @@ Este repositório hospeda o **hub central da comunidade** para todos os projetos
 
 Contribuições são bem-vindas! Confira:
 
-- [Guia de Contribuição](CONTRIBUTING.md)
-- [Código de Conduta](CODE_OF_CONDUCT.md)
-- [Padrões de Código](docs/architecture/coding-standards.md)
+- [Guia de Contribuição](CONTRIBUTING.md) *(coming soon)*
+- [Código de Conduta](CODE_OF_CONDUCT.md) *(coming soon)*
+- [Padrões de Código](docs/architecture/coding-standards.md) *(coming soon)*
 - [Good First Issues](https://github.com/SynkraAI/aios-core/labels/good-first-issue)
 
 ---

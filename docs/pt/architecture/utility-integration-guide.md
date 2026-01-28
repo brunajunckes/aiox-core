@@ -2,7 +2,7 @@
 
 # Guia de Integração de Utilitários
 
-> 🌐 [EN](../../architecture/utility-integration-guide.md) *(coming soon)* | **PT** | [ES](../../es/architecture/utility-integration-guide.md)
+> 🌐 [EN](../../architecture/utility-integration-guide.md) | **PT** | [ES](../../es/architecture/utility-integration-guide.md)
 
 ---
 

@@ -517,8 +517,8 @@ Todos os agentes aplicam:
 
 ## Documentação Relacionada
 
-- [Diagrama de Workflow](../.claude/commands/hybridOps/docs/workflow-diagram.md) - Representação visual do workflow de 9 fases
-- [Workflow YAML](../.claude/commands/hybridOps/workflows/hybrid-ops-pv.yaml) - Configuração de orquestração de workflow
+- [Diagrama de Workflow](../.claude/commands/hybridOps/docs/workflow-diagram.md) *(coming soon)* - Representação visual do workflow de 9 fases
+- [Workflow YAML](../.claude/commands/hybridOps/workflows/hybrid-ops-pv.yaml) *(coming soon)* - Configuração de orquestração de workflow
 
 ---
 

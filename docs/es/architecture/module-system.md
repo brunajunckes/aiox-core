@@ -10,7 +10,7 @@
 
 **Versión:** 2.1.0
 **Última Actualización:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md)
+**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -365,7 +365,7 @@ aios migrate --from=2.0 --to=2.1
 aios migrate --validate
 ```
 
-Ver [Guía de Migración](../migration/v2.0-to-v2.1.md) para instrucciones detalladas.
+Ver [Guía de Migración](../migration/v2.0-to-v2.1.md) *(coming soon)* para instrucciones detalladas.
 
 ---
 
@@ -374,8 +374,8 @@ Ver [Guía de Migración](../migration/v2.0-to-v2.1.md) para instrucciones detal
 - [Guía de Service Discovery](../guides/service-discovery.md)
 - [Guía de Quality Gates](../guides/quality-gates.md)
 - [Guía de Setup Global MCP](../guides/mcp-global-setup.md)
-- [Guía de Migración](../migration/v2.0-to-v2.1.md)
-- [ADR-002: Arquitectura Modular](decisions/ADR-002-migration-map.md)
+- [Guía de Migración](../migration/v2.0-to-v2.1.md) *(coming soon)*
+- [ADR-002: Arquitectura Modular](decisions/ADR-002-migration-map.md) *(coming soon)*
 
 ---
 
