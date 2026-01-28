@@ -1,5 +1,9 @@
 # ADR-COLLAB-1: Current State Audit - Branch Protection & Contributor Workflow
 
+> **EN** | [PT](../../pt/architecture/adr/ADR-COLLAB-1-current-state-audit.md) | [ES](../../es/architecture/adr/ADR-COLLAB-1-current-state-audit.md)
+
+---
+
 **Story:** COLLAB-1
 **Date:** 2025-12-30
 **Status:** Accepted

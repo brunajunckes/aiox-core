@@ -1,5 +1,9 @@
 # HCS Check Specifications
 
+> **EN** | [PT](../pt/architecture/hcs-check-specifications.md) | [ES](../es/architecture/hcs-check-specifications.md)
+
+---
+
 **Version:** 1.0
 **Status:** Proposed
 **Created:** 2025-12-30

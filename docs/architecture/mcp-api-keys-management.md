@@ -1,5 +1,9 @@
 # MCP API Keys Management
 
+> **EN** | [PT](../pt/architecture/mcp-api-keys-management.md) | [ES](../es/architecture/mcp-api-keys-management.md)
+
+---
+
 **Version:** 1.0.0
 **Last Updated:** 2026-01-26
 **Status:** Official Reference

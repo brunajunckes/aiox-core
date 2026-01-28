@@ -1,5 +1,9 @@
 # AIOS High-Level Architecture v2.1
 
+> **EN** | [PT](../pt/architecture/high-level-architecture.md) | [ES](../es/architecture/high-level-architecture.md)
+
+---
+
 **Version:** 2.1.0
 **Last Updated:** 2025-12-09
 **Status:** Official Architecture Document

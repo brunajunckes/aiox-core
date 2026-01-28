@@ -1,5 +1,9 @@
 # ADR: isolated-vm macOS Compatibility
 
+> **EN** | [PT](../../pt/architecture/adr/adr-isolated-vm-decision.md) | [ES](../../es/architecture/adr/adr-isolated-vm-decision.md)
+
+---
+
 **Status:** Accepted
 **Date:** 2026-01-04
 **Story:** TD-6 - CI Stability & Test Coverage Improvements

@@ -1,5 +1,9 @@
 # External Contribution Workflow Research
 
+> **EN** | [PT](../pt/architecture/contribution-workflow-research.md) | [ES](../es/architecture/contribution-workflow-research.md)
+
+---
+
 **Story:** COLLAB-1
 **Date:** 2025-12-30
 **Author:** @dev (Dex) + @devops (Gage)

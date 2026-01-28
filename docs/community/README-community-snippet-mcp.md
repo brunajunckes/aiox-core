@@ -1,5 +1,7 @@
 # README Community Section - mcp-ecosystem
 
+> 🌐 **EN** | [PT](../pt/community/README-community-snippet-mcp.md) | [ES](../es/community/README-community-snippet-mcp.md)
+
 > **Purpose:** Copy this snippet into the README.md of `SynkraAI/mcp-ecosystem` repository.
 
 ---

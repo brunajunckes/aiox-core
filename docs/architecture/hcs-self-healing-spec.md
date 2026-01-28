@@ -1,5 +1,9 @@
 # HCS Self-Healing Specification
 
+> **EN** | [PT](../pt/architecture/hcs-self-healing-spec.md) | [ES](../es/architecture/hcs-self-healing-spec.md)
+
+---
+
 **Version:** 1.0
 **Status:** Proposed
 **Created:** 2025-12-30

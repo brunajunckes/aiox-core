@@ -1,5 +1,9 @@
 # Template Engine v2.0
 
+> **EN** | [PT](../pt/guides/template-engine-v2.md) | [ES](../es/guides/template-engine-v2.md)
+
+---
+
 > Document generation and variable substitution engine for Synkra AIOS.
 
 **Version:** 2.0

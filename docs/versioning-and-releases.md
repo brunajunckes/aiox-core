@@ -1,5 +1,9 @@
 # How to Release a New Version
 
+> 🌐 **EN** | [PT](./pt/versioning-and-releases.md) | [ES](./es/versioning-and-releases.md)
+
+---
+
 ## Automated Releases (Recommended)
 
 The easiest way to release new versions is through **automatic semantic releases**. Just commit with the right message format and push and everything else happens automatically.

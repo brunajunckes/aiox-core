@@ -1,5 +1,9 @@
 # Agent Responsibility Matrix - Epic 3 Strategic Enhancements
 
+> **EN** | [PT](../pt/architecture/agent-responsibility-matrix.md) | [ES](../es/architecture/agent-responsibility-matrix.md)
+
+---
+
 **Document Version**: 1.0
 **Last Updated**: 2025-10-25
 **Author**: Winston (@architect) + Sarah (@po)

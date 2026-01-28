@@ -1,6 +1,10 @@
 # Utility Integration Guide
 
-**Version:** 1.0.0  
+> **EN** | [PT](../pt/architecture/utility-integration-guide.md) | [ES](../es/architecture/utility-integration-guide.md)
+
+---
+
+**Version:** 1.0.0
 **Created:** 2025-10-29  
 **Authors:** Sarah (@po), Winston (@architect)  
 **Purpose:** Define standard patterns for integrating utility scripts into AIOS framework

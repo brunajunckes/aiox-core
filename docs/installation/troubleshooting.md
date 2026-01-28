@@ -1,5 +1,7 @@
 # Synkra AIOS Troubleshooting Guide
 
+> 🌐 **EN** | [PT](../pt/installation/troubleshooting.md) | [ES](../es/installation/troubleshooting.md)
+
 **Version:** 2.1.0
 **Last Updated:** 2025-01-24
 

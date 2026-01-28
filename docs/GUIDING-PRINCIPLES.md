@@ -1,5 +1,9 @@
 # AIOS Method Guiding Principles
 
+> 🌐 **EN** | [PT](./pt/GUIDING-PRINCIPLES.md) | [ES](./es/GUIDING-PRINCIPLES.md)
+
+---
+
 The AIOS Method is a natural language framework for AI-assisted software development. These principles ensure contributions maintain the method's effectiveness.
 
 ## Core Principles

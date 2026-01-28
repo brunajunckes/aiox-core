@@ -1,5 +1,9 @@
 # AIOS Architecture Documentation Index
 
+> **EN** | [PT](../pt/architecture/ARCHITECTURE-INDEX.md) | [ES](../es/architecture/ARCHITECTURE-INDEX.md)
+
+---
+
 **Version:** 2.1.1
 **Last Updated:** 2026-01-26
 **Status:** Official Reference

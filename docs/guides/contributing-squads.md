@@ -1,5 +1,9 @@
 # Contributing Squads Guide
 
+> **EN** | [PT](../pt/guides/contributing-squads.md) | [ES](../es/guides/contributing-squads.md)
+
+---
+
 How to contribute squads to the AIOS ecosystem.
 
 ## Overview

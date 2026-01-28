@@ -1,5 +1,9 @@
 # AIOS Guide for AntiGravity
 
+> 🌐 **EN** | [PT](../pt/platforms/antigravity.md) | [ES](../es/platforms/antigravity.md) *(coming soon)*
+
+---
+
 > **Google's Agentic Development Platform** - Workflow-Based Architecture
 
 ---

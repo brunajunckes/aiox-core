@@ -1,5 +1,7 @@
 # @docs Agent (Ajax) - Technical Specification
 
+> 🌐 **EN** | [PT](../pt/specifications/docs-agent-technical-specification.md) | [ES](../es/specifications/docs-agent-technical-specification.md)
+
 **Agent ID:** @docs
 **Agent Name:** Ajax
 **Archetype:** Content Strategist (Aries - Creator)

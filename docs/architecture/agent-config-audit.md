@@ -1,5 +1,9 @@
 # Agent Config Usage Audit
 
+> **EN** | [PT](../pt/architecture/agent-config-audit.md) | [ES](../es/architecture/agent-config-audit.md)
+
+---
+
 **Generated:** 2025-11-16T13:49:03.668Z
 **Total Agents:** 8
 

@@ -1,5 +1,9 @@
 # AIOS Guide for Claude Code
 
+> 🌐 **EN** | [PT](../pt/platforms/claude-code.md) | [ES](../es/platforms/claude-code.md) *(coming soon)*
+
+---
+
 > **Anthropic's Official CLI** - Recommended Platform for AIOS
 
 ---

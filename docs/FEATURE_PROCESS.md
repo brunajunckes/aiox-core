@@ -1,5 +1,9 @@
 # Feature Request Process
 
+> 🌐 **EN** | [PT](./pt/FEATURE_PROCESS.md) | [ES](./es/FEATURE_PROCESS.md)
+
+---
+
 This document explains how to propose new features for AIOS.
 
 ## Quick Ideas

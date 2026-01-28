@@ -8,6 +8,10 @@
 
 # AIOS Source Tree Structure
 
+> **EN** | [PT](../pt/architecture/source-tree.md) | [ES](../es/architecture/source-tree.md)
+
+---
+
 **Version:** 1.1
 **Last Updated:** 2025-12-14
 **Status:** DEPRECATED - See docs/framework/source-tree.md

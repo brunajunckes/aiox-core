@@ -1,5 +1,9 @@
 # AIOS Nomenclature Specification
 
+> 🌐 **EN** | [PT](./pt/aios-nomenclature-specification.md) | [ES](./es/aios-nomenclature-specification.md)
+
+---
+
 **Version:** 1.0.0  
 **Status:** Draft  
 **Created:** 2025-01-17  

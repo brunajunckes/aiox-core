@@ -8,6 +8,10 @@
 
 # AIOS Coding Standards
 
+> **EN** | [PT](../pt/architecture/coding-standards.md) | [ES](../es/architecture/coding-standards.md)
+
+---
+
 **Version:** 1.1
 **Last Updated:** 2025-12-14
 **Status:** DEPRECATED - See docs/framework/coding-standards.md

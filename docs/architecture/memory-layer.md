@@ -1,5 +1,9 @@
 # AIOS Memory Layer Fullstack Architecture Document (MVP - Complete)
 
+> **EN** | [PT](../pt/architecture/memory-layer.md) | [ES](../es/architecture/memory-layer.md)
+
+---
+
 ## Introduction
 
 This document represents the completed architecture for the AIOS Memory Layer MVP, a fully functional memory management system built on LlamaIndex with local vector storage. The MVP has been successfully implemented and tested, demonstrating all core memory functionality with production-ready quality.

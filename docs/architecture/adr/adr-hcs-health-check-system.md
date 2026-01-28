@@ -1,5 +1,9 @@
 # ADR: Health Check System Architecture
 
+> **EN** | [PT](../../pt/architecture/adr/adr-hcs-health-check-system.md) | [ES](../../es/architecture/adr/adr-hcs-health-check-system.md)
+
+---
+
 **ADR ID:** ADR-HCS-001
 **Status:** Proposed
 **Created:** 2025-12-30

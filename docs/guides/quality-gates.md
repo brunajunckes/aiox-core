@@ -1,5 +1,9 @@
 # AIOS Quality Gate System Guide
 
+> **EN** | [PT](../pt/guides/quality-gates.md) | [ES](../es/guides/quality-gates.md)
+
+---
+
 > Comprehensive guide to the 3-layer quality gate system for Synkra AIOS.
 
 **Version:** 2.1.0

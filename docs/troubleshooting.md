@@ -1,5 +1,9 @@
 # Synkra AIOS Troubleshooting Guide
 
+> 🌐 **EN** | [PT](./pt/troubleshooting.md) | [ES](./es/troubleshooting.md)
+
+---
+
 This comprehensive guide helps you diagnose and resolve common issues with Synkra AIOS.
 
 ## Table of Contents

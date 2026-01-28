@@ -1,5 +1,9 @@
 # Environment Variables
 
+> 🌐 **EN** | [PT](./pt/ENVIRONMENT.md) | [ES](./es/ENVIRONMENT.md)
+
+---
+
 This document lists all environment variables used by Synkra AIOS and its components.
 
 ## Overview
