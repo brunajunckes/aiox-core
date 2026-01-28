@@ -14,7 +14,6 @@
 
 **Versão:** 2.1.1
 **Última Atualização:** 2025-12-23
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -24,12 +23,12 @@ O Sistema Global MCP permite que você configure servidores MCP uma única vez e
 
 ### Benefícios
 
-| Benefício | Descrição |
-|-----------|-----------|
-| **Configuração Única** | Configure servidores uma vez, use em todos os lugares |
-| **Configurações Consistentes** | Mesmas configurações de servidor em todos os projetos |
-| **Gerenciamento de Credenciais** | Armazenamento seguro e centralizado de credenciais |
-| **Atualizações Fáceis** | Atualize versões de servidores em um único lugar |
+| Benefício                        | Descrição                                             |
+| -------------------------------- | ----------------------------------------------------- |
+| **Configuração Única**           | Configure servidores uma vez, use em todos os lugares |
+| **Configurações Consistentes**   | Mesmas configurações de servidor em todos os projetos |
+| **Gerenciamento de Credenciais** | Armazenamento seguro e centralizado de credenciais    |
+| **Atualizações Fáceis**          | Atualize versões de servidores em um único lugar      |
 
 ### Estrutura de Diretórios Global
 
@@ -86,6 +85,7 @@ aios mcp setup
 ```
 
 **Isso cria:**
+
 - `~/.aios/` - Diretório global do AIOS
 - `~/.aios/mcp/` - Diretório de configuração MCP
 - `~/.aios/mcp/global-config.json` - Arquivo de configuração principal
@@ -101,6 +101,7 @@ aios mcp status
 ```
 
 **Saída Esperada:**
+
 ```
 MCP Global Configuration
 ========================
@@ -135,15 +136,15 @@ aios mcp add desktop-commander
 
 ### Templates Disponíveis
 
-| Template | Tipo | Descrição |
-|----------|------|-----------|
-| `context7` | SSE | Consultas de documentação de bibliotecas |
-| `exa` | Command | Busca web avançada |
-| `github` | Command | Integração com API do GitHub |
-| `puppeteer` | Command | Automação de navegador |
-| `filesystem` | Command | Acesso ao sistema de arquivos |
-| `memory` | Command | Armazenamento temporário em memória |
-| `desktop-commander` | Command | Automação de desktop |
+| Template            | Tipo    | Descrição                                |
+| ------------------- | ------- | ---------------------------------------- |
+| `context7`          | SSE     | Consultas de documentação de bibliotecas |
+| `exa`               | Command | Busca web avançada                       |
+| `github`            | Command | Integração com API do GitHub             |
+| `puppeteer`         | Command | Automação de navegador                   |
+| `filesystem`        | Command | Acesso ao sistema de arquivos            |
+| `memory`            | Command | Armazenamento temporário em memória      |
+| `desktop-commander` | Command | Automação de desktop                     |
 
 ### Configuração Personalizada de Servidor
 
@@ -217,6 +218,7 @@ aios mcp list --enabled
 ```
 
 **Saída:**
+
 ```
 Configured MCP Servers
 ======================
@@ -359,12 +361,7 @@ Para Windows, use o wrapper CMD para NPX:
 ```json
 {
   "command": "cmd",
-  "args": [
-    "/c",
-    "npx-wrapper.cmd",
-    "-y",
-    "@package/mcp-server"
-  ],
+  "args": ["/c", "npx-wrapper.cmd", "-y", "@package/mcp-server"],
   "env": {
     "API_KEY": "${API_KEY}"
   },
@@ -392,18 +389,21 @@ Referencie variáveis de ambiente usando a sintaxe `${VAR_NAME}`:
 ### Definindo Variáveis
 
 **Windows (PowerShell):**
+
 ```powershell
 $env:EXA_API_KEY = "your-api-key"
 $env:GITHUB_TOKEN = "your-github-token"
 ```
 
 **Windows (CMD):**
+
 ```cmd
 set EXA_API_KEY=your-api-key
 set GITHUB_TOKEN=your-github-token
 ```
 
 **macOS/Linux:**
+
 ```bash
 export EXA_API_KEY="your-api-key"
 export GITHUB_TOKEN="your-github-token"
@@ -414,6 +414,7 @@ export GITHUB_TOKEN="your-github-token"
 **Windows:** Adicione às Variáveis de Ambiente do Sistema
 
 **macOS/Linux:** Adicione ao `~/.bashrc`, `~/.zshrc`, ou `~/.profile`:
+
 ```bash
 export EXA_API_KEY="your-api-key"
 export GITHUB_TOKEN="your-github-token"
@@ -462,7 +463,7 @@ const {
   readGlobalConfig,
   addServer,
   removeServer,
-  listServers
+  listServers,
 } = require('./.aios-core/core/mcp/global-config-manager');
 
 // Check if setup exists
@@ -474,7 +475,7 @@ if (!globalDirExists()) {
 addServer('my-server', {
   command: 'npx',
   args: ['-y', 'my-mcp-server'],
-  enabled: true
+  enabled: true,
 });
 
 // List servers
@@ -494,14 +495,14 @@ const {
   isMacOS,
   isLinux,
   getGlobalMcpDir,
-  getGlobalConfigPath
+  getGlobalConfigPath,
 } = require('./.aios-core/core/mcp/os-detector');
 
 // Get OS type
 console.log(detectOS()); // 'windows' | 'macos' | 'linux'
 
 // Get paths
-console.log(getGlobalMcpDir());     // ~/.aios/mcp/
+console.log(getGlobalMcpDir()); // ~/.aios/mcp/
 console.log(getGlobalConfigPath()); // ~/.aios/mcp/global-config.json
 ```
 
@@ -511,28 +512,28 @@ console.log(getGlobalConfigPath()); // ~/.aios/mcp/global-config.json
 
 ### Problemas de Configuração
 
-| Problema | Solução |
-|----------|---------|
-| Permissão negada | Execute o terminal como Administrador (Windows) ou use sudo (macOS/Linux) |
-| Diretório já existe | Use `aios mcp setup --force` para recriar |
-| Caminho não encontrado | Certifique-se de que o diretório home existe |
+| Problema               | Solução                                                                   |
+| ---------------------- | ------------------------------------------------------------------------- |
+| Permissão negada       | Execute o terminal como Administrador (Windows) ou use sudo (macOS/Linux) |
+| Diretório já existe    | Use `aios mcp setup --force` para recriar                                 |
+| Caminho não encontrado | Certifique-se de que o diretório home existe                              |
 
 ### Problemas de Servidor
 
-| Problema | Solução |
-|----------|---------|
-| Servidor não inicia | Verifique comando e args, confirme que o pacote está instalado |
-| Variável de ambiente não encontrada | Defina a variável ou use armazenamento de credenciais |
-| Erros de timeout | Aumente o timeout na configuração |
-| Conexão recusada | Verifique URL e acesso à rede |
+| Problema                            | Solução                                                        |
+| ----------------------------------- | -------------------------------------------------------------- |
+| Servidor não inicia                 | Verifique comando e args, confirme que o pacote está instalado |
+| Variável de ambiente não encontrada | Defina a variável ou use armazenamento de credenciais          |
+| Erros de timeout                    | Aumente o timeout na configuração                              |
+| Conexão recusada                    | Verifique URL e acesso à rede                                  |
 
 ### Problemas Específicos do Windows
 
-| Problema | Solução |
-|----------|---------|
-| NPX não encontrado | Adicione Node.js ao PATH, use wrapper CMD |
-| Erros de symlink | Habilite Modo Desenvolvedor ou use junctions |
-| Caminho muito longo | Habilite caminhos longos no registro |
+| Problema            | Solução                                      |
+| ------------------- | -------------------------------------------- |
+| NPX não encontrado  | Adicione Node.js ao PATH, use wrapper CMD    |
+| Erros de symlink    | Habilite Modo Desenvolvedor ou use junctions |
+| Caminho muito longo | Habilite caminhos longos no registro         |
 
 ### Correções Comuns
 
@@ -552,17 +553,18 @@ npx -y @modelcontextprotocol/server-github
 
 ### Problemas do Docker MCP Toolkit
 
-| Problema | Solução |
-|----------|---------|
+| Problema                             | Solução                                               |
+| ------------------------------------ | ----------------------------------------------------- |
 | Secrets não passados para containers | Edite o arquivo de catálogo diretamente (veja abaixo) |
-| Interpolação de template falhando | Use valores hardcoded no catálogo |
-| Tools mostrando como "(N prompts)" | Token não está sendo passado - aplique o workaround |
+| Interpolação de template falhando    | Use valores hardcoded no catálogo                     |
+| Tools mostrando como "(N prompts)"   | Token não está sendo passado - aplique o workaround   |
 
 #### Bug de Secrets do Docker MCP (Dez 2025)
 
 **Problema:** O armazenamento de secrets do Docker MCP Toolkit (`docker mcp secret set`) e interpolação de templates (`{{...}}`) NÃO funcionam corretamente. Credenciais não são passadas para containers.
 
 **Sintomas:**
+
 - `docker mcp tools ls` mostra "(N prompts)" em vez de "(N tools)"
 - Servidor MCP inicia mas falha na autenticação
 - Saída verbose mostra `-e ENV_VAR` sem valores
@@ -570,13 +572,14 @@ npx -y @modelcontextprotocol/server-github
 **Workaround:** Edite `~/.docker/mcp/catalogs/docker-mcp.yaml` diretamente:
 
 ```yaml
-{mcp-name}:
+{ mcp-name }:
   env:
     - name: API_TOKEN
       value: 'actual-token-value-here'
 ```
 
 **Exemplo - Apify:**
+
 ```yaml
 apify-mcp-server:
   env:
@@ -653,9 +656,8 @@ Crie `.mcp.json` na raiz do projeto para sobrescrever configurações globais:
 ## Documentação Relacionada
 
 - [Arquitetura do Sistema de Módulos](../architecture/module-system.md)
-- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md) *(coming soon)*
 - [Diagramas de Arquitetura MCP](../architecture/mcp-system-diagrams.md)
 
 ---
 
-*Synkra AIOS v2.1 Guia de Configuração Global MCP*
+_Synkra AIOS v2.1 Guia de Configuração Global MCP_

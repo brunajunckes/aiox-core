@@ -60,12 +60,12 @@ matrix:
 
 ## Alternativas Consideradas
 
-| Opcion            | Esfuerzo | Riesgo | Cobertura | Decision            |
-| ----------------- | -------- | ------ | --------- | ------------------- |
-| Mantener exclusion | Ninguno | Bajo   | 78%       | ✅ **Seleccionada** |
-| Upgrade a v6.x    | Medio    | Medio  | 100%?     | ❌ Probar primero   |
-| Reemplazar con vm2 | Alto    | Alto   | 100%      | ❌ Breaking changes |
-| Usar Node.js vm   | Medio    | Medio  | 100%      | ❌ Menos seguro     |
+| Opcion             | Esfuerzo | Riesgo | Cobertura | Decision            |
+| ------------------ | -------- | ------ | --------- | ------------------- |
+| Mantener exclusion | Ninguno  | Bajo   | 78%       | ✅ **Seleccionada** |
+| Upgrade a v6.x     | Medio    | Medio  | 100%?     | ❌ Probar primero   |
+| Reemplazar con vm2 | Alto     | Alto   | 100%      | ❌ Breaking changes |
+| Usar Node.js vm    | Medio    | Medio  | 100%      | ❌ Menos seguro     |
 
 ## Acciones Futuras
 
@@ -90,4 +90,3 @@ matrix:
 
 - [isolated-vm#424 - Segmentation fault on Node 20 macos arm64](https://github.com/laverdet/isolated-vm/issues/424)
 - [isolated-vm releases](https://github.com/laverdet/isolated-vm/releases)
-- [Story TD-6](../../../docs/stories/v2.1/sprint-18/story-td-6-ci-stability.md) *(coming soon)*

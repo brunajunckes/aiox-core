@@ -36,6 +36,7 @@
 Este documento define los estándares oficiales de codificación para el desarrollo del framework AIOS. Todas las contribuciones de código deben adherirse a estos estándares para asegurar consistencia, mantenibilidad y calidad.
 
 **Aplicación:**
+
 - ESLint (automatizado)
 - Prettier (automatizado)
 - Revisión CodeRabbit (automatizada)
@@ -56,7 +57,7 @@ const data = await fetchData();
 const { id, name } = data;
 
 // ❌ INCORRECTO: Sintaxis obsoleta
-fetchData().then(function(data) {
+fetchData().then(function (data) {
   var id = data.id;
   var name = data.name;
 });
@@ -98,14 +99,15 @@ function processAgent(agent) {
 
 // ❌ INCORRECTO: 4 espacios o tabs
 function processAgent(agent) {
-    if (agent.enabled) {
-        return loadAgent(agent);
-    }
-    return null;
+  if (agent.enabled) {
+    return loadAgent(agent);
+  }
+  return null;
 }
 ```
 
 **Configuración Prettier:**
+
 ```json
 {
   "printWidth": 100,
@@ -123,14 +125,14 @@ function processAgent(agent) {
 
 ```javascript
 // ✅ CORRECTO: Máximo 100 caracteres
-const result = await executeTask(
-  taskName,
-  taskArgs,
-  { timeout: 5000, retry: 3 }
-);
+const result = await executeTask(taskName, taskArgs, { timeout: 5000, retry: 3 });
 
 // ❌ INCORRECTO: Más de 100 caracteres
-const result = await executeTask(taskName, taskArgs, { timeout: 5000, retry: 3, failureCallback: onFailure });
+const result = await executeTask(taskName, taskArgs, {
+  timeout: 5000,
+  retry: 3,
+  failureCallback: onFailure,
+});
 ```
 
 #### Comillas
@@ -141,7 +143,7 @@ const agentName = 'developer';
 const message = `Agent ${agentName} activated`;
 
 // ❌ INCORRECTO: Comillas dobles (excepto JSON)
-const agentName = "developer";
+const agentName = 'developer';
 ```
 
 ### Patrones Modernos de JavaScript
@@ -164,9 +166,8 @@ async function loadAgent(agentId) {
 // ❌ INCORRECTO: Cadenas de Promesas
 function loadAgent(agentId) {
   return fetchAgent(agentId)
-    .then(agent => loadConfig(agent.configPath)
-      .then(config => ({ agent, config })))
-    .catch(error => {
+    .then((agent) => loadConfig(agent.configPath).then((config) => ({ agent, config })))
+    .catch((error) => {
       console.error(`Failed to load agent ${agentId}:`, error);
       throw error;
     });
@@ -194,7 +195,7 @@ const activeAgents = agents.filter((agent) => agent.enabled);
 const agentNames = agents.map((agent) => agent.name);
 
 // ❌ INCORRECTO: Funciones tradicionales para callbacks simples
-const activeAgents = agents.filter(function(agent) {
+const activeAgents = agents.filter(function (agent) {
   return agent.enabled;
 });
 ```
@@ -267,15 +268,15 @@ docs/
 
 ```javascript
 // ✅ CORRECTO: kebab-case para archivos
-agent-executor.js
-task-runner.js
-greeting-builder.js
-context-detector.js
+agent - executor.js;
+task - runner.js;
+greeting - builder.js;
+context - detector.js;
 
 // ❌ INCORRECTO: camelCase o PascalCase para archivos
-agentExecutor.js
-TaskRunner.js
-GreetingBuilder.js
+agentExecutor.js;
+TaskRunner.js;
+GreetingBuilder.js;
 ```
 
 ### Estructura de Módulos
@@ -400,7 +401,7 @@ class AgentManager {
 
   async getAgent(id) {
     // API pública
-    return this._loadFromCache(id) || await this._fetchAgent(id);
+    return this._loadFromCache(id) || (await this._fetchAgent(id));
   }
 }
 ```
@@ -484,6 +485,7 @@ function processAgent(agent) {
 ```
 
 **Refactorizar funciones complejas:**
+
 ```javascript
 // ✅ CORRECTO: Funciones helper extraídas
 function processAgent(agent) {
@@ -599,8 +601,8 @@ Cada módulo/directorio debería tener un README.md:
 const { executeAgent } = require('./agent-executor');
 
 const result = await executeAgent('dev', {
-  yoloMode: true,
-  storyPath: 'docs/stories/story-6.1.2.5.md'
+yoloMode: true,
+storyPath: 'docs/stories/story-6.1.2.5.md'
 });
 \`\`\`
 
@@ -654,10 +656,7 @@ describe('ContextDetector', () => {
 
     it('should return "workflow" when command pattern matches story_development', async () => {
       // Given
-      const conversationHistory = [
-        { command: 'validate-story-draft' },
-        { command: 'develop' }
-      ];
+      const conversationHistory = [{ command: 'validate-story-draft' }, { command: 'develop' }];
 
       // When
       const result = await detectSessionType(conversationHistory, null);
@@ -717,6 +716,7 @@ wip
 ```
 
 **Formato:**
+
 ```
 <type>: <description> [Story <id>]
 
@@ -726,6 +726,7 @@ wip
 ```
 
 **Tipos:**
+
 - `feat`: Nueva funcionalidad
 - `fix`: Corrección de bug
 - `docs`: Cambios de documentación
@@ -863,6 +864,7 @@ jobs:
 ### Integración CodeRabbit
 
 Todos los PRs son revisados automáticamente por CodeRabbit para:
+
 - Problemas de calidad de código
 - Vulnerabilidades de seguridad
 - Problemas de rendimiento
@@ -873,19 +875,18 @@ Todos los PRs son revisados automáticamente por CodeRabbit para:
 
 ## Historial de Versiones
 
-| Versión | Fecha | Cambios | Autor |
-|---------|------|---------|--------|
-| 1.0 | 2025-01-15 | Documento inicial de estándares de codificación | Aria (architect) |
-| 1.1 | 2025-12-14 | Actualizado aviso de migración a SynkraAI/aios-core [Story 6.10] | Dex (dev) |
+| Versión | Fecha      | Cambios                                                          | Autor            |
+| ------- | ---------- | ---------------------------------------------------------------- | ---------------- |
+| 1.0     | 2025-01-15 | Documento inicial de estándares de codificación                  | Aria (architect) |
+| 1.1     | 2025-12-14 | Actualizado aviso de migración a SynkraAI/aios-core [Story 6.10] | Dex (dev)        |
 
 ---
 
 **Documentos Relacionados:**
+
 - [Stack Tecnológico](./tech-stack.md)
 - [Árbol de Código Fuente](./source-tree.md)
-- [Decision 005: Reestructuración del Repositorio](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agentes](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
-*Este es un estándar oficial del framework AIOS. Todas las contribuciones de código deben cumplir.*
+_Este es un estándar oficial del framework AIOS. Todas las contribuciones de código deben cumplir._

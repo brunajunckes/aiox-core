@@ -12,29 +12,29 @@ For discussions, questions, and community interaction, visit our central hub:
 
 👉 **[AIOS Community Discussions](https://github.com/SynkraAI/aios-core/discussions)**
 
-| Need | Where to Go |
-|------|-------------|
-| 🔧 **MCP questions?** | Use the ["MCP Ecosystem" category](https://github.com/SynkraAI/aios-core/discussions/categories/mcp-ecosystem) |
-| 💡 **Feature ideas?** | Start a [Discussion in "Ideas"](https://github.com/SynkraAI/aios-core/discussions/categories/ideas) |
-| 🐛 **Found a bug?** | [Open an issue](https://github.com/SynkraAI/mcp-ecosystem/issues/new/choose) in **this repository** |
-| 🙏 **Need help?** | Ask in ["Q&A"](https://github.com/SynkraAI/aios-core/discussions/categories/q-a) |
-| 🙌 **Built something cool?** | Share in ["Show and Tell"](https://github.com/SynkraAI/aios-core/discussions/categories/show-and-tell) |
+| Need                         | Where to Go                                                                                                    |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 🔧 **MCP questions?**        | Use the ["MCP Ecosystem" category](https://github.com/SynkraAI/aios-core/discussions/categories/mcp-ecosystem) |
+| 💡 **Feature ideas?**        | Start a [Discussion in "Ideas"](https://github.com/SynkraAI/aios-core/discussions/categories/ideas)            |
+| 🐛 **Found a bug?**          | [Open an issue](https://github.com/SynkraAI/mcp-ecosystem/issues/new/choose) in **this repository**            |
+| 🙏 **Need help?**            | Ask in ["Q&A"](https://github.com/SynkraAI/aios-core/discussions/categories/q-a)                               |
+| 🙌 **Built something cool?** | Share in ["Show and Tell"](https://github.com/SynkraAI/aios-core/discussions/categories/show-and-tell)         |
 
 ### What's in this Repository?
 
-| Component | Description |
-|-----------|-------------|
-| 🐳 **Docker MCP Toolkit** | Pre-configured MCP servers running in Docker containers |
-| ⚙️ **MCP Presets** | Curated configurations for different workflows (dev, research, etc.) |
-| 🖥️ **IDE Configs** | Integration configs for VS Code, Cursor, Claude Code |
-| 🌐 **Gateway Service** | HTTP/SSE gateway for reliable MCP connections |
+| Component                 | Description                                                          |
+| ------------------------- | -------------------------------------------------------------------- |
+| 🐳 **Docker MCP Toolkit** | Pre-configured MCP servers running in Docker containers              |
+| ⚙️ **MCP Presets**        | Curated configurations for different workflows (dev, research, etc.) |
+| 🖥️ **IDE Configs**        | Integration configs for VS Code, Cursor, Claude Code                 |
+| 🌐 **Gateway Service**    | HTTP/SSE gateway for reliable MCP connections                        |
 
 ### Quick Links
 
-- [Docker MCP Toolkit Setup](docs/docker-mcp-setup.md) *(coming soon)*
-- [Available Presets](presets/) *(coming soon)*
-- [IDE Integration Guide](docs/ide-integration.md) *(coming soon)*
-- [Troubleshooting Guide](docs/troubleshooting.md) *(coming soon)*
+- [Docker MCP Toolkit Setup](docs/docker-mcp-setup.md) _(coming soon)_
+- [Available Presets](presets/) _(coming soon)_
+- [IDE Integration Guide](docs/ide-integration.md) _(coming soon)_
+- [Troubleshooting Guide](../troubleshooting.md)
 
 ### Proposing a New MCP Server
 

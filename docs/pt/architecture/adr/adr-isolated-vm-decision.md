@@ -15,14 +15,14 @@ Durante testes de CI, observamos crashes SIGSEGV no macOS com Node.js 18.x e 20.
 
 ### Configurações Afetadas
 
-| Plataforma  | Versão Node  | Status           |
-| ----------- | ------------ | ---------------- |
-| macOS ARM64 | 18.x         | ❌ Crash SIGSEGV |
-| macOS ARM64 | 20.x         | ❌ Crash SIGSEGV |
-| macOS ARM64 | 22.x         | ✅ Funciona      |
-| macOS x64   | Todas        | ✅ Funciona      |
-| Ubuntu      | Todas        | ✅ Funciona      |
-| Windows     | Todas        | ✅ Funciona      |
+| Plataforma  | Versão Node | Status           |
+| ----------- | ----------- | ---------------- |
+| macOS ARM64 | 18.x        | ❌ Crash SIGSEGV |
+| macOS ARM64 | 20.x        | ❌ Crash SIGSEGV |
+| macOS ARM64 | 22.x        | ✅ Funciona      |
+| macOS x64   | Todas       | ✅ Funciona      |
+| Ubuntu      | Todas       | ✅ Funciona      |
+| Windows     | Todas       | ✅ Funciona      |
 
 ### Causa Raiz
 
@@ -60,12 +60,12 @@ matrix:
 
 ## Alternativas Consideradas
 
-| Opção              | Esforço | Risco  | Cobertura | Decisão             |
-| ------------------ | ------- | ------ | --------- | ------------------- |
-| Manter exclusão    | Nenhum  | Baixo  | 78%       | ✅ **Selecionada**  |
-| Upgrade para v6.x  | Médio   | Médio  | 100%?     | ❌ Testar primeiro  |
-| Substituir por vm2 | Alto    | Alto   | 100%      | ❌ Breaking changes |
-| Usar Node.js vm    | Médio   | Médio  | 100%      | ❌ Menos seguro     |
+| Opção              | Esforço | Risco | Cobertura | Decisão             |
+| ------------------ | ------- | ----- | --------- | ------------------- |
+| Manter exclusão    | Nenhum  | Baixo | 78%       | ✅ **Selecionada**  |
+| Upgrade para v6.x  | Médio   | Médio | 100%?     | ❌ Testar primeiro  |
+| Substituir por vm2 | Alto    | Alto  | 100%      | ❌ Breaking changes |
+| Usar Node.js vm    | Médio   | Médio | 100%      | ❌ Menos seguro     |
 
 ## Ações Futuras
 
@@ -90,4 +90,3 @@ matrix:
 
 - [isolated-vm#424 - Segmentation fault on Node 20 macos arm64](https://github.com/laverdet/isolated-vm/issues/424)
 - [isolated-vm releases](https://github.com/laverdet/isolated-vm/releases)
-- [Story TD-6](../../../docs/stories/v2.1/sprint-18/story-td-6-ci-stability.md) *(coming soon)*

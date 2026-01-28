@@ -38,6 +38,7 @@ O AIOS usa uma **arquitetura modular** com clara separação de responsabilidade
 2. **Project Workspace** (root) - Implementação específica do projeto
 
 **Filosofia:**
+
 - **Organização orientada a domínio** - Componentes agrupados por função
 - **Portabilidade** - Componentes do framework funcionam entre projetos
 - **Separação de responsabilidades** - Limites claros entre módulos
@@ -410,17 +411,17 @@ workflows:
 
 # Dependencies
 dependencies:
-  aios-core: ">=2.1.0"
+  aios-core: '>=2.1.0'
 ```
 
 ### Migração de Squads
 
-| Legado (Deprecado) | Atual (Squads) |
-|---------------------|------------------|
-| `Squads/` directory | `templates/squad/` template |
+| Legado (Deprecado)              | Atual (Squads)                  |
+| ------------------------------- | ------------------------------- |
+| `Squads/` directory             | `templates/squad/` template     |
 | `expansionPacksLocation` config | `squadsTemplateLocation` config |
-| `pack.yaml` manifest | `squad.yaml` manifest |
-| Direct loading | Template-based creation |
+| `pack.yaml` manifest            | `squad.yaml` manifest           |
+| Direct loading                  | Template-based creation         |
 
 ---
 
@@ -710,19 +711,17 @@ outputs/                               # Runtime outputs (gitignored)
 
 - [Padrões de Código](./coding-standards.md)
 - [Tech Stack](./tech-stack.md)
-- [Decision 005: Repository Restructuring](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- [Story 6.1.2.5: Contextual Agent Load System](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
 ## Histórico de Versões
 
-| Versão | Data | Alterações | Autor |
-|---------|------|---------|--------|
-| 1.0 | 2025-01-15 | Documentação inicial de source tree | Aria (architect) |
-| 1.1 | 2025-12-14 | Atualizado org para SynkraAI, substituído Squads pelo sistema Squads [Story 6.10] | Dex (dev) |
-| 2.0 | 2025-12-15 | Atualização maior para refletir arquitetura modular (cli/, core/, development/, infrastructure/, product/) [Story 6.13] | Pax (PO) |
+| Versão | Data       | Alterações                                                                                                              | Autor            |
+| ------ | ---------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| 1.0    | 2025-01-15 | Documentação inicial de source tree                                                                                     | Aria (architect) |
+| 1.1    | 2025-12-14 | Atualizado org para SynkraAI, substituído Squads pelo sistema Squads [Story 6.10]                                       | Dex (dev)        |
+| 2.0    | 2025-12-15 | Atualização maior para refletir arquitetura modular (cli/, core/, development/, infrastructure/, product/) [Story 6.13] | Pax (PO)         |
 
 ---
 
-*Este é um padrão oficial do framework AIOS. Todo posicionamento de arquivos deve seguir esta estrutura.*
+_Este é um padrão oficial do framework AIOS. Todo posicionamento de arquivos deve seguir esta estrutura._

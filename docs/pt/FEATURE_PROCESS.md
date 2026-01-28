@@ -34,7 +34,7 @@ Para funcionalidades maiores que requerem decisões de design:
 
 ### Ciclo de Vida da RFC
 
-1. **Draft**: Autor escreve RFC usando nosso [Template de RFC](/.github/RFC_TEMPLATE.md) *(coming soon)*
+1. **Draft**: Autor escreve RFC usando nosso [Template de RFC](/.github/RFC_TEMPLATE.md) _(coming soon)_
 2. **Under Review**: Período de comentários de 2 semanas
 3. **Decision**: Mantenedores aceitam/rejeitam
 4. **Implementation**: Se aceita, implementação começa
@@ -85,6 +85,7 @@ Isso garante priorização adequada e alinhamento com os objetivos do projeto.
 ### Crédito aos Contribuidores
 
 Contribuidores cujas ideias são implementadas serão creditados em:
+
 - As notas de release do CHANGELOG.md
 - O PR que implementa a funcionalidade
 - Nossa página de contribuidores (se aplicável)
@@ -95,4 +96,4 @@ Pergunte no GitHub Discussions ou Discord.
 
 ---
 
-*Veja também: [Community Handbook](/COMMUNITY.md) *(coming soon)* | [Contributing Guide](/CONTRIBUTING.md) *(coming soon)**
+_Veja também: [Community Handbook](../../COMMUNITY.md) | [Contributing Guide](../../CONTRIBUTING.md)_

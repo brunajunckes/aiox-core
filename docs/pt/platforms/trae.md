@@ -27,13 +27,13 @@ O Trae oferece uma experiência de desenvolvimento moderna:
 
 ### Comparação com Outras Plataformas
 
-| Recurso | Trae | Cursor | Claude Code |
-|---------|:----:|:------:|:-----------:|
-| UI Moderna | Sim | Sim | Não |
-| Ativação @mention | Sim | Sim | /comando |
-| Modo Builder | Sim | Composer | Task Tool |
-| Suporte MCP | Limitado | Config | Nativo |
-| Foco em Velocidade | Sim | Moderado | Moderado |
+| Recurso            |   Trae   |  Cursor  | Claude Code |
+| ------------------ | :------: | :------: | :---------: |
+| UI Moderna         |   Sim    |   Sim    |     Não     |
+| Ativação @mention  |   Sim    |   Sim    |  /comando   |
+| Modo Builder       |   Sim    | Composer |  Task Tool  |
+| Suporte MCP        | Limitado |  Config  |   Nativo    |
+| Foco em Velocidade |   Sim    | Moderado |  Moderado   |
 
 ---
 
@@ -41,12 +41,12 @@ O Trae oferece uma experiência de desenvolvimento moderna:
 
 ### Requisitos de Sistema
 
-| Requisito | Mínimo | Recomendado |
-|-----------|--------|-------------|
-| **RAM** | 4GB | 8GB+ |
-| **Espaço em Disco** | 500MB | 1GB+ |
-| **SO** | macOS 11+, Windows 10+, Linux | Última versão |
-| **Node.js** | 18.0+ (para AIOS) | 20.0+ |
+| Requisito           | Mínimo                        | Recomendado   |
+| ------------------- | ----------------------------- | ------------- |
+| **RAM**             | 4GB                           | 8GB+          |
+| **Espaço em Disco** | 500MB                         | 1GB+          |
+| **SO**              | macOS 11+, Windows 10+, Linux | Última versão |
+| **Node.js**         | 18.0+ (para AIOS)             | 20.0+         |
 
 ### Requisitos de Conta
 
@@ -86,6 +86,7 @@ ls -la .trae/
 ```
 
 Estrutura esperada:
+
 ```
 .trae/
 ├── rules.md           # Regras principais
@@ -108,10 +109,12 @@ Estrutura esperada:
 # Regras Synkra AIOS para Trae
 
 ## Sistema de Agentes
+
 - Use @nome-agente para ativar agentes
 - Siga workflows dos agentes
 
 ## Padrões de Desenvolvimento
+
 - Escreva código limpo e testado
 - Siga padrões existentes
 - Foco em iteração rápida
@@ -125,15 +128,18 @@ Estrutura esperada:
 # Agente Desenvolvedor (@dev)
 
 ## Papel
+
 Desenvolvedor Full Stack Sênior
 
 ## Expertise
+
 - TypeScript/JavaScript
 - Node.js, React
 - Prototipagem rápida
 - Práticas de código limpo
 
 ## Fluxo de Trabalho
+
 1. Entender requisitos rapidamente
 2. Prototipar solução
 3. Iterar baseado em feedback
@@ -228,6 +234,7 @@ Modo de desenvolvimento focado do Trae:
 ### Sugestões Inline
 
 O Trae fornece sugestões inline rápidas:
+
 1. Comece a digitar código
 2. Veja sugestões instantâneas
 3. Tab para aceitar
@@ -265,30 +272,30 @@ Camadas de regras para projetos complexos:
 
 ### Modo Builder
 
-| Recurso | Descrição |
-|---------|-----------|
+| Recurso                   | Descrição                        |
+| ------------------------- | -------------------------------- |
 | **Preview em Tempo Real** | Veja alterações instantaneamente |
-| **Construção Iterativa** | Ciclos de feedback rápidos |
-| **Foco em Componente** | Construa uma coisa por vez |
-| **Auto-Save** | Nunca perca trabalho |
+| **Construção Iterativa**  | Ciclos de feedback rápidos       |
+| **Foco em Componente**    | Construa uma coisa por vez       |
+| **Auto-Save**             | Nunca perca trabalho             |
 
 ### Atalhos de Teclado
 
-| Atalho | Ação |
-|--------|------|
+| Atalho         | Ação                  |
+| -------------- | --------------------- |
 | `Cmd/Ctrl + B` | Alternar Modo Builder |
-| `Cmd/Ctrl + I` | Abrir Chat IA |
-| `Cmd/Ctrl + .` | Ações Rápidas |
-| `Tab` | Aceitar sugestão |
-| `Escape` | Cancelar/Fechar |
+| `Cmd/Ctrl + I` | Abrir Chat IA         |
+| `Cmd/Ctrl + .` | Ações Rápidas         |
+| `Tab`          | Aceitar sugestão      |
+| `Escape`       | Cancelar/Fechar       |
 
 ### Recursos de Velocidade
 
-| Recurso | Descrição |
-|---------|-----------|
-| **Preview Instantâneo** | Alterações renderizam imediatamente |
-| **Cache Inteligente** | Operações repetidas rápidas |
-| **Processamento Paralelo** | Múltiplas operações ao mesmo tempo |
+| Recurso                    | Descrição                           |
+| -------------------------- | ----------------------------------- |
+| **Preview Instantâneo**    | Alterações renderizam imediatamente |
+| **Cache Inteligente**      | Operações repetidas rápidas         |
+| **Processamento Paralelo** | Múltiplas operações ao mesmo tempo  |
 
 ---
 
@@ -323,21 +330,25 @@ O Trae usa formato project-rules:
 **Ativação:** @dev
 
 ## Persona
+
 Desenvolvedor Full Stack ágil focado em iteração rápida.
 
 ## Expertise
+
 - TypeScript/JavaScript
 - React, Vue, Svelte
 - Node.js, Deno
 - Prototipagem rápida
 
 ## Abordagem
+
 - Comece simples, itere rapidamente
 - Mostre código funcionando rápido
 - Refine baseado em feedback
 - Mantenha o momentum
 
 ## Estilo de Resposta
+
 - Explicações concisas
 - Código funcionando primeiro
 - Iterações rápidas
@@ -350,20 +361,20 @@ Desenvolvedor Full Stack ágil focado em iteração rápida.
 
 ### Limitações Atuais
 
-| Limitação | Solução Alternativa |
-|-----------|---------------------|
-| MCP limitado | Use integrações básicas |
+| Limitação            | Solução Alternativa            |
+| -------------------- | ------------------------------ |
+| MCP limitado         | Use integrações básicas        |
 | Plataforma mais nova | Conjunto de recursos crescente |
-| Comunidade menor | Use docs oficiais |
+| Comunidade menor     | Use docs oficiais              |
 
 ### Trae vs Cursor
 
-| Aspecto | Trae | Cursor |
-|---------|------|--------|
-| Foco | Velocidade | Recursos |
-| UI | Moderna | Estilo VS Code |
-| MCP | Limitado | Config |
-| Maturidade | Mais novo | Estabelecido |
+| Aspecto    | Trae       | Cursor         |
+| ---------- | ---------- | -------------- |
+| Foco       | Velocidade | Recursos       |
+| UI         | Moderna    | Estilo VS Code |
+| MCP        | Limitado   | Config         |
+| Maturidade | Mais novo  | Estabelecido   |
 
 ---
 
@@ -372,28 +383,37 @@ Desenvolvedor Full Stack ágil focado em iteração rápida.
 ### Problemas Comuns
 
 #### Regras Não Carregando
+
 ```
 Problema: Agente não responde
 ```
+
 **Solução:**
+
 1. Verifique se `.trae/rules.md` existe
 2. Verifique a sintaxe
 3. Recarregue o Trae
 
 #### Problemas no Modo Builder
+
 ```
 Problema: Builder não faz preview
 ```
+
 **Solução:**
+
 1. Verifique se tipo de arquivo é suportado
 2. Verifique se servidor de preview está rodando
 3. Reinicie o modo Builder
 
 #### Performance Lenta
+
 ```
 Problema: Sugestões demorando muito
 ```
+
 **Solução:**
+
 1. Verifique conexão de rede
 2. Reduza tamanho do contexto
 3. Feche painéis não utilizados
@@ -448,10 +468,10 @@ R: Plataforma mais nova, ativamente desenvolvida com recursos crescentes.
 - [Site Oficial do Trae](https://www.trae.ai/)
 - [Download Trae IDE](https://traeide.com/)
 - [Trae Agent (GitHub)](https://github.com/bytedance/trae-agent)
-- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
+- [Guia de Plataformas AIOS](../README.md)
 
 > **Nota:** O Trae é desenvolvido pela ByteDance. Como um fork do VS Code, a maioria das extensões do VS Code são compatíveis.
 
 ---
 
-*Synkra AIOS - Guia da Plataforma Trae v1.0*
+_Synkra AIOS - Guia da Plataforma Trae v1.0_

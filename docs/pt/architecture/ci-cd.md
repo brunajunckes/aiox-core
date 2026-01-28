@@ -29,18 +29,18 @@ O AIOS-Core utiliza GitHub Actions para integração contínua e implantação. 
 
 ## Workflows Ativos
 
-| Workflow | Propósito | Trigger | Crítico |
-|----------|-----------|---------|---------|
-| `ci.yml` | Validação principal de CI (lint, typecheck, test) | PR, push para main | Sim |
-| `pr-automation.yml` | Relatório de cobertura e métricas | Apenas PR | Não |
-| `semantic-release.yml` | Versionamento automático e changelog | Push para main | Sim |
-| `test.yml` | Testes estendidos (segurança, build, integração) | Apenas push para main | Não |
-| `macos-testing.yml` | Testes específicos para macOS (Intel + ARM) | Filtrado por path | Não |
-| `release.yml` | Criação de Release no GitHub | Tag v* | Sim |
-| `npm-publish.yml` | Publicação de pacote no NPM | Release publicado | Sim |
-| `pr-labeling.yml` | Auto-rotulagem de PRs | PR aberto/sincronizado | Não |
-| `quarterly-gap-audit.yml` | Auditoria agendada | Cron | Não |
-| `welcome.yml` | Boas-vindas a contribuidores iniciantes | PR | Não |
+| Workflow                  | Propósito                                         | Trigger                | Crítico |
+| ------------------------- | ------------------------------------------------- | ---------------------- | ------- |
+| `ci.yml`                  | Validação principal de CI (lint, typecheck, test) | PR, push para main     | Sim     |
+| `pr-automation.yml`       | Relatório de cobertura e métricas                 | Apenas PR              | Não     |
+| `semantic-release.yml`    | Versionamento automático e changelog              | Push para main         | Sim     |
+| `test.yml`                | Testes estendidos (segurança, build, integração)  | Apenas push para main  | Não     |
+| `macos-testing.yml`       | Testes específicos para macOS (Intel + ARM)       | Filtrado por path      | Não     |
+| `release.yml`             | Criação de Release no GitHub                      | Tag v\*                | Sim     |
+| `npm-publish.yml`         | Publicação de pacote no NPM                       | Release publicado      | Sim     |
+| `pr-labeling.yml`         | Auto-rotulagem de PRs                             | PR aberto/sincronizado | Não     |
+| `quarterly-gap-audit.yml` | Auditoria agendada                                | Cron                   | Não     |
+| `welcome.yml`             | Boas-vindas a contribuidores iniciantes           | PR                     | Não     |
 
 ## Estratégias de Otimização
 
@@ -83,25 +83,27 @@ cross-platform:
       node: ['18', '20', '22']
       exclude:
         - os: macos-latest
-          node: '18'  # SIGSEGV do isolated-vm
+          node: '18' # SIGSEGV do isolated-vm
         - os: macos-latest
-          node: '20'  # SIGSEGV do isolated-vm
+          node: '20' # SIGSEGV do isolated-vm
 ```
 
 ### 4. Validação Consolidada
 
 Fonte única de verdade para validação:
+
 - **ci.yml** trata toda validação (lint, typecheck, test)
 - **semantic-release.yml** depende da proteção de branch (sem CI duplicado)
 - **pr-automation.yml** foca apenas em métricas/cobertura
 
 ## Redução de Minutos Faturáveis
 
-| Antes | Depois | Economia |
-|-------|--------|----------|
-| ~340 min/semana | ~85 min/semana | ~75% |
+| Antes           | Depois         | Economia |
+| --------------- | -------------- | -------- |
+| ~340 min/semana | ~85 min/semana | ~75%     |
 
 ### Detalhamento:
+
 - Concorrência: 40% de redução (cancela execuções obsoletas)
 - Filtros de path: 30% de redução (ignora PRs apenas de docs)
 - Cross-platform consolidado: 25% de redução (7 vs 16 jobs)
@@ -110,6 +112,7 @@ Fonte única de verdade para validação:
 ## Estratégia de Branches
 
 Todos os workflows visam apenas a branch `main`:
+
 - Sem branches `master` ou `develop`
 - Feature branches → PR para main
 - Releases via semantic-release na main
@@ -117,6 +120,7 @@ Todos os workflows visam apenas a branch `main`:
 ## Verificações de Status Obrigatórias
 
 Para proteção de branch na `main`:
+
 1. `CI / ESLint`
 2. `CI / TypeScript Type Checking`
 3. `CI / Jest Tests`
@@ -125,16 +129,19 @@ Para proteção de branch na `main`:
 ## Solução de Problemas
 
 ### Workflow não está executando?
+
 1. Verifique se os paths estão em `paths-ignore`
 2. Verifique se a branch corresponde ao trigger
 3. Verifique o grupo de concorrência (pode ter sido cancelado)
 
 ### Release não está publicando?
+
 1. Verifique se o secret `NPM_TOKEN` está configurado
 2. Verifique a configuração do semantic-release
 3. Verifique o formato dos conventional commits
 
 ### Testes do macOS falhando?
+
 - Node 18/20 no macOS têm problemas de SIGSEGV com isolated-vm
 - Apenas Node 22 executa no macOS (por design)
 
@@ -142,4 +149,3 @@ Para proteção de branch na `main`:
 
 - [Faturamento do GitHub Actions](https://docs.github.com/en/billing/managing-billing-for-github-actions)
 - [Semantic Release](https://semantic-release.gitbook.io/)
-- [Story 6.1: Otimização do GitHub Actions](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md) *(coming soon)*

@@ -14,7 +14,6 @@
 
 **Versión:** 2.1.0
 **Última Actualización:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -24,12 +23,12 @@ El sistema de Descubrimiento de Servicios permite encontrar y usar workers (tare
 
 ### Conceptos Clave
 
-| Concepto | Descripción |
-|----------|-------------|
-| **Worker** | Cualquier unidad ejecutable: tarea, plantilla, script, workflow |
-| **Registro de Servicios** | Catálogo central de todos los workers con metadatos |
-| **Categoría** | Tipo de worker: `task`, `template`, `script`, `checklist`, `workflow`, `data` |
-| **Etiqueta** | Label buscable para agrupar workers |
+| Concepto                  | Descripción                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| **Worker**                | Cualquier unidad ejecutable: tarea, plantilla, script, workflow               |
+| **Registro de Servicios** | Catálogo central de todos los workers con metadatos                           |
+| **Categoría**             | Tipo de worker: `task`, `template`, `script`, `checklist`, `workflow`, `data` |
+| **Etiqueta**              | Label buscable para agrupar workers                                           |
 
 ---
 
@@ -108,7 +107,7 @@ const results = await registry.search('validate', { maxResults: 10 });
 // Búsqueda dentro de categoría
 const taskResults = await registry.search('story', {
   category: 'task',
-  maxResults: 5
+  maxResults: 5,
 });
 ```
 
@@ -160,6 +159,7 @@ aios discover --category task --tag development --agent dev
 ```
 
 **Salida:**
+
 ```
 Encontrados 5 workers que coinciden con "create story":
 
@@ -189,6 +189,7 @@ aios info --path .aios-core/development/tasks/po-create-story.md
 ```
 
 **Salida:**
+
 ```
 Worker: create-story
 ========================
@@ -251,7 +252,7 @@ Definiciones de workflow ejecutables para agentes.
 task:
   name: create-story
   version: 1.0.0
-  description: "Crea una nueva historia de usuario"
+  description: 'Crea una nueva historia de usuario'
 
 inputs:
   - name: story-title
@@ -275,13 +276,13 @@ steps:
 
 Plantillas de documentos y código para generación.
 
-| Plantilla | Propósito |
-|-----------|-----------|
-| `story-tmpl.yaml` | Plantilla de documento de historia |
-| `prd-tmpl.yaml` | Plantilla de PRD |
-| `architecture-tmpl.yaml` | Plantilla de doc de arquitectura |
-| `component-react-tmpl.tsx` | Plantilla de componente React |
-| `ide-rules/*.md` | Reglas específicas de IDE |
+| Plantilla                  | Propósito                          |
+| -------------------------- | ---------------------------------- |
+| `story-tmpl.yaml`          | Plantilla de documento de historia |
+| `prd-tmpl.yaml`            | Plantilla de PRD                   |
+| `architecture-tmpl.yaml`   | Plantilla de doc de arquitectura   |
+| `component-react-tmpl.tsx` | Plantilla de componente React      |
+| `ide-rules/*.md`           | Reglas específicas de IDE          |
 
 **Ubicación:** `.aios-core/product/templates/`
 
@@ -289,12 +290,12 @@ Plantillas de documentos y código para generación.
 
 Utilidades JavaScript para automatización.
 
-| Script | Propósito |
-|--------|-----------|
-| `backup-manager.js` | Operaciones de backup/restauración |
-| `template-engine.js` | Procesamiento de plantillas |
-| `git-wrapper.js` | Operaciones Git |
-| `security-checker.js` | Validación de seguridad |
+| Script                | Propósito                          |
+| --------------------- | ---------------------------------- |
+| `backup-manager.js`   | Operaciones de backup/restauración |
+| `template-engine.js`  | Procesamiento de plantillas        |
+| `git-wrapper.js`      | Operaciones Git                    |
+| `security-checker.js` | Validación de seguridad            |
 
 **Ubicación:** `.aios-core/infrastructure/scripts/`
 
@@ -302,12 +303,12 @@ Utilidades JavaScript para automatización.
 
 Procesos de desarrollo de múltiples pasos.
 
-| Workflow | Caso de Uso |
-|----------|-------------|
-| `greenfield-fullstack.yaml` | Nuevo proyecto full-stack |
+| Workflow                    | Caso de Uso                  |
+| --------------------------- | ---------------------------- |
+| `greenfield-fullstack.yaml` | Nuevo proyecto full-stack    |
 | `brownfield-fullstack.yaml` | Mejora de proyecto existente |
-| `greenfield-service.yaml` | Nuevo servicio backend |
-| `brownfield-ui.yaml` | Mejora de frontend existente |
+| `greenfield-service.yaml`   | Nuevo servicio backend       |
+| `brownfield-ui.yaml`        | Mejora de frontend existente |
 
 **Ubicación:** `.aios-core/development/workflows/`
 
@@ -315,12 +316,12 @@ Procesos de desarrollo de múltiples pasos.
 
 Listas de verificación para validación de calidad.
 
-| Checklist | Propósito |
-|-----------|-----------|
+| Checklist                | Propósito                       |
+| ------------------------ | ------------------------------- |
 | `story-dod-checklist.md` | Definición de Hecho de Historia |
-| `pre-push-checklist.md` | Validación pre-push |
-| `architect-checklist.md` | Revisión de arquitectura |
-| `release-checklist.md` | Validación de release |
+| `pre-push-checklist.md`  | Validación pre-push             |
+| `architect-checklist.md` | Revisión de arquitectura        |
+| `release-checklist.md`   | Validación de release           |
 
 **Ubicación:** `.aios-core/product/checklists/`
 
@@ -338,6 +339,7 @@ node .aios-core/core/registry/build-registry.js
 ```
 
 El constructor escanea:
+
 - `.aios-core/development/tasks/**/*.md`
 - `.aios-core/product/templates/**/*`
 - `.aios-core/infrastructure/scripts/**/*.js`
@@ -379,11 +381,11 @@ El constructor escanea:
 
 El cargador del registro implementa caché inteligente:
 
-| Característica | Descripción |
-|----------------|-------------|
-| **Caché TTL** | 5 minutos de expiración por defecto |
-| **Búsquedas Indexadas** | O(1) por ID, categoría, etiqueta |
-| **Carga Diferida** | Registro cargado en primera consulta |
+| Característica           | Descripción                              |
+| ------------------------ | ---------------------------------------- |
+| **Caché TTL**            | 5 minutos de expiración por defecto      |
+| **Búsquedas Indexadas**  | O(1) por ID, categoría, etiqueta         |
+| **Carga Diferida**       | Registro cargado en primera consulta     |
 | **Actualización Manual** | Forzar recarga con `registry.load(true)` |
 
 ### Operaciones de Caché
@@ -414,7 +416,7 @@ async function getAgentTasks(agentId) {
   const registry = getRegistry();
   const tasks = await registry.getForAgent(agentId);
 
-  return tasks.filter(w => w.category === 'task');
+  return tasks.filter((w) => w.category === 'task');
 }
 
 // Uso
@@ -432,7 +434,7 @@ async function findAndExecute(searchTerm, inputs) {
   const registry = getRegistry();
   const results = await registry.search(searchTerm, {
     category: 'task',
-    maxResults: 1
+    maxResults: 1,
   });
 
   if (results.length === 0) {
@@ -447,7 +449,7 @@ async function findAndExecute(searchTerm, inputs) {
 // Uso
 await findAndExecute('create story', {
   'story-title': 'Implementar autenticación de usuario',
-  'epic-id': 'EPIC-001'
+  'epic-id': 'EPIC-001',
 });
 ```
 
@@ -519,4 +521,4 @@ await registry.load(true);
 
 ---
 
-*Guía de Descubrimiento de Servicios de Synkra AIOS v2.1*
+_Guía de Descubrimiento de Servicios de Synkra AIOS v2.1_

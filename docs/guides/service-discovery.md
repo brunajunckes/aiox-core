@@ -8,7 +8,6 @@
 
 **Version:** 2.1.0
 **Last Updated:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -18,12 +17,12 @@ The Service Discovery system enables finding and using workers (tasks, templates
 
 ### Key Concepts
 
-| Concept | Description |
-|---------|-------------|
-| **Worker** | Any executable unit: task, template, script, workflow |
-| **Service Registry** | Central catalog of all workers with metadata |
-| **Category** | Worker type: `task`, `template`, `script`, `checklist`, `workflow`, `data` |
-| **Tag** | Searchable label for grouping workers |
+| Concept              | Description                                                                |
+| -------------------- | -------------------------------------------------------------------------- |
+| **Worker**           | Any executable unit: task, template, script, workflow                      |
+| **Service Registry** | Central catalog of all workers with metadata                               |
+| **Category**         | Worker type: `task`, `template`, `script`, `checklist`, `workflow`, `data` |
+| **Tag**              | Searchable label for grouping workers                                      |
 
 ---
 
@@ -102,7 +101,7 @@ const results = await registry.search('validate', { maxResults: 10 });
 // Search within category
 const taskResults = await registry.search('story', {
   category: 'task',
-  maxResults: 5
+  maxResults: 5,
 });
 ```
 
@@ -154,6 +153,7 @@ aios discover --category task --tag development --agent dev
 ```
 
 **Output:**
+
 ```
 Found 5 workers matching "create story":
 
@@ -183,6 +183,7 @@ aios info --path .aios-core/development/tasks/po-create-story.md
 ```
 
 **Output:**
+
 ```
 Worker: create-story
 ========================
@@ -245,7 +246,7 @@ Executable workflow definitions for agents.
 task:
   name: create-story
   version: 1.0.0
-  description: "Creates a new user story"
+  description: 'Creates a new user story'
 
 inputs:
   - name: story-title
@@ -269,13 +270,13 @@ steps:
 
 Document and code templates for generation.
 
-| Template | Purpose |
-|----------|---------|
-| `story-tmpl.yaml` | Story document template |
-| `prd-tmpl.yaml` | PRD template |
-| `architecture-tmpl.yaml` | Architecture doc template |
-| `component-react-tmpl.tsx` | React component template |
-| `ide-rules/*.md` | IDE-specific rules |
+| Template                   | Purpose                   |
+| -------------------------- | ------------------------- |
+| `story-tmpl.yaml`          | Story document template   |
+| `prd-tmpl.yaml`            | PRD template              |
+| `architecture-tmpl.yaml`   | Architecture doc template |
+| `component-react-tmpl.tsx` | React component template  |
+| `ide-rules/*.md`           | IDE-specific rules        |
 
 **Location:** `.aios-core/product/templates/`
 
@@ -283,12 +284,12 @@ Document and code templates for generation.
 
 JavaScript utilities for automation.
 
-| Script | Purpose |
-|--------|---------|
-| `backup-manager.js` | Backup/restore operations |
-| `template-engine.js` | Template processing |
-| `git-wrapper.js` | Git operations |
-| `security-checker.js` | Security validation |
+| Script                | Purpose                   |
+| --------------------- | ------------------------- |
+| `backup-manager.js`   | Backup/restore operations |
+| `template-engine.js`  | Template processing       |
+| `git-wrapper.js`      | Git operations            |
+| `security-checker.js` | Security validation       |
 
 **Location:** `.aios-core/infrastructure/scripts/`
 
@@ -296,12 +297,12 @@ JavaScript utilities for automation.
 
 Multi-step development processes.
 
-| Workflow | Use Case |
-|----------|----------|
-| `greenfield-fullstack.yaml` | New full-stack project |
-| `brownfield-fullstack.yaml` | Existing project enhancement |
-| `greenfield-service.yaml` | New backend service |
-| `brownfield-ui.yaml` | Existing frontend enhancement |
+| Workflow                    | Use Case                      |
+| --------------------------- | ----------------------------- |
+| `greenfield-fullstack.yaml` | New full-stack project        |
+| `brownfield-fullstack.yaml` | Existing project enhancement  |
+| `greenfield-service.yaml`   | New backend service           |
+| `brownfield-ui.yaml`        | Existing frontend enhancement |
 
 **Location:** `.aios-core/development/workflows/`
 
@@ -309,12 +310,12 @@ Multi-step development processes.
 
 Quality validation checklists.
 
-| Checklist | Purpose |
-|-----------|---------|
+| Checklist                | Purpose                  |
+| ------------------------ | ------------------------ |
 | `story-dod-checklist.md` | Story Definition of Done |
-| `pre-push-checklist.md` | Pre-push validation |
-| `architect-checklist.md` | Architecture review |
-| `release-checklist.md` | Release validation |
+| `pre-push-checklist.md`  | Pre-push validation      |
+| `architect-checklist.md` | Architecture review      |
+| `release-checklist.md`   | Release validation       |
 
 **Location:** `.aios-core/product/checklists/`
 
@@ -332,6 +333,7 @@ node .aios-core/core/registry/build-registry.js
 ```
 
 The builder scans:
+
 - `.aios-core/development/tasks/**/*.md`
 - `.aios-core/product/templates/**/*`
 - `.aios-core/infrastructure/scripts/**/*.js`
@@ -373,12 +375,12 @@ The builder scans:
 
 The registry loader implements intelligent caching:
 
-| Feature | Description |
-|---------|-------------|
-| **TTL Cache** | 5 minutes default expiration |
-| **Indexed Lookups** | O(1) by ID, category, tag |
-| **Lazy Loading** | Registry loaded on first query |
-| **Manual Refresh** | Force reload with `registry.load(true)` |
+| Feature             | Description                             |
+| ------------------- | --------------------------------------- |
+| **TTL Cache**       | 5 minutes default expiration            |
+| **Indexed Lookups** | O(1) by ID, category, tag               |
+| **Lazy Loading**    | Registry loaded on first query          |
+| **Manual Refresh**  | Force reload with `registry.load(true)` |
 
 ### Cache Operations
 
@@ -408,7 +410,7 @@ async function getAgentTasks(agentId) {
   const registry = getRegistry();
   const tasks = await registry.getForAgent(agentId);
 
-  return tasks.filter(w => w.category === 'task');
+  return tasks.filter((w) => w.category === 'task');
 }
 
 // Usage
@@ -426,7 +428,7 @@ async function findAndExecute(searchTerm, inputs) {
   const registry = getRegistry();
   const results = await registry.search(searchTerm, {
     category: 'task',
-    maxResults: 1
+    maxResults: 1,
   });
 
   if (results.length === 0) {
@@ -441,7 +443,7 @@ async function findAndExecute(searchTerm, inputs) {
 // Usage
 await findAndExecute('create story', {
   'story-title': 'Implement user authentication',
-  'epic-id': 'EPIC-001'
+  'epic-id': 'EPIC-001',
 });
 ```
 
@@ -513,4 +515,4 @@ await registry.load(true);
 
 ---
 
-*Synkra AIOS v2.1 Service Discovery Guide*
+_Synkra AIOS v2.1 Service Discovery Guide_

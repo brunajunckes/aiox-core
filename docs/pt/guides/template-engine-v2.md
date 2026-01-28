@@ -14,7 +14,6 @@
 
 **Versão:** 2.0
 **Última Atualização:** 2025-12-05
-**Story:** [3.12 - Documentation Sprint 3](../stories/v2.1/sprint-3/story-3.12-documentation-sprint-3.md) *(coming soon)*
 
 ---
 
@@ -24,13 +23,13 @@ O Template Engine fornece uma forma consistente de gerar documentos (PRDs, ADRs,
 
 ### Funcionalidades Principais
 
-| Funcionalidade | Sintaxe | Descrição |
-|----------------|---------|-----------|
-| Variáveis | `{{VAR_NAME}}` | Substituição simples de variáveis |
-| Condicionais | `{{#IF_CONDITION}}...{{/IF_CONDITION}}` | Blocos condicionais |
-| Loops | `{{#EACH_ITEMS}}...{{/EACH_ITEMS}}` | Iteração sobre arrays |
-| Caminhos Aninhados | `{{user.name}}` | Acesso a propriedades de objetos aninhados |
-| Escape | `\{{literal}}` | Prevenir processamento do template |
+| Funcionalidade     | Sintaxe                                 | Descrição                                  |
+| ------------------ | --------------------------------------- | ------------------------------------------ |
+| Variáveis          | `{{VAR_NAME}}`                          | Substituição simples de variáveis          |
+| Condicionais       | `{{#IF_CONDITION}}...{{/IF_CONDITION}}` | Blocos condicionais                        |
+| Loops              | `{{#EACH_ITEMS}}...{{/EACH_ITEMS}}`     | Iteração sobre arrays                      |
+| Caminhos Aninhados | `{{user.name}}`                         | Acesso a propriedades de objetos aninhados |
+| Escape             | `\{{literal}}`                          | Prevenir processamento do template         |
 
 ---
 
@@ -57,7 +56,7 @@ const variables = {
   TITLE: 'My Document',
   AUTHOR: 'Dex (@dev)',
   DATE: '2025-12-05',
-  SUMMARY: 'This is a generated document.'
+  SUMMARY: 'This is a generated document.',
 };
 
 const output = engine.process(template, variables);
@@ -73,6 +72,7 @@ Created by: Dex (@dev)
 Date: 2025-12-05
 
 ## Summary
+
 This is a generated document.
 ```
 
@@ -94,6 +94,7 @@ const engine = new TemplateEngine();
 Processa uma string de template com as variáveis fornecidas.
 
 **Parâmetros:**
+
 - `template` (string) - String de template com placeholders
 - `variables` (Object) - Pares chave-valor para substituição
 
@@ -109,16 +110,17 @@ const result = engine.process('Hello, {{NAME}}!', { NAME: 'World' });
 Carrega um arquivo de template e o processa.
 
 **Parâmetros:**
+
 - `templatePath` (string) - Caminho para o arquivo de template
 - `variables` (Object) - Variáveis a substituir
 
 **Retorna:** `Promise<string>` - Template processado
 
 ```javascript
-const result = await engine.loadAndProcess(
-  '.aios-core/product/templates/story-tmpl.md',
-  { STORY_ID: '3.12', TITLE: 'Documentation' }
-);
+const result = await engine.loadAndProcess('.aios-core/product/templates/story-tmpl.md', {
+  STORY_ID: '3.12',
+  TITLE: 'Documentation',
+});
 ```
 
 #### `validateTemplate(template, requiredVars)`
@@ -126,6 +128,7 @@ const result = await engine.loadAndProcess(
 Valida se um template possui todos os placeholders obrigatórios.
 
 **Parâmetros:**
+
 - `template` (string) - Template a validar
 - `requiredVars` (string[]) - Lista de nomes de variáveis obrigatórias
 
@@ -143,6 +146,7 @@ if (!validation.valid) {
 Extrai todas as variáveis usadas em um template.
 
 **Parâmetros:**
+
 - `template` (string) - Template a analisar
 
 **Retorna:** `Object` - `{ simple: string[], conditionals: string[], loops: string[] }`
@@ -159,6 +163,7 @@ console.log('Loop variables:', vars.loops);
 Escapa caracteres especiais em entrada do usuário para prevenir injeção.
 
 **Parâmetros:**
+
 - `input` (string) - Entrada do usuário a escapar
 
 **Retorna:** `string` - Entrada escapada
@@ -196,9 +201,9 @@ const variables = {
     name: 'AIOS',
     owner: {
       name: 'Pedro',
-      email: 'pedro@example.com'
-    }
-  }
+      email: 'pedro@example.com',
+    },
+  },
 };
 ```
 
@@ -208,6 +213,7 @@ Inclua conteúdo apenas se uma variável for truthy:
 
 ```markdown
 {{#IF_HAS_DEPENDENCIES}}
+
 ## Dependencies
 
 This project depends on:
@@ -218,7 +224,7 @@ This project depends on:
 ```javascript
 const variables = {
   HAS_DEPENDENCIES: true,
-  DEPENDENCIES: '- react\n- typescript'
+  DEPENDENCIES: '- react\n- typescript',
 };
 ```
 
@@ -230,8 +236,9 @@ Itere sobre arrays:
 ## Tasks
 
 {{#EACH_TASKS}}
+
 - [ ] {{ITEM.title}} ({{ITEM.priority}})
-{{/EACH_TASKS}}
+      {{/EACH_TASKS}}
 ```
 
 ```javascript
@@ -239,12 +246,13 @@ const variables = {
   TASKS: [
     { title: 'Write docs', priority: 'HIGH' },
     { title: 'Add tests', priority: 'MEDIUM' },
-    { title: 'Review code', priority: 'LOW' }
-  ]
+    { title: 'Review code', priority: 'LOW' },
+  ],
 };
 ```
 
 **Variáveis de Contexto do Loop:**
+
 - `{{ITEM}}` - Item atual
 - `{{INDEX}}` - Índice atual (base 0)
 - `{{FIRST}}` - Boolean, true se primeiro item
@@ -266,19 +274,20 @@ Saída: `To use variables, write {{VARIABLE_NAME}}.`
 
 ### Templates de Documentos
 
-| Template | Localização | Propósito |
-|----------|-------------|-----------|
-| **PRD** | `templates/prd-tmpl.md` | Documento de Requisitos do Produto |
-| **ADR** | `templates/adr-tmpl.md` | Registro de Decisão de Arquitetura |
-| **PMDR** | `templates/pmdr-tmpl.md` | Registro de Decisão de Mapeamento de Processos |
-| **DBDR** | `templates/dbdr-tmpl.md` | Registro de Design de Banco de Dados |
-| **Story** | `templates/story-tmpl.yaml` | User Story |
-| **Epic** | `templates/epic-tmpl.md` | Definição de Epic |
-| **Task** | `templates/task-tmpl.md` | Definição de Task |
+| Template  | Localização                 | Propósito                                      |
+| --------- | --------------------------- | ---------------------------------------------- |
+| **PRD**   | `templates/prd-tmpl.md`     | Documento de Requisitos do Produto             |
+| **ADR**   | `templates/adr-tmpl.md`     | Registro de Decisão de Arquitetura             |
+| **PMDR**  | `templates/pmdr-tmpl.md`    | Registro de Decisão de Mapeamento de Processos |
+| **DBDR**  | `templates/dbdr-tmpl.md`    | Registro de Design de Banco de Dados           |
+| **Story** | `templates/story-tmpl.yaml` | User Story                                     |
+| **Epic**  | `templates/epic-tmpl.md`    | Definição de Epic                              |
+| **Task**  | `templates/task-tmpl.md`    | Definição de Task                              |
 
 ### Localização dos Templates
 
 Todos os templates são armazenados em:
+
 ```
 .aios-core/product/templates/
 ```
@@ -301,16 +310,19 @@ Todos os templates são armazenados em:
 {{DESCRIPTION}}
 
 {{#IF_HAS_PROPS}}
+
 ## Properties
 
 | Name | Type | Default | Description |
-|------|------|---------|-------------|
+| ---- | ---- | ------- | ----------- |
+
 {{#EACH_PROPS}}
 | {{ITEM.name}} | {{ITEM.type}} | {{ITEM.default}} | {{ITEM.description}} |
 {{/EACH_PROPS}}
 {{/IF_HAS_PROPS}}
 
 {{#IF_HAS_EXAMPLES}}
+
 ## Examples
 
 {{EXAMPLES}}
@@ -324,7 +336,7 @@ Crie um arquivo de schema (opcional, mas recomendado):
 ```yaml
 # my-template.schema.yaml
 name: component-template
-version: "1.0"
+version: '1.0'
 description: Template for component documentation
 
 variables:
@@ -371,9 +383,9 @@ const output = engine.process(template, {
   HAS_PROPS: true,
   PROPS: [
     { name: 'variant', type: 'string', default: 'primary', description: 'Button style' },
-    { name: 'size', type: 'string', default: 'medium', description: 'Button size' }
+    { name: 'size', type: 'string', default: 'medium', description: 'Button size' },
   ],
-  HAS_EXAMPLES: false
+  HAS_EXAMPLES: false,
 });
 ```
 
@@ -385,11 +397,13 @@ const output = engine.process(template, {
 
 ```markdown
 <!-- Bom -->
+
 {{STORY_TITLE}}
 {{ACCEPTANCE_CRITERIA}}
 {{AUTHOR_NAME}}
 
 <!-- Ruim -->
+
 {{T}}
 {{AC}}
 {{N}}
@@ -401,7 +415,7 @@ const output = engine.process(template, {
 const variables = {
   TITLE: title || 'Untitled',
   DATE: date || new Date().toISOString().split('T')[0],
-  VERSION: version || '1.0'
+  VERSION: version || '1.0',
 };
 ```
 
@@ -427,6 +441,7 @@ const output = engine.process(template, { USER_CONTENT: safeInput });
 
 ```markdown
 {{#IF_HAS_NOTES}}
+
 ## Notes
 
 {{NOTES}}
@@ -439,12 +454,12 @@ const output = engine.process(template, { USER_CONTENT: safeInput });
 
 ### Problemas Comuns
 
-| Problema | Solução |
-|----------|---------|
+| Problema                 | Solução                                                                             |
+| ------------------------ | ----------------------------------------------------------------------------------- |
 | Variável não substituída | Verifique se a ortografia corresponde exatamente (sensível a maiúsculas/minúsculas) |
-| Loop produz saída vazia | Certifique-se de que a variável é um array, não undefined |
-| Condicional sempre falso | Verifique se a variável é truthy (não string vazia/0/null) |
-| Injeção de template | Use `escapeInput()` para valores fornecidos pelo usuário |
+| Loop produz saída vazia  | Certifique-se de que a variável é um array, não undefined                           |
+| Condicional sempre falso | Verifique se a variável é truthy (não string vazia/0/null)                          |
+| Injeção de template      | Use `escapeInput()` para valores fornecidos pelo usuário                            |
 
 ### Modo Debug
 
@@ -463,8 +478,7 @@ console.log('Validation result:', validation);
 ## Documentação Relacionada
 
 - [Guia de Quality Gates](./quality-gates.md)
-- [Story 3.6: Template Engine Core](../stories/v2.1/sprint-3/story-3.6-template-engine-core.md) *(coming soon)*
 
 ---
 
-*Synkra AIOS Template Engine v2.0*
+_Synkra AIOS Template Engine v2.0_

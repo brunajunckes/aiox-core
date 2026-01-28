@@ -43,13 +43,13 @@ Este documento especifica las capacidades de auto-reparación del Sistema de Ver
 
 ### Patrones de la Industria Aplicados
 
-| Sistema        | Enfoque de Auto-reparación                     | Lección para HCS                                     |
-| -------------- | ---------------------------------------------- | ---------------------------------------------------- |
-| **Kubernetes** | Reiniciar contenedores ante falla de liveness  | Recuperación automática para operaciones conocidas   |
+| Sistema        | Enfoque de Auto-reparación                       | Lección para HCS                                   |
+| -------------- | ------------------------------------------------ | -------------------------------------------------- |
+| **Kubernetes** | Reiniciar contenedores ante falla de liveness    | Recuperación automática para operaciones conocidas |
 | **VS Code**    | Auto-actualizar extensiones, bloquear maliciosas | Actualizaciones silenciosas, bloqueos explícitos   |
-| **Terraform**  | `apply` solo después de aprobación de `plan`   | Separar detección de remediación                     |
-| **npm/yarn**   | `--update-checksums` para corregir integridad  | Comandos de recuperación iniciados por usuario       |
-| **Git**        | `reflog` para recuperación                     | Siempre preservar historial/respaldos                |
+| **Terraform**  | `apply` solo después de aprobación de `plan`     | Separar detección de remediación                   |
+| **npm/yarn**   | `--update-checksums` para corregir integridad    | Comandos de recuperación iniciados por usuario     |
+| **Git**        | `reflog` para recuperación                       | Siempre preservar historial/respaldos              |
 
 ### Árbol de Decisión
 
@@ -103,15 +103,15 @@ silenciosamente  │ modifica datos/ │
 
 **Acciones:**
 
-| Acción                 | Descripción                                           | Respaldo      |
-| ---------------------- | ----------------------------------------------------- | ------------- |
-| `recreate_config`      | Recrear `.aios/config.yaml` faltante desde plantilla  | Sí            |
-| `clear_cache`          | Limpiar archivos de caché obsoletos en `.aios/cache/` | Sí            |
-| `create_dirs`          | Crear directorios faltantes del framework             | No (aditivo)  |
-| `fix_permissions`      | Corregir permisos en archivos del framework           | Sí            |
-| `regenerate_lockfile`  | Regenerar integridad del lockfile de paquetes         | Sí            |
-| `restart_mcp`          | Reiniciar servidores MCP que no responden             | No            |
-| `reset_project_status` | Resetear archivo de estado del proyecto corrupto      | Sí            |
+| Acción                 | Descripción                                           | Respaldo     |
+| ---------------------- | ----------------------------------------------------- | ------------ |
+| `recreate_config`      | Recrear `.aios/config.yaml` faltante desde plantilla  | Sí           |
+| `clear_cache`          | Limpiar archivos de caché obsoletos en `.aios/cache/` | Sí           |
+| `create_dirs`          | Crear directorios faltantes del framework             | No (aditivo) |
+| `fix_permissions`      | Corregir permisos en archivos del framework           | Sí           |
+| `regenerate_lockfile`  | Regenerar integridad del lockfile de paquetes         | Sí           |
+| `restart_mcp`          | Reiniciar servidores MCP que no responden             | No           |
+| `reset_project_status` | Resetear archivo de estado del proyecto corrupto      | Sí           |
 
 **Ejemplos de Problemas:**
 
@@ -163,14 +163,14 @@ silenciosamente  │ modifica datos/ │
 
 **Acciones:**
 
-| Acción                | Descripción                           | Respaldo | Solicitud al Usuario               |
-| --------------------- | ------------------------------------- | -------- | ---------------------------------- |
-| `update_deps`         | Actualizar dependencias obsoletas     | Sí       | "¿Actualizar X paquetes?"          |
-| `fix_symlinks`        | Reparar enlaces simbólicos rotos      | Sí       | "¿Corregir N enlaces rotos?"       |
-| `regenerate_files`    | Regenerar archivos basados en plantilla| Sí      | "¿Regenerar desde plantilla?"      |
-| `fix_ide_config`      | Reparar configuración del IDE         | Sí       | "¿Reparar configuración VS Code?"  |
-| `migrate_config`      | Migrar config a nueva versión         | Sí       | "¿Migrar config v1→v2?"            |
-| `create_missing_docs` | Crear archivos de documentación faltantes | No   | "¿Crear coding-standards.md?"      |
+| Acción                | Descripción                               | Respaldo | Solicitud al Usuario              |
+| --------------------- | ----------------------------------------- | -------- | --------------------------------- |
+| `update_deps`         | Actualizar dependencias obsoletas         | Sí       | "¿Actualizar X paquetes?"         |
+| `fix_symlinks`        | Reparar enlaces simbólicos rotos          | Sí       | "¿Corregir N enlaces rotos?"      |
+| `regenerate_files`    | Regenerar archivos basados en plantilla   | Sí       | "¿Regenerar desde plantilla?"     |
+| `fix_ide_config`      | Reparar configuración del IDE             | Sí       | "¿Reparar configuración VS Code?" |
+| `migrate_config`      | Migrar config a nueva versión             | Sí       | "¿Migrar config v1→v2?"           |
+| `create_missing_docs` | Crear archivos de documentación faltantes | No       | "¿Crear coding-standards.md?"     |
 
 **Ejemplos de Problemas:**
 
@@ -237,12 +237,12 @@ silenciosamente  │ modifica datos/ │
 
 **Acciones:**
 
-| Acción          | Descripción                          | Orientación Proporcionada |
-| --------------- | ------------------------------------ | ------------------------- |
-| `manual_guide`  | Proporcionar instrucciones paso a paso | Comandos a ejecutar      |
-| `external_link` | Enlace a documentación               | URL + contexto            |
-| `suggest_agent` | Sugerir agente apropiado             | "@architect revisar"      |
-| `escalate`      | Marcar para revisión humana          | Abrir issue en GitHub     |
+| Acción          | Descripción                            | Orientación Proporcionada |
+| --------------- | -------------------------------------- | ------------------------- |
+| `manual_guide`  | Proporcionar instrucciones paso a paso | Comandos a ejecutar       |
+| `external_link` | Enlace a documentación                 | URL + contexto            |
+| `suggest_agent` | Sugerir agente apropiado               | "@architect revisar"      |
+| `escalate`      | Marcar para revisión humana            | Abrir issue en GitHub     |
 
 **Ejemplos de Problemas:**
 
@@ -689,7 +689,6 @@ await healingLog.append({
 - [ADR: Arquitectura HCS](./adr/adr-hcs-health-check-system.md)
 - [Modos de Ejecución HCS](./hcs-execution-modes.md)
 - [Especificaciones de Verificaciones HCS](./hcs-check-specifications.md)
-- [Historia HCS-2: Implementación](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

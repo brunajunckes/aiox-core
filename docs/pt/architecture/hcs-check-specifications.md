@@ -41,14 +41,14 @@ O Sistema de Verificação de Saúde (HCS) realiza verificações diagnósticas 
 
 ### Resumo da Contagem de Verificações
 
-| Domínio                    | Total de Verificações | Modo Rápido | Modo Completo |
-| -------------------------- | --------------------- | ----------- | ------------- |
-| Coerência do Projeto       | 8                     | 4           | 8             |
-| Ambiente Local             | 8                     | 5           | 8             |
-| Saúde do Repositório       | 8                     | 3           | 8             |
-| Ambiente de Implantação    | 5                     | 2           | 5             |
-| Integração de Serviços     | 4                     | 4           | 4             |
-| **Total**                  | **33**                | **18**      | **33**        |
+| Domínio                 | Total de Verificações | Modo Rápido | Modo Completo |
+| ----------------------- | --------------------- | ----------- | ------------- |
+| Coerência do Projeto    | 8                     | 4           | 8             |
+| Ambiente Local          | 8                     | 5           | 8             |
+| Saúde do Repositório    | 8                     | 3           | 8             |
+| Ambiente de Implantação | 5                     | 2           | 5             |
+| Integração de Serviços  | 4                     | 4           | 4             |
+| **Total**               | **33**                | **18**      | **33**        |
 
 ---
 
@@ -149,16 +149,16 @@ heal:
 
 ### Verificações
 
-| ID     | Nome                        | Severidade | Nível | Modo  | Timeout | Descrição                                      |
-| ------ | --------------------------- | ---------- | ----- | ----- | ------- | ---------------------------------------------- |
-| PC-001 | Config existe               | CRITICAL   | 1     | quick | 100ms   | `.aios/config.yaml` existe e é YAML válido     |
-| PC-002 | Referências de agentes válidas | HIGH    | 3     | full  | 2s      | Tarefas referenciam agentes existentes         |
-| PC-003 | Coding standards existe     | MEDIUM     | 2     | full  | 100ms   | `docs/framework/coding-standards.md` existe    |
-| PC-004 | Tech stack existe           | MEDIUM     | 2     | full  | 100ms   | `docs/framework/tech-stack.md` existe          |
-| PC-005 | Source tree existe          | MEDIUM     | 2     | full  | 100ms   | `docs/framework/source-tree.md` existe         |
-| PC-006 | Sem arquivos órfãos         | LOW        | 3     | full  | 5s      | Todos os arquivos em `.aios-core/` são referenciados |
-| PC-007 | Manifestos válidos          | HIGH       | 3     | quick | 1s      | Todos os manifestos YAML parseiam corretamente |
-| PC-008 | Caminhos de templates válidos | MEDIUM   | 3     | full  | 2s      | Templates referenciam arquivos existentes      |
+| ID     | Nome                           | Severidade | Nível | Modo  | Timeout | Descrição                                            |
+| ------ | ------------------------------ | ---------- | ----- | ----- | ------- | ---------------------------------------------------- |
+| PC-001 | Config existe                  | CRITICAL   | 1     | quick | 100ms   | `.aios/config.yaml` existe e é YAML válido           |
+| PC-002 | Referências de agentes válidas | HIGH       | 3     | full  | 2s      | Tarefas referenciam agentes existentes               |
+| PC-003 | Coding standards existe        | MEDIUM     | 2     | full  | 100ms   | `docs/framework/coding-standards.md` existe          |
+| PC-004 | Tech stack existe              | MEDIUM     | 2     | full  | 100ms   | `docs/framework/tech-stack.md` existe                |
+| PC-005 | Source tree existe             | MEDIUM     | 2     | full  | 100ms   | `docs/framework/source-tree.md` existe               |
+| PC-006 | Sem arquivos órfãos            | LOW        | 3     | full  | 5s      | Todos os arquivos em `.aios-core/` são referenciados |
+| PC-007 | Manifestos válidos             | HIGH       | 3     | quick | 1s      | Todos os manifestos YAML parseiam corretamente       |
+| PC-008 | Caminhos de templates válidos  | MEDIUM     | 3     | full  | 2s      | Templates referenciam arquivos existentes            |
 
 ### Detalhes de Implementação
 
@@ -221,16 +221,16 @@ class ConfigExistsCheck extends BaseCheck {
 
 ### Verificações
 
-| ID     | Nome                   | Severidade | Nível | Modo  | Timeout | Descrição                        |
-| ------ | ---------------------- | ---------- | ----- | ----- | ------- | -------------------------------- |
-| LE-001 | Versão do Node.js      | CRITICAL   | 3     | quick | 500ms   | Node.js 18+ instalado            |
-| LE-002 | Gerenciador de pacotes | CRITICAL   | 3     | quick | 500ms   | npm/yarn/pnpm disponível         |
-| LE-003 | Git configurado        | CRITICAL   | 3     | quick | 500ms   | Git instalado com config de usuário |
-| LE-004 | GitHub CLI autenticado | HIGH       | 3     | full  | 2s      | `gh auth status` passa           |
-| LE-005 | MCPs respondendo       | HIGH       | 1     | quick | 5s      | Servidores MCP estão saudáveis   |
-| LE-006 | CLAUDE.md válido       | MEDIUM     | 2     | quick | 500ms   | Seções obrigatórias presentes    |
-| LE-007 | Regras da IDE configuradas | LOW    | 2     | full  | 1s      | Regras VS Code/Cursor existem    |
-| LE-008 | Vars de ambiente definidas | HIGH   | 3     | full  | 500ms   | Vars de ambiente obrigatórias definidas |
+| ID     | Nome                       | Severidade | Nível | Modo  | Timeout | Descrição                               |
+| ------ | -------------------------- | ---------- | ----- | ----- | ------- | --------------------------------------- |
+| LE-001 | Versão do Node.js          | CRITICAL   | 3     | quick | 500ms   | Node.js 18+ instalado                   |
+| LE-002 | Gerenciador de pacotes     | CRITICAL   | 3     | quick | 500ms   | npm/yarn/pnpm disponível                |
+| LE-003 | Git configurado            | CRITICAL   | 3     | quick | 500ms   | Git instalado com config de usuário     |
+| LE-004 | GitHub CLI autenticado     | HIGH       | 3     | full  | 2s      | `gh auth status` passa                  |
+| LE-005 | MCPs respondendo           | HIGH       | 1     | quick | 5s      | Servidores MCP estão saudáveis          |
+| LE-006 | CLAUDE.md válido           | MEDIUM     | 2     | quick | 500ms   | Seções obrigatórias presentes           |
+| LE-007 | Regras da IDE configuradas | LOW        | 2     | full  | 1s      | Regras VS Code/Cursor existem           |
+| LE-008 | Vars de ambiente definidas | HIGH       | 3     | full  | 500ms   | Vars de ambiente obrigatórias definidas |
 
 ### Detalhes de Implementação
 
@@ -365,16 +365,16 @@ class McpHealthCheck extends BaseCheck {
 
 ### Verificações
 
-| ID     | Nome                   | Severidade | Nível | Modo  | Timeout | Descrição                             |
-| ------ | ---------------------- | ---------- | ----- | ----- | ------- | ------------------------------------- |
-| RH-001 | Workflows válidos      | HIGH       | 3     | full  | 2s      | YAML do GitHub Actions é válido       |
-| RH-002 | Sem workflows falhando | MEDIUM     | 3     | full  | 5s      | Últimos 10 workflows passaram         |
-| RH-003 | Proteção de branch     | MEDIUM     | 3     | full  | 2s      | Branch principal está protegido       |
-| RH-004 | Secrets configurados   | HIGH       | 3     | full  | 2s      | Secrets obrigatórios existem          |
-| RH-005 | Sem PRs obsoletos      | LOW        | 3     | full  | 3s      | Nenhum PR com mais de 30 dias         |
-| RH-006 | Dependências atualizadas | MEDIUM   | 2     | full  | 5s      | Nenhuma dep desatualizada com problemas de segurança |
-| RH-007 | Sem vulnerabilidades   | CRITICAL   | 3     | quick | 10s     | `npm audit` passa                     |
-| RH-008 | Gitignore completo     | LOW        | 1     | quick | 100ms   | Padrões obrigatórios em .gitignore    |
+| ID     | Nome                     | Severidade | Nível | Modo  | Timeout | Descrição                                            |
+| ------ | ------------------------ | ---------- | ----- | ----- | ------- | ---------------------------------------------------- |
+| RH-001 | Workflows válidos        | HIGH       | 3     | full  | 2s      | YAML do GitHub Actions é válido                      |
+| RH-002 | Sem workflows falhando   | MEDIUM     | 3     | full  | 5s      | Últimos 10 workflows passaram                        |
+| RH-003 | Proteção de branch       | MEDIUM     | 3     | full  | 2s      | Branch principal está protegido                      |
+| RH-004 | Secrets configurados     | HIGH       | 3     | full  | 2s      | Secrets obrigatórios existem                         |
+| RH-005 | Sem PRs obsoletos        | LOW        | 3     | full  | 3s      | Nenhum PR com mais de 30 dias                        |
+| RH-006 | Dependências atualizadas | MEDIUM     | 2     | full  | 5s      | Nenhuma dep desatualizada com problemas de segurança |
+| RH-007 | Sem vulnerabilidades     | CRITICAL   | 3     | quick | 10s     | `npm audit` passa                                    |
+| RH-008 | Gitignore completo       | LOW        | 1     | quick | 100ms   | Padrões obrigatórios em .gitignore                   |
 
 ### Detalhes de Implementação
 
@@ -447,13 +447,13 @@ class VulnerabilityCheck extends BaseCheck {
 
 ### Verificações
 
-| ID     | Nome                | Severidade | Nível | Modo  | Timeout | Descrição                           |
-| ------ | ------------------- | ---------- | ----- | ----- | ------- | ----------------------------------- |
-| DE-001 | Modo de implantação | INFO       | N/A   | quick | 100ms   | Detectar local/staging/prod         |
-| DE-002 | Vars por ambiente   | HIGH       | 3     | full  | 500ms   | Vars específicas do ambiente definidas |
-| DE-003 | Conexão remota      | HIGH       | 3     | full  | 5s      | Consegue alcançar alvo de implantação |
-| DE-004 | Certificados SSL    | CRITICAL   | 3     | full  | 5s      | Certificados válidos e não expirando |
-| DE-005 | Endpoints de serviço | HIGH      | 3     | full  | 10s     | Endpoints de API respondendo        |
+| ID     | Nome                 | Severidade | Nível | Modo  | Timeout | Descrição                              |
+| ------ | -------------------- | ---------- | ----- | ----- | ------- | -------------------------------------- |
+| DE-001 | Modo de implantação  | INFO       | N/A   | quick | 100ms   | Detectar local/staging/prod            |
+| DE-002 | Vars por ambiente    | HIGH       | 3     | full  | 500ms   | Vars específicas do ambiente definidas |
+| DE-003 | Conexão remota       | HIGH       | 3     | full  | 5s      | Consegue alcançar alvo de implantação  |
+| DE-004 | Certificados SSL     | CRITICAL   | 3     | full  | 5s      | Certificados válidos e não expirando   |
+| DE-005 | Endpoints de serviço | HIGH       | 3     | full  | 10s     | Endpoints de API respondendo           |
 
 ### Detalhes de Implementação
 
@@ -563,12 +563,12 @@ class SslCertificateCheck extends BaseCheck {
 
 ### Verificações
 
-| ID     | Nome              | Severidade | Nível | Modo  | Timeout | Descrição                          |
-| ------ | ----------------- | ---------- | ----- | ----- | ------- | ---------------------------------- |
-| SI-001 | Gerenciador backlog | HIGH     | 1     | quick | 3s      | ClickUp/GitHub Issues acessível    |
-| SI-002 | API do GitHub     | HIGH       | 1     | quick | 3s      | API do GitHub respondendo          |
-| SI-003 | Servidores MCP    | MEDIUM     | 1     | quick | 5s      | Servidores MCP operacionais        |
-| SI-004 | Camada de memória | LOW        | 1     | quick | 2s      | Status da camada de memória (se habilitado) |
+| ID     | Nome                | Severidade | Nível | Modo  | Timeout | Descrição                                   |
+| ------ | ------------------- | ---------- | ----- | ----- | ------- | ------------------------------------------- |
+| SI-001 | Gerenciador backlog | HIGH       | 1     | quick | 3s      | ClickUp/GitHub Issues acessível             |
+| SI-002 | API do GitHub       | HIGH       | 1     | quick | 3s      | API do GitHub respondendo                   |
+| SI-003 | Servidores MCP      | MEDIUM     | 1     | quick | 5s      | Servidores MCP operacionais                 |
+| SI-004 | Camada de memória   | LOW        | 1     | quick | 2s      | Status da camada de memória (se habilitado) |
 
 ### Detalhes de Implementação
 
@@ -640,17 +640,17 @@ class GitHubApiCheck extends BaseCheck {
 
 ### Métodos de Detecção
 
-| IDE/CLI         | Arquivo de Config              | Método de Detecção    | Validação             |
-| --------------- | ------------------------------ | --------------------- | --------------------- |
-| **VS Code**     | `.vscode/settings.json`        | Arquivo existe        | JSON schema           |
-| **Cursor**      | `.cursorrules`                 | Arquivo existe        | Padrões de conteúdo   |
-| **Windsurf**    | `.windsurf/rules/`             | Diretório existe      | TBD                   |
-| **Claude Code** | `.claude/CLAUDE.md`            | Arquivo existe        | Seções obrigatórias   |
-| **MCPs**        | `.claude.json` / `.mcp.json`   | Arquivo existe        | Ping de saúde MCP     |
-| **Git**         | `.gitconfig`                   | `git config --list`   | Configurações obrigatórias |
-| **GitHub CLI**  | N/A                            | `gh auth status`      | Verificação de auth   |
-| **Node.js**     | N/A                            | `node --version`      | Versão >= 18          |
-| **npm**         | `package.json`                 | `npm --version`       | Versão >= 9           |
+| IDE/CLI         | Arquivo de Config            | Método de Detecção  | Validação                  |
+| --------------- | ---------------------------- | ------------------- | -------------------------- |
+| **VS Code**     | `.vscode/settings.json`      | Arquivo existe      | JSON schema                |
+| **Cursor**      | `.cursorrules`               | Arquivo existe      | Padrões de conteúdo        |
+| **Windsurf**    | `.windsurf/rules/`           | Diretório existe    | TBD                        |
+| **Claude Code** | `.claude/CLAUDE.md`          | Arquivo existe      | Seções obrigatórias        |
+| **MCPs**        | `.claude.json` / `.mcp.json` | Arquivo existe      | Ping de saúde MCP          |
+| **Git**         | `.gitconfig`                 | `git config --list` | Configurações obrigatórias |
+| **GitHub CLI**  | N/A                          | `gh auth status`    | Verificação de auth        |
+| **Node.js**     | N/A                          | `node --version`    | Versão >= 18               |
+| **npm**         | `package.json`               | `npm --version`     | Versão >= 9                |
 
 ### Validação do CLAUDE.md
 
@@ -800,16 +800,16 @@ checks:
 
 ### Tipos de Verificação Customizada
 
-| Tipo              | Descrição                           | Parâmetros                        |
-| ----------------- | ----------------------------------- | --------------------------------- |
-| `file-exists`     | Verificar se arquivo existe         | `path`                            |
-| `dir-exists`      | Verificar se diretório existe       | `path`                            |
-| `content-pattern` | Buscar padrão em arquivos           | `glob`, `pattern`, `negate`       |
-| `command`         | Executar comando e verificar exit code | `command`, `expectedExitCode`  |
-| `http-health`     | Verificação de saúde de endpoint HTTP | `url`, `method`, `expectedStatus` |
-| `json-schema`     | Validar JSON contra schema          | `path`, `schema`                  |
-| `yaml-valid`      | Verificar se YAML é parseável       | `path`                            |
-| `env-var`         | Verificar variável de ambiente      | `name`, `pattern`                 |
+| Tipo              | Descrição                              | Parâmetros                        |
+| ----------------- | -------------------------------------- | --------------------------------- |
+| `file-exists`     | Verificar se arquivo existe            | `path`                            |
+| `dir-exists`      | Verificar se diretório existe          | `path`                            |
+| `content-pattern` | Buscar padrão em arquivos              | `glob`, `pattern`, `negate`       |
+| `command`         | Executar comando e verificar exit code | `command`, `expectedExitCode`     |
+| `http-health`     | Verificação de saúde de endpoint HTTP  | `url`, `method`, `expectedStatus` |
+| `json-schema`     | Validar JSON contra schema             | `path`, `schema`                  |
+| `yaml-valid`      | Verificar se YAML é parseável          | `path`                            |
+| `env-var`         | Verificar variável de ambiente         | `name`, `pattern`                 |
 
 ---
 
@@ -893,7 +893,6 @@ async function runCheckWithTimeout(check, context) {
 - [ADR: Arquitetura do HCS](./adr/adr-hcs-health-check-system.md)
 - [Modos de Execução do HCS](./hcs-execution-modes.md)
 - [Especificação de Auto-Recuperação do HCS](./hcs-self-healing-spec.md)
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

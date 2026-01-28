@@ -10,7 +10,6 @@
 
 **Versão:** 2.1.0
 **Última Atualização:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -20,13 +19,13 @@
 
 A arquitetura modular v2.1 aborda vários desafios da estrutura flat da v2.0:
 
-| Desafio | Problema v2.0 | Solução v2.1 |
-|-----------|--------------|---------------|
-| **Descoberta** | 200+ arquivos em diretórios mistos | Organizado por responsabilidade |
-| **Manutenção** | Propriedade pouco clara | Limites de módulo definem propriedade |
-| **Dependências** | Implícitas, circulares | Explícitas, unidirecionais |
-| **Escalabilidade** | Todos os arquivos sempre carregados | Lazy loading por módulo |
-| **Testes** | Apenas testes de sistema completo | Isolamento em nível de módulo |
+| Desafio            | Problema v2.0                       | Solução v2.1                          |
+| ------------------ | ----------------------------------- | ------------------------------------- |
+| **Descoberta**     | 200+ arquivos em diretórios mistos  | Organizado por responsabilidade       |
+| **Manutenção**     | Propriedade pouco clara             | Limites de módulo definem propriedade |
+| **Dependências**   | Implícitas, circulares              | Explícitas, unidirecionais            |
+| **Escalabilidade** | Todos os arquivos sempre carregados | Lazy loading por módulo               |
+| **Testes**         | Apenas testes de sistema completo   | Isolamento em nível de módulo         |
 
 ### Princípios de Design
 
@@ -110,19 +109,19 @@ graph TB
 
 ### Conteúdos
 
-| Diretório | Conteúdos | Descrição |
-|-----------|----------|-------------|
-| `config/` | `config-cache.js`, `config-loader.js` | Gerenciamento de configuração com cache TTL |
-| `data/` | `aios-kb.md`, `workflow-patterns.yaml` | Base de conhecimento do framework |
-| `docs/` | Documentação interna | Guias de componentes, troubleshooting |
-| `elicitation/` | `elicitation-engine.js`, `session-manager.js` | Sistema de prompting interativo |
-| `session/` | `context-detector.js`, `context-loader.js` | Gerenciamento de contexto de sessão |
-| `utils/` | `output-formatter.js`, `yaml-validator.js` | Utilitários comuns |
-| `registry/` | `service-registry.json`, `registry-loader.js` | Sistema de service discovery |
-| `quality-gates/` | `quality-gate-manager.js`, configs de camada | Sistema de quality gate de 3 camadas |
-| `mcp/` | `global-config-manager.js`, `os-detector.js` | Configuração global MCP |
-| `manifest/` | `manifest-generator.js`, `manifest-validator.js` | Sistema de manifesto de projeto |
-| `migration/` | `migration-config.yaml`, `module-mapping.yaml` | Configuração de migração |
+| Diretório        | Conteúdos                                        | Descrição                                   |
+| ---------------- | ------------------------------------------------ | ------------------------------------------- |
+| `config/`        | `config-cache.js`, `config-loader.js`            | Gerenciamento de configuração com cache TTL |
+| `data/`          | `aios-kb.md`, `workflow-patterns.yaml`           | Base de conhecimento do framework           |
+| `docs/`          | Documentação interna                             | Guias de componentes, troubleshooting       |
+| `elicitation/`   | `elicitation-engine.js`, `session-manager.js`    | Sistema de prompting interativo             |
+| `session/`       | `context-detector.js`, `context-loader.js`       | Gerenciamento de contexto de sessão         |
+| `utils/`         | `output-formatter.js`, `yaml-validator.js`       | Utilitários comuns                          |
+| `registry/`      | `service-registry.json`, `registry-loader.js`    | Sistema de service discovery                |
+| `quality-gates/` | `quality-gate-manager.js`, configs de camada     | Sistema de quality gate de 3 camadas        |
+| `mcp/`           | `global-config-manager.js`, `os-detector.js`     | Configuração global MCP                     |
+| `manifest/`      | `manifest-generator.js`, `manifest-validator.js` | Sistema de manifesto de projeto             |
+| `migration/`     | `migration-config.yaml`, `module-mapping.yaml`   | Configuração de migração                    |
 
 ### APIs Principais
 
@@ -157,39 +156,39 @@ const QualityGateManager = require('./.aios-core/core/quality-gates/quality-gate
 
 ### Conteúdos
 
-| Diretório | Conteúdos | Descrição |
-|-----------|----------|-------------|
-| `agents/` | 11 definições de agentes | `dev.md`, `qa.md`, `architect.md`, etc. |
-| `agent-teams/` | 5 configurações de times | Grupos de agentes pré-definidos |
-| `tasks/` | 115+ definições de tarefas | Workflows de tarefas executáveis |
-| `workflows/` | 7 definições de workflows | Workflows de desenvolvimento multi-step |
-| `scripts/` | 24 scripts | Utilitários de suporte a agentes |
+| Diretório      | Conteúdos                  | Descrição                               |
+| -------------- | -------------------------- | --------------------------------------- |
+| `agents/`      | 11 definições de agentes   | `dev.md`, `qa.md`, `architect.md`, etc. |
+| `agent-teams/` | 5 configurações de times   | Grupos de agentes pré-definidos         |
+| `tasks/`       | 115+ definições de tarefas | Workflows de tarefas executáveis        |
+| `workflows/`   | 7 definições de workflows  | Workflows de desenvolvimento multi-step |
+| `scripts/`     | 24 scripts                 | Utilitários de suporte a agentes        |
 
 ### Agentes
 
-| Agente | ID | Responsabilidade |
-|-------|-----|---------------|
-| AIOS Master | `aios-master` | Orquestração do framework |
-| Developer | `dev` | Implementação de código |
-| QA | `qa` | Garantia de qualidade |
-| Architect | `architect` | Arquitetura técnica |
-| Product Owner | `po` | Backlog do produto |
-| Product Manager | `pm` | Estratégia de produto |
-| Scrum Master | `sm` | Facilitação de processos |
-| Analyst | `analyst` | Análise de negócios |
-| Data Engineer | `data-engineer` | Engenharia de dados |
-| DevOps | `devops` | CI/CD e operações |
-| UX Expert | `ux-design-expert` | Experiência do usuário |
+| Agente          | ID                 | Responsabilidade          |
+| --------------- | ------------------ | ------------------------- |
+| AIOS Master     | `aios-master`      | Orquestração do framework |
+| Developer       | `dev`              | Implementação de código   |
+| QA              | `qa`               | Garantia de qualidade     |
+| Architect       | `architect`        | Arquitetura técnica       |
+| Product Owner   | `po`               | Backlog do produto        |
+| Product Manager | `pm`               | Estratégia de produto     |
+| Scrum Master    | `sm`               | Facilitação de processos  |
+| Analyst         | `analyst`          | Análise de negócios       |
+| Data Engineer   | `data-engineer`    | Engenharia de dados       |
+| DevOps          | `devops`           | CI/CD e operações         |
+| UX Expert       | `ux-design-expert` | Experiência do usuário    |
 
 ### Times de Agentes
 
-| Time | Agentes | Caso de Uso |
-|------|--------|----------|
-| `team-all` | Todos os 11 agentes | Time de desenvolvimento completo |
-| `team-fullstack` | dev, qa, architect, devops | Projetos full-stack |
-| `team-ide-minimal` | dev, qa | Setup mínimo de IDE |
-| `team-no-ui` | dev, architect, devops, data-engineer | Projetos backend/API |
-| `team-qa-focused` | qa, dev, architect | Trabalho focado em qualidade |
+| Time               | Agentes                               | Caso de Uso                      |
+| ------------------ | ------------------------------------- | -------------------------------- |
+| `team-all`         | Todos os 11 agentes                   | Time de desenvolvimento completo |
+| `team-fullstack`   | dev, qa, architect, devops            | Projetos full-stack              |
+| `team-ide-minimal` | dev, qa                               | Setup mínimo de IDE              |
+| `team-no-ui`       | dev, architect, devops, data-engineer | Projetos backend/API             |
+| `team-qa-focused`  | qa, dev, architect                    | Trabalho focado em qualidade     |
 
 ### Dependências
 
@@ -204,21 +203,21 @@ const QualityGateManager = require('./.aios-core/core/quality-gates/quality-gate
 
 ### Conteúdos
 
-| Diretório | Conteúdos | Descrição |
-|-----------|----------|-------------|
-| `templates/` | 52+ templates | PRDs, stories, arquiteturas, regras de IDE |
-| `checklists/` | 11 checklists | Checklists de validação de qualidade |
-| `data/` | 6 arquivos de dados | Base de conhecimento PM e referência |
+| Diretório     | Conteúdos           | Descrição                                  |
+| ------------- | ------------------- | ------------------------------------------ |
+| `templates/`  | 52+ templates       | PRDs, stories, arquiteturas, regras de IDE |
+| `checklists/` | 11 checklists       | Checklists de validação de qualidade       |
+| `data/`       | 6 arquivos de dados | Base de conhecimento PM e referência       |
 
 ### Templates Principais
 
-| Template | Propósito |
-|----------|---------|
-| `story-tmpl.yaml` | Template de story v2.0 |
-| `prd-tmpl.yaml` | Documento de Requisitos de Produto |
-| `architecture-tmpl.yaml` | Documentação de arquitetura |
-| `qa-gate-tmpl.yaml` | Template de quality gate |
-| `ide-rules/` | 9 arquivos de regras específicos de IDE |
+| Template                 | Propósito                               |
+| ------------------------ | --------------------------------------- |
+| `story-tmpl.yaml`        | Template de story v2.0                  |
+| `prd-tmpl.yaml`          | Documento de Requisitos de Produto      |
+| `architecture-tmpl.yaml` | Documentação de arquitetura             |
+| `qa-gate-tmpl.yaml`      | Template de quality gate                |
+| `ide-rules/`             | 9 arquivos de regras específicos de IDE |
 
 ### Checklists
 
@@ -243,22 +242,22 @@ const QualityGateManager = require('./.aios-core/core/quality-gates/quality-gate
 
 ### Conteúdos
 
-| Diretório | Conteúdos | Descrição |
-|-----------|----------|-------------|
-| `scripts/` | 55+ scripts | Utilitários de infraestrutura |
-| `tools/` | Configurações de ferramentas | CLI, MCP, configs de ferramentas locais |
-| `integrations/` | Adaptadores PM | Adaptadores ClickUp, Jira, GitHub |
-| `tests/` | Testes de módulo | Validação de infraestrutura |
+| Diretório       | Conteúdos                    | Descrição                               |
+| --------------- | ---------------------------- | --------------------------------------- |
+| `scripts/`      | 55+ scripts                  | Utilitários de infraestrutura           |
+| `tools/`        | Configurações de ferramentas | CLI, MCP, configs de ferramentas locais |
+| `integrations/` | Adaptadores PM               | Adaptadores ClickUp, Jira, GitHub       |
+| `tests/`        | Testes de módulo             | Validação de infraestrutura             |
 
 ### Scripts Principais
 
-| Script | Propósito |
-|--------|---------|
-| `git-wrapper.js` | Wrapper de operações Git |
-| `backup-manager.js` | Sistema de backup/restore |
-| `template-engine.js` | Processamento de templates |
-| `security-checker.js` | Validação de segurança |
-| `performance-analyzer.js` | Análise de performance |
+| Script                    | Propósito                  |
+| ------------------------- | -------------------------- |
+| `git-wrapper.js`          | Wrapper de operações Git   |
+| `backup-manager.js`       | Sistema de backup/restore  |
+| `template-engine.js`      | Processamento de templates |
+| `security-checker.js`     | Validação de segurança     |
+| `performance-analyzer.js` | Análise de performance     |
 
 ### Configurações de Ferramentas
 
@@ -297,6 +296,7 @@ graph LR
 ```
 
 **Regras:**
+
 1. `core/` não tem dependências internas
 2. `development/`, `product/`, `infrastructure/` dependem apenas de `core/`
 3. Dependências circulares não são permitidas
@@ -327,26 +327,26 @@ Ao adicionar nova funcionalidade:
 
 ### Convenções de Nomenclatura
 
-| Tipo | Convenção | Exemplo |
-|------|------------|---------|
-| Scripts | `kebab-case.js` | `config-loader.js` |
-| Agentes | `agent-id.md` | `dev.md`, `qa.md` |
-| Tarefas | `agent-prefix-task-name.md` | `dev-develop-story.md` |
-| Templates | `name-tmpl.yaml` | `story-tmpl.yaml` |
-| Checklists | `name-checklist.md` | `pre-push-checklist.md` |
+| Tipo       | Convenção                   | Exemplo                 |
+| ---------- | --------------------------- | ----------------------- |
+| Scripts    | `kebab-case.js`             | `config-loader.js`      |
+| Agentes    | `agent-id.md`               | `dev.md`, `qa.md`       |
+| Tarefas    | `agent-prefix-task-name.md` | `dev-develop-story.md`  |
+| Templates  | `name-tmpl.yaml`            | `story-tmpl.yaml`       |
+| Checklists | `name-checklist.md`         | `pre-push-checklist.md` |
 
 ### Adicionando Novos Arquivos
 
-| Tipo de Arquivo | Localização | Módulo |
-|-----------|----------|--------|
-| Definição de agente | `development/agents/` | Development |
-| Definição de tarefa | `development/tasks/` | Development |
-| Workflow | `development/workflows/` | Development |
-| Template | `product/templates/` | Product |
-| Checklist | `product/checklists/` | Product |
-| Script utilitário | `infrastructure/scripts/` | Infrastructure |
-| Loader de config | `core/config/` | Core |
-| Registry | `core/registry/` | Core |
+| Tipo de Arquivo     | Localização               | Módulo         |
+| ------------------- | ------------------------- | -------------- |
+| Definição de agente | `development/agents/`     | Development    |
+| Definição de tarefa | `development/tasks/`      | Development    |
+| Workflow            | `development/workflows/`  | Development    |
+| Template            | `product/templates/`      | Product        |
+| Checklist           | `product/checklists/`     | Product        |
+| Script utilitário   | `infrastructure/scripts/` | Infrastructure |
+| Loader de config    | `core/config/`            | Core           |
+| Registry            | `core/registry/`          | Core           |
 
 ---
 
@@ -365,7 +365,7 @@ aios migrate --from=2.0 --to=2.1
 aios migrate --validate
 ```
 
-Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) *(coming soon)* para instruções detalhadas.
+Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) _(coming soon)_ para instruções detalhadas.
 
 ---
 
@@ -374,9 +374,9 @@ Veja o [Guia de Migração](../migration/v2.0-to-v2.1.md) *(coming soon)* para i
 - [Guia de Service Discovery](../guides/service-discovery.md)
 - [Guia de Quality Gates](../guides/quality-gates.md)
 - [Guia de Setup Global MCP](../guides/mcp-global-setup.md)
-- [Guia de Migração](../migration/v2.0-to-v2.1.md) *(coming soon)*
-- [ADR-002: Arquitetura Modular](decisions/ADR-002-migration-map.md) *(coming soon)*
+- [Guia de Migração](../migration/v2.0-to-v2.1.md) _(coming soon)_
+- [ADR-002: Arquitetura Modular](decisions/ADR-002-migration-map.md) _(coming soon)_
 
 ---
 
-*Arquitetura do Sistema de Módulos Synkra AIOS v2.1*
+_Arquitetura do Sistema de Módulos Synkra AIOS v2.1_

@@ -8,7 +8,6 @@
 
 **Version:** 2.1.1
 **Last Updated:** 2025-12-23
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -18,12 +17,12 @@ The MCP Global System allows you to configure MCP servers once and share them ac
 
 ### Benefits
 
-| Benefit | Description |
-|---------|-------------|
-| **Single Configuration** | Configure servers once, use everywhere |
-| **Consistent Settings** | Same server configs across all projects |
-| **Credential Management** | Secure, centralized credential storage |
-| **Easy Updates** | Update server versions in one place |
+| Benefit                   | Description                             |
+| ------------------------- | --------------------------------------- |
+| **Single Configuration**  | Configure servers once, use everywhere  |
+| **Consistent Settings**   | Same server configs across all projects |
+| **Credential Management** | Secure, centralized credential storage  |
+| **Easy Updates**          | Update server versions in one place     |
 
 ### Global Directory Structure
 
@@ -80,6 +79,7 @@ aios mcp setup
 ```
 
 **This creates:**
+
 - `~/.aios/` - Global AIOS directory
 - `~/.aios/mcp/` - MCP configuration directory
 - `~/.aios/mcp/global-config.json` - Main config file
@@ -95,6 +95,7 @@ aios mcp status
 ```
 
 **Expected Output:**
+
 ```
 MCP Global Configuration
 ========================
@@ -129,15 +130,15 @@ aios mcp add desktop-commander
 
 ### Available Templates
 
-| Template | Type | Description |
-|----------|------|-------------|
-| `context7` | SSE | Library documentation lookups |
-| `exa` | Command | Advanced web search |
-| `github` | Command | GitHub API integration |
-| `puppeteer` | Command | Browser automation |
-| `filesystem` | Command | File system access |
-| `memory` | Command | Temporary memory storage |
-| `desktop-commander` | Command | Desktop automation |
+| Template            | Type    | Description                   |
+| ------------------- | ------- | ----------------------------- |
+| `context7`          | SSE     | Library documentation lookups |
+| `exa`               | Command | Advanced web search           |
+| `github`            | Command | GitHub API integration        |
+| `puppeteer`         | Command | Browser automation            |
+| `filesystem`        | Command | File system access            |
+| `memory`            | Command | Temporary memory storage      |
+| `desktop-commander` | Command | Desktop automation            |
 
 ### Custom Server Configuration
 
@@ -211,6 +212,7 @@ aios mcp list --enabled
 ```
 
 **Output:**
+
 ```
 Configured MCP Servers
 ======================
@@ -353,12 +355,7 @@ For Windows, use the CMD wrapper for NPX:
 ```json
 {
   "command": "cmd",
-  "args": [
-    "/c",
-    "npx-wrapper.cmd",
-    "-y",
-    "@package/mcp-server"
-  ],
+  "args": ["/c", "npx-wrapper.cmd", "-y", "@package/mcp-server"],
   "env": {
     "API_KEY": "${API_KEY}"
   },
@@ -386,18 +383,21 @@ Reference environment variables using `${VAR_NAME}` syntax:
 ### Setting Variables
 
 **Windows (PowerShell):**
+
 ```powershell
 $env:EXA_API_KEY = "your-api-key"
 $env:GITHUB_TOKEN = "your-github-token"
 ```
 
 **Windows (CMD):**
+
 ```cmd
 set EXA_API_KEY=your-api-key
 set GITHUB_TOKEN=your-github-token
 ```
 
 **macOS/Linux:**
+
 ```bash
 export EXA_API_KEY="your-api-key"
 export GITHUB_TOKEN="your-github-token"
@@ -408,6 +408,7 @@ export GITHUB_TOKEN="your-github-token"
 **Windows:** Add to System Environment Variables
 
 **macOS/Linux:** Add to `~/.bashrc`, `~/.zshrc`, or `~/.profile`:
+
 ```bash
 export EXA_API_KEY="your-api-key"
 export GITHUB_TOKEN="your-github-token"
@@ -456,7 +457,7 @@ const {
   readGlobalConfig,
   addServer,
   removeServer,
-  listServers
+  listServers,
 } = require('./.aios-core/core/mcp/global-config-manager');
 
 // Check if setup exists
@@ -468,7 +469,7 @@ if (!globalDirExists()) {
 addServer('my-server', {
   command: 'npx',
   args: ['-y', 'my-mcp-server'],
-  enabled: true
+  enabled: true,
 });
 
 // List servers
@@ -488,14 +489,14 @@ const {
   isMacOS,
   isLinux,
   getGlobalMcpDir,
-  getGlobalConfigPath
+  getGlobalConfigPath,
 } = require('./.aios-core/core/mcp/os-detector');
 
 // Get OS type
 console.log(detectOS()); // 'windows' | 'macos' | 'linux'
 
 // Get paths
-console.log(getGlobalMcpDir());     // ~/.aios/mcp/
+console.log(getGlobalMcpDir()); // ~/.aios/mcp/
 console.log(getGlobalConfigPath()); // ~/.aios/mcp/global-config.json
 ```
 
@@ -505,28 +506,28 @@ console.log(getGlobalConfigPath()); // ~/.aios/mcp/global-config.json
 
 ### Setup Issues
 
-| Issue | Solution |
-|-------|----------|
+| Issue             | Solution                                                          |
+| ----------------- | ----------------------------------------------------------------- |
 | Permission denied | Run terminal as Administrator (Windows) or use sudo (macOS/Linux) |
-| Directory exists | Use `aios mcp setup --force` to recreate |
-| Path not found | Ensure home directory exists |
+| Directory exists  | Use `aios mcp setup --force` to recreate                          |
+| Path not found    | Ensure home directory exists                                      |
 
 ### Server Issues
 
-| Issue | Solution |
-|-------|----------|
-| Server not starting | Check command and args, verify package installed |
-| Environment variable not found | Set variable or use credentials storage |
-| Timeout errors | Increase timeout in config |
-| Connection refused | Check URL and network access |
+| Issue                          | Solution                                         |
+| ------------------------------ | ------------------------------------------------ |
+| Server not starting            | Check command and args, verify package installed |
+| Environment variable not found | Set variable or use credentials storage          |
+| Timeout errors                 | Increase timeout in config                       |
+| Connection refused             | Check URL and network access                     |
 
 ### Windows-Specific Issues
 
-| Issue | Solution |
-|-------|----------|
-| NPX not found | Add Node.js to PATH, use CMD wrapper |
+| Issue          | Solution                               |
+| -------------- | -------------------------------------- |
+| NPX not found  | Add Node.js to PATH, use CMD wrapper   |
 | Symlink errors | Enable Developer Mode or use junctions |
-| Path too long | Enable long paths in registry |
+| Path too long  | Enable long paths in registry          |
 
 ### Common Fixes
 
@@ -546,17 +547,18 @@ npx -y @modelcontextprotocol/server-github
 
 ### Docker MCP Toolkit Issues
 
-| Issue | Solution |
-|-------|----------|
-| Secrets not passed to containers | Edit catalog file directly (see below) |
-| Template interpolation failing | Use hardcoded values in catalog |
-| Tools showing as "(N prompts)" | Token not being passed - apply workaround |
+| Issue                            | Solution                                  |
+| -------------------------------- | ----------------------------------------- |
+| Secrets not passed to containers | Edit catalog file directly (see below)    |
+| Template interpolation failing   | Use hardcoded values in catalog           |
+| Tools showing as "(N prompts)"   | Token not being passed - apply workaround |
 
 #### Docker MCP Secrets Bug (Dec 2025)
 
 **Issue:** Docker MCP Toolkit's secrets store (`docker mcp secret set`) and template interpolation (`{{...}}`) do NOT work properly. Credentials are not passed to containers.
 
 **Symptoms:**
+
 - `docker mcp tools ls` shows "(N prompts)" instead of "(N tools)"
 - MCP server starts but fails authentication
 - Verbose output shows `-e ENV_VAR` without values
@@ -564,13 +566,14 @@ npx -y @modelcontextprotocol/server-github
 **Workaround:** Edit `~/.docker/mcp/catalogs/docker-mcp.yaml` directly:
 
 ```yaml
-{mcp-name}:
+{ mcp-name }:
   env:
     - name: API_TOKEN
       value: 'actual-token-value-here'
 ```
 
 **Example - Apify:**
+
 ```yaml
 apify-mcp-server:
   env:
@@ -647,9 +650,8 @@ Create `.mcp.json` in project root to override global settings:
 ## Related Documentation
 
 - [Module System Architecture](../architecture/module-system.md)
-- [Story 2.11: MCP System Global](../stories/v2.1/sprint-2/story-2.11-mcp-system-global.md) *(coming soon)*
 - [MCP Architecture Diagrams](../architecture/mcp-system-diagrams.md)
 
 ---
 
-*Synkra AIOS v2.1 MCP Global Setup Guide*
+_Synkra AIOS v2.1 MCP Global Setup Guide_

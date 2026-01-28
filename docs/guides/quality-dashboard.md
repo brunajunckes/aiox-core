@@ -8,7 +8,6 @@
 
 **Version:** 1.0
 **Last Updated:** 2025-12-05
-**Story:** [3.11b - Quality Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 
@@ -18,14 +17,14 @@ The Quality Gates Dashboard provides real-time visualization of quality metrics 
 
 ### Key Features
 
-| Feature | Description |
-|---------|-------------|
-| **3-Layer Metrics** | View pass rates for Pre-Commit, PR Review, and Human Review |
-| **Trend Charts** | Track auto-catch rate over the last 30 days |
-| **Real-time Updates** | Auto-refresh every 60 seconds |
-| **Responsive Design** | Works on desktop, tablet, and mobile |
-| **Accessibility** | WCAG 2.1 AA compliant |
-| **Dark Mode** | Automatic based on system preference |
+| Feature               | Description                                                 |
+| --------------------- | ----------------------------------------------------------- |
+| **3-Layer Metrics**   | View pass rates for Pre-Commit, PR Review, and Human Review |
+| **Trend Charts**      | Track auto-catch rate over the last 30 days                 |
+| **Real-time Updates** | Auto-refresh every 60 seconds                               |
+| **Responsive Design** | Works on desktop, tablet, and mobile                        |
+| **Accessibility**     | WCAG 2.1 AA compliant                                       |
+| **Dark Mode**         | Automatic based on system preference                        |
 
 ---
 
@@ -64,6 +63,7 @@ npx serve dist
 ### Direct File Access
 
 Open the pre-built dashboard:
+
 ```
 tools/quality-dashboard/dist/index.html
 ```
@@ -82,11 +82,11 @@ tools/quality-dashboard/dist/index.html
 └─────────────────────────────────────────────────────────┘
 ```
 
-| Element | Description |
-|---------|-------------|
-| **Last Update** | Timestamp of most recent data fetch |
-| **Refresh Button** | Manual refresh without page reload |
-| **Auto-refresh** | Configurable interval (30s, 60s, 5m, off) |
+| Element            | Description                               |
+| ------------------ | ----------------------------------------- |
+| **Last Update**    | Timestamp of most recent data fetch       |
+| **Refresh Button** | Manual refresh without page reload        |
+| **Auto-refresh**   | Configurable interval (30s, 60s, 5m, off) |
 
 ### Layer Cards
 
@@ -106,22 +106,23 @@ Each quality gate layer has its own metrics card:
 
 #### Layer 1: Pre-Commit
 
-| Metric | Description |
-|--------|-------------|
-| **Pass Rate** | % of commits passing all checks (lint, test, typecheck) |
-| **Avg Time** | Average time to complete all Layer 1 checks |
-| **Total Runs** | Number of pre-commit runs in the time period |
+| Metric         | Description                                             |
+| -------------- | ------------------------------------------------------- |
+| **Pass Rate**  | % of commits passing all checks (lint, test, typecheck) |
+| **Avg Time**   | Average time to complete all Layer 1 checks             |
+| **Total Runs** | Number of pre-commit runs in the time period            |
 
 #### Layer 2: PR Review
 
-| Metric | Description |
-|--------|-------------|
-| **Pass Rate** | % of PRs passing automated review |
+| Metric                  | Description                              |
+| ----------------------- | ---------------------------------------- |
+| **Pass Rate**           | % of PRs passing automated review        |
 | **CodeRabbit Findings** | Issues found by CodeRabbit (by severity) |
-| **Quinn Findings** | Issues found by @qa agent |
-| **Auto-Catch Rate** | % of issues caught before human review |
+| **Quinn Findings**      | Issues found by @qa agent                |
+| **Auto-Catch Rate**     | % of issues caught before human review   |
 
 **Expanded View (click to expand):**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Layer 2: PR Review                         ● Warning  │
@@ -144,11 +145,11 @@ Each quality gate layer has its own metrics card:
 
 #### Layer 3: Human Review
 
-| Metric | Description |
-|--------|-------------|
-| **Pass Rate** | % of PRs approved on first review |
-| **Avg Time** | Average time from PR creation to approval |
-| **Revision Rate** | % of PRs requiring revisions |
+| Metric            | Description                               |
+| ----------------- | ----------------------------------------- |
+| **Pass Rate**     | % of PRs approved on first review         |
+| **Avg Time**      | Average time from PR creation to approval |
+| **Revision Rate** | % of PRs requiring revisions              |
 
 ### Trend Chart
 
@@ -176,6 +177,7 @@ Higher is better - means more issues are caught automatically before human revie
 ### Location
 
 Metrics are stored in:
+
 ```
 .aios/data/quality-metrics.json
 ```
@@ -260,20 +262,20 @@ This copies `.aios/data/quality-metrics.json` to `tools/quality-dashboard/public
 
 ### Healthy Trends
 
-| Indicator | What It Means |
-|-----------|---------------|
-| **Rising Auto-Catch Rate** | More issues caught automatically - quality gates working |
-| **Decreasing Layer 3 Revisions** | Human reviewers finding fewer issues |
-| **Stable Pass Rates > 90%** | Developers writing better code upfront |
+| Indicator                        | What It Means                                            |
+| -------------------------------- | -------------------------------------------------------- |
+| **Rising Auto-Catch Rate**       | More issues caught automatically - quality gates working |
+| **Decreasing Layer 3 Revisions** | Human reviewers finding fewer issues                     |
+| **Stable Pass Rates > 90%**      | Developers writing better code upfront                   |
 
 ### Warning Signs
 
-| Indicator | What It Means | Action |
-|-----------|---------------|--------|
-| **Dropping Auto-Catch Rate** | Automated checks missing issues | Review CodeRabbit config |
-| **Layer 1 Pass Rate < 80%** | Too many failing commits | Check lint/test rules |
-| **Layer 2 Many CRITICALs** | Security/quality issues | Review code practices |
-| **Layer 3 Revision Rate > 30%** | Human review finding many issues | Improve automation |
+| Indicator                       | What It Means                    | Action                   |
+| ------------------------------- | -------------------------------- | ------------------------ |
+| **Dropping Auto-Catch Rate**    | Automated checks missing issues  | Review CodeRabbit config |
+| **Layer 1 Pass Rate < 80%**     | Too many failing commits         | Check lint/test rules    |
+| **Layer 2 Many CRITICALs**      | Security/quality issues          | Review code practices    |
+| **Layer 3 Revision Rate > 30%** | Human review finding many issues | Improve automation       |
 
 ---
 
@@ -283,12 +285,12 @@ This copies `.aios/data/quality-metrics.json` to `tools/quality-dashboard/public
 
 Click the dropdown next to the refresh button:
 
-| Option | Use Case |
-|--------|----------|
+| Option         | Use Case                          |
+| -------------- | --------------------------------- |
 | **30 seconds** | Active monitoring during releases |
-| **60 seconds** | Default for daily use |
-| **5 minutes** | Background monitoring |
-| **Off** | Manual refresh only |
+| **60 seconds** | Default for daily use             |
+| **5 minutes**  | Background monitoring             |
+| **Off**        | Manual refresh only               |
 
 ### Dark Mode
 
@@ -300,13 +302,13 @@ The dashboard automatically follows your system preference. No manual toggle nee
 
 The dashboard is WCAG 2.1 AA compliant:
 
-| Feature | Implementation |
-|---------|----------------|
-| **Color Contrast** | All text has 4.5:1 minimum contrast ratio |
-| **Keyboard Navigation** | Full keyboard support with visible focus |
-| **Screen Readers** | ARIA labels on all interactive elements |
-| **Reduced Motion** | Respects `prefers-reduced-motion` |
-| **Focus Management** | Logical tab order throughout |
+| Feature                 | Implementation                            |
+| ----------------------- | ----------------------------------------- |
+| **Color Contrast**      | All text has 4.5:1 minimum contrast ratio |
+| **Keyboard Navigation** | Full keyboard support with visible focus  |
+| **Screen Readers**      | ARIA labels on all interactive elements   |
+| **Reduced Motion**      | Respects `prefers-reduced-motion`         |
+| **Focus Management**    | Logical tab order throughout              |
 
 ---
 
@@ -325,6 +327,7 @@ npm run sync-metrics
 ### Metrics File Not Found
 
 Ensure the metrics collector has run:
+
 ```bash
 # Check if metrics file exists
 ls -la .aios/data/quality-metrics.json
@@ -342,6 +345,7 @@ npx aios metrics seed
 ### Auto-Refresh Not Working
 
 The auto-refresh pauses when:
+
 - Browser tab is in background
 - Network connectivity is lost
 - Focus is on an interactive element
@@ -351,9 +355,7 @@ The auto-refresh pauses when:
 ## Related Documentation
 
 - [Quality Gates Guide](./quality-gates.md)
-- [Story 3.11a: Metrics Collector](../stories/v2.1/sprint-3/story-3.11a-metrics-collector.md) *(coming soon)*
-- [Story 3.11b: Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 
-*Synkra AIOS Quality Dashboard v1.0*
+_Synkra AIOS Quality Dashboard v1.0_

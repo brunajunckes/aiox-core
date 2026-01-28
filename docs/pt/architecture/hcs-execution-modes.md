@@ -42,13 +42,13 @@ Este documento define os modos de execução para o Sistema de Verificação de 
 
 ### Padrões da Indústria Analisados
 
-| Sistema                     | Padrão de Health Check                     | Gatilho                 | Insight Principal                                   |
-| --------------------------- | ------------------------------------------ | ----------------------- | --------------------------------------------------- |
-| **Kubernetes**              | Probes de Liveness/Readiness/Startup       | Periódico (configurável)| Diferenciar entre "vivo" e "pronto para servir"     |
-| **VS Code**                 | Bisect de extensão, integridade de instalação | Sob demanda + background | Isolamento previne falhas em cascata               |
-| **Terraform**               | Detecção de drift com `terraform plan`     | Manual + CI agendado    | Detectar vs. remediar são etapas separadas          |
-| **npm/yarn**                | Integridade de lockfile, `npm audit`       | Na instalação + manual  | Hashes criptográficos previnem adulteração          |
-| **Flutter/Homebrew doctor** | Comando CLI `doctor`                       | Sob demanda             | Saída categorizada (✅ ⚠️ ❌) com correções acionáveis |
+| Sistema                     | Padrão de Health Check                        | Gatilho                  | Insight Principal                                      |
+| --------------------------- | --------------------------------------------- | ------------------------ | ------------------------------------------------------ |
+| **Kubernetes**              | Probes de Liveness/Readiness/Startup          | Periódico (configurável) | Diferenciar entre "vivo" e "pronto para servir"        |
+| **VS Code**                 | Bisect de extensão, integridade de instalação | Sob demanda + background | Isolamento previne falhas em cascata                   |
+| **Terraform**               | Detecção de drift com `terraform plan`        | Manual + CI agendado     | Detectar vs. remediar são etapas separadas             |
+| **npm/yarn**                | Integridade de lockfile, `npm audit`          | Na instalação + manual   | Hashes criptográficos previnem adulteração             |
+| **Flutter/Homebrew doctor** | Comando CLI `doctor`                          | Sob demanda              | Saída categorizada (✅ ⚠️ ❌) com correções acionáveis |
 
 ### Lições Principais Aprendidas
 
@@ -87,15 +87,15 @@ Este documento define os modos de execução para o Sistema de Verificação de 
 
 ## Matriz de Comparação de Modos de Execução
 
-| Modo                         | Gatilho            | Duração | Impacto UX            | Caso de Uso            | Recomendação        |
-| ---------------------------- | ------------------ | ------- | --------------------- | ---------------------- | ------------------- |
-| **Manual** (`*health-check`) | Comando do usuário | 10-60s  | Nenhum (iniciado pelo usuário) | Diagnóstico sob demanda | ✅ **Primário**     |
-| **Hook pré-commit**          | `git commit`       | 10-30s  | Alto atrito           | Capturar problemas cedo | ❌ Não recomendado  |
-| **Hook pós-commit**          | Após commit        | 10-60s  | Atrito médio          | Validação local        | ⚠️ Opcional         |
-| **CI Agendado**              | Cron/workflow      | 60-300s | Nenhum                | Monitoramento contínuo | ✅ **Secundário**   |
-| **Trigger pós-merge**        | Merge de PR        | 60-120s | Nenhum                | Validação pós-mudança  | ✅ **Terciário**    |
-| **Background na IDE**        | Save/intervalo     | 5-15s   | Indicadores sutis     | Feedback em tempo real | ⚠️ Apenas usuários avançados |
-| **Na instalação/bootstrap**  | `npx aios install` | 60-120s | Esperado              | Validação de setup     | ✅ **Obrigatório**  |
+| Modo                         | Gatilho            | Duração | Impacto UX                     | Caso de Uso             | Recomendação                 |
+| ---------------------------- | ------------------ | ------- | ------------------------------ | ----------------------- | ---------------------------- |
+| **Manual** (`*health-check`) | Comando do usuário | 10-60s  | Nenhum (iniciado pelo usuário) | Diagnóstico sob demanda | ✅ **Primário**              |
+| **Hook pré-commit**          | `git commit`       | 10-30s  | Alto atrito                    | Capturar problemas cedo | ❌ Não recomendado           |
+| **Hook pós-commit**          | Após commit        | 10-60s  | Atrito médio                   | Validação local         | ⚠️ Opcional                  |
+| **CI Agendado**              | Cron/workflow      | 60-300s | Nenhum                         | Monitoramento contínuo  | ✅ **Secundário**            |
+| **Trigger pós-merge**        | Merge de PR        | 60-120s | Nenhum                         | Validação pós-mudança   | ✅ **Terciário**             |
+| **Background na IDE**        | Save/intervalo     | 5-15s   | Indicadores sutis              | Feedback em tempo real  | ⚠️ Apenas usuários avançados |
+| **Na instalação/bootstrap**  | `npx aios install` | 60-120s | Esperado                       | Validação de setup      | ✅ **Obrigatório**           |
 
 ### Avaliação Detalhada
 
@@ -287,13 +287,13 @@ healthCheck:
 
 ### Configuração de Modo
 
-| Configuração        | Modo Rápido       | Modo Completo    | Modo por Domínio         |
-| ------------------- | ----------------- | ---------------- | ------------------------ |
-| **Verificações executadas** | Apenas críticas   | Todas as verificações | Domínio específico       |
-| **Duração alvo**    | <10 segundos      | <60 segundos     | <30 segundos             |
-| **Auto-recuperação**| Apenas Nível 1    | Todos os níveis  | Específico do domínio    |
-| **Detalhe do relatório** | Resumo        | Relatório completo | Relatório do domínio    |
-| **Caso de uso**     | Validação rápida  | Diagnóstico profundo | Troubleshooting direcionado |
+| Configuração                | Modo Rápido      | Modo Completo         | Modo por Domínio            |
+| --------------------------- | ---------------- | --------------------- | --------------------------- |
+| **Verificações executadas** | Apenas críticas  | Todas as verificações | Domínio específico          |
+| **Duração alvo**            | <10 segundos     | <60 segundos          | <30 segundos                |
+| **Auto-recuperação**        | Apenas Nível 1   | Todos os níveis       | Específico do domínio       |
+| **Detalhe do relatório**    | Resumo           | Relatório completo    | Relatório do domínio        |
+| **Caso de uso**             | Validação rápida | Diagnóstico profundo  | Troubleshooting direcionado |
 
 ---
 
@@ -320,14 +320,14 @@ healthCheck:
 
 **Parâmetros:**
 
-| Parâmetro            | Valores                                  | Padrão  | Descrição                  |
-| -------------------- | ---------------------------------------- | ------- | -------------------------- |
-| `--mode`             | quick, full, domain                      | quick   | Abrangência da verificação |
-| `--domain`           | project, local, repo, deploy, services   | all     | Filtro de domínio          |
-| `--fix` / `--no-fix` | boolean                                  | true    | Habilitar auto-recuperação |
-| `--report`           | boolean                                  | true    | Gerar relatório markdown   |
-| `--json`             | boolean                                  | false   | Saída JSON para automação  |
-| `--verbose`          | boolean                                  | false   | Mostrar saída detalhada    |
+| Parâmetro            | Valores                                | Padrão | Descrição                  |
+| -------------------- | -------------------------------------- | ------ | -------------------------- |
+| `--mode`             | quick, full, domain                    | quick  | Abrangência da verificação |
+| `--domain`           | project, local, repo, deploy, services | all    | Filtro de domínio          |
+| `--fix` / `--no-fix` | boolean                                | true   | Habilitar auto-recuperação |
+| `--report`           | boolean                                | true   | Gerar relatório markdown   |
+| `--json`             | boolean                                | false  | Saída JSON para automação  |
+| `--verbose`          | boolean                                | false  | Mostrar saída detalhada    |
 
 ### 2. Modo CI Agendado
 
@@ -442,11 +442,11 @@ jobs:
 
 ### Metas de Performance
 
-| Modo   | Duração Alvo | Duração Máxima |
-| ------ | ------------ | -------------- |
-| Rápido | 5 segundos   | 10 segundos    |
-| Completo | 30 segundos | 60 segundos    |
-| Domínio | 10 segundos | 30 segundos    |
+| Modo     | Duração Alvo | Duração Máxima |
+| -------- | ------------ | -------------- |
+| Rápido   | 5 segundos   | 10 segundos    |
+| Completo | 30 segundos  | 60 segundos    |
+| Domínio  | 10 segundos  | 30 segundos    |
 
 ### Estratégia de Cache
 
@@ -502,8 +502,6 @@ async function runAllChecks() {
 - [ADR: Arquitetura do HCS](./adr/adr-hcs-health-check-system.md)
 - [Especificação de Auto-Recuperação do HCS](./hcs-self-healing-spec.md)
 - [Especificações de Verificação do HCS](./hcs-check-specifications.md)
-- [Story HCS-1: Investigação](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md) *(coming soon)*
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
 
 ---
 

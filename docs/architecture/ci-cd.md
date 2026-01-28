@@ -27,18 +27,18 @@ AIOS-Core uses GitHub Actions for continuous integration and deployment. This do
 
 ## Active Workflows
 
-| Workflow | Purpose | Trigger | Critical |
-|----------|---------|---------|----------|
-| `ci.yml` | Main CI validation (lint, typecheck, test) | PR, push to main | Yes |
-| `pr-automation.yml` | Coverage report & metrics | PR only | No |
-| `semantic-release.yml` | Automated versioning & changelog | Push to main | Yes |
-| `test.yml` | Extended testing (security, build, integration) | Push to main only | No |
-| `macos-testing.yml` | macOS-specific testing (Intel + ARM) | Path-filtered | No |
-| `release.yml` | GitHub Release creation | Tag v* | Yes |
-| `npm-publish.yml` | NPM package publishing | Release published | Yes |
-| `pr-labeling.yml` | Auto-labeling PRs | PR opened/sync | No |
-| `quarterly-gap-audit.yml` | Scheduled audit | Cron | No |
-| `welcome.yml` | First-time contributor welcome | PR | No |
+| Workflow                  | Purpose                                         | Trigger           | Critical |
+| ------------------------- | ----------------------------------------------- | ----------------- | -------- |
+| `ci.yml`                  | Main CI validation (lint, typecheck, test)      | PR, push to main  | Yes      |
+| `pr-automation.yml`       | Coverage report & metrics                       | PR only           | No       |
+| `semantic-release.yml`    | Automated versioning & changelog                | Push to main      | Yes      |
+| `test.yml`                | Extended testing (security, build, integration) | Push to main only | No       |
+| `macos-testing.yml`       | macOS-specific testing (Intel + ARM)            | Path-filtered     | No       |
+| `release.yml`             | GitHub Release creation                         | Tag v\*           | Yes      |
+| `npm-publish.yml`         | NPM package publishing                          | Release published | Yes      |
+| `pr-labeling.yml`         | Auto-labeling PRs                               | PR opened/sync    | No       |
+| `quarterly-gap-audit.yml` | Scheduled audit                                 | Cron              | No       |
+| `welcome.yml`             | First-time contributor welcome                  | PR                | No       |
 
 ## Optimization Strategies
 
@@ -81,25 +81,27 @@ cross-platform:
       node: ['18', '20', '22']
       exclude:
         - os: macos-latest
-          node: '18'  # isolated-vm SIGSEGV
+          node: '18' # isolated-vm SIGSEGV
         - os: macos-latest
-          node: '20'  # isolated-vm SIGSEGV
+          node: '20' # isolated-vm SIGSEGV
 ```
 
 ### 4. Consolidated Validation
 
 Single source of truth for validation:
+
 - **ci.yml** handles all validation (lint, typecheck, test)
 - **semantic-release.yml** relies on branch protection (no duplicate CI)
 - **pr-automation.yml** focuses only on metrics/coverage
 
 ## Billable Minutes Reduction
 
-| Before | After | Savings |
-|--------|-------|---------|
-| ~340 min/week | ~85 min/week | ~75% |
+| Before        | After        | Savings |
+| ------------- | ------------ | ------- |
+| ~340 min/week | ~85 min/week | ~75%    |
 
 ### Breakdown:
+
 - Concurrency: 40% reduction (cancels stale runs)
 - Path filters: 30% reduction (skips docs-only PRs)
 - Consolidated cross-platform: 25% reduction (7 vs 16 jobs)
@@ -108,6 +110,7 @@ Single source of truth for validation:
 ## Branch Strategy
 
 All workflows target `main` branch only:
+
 - No `master` or `develop` branches
 - Feature branches → PR to main
 - Releases via semantic-release on main
@@ -115,6 +118,7 @@ All workflows target `main` branch only:
 ## Required Status Checks
 
 For branch protection on `main`:
+
 1. `CI / ESLint`
 2. `CI / TypeScript Type Checking`
 3. `CI / Jest Tests`
@@ -123,16 +127,19 @@ For branch protection on `main`:
 ## Troubleshooting
 
 ### Workflow not running?
+
 1. Check if paths are in `paths-ignore`
 2. Verify branch matches trigger
 3. Check concurrency group (may be cancelled)
 
 ### Release not publishing?
+
 1. Verify `NPM_TOKEN` secret is set
 2. Check semantic-release config
 3. Verify conventional commits format
 
 ### macOS tests failing?
+
 - Node 18/20 on macOS have isolated-vm SIGSEGV issues
 - Only Node 22 runs on macOS (by design)
 
@@ -140,4 +147,3 @@ For branch protection on `main`:
 
 - [GitHub Actions Billing](https://docs.github.com/en/billing/managing-billing-for-github-actions)
 - [Semantic Release](https://semantic-release.gitbook.io/)
-- [Story 6.1: GitHub Actions Optimization](../stories/v2.1/sprint-6/story-6.1-github-actions-optimization.md) *(coming soon)*

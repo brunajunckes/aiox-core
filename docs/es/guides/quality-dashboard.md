@@ -14,7 +14,6 @@
 
 **Versión:** 1.0
 **Última Actualización:** 2025-12-05
-**Story:** [3.11b - Quality Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 
@@ -24,14 +23,14 @@ El Dashboard de Quality Gates proporciona visualización en tiempo real de las m
 
 ### Características Principales
 
-| Característica | Descripción |
-|----------------|-------------|
-| **Métricas de 3 Capas** | Ver tasas de aprobación para Pre-Commit, PR Review y Human Review |
-| **Gráficos de Tendencias** | Seguir tasa de auto-detección en los últimos 30 días |
-| **Actualizaciones en Tiempo Real** | Auto-actualización cada 60 segundos |
-| **Diseño Responsivo** | Funciona en escritorio, tablet y móvil |
-| **Accesibilidad** | Cumple con WCAG 2.1 AA |
-| **Modo Oscuro** | Automático basado en preferencia del sistema |
+| Característica                     | Descripción                                                       |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| **Métricas de 3 Capas**            | Ver tasas de aprobación para Pre-Commit, PR Review y Human Review |
+| **Gráficos de Tendencias**         | Seguir tasa de auto-detección en los últimos 30 días              |
+| **Actualizaciones en Tiempo Real** | Auto-actualización cada 60 segundos                               |
+| **Diseño Responsivo**              | Funciona en escritorio, tablet y móvil                            |
+| **Accesibilidad**                  | Cumple con WCAG 2.1 AA                                            |
+| **Modo Oscuro**                    | Automático basado en preferencia del sistema                      |
 
 ---
 
@@ -70,6 +69,7 @@ npx serve dist
 ### Acceso Directo a Archivo
 
 Abrir el dashboard pre-construido:
+
 ```
 tools/quality-dashboard/dist/index.html
 ```
@@ -88,11 +88,11 @@ tools/quality-dashboard/dist/index.html
 └─────────────────────────────────────────────────────────┘
 ```
 
-| Elemento | Descripción |
-|----------|-------------|
-| **Última Actualización** | Timestamp de la última obtención de datos |
-| **Botón Actualizar** | Actualización manual sin recargar página |
-| **Auto-actualización** | Intervalo configurable (30s, 60s, 5m, desactivado) |
+| Elemento                 | Descripción                                        |
+| ------------------------ | -------------------------------------------------- |
+| **Última Actualización** | Timestamp de la última obtención de datos          |
+| **Botón Actualizar**     | Actualización manual sin recargar página           |
+| **Auto-actualización**   | Intervalo configurable (30s, 60s, 5m, desactivado) |
 
 ### Tarjetas de Capas
 
@@ -112,22 +112,23 @@ Cada capa de quality gate tiene su propia tarjeta de métricas:
 
 #### Capa 1: Pre-Commit
 
-| Métrica | Descripción |
-|---------|-------------|
-| **Tasa de Aprobación** | % de commits que pasan todas las verificaciones (lint, test, typecheck) |
-| **Tiempo Promedio** | Tiempo promedio para completar todas las verificaciones de Capa 1 |
-| **Total de Ejecuciones** | Número de ejecuciones de pre-commit en el período de tiempo |
+| Métrica                  | Descripción                                                             |
+| ------------------------ | ----------------------------------------------------------------------- |
+| **Tasa de Aprobación**   | % de commits que pasan todas las verificaciones (lint, test, typecheck) |
+| **Tiempo Promedio**      | Tiempo promedio para completar todas las verificaciones de Capa 1       |
+| **Total de Ejecuciones** | Número de ejecuciones de pre-commit en el período de tiempo             |
 
 #### Capa 2: PR Review
 
-| Métrica | Descripción |
-|---------|-------------|
-| **Tasa de Aprobación** | % de PRs que pasan la revisión automatizada |
-| **Hallazgos de CodeRabbit** | Problemas encontrados por CodeRabbit (por severidad) |
-| **Hallazgos de Quinn** | Problemas encontrados por el agente @qa |
-| **Tasa de Auto-Detección** | % de problemas detectados antes de la revisión humana |
+| Métrica                     | Descripción                                           |
+| --------------------------- | ----------------------------------------------------- |
+| **Tasa de Aprobación**      | % de PRs que pasan la revisión automatizada           |
+| **Hallazgos de CodeRabbit** | Problemas encontrados por CodeRabbit (por severidad)  |
+| **Hallazgos de Quinn**      | Problemas encontrados por el agente @qa               |
+| **Tasa de Auto-Detección**  | % de problemas detectados antes de la revisión humana |
 
 **Vista Expandida (click para expandir):**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Capa 2: PR Review                         ● Advertencia │
@@ -150,11 +151,11 @@ Cada capa de quality gate tiene su propia tarjeta de métricas:
 
 #### Capa 3: Human Review
 
-| Métrica | Descripción |
-|---------|-------------|
-| **Tasa de Aprobación** | % de PRs aprobados en la primera revisión |
-| **Tiempo Promedio** | Tiempo promedio desde creación de PR hasta aprobación |
-| **Tasa de Revisión** | % de PRs que requieren revisiones |
+| Métrica                | Descripción                                           |
+| ---------------------- | ----------------------------------------------------- |
+| **Tasa de Aprobación** | % de PRs aprobados en la primera revisión             |
+| **Tiempo Promedio**    | Tiempo promedio desde creación de PR hasta aprobación |
+| **Tasa de Revisión**   | % de PRs que requieren revisiones                     |
 
 ### Gráfico de Tendencias
 
@@ -182,6 +183,7 @@ Mayor es mejor - significa que más problemas se detectan automáticamente antes
 ### Ubicación
 
 Las métricas se almacenan en:
+
 ```
 .aios/data/quality-metrics.json
 ```
@@ -266,20 +268,20 @@ Esto copia `.aios/data/quality-metrics.json` a `tools/quality-dashboard/public/.
 
 ### Tendencias Saludables
 
-| Indicador | Qué Significa |
-|-----------|---------------|
-| **Tasa de Auto-Detección en Aumento** | Más problemas detectados automáticamente - quality gates funcionando |
-| **Revisiones de Capa 3 Disminuyendo** | Revisores humanos encuentran menos problemas |
-| **Tasas de Aprobación Estables > 90%** | Desarrolladores escriben mejor código desde el inicio |
+| Indicador                              | Qué Significa                                                        |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| **Tasa de Auto-Detección en Aumento**  | Más problemas detectados automáticamente - quality gates funcionando |
+| **Revisiones de Capa 3 Disminuyendo**  | Revisores humanos encuentran menos problemas                         |
+| **Tasas de Aprobación Estables > 90%** | Desarrolladores escriben mejor código desde el inicio                |
 
 ### Señales de Advertencia
 
-| Indicador | Qué Significa | Acción |
-|-----------|---------------|--------|
-| **Tasa de Auto-Detección Bajando** | Verificaciones automatizadas no detectan problemas | Revisar configuración de CodeRabbit |
-| **Tasa de Aprobación Capa 1 < 80%** | Demasiados commits fallando | Verificar reglas de lint/test |
-| **Muchos CRÍTICOS en Capa 2** | Problemas de seguridad/calidad | Revisar prácticas de código |
-| **Tasa de Revisión Capa 3 > 30%** | Revisión humana encuentra muchos problemas | Mejorar automatización |
+| Indicador                           | Qué Significa                                      | Acción                              |
+| ----------------------------------- | -------------------------------------------------- | ----------------------------------- |
+| **Tasa de Auto-Detección Bajando**  | Verificaciones automatizadas no detectan problemas | Revisar configuración de CodeRabbit |
+| **Tasa de Aprobación Capa 1 < 80%** | Demasiados commits fallando                        | Verificar reglas de lint/test       |
+| **Muchos CRÍTICOS en Capa 2**       | Problemas de seguridad/calidad                     | Revisar prácticas de código         |
+| **Tasa de Revisión Capa 3 > 30%**   | Revisión humana encuentra muchos problemas         | Mejorar automatización              |
 
 ---
 
@@ -289,12 +291,12 @@ Esto copia `.aios/data/quality-metrics.json` a `tools/quality-dashboard/public/.
 
 Click en el menú desplegable junto al botón de actualizar:
 
-| Opción | Caso de Uso |
-|--------|-------------|
+| Opción          | Caso de Uso                       |
+| --------------- | --------------------------------- |
 | **30 segundos** | Monitoreo activo durante releases |
-| **60 segundos** | Predeterminado para uso diario |
-| **5 minutos** | Monitoreo en segundo plano |
-| **Desactivado** | Solo actualización manual |
+| **60 segundos** | Predeterminado para uso diario    |
+| **5 minutos**   | Monitoreo en segundo plano        |
+| **Desactivado** | Solo actualización manual         |
 
 ### Modo Oscuro
 
@@ -306,13 +308,13 @@ El dashboard sigue automáticamente la preferencia del sistema. No se necesita i
 
 El dashboard cumple con WCAG 2.1 AA:
 
-| Característica | Implementación |
-|----------------|----------------|
-| **Contraste de Color** | Todo el texto tiene ratio de contraste mínimo 4.5:1 |
-| **Navegación por Teclado** | Soporte completo de teclado con foco visible |
-| **Lectores de Pantalla** | Etiquetas ARIA en todos los elementos interactivos |
-| **Movimiento Reducido** | Respeta `prefers-reduced-motion` |
-| **Gestión de Foco** | Orden de tabulación lógico en todo |
+| Característica             | Implementación                                      |
+| -------------------------- | --------------------------------------------------- |
+| **Contraste de Color**     | Todo el texto tiene ratio de contraste mínimo 4.5:1 |
+| **Navegación por Teclado** | Soporte completo de teclado con foco visible        |
+| **Lectores de Pantalla**   | Etiquetas ARIA en todos los elementos interactivos  |
+| **Movimiento Reducido**    | Respeta `prefers-reduced-motion`                    |
+| **Gestión de Foco**        | Orden de tabulación lógico en todo                  |
 
 ---
 
@@ -331,6 +333,7 @@ npm run sync-metrics
 ### Archivo de Métricas No Encontrado
 
 Asegúrese de que el recolector de métricas se haya ejecutado:
+
 ```bash
 # Verificar si el archivo de métricas existe
 ls -la .aios/data/quality-metrics.json
@@ -348,6 +351,7 @@ npx aios metrics seed
 ### Auto-Actualización No Funciona
 
 La auto-actualización se pausa cuando:
+
 - La pestaña del navegador está en segundo plano
 - Se pierde conectividad de red
 - El foco está en un elemento interactivo
@@ -357,9 +361,7 @@ La auto-actualización se pausa cuando:
 ## Documentación Relacionada
 
 - [Guía de Quality Gates](./quality-gates.md)
-- [Story 3.11a: Recolector de Métricas](../stories/v2.1/sprint-3/story-3.11a-metrics-collector.md) *(coming soon)*
-- [Story 3.11b: Dashboard UI](../stories/v2.1/sprint-3/story-3.11b-quality-dashboard-ui.md) *(coming soon)*
 
 ---
 
-*Synkra AIOS Quality Dashboard v1.0*
+_Synkra AIOS Quality Dashboard v1.0_

@@ -27,14 +27,14 @@ O Cursor é uma das **IDEs com IA mais populares** com excelente integração AI
 
 ### Comparação com Outras Plataformas
 
-| Recurso | Cursor | Claude Code | Windsurf |
-|---------|:------:|:-----------:|:--------:|
-| Interface GUI | Sim | Não | Sim |
-| Ativação @mention | Sim | /comando | Sim |
-| Composer | Sim | Task Tool | Cascade |
-| Extensões VS Code | Sim | Não | Limitado |
-| Suporte MCP | Config | Nativo | Config |
-| Edição Multi-arquivo | Sim | Sim | Sim |
+| Recurso              | Cursor | Claude Code | Windsurf |
+| -------------------- | :----: | :---------: | :------: |
+| Interface GUI        |  Sim   |     Não     |   Sim    |
+| Ativação @mention    |  Sim   |  /comando   |   Sim    |
+| Composer             |  Sim   |  Task Tool  | Cascade  |
+| Extensões VS Code    |  Sim   |     Não     | Limitado |
+| Suporte MCP          | Config |   Nativo    |  Config  |
+| Edição Multi-arquivo |  Sim   |     Sim     |   Sim    |
 
 ---
 
@@ -42,12 +42,12 @@ O Cursor é uma das **IDEs com IA mais populares** com excelente integração AI
 
 ### Requisitos de Sistema
 
-| Requisito | Mínimo | Recomendado |
-|-----------|--------|-------------|
-| **RAM** | 4GB | 8GB+ |
-| **Espaço em Disco** | 500MB | 1GB+ |
-| **SO** | macOS 10.15+, Windows 10+, Linux | Última versão |
-| **Node.js** | 18.0+ (para AIOS) | 20.0+ |
+| Requisito           | Mínimo                           | Recomendado   |
+| ------------------- | -------------------------------- | ------------- |
+| **RAM**             | 4GB                              | 8GB+          |
+| **Espaço em Disco** | 500MB                            | 1GB+          |
+| **SO**              | macOS 10.15+, Windows 10+, Linux | Última versão |
+| **Node.js**         | 18.0+ (para AIOS)                | 20.0+         |
 
 ### Requisitos de Conta
 
@@ -106,6 +106,7 @@ ls -la .cursor/
 ```
 
 Estrutura esperada:
+
 ```
 .cursor/
 ├── rules.md           # Configuração principal de regras
@@ -126,6 +127,7 @@ Estrutura esperada:
 **Localização:** `.cursor/rules.md`
 
 Este arquivo contém:
+
 - Regras e contexto específicos do projeto
 - Instruções de ativação de agentes
 - Padrões de desenvolvimento
@@ -136,6 +138,7 @@ Este arquivo contém:
 **Localização:** `.cursor/rules/`
 
 Cada agente tem um arquivo dedicado:
+
 ```
 .cursor/rules/
 ├── dev.md          # Regras do agente desenvolvedor
@@ -249,6 +252,7 @@ Referencie o contexto completo do seu projeto:
 ### Fluxos de Trabalho do Composer
 
 #### Refatoração Multi-Arquivo
+
 ```
 @architect @codebase
 Refatore o módulo de usuário para seguir clean architecture:
@@ -259,6 +263,7 @@ Refatore o módulo de usuário para seguir clean architecture:
 ```
 
 #### Implementação de Feature
+
 ```
 @dev @codebase
 Implemente a feature de carrinho de compras:
@@ -272,12 +277,12 @@ Implemente a feature de carrinho de compras:
 
 O Cursor suporta diferentes modos de interação:
 
-| Modo | Caso de Uso |
-|------|-------------|
-| **Chat** | Perguntas gerais, explicações |
-| **Edit** | Modificações inline de código |
-| **Composer** | Alterações multi-arquivo |
-| **Terminal** | Execução de comandos |
+| Modo         | Caso de Uso                   |
+| ------------ | ----------------------------- |
+| **Chat**     | Perguntas gerais, explicações |
+| **Edit**     | Modificações inline de código |
+| **Composer** | Alterações multi-arquivo      |
+| **Terminal** | Execução de comandos          |
 
 ### Edição Inline
 
@@ -313,47 +318,47 @@ Organize regras por contexto:
 
 ### Superpoderes
 
-| Recurso | Descrição |
-|---------|-----------|
-| **Cmd+K** | Edição IA inline |
-| **Cmd+L** | Abrir chat IA |
-| **Cmd+I** | Abrir Composer |
+| Recurso         | Descrição                 |
+| --------------- | ------------------------- |
+| **Cmd+K**       | Edição IA inline          |
+| **Cmd+L**       | Abrir chat IA             |
+| **Cmd+I**       | Abrir Composer            |
 | **Cmd+Shift+L** | Adicionar seleção ao chat |
-| **Tab** | Aceitar sugestão IA |
+| **Tab**         | Aceitar sugestão IA       |
 
 ### Atalhos de Teclado
 
-| Atalho | Ação |
-|--------|------|
-| `Cmd/Ctrl + K` | Edição IA |
-| `Cmd/Ctrl + L` | Chat IA |
-| `Cmd/Ctrl + I` | Composer |
-| `Cmd/Ctrl + Shift + K` | Editar com seleção |
-| `Escape` | Cancelar operação IA |
+| Atalho                 | Ação                 |
+| ---------------------- | -------------------- |
+| `Cmd/Ctrl + K`         | Edição IA            |
+| `Cmd/Ctrl + L`         | Chat IA              |
+| `Cmd/Ctrl + I`         | Composer             |
+| `Cmd/Ctrl + Shift + K` | Editar com seleção   |
+| `Escape`               | Cancelar operação IA |
 
 ### Referências de Contexto
 
 Use estas no chat ou Composer:
 
-| Referência | Descrição |
-|------------|-----------|
-| `@codebase` | Contexto completo do projeto |
-| `@file` | Arquivo específico |
-| `@folder` | Conteúdo da pasta |
-| `@docs` | Documentação |
-| `@web` | Busca web |
-| `@nome-agente` | Agente AIOS |
+| Referência     | Descrição                    |
+| -------------- | ---------------------------- |
+| `@codebase`    | Contexto completo do projeto |
+| `@file`        | Arquivo específico           |
+| `@folder`      | Conteúdo da pasta            |
+| `@docs`        | Documentação                 |
+| `@web`         | Busca web                    |
+| `@nome-agente` | Agente AIOS                  |
 
 ### Seleção de Modelo
 
 Mude de modelo baseado na tarefa:
 
-| Modelo | Melhor Para |
-|--------|-------------|
+| Modelo                | Melhor Para                      |
+| --------------------- | -------------------------------- |
 | **Claude 3.5 Sonnet** | Raciocínio complexo, arquitetura |
-| **GPT-4** | Codificação geral |
-| **GPT-4 Turbo** | Respostas rápidas |
-| **Cursor Small** | Completações rápidas |
+| **GPT-4**             | Codificação geral                |
+| **GPT-4 Turbo**       | Respostas rápidas                |
+| **Cursor Small**      | Completações rápidas             |
 
 ---
 
@@ -389,21 +394,25 @@ Agentes no Cursor usam formato markdown condensado:
 # Agente Desenvolvedor (@dev)
 
 ## Papel
+
 Desenvolvedor Full Stack Sênior focado em código limpo e manutenível.
 
 ## Expertise
+
 - TypeScript/JavaScript
 - Node.js/React
 - Design de banco de dados
 - Desenvolvimento de API
 
 ## Fluxo de Trabalho
+
 1. Entender requisitos da story
 2. Planejar abordagem de implementação
 3. Escrever código limpo e testado
 4. Atualizar progresso da story
 
 ## Padrões
+
 - Seguir convenções existentes do codebase
 - Escrever tratamento abrangente de erros
 - Incluir testes unitários para código novo
@@ -423,22 +432,22 @@ Quando conflitos ocorrem durante o sync:
 
 ### Limitações Atuais
 
-| Limitação | Solução Alternativa |
-|-----------|---------------------|
-| Sem MCP nativo | Use MCP baseado em configuração |
-| Sem spawn de subagente | Troca manual de agente |
-| Limites de janela de contexto | Use @codebase seletivamente |
-| Rate limiting | Configure nas configurações |
+| Limitação                     | Solução Alternativa             |
+| ----------------------------- | ------------------------------- |
+| Sem MCP nativo                | Use MCP baseado em configuração |
+| Sem spawn de subagente        | Troca manual de agente          |
+| Limites de janela de contexto | Use @codebase seletivamente     |
+| Rate limiting                 | Configure nas configurações     |
 
 ### Cursor vs Claude Code
 
-| Aspecto | Cursor | Claude Code |
-|---------|--------|-------------|
-| Task Tool | Não | Sim |
-| Hooks | Não | Sim |
-| Skills | Não | Nativo |
-| GUI | Sim | Não |
-| Ext VS Code | Sim | Não |
+| Aspecto     | Cursor | Claude Code |
+| ----------- | ------ | ----------- |
+| Task Tool   | Não    | Sim         |
+| Hooks       | Não    | Sim         |
+| Skills      | Não    | Nativo      |
+| GUI         | Sim    | Não         |
+| Ext VS Code | Sim    | Não         |
 
 ### Problemas Conhecidos
 
@@ -453,19 +462,25 @@ Quando conflitos ocorrem durante o sync:
 ### Problemas Comuns
 
 #### Regras Não Carregando
+
 ```
 Problema: Agente não responde a @mentions
 ```
+
 **Solução:**
+
 1. Verifique se arquivo de regras existe: `ls .cursor/rules.md`
 2. Confira Cursor settings > Rules > Enabled
 3. Reinicie o Cursor
 
 #### MCP Não Funcionando
+
 ```
 Problema: Ferramentas MCP não disponíveis
 ```
+
 **Solução:**
+
 ```bash
 # Verificar configuração MCP
 cat ~/.cursor/mcp.json
@@ -475,19 +490,25 @@ npx @modelcontextprotocol/server-filesystem --version
 ```
 
 #### Performance Lenta
+
 ```
 Problema: Cursor está lento com projetos grandes
 ```
+
 **Solução:**
+
 1. Exclua pastas grandes em `.cursorignore`
 2. Use referências específicas de arquivo ao invés de @codebase
 3. Aumente alocação de memória nas configurações
 
 #### Agente Não Reconhecido
+
 ```
 Problema: @dev não ativa agente
 ```
+
 **Solução:**
+
 ```bash
 # Ressincronizar agentes
 npm run sync:agents
@@ -563,11 +584,13 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 ### Do Cursor para Claude Code
 
 1. Exporte regras personalizadas:
+
    ```bash
    cp -r .cursor/rules/ cursor-rules-backup/
    ```
 
 2. Inicialize AIOS para Claude Code:
+
    ```bash
    npx @anthropic/aios init --ide claude-code
    ```
@@ -577,11 +600,13 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 ### Do Cursor para Windsurf
 
 1. Exporte configuração:
+
    ```bash
    cp .cursor/rules.md cursor-rules-backup.md
    ```
 
 2. Inicialize AIOS para Windsurf:
+
    ```bash
    npx @anthropic/aios init --ide windsurf
    ```
@@ -593,18 +618,21 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 ## Recursos Adicionais
 
 ### Documentação Oficial
+
 - [Documentação do Cursor](https://cursor.com/docs)
 - [Changelog do Cursor](https://cursor.com/changelog)
 - [Discord do Cursor](https://discord.gg/cursor)
 
 ### Comunidade
+
 - [Reddit do Cursor](https://reddit.com/r/cursor)
 - [GitHub Discussions](https://github.com/getcursor/cursor/discussions)
 
 ### Tutoriais
+
 - [Dicas e Truques do Cursor](https://cursor.com/tips)
-- [Guia de Integração AIOS](../README.md) *(coming soon)*
+- [Guia de Integração AIOS](../README.md)
 
 ---
 
-*Synkra AIOS - Guia da Plataforma Cursor v1.0*
+_Synkra AIOS - Guia da Plataforma Cursor v1.0_

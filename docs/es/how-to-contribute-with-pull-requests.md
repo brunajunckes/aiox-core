@@ -139,7 +139,7 @@ git push origin fix/typo-in-readme
 
 - Reporta bugs usando la [plantilla de reporte de bugs](https://github.com/SynkraAIinc/@synkra/aios-core/issues/new?template=bug_report.md)
 - Sugiere features usando la [plantilla de solicitud de feature](https://github.com/SynkraAIinc/@synkra/aios-core/issues/new?template=feature_request.md)
-- Lee las [Directrices de Contribucion](../CONTRIBUTING.md) *(coming soon)* completas
+- Lee las [Directrices de Contribucion](../../CONTRIBUTING.md) completas
 
 ## Ejemplo: Buenos PRs vs Malos
 
