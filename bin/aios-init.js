@@ -27,10 +27,10 @@ const BANNER = chalk.cyan(`
  ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝      ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
 `);
 
-const SUBTITLE = chalk.magenta('🚀 Universal AI Agent Framework for Any Domain');
+const SUBTITLE = chalk.magenta('Universal AI Agent Framework for Any Domain');
 // Read version from package.json dynamically
 const packageJsonVersion = require(path.join(__dirname, '..', 'package.json')).version;
-const VERSION = chalk.yellow(`✨ Installer v${packageJsonVersion}`);
+const VERSION = chalk.yellow(`Installer v${packageJsonVersion}`);
 
 /**
  * Smart path resolution for AIOS Core modules

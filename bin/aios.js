@@ -199,7 +199,7 @@ async function initProject(projectName) {
   const targetPath = isCurrentDir ? process.cwd() : path.join(process.cwd(), projectName);
   const displayName = isCurrentDir ? path.basename(process.cwd()) : projectName;
 
-  console.log(`🚀 Creating new AIOS project: ${displayName}\n`);
+  console.log(`Creating new AIOS project: ${displayName}\n`);
 
   // Check if directory exists
   if (fs.existsSync(targetPath)) {
@@ -245,7 +245,7 @@ async function main() {
 
     case 'install':
       // Install in current project
-      console.log('🚀 AIOS-FullStack Installation\n');
+      console.log('AIOS-FullStack Installation\n');
       await runWizard();
       break;
 
@@ -277,7 +277,7 @@ async function main() {
 
     case undefined:
       // No arguments - run wizard directly (npx default behavior)
-      console.log('🚀 AIOS-FullStack Installation\n');
+      console.log('AIOS-FullStack Installation\n');
       await runWizard();
       break;
 

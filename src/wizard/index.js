@@ -502,7 +502,7 @@ async function runWizard() {
     // }
 
     // Story 6.7: LLM Routing Installation
-    console.log('\n🚀 Installing LLM Routing commands...');
+    console.log('\nInstalling LLM Routing commands...');
     try {
       // Check if already installed
       if (isLLMRoutingInstalled()) {

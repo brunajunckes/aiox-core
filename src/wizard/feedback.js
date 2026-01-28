@@ -146,8 +146,8 @@ function showWelcome() {
   }
 
   console.log(colors.primary(BANNER));
-  console.log(colors.secondary('🚀 Universal AI Agent Framework for Any Domain'));
-  console.log(colors.tertiary(`✨ Installer v${version}`));
+  console.log(colors.secondary('Universal AI Agent Framework for Any Domain'));
+  console.log(colors.tertiary(`Installer v${version}`));
   console.log('');
   console.log(colors.dim('═'.repeat(80)));
   console.log('');
