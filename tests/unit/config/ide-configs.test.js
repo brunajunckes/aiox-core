@@ -4,8 +4,8 @@
  * Story 1.4: IDE Selection
  * Tests IDE configuration metadata structure
  *
- * Synkra AIOS v2.1 supports 6 IDEs:
- * - Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, AntiGravity
+ * Synkra AIOS v2.1 supports 5 IDEs:
+ * - Claude Code, Cursor, Windsurf, GitHub Copilot, AntiGravity
  */
 
 const {
@@ -20,18 +20,11 @@ describe('IDE Configs', () => {
   describe('IDE_CONFIGS', () => {
     it('should have 6 IDE configurations', () => {
       const keys = Object.keys(IDE_CONFIGS);
-      expect(keys).toHaveLength(6);
+      expect(keys).toHaveLength(5);
     });
 
     it('should include all expected IDEs', () => {
-      const expectedIDEs = [
-        'claude-code',
-        'cursor',
-        'windsurf',
-        'gemini-cli',
-        'github-copilot',
-        'antigravity',
-      ];
+      const expectedIDEs = ['claude-code', 'cursor', 'windsurf', 'github-copilot', 'antigravity'];
 
       expectedIDEs.forEach((ide) => {
         expect(IDE_CONFIGS).toHaveProperty(ide);
@@ -61,7 +54,6 @@ describe('IDE Configs', () => {
     it('should have correct directory requirements', () => {
       // IDEs that require directories
       expect(IDE_CONFIGS['claude-code'].requiresDirectory).toBe(true);
-      expect(IDE_CONFIGS['gemini-cli'].requiresDirectory).toBe(true);
       expect(IDE_CONFIGS['github-copilot'].requiresDirectory).toBe(true);
       expect(IDE_CONFIGS.antigravity.requiresDirectory).toBe(true);
       expect(IDE_CONFIGS.cursor.requiresDirectory).toBe(true);
@@ -81,7 +73,6 @@ describe('IDE Configs', () => {
       expect(IDE_CONFIGS['claude-code'].configFile).toContain('.claude');
       expect(IDE_CONFIGS.cursor.configFile).toContain('.cursor');
       expect(IDE_CONFIGS.windsurf.configFile).toBe('.windsurfrules');
-      expect(IDE_CONFIGS['gemini-cli'].configFile).toContain('.gemini');
       expect(IDE_CONFIGS['github-copilot'].configFile).toContain('.github');
       expect(IDE_CONFIGS.antigravity.configFile).toContain('.antigravity');
     });
@@ -103,8 +94,6 @@ describe('IDE Configs', () => {
       expect(IDE_CONFIGS.cursor.agentFolder).toContain('rules');
       expect(IDE_CONFIGS.windsurf.agentFolder).toContain('.windsurf');
       expect(IDE_CONFIGS.windsurf.agentFolder).toContain('rules');
-      expect(IDE_CONFIGS['gemini-cli'].agentFolder).toContain('.gemini');
-      expect(IDE_CONFIGS['gemini-cli'].agentFolder).toContain('agents');
       expect(IDE_CONFIGS['github-copilot'].agentFolder).toContain('.github');
       expect(IDE_CONFIGS['github-copilot'].agentFolder).toContain('agents');
       // AntiGravity uses .agent/workflows instead of .antigravity/agents
@@ -118,19 +107,12 @@ describe('IDE Configs', () => {
       const keys = getIDEKeys();
 
       expect(Array.isArray(keys)).toBe(true);
-      expect(keys).toHaveLength(6);
+      expect(keys).toHaveLength(5);
     });
 
     it('should return all IDE keys', () => {
       const keys = getIDEKeys();
-      const expectedKeys = [
-        'claude-code',
-        'cursor',
-        'windsurf',
-        'gemini-cli',
-        'github-copilot',
-        'antigravity',
-      ];
+      const expectedKeys = ['claude-code', 'cursor', 'windsurf', 'github-copilot', 'antigravity'];
 
       expectedKeys.forEach((key) => {
         expect(keys).toContain(key);
@@ -153,14 +135,7 @@ describe('IDE Configs', () => {
     });
 
     it('should return correct config for all IDEs', () => {
-      const ides = [
-        'claude-code',
-        'cursor',
-        'windsurf',
-        'gemini-cli',
-        'github-copilot',
-        'antigravity',
-      ];
+      const ides = ['claude-code', 'cursor', 'windsurf', 'github-copilot', 'antigravity'];
 
       ides.forEach((ide) => {
         const config = getIDEConfig(ide);
@@ -174,7 +149,7 @@ describe('IDE Configs', () => {
     it('should return true for valid IDE', () => {
       expect(isValidIDE('cursor')).toBe(true);
       expect(isValidIDE('windsurf')).toBe(true);
-      expect(isValidIDE('gemini-cli')).toBe(true);
+      expect(isValidIDE('github-copilot')).toBe(true);
       expect(isValidIDE('claude-code')).toBe(true);
       expect(isValidIDE('antigravity')).toBe(true);
     });
@@ -200,7 +175,7 @@ describe('IDE Configs', () => {
       const choices = getIDEChoices();
 
       expect(Array.isArray(choices)).toBe(true);
-      expect(choices).toHaveLength(6);
+      expect(choices).toHaveLength(5);
     });
 
     it('should have valid choice structure', () => {

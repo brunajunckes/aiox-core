@@ -193,7 +193,7 @@ describe('IDE Config Generator', () => {
     });
 
     it('should create directory for IDEs that require it', async () => {
-      const selectedIDEs = ['gemini-cli'];
+      const selectedIDEs = ['antigravity'];
       const wizardState = { projectName: 'test', projectType: 'greenfield' };
 
       const result = await generateIDEConfigs(selectedIDEs, wizardState, {
@@ -202,8 +202,8 @@ describe('IDE Config Generator', () => {
 
       expect(result.success).toBe(true);
 
-      // Gemini CLI uses .gemini/rules.md
-      const configPath = path.join(testDir, '.gemini', 'rules.md');
+      // AntiGravity uses .antigravity/rules.md
+      const configPath = path.join(testDir, '.antigravity', 'rules.md');
       expect(await fs.pathExists(configPath)).toBe(true);
     });
 
