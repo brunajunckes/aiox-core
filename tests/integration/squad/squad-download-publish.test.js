@@ -85,9 +85,13 @@ describe('Squad Download & Publish Integration', () => {
 
   afterEach(async () => {
     // Clean temp directory between tests
-    const entries = await fs.readdir(TEMP_PATH);
-    for (const entry of entries) {
-      await fs.rm(path.join(TEMP_PATH, entry), { recursive: true, force: true });
+    try {
+      const entries = await fs.readdir(TEMP_PATH);
+      for (const entry of entries) {
+        await fs.rm(path.join(TEMP_PATH, entry), { recursive: true, force: true });
+      }
+    } catch {
+      // Directory may not exist, ignore
     }
   });
 

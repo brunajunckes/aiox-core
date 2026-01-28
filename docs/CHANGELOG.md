@@ -93,7 +93,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Upgrading from 2.0.x to 2.1.x
 
-
 **Quick upgrade:**
 
 ```bash
@@ -101,6 +100,7 @@ npx @synkra/aios-core install --force-upgrade
 ```
 
 **Key changes:**
+
 1. Directory renamed: `.bmad-core/` → `.aios-core/`
 2. Update `core-config.yaml` with new fields
 3. Re-run IDE configuration
