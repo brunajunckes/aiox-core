@@ -34,7 +34,7 @@ Para funcionalidades maiores que requerem decisões de design:
 
 ### Ciclo de Vida da RFC
 
-1. **Draft**: Autor escreve RFC usando nosso [Template de RFC](/.github/RFC_TEMPLATE.md) _(coming soon)_
+1. **Draft**: Autor escreve RFC usando nosso [Template de RFC](../../.github/RFC_TEMPLATE.md)
 2. **Under Review**: Período de comentários de 2 semanas
 3. **Decision**: Mantenedores aceitam/rejeitam
 4. **Implementation**: Se aceita, implementação começa

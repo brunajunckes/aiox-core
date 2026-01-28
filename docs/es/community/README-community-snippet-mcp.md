@@ -31,9 +31,9 @@ Para discusiones, preguntas e interaccion con la comunidad, visita nuestro hub c
 
 ### Enlaces Rapidos
 
-- [Configuracion de Docker MCP Toolkit](docs/docker-mcp-setup.md) _(coming soon)_
-- [Presets Disponibles](presets/) _(coming soon)_
-- [Guia de Integracion con IDE](docs/ide-integration.md) _(coming soon)_
+- [Configuración de Docker MCP Toolkit](../../docker-mcp-setup.md)
+- [Presets Disponibles](../../../presets/)
+- [Guía de Integración con IDE](../../ide-integration.md)
 - [Guia de Solucion de Problemas](../../troubleshooting.md)
 
 ### Proponer un Nuevo Servidor MCP

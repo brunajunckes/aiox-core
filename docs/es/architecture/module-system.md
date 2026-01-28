@@ -365,7 +365,7 @@ aios migrate --from=2.0 --to=2.1
 aios migrate --validate
 ```
 
-Ver [Guía de Migración](../migration/v2.0-to-v2.1.md) _(coming soon)_ para instrucciones detalladas.
+Ver [Guía de Migración](../../migration/v2.0-to-v2.1.md) para instrucciones detalladas.
 
 ---
 
@@ -374,8 +374,8 @@ Ver [Guía de Migración](../migration/v2.0-to-v2.1.md) _(coming soon)_ para ins
 - [Guía de Service Discovery](../guides/service-discovery.md)
 - [Guía de Quality Gates](../guides/quality-gates.md)
 - [Guía de Setup Global MCP](../guides/mcp-global-setup.md)
-- [Guía de Migración](../migration/v2.0-to-v2.1.md) _(coming soon)_
-- [ADR-002: Arquitectura Modular](decisions/ADR-002-migration-map.md) _(coming soon)_
+- [Guía de Migración](../../migration/v2.0-to-v2.1.md)
+- [ADR-002: Mapa de Migración](../../architecture/adr/ADR-002-migration-map.md)
 
 ---
 

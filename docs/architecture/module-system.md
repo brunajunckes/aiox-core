@@ -373,7 +373,7 @@ See [Migration Guide](../migration/v2.0-to-v2.1.md) for detailed instructions.
 - [Quality Gates Guide](../guides/quality-gates.md)
 - [MCP Global Setup Guide](../guides/mcp-global-setup.md)
 - [Migration Guide](../migration/v2.0-to-v2.1.md)
-- [ADR-002: Modular Architecture](decisions/ADR-002-migration-map.md) _(coming soon)_
+- [ADR-002: Migration Map](./adr/ADR-002-migration-map.md)
 
 ---
 

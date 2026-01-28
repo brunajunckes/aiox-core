@@ -46,7 +46,7 @@ Cada ejemplo incluye comentarios explicando:
 
 ## Crear el Tuyo Propio
 
-1. Comienza con la [Plantilla de Squad](../../../templates/squad/) _(coming soon)_
+1. Comienza con la [Plantilla de Squad](../../../../templates/squad/)
 2. Consulta estos ejemplos para patrones
 3. Sigue la [Guía de Squads](../squads-guide.md)
 

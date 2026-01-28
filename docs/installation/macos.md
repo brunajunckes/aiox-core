@@ -166,7 +166,7 @@ The updater will:
 
 1. Configure your IDE (see IDE-specific setup above)
 2. Run `*help` in your AI agent to see available commands
-3. Start with the [User Guide](../../aios-core/user-guide.md) _(coming soon)_
+3. Start with the [User Guide](../guides/user-guide.md)
 4. Join our [Discord Community](https://discord.gg/gk8jAdXWmj) for help
 
 ## System Requirements
@@ -179,6 +179,6 @@ The updater will:
 ## Additional Resources
 
 - [Main README](../../README.md)
-- [User Guide](../../aios-core/user-guide.md) _(coming soon)_
+- [User Guide](../guides/user-guide.md)
 - [Troubleshooting Guide](../troubleshooting.md)
 - [Discord Community](https://discord.gg/gk8jAdXWmj)
