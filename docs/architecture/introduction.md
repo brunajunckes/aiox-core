@@ -1,5 +1,9 @@
 # Introdução
 
+> **EN** | [PT](../pt/architecture/introduction.md) | [ES](../es/architecture/introduction.md)
+
+---
+
 Este documento captura o estado atual do codebase do **Synkra AIOS**, servindo como a arquitetura de referência para o desenvolvimento da **Fase 1 do Synkra AIOS (MVP até o FR4)**. Ele descreve os padrões, componentes e tecnologias existentes sobre os quais as novas funcionalidades serão construídas.
 
 ## Escopo do Documento

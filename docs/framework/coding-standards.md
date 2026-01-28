@@ -1,5 +1,7 @@
 # AIOS Coding Standards
 
+> 🌐 **EN** | [PT](../pt/framework/coding-standards.md) | [ES](../es/framework/coding-standards.md)
+
 **Version:** 1.1
 **Last Updated:** 2025-12-14
 **Status:** Official Framework Standard

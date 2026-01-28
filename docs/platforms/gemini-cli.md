@@ -1,5 +1,9 @@
 # AIOS Guide for Gemini CLI
 
+> 🌐 **EN** | [PT](../pt/platforms/gemini-cli.md) | [ES](../es/platforms/gemini-cli.md) *(coming soon)*
+
+---
+
 > **Google AI CLI Assistant** - Command-Line AI Development
 
 ---

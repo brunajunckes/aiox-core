@@ -1,5 +1,9 @@
 # Uninstallation Guide
 
+> 🌐 **EN** | [PT](./pt/uninstallation.md) | [ES](./es/uninstallation.md)
+
+---
+
 This guide provides comprehensive instructions for uninstalling Synkra AIOS from your system.
 
 ## Table of Contents

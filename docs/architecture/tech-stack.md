@@ -8,6 +8,10 @@
 
 # AIOS Technology Stack
 
+> **EN** | [PT](../pt/architecture/tech-stack.md) | [ES](../es/architecture/tech-stack.md)
+
+---
+
 **Version:** 1.1
 **Last Updated:** 2025-12-14
 **Status:** DEPRECATED - See docs/framework/tech-stack.md

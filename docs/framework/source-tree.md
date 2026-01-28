@@ -1,5 +1,7 @@
 # AIOS Source Tree Structure
 
+> 🌐 **EN** | [PT](../pt/framework/source-tree.md) | [ES](../es/framework/source-tree.md)
+
 **Version:** 2.0
 **Last Updated:** 2025-12-15
 **Status:** Official Framework Standard

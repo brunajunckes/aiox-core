@@ -1,4 +1,9 @@
 # Agent Selection Guide
+
+> **EN** | [PT](../pt/guides/agent-selection-guide.md) | [ES](../es/guides/agent-selection-guide.md)
+
+---
+
 ## Quick Reference for Choosing the Right Agent
 
 **Last Updated:** 2025-01-15 (Story 6.1.2.3)

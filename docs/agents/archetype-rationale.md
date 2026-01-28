@@ -1,5 +1,7 @@
 # AIOS Agent Archetype Rationale
 
+> 🌐 **EN** | [PT](../pt/agents/archetype-rationale.md) | [ES](../es/agents/archetype-rationale.md)
+
 **Version:** 1.0
 **Created:** 2025-01-14
 **Author:** @ux-design-expert (Uma) + @architect (Aria)

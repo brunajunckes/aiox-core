@@ -1,5 +1,9 @@
 # CI/CD Architecture
 
+> **EN** | [PT](../pt/architecture/ci-cd.md) | [ES](../es/architecture/ci-cd.md)
+
+---
+
 > Story 6.1: GitHub Actions Cost Optimization
 
 ## Overview

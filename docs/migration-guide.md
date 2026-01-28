@@ -1,5 +1,9 @@
 # Synkra AIOS Upgrade Guide
 
+> 🌐 **EN** | [PT](./pt/migration-guide.md) | [ES](./es/migration-guide.md)
+
+---
+
 This guide helps you upgrade between versions of Synkra AIOS.
 
 ## Table of Contents

@@ -1,5 +1,9 @@
 # AIOS Guides
 
+> **EN** | [PT](../pt/guides/README.md) | [ES](../es/guides/README.md)
+
+---
+
 Complete documentation index for AIOS system guides.
 
 ---

@@ -1,5 +1,9 @@
 # AIOS Guide for GitHub Copilot
 
+> 🌐 **EN** | [PT](../pt/platforms/github-copilot.md) | [ES](../es/platforms/github-copilot.md) *(coming soon)*
+
+---
+
 > **GitHub's AI Pair Programmer** - Native GitHub Integration
 
 ---

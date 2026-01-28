@@ -1,5 +1,9 @@
 # AIOS Method: Core Architecture
 
+> 🌐 **EN** | [PT](./pt/core-architecture.md) | [ES](./es/core-architecture.md)
+
+---
+
 ## 1. Overview
 
 The AIOS Method is designed to provide agentic modes, tasks and templates to allow repeatable helpful workflows be it for agile agentic development, or expansion into vastly different domains. The core purpose of the project is to provide a structured yet flexible set of prompts, templates, and workflows that users can employ to guide AI agents (like Gemini, Claude, or ChatGPT) to perform complex tasks, guided discussions, or other meaningful domain specific flows in a predictable, high-quality manner.

@@ -1,5 +1,9 @@
 # ADR-COLLAB-2: Proposed Configuration - External Contribution Workflow
 
+> **EN** | [PT](../../pt/architecture/adr/ADR-COLLAB-2-proposed-configuration.md) | [ES](../../es/architecture/adr/ADR-COLLAB-2-proposed-configuration.md)
+
+---
+
 **Story:** COLLAB-1
 **Date:** 2025-12-30
 **Status:** Proposed

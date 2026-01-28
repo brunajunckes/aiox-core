@@ -1,5 +1,9 @@
 # AIOS Guide for Cline
 
+> 🌐 **EN** | [PT](../pt/platforms/cline.md) | [ES](../es/platforms/cline.md) *(coming soon)*
+
+---
+
 > **VS Code AI Coding Assistant** - Full VS Code Integration
 
 ---

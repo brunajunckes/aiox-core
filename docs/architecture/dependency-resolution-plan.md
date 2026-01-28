@@ -1,5 +1,9 @@
 # Dependency Resolution in AIOS
 
+> **EN** | PT *(coming soon)* | ES *(coming soon)*
+
+---
+
 **Version:** 1.0.0
 **Last Updated:** 2026-01-26
 **Status:** Official Reference

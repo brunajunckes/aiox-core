@@ -1,5 +1,9 @@
 # HybridOps PV Agents Reference Guide
 
+> 🌐 **EN** | [PT](./pt/agent-reference-guide.md) | [ES](./es/agent-reference-guide.md)
+
+---
+
 **Version**: 2.0
 **Last Updated**: 2025-10-19
 **Story**: 1.9 - Complete PV Agent Implementation

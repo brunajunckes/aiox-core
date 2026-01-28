@@ -1,5 +1,9 @@
 # AIOS Service Discovery Guide
 
+> **EN** | [PT](../pt/guides/service-discovery.md) | [ES](../es/guides/service-discovery.md)
+
+---
+
 > How to discover, query, and use workers in the AIOS framework.
 
 **Version:** 2.1.0

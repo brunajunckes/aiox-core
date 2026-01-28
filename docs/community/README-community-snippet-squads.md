@@ -1,5 +1,7 @@
 # README Community Section - aios-squads
 
+> 🌐 **EN** | [PT](../pt/community/README-community-snippet-squads.md) | [ES](../es/community/README-community-snippet-squads.md)
+
 > **Purpose:** Copy this snippet into the README.md of `SynkraAI/aios-squads` repository.
 
 ---

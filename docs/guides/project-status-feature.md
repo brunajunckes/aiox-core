@@ -1,5 +1,9 @@
 # Project Status Feature - User Guide
 
+> **EN** | [PT](../pt/guides/project-status-feature.md) | [ES](../es/guides/project-status-feature.md)
+
+---
+
 **Feature:** Dynamic Project Status Context for Agent Activation
 **Version:** 1.0
 **Story:** 6.1.2.4

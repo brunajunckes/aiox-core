@@ -1,5 +1,9 @@
 # AIOS MCP Global Setup Guide
 
+> **EN** | [PT](../pt/guides/mcp-global-setup.md) | [ES](../es/guides/mcp-global-setup.md)
+
+---
+
 > Configure global MCP (Model Context Protocol) servers for Synkra AIOS.
 
 **Version:** 2.1.1

@@ -1,5 +1,7 @@
 # Squads API Reference
 
+> 🌐 **EN** | [PT](../pt/api/squads-api.md) | [ES](../es/api/squads-api.md)
+
 REST API for syncing squads to Synkra and discovering marketplace squads.
 
 ## Overview

@@ -1,5 +1,9 @@
 # AIOS Guide for Cursor
 
+> 🌐 **EN** | [PT](../pt/platforms/cursor.md) | [ES](../es/platforms/cursor.md) *(coming soon)*
+
+---
+
 > **AI-First Code Editor** - Most Popular AI IDE
 
 ---

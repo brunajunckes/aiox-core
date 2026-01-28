@@ -1,5 +1,7 @@
 # AIOS Agent Persona Definitions
 
+> 🌐 **EN** | [PT](../pt/agents/persona-definitions.md) | [ES](../es/agents/persona-definitions.md)
+
 **Version:** 1.0
 **Created:** 2025-01-14
 **Author:** @ux-design-expert (Uma)

@@ -1,5 +1,9 @@
 # Squad Examples
 
+> **EN** | [PT](../../pt/guides/squad-examples/README.md) | [ES](../../es/guides/squad-examples/README.md)
+
+---
+
 This directory contains example Squad configurations to help you get started.
 
 ## Available Examples

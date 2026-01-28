@@ -1,5 +1,9 @@
 # AIOS Guide for Roo Code
 
+> 🌐 **EN** | [PT](../pt/platforms/roo-code.md) | [ES](../es/platforms/roo-code.md) *(coming soon)*
+
+---
+
 > **Mode-Based VS Code Extension** - Specialized Agent Modes
 
 ---

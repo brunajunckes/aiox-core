@@ -1,5 +1,9 @@
 # Guia do Sistema de Greeting Contextual
 
+> **EN** | [PT](../pt/guides/contextual-greeting-system-guide.md) | [ES](../es/guides/contextual-greeting-system-guide.md)
+
+---
+
 **Story:** 6.1.2.5 - Contextual Agent Load System
 **Status:** Componentes Implementados, Integração Pendente
 **Data:** 2025-01-15
