@@ -42,6 +42,7 @@
 AIOS é construído em JavaScript/TypeScript moderno com runtime Node.js, otimizado para desenvolvimento de CLI cross-platform com UX interativa e capacidades de orquestração de agentes.
 
 **Filosofia:**
+
 - Preferir **tecnologia consolidada** onde possível (dependências provadas e estáveis)
 - Escolher **tecnologia inovadora** apenas onde necessário (performance, melhorias de DX)
 - Minimizar dependências (reduzir risco de supply chain)
@@ -60,6 +61,7 @@ Razão: Suporte estável a async/await, fetch API, ES2022
 ```
 
 **Por que Node.js 18+:**
+
 - ✅ API `fetch()` nativa (sem necessidade de axios/node-fetch)
 - ✅ Suporte a módulos ES2022 (top-level await)
 - ✅ V8 10.2+ (melhorias de performance)
@@ -67,6 +69,7 @@ Razão: Suporte estável a async/await, fetch API, ES2022
 - ✅ Cross-platform (Windows/macOS/Linux)
 
 **Gerenciador de Pacotes:**
+
 ```yaml
 Principal: npm 9.0.0+
 Alternativo: yarn/pnpm (escolha do usuário)
@@ -86,6 +89,7 @@ Futuro: Migração para ESM planejada (Story 6.2.x)
 ```
 
 **Por que ES2022:**
+
 - ✅ Class fields e métodos privados
 - ✅ Top-level await
 - ✅ Error cause
@@ -102,6 +106,7 @@ Futuro: Migração completa para TypeScript considerada para Q2 2026
 ```
 
 **Uso Atual de TypeScript:**
+
 ```typescript
 // index.d.ts - Definições de tipos para API pública
 export interface AgentConfig {
@@ -111,13 +116,11 @@ export interface AgentConfig {
   dependencies?: string[];
 }
 
-export function executeAgent(
-  agentId: string,
-  args: Record<string, any>
-): Promise<any>;
+export function executeAgent(agentId: string, args: Record<string, any>): Promise<any>;
 ```
 
 **Configuração TypeScript:**
+
 ```json
 {
   "compilerOptions": {
@@ -140,6 +143,7 @@ export function executeAgent(
 ### CLI e UX Interativa
 
 #### @clack/prompts (^0.11.0)
+
 **Propósito:** Prompts de CLI modernos com UX elegante
 **Uso:** Wizard interativo, coleta de input do usuário
 **Por que:** UX de classe mundial, animações de spinner, barras de progresso
@@ -151,12 +155,13 @@ const agent = await select({
   message: 'Selecione o agente:',
   options: [
     { value: 'dev', label: '💻 Developer' },
-    { value: 'qa', label: '🧪 QA Engineer' }
-  ]
+    { value: 'qa', label: '🧪 QA Engineer' },
+  ],
 });
 ```
 
 #### chalk (^4.1.2)
+
 **Propósito:** Estilização de strings no terminal
 **Uso:** Saída colorida, formatação
 **Por que:** Cross-platform, zero dependências, API estável
@@ -168,6 +173,7 @@ console.log(chalk.red('❌ Tarefa falhou'));
 ```
 
 #### picocolors (^1.1.1)
+
 **Propósito:** Biblioteca de cores leve (alternativa mais rápida ao chalk)
 **Uso:** Saída de cores crítica em performance
 **Por que:** 14x menor que chalk, 2x mais rápido
@@ -178,6 +184,7 @@ console.log(pc.green('✅ Saída rápida'));
 ```
 
 #### ora (^5.4.1)
+
 **Propósito:** Spinners de terminal
 **Uso:** Indicadores de carregamento, operações assíncronas
 **Por que:** Spinners bonitos, customizáveis, amplamente usado
@@ -192,6 +199,7 @@ spinner.succeed('Agente carregado');
 ### Sistema de Arquivos e Operações de Path
 
 #### fs-extra (^11.3.2)
+
 **Propósito:** Operações aprimoradas de sistema de arquivos
 **Uso:** Cópia de arquivos, criação de diretórios, leitura/escrita JSON
 **Por que:** Baseado em promises, utilitários adicionais sobre `fs` nativo
@@ -204,6 +212,7 @@ await fs.outputJson('config.json', data);
 ```
 
 #### glob (^11.0.3)
+
 **Propósito:** Pattern matching de arquivos
 **Uso:** Encontrar arquivos por padrões (ex: `*.md`, `**/*.yaml`)
 **Por que:** Rápido, suporta padrões gitignore
@@ -216,6 +225,7 @@ const stories = await glob('docs/stories/**/*.md');
 ### Processamento YAML
 
 #### yaml (^2.8.1)
+
 **Propósito:** Parsing e serialização YAML
 **Uso:** Configs de agentes, workflows, templates
 **Por que:** Rápido, compatível com spec, preserva comentários
@@ -226,6 +236,7 @@ const agent = YAML.parse(fs.readFileSync('agent.yaml', 'utf8'));
 ```
 
 #### js-yaml (^4.1.0)
+
 **Propósito:** Parser YAML alternativo (suporte legado)
 **Uso:** Parsing de arquivos YAML antigos
 **Por que:** API diferente, usado em código legado
@@ -240,6 +251,7 @@ const doc = yaml.load(fs.readFileSync('config.yaml', 'utf8'));
 ### Processamento Markdown
 
 #### @kayvan/markdown-tree-parser (^1.5.0)
+
 **Propósito:** Parsear markdown em AST
 **Uso:** Parsing de stories, análise de estrutura de documentos
 **Por que:** Leve, rápido, suporta GFM
@@ -252,6 +264,7 @@ const ast = parseMarkdown(markdownContent);
 ### Execução de Processos
 
 #### execa (^9.6.0)
+
 **Propósito:** child_process aprimorado
 **Uso:** Executar git, npm, ferramentas CLI externas
 **Por que:** Cross-platform, baseado em promises, melhor tratamento de erros
@@ -264,6 +277,7 @@ const { stdout } = await execa('git', ['status']);
 ### Parsing de Linha de Comando
 
 #### commander (^14.0.1)
+
 **Propósito:** Framework CLI
 **Uso:** Parsing de argumentos de linha de comando, subcomandos
 **Por que:** Padrão da indústria, recursos ricos, suporte TypeScript
@@ -281,6 +295,7 @@ program
 ```
 
 #### inquirer (^8.2.6)
+
 **Propósito:** Prompts interativos de linha de comando
 **Uso:** Coleta de input do usuário, wizards
 **Por que:** Tipos ricos de prompts, suporte a validação
@@ -292,14 +307,15 @@ const answers = await inquirer.prompt([
     type: 'list',
     name: 'agent',
     message: 'Selecione o agente:',
-    choices: ['dev', 'qa', 'architect']
-  }
+    choices: ['dev', 'qa', 'architect'],
+  },
 ]);
 ```
 
 ### Sandboxing e Segurança
 
 #### isolated-vm (^5.0.4)
+
 **Propósito:** V8 isolate para execução JavaScript em sandbox
 **Uso:** Execução segura de scripts de usuário, execução de tarefas
 **Por que:** Isolamento de segurança, limites de memória, controle de timeout
@@ -313,6 +329,7 @@ const context = await isolate.createContext();
 ### Validação
 
 #### validator (^13.15.15)
+
 **Propósito:** Validadores e sanitizadores de strings
 **Uso:** Validação de input (URLs, emails, etc.)
 **Por que:** Abrangente, bem testado, sem dependências
@@ -325,6 +342,7 @@ if (validator.isURL(url)) {
 ```
 
 #### semver (^7.7.2)
+
 **Propósito:** Parser e comparador de versionamento semântico
 **Uso:** Verificação de versões, resolução de dependências
 **Por que:** Padrão NPM, amplamente testado
@@ -343,13 +361,16 @@ if (semver.satisfies('1.2.3', '>=1.0.0')) {
 ### Linting
 
 #### ESLint (^9.38.0)
+
 **Propósito:** Linter JavaScript/TypeScript
 **Configuração:** `.eslintrc.json`
 **Plugins:**
+
 - `@typescript-eslint/eslint-plugin` (^8.46.2)
 - `@typescript-eslint/parser` (^8.46.2)
 
 **Regras Principais:**
+
 ```javascript
 {
   "rules": {
@@ -365,6 +386,7 @@ if (semver.satisfies('1.2.3', '>=1.0.0')) {
 ### Formatação
 
 #### Prettier (^3.5.3)
+
 **Propósito:** Formatador de código
 **Configuração:** `.prettierrc`
 
@@ -380,12 +402,14 @@ if (semver.satisfies('1.2.3', '>=1.0.0')) {
 ```
 
 #### yaml-lint (^1.7.0)
+
 **Propósito:** Linter de arquivos YAML
 **Uso:** Validar configs de agentes, workflows, templates
 
 ### Git Hooks
 
 #### husky (^9.1.7)
+
 **Propósito:** Gerenciamento de git hooks
 **Uso:** Linting pré-commit, testes pré-push
 
@@ -401,6 +425,7 @@ if (semver.satisfies('1.2.3', '>=1.0.0')) {
 ```
 
 #### lint-staged (^16.1.1)
+
 **Propósito:** Executar linters em arquivos staged
 **Configuração:**
 
@@ -418,6 +443,7 @@ if (semver.satisfies('1.2.3', '>=1.0.0')) {
 ## Framework de Testes
 
 ### Jest (^30.2.0)
+
 **Propósito:** Framework de testes
 **Uso:** Testes unitários, testes de integração, cobertura
 
@@ -432,6 +458,7 @@ describe('AgentExecutor', () => {
 ```
 
 **Configuração:**
+
 ```json
 {
   "jest": {
@@ -449,6 +476,7 @@ describe('AgentExecutor', () => {
 ```
 
 #### @types/jest (^30.0.0)
+
 **Propósito:** Definições de tipo TypeScript para Jest
 **Uso:** Escrita de testes com type safety
 
@@ -459,10 +487,12 @@ describe('AgentExecutor', () => {
 ### Versionamento e Release
 
 #### semantic-release (^25.0.2)
+
 **Propósito:** Versionamento semântico automatizado e releases
 **Uso:** Publicação automática no NPM, geração de changelog
 
 **Plugins:**
+
 - `@semantic-release/changelog` (^6.0.3) - Gerar CHANGELOG.md
 - `@semantic-release/git` (^10.0.1) - Commitar ativos de release
 
@@ -573,6 +603,7 @@ CodeRabbit:
 **Planejado para Q2-Q4 2026** (após reestruturação de repositório):
 
 ### Migração ESM
+
 ```javascript
 // Atual: CommonJS
 const agent = require('./agent');
@@ -584,12 +615,14 @@ export { executeAgent };
 ```
 
 ### TypeScript Completo
+
 ```typescript
 // Migrar de JS + .d.ts para TypeScript completo
 // Benefícios: Type safety, melhor refatoração, DX aprimorado
 ```
 
 ### Ferramentas de Build
+
 ```yaml
 Bundler: esbuild ou tsup
 Razão: Builds rápidos, tree-shaking, minificação
@@ -597,6 +630,7 @@ Alvo: Executável CLI único (opcional)
 ```
 
 ### Melhorias de Testes
+
 ```yaml
 Testes E2E: Playwright (testes de automação de browser)
 Testes de Performance: Benchmark.js (timing de workflows)
@@ -645,18 +679,18 @@ npx cost-of-modules
 
 ## Matriz de Compatibilidade de Versões
 
-| Componente | Versão | Compatibilidade | Notas |
-|-----------|---------|---------------|-------|
-| **Node.js** | 18.0.0+ | Obrigatório | LTS Ativo |
-| **npm** | 9.0.0+ | Obrigatório | Gerenciador de pacotes |
-| **TypeScript** | 5.9.3 | Recomendado | Definições de tipos |
-| **ESLint** | 9.38.0 | Obrigatório | Linting |
-| **Prettier** | 3.5.3 | Obrigatório | Formatação |
-| **Jest** | 30.2.0 | Obrigatório | Testes |
-| **Git** | 2.30+ | Obrigatório | Controle de versão |
-| **GitHub CLI** | 2.x+ | Opcional | Gerenciamento de repositório |
-| **Railway CLI** | 3.x+ | Opcional | Deploy |
-| **Supabase CLI** | 1.x+ | Opcional | Gerenciamento de banco de dados |
+| Componente       | Versão  | Compatibilidade | Notas                           |
+| ---------------- | ------- | --------------- | ------------------------------- |
+| **Node.js**      | 18.0.0+ | Obrigatório     | LTS Ativo                       |
+| **npm**          | 9.0.0+  | Obrigatório     | Gerenciador de pacotes          |
+| **TypeScript**   | 5.9.3   | Recomendado     | Definições de tipos             |
+| **ESLint**       | 9.38.0  | Obrigatório     | Linting                         |
+| **Prettier**     | 3.5.3   | Obrigatório     | Formatação                      |
+| **Jest**         | 30.2.0  | Obrigatório     | Testes                          |
+| **Git**          | 2.30+   | Obrigatório     | Controle de versão              |
+| **GitHub CLI**   | 2.x+    | Opcional        | Gerenciamento de repositório    |
+| **Railway CLI**  | 3.x+    | Opcional        | Deploy                          |
+| **Supabase CLI** | 1.x+    | Opcional        | Gerenciamento de banco de dados |
 
 ---
 
@@ -759,18 +793,16 @@ SUPABASE_ACCESS_REDACTED
 
 - [Padrões de Codificação](./coding-standards.md)
 - [Árvore de Código](./source-tree.md)
-- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
 ## Histórico de Versão
 
-| Versão | Data | Alterações | Autor |
-|---------|------|---------|--------|
-| 1.0 | 2025-01-15 | Documentação inicial do tech stack | Aria (architect) |
-| 1.1 | 2025-12-14 | Atualizado aviso de migração para SynkraAI/aios-core, semantic-release para v25.0.2 [Story 6.10] | Dex (dev) |
+| Versão | Data       | Alterações                                                                                       | Autor            |
+| ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------- |
+| 1.0    | 2025-01-15 | Documentação inicial do tech stack                                                               | Aria (architect) |
+| 1.1    | 2025-12-14 | Atualizado aviso de migração para SynkraAI/aios-core, semantic-release para v25.0.2 [Story 6.10] | Dex (dev)        |
 
 ---
 
-*Este é um padrão oficial do framework AIOS. Todas as escolhas de tecnologia devem estar alinhadas com este stack.*
+_Este é um padrão oficial do framework AIOS. Todas as escolhas de tecnologia devem estar alinhadas com este stack._

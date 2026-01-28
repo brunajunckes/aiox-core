@@ -139,7 +139,7 @@ git push origin fix/typo-in-readme
 
 - 🐛 Reporte bugs usando o [template de bug report](https://github.com/SynkraAIinc/@synkra/aios-core/issues/new?template=bug_report.md)
 - 💡 Sugira features usando o [template de feature request](https://github.com/SynkraAIinc/@synkra/aios-core/issues/new?template=feature_request.md)
-- 📖 Leia as [Diretrizes de Contribuição](../CONTRIBUTING.md) *(coming soon)* completas
+- 📖 Leia as [Diretrizes de Contribuição](../../CONTRIBUTING.md) completas
 
 ## Exemplo: PRs Bons vs Ruins
 

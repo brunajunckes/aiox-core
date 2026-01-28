@@ -35,10 +35,12 @@
 ## Overview
 
 AIOS uses a **dual-layer architecture**:
+
 1. **Framework Core** (`.aios-core/`) - Portable framework components
 2. **Project Workspace** (root) - Project-specific implementation
 
 **Philosophy:**
+
 - Framework components are **portable** (move between projects)
 - Project files are **specific** (brownfield implementation)
 - Clear **separation of concerns** (framework vs project)
@@ -416,17 +418,17 @@ workflows:
 
 # Dependencies
 dependencies:
-  aios-core: ">=2.1.0"
+  aios-core: '>=2.1.0'
 ```
 
 ### Migration from Squads
 
-| Legacy (Deprecated) | Current (Squads) |
-|---------------------|------------------|
-| `Squads/` directory | `templates/squad/` template |
+| Legacy (Deprecated)             | Current (Squads)                |
+| ------------------------------- | ------------------------------- |
+| `Squads/` directory             | `templates/squad/` template     |
 | `expansionPacksLocation` config | `squadsTemplateLocation` config |
-| `pack.yaml` manifest | `squad.yaml` manifest |
-| Direct loading | Template-based creation |
+| `pack.yaml` manifest            | `squad.yaml` manifest           |
+| Direct loading                  | Template-based creation         |
 
 ---
 
@@ -691,18 +693,16 @@ outputs/                               # Runtime outputs (gitignored)
 
 - [Coding Standards](./coding-standards.md)
 - [Tech Stack](./tech-stack.md)
-- [Decision 005: Repository Restructuring](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- [Story 6.1.2.5: Contextual Agent Load System](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
 ## Version History
 
-| Version | Date | Changes | Author |
-|---------|------|---------|--------|
-| 1.0 | 2025-01-15 | Initial source tree documentation | Aria (architect) |
-| 1.1 | 2025-12-14 | Updated org to SynkraAI, replaced Squads with Squads system [Story 6.10] | Dex (dev) |
+| Version | Date       | Changes                                                                  | Author           |
+| ------- | ---------- | ------------------------------------------------------------------------ | ---------------- |
+| 1.0     | 2025-01-15 | Initial source tree documentation                                        | Aria (architect) |
+| 1.1     | 2025-12-14 | Updated org to SynkraAI, replaced Squads with Squads system [Story 6.10] | Dex (dev)        |
 
 ---
 
-*This is an official AIOS framework standard. All file placement must follow this structure.*
+_This is an official AIOS framework standard. All file placement must follow this structure._

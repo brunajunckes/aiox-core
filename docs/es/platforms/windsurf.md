@@ -29,13 +29,13 @@ Windsurf ofrece capacidades únicas para AIOS:
 
 ### Comparación con Otras Plataformas
 
-| Característica | Windsurf | Cursor | Claude Code |
-|---------|:--------:|:------:|:-----------:|
-| Cascade Flow | Sí | No | No |
-| Activación @mention | Sí | Sí | /command |
-| Supercomplete | Sí | Tab | Tab |
-| Soporte MCP | Config | Config | Nativo |
-| Formato Reglas XML | Sí | No | No |
+| Característica      | Windsurf | Cursor | Claude Code |
+| ------------------- | :------: | :----: | :---------: |
+| Cascade Flow        |    Sí    |   No   |     No      |
+| Activación @mention |    Sí    |   Sí   |  /command   |
+| Supercomplete       |    Sí    |  Tab   |     Tab     |
+| Soporte MCP         |  Config  | Config |   Nativo    |
+| Formato Reglas XML  |    Sí    |   No   |     No      |
 
 ---
 
@@ -43,12 +43,12 @@ Windsurf ofrece capacidades únicas para AIOS:
 
 ### Requisitos del Sistema
 
-| Requisito | Mínimo | Recomendado |
-|-------------|---------|-------------|
-| **RAM** | 4GB | 8GB+ |
-| **Espacio en Disco** | 500MB | 1GB+ |
-| **SO** | macOS 10.15+, Windows 10+, Linux | Más reciente |
-| **Node.js** | 18.0+ (para AIOS) | 20.0+ |
+| Requisito            | Mínimo                           | Recomendado  |
+| -------------------- | -------------------------------- | ------------ |
+| **RAM**              | 4GB                              | 8GB+         |
+| **Espacio en Disco** | 500MB                            | 1GB+         |
+| **SO**               | macOS 10.15+, Windows 10+, Linux | Más reciente |
+| **Node.js**          | 18.0+ (para AIOS)                | 20.0+        |
 
 ### Requisitos de Cuenta
 
@@ -88,6 +88,7 @@ ls -la .windsurf/
 ```
 
 Estructura esperada:
+
 ```
 project/
 ├── .windsurfrules          # Archivo principal de reglas
@@ -113,13 +114,15 @@ Este archivo utiliza formato de markdown etiquetado en XML:
 # Reglas de Desarrollo Synkra AIOS
 
 ## Integración de Agentes
+
 - Usar @agent-name para activar agentes
 - Seguir flujos de trabajo específicos de agentes
 
 ## Estándares de Desarrollo
+
 - Escribir código limpio y probado
 - Seguir convenciones del proyecto
-</rules>
+  </rules>
 
 <context>
 El contexto específico del proyecto va aquí
@@ -137,14 +140,16 @@ Cada archivo de agente sigue el formato etiquetado en XML:
 # Agente Desarrollador
 
 ## Experiencia
+
 - Desarrollo full-stack
 - Prácticas de código limpio
 
 ## Flujo de Trabajo
+
 1. Entender requisitos
 2. Planificar implementación
 3. Escribir código probado
-</agent>
+   </agent>
 ```
 
 ### Configuración MCP
@@ -217,6 +222,7 @@ Agregar pruebas unitarias para el repositorio
 ### Flujos de Trabajo Cascade
 
 #### Implementación Multi-paso
+
 ```
 @dev @cascade
 1. Crear el esquema de base de datos
@@ -227,6 +233,7 @@ Agregar pruebas unitarias para el repositorio
 ```
 
 #### Refactorización Compleja
+
 ```
 @architect @cascade
 Refactorizar el módulo de pagos:
@@ -278,32 +285,32 @@ API RESTful con Express.js
 
 ### Panel Cascade
 
-| Característica | Descripción |
-|---------|-------------|
-| **Memoria de Contexto** | Recuerda en interacciones |
+| Característica              | Descripción                  |
+| --------------------------- | ---------------------------- |
+| **Memoria de Contexto**     | Recuerda en interacciones    |
 | **Seguimiento de Archivos** | Rastrea archivos modificados |
-| **Vista de Diff** | Muestra todos los cambios |
-| **Rollback** | Deshacer cambios de cascade |
+| **Vista de Diff**           | Muestra todos los cambios    |
+| **Rollback**                | Deshacer cambios de cascade  |
 
 ### Atajos de Teclado
 
-| Atajo | Acción |
-|----------|--------|
-| `Cmd/Ctrl + I` | Abrir panel de IA |
-| `Cmd/Ctrl + Shift + I` | Modo Cascade |
-| `Tab` | Aceptar Supercomplete |
-| `Escape` | Descartar sugerencia |
-| `Cmd/Ctrl + Z` | Deshacer paso de cascade |
+| Atajo                  | Acción                   |
+| ---------------------- | ------------------------ |
+| `Cmd/Ctrl + I`         | Abrir panel de IA        |
+| `Cmd/Ctrl + Shift + I` | Modo Cascade             |
+| `Tab`                  | Aceptar Supercomplete    |
+| `Escape`               | Descartar sugerencia     |
+| `Cmd/Ctrl + Z`         | Deshacer paso de cascade |
 
 ### Etiquetas de Reglas XML
 
-| Etiqueta | Propósito |
-|-----|---------|
-| `<rules>` | Sección principal de reglas |
-| `<context>` | Contexto del proyecto |
-| `<agent>` | Definición de agente |
-| `<patterns>` | Patrones de código |
-| `<constraints>` | Limitaciones |
+| Etiqueta        | Propósito                   |
+| --------------- | --------------------------- |
+| `<rules>`       | Sección principal de reglas |
+| `<context>`     | Contexto del proyecto       |
+| `<agent>`       | Definición de agente        |
+| `<patterns>`    | Patrones de código          |
+| `<constraints>` | Limitaciones                |
 
 ---
 
@@ -362,19 +369,19 @@ Desarrollador Full Stack Senior
 
 ### Limitaciones Actuales
 
-| Limitación | Solución Alternativa |
-|------------|------------|
-| Sin CLI nativa | Usar GUI o integrar con terminal |
+| Limitación                     | Solución Alternativa             |
+| ------------------------------ | -------------------------------- |
+| Sin CLI nativa                 | Usar GUI o integrar con terminal |
 | Límites de contexto de Cascade | Dividir en cascadas más pequeñas |
-| MCP limitado | Solo basado en configuración |
+| MCP limitado                   | Solo basado en configuración     |
 
 ### Windsurf vs Cursor
 
-| Aspecto | Windsurf | Cursor |
-|--------|----------|--------|
-| Flujo | Cascade | Composer |
-| Formato | Etiquetado XML | Markdown |
-| Completación | Supercomplete | Tab |
+| Aspecto      | Windsurf       | Cursor   |
+| ------------ | -------------- | -------- |
+| Flujo        | Cascade        | Composer |
+| Formato      | Etiquetado XML | Markdown |
+| Completación | Supercomplete  | Tab      |
 
 ---
 
@@ -383,28 +390,37 @@ Desarrollador Full Stack Senior
 ### Problemas Comunes
 
 #### Las Reglas No Se Cargan
+
 ```
 Problema: .windsurfrules no reconocido
 ```
+
 **Solución:**
+
 1. Verificar que el archivo está en la raíz del proyecto
 2. Revisar que la sintaxis XML sea válida
 3. Reiniciar Windsurf
 
 #### Cascade Pierde Contexto
+
 ```
 Problema: Cascade olvida el contexto anterior
 ```
+
 **Solución:**
+
 1. Usar `@cascade` explícitamente
 2. Mantener cascadas enfocadas
 3. Revisar límites de contexto
 
 #### Agente No Se Activa
+
 ```
 Problema: @dev no se reconoce
 ```
+
 **Solución:**
+
 ```bash
 # Resincronizar agentes
 npm run sync:agents
@@ -446,11 +462,13 @@ R: La edición básica funciona sin conexión, pero las características de IA r
 ### De Cursor a Windsurf
 
 1. Exportar reglas de Cursor:
+
    ```bash
    cp .cursor/rules.md cursor-backup.md
    ```
 
 2. Inicializar AIOS para Windsurf:
+
    ```bash
    npx @anthropic/aios init --ide windsurf
    ```
@@ -469,8 +487,8 @@ R: La edición básica funciona sin conexión, pero las características de IA r
 
 - [Documentación de Windsurf](https://codeium.com/windsurf/docs)
 - [Comunidad Codeium](https://discord.gg/codeium)
-- [Guía de Plataforma AIOS](../README.md) *(coming soon)*
+- [Guía de Plataforma AIOS](../README.md)
 
 ---
 
-*Synkra AIOS - Guía de Plataforma Windsurf v1.0*
+_Synkra AIOS - Guía de Plataforma Windsurf v1.0_

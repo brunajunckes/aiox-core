@@ -17,6 +17,7 @@
 Instale Node.js usando uno de estos métodos:
 
 **Opción A: Usando Homebrew (Recomendado)**
+
 ```bash
 # Instalar Homebrew si aún no está instalado
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -29,6 +30,7 @@ brew install node
 Descargue desde [nodejs.org](https://nodejs.org/)
 
 **Opción C: Usando Node Version Manager (nvm)**
+
 ```bash
 # Instalar nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -43,11 +45,13 @@ nvm use 20
 Instale GitHub CLI para colaboración en equipo:
 
 **Usando Homebrew (Recomendado)**
+
 ```bash
 brew install gh
 ```
 
 **Usando MacPorts**
+
 ```bash
 sudo port install gh
 ```
@@ -61,6 +65,7 @@ Descargue desde [cli.github.com](https://cli.github.com/)
 
 1. Abra Terminal
 2. Navegue a su directorio de proyecto:
+
    ```bash
    cd ~/path/to/your/project
    ```
@@ -73,6 +78,7 @@ Descargue desde [cli.github.com](https://cli.github.com/)
 ### Qué Hace el Instalador
 
 El instalador automáticamente:
+
 - Detecta macOS y aplica configuraciones específicas de la plataforma
 - Crea los directorios necesarios con los permisos adecuados
 - Configura las rutas del IDE para ubicaciones de macOS:
@@ -142,6 +148,7 @@ source ~/.zshrc  # o source ~/.bash_profile
 Los sistemas de archivos de macOS pueden ser insensibles a mayúsculas por defecto. Si experimenta problemas:
 
 1. Verifique su sistema de archivos:
+
    ```bash
    diskutil info / | grep "File System"
    ```
@@ -157,6 +164,7 @@ npx github:SynkraAI/aios-core install
 ```
 
 El actualizador:
+
 - Detectará su instalación existente
 - Hará una copia de seguridad de cualquier personalización
 - Actualizará solo los archivos modificados
@@ -166,7 +174,7 @@ El actualizador:
 
 1. Configure su IDE (vea la configuración específica por IDE arriba)
 2. Ejecute `*help` en su agente de IA para ver los comandos disponibles
-3. Comience con la [Guía del Usuario](../../aios-core/user-guide.md) *(coming soon)*
+3. Comience con la [Guía del Usuario](../../aios-core/user-guide.md) _(coming soon)_
 4. Únase a nuestra [Comunidad de Discord](https://discord.gg/gk8jAdXWmj) para obtener ayuda
 
 ## Requisitos del Sistema
@@ -179,6 +187,6 @@ El actualizador:
 ## Recursos Adicionales
 
 - [README Principal](../../README.md)
-- [Guía del Usuario](../../aios-core/user-guide.md) *(coming soon)*
-- [Guía de Solución de Problemas](../../docs/troubleshooting.md) *(coming soon)*
+- [Guía del Usuario](../../aios-core/user-guide.md) _(coming soon)_
+- [Guía de Solución de Problemas](../../troubleshooting.md)
 - [Comunidad de Discord](https://discord.gg/gk8jAdXWmj)

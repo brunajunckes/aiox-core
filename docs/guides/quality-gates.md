@@ -8,7 +8,6 @@
 
 **Version:** 2.1.0
 **Last Updated:** 2025-12-01
-**Story:** [2.16 - Documentation Sprint 2](../stories/v2.1/sprint-2/story-2.16-documentation.md) *(coming soon)*
 
 ---
 
@@ -40,26 +39,27 @@ graph LR
     style L3 fill:#fff3e0
 ```
 
-| Layer | Type | Speed | Purpose |
-|-------|------|-------|---------|
-| **Layer 1** | Automated | ~30s | Catch syntax, linting, type errors |
-| **Layer 2** | AI-Assisted | ~5m | Catch logic, security, patterns |
-| **Layer 3** | Human | Variable | Strategic review, sign-off |
+| Layer       | Type        | Speed    | Purpose                            |
+| ----------- | ----------- | -------- | ---------------------------------- |
+| **Layer 1** | Automated   | ~30s     | Catch syntax, linting, type errors |
+| **Layer 2** | AI-Assisted | ~5m      | Catch logic, security, patterns    |
+| **Layer 3** | Human       | Variable | Strategic review, sign-off         |
 
 ---
 
 ## Layer 1: Pre-commit Checks
 
 ### Purpose
+
 Fast, local checks that run before code is committed. Catches obvious issues immediately.
 
 ### Checks Included
 
-| Check | Tool | Timeout | Description |
-|-------|------|---------|-------------|
-| **Lint** | ESLint | 60s | Code style and best practices |
-| **Test** | Jest | 5m | Unit tests with coverage |
-| **TypeCheck** | TypeScript | 2m | Static type validation |
+| Check         | Tool       | Timeout | Description                   |
+| ------------- | ---------- | ------- | ----------------------------- |
+| **Lint**      | ESLint     | 60s     | Code style and best practices |
+| **Test**      | Jest       | 5m      | Unit tests with coverage      |
+| **TypeCheck** | TypeScript | 2m      | Static type validation        |
 
 ### Configuration
 
@@ -67,24 +67,24 @@ Fast, local checks that run before code is committed. Catches obvious issues imm
 # .aios-core/core/quality-gates/quality-gate-config.yaml
 layer1:
   enabled: true
-  failFast: true  # Stop on first failure
+  failFast: true # Stop on first failure
   checks:
     lint:
       enabled: true
-      command: "npm run lint"
-      failOn: "error"  # error | warning
-      timeout: 60000   # 1 minute
+      command: 'npm run lint'
+      failOn: 'error' # error | warning
+      timeout: 60000 # 1 minute
     test:
       enabled: true
-      command: "npm test"
-      timeout: 300000  # 5 minutes
+      command: 'npm test'
+      timeout: 300000 # 5 minutes
       coverage:
         enabled: true
         minimum: 80
     typecheck:
       enabled: true
-      command: "npm run typecheck"
-      timeout: 120000  # 2 minutes
+      command: 'npm run typecheck'
+      timeout: 120000 # 2 minutes
 ```
 
 ### Running Layer 1
@@ -131,14 +131,15 @@ LAYER 1 PASSED (85.6s)
 ## Layer 2: PR Automation
 
 ### Purpose
+
 AI-assisted code review that runs on pull requests. Catches deeper issues like logic errors, security vulnerabilities, and architectural problems.
 
 ### Tools Integrated
 
-| Tool | Purpose | Blocking Severity |
-|------|---------|-------------------|
-| **CodeRabbit** | AI code review | CRITICAL |
-| **Quinn (@qa)** | Automated QA review | CRITICAL |
+| Tool            | Purpose             | Blocking Severity |
+| --------------- | ------------------- | ----------------- |
+| **CodeRabbit**  | AI code review      | CRITICAL          |
+| **Quinn (@qa)** | Automated QA review | CRITICAL          |
 
 ### Configuration
 
@@ -148,8 +149,8 @@ layer2:
   enabled: true
   coderabbit:
     enabled: true
-    command: "coderabbit --prompt-only -t uncommitted"
-    timeout: 900000  # 15 minutes
+    command: 'coderabbit --prompt-only -t uncommitted'
+    timeout: 900000 # 15 minutes
     blockOn:
       - CRITICAL
     warnOn:
@@ -161,10 +162,10 @@ layer2:
   quinn:
     enabled: true
     autoReview: true
-    agentPath: ".claude/commands/AIOS/agents/qa.md"
+    agentPath: '.claude/commands/AIOS/agents/qa.md'
     severity:
-      block: ["CRITICAL"]
-      warn: ["HIGH", "MEDIUM"]
+      block: ['CRITICAL']
+      warn: ['HIGH', 'MEDIUM']
 ```
 
 ### Running Layer 2
@@ -182,12 +183,12 @@ aios qa run --layer=2 --tool=quinn
 
 ### Severity Levels
 
-| Severity | Action | Description |
-|----------|--------|-------------|
-| **CRITICAL** | Block | Security vulnerability, data loss risk, breaking change |
-| **HIGH** | Warn + Document | Performance issue, missing validation, anti-pattern |
-| **MEDIUM** | Document | Code smell, improvement suggestion, minor risk |
-| **LOW** | Ignore | Style preference, minor optimization |
+| Severity     | Action          | Description                                             |
+| ------------ | --------------- | ------------------------------------------------------- |
+| **CRITICAL** | Block           | Security vulnerability, data loss risk, breaking change |
+| **HIGH**     | Warn + Document | Performance issue, missing validation, anti-pattern     |
+| **MEDIUM**   | Document        | Code smell, improvement suggestion, minor risk          |
+| **LOW**      | Ignore          | Style preference, minor optimization                    |
 
 ### CodeRabbit Integration
 
@@ -228,6 +229,7 @@ const result = await manager.runQuinnReview(pullRequestId);
 ## Layer 3: Human Review
 
 ### Purpose
+
 Strategic human review for final sign-off. Ensures business requirements are met and architectural decisions are sound.
 
 ### Configuration
@@ -237,24 +239,24 @@ Strategic human review for final sign-off. Ensures business requirements are met
 layer3:
   enabled: true
   requireSignoff: true
-  assignmentStrategy: "auto"  # auto | manual | round-robin
-  defaultReviewer: "@architect"
+  assignmentStrategy: 'auto' # auto | manual | round-robin
+  defaultReviewer: '@architect'
   checklist:
     enabled: true
-    template: "strategic-review-checklist"
+    template: 'strategic-review-checklist'
     minItems: 5
   signoff:
     required: true
-    expiry: 86400000  # 24 hours in ms
+    expiry: 86400000 # 24 hours in ms
 ```
 
 ### Assignment Strategies
 
-| Strategy | Description |
-|----------|-------------|
-| **auto** | Assign based on file ownership and expertise |
-| **manual** | Manually assign reviewer |
-| **round-robin** | Rotate through team members |
+| Strategy        | Description                                  |
+| --------------- | -------------------------------------------- |
+| **auto**        | Assign based on file ownership and expertise |
+| **manual**      | Manually assign reviewer                     |
+| **round-robin** | Rotate through team members                  |
 
 ### Review Checklist
 
@@ -264,21 +266,25 @@ The strategic review checklist ensures reviewers cover key areas:
 ## Strategic Review Checklist
 
 ### Architecture
+
 - [ ] Changes align with system architecture
 - [ ] No unauthorized dependencies introduced
 - [ ] Backwards compatibility maintained
 
 ### Security
+
 - [ ] No sensitive data exposed
 - [ ] Input validation present
 - [ ] Authentication/authorization correct
 
 ### Quality
+
 - [ ] Code is maintainable and readable
 - [ ] Tests are comprehensive
 - [ ] Documentation updated
 
 ### Business
+
 - [ ] Acceptance criteria met
 - [ ] User experience considered
 - [ ] Performance acceptable
@@ -336,6 +342,7 @@ aios qa status --pr=123
 ```
 
 **Output:**
+
 ```
 Quality Gate Status
 ===================
@@ -483,7 +490,7 @@ aios qa run --layer=1 --fail-fast
 
 ```yaml
 # quality-gate-config.yaml
-version: "1.0"
+version: '1.0'
 
 # Layer 1: Pre-commit checks
 layer1:
@@ -492,19 +499,19 @@ layer1:
   checks:
     lint:
       enabled: true
-      command: "npm run lint"
-      failOn: "error"
+      command: 'npm run lint'
+      failOn: 'error'
       timeout: 60000
     test:
       enabled: true
-      command: "npm test"
+      command: 'npm test'
       timeout: 300000
       coverage:
         enabled: true
         minimum: 80
     typecheck:
       enabled: true
-      command: "npm run typecheck"
+      command: 'npm run typecheck'
       timeout: 120000
 
 # Layer 2: PR Automation
@@ -512,7 +519,7 @@ layer2:
   enabled: true
   coderabbit:
     enabled: true
-    command: "coderabbit --prompt-only -t uncommitted"
+    command: 'coderabbit --prompt-only -t uncommitted'
     timeout: 900000
     blockOn: [CRITICAL]
     warnOn: [HIGH]
@@ -521,7 +528,7 @@ layer2:
   quinn:
     enabled: true
     autoReview: true
-    agentPath: ".claude/commands/AIOS/agents/qa.md"
+    agentPath: '.claude/commands/AIOS/agents/qa.md'
     severity:
       block: [CRITICAL]
       warn: [HIGH, MEDIUM]
@@ -530,11 +537,11 @@ layer2:
 layer3:
   enabled: true
   requireSignoff: true
-  assignmentStrategy: "auto"
-  defaultReviewer: "@architect"
+  assignmentStrategy: 'auto'
+  defaultReviewer: '@architect'
   checklist:
     enabled: true
-    template: "strategic-review-checklist"
+    template: 'strategic-review-checklist'
     minItems: 5
   signoff:
     required: true
@@ -542,14 +549,14 @@ layer3:
 
 # Reports
 reports:
-  location: ".aios/qa-reports"
-  format: "json"
+  location: '.aios/qa-reports'
+  format: 'json'
   retention: 30
   includeMetrics: true
 
 # Status persistence
 status:
-  location: ".aios/qa-status.json"
+  location: '.aios/qa-status.json'
   updateOnChange: true
 
 # Verbose output
@@ -566,28 +573,28 @@ verbose:
 
 ### Layer 1 Failures
 
-| Issue | Solution |
-|-------|----------|
-| Lint errors | Run `npm run lint -- --fix` to auto-fix |
-| Test failures | Check test output, update tests or fix code |
+| Issue            | Solution                                     |
+| ---------------- | -------------------------------------------- |
+| Lint errors      | Run `npm run lint -- --fix` to auto-fix      |
+| Test failures    | Check test output, update tests or fix code  |
 | TypeCheck errors | Review type annotations, fix type mismatches |
-| Timeout | Increase timeout in config or optimize tests |
+| Timeout          | Increase timeout in config or optimize tests |
 
 ### Layer 2 Failures
 
-| Issue | Solution |
-|-------|----------|
+| Issue               | Solution                                |
+| ------------------- | --------------------------------------- |
 | CodeRabbit critical | Address security/breaking change issues |
-| CodeRabbit timeout | Check network, try manual run |
-| Quinn blocked | Review @qa feedback, update code |
+| CodeRabbit timeout  | Check network, try manual run           |
+| Quinn blocked       | Review @qa feedback, update code        |
 
 ### Layer 3 Issues
 
-| Issue | Solution |
-|-------|----------|
+| Issue                | Solution                      |
+| -------------------- | ----------------------------- |
 | No reviewer assigned | Set defaultReviewer in config |
-| Sign-off expired | Request new review |
-| Checklist incomplete | Complete all required items |
+| Sign-off expired     | Request new review            |
+| Checklist incomplete | Complete all required items   |
 
 ---
 
@@ -595,8 +602,7 @@ verbose:
 
 - [Module System Architecture](../architecture/module-system.md)
 - [Service Discovery Guide](./service-discovery.md)
-- [Story 2.10: Quality Gate Manager](../stories/v2.1/sprint-2/story-2.10-quality-gate-manager.md) *(coming soon)*
 
 ---
 
-*Synkra AIOS v2.1 Quality Gate System Guide*
+_Synkra AIOS v2.1 Quality Gate System Guide_

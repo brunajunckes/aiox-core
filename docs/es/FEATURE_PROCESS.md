@@ -34,7 +34,7 @@ Para características más grandes que requieren decisiones de diseño:
 
 ### Ciclo de Vida del RFC
 
-1. **Borrador**: El autor escribe el RFC usando nuestra [Plantilla RFC](/.github/RFC_TEMPLATE.md) *(coming soon)*
+1. **Borrador**: El autor escribe el RFC usando nuestra [Plantilla RFC](/.github/RFC_TEMPLATE.md) _(coming soon)_
 2. **En Revisión**: Período de comentarios de 2 semanas
 3. **Decisión**: Los mantenedores aceptan/rechazan
 4. **Implementación**: Si es aceptado, comienza la implementación
@@ -85,6 +85,7 @@ Esto asegura una priorización adecuada y alineación con los objetivos del proy
 ### Crédito al Contribuidor
 
 Los contribuidores cuyas ideas son implementadas serán acreditados en:
+
 - Las notas de release en CHANGELOG.md
 - El PR que implementa la característica
 - Nuestra página de contribuidores (si aplica)
@@ -95,4 +96,4 @@ Pregunte en GitHub Discussions o Discord.
 
 ---
 
-*Ver también: [Manual de la Comunidad](/COMMUNITY.md) *(coming soon)* | [Guía de Contribución](/CONTRIBUTING.md) *(coming soon)**
+_Ver también: [Manual de la Comunidad](../../COMMUNITY.md) | [Guía de Contribución](../../CONTRIBUTING.md)_

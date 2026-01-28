@@ -26,11 +26,11 @@ Este diretório contém **documentação oficial do framework AIOS** que define 
 
 ## Inventário de Documentação
 
-| Documento | Propósito | Público |
-|----------|---------|----------|
-| [**coding-standards.md**](coding-standards.md) | Padrões JavaScript/TypeScript, convenções de nomenclatura, regras de qualidade de código | Todos os desenvolvedores |
-| [**tech-stack.md**](tech-stack.md) | Escolhas de tecnologia, frameworks, bibliotecas e padrões de ferramentas | Arquitetos, desenvolvedores |
-| [**source-tree.md**](source-tree.md) | Estrutura de diretórios, organização de arquivos e patterns de layout de projeto | Todos os membros da equipe |
+| Documento                                      | Propósito                                                                                | Público                     |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------- |
+| [**coding-standards.md**](coding-standards.md) | Padrões JavaScript/TypeScript, convenções de nomenclatura, regras de qualidade de código | Todos os desenvolvedores    |
+| [**tech-stack.md**](tech-stack.md)             | Escolhas de tecnologia, frameworks, bibliotecas e padrões de ferramentas                 | Arquitetos, desenvolvedores |
+| [**source-tree.md**](source-tree.md)           | Estrutura de diretórios, organização de arquivos e patterns de layout de projeto         | Todos os membros da equipe  |
 
 ---
 
@@ -47,6 +47,7 @@ Este diretório contém **documentação oficial do framework AIOS** que define 
 ### Compatibilidade Retroativa
 
 Para compatibilidade retroativa, os docs do framework permanecem acessíveis em **ambas** localizações até Q3 2026:
+
 - **Nova localização** (preferida): `docs/framework/{nome-do-doc}.md`
 - **Localização antiga** (deprecada): `docs/architecture/{nome-do-doc}.md`
 
@@ -57,12 +58,14 @@ Para compatibilidade retroativa, os docs do framework permanecem acessíveis em 
 ## Documentação de Framework vs. Projeto
 
 ### Documentação do Framework (`docs/framework/`)
+
 - **Escopo**: Portável entre todos os projetos AIOS
 - **Exemplos**: Padrões de código, tech stack, estrutura de source tree
 - **Ciclo de vida**: Vive no repositório `SynkraAI/aios-core`
 - **Alterações**: Requerem aprovação em nível de framework
 
 ### Documentação do Projeto (`docs/architecture/project-decisions/`)
+
 - **Escopo**: Específico para implementação brownfield
 - **Exemplos**: Análise de decisões, revisões arquiteturais, decisões de integração
 - **Ciclo de vida**: Vive no repositório do projeto permanentemente
@@ -73,30 +76,24 @@ Para compatibilidade retroativa, os docs do framework permanecem acessíveis em 
 ## Diretrizes de Uso
 
 ### Para Desenvolvedores
+
 1. **Leia os docs do framework durante o onboarding** - Entenda os padrões AIOS
 2. **Consulte durante o desenvolvimento** - Garanta conformidade com os patterns do framework
 3. **Proponha alterações via PRs** - Padrões do framework evoluem com input da comunidade
 
 ### Para Arquitetos
+
 1. **Mantenha os docs do framework** - Mantenha os padrões atuais e práticos
 2. **Revise PRs para conformidade** - Garanta que o código segue os padrões documentados
 3. **Planeje a migração** - Prepare-se para a separação de repositórios em Q2 2026
 
 ### Para Mantenedores do Framework AIOS
+
 1. **Controle de versão** - Acompanhe mudanças nos padrões do framework
 2. **Prontidão para migração** - Garanta que os docs estejam prontos para separação de repositórios
 3. **Consistência entre projetos** - Aplique padrões uniformemente
 
 ---
 
-## Documentos Relacionados
-
-- **Decisões de Arquitetura**: [`docs/decisions/decision-005-repository-restructuring-FINAL.md`](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- **Story de Migração**: [`docs/stories/aios migration/story-6.1.2.6-framework-config-system.md`](../stories/aios migration/story-6.1.2.6-framework-config-system.md) *(coming soon)*
-- **Docs Específicos do Projeto**: [`docs/architecture/project-decisions/`](../architecture/project-decisions/) *(coming soon)*
-
----
-
 **Última Atualização**: 2025-12-14
 **Mantenedor**: Equipe do Framework AIOS
-**Dúvidas?** Veja [Epic 6.1 - Agent Identity System](../epics/epic-6.1-agent-identity-system.md) *(coming soon)*

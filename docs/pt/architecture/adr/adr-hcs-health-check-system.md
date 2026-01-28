@@ -217,12 +217,12 @@ tools/
 
 ### Riscos
 
-| Risco                                   | Probabilidade | Impacto | Mitigação                                  |
-| --------------------------------------- | ------------- | ------- | ------------------------------------------ |
-| Auto-correção causa danos               | Baixa         | Alto    | Blocklist estrita, backups obrigatórios    |
-| Metas de performance não atingidas      | Média         | Média   | Cache agressivo, execução paralela         |
-| Checks customizados muito complexos     | Baixa         | Baixa   | Fornecer exemplos, limitar tipos de check  |
-| Scope creep de dashboard                | Média         | Média   | Limites estritos de componentes compartilhados |
+| Risco                               | Probabilidade | Impacto | Mitigação                                      |
+| ----------------------------------- | ------------- | ------- | ---------------------------------------------- |
+| Auto-correção causa danos           | Baixa         | Alto    | Blocklist estrita, backups obrigatórios        |
+| Metas de performance não atingidas  | Média         | Média   | Cache agressivo, execução paralela             |
+| Checks customizados muito complexos | Baixa         | Baixa   | Fornecer exemplos, limitar tipos de check      |
+| Scope creep de dashboard            | Média         | Média   | Limites estritos de componentes compartilhados |
 
 ---
 
@@ -361,18 +361,15 @@ tools/
 
 ### Referências Internas
 
-- [Story 3.11: Dashboard de Quality Gates](../stories/v2.1/sprint-3/story-3.11-quality-gates-dashboard.md) *(coming soon)*
-- [Story HCS-1: Investigação](../stories/epics/epic-health-check-system/story-hcs-1-investigation.md) *(coming soon)*
-- [Story HCS-2: Implementação](../stories/epics/epic-health-check-system/story-hcs-2-implementation.md) *(coming soon)*
-- [Padrões de Codificação](../framework/coding-standards.md) *(coming soon)*
+- [Padrões de Codificação](../../framework/coding-standards.md)
 
 ---
 
 ## Registro de Decisão
 
-| Data       | Decisão                               | Autor               |
-| ---------- | ------------------------------------- | ------------------- |
-| 2025-12-30 | Proposta inicial de arquitetura       | @architect via @dev |
+| Data       | Decisão                         | Autor               |
+| ---------- | ------------------------------- | ------------------- |
+| 2025-12-30 | Proposta inicial de arquitetura | @architect via @dev |
 
 ---
 

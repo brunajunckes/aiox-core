@@ -8,7 +8,6 @@
 
 **Version:** 2.0
 **Last Updated:** 2025-12-05
-**Story:** [3.12 - Documentation Sprint 3](../stories/v2.1/sprint-3/story-3.12-documentation-sprint-3.md) *(coming soon)*
 
 ---
 
@@ -18,13 +17,13 @@ The Template Engine provides a consistent way to generate documents (PRDs, ADRs,
 
 ### Key Features
 
-| Feature | Syntax | Description |
-|---------|--------|-------------|
-| Variables | `{{VAR_NAME}}` | Simple variable substitution |
-| Conditionals | `{{#IF_CONDITION}}...{{/IF_CONDITION}}` | Conditional blocks |
-| Loops | `{{#EACH_ITEMS}}...{{/EACH_ITEMS}}` | Iterate over arrays |
-| Nested Paths | `{{user.name}}` | Access nested object properties |
-| Escaping | `\{{literal}}` | Prevent template processing |
+| Feature      | Syntax                                  | Description                     |
+| ------------ | --------------------------------------- | ------------------------------- |
+| Variables    | `{{VAR_NAME}}`                          | Simple variable substitution    |
+| Conditionals | `{{#IF_CONDITION}}...{{/IF_CONDITION}}` | Conditional blocks              |
+| Loops        | `{{#EACH_ITEMS}}...{{/EACH_ITEMS}}`     | Iterate over arrays             |
+| Nested Paths | `{{user.name}}`                         | Access nested object properties |
+| Escaping     | `\{{literal}}`                          | Prevent template processing     |
 
 ---
 
@@ -51,7 +50,7 @@ const variables = {
   TITLE: 'My Document',
   AUTHOR: 'Dex (@dev)',
   DATE: '2025-12-05',
-  SUMMARY: 'This is a generated document.'
+  SUMMARY: 'This is a generated document.',
 };
 
 const output = engine.process(template, variables);
@@ -67,6 +66,7 @@ Created by: Dex (@dev)
 Date: 2025-12-05
 
 ## Summary
+
 This is a generated document.
 ```
 
@@ -88,6 +88,7 @@ const engine = new TemplateEngine();
 Process a template string with given variables.
 
 **Parameters:**
+
 - `template` (string) - Template string with placeholders
 - `variables` (Object) - Key-value pairs for substitution
 
@@ -103,16 +104,17 @@ const result = engine.process('Hello, {{NAME}}!', { NAME: 'World' });
 Load a template file and process it.
 
 **Parameters:**
+
 - `templatePath` (string) - Path to template file
 - `variables` (Object) - Variables to substitute
 
 **Returns:** `Promise<string>` - Processed template
 
 ```javascript
-const result = await engine.loadAndProcess(
-  '.aios-core/product/templates/story-tmpl.md',
-  { STORY_ID: '3.12', TITLE: 'Documentation' }
-);
+const result = await engine.loadAndProcess('.aios-core/product/templates/story-tmpl.md', {
+  STORY_ID: '3.12',
+  TITLE: 'Documentation',
+});
 ```
 
 #### `validateTemplate(template, requiredVars)`
@@ -120,6 +122,7 @@ const result = await engine.loadAndProcess(
 Validate that a template has all required placeholders.
 
 **Parameters:**
+
 - `template` (string) - Template to validate
 - `requiredVars` (string[]) - List of required variable names
 
@@ -137,6 +140,7 @@ if (!validation.valid) {
 Extract all variables used in a template.
 
 **Parameters:**
+
 - `template` (string) - Template to analyze
 
 **Returns:** `Object` - `{ simple: string[], conditionals: string[], loops: string[] }`
@@ -153,6 +157,7 @@ console.log('Loop variables:', vars.loops);
 Escape special characters in user input to prevent injection.
 
 **Parameters:**
+
 - `input` (string) - User input to escape
 
 **Returns:** `string` - Escaped input
@@ -190,9 +195,9 @@ const variables = {
     name: 'AIOS',
     owner: {
       name: 'Pedro',
-      email: 'pedro@example.com'
-    }
-  }
+      email: 'pedro@example.com',
+    },
+  },
 };
 ```
 
@@ -202,6 +207,7 @@ Include content only if a variable is truthy:
 
 ```markdown
 {{#IF_HAS_DEPENDENCIES}}
+
 ## Dependencies
 
 This project depends on:
@@ -212,7 +218,7 @@ This project depends on:
 ```javascript
 const variables = {
   HAS_DEPENDENCIES: true,
-  DEPENDENCIES: '- react\n- typescript'
+  DEPENDENCIES: '- react\n- typescript',
 };
 ```
 
@@ -224,8 +230,9 @@ Iterate over arrays:
 ## Tasks
 
 {{#EACH_TASKS}}
+
 - [ ] {{ITEM.title}} ({{ITEM.priority}})
-{{/EACH_TASKS}}
+      {{/EACH_TASKS}}
 ```
 
 ```javascript
@@ -233,12 +240,13 @@ const variables = {
   TASKS: [
     { title: 'Write docs', priority: 'HIGH' },
     { title: 'Add tests', priority: 'MEDIUM' },
-    { title: 'Review code', priority: 'LOW' }
-  ]
+    { title: 'Review code', priority: 'LOW' },
+  ],
 };
 ```
 
 **Loop Context Variables:**
+
 - `{{ITEM}}` - Current item
 - `{{INDEX}}` - Current index (0-based)
 - `{{FIRST}}` - Boolean, true if first item
@@ -260,19 +268,20 @@ Output: `To use variables, write {{VARIABLE_NAME}}.`
 
 ### Document Templates
 
-| Template | Location | Purpose |
-|----------|----------|---------|
-| **PRD** | `templates/prd-tmpl.md` | Product Requirements Document |
-| **ADR** | `templates/adr-tmpl.md` | Architecture Decision Record |
-| **PMDR** | `templates/pmdr-tmpl.md` | Process Mapping Decision Record |
-| **DBDR** | `templates/dbdr-tmpl.md` | Database Design Record |
-| **Story** | `templates/story-tmpl.yaml` | User Story |
-| **Epic** | `templates/epic-tmpl.md` | Epic Definition |
-| **Task** | `templates/task-tmpl.md` | Task Definition |
+| Template  | Location                    | Purpose                         |
+| --------- | --------------------------- | ------------------------------- |
+| **PRD**   | `templates/prd-tmpl.md`     | Product Requirements Document   |
+| **ADR**   | `templates/adr-tmpl.md`     | Architecture Decision Record    |
+| **PMDR**  | `templates/pmdr-tmpl.md`    | Process Mapping Decision Record |
+| **DBDR**  | `templates/dbdr-tmpl.md`    | Database Design Record          |
+| **Story** | `templates/story-tmpl.yaml` | User Story                      |
+| **Epic**  | `templates/epic-tmpl.md`    | Epic Definition                 |
+| **Task**  | `templates/task-tmpl.md`    | Task Definition                 |
 
 ### Template Location
 
 All templates are stored in:
+
 ```
 .aios-core/product/templates/
 ```
@@ -295,16 +304,19 @@ All templates are stored in:
 {{DESCRIPTION}}
 
 {{#IF_HAS_PROPS}}
+
 ## Properties
 
 | Name | Type | Default | Description |
-|------|------|---------|-------------|
+| ---- | ---- | ------- | ----------- |
+
 {{#EACH_PROPS}}
 | {{ITEM.name}} | {{ITEM.type}} | {{ITEM.default}} | {{ITEM.description}} |
 {{/EACH_PROPS}}
 {{/IF_HAS_PROPS}}
 
 {{#IF_HAS_EXAMPLES}}
+
 ## Examples
 
 {{EXAMPLES}}
@@ -318,7 +330,7 @@ Create a schema file (optional but recommended):
 ```yaml
 # my-template.schema.yaml
 name: component-template
-version: "1.0"
+version: '1.0'
 description: Template for component documentation
 
 variables:
@@ -365,9 +377,9 @@ const output = engine.process(template, {
   HAS_PROPS: true,
   PROPS: [
     { name: 'variant', type: 'string', default: 'primary', description: 'Button style' },
-    { name: 'size', type: 'string', default: 'medium', description: 'Button size' }
+    { name: 'size', type: 'string', default: 'medium', description: 'Button size' },
   ],
-  HAS_EXAMPLES: false
+  HAS_EXAMPLES: false,
 });
 ```
 
@@ -379,11 +391,13 @@ const output = engine.process(template, {
 
 ```markdown
 <!-- Good -->
+
 {{STORY_TITLE}}
 {{ACCEPTANCE_CRITERIA}}
 {{AUTHOR_NAME}}
 
 <!-- Bad -->
+
 {{T}}
 {{AC}}
 {{N}}
@@ -395,7 +409,7 @@ const output = engine.process(template, {
 const variables = {
   TITLE: title || 'Untitled',
   DATE: date || new Date().toISOString().split('T')[0],
-  VERSION: version || '1.0'
+  VERSION: version || '1.0',
 };
 ```
 
@@ -421,6 +435,7 @@ const output = engine.process(template, { USER_CONTENT: safeInput });
 
 ```markdown
 {{#IF_HAS_NOTES}}
+
 ## Notes
 
 {{NOTES}}
@@ -433,12 +448,12 @@ const output = engine.process(template, { USER_CONTENT: safeInput });
 
 ### Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| Variable not replaced | Check spelling matches exactly (case-sensitive) |
-| Loop produces empty output | Ensure variable is an array, not undefined |
-| Conditional always false | Check variable is truthy (not empty string/0/null) |
-| Template injection | Use `escapeInput()` for user-provided values |
+| Issue                      | Solution                                           |
+| -------------------------- | -------------------------------------------------- |
+| Variable not replaced      | Check spelling matches exactly (case-sensitive)    |
+| Loop produces empty output | Ensure variable is an array, not undefined         |
+| Conditional always false   | Check variable is truthy (not empty string/0/null) |
+| Template injection         | Use `escapeInput()` for user-provided values       |
 
 ### Debug Mode
 
@@ -457,8 +472,7 @@ console.log('Validation result:', validation);
 ## Related Documentation
 
 - [Quality Gates Guide](./quality-gates.md)
-- [Story 3.6: Template Engine Core](../stories/v2.1/sprint-3/story-3.6-template-engine-core.md) *(coming soon)*
 
 ---
 
-*Synkra AIOS Template Engine v2.0*
+_Synkra AIOS Template Engine v2.0_

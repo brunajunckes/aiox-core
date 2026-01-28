@@ -42,6 +42,7 @@
 Este documento define os padrões oficiais de codificação para desenvolvimento do framework AIOS. Todas as contribuições de código devem aderir a estes padrões para garantir consistência, manutenibilidade e qualidade.
 
 **Aplicação:**
+
 - ESLint (automatizado)
 - Prettier (automatizado)
 - Revisão CodeRabbit (automatizada)
@@ -62,7 +63,7 @@ const data = await fetchData();
 const { id, name } = data;
 
 // ❌ RUIM: Sintaxe desatualizada
-fetchData().then(function(data) {
+fetchData().then(function (data) {
   var id = data.id;
   var name = data.name;
 });
@@ -104,14 +105,15 @@ function processAgent(agent) {
 
 // ❌ RUIM: 4 espaços ou tabs
 function processAgent(agent) {
-    if (agent.enabled) {
-        return loadAgent(agent);
-    }
-    return null;
+  if (agent.enabled) {
+    return loadAgent(agent);
+  }
+  return null;
 }
 ```
 
 **Configuração Prettier:**
+
 ```json
 {
   "printWidth": 100,
@@ -129,14 +131,14 @@ function processAgent(agent) {
 
 ```javascript
 // ✅ BOM: Máximo 100 caracteres
-const result = await executeTask(
-  taskName,
-  taskArgs,
-  { timeout: 5000, retry: 3 }
-);
+const result = await executeTask(taskName, taskArgs, { timeout: 5000, retry: 3 });
 
 // ❌ RUIM: Mais de 100 caracteres
-const result = await executeTask(taskName, taskArgs, { timeout: 5000, retry: 3, failureCallback: onFailure });
+const result = await executeTask(taskName, taskArgs, {
+  timeout: 5000,
+  retry: 3,
+  failureCallback: onFailure,
+});
 ```
 
 #### Aspas
@@ -147,7 +149,7 @@ const agentName = 'developer';
 const message = `Agent ${agentName} activated`;
 
 // ❌ RUIM: Aspas duplas (exceto JSON)
-const agentName = "developer";
+const agentName = 'developer';
 ```
 
 ### Padrões Modernos de JavaScript
@@ -170,9 +172,8 @@ async function loadAgent(agentId) {
 // ❌ RUIM: Cadeias de Promise
 function loadAgent(agentId) {
   return fetchAgent(agentId)
-    .then(agent => loadConfig(agent.configPath)
-      .then(config => ({ agent, config })))
-    .catch(error => {
+    .then((agent) => loadConfig(agent.configPath).then((config) => ({ agent, config })))
+    .catch((error) => {
       console.error(`Failed to load agent ${agentId}:`, error);
       throw error;
     });
@@ -200,7 +201,7 @@ const activeAgents = agents.filter((agent) => agent.enabled);
 const agentNames = agents.map((agent) => agent.name);
 
 // ❌ RUIM: Funções tradicionais para callbacks simples
-const activeAgents = agents.filter(function(agent) {
+const activeAgents = agents.filter(function (agent) {
   return agent.enabled;
 });
 ```
@@ -273,15 +274,15 @@ docs/
 
 ```javascript
 // ✅ BOM: Kebab-case para arquivos
-agent-executor.js
-task-runner.js
-greeting-builder.js
-context-detector.js
+agent - executor.js;
+task - runner.js;
+greeting - builder.js;
+context - detector.js;
 
 // ❌ RUIM: camelCase ou PascalCase para arquivos
-agentExecutor.js
-TaskRunner.js
-GreetingBuilder.js
+agentExecutor.js;
+TaskRunner.js;
+GreetingBuilder.js;
 ```
 
 ### Estrutura de Módulo
@@ -406,7 +407,7 @@ class AgentManager {
 
   async getAgent(id) {
     // API pública
-    return this._loadFromCache(id) || await this._fetchAgent(id);
+    return this._loadFromCache(id) || (await this._fetchAgent(id));
   }
 }
 ```
@@ -490,6 +491,7 @@ function processAgent(agent) {
 ```
 
 **Refatorar funções complexas:**
+
 ```javascript
 // ✅ BOM: Funções auxiliares extraídas
 function processAgent(agent) {
@@ -605,8 +607,8 @@ Todo módulo/diretório deve ter um README.md:
 const { executeAgent } = require('./agent-executor');
 
 const result = await executeAgent('dev', {
-  yoloMode: true,
-  storyPath: 'docs/stories/story-6.1.2.5.md'
+yoloMode: true,
+storyPath: 'docs/stories/story-6.1.2.5.md'
 });
 \`\`\`
 
@@ -660,10 +662,7 @@ describe('ContextDetector', () => {
 
     it('should return "workflow" when command pattern matches story_development', async () => {
       // Given (Dado)
-      const conversationHistory = [
-        { command: 'validate-story-draft' },
-        { command: 'develop' }
-      ];
+      const conversationHistory = [{ command: 'validate-story-draft' }, { command: 'develop' }];
 
       // When (Quando)
       const result = await detectSessionType(conversationHistory, null);
@@ -723,6 +722,7 @@ wip
 ```
 
 **Formato:**
+
 ```
 <type>: <description> [Story <id>]
 
@@ -732,6 +732,7 @@ wip
 ```
 
 **Tipos:**
+
 - `feat`: Nova funcionalidade
 - `fix`: Correção de bug
 - `docs`: Alterações de documentação
@@ -869,6 +870,7 @@ jobs:
 ### Integração CodeRabbit
 
 Todos os PRs são automaticamente revisados pelo CodeRabbit para:
+
 - Problemas de qualidade de código
 - Vulnerabilidades de segurança
 - Problemas de performance
@@ -879,19 +881,18 @@ Todos os PRs são automaticamente revisados pelo CodeRabbit para:
 
 ## Histórico de Versão
 
-| Versão | Data | Alterações | Autor |
-|---------|------|---------|--------|
-| 1.0 | 2025-01-15 | Documento inicial de padrões de codificação | Aria (architect) |
-| 1.1 | 2025-12-14 | Atualizado aviso de migração para SynkraAI/aios-core [Story 6.10] | Dex (dev) |
+| Versão | Data       | Alterações                                                        | Autor            |
+| ------ | ---------- | ----------------------------------------------------------------- | ---------------- |
+| 1.0    | 2025-01-15 | Documento inicial de padrões de codificação                       | Aria (architect) |
+| 1.1    | 2025-12-14 | Atualizado aviso de migração para SynkraAI/aios-core [Story 6.10] | Dex (dev)        |
 
 ---
 
 **Documentos Relacionados:**
+
 - [Tech Stack](./tech-stack.md)
 - [Source Tree](./source-tree.md)
-- [Decisão 005: Reestruturação de Repositório](../decisions/decision-005-repository-restructuring-FINAL.md) *(coming soon)*
-- [Story 6.1.2.5: Sistema de Carga Contextual de Agente](../stories/aios%20migration/story-6.1.2.5-contextual-agent-load-system.md) *(coming soon)*
 
 ---
 
-*Este é um padrão oficial do framework AIOS. Todas as contribuições de código devem estar em conformidade.*
+_Este é um padrão oficial do framework AIOS. Todas as contribuições de código devem estar em conformidade._

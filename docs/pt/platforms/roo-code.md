@@ -26,12 +26,12 @@ O Roo Code oferece uma abordagem única baseada em modos:
 
 ### Comparação com Outras Plataformas
 
-| Recurso | Roo Code | Cline | Cursor |
-|---------|:--------:|:-----:|:------:|
-| Sistema de Modos | Sim | Não | Não |
-| Extensão VS Code | Sim | Sim | Não |
+| Recurso            |    Roo Code     |  Cline   |  Cursor  |
+| ------------------ | :-------------: | :------: | :------: |
+| Sistema de Modos   |       Sim       |   Não    |   Não    |
+| Extensão VS Code   |       Sim       |   Sim    |   Não    |
 | Ativação de Agente | Seletor de Modo | @mention | @mention |
-| Suporte MCP | Não | Limitado | Config |
+| Suporte MCP        |       Não       | Limitado |  Config  |
 
 ---
 
@@ -39,11 +39,11 @@ O Roo Code oferece uma abordagem única baseada em modos:
 
 ### Requisitos de Sistema
 
-| Requisito | Mínimo | Recomendado |
-|-----------|--------|-------------|
-| **VS Code** | 1.80+ | Última versão |
-| **RAM** | 4GB | 8GB+ |
-| **Node.js** | 18.0+ (para AIOS) | 20.0+ |
+| Requisito   | Mínimo            | Recomendado   |
+| ----------- | ----------------- | ------------- |
+| **VS Code** | 1.80+             | Última versão |
+| **RAM**     | 4GB               | 8GB+          |
+| **Node.js** | 18.0+ (para AIOS) | 20.0+         |
 
 ### Requisitos de Conta
 
@@ -65,6 +65,7 @@ Baixe de [code.visualstudio.com](https://code.visualstudio.com).
 3. Clique em Instalar
 
 Ou via linha de comando:
+
 ```bash
 code --install-extension RooVeterinaryInc.roo-cline
 ```
@@ -90,6 +91,7 @@ ls -la .roo/
 ```
 
 Estrutura esperada:
+
 ```
 .roo/
 ├── rules.md           # Regras principais
@@ -112,10 +114,12 @@ Estrutura esperada:
 # Regras Synkra AIOS para Roo Code
 
 ## Sistema de Agentes
+
 - Use o seletor de modo para trocar agentes
 - Cada modo corresponde a um agente AIOS
 
 ## Padrões de Desenvolvimento
+
 - Escreva código limpo e testado
 - Siga padrões existentes
 ```
@@ -157,15 +161,18 @@ Estrutura esperada:
 # Modo Desenvolvedor
 
 ## Papel
+
 Você é um Desenvolvedor Full Stack Sênior.
 
 ## Expertise
+
 - TypeScript/JavaScript
 - Node.js, React
 - Design de banco de dados
 - Desenvolvimento de API
 
 ## Fluxo de Trabalho
+
 1. Entender requisitos
 2. Planejar implementação
 3. Escrever código limpo
@@ -185,11 +192,13 @@ Você é um Desenvolvedor Full Stack Sênior.
 ### Trocando Modos
 
 **Via Barra de Status:**
+
 1. Clique no indicador de modo na barra de status
 2. Selecione o modo desejado da lista
 3. O contexto do modo carrega imediatamente
 
 **Via Paleta de Comandos:**
+
 1. `Cmd/Ctrl + Shift + P`
 2. Digite "Roo: Switch Mode"
 3. Selecione o modo
@@ -198,24 +207,24 @@ Você é um Desenvolvedor Full Stack Sênior.
 
 O Roo Code vem com vários modos built-in:
 
-| Modo | Propósito |
-|------|-----------|
-| **Code** | Tarefas gerais de codificação |
-| **Architect** | Planejamento e liderança técnica |
-| **Ask** | Responder perguntas e fornecer informações |
-| **Debug** | Diagnóstico sistemático de problemas |
-| **Orchestrator** | Coordenação de workflows multi-etapa |
+| Modo             | Propósito                                  |
+| ---------------- | ------------------------------------------ |
+| **Code**         | Tarefas gerais de codificação              |
+| **Architect**    | Planejamento e liderança técnica           |
+| **Ask**          | Responder perguntas e fornecer informações |
+| **Debug**        | Diagnóstico sistemático de problemas       |
+| **Orchestrator** | Coordenação de workflows multi-etapa       |
 
 ### Modos AIOS Personalizados
 
-| Modo | Agente | Propósito |
-|------|--------|-----------|
-| `aios-dev` | Desenvolvedor | Desenvolvimento full-stack |
-| `aios-qa` | QA | Garantia de qualidade |
-| `aios-architect` | Arquiteto | Design de sistema |
-| `aios-pm` | PM | Gerenciamento de projeto |
-| `aios-po` | PO | Product ownership |
-| `aios-analyst` | Analista | Análise de negócios |
+| Modo             | Agente        | Propósito                  |
+| ---------------- | ------------- | -------------------------- |
+| `aios-dev`       | Desenvolvedor | Desenvolvimento full-stack |
+| `aios-qa`        | QA            | Garantia de qualidade      |
+| `aios-architect` | Arquiteto     | Design de sistema          |
+| `aios-pm`        | PM            | Gerenciamento de projeto   |
+| `aios-po`        | PO            | Product ownership          |
+| `aios-analyst`   | Analista      | Análise de negócios        |
 
 ### Exemplos de Interação
 
@@ -306,6 +315,7 @@ Configure aplicação automática de alterações:
 ### Indicador de Modo
 
 A barra de status mostra:
+
 - Nome do modo atual
 - Ícone do modo
 - Acesso rápido para troca
@@ -372,15 +382,18 @@ O Roo Code usa markdown simples:
 **Ativação:** Seletor de modo
 
 ## Persona
+
 Desenvolvedor Full Stack Sênior com expertise em tecnologias web modernas.
 
 ## Capacidades
+
 - Desenvolvimento frontend (React, Vue)
 - Desenvolvimento backend (Node.js, Python)
 - Design de banco de dados (PostgreSQL, MongoDB)
 - Desenvolvimento de API (REST, GraphQL)
 
 ## Fluxo de Trabalho
+
 1. Revisar requisitos e critérios de aceitação
 2. Planejar abordagem de implementação
 3. Escrever código limpo e testado
@@ -393,20 +406,20 @@ Desenvolvedor Full Stack Sênior com expertise em tecnologias web modernas.
 
 ### Limitações Atuais
 
-| Limitação | Solução Alternativa |
-|-----------|---------------------|
-| Sem suporte MCP | Use outras ferramentas |
-| Apenas VS Code | Sem versão standalone |
-| Troca manual de modo | Use atalhos |
-| Janela de contexto limitada | Contexto seletivo |
+| Limitação                   | Solução Alternativa    |
+| --------------------------- | ---------------------- |
+| Sem suporte MCP             | Use outras ferramentas |
+| Apenas VS Code              | Sem versão standalone  |
+| Troca manual de modo        | Use atalhos            |
+| Janela de contexto limitada | Contexto seletivo      |
 
 ### Roo Code vs Cline
 
-| Aspecto | Roo Code | Cline |
-|---------|----------|-------|
-| Sistema de Agentes | Modos | @mention |
-| MCP | Não | Limitado |
-| Auto-aplicar | Configurável | Aprovação |
+| Aspecto            | Roo Code     | Cline     |
+| ------------------ | ------------ | --------- |
+| Sistema de Agentes | Modos        | @mention  |
+| MCP                | Não          | Limitado  |
+| Auto-aplicar       | Configurável | Aprovação |
 
 ---
 
@@ -415,28 +428,37 @@ Desenvolvedor Full Stack Sênior com expertise em tecnologias web modernas.
 ### Problemas Comuns
 
 #### Modos Não Carregando
+
 ```
 Problema: Modos personalizados não aparecem
 ```
+
 **Solução:**
+
 1. Verifique se arquivo `.roomodes` existe e é JSON válido
 2. Recarregue janela do VS Code
 3. Verifique se arquivos de agente existem
 
 #### Contexto de Modo Não Aplicado
+
 ```
 Problema: Regras do modo não sendo seguidas
 ```
+
 **Solução:**
+
 1. Verifique caminho do arquivo de regras em `.roomodes`
 2. Verifique conteúdo do arquivo de regras
 3. Troque modos para atualizar
 
 #### Extensão Não Funcionando
+
 ```
 Problema: Roo Code não responde
 ```
+
 **Solução:**
+
 1. Verifique se chave de API está configurada
 2. Verifique se modelo está disponível
 3. Reinstale a extensão
@@ -492,8 +514,8 @@ R: Sim, modos personalizados definidos em `.roomodes` persistem com seu projeto.
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline)
 - [Repositório GitHub](https://github.com/RooCodeInc/Roo-Code)
 - [Comunidade Discord](https://discord.gg/roocode)
-- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
+- [Guia de Plataformas AIOS](../README.md)
 
 ---
 
-*Synkra AIOS - Guia da Plataforma Roo Code v1.0*
+_Synkra AIOS - Guia da Plataforma Roo Code v1.0_

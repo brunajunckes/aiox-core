@@ -27,13 +27,13 @@ O Cline oferece integração perfeita com VS Code para o AIOS:
 
 ### Comparação com Outras Plataformas
 
-| Recurso | Cline | Cursor | Claude Code |
-|---------|:-----:|:------:|:-----------:|
-| Extensão VS Code | Sim | Não (app separado) | Não |
-| Ativação @mention | Sim | Sim | /comando |
-| Acesso ao Terminal | Sim | Sim | Sim |
-| Suporte MCP | Limitado | Config | Nativo |
-| Aprovação Necessária | Sim | Opcional | Opcional |
+| Recurso              |  Cline   |       Cursor       | Claude Code |
+| -------------------- | :------: | :----------------: | :---------: |
+| Extensão VS Code     |   Sim    | Não (app separado) |     Não     |
+| Ativação @mention    |   Sim    |        Sim         |  /comando   |
+| Acesso ao Terminal   |   Sim    |        Sim         |     Sim     |
+| Suporte MCP          | Limitado |       Config       |   Nativo    |
+| Aprovação Necessária |   Sim    |      Opcional      |  Opcional   |
 
 ---
 
@@ -41,11 +41,11 @@ O Cline oferece integração perfeita com VS Code para o AIOS:
 
 ### Requisitos de Sistema
 
-| Requisito | Mínimo | Recomendado |
-|-----------|--------|-------------|
-| **VS Code** | 1.80+ | Última versão |
-| **RAM** | 4GB | 8GB+ |
-| **Node.js** | 18.0+ (para AIOS) | 20.0+ |
+| Requisito   | Mínimo            | Recomendado   |
+| ----------- | ----------------- | ------------- |
+| **VS Code** | 1.80+             | Última versão |
+| **RAM**     | 4GB               | 8GB+          |
+| **Node.js** | 18.0+ (para AIOS) | 20.0+         |
 
 ### Requisitos de Conta
 
@@ -68,6 +68,7 @@ Baixe de [code.visualstudio.com](https://code.visualstudio.com) se ainda não es
 4. Clique em Instalar
 
 Ou via linha de comando:
+
 ```bash
 code --install-extension saoudrizwan.claude-dev
 ```
@@ -93,6 +94,7 @@ ls -la .cline/
 ```
 
 Estrutura esperada:
+
 ```
 .cline/
 ├── rules.md           # Configuração principal de regras
@@ -115,10 +117,12 @@ Estrutura esperada:
 # Regras Synkra AIOS para Cline
 
 ## Sistema de Agentes
+
 - Ative agentes com @nome-agente
 - Siga workflows específicos do agente
 
 ## Padrões de Desenvolvimento
+
 - Escreva código limpo e testado
 - Siga padrões existentes
 - Inclua tratamento de erros
@@ -132,14 +136,17 @@ Estrutura esperada:
 # Agente Desenvolvedor (@dev)
 
 ## Papel
+
 Desenvolvedor Full Stack Sênior
 
 ## Expertise
+
 - TypeScript/JavaScript
 - Node.js, React
 - Design de banco de dados
 
 ## Fluxo de Trabalho
+
 1. Entender requisitos
 2. Planejar implementação
 3. Escrever código testado
@@ -198,6 +205,7 @@ Use @mentions no chat do Cline:
 ### Fluxo de Aprovação
 
 O Cline pede aprovação antes de:
+
 - Criar/modificar arquivos
 - Executar comandos no terminal
 - Fazer alterações significativas
@@ -256,23 +264,24 @@ escreva testes para o módulo de pagamento
 
 ### Configurações de Aprovação
 
-| Configuração | Descrição |
-|--------------|-----------|
-| `autoApprove.read` | Auto-aprovar leituras de arquivo |
-| `autoApprove.write` | Auto-aprovar escritas de arquivo |
-| `autoApprove.execute` | Auto-aprovar comandos |
+| Configuração          | Descrição                        |
+| --------------------- | -------------------------------- |
+| `autoApprove.read`    | Auto-aprovar leituras de arquivo |
+| `autoApprove.write`   | Auto-aprovar escritas de arquivo |
+| `autoApprove.execute` | Auto-aprovar comandos            |
 
 ### Atalhos de Teclado
 
-| Atalho | Ação |
-|--------|------|
+| Atalho                 | Ação               |
+| ---------------------- | ------------------ |
 | `Cmd/Ctrl + Shift + P` | Paleta de Comandos |
-| `Cmd/Ctrl + .` | Aprovação rápida |
-| `Escape` | Cancelar operação |
+| `Cmd/Ctrl + .`         | Aprovação rápida   |
+| `Escape`               | Cancelar operação  |
 
 ### Histórico de Tarefas
 
 Veja interações anteriores:
+
 1. Abra o painel do Cline
 2. Clique no ícone de histórico
 3. Retome ou referencie tarefas passadas
@@ -321,18 +330,22 @@ O Cline usa markdown condensado:
 **Ativação:** @dev
 
 ## Persona
+
 Você é um Desenvolvedor Full Stack Sênior com expertise em:
+
 - TypeScript/JavaScript
 - Node.js e React
 - Design e otimização de banco de dados
 
 ## Fluxo de Trabalho
+
 1. Ler e entender os requisitos da story
 2. Planejar a abordagem de implementação
 3. Escrever código limpo e bem testado
 4. Atualizar progresso da story quando completo
 
 ## Padrões
+
 - Seguir padrões existentes do codebase
 - Incluir tratamento abrangente de erros
 - Escrever testes unitários para código novo
@@ -344,21 +357,21 @@ Você é um Desenvolvedor Full Stack Sênior com expertise em:
 
 ### Limitações Atuais
 
-| Limitação | Solução Alternativa |
-|-----------|---------------------|
-| MCP limitado | Use servidores MCP básicos |
-| Sem subagentes nativos | Troca manual de agente |
-| Aprovação interrompe fluxo | Configure auto-aprovação |
-| Apenas VS Code | Sem versão standalone |
+| Limitação                  | Solução Alternativa        |
+| -------------------------- | -------------------------- |
+| MCP limitado               | Use servidores MCP básicos |
+| Sem subagentes nativos     | Troca manual de agente     |
+| Aprovação interrompe fluxo | Configure auto-aprovação   |
+| Apenas VS Code             | Sem versão standalone      |
 
 ### Cline vs Claude Code
 
-| Aspecto | Cline | Claude Code |
-|---------|-------|-------------|
-| Ambiente | VS Code | Terminal |
-| MCP | Limitado | Nativo |
-| Task Tool | Não | Sim |
-| Extensões | Sim | Não |
+| Aspecto   | Cline    | Claude Code |
+| --------- | -------- | ----------- |
+| Ambiente  | VS Code  | Terminal    |
+| MCP       | Limitado | Nativo      |
+| Task Tool | Não      | Sim         |
+| Extensões | Sim      | Não         |
 
 ---
 
@@ -367,28 +380,37 @@ Você é um Desenvolvedor Full Stack Sênior com expertise em:
 ### Problemas Comuns
 
 #### Extensão Não Carregando
+
 ```
 Problema: Cline não aparece no VS Code
 ```
+
 **Solução:**
+
 1. Verifique versão do VS Code (1.80+)
 2. Recarregue VS Code (`Cmd/Ctrl + Shift + P` > "Reload Window")
 3. Reinstale a extensão
 
 #### Chave de API Inválida
+
 ```
 Problema: Falha na autenticação
 ```
+
 **Solução:**
+
 1. Abra configurações do Cline
 2. Re-insira a chave de API
 3. Verifique se a chave está ativa
 
 #### Agente Não Reconhecido
+
 ```
 Problema: @dev não ativando
 ```
+
 **Solução:**
+
 ```bash
 # Ressincronizar agentes
 npm run sync:agents
@@ -398,10 +420,13 @@ cat .cline/agents/dev.md
 ```
 
 #### Performance Lenta
+
 ```
 Problema: Cline respondendo devagar
 ```
+
 **Solução:**
+
 1. Verifique cota da API
 2. Use modelo mais rápido
 3. Reduza tamanho do contexto
@@ -439,6 +464,7 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 ### De Outras Extensões
 
 1. Instale AIOS para Cline:
+
    ```bash
    npx @anthropic/aios init --ide cline
    ```
@@ -459,8 +485,8 @@ R: Execute `npm run sync:agents` após atualizações do AIOS.
 
 - [GitHub do Cline](https://github.com/cline/cline)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
-- [Guia de Plataformas AIOS](../README.md) *(coming soon)*
+- [Guia de Plataformas AIOS](../README.md)
 
 ---
 
-*Synkra AIOS - Guia da Plataforma Cline v1.0*
+_Synkra AIOS - Guia da Plataforma Cline v1.0_

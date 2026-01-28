@@ -9,6 +9,7 @@
 Install Node.js using one of these methods:
 
 **Option A: Using Homebrew (Recommended)**
+
 ```bash
 # Install Homebrew if not already installed
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -21,6 +22,7 @@ brew install node
 Download from [nodejs.org](https://nodejs.org/)
 
 **Option C: Using Node Version Manager (nvm)**
+
 ```bash
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -35,11 +37,13 @@ nvm use 20
 Install GitHub CLI for team collaboration:
 
 **Using Homebrew (Recommended)**
+
 ```bash
 brew install gh
 ```
 
 **Using MacPorts**
+
 ```bash
 sudo port install gh
 ```
@@ -53,6 +57,7 @@ Download from [cli.github.com](https://cli.github.com/)
 
 1. Open Terminal
 2. Navigate to your project directory:
+
    ```bash
    cd ~/path/to/your/project
    ```
@@ -65,6 +70,7 @@ Download from [cli.github.com](https://cli.github.com/)
 ### What the Installer Does
 
 The installer automatically:
+
 - ✅ Detects macOS and applies platform-specific configurations
 - ✅ Creates necessary directories with proper permissions
 - ✅ Configures IDE paths for macOS locations:
@@ -134,6 +140,7 @@ source ~/.zshrc  # or source ~/.bash_profile
 macOS filesystems can be case-insensitive by default. If you experience issues:
 
 1. Check your filesystem:
+
    ```bash
    diskutil info / | grep "File System"
    ```
@@ -149,6 +156,7 @@ npx github:SynkraAI/aios-core install
 ```
 
 The updater will:
+
 - Detect your existing installation
 - Back up any customizations
 - Update only changed files
@@ -158,7 +166,7 @@ The updater will:
 
 1. Configure your IDE (see IDE-specific setup above)
 2. Run `*help` in your AI agent to see available commands
-3. Start with the [User Guide](../../aios-core/user-guide.md) *(coming soon)*
+3. Start with the [User Guide](../../aios-core/user-guide.md) _(coming soon)_
 4. Join our [Discord Community](https://discord.gg/gk8jAdXWmj) for help
 
 ## System Requirements
@@ -171,6 +179,6 @@ The updater will:
 ## Additional Resources
 
 - [Main README](../../README.md)
-- [User Guide](../../aios-core/user-guide.md) *(coming soon)*
-- [Troubleshooting Guide](../../docs/troubleshooting.md)
+- [User Guide](../../aios-core/user-guide.md) _(coming soon)_
+- [Troubleshooting Guide](../troubleshooting.md)
 - [Discord Community](https://discord.gg/gk8jAdXWmj)

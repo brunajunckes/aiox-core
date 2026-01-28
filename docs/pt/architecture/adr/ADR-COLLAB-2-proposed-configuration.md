@@ -287,13 +287,13 @@ docs/guides/ @SynkraAI/maintainers
 
 **Checks Propostos:**
 
-| Check                | Workflow Fonte | Prioridade  | Notas                         |
-| -------------------- | -------------- | ----------- | ----------------------------- |
-| `lint`               | ci.yml         | Obrigatório | Validação ESLint              |
-| `typecheck`          | ci.yml         | Obrigatório | Verificação TypeScript        |
-| `build`              | ci.yml         | Obrigatório | Verificação de build          |
-| `test`               | ci.yml         | Obrigatório | Suíte de testes Jest          |
-| `validation-summary` | ci.yml         | Obrigatório | Padrão alls-green             |
+| Check                | Workflow Fonte | Prioridade  | Notas                          |
+| -------------------- | -------------- | ----------- | ------------------------------ |
+| `lint`               | ci.yml         | Obrigatório | Validação ESLint               |
+| `typecheck`          | ci.yml         | Obrigatório | Verificação TypeScript         |
+| `build`              | ci.yml         | Obrigatório | Verificação de build           |
+| `test`               | ci.yml         | Obrigatório | Suíte de testes Jest           |
+| `validation-summary` | ci.yml         | Obrigatório | Padrão alls-green              |
 | `story-validation`   | ci.yml         | Opcional    | Validação de checkbox de story |
 
 **Nota:** O job `validation-summary` em ci.yml age como padrão "alls-green", garantindo que todos os outros jobs passaram.
@@ -346,7 +346,7 @@ Fixes #
 
 ---
 
-_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md) *(coming soon)*_
+_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../../../CONTRIBUTING.md)_
 ```
 
 **Arquivo:** `.github/PULL_REQUEST_TEMPLATE/task_contribution.md`
@@ -391,7 +391,7 @@ Fixes #
 
 ---
 
-_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CONTRIBUTING.md) *(coming soon)*_
+_Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../../../CONTRIBUTING.md)_
 ```
 
 ---
@@ -400,39 +400,39 @@ _Ao submeter este PR, confirmo que li as [Diretrizes de Contribuição](../../CO
 
 ### Fase 1: Segurança Crítica (Dia 1)
 
-| Item               | Ação                     | Rollback                                              |
-| ------------------ | ------------------------ | ----------------------------------------------------- |
-| Revisões obrigatórias | Definir count para 1  | `gh api -X PUT ... required_approving_review_count:0` |
+| Item                   | Ação                 | Rollback                                              |
+| ---------------------- | -------------------- | ----------------------------------------------------- |
+| Revisões obrigatórias  | Definir count para 1 | `gh api -X PUT ... required_approving_review_count:0` |
 | Revisões de code owner | Habilitar            | `gh api -X PUT ... require_code_owner_reviews:false`  |
 
 **Risco:** Baixo - são proteções aditivas
 
 ### Fase 2: Revisão Automatizada (Dia 2-3)
 
-| Item                   | Ação                      | Rollback      |
-| ---------------------- | ------------------------- | ------------- |
-| Config CodeRabbit      | Criar `.coderabbit.yaml`  | Deletar arquivo |
-| Testar em feature PR   | Abrir PR de teste         | N/A           |
-| Validar integração     | Verificar comentários CodeRabbit | N/A     |
+| Item                 | Ação                             | Rollback        |
+| -------------------- | -------------------------------- | --------------- |
+| Config CodeRabbit    | Criar `.coderabbit.yaml`         | Deletar arquivo |
+| Testar em feature PR | Abrir PR de teste                | N/A             |
+| Validar integração   | Verificar comentários CodeRabbit | N/A             |
 
 **Risco:** Baixo - CodeRabbit não é bloqueante por padrão
 
 ### Fase 3: Documentação (Dia 3-5)
 
-| Item            | Ação               | Rollback      |
-| --------------- | ------------------ | ------------- |
+| Item            | Ação                    | Rollback     |
+| --------------- | ----------------------- | ------------ |
 | CODEOWNERS      | Atualizar granularidade | `git revert` |
-| Templates de PR | Criar templates    | `git revert`  |
-| Guia externo    | Criar guia         | `git revert`  |
+| Templates de PR | Criar templates         | `git revert` |
+| Guia externo    | Criar guia              | `git revert` |
 
 **Risco:** Muito baixo - apenas documentação
 
 ### Fase 4: Hardening de CI (Dia 5-7)
 
-| Item                       | Ação                       | Rollback              |
-| -------------------------- | -------------------------- | --------------------- |
+| Item                              | Ação                         | Rollback            |
+| --------------------------------- | ---------------------------- | ------------------- |
 | Adicionar `test` aos obrigatórios | Atualizar proteção de branch | Remover de contexts |
-| Resolução de conversas     | Habilitar                  | Desabilitar           |
+| Resolução de conversas            | Habilitar                    | Desabilitar         |
 
 **Risco:** Médio - poderia bloquear PRs legítimos se testes forem flaky
 
@@ -476,13 +476,13 @@ git push
 
 ## Critérios de Sucesso
 
-| Métrica                        | Alvo                    | Medição                  |
-| ------------------------------ | ----------------------- | ------------------------ |
-| Todos PRs requerem aprovação   | 100%                    | Auditoria de proteção de branch |
-| CodeRabbit revisa PRs          | 100%                    | Dashboard CodeRabbit     |
-| Nenhum merge não autorizado    | 0 incidentes            | Auditoria de segurança   |
-| Sucesso de contribuidor externo | Primeiro PR em 1 semana | GitHub insights          |
-| Tempo até primeira revisão     | <24 horas               | Métricas de PR           |
+| Métrica                         | Alvo                    | Medição                         |
+| ------------------------------- | ----------------------- | ------------------------------- |
+| Todos PRs requerem aprovação    | 100%                    | Auditoria de proteção de branch |
+| CodeRabbit revisa PRs           | 100%                    | Dashboard CodeRabbit            |
+| Nenhum merge não autorizado     | 0 incidentes            | Auditoria de segurança          |
+| Sucesso de contribuidor externo | Primeiro PR em 1 semana | GitHub insights                 |
+| Tempo até primeira revisão      | <24 horas               | Métricas de PR                  |
 
 ---
 
@@ -512,7 +512,6 @@ git push
 
 - [ADR-COLLAB-1-current-state-audit.md](./ADR-COLLAB-1-current-state-audit.md)
 - [contribution-workflow-research.md](../contribution-workflow-research.md)
-- [Story COLLAB-2: Implementação](../../stories/v2.1/sprint-15/story-collab-2-implementation.md) *(coming soon)* (follow-up)
 
 ---
 

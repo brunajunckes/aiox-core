@@ -15,6 +15,7 @@ Como migrar squads legados para o formato AIOS 2.1.
 ## Visão Geral
 
 AIOS 2.1 introduziu um novo formato de squad com:
+
 - Arquitetura task-first
 - Validação JSON Schema
 - Distribuição em três níveis
@@ -26,12 +27,12 @@ Squads legados usando `config.yaml` ou formatos mais antigos precisam de migraç
 
 ### Sinais de Formato Legado
 
-| Indicador | Legado | Atual (2.1+) |
-|-----------|--------|--------------|
-| Arquivo de manifesto | `config.yaml` | `squad.yaml` |
-| Campo AIOS type | Ausente | `aios.type: squad` |
-| Versão mínima | Ausente | `aios.minVersion: "2.1.0"` |
-| Estrutura | Agent-first | Task-first |
+| Indicador            | Legado        | Atual (2.1+)               |
+| -------------------- | ------------- | -------------------------- |
+| Arquivo de manifesto | `config.yaml` | `squad.yaml`               |
+| Campo AIOS type      | Ausente       | `aios.type: squad`         |
+| Versão mínima        | Ausente       | `aios.minVersion: "2.1.0"` |
+| Estrutura            | Agent-first   | Task-first                 |
 
 ### Comando de Verificação
 
@@ -85,7 +86,7 @@ config.yaml → squad.yaml
 ```yaml
 # Estes campos são adicionados se ausentes
 aios:
-  minVersion: "2.1.0"
+  minVersion: '2.1.0'
   type: squad
 ```
 
@@ -119,14 +120,15 @@ role: Helper
 
 ```markdown
 # Depois: agents/my-agent.md
+
 # my-agent
 
 ACTIVATION-NOTICE: ...
 
 \`\`\`yaml
 agent:
-  name: my-agent
-  ...
+name: my-agent
+...
 \`\`\`
 ```
 
@@ -135,6 +137,7 @@ agent:
 ### Cenário 1: Squad Simples (apenas config.yaml)
 
 **Antes:**
+
 ```
 my-squad/
 ├── config.yaml
@@ -142,11 +145,13 @@ my-squad/
 ```
 
 **Comando:**
+
 ```bash
 *migrate-squad ./squads/my-squad
 ```
 
 **Depois:**
+
 ```
 my-squad/
 ├── squad.yaml         # Renomeado + atualizado
@@ -158,6 +163,7 @@ my-squad/
 ### Cenário 2: Squad com Agents YAML
 
 **Antes:**
+
 ```
 my-squad/
 ├── config.yaml
@@ -166,11 +172,13 @@ my-squad/
 ```
 
 **Comando:**
+
 ```bash
 *migrate-squad ./squads/my-squad
 ```
 
 **Depois:**
+
 ```
 my-squad/
 ├── squad.yaml
@@ -184,6 +192,7 @@ my-squad/
 ### Cenário 3: Migração Parcial (Já Tem Alguns Recursos 2.1)
 
 **Antes:**
+
 ```
 my-squad/
 ├── squad.yaml         # Já renomeado
@@ -193,11 +202,13 @@ my-squad/
 ```
 
 **Comando:**
+
 ```bash
 *migrate-squad ./squads/my-squad
 ```
 
 **Resultado:**
+
 - Adiciona campos `aios` ausentes ao manifesto
 - Converte arquivos YAML restantes
 - Pula arquivos já migrados
@@ -252,7 +263,7 @@ version: 1.0.0
 description: Meu squad
 
 aios:
-  minVersion: "2.1.0"
+  minVersion: '2.1.0'
   type: squad
 
 components:
@@ -267,6 +278,7 @@ Error: YAML parse error at line 15
 ```
 
 **Solução:**
+
 1. Verifique sintaxe YAML com um linter
 2. Problemas comuns: tabs (use espaços), aspas faltando
 3. Corrija erros, depois tente a migração novamente
@@ -278,6 +290,7 @@ Error: Could not create backup directory
 ```
 
 **Solução:**
+
 1. Verifique permissões de escrita: `chmod 755 ./squads/my-squad`
 2. Verifique espaço em disco
 3. Tente com sudo (se apropriado)
@@ -289,6 +302,7 @@ Warning: Some files could not be migrated
 ```
 
 **Solução:**
+
 1. Execute com `--verbose` para ver quais arquivos falharam
 2. Corrija arquivos problemáticos manualmente
 3. Re-execute a migração
@@ -314,7 +328,7 @@ const { SquadMigrator } = require('./.aios-core/development/scripts/squad');
 const migrator = new SquadMigrator({
   verbose: true,
   dryRun: false,
-  backupDir: '.backup'
+  backupDir: '.backup',
 });
 
 // Verificar se migração é necessária
@@ -335,7 +349,7 @@ console.log(result);
 
 - [Guia de Desenvolvimento de Squad](./squads-guide.md)
 - [Guia de Contribuição de Squads](./contributing-squads.md)
-- [Agente @squad-creator](../../.aios-core/development/agents/squad-creator.md) *(coming soon)*
+- [Agente @squad-creator](../../../.aios-core/development/agents/squad-creator.md)
 
 ---
 
