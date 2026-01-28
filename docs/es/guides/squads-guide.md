@@ -193,7 +193,7 @@ Solicitud del Usuario → Tarea → Ejecucion del Agente → Salida
                      Workflow (si es multi-paso)
 ```
 
-Las tareas deben seguir [TASK-FORMAT-SPECIFICATION-V1](../../.aios-core/docs/standards/TASK-FORMAT-SPECIFICATION-V1.md) _(coming soon)_.
+Las tareas deben seguir [TASK-FORMAT-SPECIFICATION-V1](../../../.aios-core/docs/standards/TASK-FORMAT-SPECIFICATION-V1.md).
 
 ---
 
@@ -815,7 +815,7 @@ npm test -- tests/squads/my-squad/
 
 ## Recursos Relacionados
 
-- [TASK-FORMAT-SPECIFICATION-V1](../../.aios-core/docs/standards/TASK-FORMAT-SPECIFICATION-V1.md) _(coming soon)_
+- [TASK-FORMAT-SPECIFICATION-V1](../../../.aios-core/docs/standards/TASK-FORMAT-SPECIFICATION-V1.md)
 - [Guia de Contribucion de Squads](./contributing-squads.md)
 - [Guia de Migracion de Squad](./squad-migration.md)
 - [Referencia de API de Squads](../api/squads-api.md)

@@ -34,7 +34,7 @@ Para características más grandes que requieren decisiones de diseño:
 
 ### Ciclo de Vida del RFC
 
-1. **Borrador**: El autor escribe el RFC usando nuestra [Plantilla RFC](/.github/RFC_TEMPLATE.md) _(coming soon)_
+1. **Borrador**: El autor escribe el RFC usando nuestra [Plantilla RFC](../../.github/RFC_TEMPLATE.md)
 2. **En Revisión**: Período de comentarios de 2 semanas
 3. **Decisión**: Los mantenedores aceptan/rechazan
 4. **Implementación**: Si es aceptado, comienza la implementación

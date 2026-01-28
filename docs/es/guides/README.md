@@ -27,20 +27,20 @@ Use el agente DevOps: `@devops` luego `*setup-mcp-docker`
 
 ### Comandos de Gestión de MCP
 
-| Comando | Descripción | Agente |
-|---------|-------------|--------|
+| Comando             | Descripción                                 | Agente  |
+| ------------------- | ------------------------------------------- | ------- |
 | `*setup-mcp-docker` | Configuración inicial de Docker MCP Toolkit | @devops |
-| `*search-mcp` | Buscar MCPs disponibles en el catálogo | @devops |
-| `*add-mcp` | Agregar servidor MCP al gateway de Docker | @devops |
-| `*list-mcps` | Listar MCPs actualmente habilitados | @devops |
-| `*remove-mcp` | Eliminar MCP del gateway de Docker | @devops |
+| `*search-mcp`       | Buscar MCPs disponibles en el catálogo      | @devops |
+| `*add-mcp`          | Agregar servidor MCP al gateway de Docker   | @devops |
+| `*list-mcps`        | Listar MCPs actualmente habilitados         | @devops |
+| `*remove-mcp`       | Eliminar MCP del gateway de Docker          | @devops |
 
 ### Referencia de Arquitectura
 
-| Guía | Propósito | Tiempo | Audiencia |
-|------|-----------|--------|-----------|
-| **[Guía de Configuración Global de MCP](./mcp-global-setup.md)** | Configuración global de servidor MCP | 10 min | Todos los usuarios |
-| **[Gestión de Claves API de MCP](../architecture/mcp-api-keys-management.md)** | Manejo seguro de credenciales | 10 min | DevOps |
+| Guía                                                                           | Propósito                            | Tiempo | Audiencia          |
+| ------------------------------------------------------------------------------ | ------------------------------------ | ------ | ------------------ |
+| **[Guía de Configuración Global de MCP](./mcp-global-setup.md)**               | Configuración global de servidor MCP | 10 min | Todos los usuarios |
+| **[Gestión de Claves API de MCP](../architecture/mcp-api-keys-management.md)** | Manejo seguro de credenciales        | 10 min | DevOps             |
 
 > **Nota:** La documentación de 1MCP ha sido descontinuada. AIOS ahora usa Docker MCP Toolkit exclusivamente (Story 5.11). Los documentos archivados están disponibles en `.github/deprecated-docs/guides/`.
 
@@ -54,24 +54,24 @@ Use el agente DevOps: `@devops` luego `*setup-mcp-docker`
 
 ### Arquitectura Central
 
-| Guía | Propósito | Tiempo | Audiencia |
-|------|-----------|--------|-----------|
-| **[Arquitectura del Sistema de Módulos](../architecture/module-system.md)** | Arquitectura modular v2.1 (4 módulos) | 15 min | Arquitectos, Desarrolladores |
-| **[Guía de Descubrimiento de Servicios](./service-discovery.md)** | API de descubrimiento y registro de workers | 10 min | Desarrolladores |
-| **[Guía de Migración v2.0→v2.1](../migration/v2.0-to-v2.1.md)** *(coming soon)* | Instrucciones de migración paso a paso | 20 min | Todos los usuarios actualizando |
+| Guía                                                                        | Propósito                                   | Tiempo | Audiencia                       |
+| --------------------------------------------------------------------------- | ------------------------------------------- | ------ | ------------------------------- |
+| **[Arquitectura del Sistema de Módulos](../architecture/module-system.md)** | Arquitectura modular v2.1 (4 módulos)       | 15 min | Arquitectos, Desarrolladores    |
+| **[Guía de Descubrimiento de Servicios](./service-discovery.md)**           | API de descubrimiento y registro de workers | 10 min | Desarrolladores                 |
+| **[Guía de Migración v2.0→v2.1](../../migration/v2.0-to-v2.1.md)**          | Instrucciones de migración paso a paso      | 20 min | Todos los usuarios actualizando |
 
 ### Configuración del Sistema
 
-| Guía | Propósito | Tiempo | Audiencia |
-|------|-----------|--------|-----------|
-| **[Guía de Quality Gates](./quality-gates.md)** | Sistema de quality gates de 3 capas | 15 min | QA, DevOps |
-| **[Guía del Dashboard de Calidad](./quality-dashboard.md)** | Visualización de métricas del dashboard | 10 min | Tech Leads, QA |
-| **[Guía de Configuración Global de MCP](./mcp-global-setup.md)** | Configuración global de servidor MCP | 10 min | Todos los usuarios |
+| Guía                                                             | Propósito                               | Tiempo | Audiencia          |
+| ---------------------------------------------------------------- | --------------------------------------- | ------ | ------------------ |
+| **[Guía de Quality Gates](./quality-gates.md)**                  | Sistema de quality gates de 3 capas     | 15 min | QA, DevOps         |
+| **[Guía del Dashboard de Calidad](./quality-dashboard.md)**      | Visualización de métricas del dashboard | 10 min | Tech Leads, QA     |
+| **[Guía de Configuración Global de MCP](./mcp-global-setup.md)** | Configuración global de servidor MCP    | 10 min | Todos los usuarios |
 
 ### Herramientas de Desarrollo (Sprint 3)
 
-| Guía | Propósito | Tiempo | Audiencia |
-|------|-----------|--------|-----------|
+| Guía                                                  | Propósito                         | Tiempo | Audiencia       |
+| ----------------------------------------------------- | --------------------------------- | ------ | --------------- |
 | **[Motor de Plantillas v2](./template-engine-v2.md)** | Motor de generación de documentos | 10 min | Desarrolladores |
 
 ### Navegación Rápida (v2.1)
@@ -83,7 +83,7 @@ Use el agente DevOps: `@devops` luego `*setup-mcp-docker`
 → [`service-discovery.md`](./service-discovery.md) (10 min)
 
 **...migrar de v2.0 a v2.1**
-→ [`v2.0-to-v2.1.md`](../migration/v2.0-to-v2.1.md) *(coming soon)* (20 min)
+→ [`v2.0-to-v2.1.md`](../../migration/v2.0-to-v2.1.md) (20 min)
 
 **...configurar quality gates**
 → [`quality-gates.md`](./quality-gates.md) (15 min)
@@ -113,12 +113,12 @@ Use el agente DevOps: `@devops` luego `*setup-mcp-docker`
 
 ## Documentación del Sprint 3
 
-| Documento | Líneas | Estado |
-|-----------|--------|--------|
-| [Guía de Quality Gates](./quality-gates.md) | ~600 | Completo |
-| [Guía del Dashboard de Calidad](./quality-dashboard.md) | ~350 | Completo |
-| [Motor de Plantillas v2](./template-engine-v2.md) | ~400 | Completo |
-| [Integración con CodeRabbit](./coderabbit/) *(coming soon)* | ~1000 | Completo |
+| Documento                                               | Líneas | Estado   |
+| ------------------------------------------------------- | ------ | -------- |
+| [Guía de Quality Gates](./quality-gates.md)             | ~600   | Completo |
+| [Guía del Dashboard de Calidad](./quality-dashboard.md) | ~350   | Completo |
+| [Motor de Plantillas v2](./template-engine-v2.md)       | ~400   | Completo |
+| [Integración con CodeRabbit](../../guides/coderabbit/)  | ~1000  | Completo |
 
 ---
 

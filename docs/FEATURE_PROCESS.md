@@ -28,7 +28,7 @@ For larger features that require design decisions:
 
 ### RFC Lifecycle
 
-1. **Draft**: Author writes RFC using our [RFC Template](/.github/RFC_TEMPLATE.md) *(coming soon)*
+1. **Draft**: Author writes RFC using our [RFC Template](../.github/RFC_TEMPLATE.md)
 2. **Under Review**: 2-week comment period
 3. **Decision**: Maintainers accept/reject
 4. **Implementation**: If accepted, implementation begins
@@ -79,6 +79,7 @@ This ensures proper prioritization and alignment with project goals.
 ### Contributor Credit
 
 Contributors whose ideas are implemented will be credited in:
+
 - The CHANGELOG.md release notes
 - The PR that implements the feature
 - Our contributors page (if applicable)
@@ -89,4 +90,4 @@ Ask in GitHub Discussions or Discord.
 
 ---
 
-*See also: [Community Handbook](/COMMUNITY.md) *(coming soon)* | [Contributing Guide](/CONTRIBUTING.md) *(coming soon)**
+_See also: [Community Handbook](../COMMUNITY.md) | [Contributing Guide](../CONTRIBUTING.md)_

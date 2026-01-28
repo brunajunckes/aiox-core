@@ -50,7 +50,7 @@ O Método AIOS é um framework em linguagem natural para desenvolvimento de soft
 - Documentação pesada ou bases de conhecimento
 - Qualquer coisa que sobrecarregaria agents do core
 
-Veja o [Guia de Squads](../docs/Squads.md) *(coming soon)* para exemplos detalhados e ideias.
+Veja o [Visão Geral de Squads](../guides/squads-overview.md) para exemplos detalhados e ideias.
 
 ### Regras de Design de Agents
 
@@ -75,7 +75,7 @@ Veja o [Guia de Squads](../docs/Squads.md) *(coming soon)* para exemplos detalha
 
 ### Regras de Templates
 
-Templates seguem a especificação do [AIOS Document Template](common/utils/aios-doc-template.md) *(coming soon)* usando formato YAML:
+Templates seguem a especificação do [AIOS Document Template](../../common/utils/aios-doc-template.md) usando formato YAML:
 
 1. **Estrutura**: Templates são definidos em YAML com metadados claros, configuração de workflow e hierarquia de seções
 2. **Separação de Responsabilidades**: Instruções para LLMs estão em campos `instruction`, separadas do conteúdo
