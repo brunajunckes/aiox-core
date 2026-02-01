@@ -192,6 +192,97 @@ class WorkflowNavigator {
   }
 
   /**
+   * Detect workflow state from a state file (GAP-3 integration)
+   * @param {string} stateFilePath - Path to a workflow state YAML file
+   * @returns {Object|null} { workflow, state, context, stateData } or null
+   */
+  detectWorkflowStateFromFile(stateFilePath) {
+    try {
+      if (!fs.existsSync(stateFilePath)) {
+        return null;
+      }
+
+      const content = fs.readFileSync(stateFilePath, 'utf8');
+      const stateData = yaml.load(content);
+
+      if (!stateData || stateData.status !== 'active') {
+        return null;
+      }
+
+      return {
+        workflow: stateData.workflow_id,
+        state: `step_${stateData.current_step_index}`,
+        context: {
+          instance_id: stateData.instance_id,
+          current_phase: stateData.current_phase,
+          target_context: stateData.target_context,
+          squad_name: stateData.squad_name,
+        },
+        stateData,
+      };
+    } catch (error) {
+      console.warn('[WorkflowNavigator] Failed to load state file:', error.message);
+      return null;
+    }
+  }
+
+  /**
+   * Suggest next commands based on workflow state file (GAP-3 integration)
+   * @param {Object} state - Workflow state object from state file
+   * @returns {Array} Array of suggestions
+   */
+  suggestNextCommandsFromState(state) {
+    if (!state || state.status !== 'active') {
+      return [];
+    }
+
+    const currentStep = state.steps[state.current_step_index];
+    if (!currentStep) {
+      return [];
+    }
+
+    const suggestions = [];
+
+    // Primary: continue the workflow
+    suggestions.push({
+      command: `*run-workflow ${state.workflow_id} continue`,
+      description: `Continue workflow — ${currentStep.phase}`,
+      raw_command: 'run-workflow',
+      args: `${state.workflow_id} continue`,
+    });
+
+    // If current step has an agent, suggest activating it
+    if (currentStep.agent) {
+      suggestions.push({
+        command: `@${currentStep.agent}`,
+        description: `Activate agent for current step`,
+        raw_command: currentStep.agent,
+        args: '',
+      });
+    }
+
+    // If current step is optional, offer skip
+    if (currentStep.optional) {
+      suggestions.push({
+        command: `*run-workflow ${state.workflow_id} skip`,
+        description: `Skip optional step`,
+        raw_command: 'run-workflow',
+        args: `${state.workflow_id} skip`,
+      });
+    }
+
+    // Status check
+    suggestions.push({
+      command: `*run-workflow ${state.workflow_id} status`,
+      description: `View workflow progress`,
+      raw_command: 'run-workflow',
+      args: `${state.workflow_id} status`,
+    });
+
+    return suggestions;
+  }
+
+  /**
    * Get greeting message for workflow state
    * @param {Object} workflowState - Workflow state
    * @returns {string} Greeting message

@@ -9,6 +9,18 @@ workflow:
   version: "{{WORKFLOW_VERSION}}"
   type: "{{WORKFLOW_TYPE}}"  # sequential, parallel, conditional
   
+{{#IF_CONTEXT}}
+context:
+  target: "{{TARGET_CONTEXT}}"  # core | squad | hybrid
+  {{#IF_SQUAD}}
+  squad: "{{SQUAD_NAME}}"
+  {{/IF_SQUAD}}
+  {{#IF_HYBRID}}
+  resolution_order: "squad-first, core-fallback"
+  note: "Agents are resolved from squad first; if not found, falls back to core agents"
+  {{/IF_HYBRID}}
+{{/IF_CONTEXT}}
+
 metadata:
   author: "{{AUTHOR}}"
   created_date: "{{CREATED_DATE}}"

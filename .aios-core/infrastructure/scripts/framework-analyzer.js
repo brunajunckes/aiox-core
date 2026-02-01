@@ -714,7 +714,23 @@ class FrameworkAnalyzer {
   extractTaskParameters(content) { return []; }
   analyzeImplementationStatus(content) { return 'unknown'; }
   calculateWorkflowComplexity(workflow) { return 1; }
-  validateWorkflow(workflow) { return { valid: true }; }
+  async validateWorkflow(workflow) {
+    try {
+      const { WorkflowValidator } = require('../../development/scripts/workflow-validator');
+      const validator = new WorkflowValidator({ verbose: false });
+      // validateRequiredFields works on the parsed object directly
+      const result = validator.validateRequiredFields({ workflow }, 'inline');
+      if (workflow && workflow.sequence) {
+        const seqResult = validator.validatePhaseSequence(workflow.sequence);
+        result.errors.push(...(seqResult.errors || []));
+        result.warnings.push(...(seqResult.warnings || []));
+        if (seqResult.errors && seqResult.errors.length > 0) result.valid = false;
+      }
+      return result;
+    } catch {
+      return { valid: true, errors: [], warnings: [] };
+    }
+  }
   extractUtilDescription(content) { return ''; }
   extractExports(content) { return []; }
   extractFunctions(content) { return []; }
