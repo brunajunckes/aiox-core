@@ -22,8 +22,8 @@ workflow:
       prompts: 5-10
       default: true
     - mode: preflight
-      description: Planejamento completo antes da execução
-      prompts: análise upfront
+      description: Planejamento completo antes da execução - análise upfront de requisitos e dependências
+      prompts: "10-15"
 
   sequence:
     - step: create_story
