@@ -56,6 +56,12 @@ atomic_layer: Config
   obrigatório: false
   validação: Must be "start", "continue", "status", "skip", or "abort". Default: "continue"
 
+- campo: mode
+  tipo: string
+  origem: User Input
+  obrigatório: false
+  validação: Must be "guided" or "engine". Default: "guided"
+
 **Saída:**
 - campo: workflow_state
   tipo: object
@@ -243,8 +249,27 @@ The following inputs are collected before execution:
 2. **target_context** — Where to look for the workflow: `core`, `squad`, or `hybrid` (default: `core`)
 3. **squad_name** — Required when target_context is `squad` or `hybrid`
 4. **action** — What to do: `start`, `continue`, `status`, `skip`, `abort` (default: `continue`)
+5. **mode** — Execution mode: `guided` (persona-switch) or `engine` (real subagent spawning) (default: `guided`)
 
 ## Task Execution
+
+### Mode Dispatch
+
+**BEFORE processing any action**, check the `mode` parameter:
+
+```
+IF mode == "engine":
+  Delegate ENTIRELY to run-workflow-engine.md task.
+  Pass all parameters: workflow_name, target_context, squad_name, action.
+  The engine task handles everything from here — do NOT continue below.
+  STOP.
+
+ELSE (mode == "guided" or not specified):
+  Continue with existing guided automation logic below.
+```
+
+---
+
 
 ### Action: `start`
 

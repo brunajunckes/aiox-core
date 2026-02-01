@@ -134,8 +134,8 @@ commands:
     description: 'Validate workflow YAML structure, agents, artifacts, and logic'
     visibility: full
   - name: run-workflow
-    args: '{name} [start|continue|status|skip|abort]'
-    description: 'Guided workflow execution with state tracking across sessions'
+    args: '{name} [start|continue|status|skip|abort] [--mode=guided|engine]'
+    description: 'Workflow execution: guided (persona-switch) or engine (real subagent spawning)'
     visibility: full
   - name: analyze-framework
     description: 'Analyze framework structure and patterns'
@@ -151,8 +151,8 @@ commands:
 
   # Workflow & Planning (Consolidated - Story 6.1.2.3)
   - name: workflow
-    args: '{name}'
-    description: 'Start workflow (or list available)'
+    args: '{name} [--mode=guided|engine]'
+    description: 'Start workflow (guided=manual, engine=real subagent spawning)'
   - name: plan
     args: '[create|status|update] [id]'
     description: 'Workflow planning (default: create)'
@@ -239,6 +239,7 @@ dependencies:
     - update-manifest.md
     - validate-workflow.md
     - run-workflow.md
+    - run-workflow-engine.md
   # Delegated tasks (Story 6.1.2.3):
   #   brownfield-create-epic.md → @pm
   #   brownfield-create-story.md → @pm
@@ -261,6 +262,7 @@ dependencies:
     - story-tmpl.yaml
     - task-template.md
     - workflow-template.yaml
+    - subagent-step-prompt.md
   data:
     - aios-kb.md
     - brainstorming-techniques.md
