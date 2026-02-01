@@ -1,6 +1,6 @@
 # Run Design System Pipeline
 
-> Task ID: ux-run-design-system-pipeline
+> Task ID: run-design-system-pipeline
 > Agent: @ux-design-expert (Brad - Design System Architect)
 > Version: 1.0.0
 
@@ -33,61 +33,61 @@
 ## Task Definition (AIOS Task Format V1.0)
 
 ```yaml
-task: runDesignSystemPipeline()
+task: run-design-system-pipeline
 responsável: Brad (Design System Architect)
 responsavel_type: Agente
 atomic_layer: Pipeline
 
-**Entrada:**
-- campo: project_path
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: Valid project directory (default: current)
+inputs:
+  - name: project_path
+    type: string
+    required: false
+    default: "."
+    prompt: "Project directory path"
 
-- campo: mode
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: yolo|interactive|preflight
+  - name: mode
+    type: string
+    required: false
+    default: "interactive"
+    prompt: "Execution mode (yolo|interactive|preflight)"
 
-- campo: skip_steps
-  tipo: array
-  origem: User Input
-  obrigatório: false
-  validação: Array of step ids to skip (build|document|a11y|roi)
+  - name: skip_steps
+    type: array
+    required: false
+    default: []
+    prompt: "Steps to skip (build|document|a11y|roi)"
 
-- campo: output_dir
-  tipo: string
-  origem: User Input
-  obrigatório: false
-  validação: Output directory (default: outputs/design-system/)
+  - name: output_dir
+    type: string
+    required: false
+    default: "outputs/design-system/"
+    prompt: "Output directory for artifacts"
 
-**Saída:**
-- campo: pipeline_report
-  tipo: object
-  destino: File system
-  persistido: true
+outputs:
+  - name: pipeline_report
+    type: object
+    destination: file_system
+    persisted: true
 
-- campo: build_artifacts
-  tipo: object
-  destino: File system
-  persistido: true
+  - name: build_artifacts
+    type: object
+    destination: file_system
+    persisted: true
 
-- campo: documentation
-  tipo: object
-  destino: File system
-  persistido: true
+  - name: documentation
+    type: object
+    destination: file_system
+    persisted: true
 
-- campo: a11y_report
-  tipo: object
-  destino: File system
-  persistido: true
+  - name: a11y_report
+    type: object
+    destination: file_system
+    persisted: true
 
-- campo: roi_metrics
-  tipo: object
-  destino: File system
-  persistido: true
+  - name: roi_metrics
+    type: object
+    destination: file_system
+    persisted: true
 ```
 
 ---
@@ -287,7 +287,7 @@ Ideal para integração em CI/CD ou validação antes de releases.
 
 ### Pipeline Sequence
 
-```
+```text
 ┌──────┬───────────────────┬───────────────────────────────────────┐
 │ Step │       ID          │                 Ação                  │
 ├──────┼───────────────────┼───────────────────────────────────────┤
