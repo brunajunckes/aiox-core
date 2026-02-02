@@ -6,7 +6,7 @@
 const fs = require('fs');
 const {
   validateFiles,
-} = require('../../../../src/wizard/validation/validators/file-structure-validator');
+} = require('../../../../packages/installer/src/wizard/validation/validators/file-structure-validator');
 
 // Mock fs module
 jest.mock('fs');

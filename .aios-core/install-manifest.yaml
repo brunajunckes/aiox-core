@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 3.10.0
-generated_at: "2026-02-02T01:25:25.903Z"
+generated_at: "2026-02-02T02:33:14.373Z"
 generator: scripts/generate-install-manifest.js
-file_count: 784
+file_count: 836
 files:
   - path: cli/commands/generate/index.js
     hash: sha256:36f8e38ab767fa5478d8dabac548c66dc2c0fc521c216e954ac33fcea0ba597b
@@ -1700,6 +1700,10 @@ files:
     hash: sha256:364b955b3315f1621a27ea26ff1459467a19c87781ac714e387fb616aeb336e6
     type: task
     size: 4686
+  - path: development/templates/aios-doc-template.md
+    hash: sha256:755abbb43aacb901a07dd2b66574f7d5a0750bf4f18e59f58fe52c35e61de8c1
+    type: template
+    size: 8230
   - path: development/templates/service-template/__tests__/index.test.ts.hbs
     hash: sha256:04090b95bc0b606448c161d8e698fcf4d5c7da2517a5ac65663554a54c5acf91
     type: template
@@ -1736,6 +1740,42 @@ files:
     hash: sha256:2338ab2e1ade619bf33a2c8f22b149402b513c05a6d1d8a805c5273c7233d151
     type: template
     size: 2516
+  - path: development/templates/squad-template/agents/example-agent.yaml
+    hash: sha256:824a1b349965e5d4ae85458c231b78260dc65497da75dada25b271f2cabbbe67
+    type: agent
+    size: 736
+  - path: development/templates/squad-template/LICENSE
+    hash: sha256:ff7017aa403270cf2c440f5ccb4240d0b08e54d8bf8a0424d34166e8f3e10138
+    type: template
+    size: 1071
+  - path: development/templates/squad-template/package.json
+    hash: sha256:c276fe1a238d9587f72cba1fabafae4ca227d212128f7ad339210c3b6a1bd955
+    type: template
+    size: 396
+  - path: development/templates/squad-template/README.md
+    hash: sha256:611f4b3524cc2f022e31dcb9d0cba20d315a0509ffa23d0d70db69d947f4c1f1
+    type: template
+    size: 480
+  - path: development/templates/squad-template/squad.yaml
+    hash: sha256:83b8d95c480a1b6496b9c4b3d88dc35a5e29937b6f21054e013e5bd048c91661
+    type: template
+    size: 335
+  - path: development/templates/squad-template/tasks/example-task.yaml
+    hash: sha256:2e6c03c6a8c3190eea22c865eb6bb2dc168b40a07baec461d48f65721584a2a0
+    type: task
+    size: 1056
+  - path: development/templates/squad-template/templates/example-template.md
+    hash: sha256:cdcf7510c827ec2506b66b4539d21f683efd9c67481014e6df1b56d5e1afea93
+    type: template
+    size: 206
+  - path: development/templates/squad-template/tests/example-agent.test.js
+    hash: sha256:6cfb0239ce8e4e1506b54d8fbaab6b633f21244f6a0b787a50410a595b87604b
+    type: template
+    size: 1510
+  - path: development/templates/squad-template/workflows/example-workflow.yaml
+    hash: sha256:ae6b2e5eadba6625323b0e646fe9648ae8acf86c8bc6ea4ac35aa5a7c5265d5f
+    type: workflow
+    size: 1173
   - path: development/templates/squad/agent-template.md
     hash: sha256:b8ba4621f0bf03bf3612a683cebaa52e246cba19fb81197493ec4d682a1db14b
     type: template
@@ -3040,6 +3080,174 @@ files:
     hash: sha256:ef72a3df899b1acf26064b00d0a3b39172f8f0b4893ead45189df8dae2eadac3
     type: script
     size: 5047
+  - path: scripts/diagnostics/diagnose-installation.js
+    hash: sha256:2ed72ea41e3e40c1d25cb3d7c51090dddfd486c54f2f78f469f464aae0f87a2c
+    type: script
+    size: 11140
+  - path: scripts/diagnostics/diagnose-npx-issue.ps1
+    hash: sha256:90e2dea155ff08b3a14c73f1c01218d49fbaa03050634d6382445807a158b0d0
+    type: script
+    size: 3590
+  - path: scripts/diagnostics/health-dashboard/index.html
+    hash: sha256:a31b427f5feab24c145ccc565408534e65f650d934c284babf56e48e6b311634
+    type: script
+    size: 373
+  - path: scripts/diagnostics/health-dashboard/package-lock.json
+    hash: sha256:c2fc255c7a952e3c3d2650dae96695b4490fe1adb0e7489c9979f97a7befd870
+    type: script
+    size: 178273
+  - path: scripts/diagnostics/health-dashboard/package.json
+    hash: sha256:076f9608cfd295125a4856caa634f91776ea40272d2f3e85e85503909a07e6b2
+    type: script
+    size: 559
+  - path: scripts/diagnostics/health-dashboard/public/favicon.svg
+    hash: sha256:80b16c17240e9f625b25572c7254d89fab1277905c02a6baf593b659cf8723f8
+    type: script
+    size: 473
+  - path: scripts/diagnostics/health-dashboard/README.md
+    hash: sha256:c7e508b37c800eee456bc0a714879b44f157d61363ee2eea71599d2efa0ccfe8
+    type: script
+    size: 3307
+  - path: scripts/diagnostics/health-dashboard/src/App.jsx
+    hash: sha256:df78d85545abf8506c0ae763354ed98f4c3836f47258ad5d649bcebb3e40eabf
+    type: script
+    size: 568
+  - path: scripts/diagnostics/health-dashboard/src/components/AutoFixLog.css
+    hash: sha256:f77463d451350b8435c409dc5f512fe7c7c05ea651c369e9333425f13ec917ed
+    type: script
+    size: 2356
+  - path: scripts/diagnostics/health-dashboard/src/components/AutoFixLog.jsx
+    hash: sha256:8346355c3dd73662e1a63de7bbd72546786c8500ae19531995ff929c4f719bf3
+    type: script
+    size: 1948
+  - path: scripts/diagnostics/health-dashboard/src/components/DomainCard.css
+    hash: sha256:fcb50fd9bd740bb96b36eeea260a007170a91a8be67e9f7220194c0bb8735d96
+    type: script
+    size: 2092
+  - path: scripts/diagnostics/health-dashboard/src/components/DomainCard.jsx
+    hash: sha256:fa247c1a03db4673e8d477a8c2e6fef33fe3f3d3aee55918625ed2de42e7f795
+    type: script
+    size: 3596
+  - path: scripts/diagnostics/health-dashboard/src/components/HealthScore.css
+    hash: sha256:be603c6f2af559943f66dd52353569b6b8ddc4b0d6f83ffd0c339d1f112ff1e7
+    type: script
+    size: 1317
+  - path: scripts/diagnostics/health-dashboard/src/components/HealthScore.jsx
+    hash: sha256:e52324aab05e3d55d3c5e593a771114cfae746fc2720dfc391ff8445c2bdb838
+    type: script
+    size: 2514
+  - path: scripts/diagnostics/health-dashboard/src/components/index.js
+    hash: sha256:9b72d494c14310eb09e59e29212d7c4c012c15ff922d08366cb92860107ac4d0
+    type: script
+    size: 394
+  - path: scripts/diagnostics/health-dashboard/src/components/IssuesList.css
+    hash: sha256:e32b7e59a772604407ae87749ca227199827ce0f37a6e323e4f4839e9bb5c5d4
+    type: script
+    size: 3370
+  - path: scripts/diagnostics/health-dashboard/src/components/IssuesList.jsx
+    hash: sha256:c9d117aa8f48a79d5a0ff2bad6938610d547aeb8e1df37ff6599d348fd55566c
+    type: script
+    size: 4584
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Card.css
+    hash: sha256:771bf84ee1280983e4fb5efda4bc7dc32b03e562cedd3e61d109618e091bc145
+    type: script
+    size: 781
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Card.jsx
+    hash: sha256:22c76b233c3a85bd52cbe46fbe2dbcbbc0872c23455c859df019f3a4f0bab2d0
+    type: script
+    size: 687
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Chart.css
+    hash: sha256:dc3e5d055568511e04d66affce42966453eec7ec5e6869f297fa5241a19897f3
+    type: script
+    size: 272
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Chart.jsx
+    hash: sha256:550bb7ecfb638121c60419a1ef60158827cd8b5d0b77b939c9bd694193a011ae
+    type: script
+    size: 4061
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Header.css
+    hash: sha256:a32d09ad552efbc4655cfccbc3532c1649dd8f10a6656f9a062a10c7bf2baada
+    type: script
+    size: 1020
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/Header.jsx
+    hash: sha256:06e3634da63cfa4c83d3e1af501b8ebc95ce830413ae7cbe1c4e4a57f68c864e
+    type: script
+    size: 531
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/index.js
+    hash: sha256:0f10256312b455be313f78d2c03a44058ecc96b1318acae7eb61f3062e1e9833
+    type: script
+    size: 193
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/StatusBadge.css
+    hash: sha256:b0c1b630dab59cbf7323ab44e0d2a4613fd3826065d5eedf8be47f3f404d5820
+    type: script
+    size: 1492
+  - path: scripts/diagnostics/health-dashboard/src/components/shared/StatusBadge.jsx
+    hash: sha256:5727624e24697e6b515db4a77f09dfc0a27c4d679b501a304bb31bb3ace4ff2c
+    type: script
+    size: 1367
+  - path: scripts/diagnostics/health-dashboard/src/components/TechDebtList.css
+    hash: sha256:f9da717fbef3775d4e620de72f59e2e42d40fb678af2c98e60eddc550b193f50
+    type: script
+    size: 2123
+  - path: scripts/diagnostics/health-dashboard/src/components/TechDebtList.jsx
+    hash: sha256:03f7279d0f78be2e77bac6c8a8f2529efed432dab6e3cf1046c15120a50dc591
+    type: script
+    size: 2116
+  - path: scripts/diagnostics/health-dashboard/src/hooks/index.js
+    hash: sha256:8873c96eb9def440cff602cc8143dddc4fc351f353377dc0683f4e2373662986
+    type: script
+    size: 122
+  - path: scripts/diagnostics/health-dashboard/src/hooks/useAutoRefresh.js
+    hash: sha256:f8dbf187f413424041207aa35bf7c8ad2df0f701952aec5cb3386c2311513c3b
+    type: script
+    size: 2090
+  - path: scripts/diagnostics/health-dashboard/src/hooks/useHealthData.js
+    hash: sha256:2924918491f79d1c63d3147b549806d2897bdd472c7027062af31bd3e949725c
+    type: script
+    size: 9491
+  - path: scripts/diagnostics/health-dashboard/src/main.jsx
+    hash: sha256:85b7cbf7d9a0ca6b984aada57871797680d81404bdd90ca9c43ec4231d42699f
+    type: script
+    size: 335
+  - path: scripts/diagnostics/health-dashboard/src/pages/Dashboard.css
+    hash: sha256:1a5fd97f59329e52c6ab7e1e250dd18f62766dc97d162e31b9f9597036c97d28
+    type: script
+    size: 4138
+  - path: scripts/diagnostics/health-dashboard/src/pages/Dashboard.jsx
+    hash: sha256:486e39d12a6148f301d3c2226f2051f4877122cd5f4d3181a211a3b3d66455d5
+    type: script
+    size: 4630
+  - path: scripts/diagnostics/health-dashboard/src/pages/DomainDetail.css
+    hash: sha256:4833c1470c86f84266b0b25c38bbc80bb62a5d9f5d70e83011441ed8c2d25b09
+    type: script
+    size: 4503
+  - path: scripts/diagnostics/health-dashboard/src/pages/DomainDetail.jsx
+    hash: sha256:415fab366201ec5b73477997f4dcbbf6a5133b31b8a544de12ecf1bdbc2644c0
+    type: script
+    size: 5732
+  - path: scripts/diagnostics/health-dashboard/src/pages/index.js
+    hash: sha256:52a22fa5651e7d6930a685c691e5e13c5245faa34cd4c17a0be25b4ae8668043
+    type: script
+    size: 110
+  - path: scripts/diagnostics/health-dashboard/src/styles/App.css
+    hash: sha256:eab588caa6f791cd9e491e510c37642b958d139aadceba4ff60c016dbac6f768
+    type: script
+    size: 272
+  - path: scripts/diagnostics/health-dashboard/src/styles/index.css
+    hash: sha256:998ec17773fd9a32d25c0e44285ff7e0d3819503be5ee7396e0fbc75d35c6543
+    type: script
+    size: 1381
+  - path: scripts/diagnostics/health-dashboard/vite.config.js
+    hash: sha256:e87c88a741e4fc88d0e7a52b67968fe59e0e8a7bae467ffb99fc55e8956af75e
+    type: script
+    size: 528
+  - path: scripts/diagnostics/quick-diagnose.cmd
+    hash: sha256:2269970c46a3022018561dd20c36b29c2073839767c8824e52dc5110a85410bd
+    type: script
+    size: 1975
+  - path: scripts/diagnostics/quick-diagnose.ps1
+    hash: sha256:b2bbf37041d26dfaf8f004e4a5ebb0ca8a41a0fe6be561148abf729fa4a48583
+    type: script
+    size: 4468
   - path: scripts/migrate-framework-docs.sh
     hash: sha256:b453931ec91e85b7f2e71d8508960e742aaa85fa44a89221ff257d472ab61ca3
     type: script

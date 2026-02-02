@@ -14,7 +14,7 @@ const { showWelcome, showCompletion, showCancellation } = require('./feedback');
 const { generateIDEConfigs, showSuccessSummary } = require('./ide-config-generator');
 const {
   configureEnvironment,
-} = require('../../packages/installer/src/config/configure-environment');
+} = require('../config/configure-environment');
 const {
   installDependencies,
 } = require('../installer/dependency-installer');
@@ -30,7 +30,7 @@ const {
 const {
   installLLMRouting,
   isLLMRoutingInstalled,
-} = require('../../.aios-core/infrastructure/scripts/llm-routing/install-llm-routing');
+} = require('../../../../.aios-core/infrastructure/scripts/llm-routing/install-llm-routing');
 
 // DISABLED: Squads replaced expansion-packs (OSR-8)
 // /**

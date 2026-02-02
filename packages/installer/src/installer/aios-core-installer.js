@@ -227,7 +227,7 @@ async function installAiosCore(options = {}) {
     // Create install manifest
     spinner.text = 'Creating installation manifest...';
     const manifest = {
-      version: require('../../package.json').version,
+      version: require('../../../../package.json').version,
       installed_at: new Date().toISOString(),
       install_type: 'full',
       files: result.installedFiles,
