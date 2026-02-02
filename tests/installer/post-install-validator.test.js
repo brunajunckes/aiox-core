@@ -24,7 +24,7 @@ const {
   IssueType,
   Severity,
   SecurityLimits,
-} = require('../../src/installer/post-install-validator');
+} = require('../../packages/installer/src/installer/post-install-validator');
 
 describe('PostInstallValidator Security Tests', () => {
   let testDir;
@@ -582,7 +582,7 @@ describe('Manifest Signature Module', () => {
   const {
     parseMinisignSignature,
     verifyManifestSignature,
-  } = require('../../src/installer/manifest-signature');
+  } = require('../../packages/installer/src/installer/manifest-signature');
 
   test('should parse valid minisign signature format', () => {
     // Minisign signature blob must be at least 74 bytes:
@@ -627,7 +627,7 @@ describe('Manifest Signature DoS Protection', () => {
   const {
     loadAndVerifyManifest,
     SignatureLimits,
-  } = require('../../src/installer/manifest-signature');
+  } = require('../../packages/installer/src/installer/manifest-signature');
 
   let testDir;
 
