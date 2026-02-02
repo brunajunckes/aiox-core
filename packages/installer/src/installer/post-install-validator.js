@@ -1263,6 +1263,60 @@ class PostInstallValidator {
         continue;
       }
 
+      // SECURITY [TOCTOU]: Verify target path has no symlinks in any component
+      // This prevents race condition attacks where a directory is replaced with a symlink
+      // between the containment check and the actual copy operation
+      try {
+        const targetDir = path.dirname(targetPath);
+
+        // Walk each path component from aiosCoreTarget to targetDir
+        // and verify none are symlinks
+        let currentPath = this.aiosCoreTarget;
+        const relativeParts = path.relative(this.aiosCoreTarget, targetDir).split(path.sep);
+
+        for (const part of relativeParts) {
+          if (!part || part === '.') continue;
+          currentPath = path.join(currentPath, part);
+
+          // Check if this path component exists and is a symlink
+          try {
+            const componentStat = fs.lstatSync(currentPath);
+            if (componentStat.isSymbolicLink()) {
+              result.skipped.push({
+                path: relativePath,
+                reason: `Symlink detected in path component: ${path.relative(this.aiosCoreTarget, currentPath)}`,
+              });
+              continue;
+            }
+          } catch (_statError) {
+            // Path component doesn't exist yet, will be created by ensureDir
+            // This is OK - we'll create it as a real directory
+            break;
+          }
+        }
+
+        // Final realpath verification: ensure resolved target stays within resolved aiosCoreTarget
+        // This catches any symlinks that might have been missed or created during the check
+        if (fs.existsSync(targetDir)) {
+          const realTargetDir = fs.realpathSync(targetDir);
+          const realAiosCoreTarget = fs.realpathSync(this.aiosCoreTarget);
+
+          if (!isPathContained(realTargetDir, realAiosCoreTarget)) {
+            result.skipped.push({
+              path: relativePath,
+              reason: `Realpath escapes target directory: ${realTargetDir} is outside ${realAiosCoreTarget}`,
+            });
+            continue;
+          }
+        }
+      } catch (toctouError) {
+        result.skipped.push({
+          path: relativePath,
+          reason: `TOCTOU verification failed: ${toctouError.message}`,
+        });
+        continue;
+      }
+
       // Perform copy
       try {
         await fs.ensureDir(path.dirname(targetPath));
