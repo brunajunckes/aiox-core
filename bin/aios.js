@@ -19,7 +19,7 @@ const args = process.argv.slice(2);
 const command = args[0];
 
 // Helper: Run initialization wizard
-async function runWizard() {
+async function runWizard(options = {}) {
   // Use the new v2.1 wizard from packages/installer/src/wizard/index.js
   const wizardPath = path.join(__dirname, '..', 'packages', 'installer', 'src', 'wizard', 'index.js');
 
@@ -27,7 +27,13 @@ async function runWizard() {
     // Fallback to legacy wizard if new wizard not found
     const legacyScript = path.join(__dirname, 'aios-init.js');
     if (fs.existsSync(legacyScript)) {
-      console.log('⚠️  Using legacy wizard (src/wizard not found)');
+      if (!options.quiet) {
+        console.log('⚠️  Using legacy wizard (src/wizard not found)');
+      }
+      // Legacy wizard doesn't support options, pass via env vars
+      process.env.AIOS_INSTALL_FORCE = options.force ? '1' : '';
+      process.env.AIOS_INSTALL_QUIET = options.quiet ? '1' : '';
+      process.env.AIOS_INSTALL_DRY_RUN = options.dryRun ? '1' : '';
       require(legacyScript);
       return;
     }
@@ -37,9 +43,9 @@ async function runWizard() {
   }
 
   try {
-    // Run the new v2.1 wizard
+    // Run the new v2.1 wizard with options
     const { runWizard: executeWizard } = require(wizardPath);
-    await executeWizard();
+    await executeWizard(options);
   } catch (error) {
     console.error('❌ Wizard error:', error.message);
     process.exit(1);
