@@ -78,10 +78,10 @@ describe('Health Check System', () => {
       assert.ok(domains.includes('services'), 'Should include services');
     });
 
-    it('should have 33 total checks', () => {
+    it('should have 34 total checks', () => {
       const counts = healthCheck.getCheckCounts();
       const total = Object.values(counts).reduce((a, b) => a + b, 0);
-      assert.strictEqual(total, 33, 'Should have 33 total checks');
+      assert.strictEqual(total, 34, 'Should have 34 total checks');
     });
 
     it('should have correct check distribution', () => {
@@ -90,7 +90,7 @@ describe('Health Check System', () => {
       assert.strictEqual(counts.local, 8, 'Local should have 8 checks');
       assert.strictEqual(counts.repository, 8, 'Repository should have 8 checks');
       assert.strictEqual(counts.deployment, 5, 'Deployment should have 5 checks');
-      assert.strictEqual(counts.services, 4, 'Services should have 4 checks');
+      assert.strictEqual(counts.services, 5, 'Services should have 5 checks');
     });
   });
 

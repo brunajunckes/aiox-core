@@ -1,14 +1,24 @@
 /**
  * Subagent Dispatcher
  * Story 10.2 - Parallel Agent Execution
+ * Story GEMINI-INT.3 - Multi-Provider Support
  *
  * Dispatches tasks to specialized subagents based on task type.
+ * Supports multiple AI providers (Claude, Gemini) with routing and fallback.
  * Injects relevant context from Memory Layer.
  */
 
 const EventEmitter = require('events');
 const { spawn } = require('child_process');
 const _path = require('path');
+
+// Import AI Provider Factory
+let AIProviderFactory;
+try {
+  AIProviderFactory = require('../../infrastructure/integrations/ai-providers');
+} catch {
+  AIProviderFactory = null;
+}
 
 // Import dependencies with fallbacks
 let MemoryQuery, GotchasMemory;
@@ -56,6 +66,30 @@ class SubagentDispatcher extends EventEmitter {
     // Default agent when no match
     this.defaultAgent = config.defaultAgent || '@dev';
 
+    // AI Provider configuration (Story GEMINI-INT.3)
+    this.providerMapping = config.providerMapping || {
+      // Tasks that benefit from Claude's deep reasoning
+      '@architect': 'claude',
+      '@analyst': 'claude',
+      security: 'claude',
+
+      // Tasks that work well with Gemini's speed
+      '@dev': 'auto', // Use configured default
+      '@qa': 'gemini',
+      '@pm': 'gemini',
+      documentation: 'gemini',
+      formatting: 'gemini',
+    };
+
+    // Default provider (from config or claude)
+    this.defaultProvider = config.defaultProvider || 'claude';
+
+    // Enable multi-provider features
+    this.multiProviderEnabled = config.multiProviderEnabled !== false;
+
+    // Parallel execution mode
+    this.parallelMode = config.parallelMode || 'fallback'; // fallback, race, consensus, best-of
+
     // Retry configuration
     this.maxRetries = config.maxRetries || 2;
     this.retryDelay = config.retryDelay || 2000;
@@ -82,11 +116,15 @@ class SubagentDispatcher extends EventEmitter {
     const agentId = this.resolveAgent(task);
     const startTime = Date.now();
 
+    // Resolve provider (Story GEMINI-INT.3)
+    const providerName = this.resolveProvider(task, agentId);
+
     // Create dispatch record
     const dispatchRecord = {
       id: `dispatch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       taskId: task.id,
       agentId,
+      provider: providerName,
       startedAt: new Date().toISOString(),
       attempts: 0,
     };
@@ -205,6 +243,67 @@ class SubagentDispatcher extends EventEmitter {
   }
 
   /**
+   * Resolve which AI provider should handle a task (Story GEMINI-INT.3)
+   * @param {Object} task - Task to resolve provider for
+   * @param {string} agentId - Resolved agent ID
+   * @returns {string} - Provider name ('claude', 'gemini', or 'auto')
+   */
+  resolveProvider(task, agentId) {
+    // Check for explicit @gemini or @claude tag in task
+    if (task.provider) {
+      return task.provider.toLowerCase();
+    }
+
+    // Check task tags for provider hints
+    if (task.tags && Array.isArray(task.tags)) {
+      if (task.tags.includes('@gemini') || task.tags.includes('gemini')) {
+        return 'gemini';
+      }
+      if (task.tags.includes('@claude') || task.tags.includes('claude')) {
+        return 'claude';
+      }
+    }
+
+    // Check description for provider hints
+    const description = (task.description || '').toLowerCase();
+    if (description.includes('@gemini')) return 'gemini';
+    if (description.includes('@claude')) return 'claude';
+
+    // Check agent mapping
+    if (this.providerMapping[agentId]) {
+      const mapped = this.providerMapping[agentId];
+      if (mapped !== 'auto') return mapped;
+    }
+
+    // Check task type mapping
+    if (task.type && this.providerMapping[task.type.toLowerCase()]) {
+      const mapped = this.providerMapping[task.type.toLowerCase()];
+      if (mapped !== 'auto') return mapped;
+    }
+
+    // Return default
+    return this.defaultProvider;
+  }
+
+  /**
+   * Get AI provider instance (Story GEMINI-INT.3)
+   * @param {string} providerName - Provider name
+   * @returns {Object|null} - Provider instance or null
+   */
+  getAIProvider(providerName) {
+    if (!AIProviderFactory) {
+      return null;
+    }
+
+    try {
+      return AIProviderFactory.getProvider(providerName);
+    } catch (error) {
+      this.log('provider_error', { provider: providerName, error: error.message });
+      return null;
+    }
+  }
+
+  /**
    * Enrich context with memory and gotchas
    * @param {Object} task - Task being dispatched
    * @param {Object} context - Base context
@@ -285,7 +384,7 @@ class SubagentDispatcher extends EventEmitter {
   }
 
   /**
-   * Spawn a subagent to execute a task
+   * Spawn a subagent to execute a task (Updated for Story GEMINI-INT.3)
    * @param {string} agentId - Agent identifier
    * @param {Object} task - Task to execute
    * @param {Object} context - Enriched context
@@ -295,8 +394,193 @@ class SubagentDispatcher extends EventEmitter {
     // Build the prompt
     const prompt = this.buildPrompt(agentId, task, context);
 
-    // Execute via Claude CLI
+    // Resolve provider
+    const providerName = this.resolveProvider(task, agentId);
+
+    // Try to use AI Provider Factory if available
+    if (this.multiProviderEnabled && AIProviderFactory) {
+      return this.executeWithProvider(prompt, providerName, task);
+    }
+
+    // Fallback to direct Claude CLI
     return this.executeClaude(prompt);
+  }
+
+  /**
+   * Execute prompt using AI Provider Factory (Story GEMINI-INT.3)
+   * @param {string} prompt - Prompt to execute
+   * @param {string} providerName - Provider to use
+   * @param {Object} task - Original task for context
+   * @returns {Promise<Object>} - Execution result
+   */
+  async executeWithProvider(prompt, providerName, task) {
+    const startTime = Date.now();
+
+    // Get primary provider
+    const provider = this.getAIProvider(providerName);
+
+    if (!provider) {
+      this.log('provider_unavailable', { provider: providerName });
+      // Fallback to legacy Claude execution
+      return this.executeClaude(prompt);
+    }
+
+    // Check availability
+    const isAvailable = await provider.checkAvailability();
+
+    if (!isAvailable) {
+      this.log('provider_not_available', { provider: providerName });
+
+      // Try fallback provider
+      const fallbackName = providerName === 'claude' ? 'gemini' : 'claude';
+      const fallback = this.getAIProvider(fallbackName);
+
+      if (fallback && (await fallback.checkAvailability())) {
+        this.log('using_fallback_provider', { original: providerName, fallback: fallbackName });
+        return this.executeWithSingleProvider(fallback, prompt, task);
+      }
+
+      // Last resort: legacy Claude
+      return this.executeClaude(prompt);
+    }
+
+    // Execute with selected provider
+    return this.executeWithSingleProvider(provider, prompt, task);
+  }
+
+  /**
+   * Execute with a single provider instance (Story GEMINI-INT.3)
+   * @param {Object} provider - Provider instance
+   * @param {string} prompt - Prompt to execute
+   * @param {Object} task - Original task
+   * @returns {Promise<Object>} - Execution result
+   */
+  async executeWithSingleProvider(provider, prompt, task) {
+    try {
+      const response = await provider.executeWithRetry(prompt, {
+        workingDir: this.rootPath,
+      });
+
+      this.emit('provider_execution_complete', {
+        provider: provider.name,
+        taskId: task.id,
+        success: response.success,
+        duration: response.metadata?.duration,
+      });
+
+      return {
+        success: response.success,
+        output: response.output,
+        filesModified: this.extractModifiedFiles(response.output),
+        provider: provider.name,
+        metadata: response.metadata,
+      };
+    } catch (error) {
+      this.emit('provider_execution_failed', {
+        provider: provider.name,
+        taskId: task.id,
+        error: error.message,
+      });
+
+      throw error;
+    }
+  }
+
+  /**
+   * Execute with parallel providers (Story GEMINI-INT.3 - Advanced)
+   * Runs both Claude and Gemini, returns based on parallelMode
+   * @param {string} prompt - Prompt to execute
+   * @param {Object} task - Original task
+   * @returns {Promise<Object>} - Best/merged result
+   */
+  async executeParallel(prompt, task) {
+    if (!AIProviderFactory) {
+      return this.executeClaude(prompt);
+    }
+
+    const claude = this.getAIProvider('claude');
+    const gemini = this.getAIProvider('gemini');
+
+    // Check availability
+    const [claudeAvail, geminiAvail] = await Promise.all([
+      claude?.checkAvailability() || false,
+      gemini?.checkAvailability() || false,
+    ]);
+
+    if (!claudeAvail && !geminiAvail) {
+      throw new Error('No AI providers available');
+    }
+
+    if (!claudeAvail) return this.executeWithSingleProvider(gemini, prompt, task);
+    if (!geminiAvail) return this.executeWithSingleProvider(claude, prompt, task);
+
+    // Execute in parallel
+    const startTime = Date.now();
+
+    this.emit('parallel_execution_started', {
+      taskId: task.id,
+      mode: this.parallelMode,
+    });
+
+    const results = await Promise.allSettled([
+      this.executeWithSingleProvider(claude, prompt, task),
+      this.executeWithSingleProvider(gemini, prompt, task),
+    ]);
+
+    const claudeResult = results[0].status === 'fulfilled' ? results[0].value : null;
+    const geminiResult = results[1].status === 'fulfilled' ? results[1].value : null;
+
+    this.emit('parallel_execution_complete', {
+      taskId: task.id,
+      duration: Date.now() - startTime,
+      claudeSuccess: !!claudeResult?.success,
+      geminiSuccess: !!geminiResult?.success,
+    });
+
+    // Select result based on mode
+    return this.selectParallelResult(claudeResult, geminiResult, task);
+  }
+
+  /**
+   * Select result from parallel execution based on mode
+   * @param {Object|null} claudeResult - Claude result
+   * @param {Object|null} geminiResult - Gemini result
+   * @param {Object} task - Original task
+   * @returns {Object} - Selected result
+   */
+  selectParallelResult(claudeResult, geminiResult, task) {
+    switch (this.parallelMode) {
+      case 'race':
+        // Return first successful result
+        return claudeResult?.success ? claudeResult : geminiResult || claudeResult;
+
+      case 'consensus':
+        // Both must succeed and be similar
+        if (claudeResult?.success && geminiResult?.success) {
+          // Simple check: both succeeded
+          return {
+            ...claudeResult,
+            consensus: true,
+            providers: ['claude', 'gemini'],
+          };
+        }
+        // Return whichever succeeded
+        return claudeResult?.success ? claudeResult : geminiResult;
+
+      case 'best-of':
+        // Return longer/more complete response (simple heuristic)
+        if (claudeResult?.success && geminiResult?.success) {
+          const claudeLen = claudeResult.output?.length || 0;
+          const geminiLen = geminiResult.output?.length || 0;
+          return claudeLen >= geminiLen ? claudeResult : geminiResult;
+        }
+        return claudeResult?.success ? claudeResult : geminiResult;
+
+      case 'fallback':
+      default:
+        // Claude primary, Gemini fallback
+        return claudeResult?.success ? claudeResult : geminiResult || claudeResult;
+    }
   }
 
   /**
@@ -493,13 +777,20 @@ class SubagentDispatcher extends EventEmitter {
     let output = '📤 Subagent Dispatcher Status\n';
     output += '━'.repeat(40) + '\n\n';
 
+    // Multi-provider status (Story GEMINI-INT.3)
+    output += '**AI Providers:**\n';
+    output += `  Multi-Provider: ${this.multiProviderEnabled ? '✅ Enabled' : '❌ Disabled'}\n`;
+    output += `  Default: ${this.defaultProvider}\n`;
+    output += `  Parallel Mode: ${this.parallelMode}\n\n`;
+
     output += '**Agent Mapping:**\n';
     const agents = [...new Set(Object.values(this.agentMapping))];
     for (const agent of agents) {
       const types = Object.entries(this.agentMapping)
         .filter(([_, a]) => a === agent)
         .map(([t]) => t);
-      output += `  ${agent}: ${types.slice(0, 4).join(', ')}${types.length > 4 ? '...' : ''}\n`;
+      const provider = this.providerMapping[agent] || 'auto';
+      output += `  ${agent} (${provider}): ${types.slice(0, 3).join(', ')}${types.length > 3 ? '...' : ''}\n`;
     }
     output += '\n';
 
@@ -507,13 +798,47 @@ class SubagentDispatcher extends EventEmitter {
       output += '**Recent Dispatches:**\n';
       for (const dispatch of recentDispatches.slice(-5)) {
         const icon = dispatch.success === true ? '✅' : dispatch.success === false ? '❌' : '🔄';
-        output += `  ${icon} ${dispatch.taskId || 'N/A'} → ${dispatch.agentId || 'N/A'}`;
+        const providerIcon = dispatch.provider === 'gemini' ? '🔷' : '🟣';
+        output += `  ${icon} ${providerIcon} ${dispatch.taskId || 'N/A'} → ${dispatch.agentId || 'N/A'}`;
         if (dispatch.duration) output += ` (${dispatch.duration}ms)`;
         output += '\n';
       }
     }
 
     return output;
+  }
+
+  /**
+   * Get provider statistics (Story GEMINI-INT.3)
+   * @returns {Object} - Provider usage stats
+   */
+  getProviderStats() {
+    const dispatches = this.getLog(100);
+    const stats = {
+      claude: { total: 0, success: 0, failed: 0, avgDuration: 0 },
+      gemini: { total: 0, success: 0, failed: 0, avgDuration: 0 },
+    };
+
+    for (const dispatch of dispatches) {
+      if (dispatch.type !== 'dispatch_completed' && dispatch.type !== 'dispatch_failed') continue;
+
+      const provider = dispatch.provider || 'claude';
+      if (!stats[provider]) continue;
+
+      stats[provider].total++;
+      if (dispatch.success) {
+        stats[provider].success++;
+      } else {
+        stats[provider].failed++;
+      }
+
+      if (dispatch.duration) {
+        const current = stats[provider].avgDuration * (stats[provider].total - 1);
+        stats[provider].avgDuration = (current + dispatch.duration) / stats[provider].total;
+      }
+    }
+
+    return stats;
   }
 }
 
