@@ -473,7 +473,7 @@ async function initProject() {
     console.log(`Template: ${template}`);
   }
   if (skipInstall) {
-    console.log(`Skip install: enabled`);
+    console.log('Skip install: enabled');
   }
   console.log('');
 

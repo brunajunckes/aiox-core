@@ -2,25 +2,41 @@
 
 /**
  * AIOS-FullStack Minimal Installation
- * Wrapper that launches aios-init.js in minimal mode
  *
- * Minimal mode only shows expansion-creator pack,
- * which provides tools to install other expansion packs manually.
+ * DEPRECATION NOTICE (v3.11.1):
+ * The --minimal mode was designed for expansion-packs which have been
+ * replaced by the Squads system (OSR-8). This command now runs the
+ * standard wizard through the main router.
+ *
+ * This file is kept for backwards compatibility but will be removed
+ * in a future major version.
  */
 
-const { execSync } = require('child_process');
+const { spawn } = require('child_process');
 const path = require('path');
 
-// Get the path to aios-init.js
-const initScriptPath = path.join(__dirname, 'aios-init.js');
+// Show deprecation warning
+console.log('\n⚠️  DEPRECATION WARNING: aios-minimal is deprecated.');
+console.log('   The --minimal mode (expansion-packs) was replaced by Squads.');
+console.log('   Running standard installation wizard instead.\n');
 
-try {
-  // Execute aios-init.js with --minimal flag
-  execSync(`node "${initScriptPath}" --minimal`, {
-    stdio: 'inherit',
-    cwd: process.cwd(),
-  });
-} catch (error) {
-  // Error is already displayed by child process
-  process.exit(error.status || 1);
-}
+// Get the path to the main router (aios.js)
+const routerPath = path.join(__dirname, 'aios.js');
+
+// Forward all arguments to the main router
+const args = process.argv.slice(2);
+
+// Spawn the main router
+const child = spawn('node', [routerPath, ...args], {
+  stdio: 'inherit',
+  cwd: process.cwd(),
+});
+
+child.on('close', (code) => {
+  process.exit(code || 0);
+});
+
+child.on('error', (error) => {
+  console.error('❌ Failed to start AIOS:', error.message);
+  process.exit(1);
+});
