@@ -8,7 +8,7 @@
 # - File types for categorization
 #
 version: 3.11.3
-generated_at: "2026-02-03T20:04:44.573Z"
+generated_at: "2026-02-03T20:51:09.899Z"
 generator: scripts/generate-install-manifest.js
 file_count: 859
 files:
@@ -581,9 +581,9 @@ files:
     type: core
     size: 15970
   - path: core/orchestration/gemini-model-selector.js
-    hash: sha256:e62a7e37992735dfa0d07c0cd1a80bc2adf6b0358bfaf5493f80b265ea83a840
+    hash: sha256:2fe54c401ae60c0b5dc07f74c7a464992a0558b10c0b61f183c06943441d0d57
     type: core
-    size: 4197
+    size: 4383
   - path: core/orchestration/index.js
     hash: sha256:b0cd2437434e492a46dd533d5b50b29348b99c75681805f6c9b8c9d1297d064d
     type: core
@@ -1965,13 +1965,13 @@ files:
     type: infrastructure
     size: 4506
   - path: infrastructure/integrations/ai-providers/claude-provider.js
-    hash: sha256:dad5170d4d8602aa0b684a2e64adc19eae5babc9d0314efdbc096fde67ef2d30
+    hash: sha256:ae3c88afda09e599d15911be353efc0e68c1b1ec7797d8859711d9538a606637
     type: infrastructure
-    size: 4761
+    size: 4796
   - path: infrastructure/integrations/ai-providers/gemini-provider.js
-    hash: sha256:e1d13d48a5c68bffa90ef0dd9129cd4e038893640b232a6e8b6aa82ef386f1d7
+    hash: sha256:725fe6896b6b043c2122700049843b35432225ebda91455da7f2e5f6c4257eac
     type: infrastructure
-    size: 10422
+    size: 10494
   - path: infrastructure/integrations/ai-providers/index.js
     hash: sha256:d657bd285b189f14ebe3fff961ec6a0287c0d59185a685251d9e91ee5d9c0e1c
     type: infrastructure
@@ -1981,17 +1981,17 @@ files:
     type: infrastructure
     size: 2599
   - path: infrastructure/integrations/gemini-extensions/cloudrun-adapter.js
-    hash: sha256:48e65a26bbafd3d13423d66981742e3e37925edb00aa4a0cf2edd7e80a7e6aaa
+    hash: sha256:4c1659ac40b89232105f77b31d702bddef04859bf7374c104d3ce7a113c802ee
     type: infrastructure
-    size: 3005
+    size: 3248
   - path: infrastructure/integrations/gemini-extensions/index.js
     hash: sha256:75f89bb3eb7a2967e9e6fa6ae3e955fc1fa9ad7b3d978f4b54d91ad40c396951
     type: infrastructure
     size: 951
   - path: infrastructure/integrations/gemini-extensions/policy-sync.js
-    hash: sha256:1e565497ab26d78f4321b9c43fde7ef145bff7a676eb5699b8f39ae388ee790e
+    hash: sha256:874086b064e2877491e1a89fa46dc32b28e2309cb40a5b0f7fa0c69b167de1d4
     type: infrastructure
-    size: 1280
+    size: 1516
   - path: infrastructure/integrations/gemini-extensions/security-adapter.js
     hash: sha256:37b407bf263ad66f4bbd78b599718a92089588a9f7b495853a2ccebdf525d0a9
     type: infrastructure
