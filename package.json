@@ -1,6 +1,6 @@
 {
   "name": "aios-core",
-  "version": "3.10.0",
+  "version": "3.11.3",
   "description": "Synkra AIOS: AI-Orchestrated System for Full Stack Development - Core Framework",
   "bin": {
     "aios": "bin/aios.js",
@@ -38,12 +38,12 @@
     "generate:manifest": "node scripts/generate-install-manifest.js",
     "validate:manifest": "node scripts/validate-manifest.js",
     "validate:structure": "node .aios-core/infrastructure/scripts/source-tree-guardian/index.js",
+    "validate:agents": "node .aios-core/infrastructure/scripts/validate-agents.js",
     "sync:ide": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync",
     "sync:ide:validate": "node .aios-core/infrastructure/scripts/ide-sync/index.js validate",
     "sync:ide:check": "node .aios-core/infrastructure/scripts/ide-sync/index.js validate --strict",
     "sync:ide:cursor": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync --ide cursor",
     "sync:ide:windsurf": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync --ide windsurf",
-    "sync:ide:trae": "node .aios-core/infrastructure/scripts/ide-sync/index.js sync --ide trae",
     "prepublishOnly": "npm run generate:manifest && npm run validate:manifest",
     "prepare": "husky"
   },
@@ -126,6 +126,7 @@
     ]
   },
   "overrides": {
-    "tar": "^7.5.7"
+    "tar": "^7.5.7",
+    "diff": "^8.0.3"
   }
 }
