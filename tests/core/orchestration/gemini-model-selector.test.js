@@ -36,9 +36,10 @@ describe('GeminiModelSelector', () => {
 
   describe('AGENT_OVERRIDES', () => {
     it('should have overrides for key agents', () => {
-      expect(AGENT_OVERRIDES['@architect']).toBe('pro');
-      expect(AGENT_OVERRIDES['@qa']).toBe('flash');
-      expect(AGENT_OVERRIDES['@dev']).toBe('auto');
+      // Keys no longer have @ prefix (normalized)
+      expect(AGENT_OVERRIDES['architect']).toBe('pro');
+      expect(AGENT_OVERRIDES['qa']).toBe('flash');
+      expect(AGENT_OVERRIDES['dev']).toBe('auto');
     });
   });
 
