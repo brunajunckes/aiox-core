@@ -396,7 +396,71 @@ async function main() {
     },
   ]);
 
-  // Step 4: Copy AIOS Core files
+  // Step 4a: Check and offer to install CLI tools
+  const cliToolsToCheck = [];
+  if (ides.includes('claude')) {
+    cliToolsToCheck.push({ ide: 'claude', command: 'claude', name: 'Claude Code', npm: '@anthropic-ai/claude-code' });
+  }
+  if (ides.includes('gemini')) {
+    cliToolsToCheck.push({ ide: 'gemini', command: 'gemini', name: 'Gemini CLI', npm: '@google/gemini-cli' });
+  }
+
+  if (cliToolsToCheck.length > 0) {
+    console.log('');
+    console.log(chalk.blue('🔍 Checking CLI tools...'));
+
+    const missingTools = [];
+    for (const tool of cliToolsToCheck) {
+      try {
+        const checkCmd = process.platform === 'win32' ? `where ${tool.command}` : `command -v ${tool.command}`;
+        require('child_process').execSync(checkCmd, { stdio: 'ignore' });
+        console.log(chalk.green('✓') + ` ${tool.name} is installed`);
+      } catch {
+        console.log(chalk.yellow('⚠') + ` ${tool.name} is not installed`);
+        missingTools.push(tool);
+      }
+    }
+
+    if (missingTools.length > 0) {
+      console.log('');
+      const toolNames = missingTools.map(t => t.name).join(', ');
+      const { installClis } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'installClis',
+          message: chalk.white(`Would you like to install ${toolNames}?`),
+          default: true,
+        },
+      ]);
+
+      if (installClis) {
+        for (const tool of missingTools) {
+          console.log(chalk.blue(`📥 Installing ${tool.name}...`));
+          try {
+            require('child_process').execSync(`npm install -g ${tool.npm}`, { stdio: 'inherit' });
+            console.log(chalk.green('✓') + ` ${tool.name} installed successfully`);
+
+            // Show post-install instructions
+            if (tool.ide === 'claude') {
+              console.log(chalk.gray('  Run `claude` to authenticate with your Anthropic account'));
+            } else if (tool.ide === 'gemini') {
+              console.log(chalk.gray('  Run `gemini` to authenticate with your Google account'));
+            }
+          } catch (error) {
+            console.log(chalk.red('✗') + ` Failed to install ${tool.name}: ${error.message}`);
+            console.log(chalk.gray(`  You can install manually: npm install -g ${tool.npm}`));
+          }
+        }
+      } else {
+        console.log(chalk.gray('  Skipping CLI installation. You can install later:'));
+        for (const tool of missingTools) {
+          console.log(chalk.gray(`    npm install -g ${tool.npm}`));
+        }
+      }
+    }
+  }
+
+  // Step 4b: Copy AIOS Core files
   console.log('');
   console.log(chalk.blue('📦 Installing AIOS Core files...'));
 
@@ -463,7 +527,7 @@ async function main() {
     for (const ide of ides) {
       if (ide !== 'none' && ideRulesMap[ide]) {
         const ideConfig = ideRulesMap[ide];
-        const sourceRules = path.join(targetCoreDir, 'templates', 'ide-rules', ideConfig.source);
+        const sourceRules = path.join(targetCoreDir, 'product', 'templates', 'ide-rules', ideConfig.source);
         const targetRules = path.join(context.projectRoot, ideConfig.target);
 
         if (fs.existsSync(sourceRules)) {
