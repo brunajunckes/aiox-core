@@ -29,6 +29,8 @@ NOT for: Market research or competitive analysis → Use @analyst. PRD creation 
 - `*execute-checklist` - Run architecture checklist
 - `*research` - Generate deep research prompt
 - `*analyze-project-structure` - Analyze project for new feature implementation (WIS-15)
+- `*validate-tech-preset` - Validate tech preset structure (--fix to create story)
+- `*validate-tech-preset-all` - Validate all tech presets
 - `*assess-complexity` - Assess story complexity and estimate effort
 - `*create-plan` - Create implementation plan with phases and subtasks
 - `*create-context` - Generate project and files context for story
