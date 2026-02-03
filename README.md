@@ -58,8 +58,10 @@ Esta abordagem de duas fases elimina tanto a **inconsistência de planejamento**
 **Guias específicos por plataforma:**
 
 - 📖 [Guia de Instalação para macOS](docs/installation/macos.md)
-- 📖 Guia de Instalação para Windows (suporte integrado)
-- 📖 Guia de Instalação para Linux (suporte integrado)
+- 📖 [Guia de Instalação para Windows](docs/installation/windows.md)
+- 📖 [Guia de Instalação para Linux](docs/installation/linux.md)
+
+**Documentação multilíngue disponível:** [Português](docs/pt/installation/) | [Español](docs/es/installation/)
 
 ## Navegação Rápida
 
@@ -536,12 +538,12 @@ Squads são equipes modulares de agentes IA. Veja a [Visão Geral de Squads](doc
 
 ## Suporte & Comunidade
 
-- 📖 [Guia da Comunidade](COMMUNITY.md) - Como participar e contribuir
+- 📖 [Guia da Comunidade](docs/community.md) - Como participar e contribuir
 - 💬 [Discussões GitHub](https://github.com/SynkraAI/aios-core/discussions) - Hub central da comunidade
 - 💡 [Processo de Features](docs/FEATURE_PROCESS.md) - Como propor novas funcionalidades
 - 🐛 [Rastreador de Issues](https://github.com/SynkraAI/aios-core/issues)
 - 📋 [Como Contribuir](CONTRIBUTING.md)
-- 🗺️ [Roadmap](ROADMAP.md) - Veja o que estamos construindo
+- 🗺️ [Roadmap](docs/roadmap.md) - Veja o que estamos construindo
 - 🤖 [Guia de Squads](docs/guides/squads-guide.md) - Crie equipes de agentes IA
 
 ## Git Workflow e Validação
@@ -622,14 +624,17 @@ Veja também:
 
 ## 📄 Legal
 
-| Documento             | English                               | Português                                |
-| --------------------- | ------------------------------------- | ---------------------------------------- |
-| **Licença**           | [MIT License](LICENSE)                | -                                        |
-| **Privacidade**       | [Privacy Policy](PRIVACY.md)          | -                                        |
-| **Termos de Uso**     | [Terms of Use](TERMS.md)              | -                                        |
-| **Código de Conduta** | [Code of Conduct](CODE_OF_CONDUCT.md) | -                                        |
-| **Contribuição**      | [Contributing](CONTRIBUTING.md)       | -                                        |
-| **Changelog**         | [Version History](CHANGELOG.md)       | -                                        |
+| Documento             | English                                     | Português                             |
+| --------------------- | ------------------------------------------- | ------------------------------------- |
+| **Licença**           | [MIT License](LICENSE)                      | -                                     |
+| **Privacidade**       | [Privacy Policy](docs/legal/privacy.md)     | -                                     |
+| **Termos de Uso**     | [Terms of Use](docs/legal/terms.md)         | -                                     |
+| **Código de Conduta** | [Code of Conduct](CODE_OF_CONDUCT.md)       | [PT-BR](docs/pt/code-of-conduct.md)   |
+| **Contribuição**      | [Contributing](CONTRIBUTING.md)             | [PT-BR](docs/pt/contributing.md)      |
+| **Segurança**         | [Security](docs/security.md)                | [PT-BR](docs/pt/security.md)          |
+| **Comunidade**        | [Community](docs/community.md)              | [PT-BR](docs/pt/community.md)         |
+| **Roadmap**           | [Roadmap](docs/roadmap.md)                  | [PT-BR](docs/pt/roadmap.md)           |
+| **Changelog**         | [Version History](CHANGELOG.md)             | -                                     |
 
 ## Reconhecimentos
 

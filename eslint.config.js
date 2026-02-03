@@ -24,6 +24,8 @@ module.exports = [
       '**/*.min.js',
       '**/aios-core/*.js',
       '**/templates/squad/**',
+      // Squad template - ES modules with placeholder imports
+      '.aios-core/development/templates/squad-template/**',
       // ESM bundle files - auto-generated
       '**/*.esm.js',
       '**/index.esm.js',

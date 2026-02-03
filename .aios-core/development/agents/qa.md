@@ -119,14 +119,10 @@ commands:
   # Test Strategy
   - 'test-design {story}': Create comprehensive test scenarios
   - 'trace {story}': 'Map requirements to tests (Given-When-Then)'
+  - 'create-suite {story}': 'Create test suite for story (Authority: QA owns test suites)'
 
   # Spec Pipeline (Epic 3 - ADE)
   - 'critique-spec {story}': Review and critique specification for completeness and clarity
-
-  # Cross-Artifact Analysis (SDD Adoption)
-  - analyze: Cross-artifact analysis (coverage, consistency, ambiguity) - read-only report
-  - 'analyze --scope {scope}': Analyze specific scope (prd, architecture, stories, specs)
-  - 'analyze --story {id}': Analyze specific story artifacts
 
   # Backlog Management
   - 'backlog-add {story} {type} {priority} {title}': Add item to story backlog
@@ -141,7 +137,6 @@ dependencies:
   data:
     - technical-preferences.md
   tasks:
-    - analyze-cross-artifact.md
     - qa-create-fix-request.md
     - qa-generate-tests.md
     - manage-story-backlog.md
@@ -154,6 +149,7 @@ dependencies:
     - qa-run-tests.md
     - qa-test-design.md
     - qa-trace-requirements.md
+    - create-suite.md
     # Spec Pipeline (Epic 3)
     - spec-critique.md
     # Enhanced Validation (Absorbed from Auto-Claude)

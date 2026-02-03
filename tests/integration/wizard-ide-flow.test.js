@@ -10,8 +10,8 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const { generateIDEConfigs } = require('../../src/wizard/ide-config-generator');
-const { getIDEConfig, getIDEKeys } = require('../../src/config/ide-configs');
+const { generateIDEConfigs } = require('../../packages/installer/src/wizard/ide-config-generator');
+const { getIDEConfig, getIDEKeys } = require('../../packages/installer/src/config/ide-configs');
 
 describe('Wizard IDE Flow Integration', () => {
   const testDir = path.join(__dirname, '..', '..', '.test-temp-integration');
