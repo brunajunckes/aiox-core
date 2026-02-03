@@ -61,6 +61,7 @@ USAGE:
   npx @synkra/aios-core@latest info         # Show system info
   npx @synkra/aios-core@latest doctor       # Run diagnostics
   npx @synkra/aios-core@latest --version    # Show version
+  npx @synkra/aios-core@latest --version -d # Show detailed version info
   npx @synkra/aios-core@latest --help       # Show this help
 
 UPDATE:
@@ -100,8 +101,64 @@ For more information, visit: https://github.com/SynkraAI/aios-core
 }
 
 // Helper: Show version
-function showVersion() {
-  console.log(packageJson.version);
+async function showVersion() {
+  const isDetailed = args.includes('--detailed') || args.includes('-d');
+
+  if (!isDetailed) {
+    // Simple version output (backwards compatible)
+    console.log(packageJson.version);
+    return;
+  }
+
+  // Detailed version output (Story 7.2: Version Tracking)
+  console.log(`AIOS-FullStack v${packageJson.version}`);
+  console.log('Package: @synkra/aios-core');
+
+  // Check for local installation
+  const localVersionPath = path.join(process.cwd(), '.aios-core', 'version.json');
+
+  if (fs.existsSync(localVersionPath)) {
+    try {
+      const versionInfo = JSON.parse(fs.readFileSync(localVersionPath, 'utf8'));
+      console.log('\n📦 Local Installation:');
+      console.log(`  Version:    ${versionInfo.version}`);
+      console.log(`  Mode:       ${versionInfo.mode || 'unknown'}`);
+
+      if (versionInfo.installedAt) {
+        const installedDate = new Date(versionInfo.installedAt);
+        console.log(`  Installed:  ${installedDate.toLocaleDateString()}`);
+      }
+
+      if (versionInfo.updatedAt) {
+        const updatedDate = new Date(versionInfo.updatedAt);
+        console.log(`  Updated:    ${updatedDate.toLocaleDateString()}`);
+      }
+
+      if (versionInfo.fileHashes) {
+        const fileCount = Object.keys(versionInfo.fileHashes).length;
+        console.log(`  Files:      ${fileCount} tracked`);
+      }
+
+      if (versionInfo.customized && versionInfo.customized.length > 0) {
+        console.log(`  Customized: ${versionInfo.customized.length} files`);
+      }
+
+      // Version comparison
+      if (versionInfo.version !== packageJson.version) {
+        console.log('\n⚠️  Version mismatch!');
+        console.log(`  Local:  ${versionInfo.version}`);
+        console.log(`  Latest: ${packageJson.version}`);
+        console.log('  Run \'npx aios-core update\' to update.');
+      } else {
+        console.log('\n✅ Up to date');
+      }
+    } catch (error) {
+      console.log(`\n⚠️  Could not read version.json: ${error.message}`);
+    }
+  } else {
+    console.log('\n📭 No local installation found');
+    console.log('  Run \'npx aios-core install\' to install AIOS in this project.');
+  }
 }
 
 // Helper: Show system info
@@ -401,7 +458,7 @@ async function main() {
     case '--version':
     case '-v':
     case '-V':
-      showVersion();
+      await showVersion();
       break;
 
     case '--help':
