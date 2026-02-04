@@ -12,7 +12,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const { confirm, password } = require('@clack/prompts');
+const { password, select } = require('@clack/prompts');
 const { generateEnvContent, generateEnvExample } = require('./templates/env-template');
 const { generateCoreConfig } = require('./templates/core-config-template');
 const {
@@ -22,6 +22,7 @@ const {
   validateCoreConfigStructure,
   sanitizeInput,
 } = require('./validation/config-validator');
+const { getMergeStrategy, hasMergeStrategy } = require('../merger/index.js');
 
 /**
  * Configure environment files (.env and core-config.yaml)
@@ -32,6 +33,8 @@ const {
  * @param {Array<string>} [options.selectedIDEs] - Selected IDEs from Story 1.4
  * @param {Array<Object>} [options.mcpServers] - MCP servers from Story 1.5
  * @param {boolean} [options.skipPrompts] - Skip interactive prompts (for testing)
+ * @param {boolean} [options.forceMerge] - Force merge mode (Story 9.4)
+ * @param {boolean} [options.noMerge] - Disable merge mode (Story 9.4)
  * @returns {Promise<Object>} Configuration result
  */
 async function configureEnvironment(options = {}) {
@@ -41,6 +44,8 @@ async function configureEnvironment(options = {}) {
     selectedIDEs = [],
     mcpServers = [],
     skipPrompts = false,
+    forceMerge = false,
+    noMerge = false,
   } = options;
 
   const results = {
@@ -52,20 +57,52 @@ async function configureEnvironment(options = {}) {
   };
 
   try {
-    // Step 1: Check for existing .env and offer backup
+    // Step 1: Check for existing .env and handle with merge/backup/overwrite
     const envPath = path.join(targetDir, '.env');
     const envExists = await fs.pathExists(envPath);
+    let envAction = 'create'; // 'create', 'merge', 'overwrite', 'skip'
+    const isBrownfield = projectType === 'BROWNFIELD' || projectType === 'EXISTING_AIOS';
+    const canMerge = !noMerge && hasMergeStrategy(envPath);
 
-    if (envExists && !skipPrompts) {
-      const shouldBackup = await confirm({
-        message: 'Found existing .env file. Create backup before overwriting?',
-        initialValue: true,
-      });
+    if (envExists) {
+      // Story 9.4: Handle CLI flags for merge behavior
+      if (forceMerge && canMerge) {
+        // --merge flag: Force merge without prompting
+        envAction = 'merge';
+        console.log('🔀 Using merge mode (--merge flag)');
+      } else if (skipPrompts) {
+        // Quiet mode: default to merge for brownfield, overwrite for greenfield
+        envAction = isBrownfield && canMerge ? 'merge' : 'overwrite';
+      } else {
+        // Interactive mode: Offer merge option for brownfield projects
+        const choices = [];
 
-      if (shouldBackup) {
-        const backupPath = path.join(targetDir, `.env.backup.${Date.now()}`);
-        await fs.copy(envPath, backupPath);
-        console.log(`✅ Backup created: ${backupPath}`);
+        if (canMerge) {
+          choices.push({
+            value: 'merge',
+            label: 'Merge (add new variables, keep existing)',
+            hint: isBrownfield ? 'recommended' : '',
+          });
+        }
+
+        choices.push(
+          { value: 'backup', label: 'Backup and overwrite' },
+          { value: 'overwrite', label: 'Overwrite completely' },
+          { value: 'skip', label: 'Skip (keep existing)' },
+        );
+
+        envAction = await select({
+          message: 'Found existing .env file. What would you like to do?',
+          options: choices,
+          initialValue: isBrownfield && canMerge ? 'merge' : 'backup',
+        });
+
+        if (envAction === 'backup') {
+          const backupPath = path.join(targetDir, `.env.backup.${Date.now()}`);
+          await fs.copy(envPath, backupPath);
+          console.log(`✅ Backup created: ${backupPath}`);
+          envAction = 'overwrite';
+        }
       }
     }
 
@@ -77,7 +114,7 @@ async function configureEnvironment(options = {}) {
       console.log('\n💡 API keys can be configured later in .env file or via aios-master');
     }
 
-    // Step 3: Generate and write .env file
+    // Step 3: Generate .env content
     const envContent = generateEnvContent(apiKeys);
 
     // Validate .env format
@@ -87,15 +124,34 @@ async function configureEnvironment(options = {}) {
       throw new Error('Generated .env file has invalid format');
     }
 
-    await fs.writeFile(envPath, envContent, { encoding: 'utf8' });
-    results.envCreated = true;
+    // Step 4: Write .env file based on action
+    if (envAction === 'skip') {
+      console.log('⏭️  Skipped .env file (keeping existing)');
+    } else if (envAction === 'merge' && envExists) {
+      // Merge existing with new
+      const existingContent = await fs.readFile(envPath, 'utf8');
+      const merger = getMergeStrategy(envPath);
+      const mergeResult = await merger.merge(existingContent, envContent);
 
-    // Set file permissions (0600 on Unix systems)
-    if (process.platform !== 'win32') {
-      await fs.chmod(envPath, 0o600);
+      await fs.writeFile(envPath, mergeResult.content, { encoding: 'utf8' });
+      results.envCreated = true;
+
+      console.log('✅ Merged .env file');
+      console.log(`   📋 Preserved: ${mergeResult.stats.preserved}, Added: ${mergeResult.stats.added}`);
+      if (mergeResult.stats.conflicts > 0) {
+        console.log(`   ⚠️  Suggestions: ${mergeResult.stats.conflicts} (see comments in file)`);
+      }
+    } else {
+      // Create new or overwrite
+      await fs.writeFile(envPath, envContent, { encoding: 'utf8' });
+      results.envCreated = true;
+      console.log('✅ Created .env file');
     }
 
-    console.log('✅ Created .env file');
+    // Set file permissions (0600 on Unix systems)
+    if (results.envCreated && process.platform !== 'win32') {
+      await fs.chmod(envPath, 0o600);
+    }
 
     // Step 4: Generate and write .env.example
     const envExamplePath = path.join(targetDir, '.env.example');

@@ -2,10 +2,13 @@
 
 You are working with Synkra AIOS, an AI-Orchestrated System for Full Stack Development.
 
+<!-- AIOS-MANAGED-START: core-framework -->
 ## Core Framework Understanding
 
 Synkra AIOS is a meta-framework that orchestrates AI agents to handle complex development workflows. Always recognize and work within this architecture.
+<!-- AIOS-MANAGED-END: core-framework -->
 
+<!-- AIOS-MANAGED-START: agent-system -->
 ## Agent System
 
 ### Agent Activation
@@ -18,6 +21,7 @@ When an agent is active:
 - Follow that agent's specific persona and expertise
 - Use the agent's designated workflow patterns
 - Maintain the agent's perspective throughout the interaction
+<!-- AIOS-MANAGED-END: agent-system -->
 
 ## Development Methodology
 
@@ -41,6 +45,7 @@ When an agent is active:
 - Add tests for new features
 - Test edge cases and error scenarios
 
+<!-- AIOS-MANAGED-START: framework-structure -->
 ## AIOS Framework Structure
 
 ```
@@ -58,6 +63,7 @@ docs/
 ├── architecture/   # System architecture documentation
 └── guides/         # User and developer guides
 ```
+<!-- AIOS-MANAGED-END: framework-structure -->
 
 ## Workflow Execution
 
@@ -112,6 +118,7 @@ try {
 - Use for PR creation: `gh pr create`
 - Check org access: `gh api user/memberships`
 
+<!-- AIOS-MANAGED-START: aios-patterns -->
 ## AIOS-Specific Patterns
 
 ### Working with Templates
@@ -135,11 +142,12 @@ const story = await loadStory(storyId);
 story.updateTask(taskId, { status: 'completed' });
 await story.save();
 ```
+<!-- AIOS-MANAGED-END: aios-patterns -->
 
 ## Environment Setup
 
 ### Required Tools
-- Node.js 18+ 
+- Node.js 18+
 - GitHub CLI
 - Git
 - Your preferred package manager (npm/yarn/pnpm)
@@ -149,6 +157,7 @@ await story.save();
 - `.env` - Environment variables
 - `aios.config.js` - Project-specific settings
 
+<!-- AIOS-MANAGED-START: common-commands -->
 ## Common Commands
 
 ### AIOS Master Commands
@@ -162,6 +171,7 @@ await story.save();
 - `npm test` - Run tests
 - `npm run lint` - Check code style
 - `npm run build` - Build project
+<!-- AIOS-MANAGED-END: common-commands -->
 
 ## Debugging
 
@@ -218,4 +228,4 @@ npm run trace -- workflow-name
 - Document breaking changes prominently
 
 ---
-*Synkra AIOS Claude Code Configuration v2.0* 
+*Synkra AIOS Claude Code Configuration v2.0*

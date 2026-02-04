@@ -775,7 +775,16 @@ Options:
   --force      Overwrite existing AIOS installation
   --quiet      Minimal output (no banner, no prompts) - ideal for CI/CD
   --dry-run    Simulate installation without modifying files
+  --merge      Auto-merge existing config files (brownfield mode)
+  --no-merge   Disable merge option, use legacy overwrite behavior
   -h, --help   Show this help message
+
+Smart Merge (Brownfield):
+  When installing in a project with existing config files (.env, CLAUDE.md),
+  AIOS can merge new settings while preserving your customizations.
+
+  - .env files: Adds new variables, preserves existing values
+  - CLAUDE.md: Updates AIOS sections, keeps your custom rules
 
 Exit Codes:
   0  Installation successful
@@ -787,6 +796,9 @@ Examples:
 
   # Force reinstall without prompts
   npx aios-core install --force
+
+  # Brownfield: merge configs automatically
+  npx aios-core install --merge
 
   # Silent install for CI/CD
   npx aios-core install --quiet --force
@@ -944,6 +956,8 @@ async function main() {
         force: installArgs.includes('--force'),
         quiet: installArgs.includes('--quiet'),
         dryRun: installArgs.includes('--dry-run'),
+        forceMerge: installArgs.includes('--merge'),
+        noMerge: installArgs.includes('--no-merge'),
       };
       if (!installOptions.quiet) {
         console.log('AIOS-FullStack Installation\n');
