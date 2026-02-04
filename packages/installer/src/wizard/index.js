@@ -130,43 +130,62 @@ function setupCancellationHandler() {
  * const answers = await runWizard();
  * console.log(answers.projectType); // 'greenfield' or 'brownfield'
  */
-async function runWizard() {
+async function runWizard(options = {}) {
   try {
     // Setup graceful cancellation
     setupCancellationHandler();
 
     // Show welcome message with AIOS branding
-    showWelcome();
+    if (!options.quiet) {
+      showWelcome();
+    }
 
-    // Phase 1: Language selection (must be first to apply i18n)
-    const languageAnswer = await inquirer.prompt([getLanguageQuestion()]);
-    setLanguage(languageAnswer.language);
+    // Start i18n with default or detected language
+    setLanguage(options.language || 'en');
 
-    // Phase 2: Build remaining questions with i18n applied
-    const remainingQuestions = [
-      getProjectTypeQuestion(),
-      ...getIDEQuestions(),
-      ...getTechPresetQuestion(),
-    ];
+    let answers = {};
 
-    // Performance tracking (AC: < 100ms per question)
-    const startTime = Date.now();
+    if (options.quiet) {
+      // Quiet mode: Skip all prompts, use defaults
+      answers = {
+        language: options.language || 'en',
+        projectType: options.projectType || 'brownfield', // Default to brownfield for safety
+        selectedIDEs: options.ide ? [options.ide] : [],   // Support single IDE flag if added later
+        selectedTechPreset: 'none',
+        ...options, // Merge any other options
+      };
+    } else {
+      // Interactive mode
+      // Phase 1: Language selection (must be first to apply i18n)
+      const languageAnswer = await inquirer.prompt([getLanguageQuestion()]);
+      setLanguage(languageAnswer.language);
 
-    // Run wizard with remaining questions
-    const remainingAnswers = await inquirer.prompt(remainingQuestions);
+      // Phase 2: Build remaining questions with i18n applied
+      const remainingQuestions = [
+        getProjectTypeQuestion(),
+        ...getIDEQuestions(),
+        ...getTechPresetQuestion(),
+      ];
 
-    // Merge all answers
-    const answers = { ...languageAnswer, ...remainingAnswers };
+      // Performance tracking (AC: < 100ms per question)
+      const startTime = Date.now();
 
-    // Log performance metrics
-    const duration = Date.now() - startTime;
-    const totalQuestions = remainingQuestions.length + 1; // +1 for language question
-    const avgTimePerQuestion = totalQuestions > 0 ? duration / totalQuestions : 0;
+      // Run wizard with remaining questions
+      const remainingAnswers = await inquirer.prompt(remainingQuestions);
 
-    if (avgTimePerQuestion > 100) {
-      console.warn(
-        `Warning: Average question response time (${avgTimePerQuestion.toFixed(0)}ms) exceeds 100ms target`,
-      );
+      // Merge all answers
+      answers = { ...languageAnswer, ...remainingAnswers };
+
+      // Log performance metrics
+      const duration = Date.now() - startTime;
+      const totalQuestions = remainingQuestions.length + 1; // +1 for language question
+      const avgTimePerQuestion = totalQuestions > 0 ? duration / totalQuestions : 0;
+
+      if (avgTimePerQuestion > 100) {
+        console.warn(
+          `Warning: Average question response time (${avgTimePerQuestion.toFixed(0)}ms) exceeds 100ms target`,
+        );
+      }
     }
 
     // Story 1.4: Install AIOS core framework (agents, tasks, workflows, templates)
@@ -351,7 +370,13 @@ async function runWizard() {
     // Story 1.4: Generate IDE configs if IDEs were selected
     let ideConfigResult = null;
     if (answers.selectedIDEs && answers.selectedIDEs.length > 0) {
-      ideConfigResult = await generateIDEConfigs(answers.selectedIDEs, answers);
+      // Pass merge options from CLI to IDE config generator (Story 9.4)
+      const ideOptions = {
+        ...answers,
+        forceMerge: options.forceMerge,
+        noMerge: options.noMerge,
+      };
+      ideConfigResult = await generateIDEConfigs(answers.selectedIDEs, ideOptions);
 
       if (ideConfigResult.success) {
         showSuccessSummary(ideConfigResult);
@@ -432,7 +457,9 @@ async function runWizard() {
         projectType: answers.projectType || 'greenfield',
         selectedIDEs: answers.selectedIDEs || [],
         mcpServers: answers.mcpServers || [],
-        skipPrompts: false, // Interactive mode
+        skipPrompts: options.quiet || false, // Skip prompts in quiet mode
+        forceMerge: options.forceMerge, // Story 9.4: Smart Merge support
+        noMerge: options.noMerge, // Story 9.4: Smart Merge support
       });
 
       if (envResult.envCreated && envResult.coreConfigCreated) {

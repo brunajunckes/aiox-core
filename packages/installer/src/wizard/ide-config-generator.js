@@ -14,6 +14,7 @@ const inquirer = require('inquirer');
 const ora = require('ora');
 const { getIDEConfig } = require('../config/ide-configs');
 const { validateProjectName } = require('./validators');
+const { getMergeStrategy, hasMergeStrategy } = require('../merger/index.js');
 
 /**
  * Render template with variables
@@ -72,20 +73,48 @@ async function backupFile(filePath) {
 /**
  * Prompt user for action when file exists
  * @param {string} filePath - Path to existing file
- * @returns {Promise<string>} Action: 'overwrite', 'skip', or 'backup'
+ * @param {Object} options - Options
+ * @param {string} options.projectType - 'BROWNFIELD' | 'GREENFIELD' | 'EXISTING_AIOS'
+ * @param {boolean} options.forceMerge - If true, auto-select merge without prompting
+ * @param {boolean} options.noMerge - If true, don't offer merge option
+ * @returns {Promise<string>} Action: 'merge', 'overwrite', 'skip', or 'backup'
  */
-async function promptFileExists(filePath) {
+async function promptFileExists(filePath, options = {}) {
+  const { projectType, forceMerge, noMerge } = options;
+  const canMerge = !noMerge && hasMergeStrategy(filePath);
+  const isBrownfield = projectType === 'BROWNFIELD' || projectType === 'EXISTING_AIOS';
+
+  // If force merge is set and merge is available, return merge directly
+  if (forceMerge && canMerge) {
+    return 'merge';
+  }
+
+  // Build choices based on available options
+  const choices = [];
+
+  if (canMerge) {
+    choices.push({
+      name: 'Merge (complement existing)',
+      value: 'merge',
+    });
+  }
+
+  choices.push(
+    { name: 'Overwrite completely', value: 'overwrite' },
+    { name: 'Create backup and overwrite', value: 'backup' },
+    { name: 'Skip', value: 'skip' },
+  );
+
+  // Default to merge for brownfield if available, otherwise backup
+  const defaultChoice = isBrownfield && canMerge ? 'merge' : 'backup';
+
   const { action } = await inquirer.prompt([
     {
       type: 'list',
       name: 'action',
       message: `File ${path.basename(filePath)} already exists. What would you like to do?`,
-      choices: [
-        { name: 'Overwrite', value: 'overwrite' },
-        { name: 'Create backup and overwrite', value: 'backup' },
-        { name: 'Skip', value: 'skip' },
-      ],
-      default: 'backup',
+      choices,
+      default: defaultChoice,
     },
   ]);
 
@@ -394,16 +423,22 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
 
         // Check if file exists
         const exists = await fs.pathExists(configPath);
+        let userAction = null;
+
         if (exists) {
           spinner.stop();
-          const action = await promptFileExists(ide.configFile);
+          userAction = await promptFileExists(configPath, {
+            projectType: wizardState.projectType,
+            forceMerge: options.forceMerge,
+            noMerge: options.noMerge,
+          });
 
-          if (action === 'skip') {
+          if (userAction === 'skip') {
             spinner.succeed(`Skipped ${ide.name} (file exists)`);
             continue;
           }
 
-          if (action === 'backup') {
+          if (userAction === 'backup') {
             const backupPath = await backupFile(configPath);
             backupFiles.push(backupPath);
             spinner.info(`Created backup: ${path.basename(backupPath)}`);
@@ -427,8 +462,29 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
         // Validate content
         validateConfigContent(rendered, ide.format);
 
+        // Handle merge vs overwrite
+        let finalContent = rendered;
+
+        if (userAction === 'merge' && exists) {
+          // Merge existing content with new template
+          spinner.text = `Merging ${ide.configFile}...`;
+          const existingContent = await fs.readFile(configPath, 'utf8');
+          const merger = getMergeStrategy(configPath);
+          const mergeResult = await merger.merge(existingContent, rendered);
+
+          finalContent = mergeResult.content;
+
+          // Show merge summary
+          spinner.succeed(`Merged ${ide.configFile}`);
+          console.log(`   📋 Preserved: ${mergeResult.stats.preserved}, Updated: ${mergeResult.stats.updated}, Added: ${mergeResult.stats.added}`);
+          if (mergeResult.stats.conflicts > 0) {
+            console.log(`   ⚠️  Suggestions: ${mergeResult.stats.conflicts} (see comments in file)`);
+          }
+          spinner.start(`Finishing ${ide.name}...`);
+        }
+
         // Write file
-        await fs.writeFile(configPath, rendered, 'utf8');
+        await fs.writeFile(configPath, finalContent, 'utf8');
         createdFiles.push(configPath);
 
         spinner.succeed(`Created ${ide.configFile}`);
