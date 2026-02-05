@@ -59,6 +59,20 @@ const {
   shouldSurface,
 } = require('./surface-checker');
 
+// Story 11.5: Session State Persistence (Projeto Bob)
+const {
+  SessionState,
+  createSessionState,
+  sessionStateExists,
+  loadSessionState,
+  ActionType,
+  Phase,
+  ResumeOption,
+  SESSION_STATE_VERSION,
+  SESSION_STATE_FILENAME,
+  CRASH_THRESHOLD_MINUTES,
+} = require('./session-state');
+
 module.exports = {
   // Main orchestrators
   WorkflowOrchestrator,
@@ -134,6 +148,18 @@ module.exports = {
   SurfaceChecker,
   createSurfaceChecker,
   shouldSurface,
+
+  // Story 11.5: Session State Persistence (Projeto Bob)
+  SessionState,
+  createSessionState,
+  sessionStateExists,
+  loadSessionState,
+  ActionType,
+  Phase,
+  ResumeOption,
+  SESSION_STATE_VERSION,
+  SESSION_STATE_FILENAME,
+  CRASH_THRESHOLD_MINUTES,
 
   // Factory function for easy instantiation
   createOrchestrator(workflowPath, options = {}) {
