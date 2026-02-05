@@ -101,6 +101,42 @@ Create a focused epic following this structure:
 
 #### Stories (Enhanced with Quality Planning)
 
+**🔧 Dynamic Executor Assignment (Story 11.1 - Projeto Bob)**
+
+Use the executor-assignment module to automatically assign executor and quality gate for each story:
+
+```javascript
+// .aios-core/core/orchestration/executor-assignment.js
+const { assignExecutorFromContent } = require('.aios-core/core/orchestration/executor-assignment');
+
+// For each story in the epic:
+const storyContent = `${storyTitle}\n${storyDescription}\n${acceptanceCriteria}`;
+const assignment = assignExecutorFromContent(storyContent);
+
+// Returns:
+// {
+//   executor: '@dev' | '@data-engineer' | '@devops' | '@ux-design-expert' | '@analyst' | '@architect',
+//   quality_gate: '@architect' | '@dev' | '@pm',
+//   quality_gate_tools: ['code_review', 'pattern_validation', ...]
+// }
+```
+
+**Executor Assignment Table:**
+
+| Work Type | Keywords | Executor | Quality Gate |
+|-----------|----------|----------|--------------|
+| Code/Features/Logic | feature, logic, handler, service, api | @dev | @architect |
+| Schema/DB/RLS/Migrations | schema, table, migration, rls, query, database | @data-engineer | @dev |
+| Infra/CI/CD/Deploy | ci/cd, deploy, docker, kubernetes, pipeline | @devops | @architect |
+| Design/UI Components | component, ui, design, interface, accessibility | @ux-design-expert | @dev |
+| Research/Investigation | research, investigate, analyze, poc | @analyst | @pm |
+| Architecture Decisions | architecture, design_decision, pattern, scalability | @architect | @pm |
+
+**CRITICAL RULES:**
+- [ ] **executor != quality_gate** (ALWAYS different)
+- [ ] Include `executor`, `quality_gate`, and `quality_gate_tools` in each story YAML frontmatter
+- [ ] Log assignment for traceability
+
 List 1-3 focused stories that complete the epic, including predicted quality gates and specialized agent assignments:
 
 **Story Structure with Quality Predictions:**
@@ -110,11 +146,21 @@ Each story should include:
 - Predicted specialized agents (based on story type)
 - Quality gates (Pre-Commit, Pre-PR, Pre-Deployment if applicable)
 
+**Story YAML Frontmatter Template (Required Fields):**
+
+```yaml
+# Every story MUST include these fields in YAML frontmatter
+executor: "@data-engineer"           # Assigned via assignExecutorFromContent()
+quality_gate: "@dev"                  # MUST be different from executor
+quality_gate_tools: [schema_validation, migration_review, rls_test]
+```
+
 **Examples:**
 
 1. **Story 1: {{Database Migration Story}}**
    - Description: {{Add new table for feature X with RLS policies}}
-   - **Predicted Agents**: @dev, @db-sage (database changes require expert SQL review)
+   - **Executor Assignment**: `executor: @data-engineer`, `quality_gate: @dev`
+   - **Quality Gate Tools**: `[schema_validation, migration_review, rls_test]`
    - **Quality Gates**:
      - Pre-Commit: Schema validation, service filter verification
      - Pre-PR: SQL review, migration safety check
