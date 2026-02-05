@@ -10,8 +10,8 @@
 
 | Metric | Count |
 |--------|-------|
-| Total Items | 8 |
-| TODO | 3 |
+| Total Items | 9 |
+| TODO | 4 |
 | CANCELLED | 1 |
 | IN PROGRESS | 0 |
 | BLOCKED | 0 |
@@ -104,6 +104,27 @@
   - Validation Summary
   - **Bob Orchestrator Tests** ✓
   - **Bob Orchestration Lint** ✓
+
+---
+
+#### [EPIC12-D1] Aumentar cobertura de docstrings para 80%
+- **Source:** CodeRabbit Pre-merge Check (PR #87)
+- **Priority:** 🟡 MEDIUM
+- **Effort:** 2-3 horas
+- **Status:** 📋 TODO
+- **Assignee:** @dev (Dex)
+- **Sprint:** Pós-Epic 12
+- **Description:** CodeRabbit identificou que a cobertura de docstrings está em 70.09%, abaixo do threshold de 80%. Adicionar JSDoc comments às funções públicas dos módulos do Epic 12.
+- **Tasks:**
+  - [ ] Docstrings em `.aios-core/core/orchestration/` (Bob, handlers, etc.)
+  - [ ] Docstrings em `.aios-core/core/config/`
+  - [ ] Docstrings em `.aios-core/core/events/`
+  - [ ] Rodar validação de cobertura
+- **Success Criteria:**
+  - [ ] Cobertura de docstrings ≥ 80%
+  - [ ] CodeRabbit Docstring Coverage check passa
+- **Acceptance:** CodeRabbit não reporta warning de docstrings em PRs futuros.
+- **Evidence:** PR #87 CodeRabbit report: "Docstring coverage is 70.09% which is insufficient. The required threshold is 80.00%."
 
 ---
 
