@@ -45,7 +45,43 @@ sections:
     instruction: Select the current status of the story
     owner: scrum-master
     editors: [scrum-master, dev-agent]
-    
+
+  # Story 11.1: Dynamic Executor Assignment (Projeto Bob)
+  - id: executor-assignment
+    title: Executor Assignment
+    type: metadata
+    required: true
+    instruction: |
+      **REQUIRED FIELDS** - Automatically populated by PM during epic creation.
+
+      Uses dynamic executor assignment based on story type analysis.
+      See: PRD AIOS v2.0 "Projeto Bob" - Section 5
+
+      **Work Type → Executor Mapping:**
+      | Work Type | Executor | Quality Gate |
+      |-----------|----------|--------------|
+      | Code/Features/Logic | @dev | @architect |
+      | Schema/DB/RLS/Migrations | @data-engineer | @dev |
+      | Infra/CI/CD/Deploy | @devops | @architect |
+      | Design/UI Components | @ux-design-expert | @dev |
+      | Research/Investigation | @analyst | @pm |
+      | Architecture Decisions | @architect | @pm |
+
+      **VALIDATION RULES:**
+      - executor != quality_gate (ALWAYS)
+      - quality_gate_tools must not be empty
+    template: |
+      executor: "{{executor}}"
+      quality_gate: "{{quality_gate}}"
+      quality_gate_tools: {{quality_gate_tools}}
+    validation:
+      - rule: executor != quality_gate
+        error: "Executor cannot be the same as Quality Gate"
+      - rule: quality_gate_tools.length > 0
+        error: "Quality gate tools cannot be empty"
+    owner: pm
+    editors: [pm, scrum-master]
+
   - id: story
     title: Story
     type: template-text

@@ -37,6 +37,9 @@ const { DashboardIntegration, NotificationType } = require('./dashboard-integrat
 // Story 0.9: CLI Commands
 const cliCommands = require('./cli-commands');
 
+// Story 11.1: Executor Assignment (Projeto Bob)
+const ExecutorAssignment = require('./executor-assignment');
+
 module.exports = {
   // Main orchestrators
   WorkflowOrchestrator,
@@ -83,6 +86,14 @@ module.exports = {
   orchestrateStatus: cliCommands.orchestrateStatus,
   orchestrateStop: cliCommands.orchestrateStop,
   orchestrateResume: cliCommands.orchestrateResume,
+
+  // Story 11.1: Executor Assignment (Projeto Bob)
+  ExecutorAssignment,
+  detectStoryType: ExecutorAssignment.detectStoryType,
+  assignExecutor: ExecutorAssignment.assignExecutor,
+  assignExecutorFromContent: ExecutorAssignment.assignExecutorFromContent,
+  validateExecutorAssignment: ExecutorAssignment.validateExecutorAssignment,
+  EXECUTOR_ASSIGNMENT_TABLE: ExecutorAssignment.EXECUTOR_ASSIGNMENT_TABLE,
 
   // Factory function for easy instantiation
   createOrchestrator(workflowPath, options = {}) {
