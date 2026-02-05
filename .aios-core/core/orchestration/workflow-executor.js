@@ -2,16 +2,18 @@
  * Workflow Executor - Development Cycle Engine
  *
  * Story 11.3: Projeto Bob - Development Cycle Workflow
+ * Story 11.5: Session State Persistence (ADR-011)
  *
  * Executes the development cycle workflow with:
  * - Dynamic executor assignment (Story 11.1)
  * - Terminal spawning for clean context (Story 11.2)
+ * - Session state persistence (Story 11.5)
  * - Conditional self-healing with CodeRabbit
  * - Quality gate by different agent
  * - Human checkpoints (GO/PAUSE/REVIEW/ABORT)
  *
  * @module core/orchestration/workflow-executor
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 'use strict';
@@ -21,9 +23,10 @@ const fsSync = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 
-// Import dependencies from Story 11.1 and 11.2
+// Import dependencies from Story 11.1, 11.2, and 11.5
 const ExecutorAssignment = require('./executor-assignment');
 const TerminalSpawner = require('./terminal-spawner');
+const { SessionState, ActionType } = require('./session-state');
 
 // Constants
 const DEFAULT_TIMEOUT_MS = 7200000; // 2 hours
@@ -83,6 +86,7 @@ class WorkflowExecutor {
       debug: false,
       autoResume: true,
       saveState: true,
+      useSessionState: true, // Story 11.5: Use unified session state
       ...options,
     };
 
@@ -96,6 +100,9 @@ class WorkflowExecutor {
     this.workflow = null;
     this.state = null;
     this.config = null;
+
+    // Story 11.5: Session State Manager (ADR-011)
+    this.sessionState = new SessionState(projectRoot, { debug: options.debug });
   }
 
   /**
@@ -186,6 +193,66 @@ class WorkflowExecutor {
     const stateFile = this.getStateFilePath(this.state.currentStory);
     this.state.lastUpdated = new Date();
     await fs.writeFile(stateFile, yaml.dump(this.state));
+
+    // Story 11.5: Also update unified session state (ADR-011)
+    await this.syncToSessionState();
+  }
+
+  /**
+   * Syncs internal workflow state to unified session state (Story 11.5)
+   * @returns {Promise<void>}
+   */
+  async syncToSessionState() {
+    if (!this.options.useSessionState) return;
+
+    try {
+      // Load or create session state
+      const sessionExists = await this.sessionState.exists();
+      if (!sessionExists) {
+        // Session state will be created by Bob orchestrator
+        // We just update if it exists
+        return;
+      }
+
+      await this.sessionState.loadSessionState();
+
+      // Map phase ID to phase name
+      const phaseNameMap = {
+        '1_validation': 'validation',
+        '2_development': 'development',
+        '3_self_healing': 'self_healing',
+        '4_quality_gate': 'quality_gate',
+        '5_push': 'push',
+        '6_checkpoint': 'checkpoint',
+      };
+
+      const phaseName = phaseNameMap[this.state.currentPhase] || this.state.currentPhase;
+
+      await this.sessionState.updateSessionState({
+        workflow: {
+          current_phase: phaseName,
+          attempt_count: this.state.attemptCount,
+          phase_results: this.state.phaseResults,
+        },
+        last_action: {
+          type: ActionType.PHASE_CHANGE,
+          story: this.state.currentStory,
+          phase: phaseName,
+        },
+        context_snapshot: {
+          last_executor: this.state.executor,
+        },
+      });
+
+      if (this.options.debug) {
+        console.log(`[WorkflowExecutor] Synced to session state: phase=${phaseName}`);
+      }
+    } catch (error) {
+      // Non-fatal - log and continue
+      if (this.options.debug) {
+        console.log(`[WorkflowExecutor] Session state sync failed: ${error.message}`);
+      }
+    }
   }
 
   /**
