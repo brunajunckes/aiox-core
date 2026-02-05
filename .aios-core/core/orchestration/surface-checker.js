@@ -13,7 +13,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const yaml = require('yaml');
+const yaml = require('js-yaml');
 
 /**
  * @typedef {Object} SurfaceContext
@@ -83,7 +83,7 @@ class SurfaceChecker {
       }
 
       const content = fs.readFileSync(this.criteriaPath, 'utf8');
-      this.criteria = yaml.parse(content);
+      this.criteria = yaml.load(content);
       this._loaded = true;
       return true;
     } catch (error) {
