@@ -48,8 +48,12 @@ const FOLDERS_TO_COPY = [
   'workflows',
 
   // Additional directories
-  'cli',            // CLI commands
-  'manifests',       // Manifest definitions
+  'cli',                    // CLI commands
+  'manifests',              // Manifest definitions
+  'schemas',                // JSON schemas for validation (*validate-squad, *migrate-squad)
+  'workflow-intelligence',  // Workflow intelligence engine (*next, *patterns)
+  'monitor',                // Claude Code hooks for monitoring
+  'presets',                // Configuration presets
 ];
 
 /**
@@ -59,9 +63,9 @@ const FOLDERS_TO_COPY = [
 const ROOT_FILES_TO_COPY = [
   'index.js',
   'index.esm.js',
-  'index.d.ts',
   'core-config.yaml',   // Core framework configuration
   'package.json',       // Module package definition
+  'constitution.md',    // AIOS fundamental principles
   'user-guide.md',
   'working-in-the-brownfield.md',
 ];
@@ -194,9 +198,9 @@ async function copyDirectoryWithRootReplacement(sourceDir, destDir, onProgress =
     const sourcePath = path.join(sourceDir, item.name);
     const destPath = path.join(destDir, item.name);
 
-    // Skip backup files and hidden files (except config files)
+    // Skip backup files and hidden files (except .gitignore and .session*)
     if (item.name.includes('.backup') ||
-        (item.name.startsWith('.') && !item.name.startsWith('.session'))) {
+        (item.name.startsWith('.') && !item.name.startsWith('.session') && item.name !== '.gitignore')) {
       continue;
     }
 
