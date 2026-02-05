@@ -43,6 +43,22 @@ const ExecutorAssignment = require('./executor-assignment');
 // Story 11.2: Terminal Spawner (Projeto Bob)
 const TerminalSpawner = require('./terminal-spawner');
 
+// Story 11.3: Workflow Executor (Projeto Bob)
+const {
+  WorkflowExecutor,
+  createWorkflowExecutor,
+  executeDevelopmentCycle,
+  PhaseStatus,
+  CheckpointDecision,
+} = require('./workflow-executor');
+
+// Story 11.4: Surface Checker (Projeto Bob)
+const {
+  SurfaceChecker,
+  createSurfaceChecker,
+  shouldSurface,
+} = require('./surface-checker');
+
 module.exports = {
   // Main orchestrators
   WorkflowOrchestrator,
@@ -106,6 +122,18 @@ module.exports = {
   isSpawnerAvailable: TerminalSpawner.isSpawnerAvailable,
   getPlatform: TerminalSpawner.getPlatform,
   cleanupOldFiles: TerminalSpawner.cleanupOldFiles,
+
+  // Story 11.3: Workflow Executor (Projeto Bob)
+  WorkflowExecutor,
+  createWorkflowExecutor,
+  executeDevelopmentCycle,
+  PhaseStatus,
+  CheckpointDecision,
+
+  // Story 11.4: Surface Checker (Projeto Bob)
+  SurfaceChecker,
+  createSurfaceChecker,
+  shouldSurface,
 
   // Factory function for easy instantiation
   createOrchestrator(workflowPath, options = {}) {
