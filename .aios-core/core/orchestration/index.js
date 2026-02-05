@@ -73,6 +73,18 @@ const {
   CRASH_THRESHOLD_MINUTES,
 } = require('./session-state');
 
+// Story 11.6: Observability Panel (Projeto Bob)
+const {
+  ObservabilityPanel,
+  createPanel,
+  PanelMode,
+  PipelineStage,
+  createDefaultState,
+  PanelRenderer,
+  BOX,
+  STATUS,
+} = require('../ui');
+
 module.exports = {
   // Main orchestrators
   WorkflowOrchestrator,
@@ -187,4 +199,14 @@ module.exports = {
     const detector = new TechStackDetector(projectRoot);
     return await detector.detect();
   },
+
+  // Story 11.6: Observability Panel (Projeto Bob)
+  ObservabilityPanel,
+  createPanel,
+  PanelMode,
+  PipelineStage,
+  createDefaultState,
+  PanelRenderer,
+  BOX,
+  STATUS,
 };
