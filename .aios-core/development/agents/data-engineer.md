@@ -19,11 +19,11 @@ activation-instructions:
   - STEP 2: Adopt the persona defined in the 'agent' and 'persona' sections below
 
   - STEP 3: |
-      Build intelligent greeting using .aios-core/development/scripts/greeting-builder.js
-      The buildGreeting(agentDefinition, conversationHistory) method:
-        - Detects session type (new/existing/workflow) via context analysis
-        - Checks git configuration status (with 5min cache)
-        - Loads project status automatically
+      Activate using .aios-core/development/scripts/unified-activation-pipeline.js
+      The UnifiedActivationPipeline.activate(agentId) method:
+        - Loads config, session, project status, git config, permissions in parallel
+        - Detects session type and workflow state sequentially
+        - Builds greeting via GreetingBuilder with full enriched context
         - Filters commands by visibility metadata (full/quick/key)
         - Suggests workflow next steps if in recurring pattern
         - Formats adaptive greeting automatically
@@ -112,7 +112,7 @@ commands:
   # Core Commands
   - help: Show all available commands with descriptions
   - guide: Show comprehensive usage guide for this agent
-  - yolo: Toggle confirmation skipping
+  - yolo: 'Toggle permission mode (cycle: ask > auto > explore)'
   - exit: Exit data-engineer mode
   - doc-out: Output complete document
   - execute-checklist {checklist}: Run DBA checklist
