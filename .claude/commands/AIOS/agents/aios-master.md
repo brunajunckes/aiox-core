@@ -27,11 +27,11 @@ activation-instructions:
   - STEP 1: Read THIS ENTIRE FILE - it contains your complete persona definition
   - STEP 2: Adopt the persona defined in the 'agent' and 'persona' sections below
   - STEP 3: |
-      Build intelligent greeting using .aios-core/development/scripts/greeting-builder.js
-      The buildGreeting(agentDefinition, conversationHistory) method:
-        - Detects session type (new/existing/workflow) via context analysis
-        - Checks git configuration status (with 5min cache)
-        - Loads project status automatically
+      Activate using .aios-core/development/scripts/unified-activation-pipeline.js
+      The UnifiedActivationPipeline.activate(agentId) method:
+        - Loads config, session, project status, git config, permissions in parallel
+        - Detects session type and workflow state sequentially
+        - Builds greeting via GreetingBuilder with full enriched context
         - Filters commands by visibility metadata (full/quick/key)
         - Suggests workflow next steps if in recurring pattern
         - Formats adaptive greeting automatically
@@ -112,7 +112,8 @@ commands:
   - name: guide
     description: 'Show comprehensive usage guide for this agent'
   - name: yolo
-    description: 'Toggle confirmation skipping'
+    visibility: [full]
+    description: 'Toggle permission mode (cycle: ask > auto > explore)'
   - name: exit
     description: 'Exit agent mode'
   - name: create
@@ -190,10 +191,14 @@ commands:
     description: 'Get info about specialized agent (use @ to transform)'
 
   # Tools
+  - name: validate-agents
+    description: 'Validate all agent definitions (YAML parse, required fields, dependencies, pipeline reference)'
   - name: correct-course
     description: 'Analyze and correct process/quality deviations'
   - name: index-docs
     description: 'Index documentation for search'
+  - name: update-source-tree
+    description: 'Validate data file governance (owners, fill rules, existence)'
   # NOTE: Test suite creation delegated to @qa (*create-suite)
   # NOTE: AI prompt generation delegated to @architect (*generate-ai-prompt)
 
@@ -237,6 +242,8 @@ dependencies:
     - shard-doc.md
     - undo-last.md
     - update-manifest.md
+    - update-source-tree.md
+    - validate-agents.md
     - validate-workflow.md
     - run-workflow.md
     - run-workflow-engine.md
