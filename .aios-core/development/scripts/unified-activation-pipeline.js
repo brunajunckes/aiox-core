@@ -646,6 +646,8 @@ class UnifiedActivationPipeline {
       sessionType: 'new',
       workflowState: null,
       userProfile: 'advanced',
+      // MIS-6: Include memories field in fallback context
+      memories: [],
       conversationHistory: [],
       lastCommands: [],
       previousAgent: null,
