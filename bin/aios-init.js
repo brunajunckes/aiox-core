@@ -5,8 +5,8 @@
  * Based on the original beautiful visual design with ASCII art
  * Version: 2.1.0
  *
- * ⚠️ DEPRECATION NOTICE (v3.11.3):
- * This file is the LEGACY installer and will be removed in v4.0.0.
+ * ⚠️ DEPRECATED (since v3.11.3, scheduled for removal in v5.0.0):
+ * This file is the LEGACY installer.
  * The new modular wizard is located at: packages/installer/src/wizard/index.js
  *
  * This file is kept as a fallback for edge cases where the new wizard
@@ -16,8 +16,8 @@
  * - Use `npx aios-core` which routes through bin/aios.js to the new wizard
  * - Do NOT call this file directly
  *
- * Supported IDEs (8 total):
- * - Claude Code, Cursor, Windsurf, Trae, Roo Code, Cline, Gemini CLI, GitHub Copilot
+ * Supported IDEs (7 total):
+ * - Claude Code, Cursor, Windsurf, Roo Code, Cline, Gemini CLI, GitHub Copilot
  */
 
 const path = require('path');

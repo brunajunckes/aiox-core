@@ -70,16 +70,15 @@ CLI First → Observability Second → UI Third
 aios-core/
 ├── .aios-core/              # Core do framework
 │   ├── core/                # Módulos principais (orchestration, memory, etc.)
-│   ├── development/         # Agents, tasks, templates, checklists
-│   └── scripts/             # Utilitários e scripts
-├── apps/
-│   └── dashboard/           # Dashboard Next.js (Observability + UI)
+│   ├── data/                # Knowledge base, entity registry
+│   ├── development/         # Agents, tasks, templates, checklists, scripts
+│   └── infrastructure/      # CI/CD templates, scripts
 ├── bin/                     # CLI executables (aios-init.js, aios.js)
-├── src/                     # Source code
 ├── docs/                    # Documentação
 │   └── stories/             # Development stories (active/, completed/)
-├── squads/                  # Expansion packs
 ├── packages/                # Shared packages
+├── pro/                     # Pro submodule (proprietary)
+├── squads/                  # Squad expansions
 └── tests/                   # Testes
 ```
 
@@ -114,11 +113,11 @@ Use prefixo `*` para comandos:
 
 | Agente | Diretórios Principais |
 |--------|----------------------|
-| `@dev` | `src/`, `packages/`, `.aios-core/core/` |
+| `@dev` | `packages/`, `.aios-core/core/`, `bin/` |
 | `@architect` | `docs/architecture/`, system design |
 | `@data-engineer` | `packages/db/`, migrations, schema |
 | `@qa` | `tests/`, `*.test.js`, quality gates |
-| `@po` | `docs/stories/`, epics, requirements |
+| `@po` | Stories, epics, requirements |
 | `@devops` | `.github/`, CI/CD, git operations |
 
 ---
@@ -313,5 +312,5 @@ tail -f .aios/logs/agent.log
 
 ---
 
-*Synkra AIOS Claude Code Configuration v3.0*
+*Synkra AIOS Claude Code Configuration v4.0*
 *CLI First | Observability Second | UI Third*
