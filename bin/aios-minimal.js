@@ -3,13 +3,10 @@
 /**
  * AIOS-FullStack Minimal Installation
  *
- * DEPRECATION NOTICE (v3.11.1):
+ * DEPRECATED (since v3.11.1, scheduled for removal in v5.0.0):
  * The --minimal mode was designed for expansion-packs which have been
  * replaced by the Squads system (OSR-8). This command now runs the
  * standard wizard through the main router.
- *
- * This file is kept for backwards compatibility but will be removed
- * in a future major version.
  */
 
 const { spawn } = require('child_process');

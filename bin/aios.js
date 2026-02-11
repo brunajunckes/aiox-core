@@ -3,7 +3,7 @@
 /**
  * AIOS-FullStack CLI
  * Main entry point - Standalone (no external dependencies for npx compatibility)
- * Version: 1.2.0
+ * Version: 4.0.0
  */
 
 const path = require('path');
