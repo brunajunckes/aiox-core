@@ -1,6 +1,6 @@
 {
   "name": "@aios-fullstack/core",
-  "version": "4.31.0",
+  "version": "4.31.1",
   "description": "AIOS-FullStack Core - Meta-agent and component generation system",
   "main": "index.js",
   "module": "index.esm.js",

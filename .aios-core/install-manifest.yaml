@@ -7,8 +7,8 @@
 # - SHA256 hashes for change detection
 # - File types for categorization
 #
-version: 4.0.0
-generated_at: "2026-02-13T01:03:21.461Z"
+version: 4.0.1
+generated_at: "2026-02-13T01:15:06.572Z"
 generator: scripts/generate-install-manifest.js
 file_count: 971
 files:
@@ -953,7 +953,7 @@ files:
     type: data
     size: 34780
   - path: data/entity-registry.yaml
-    hash: sha256:c02059828c5708815bf6ac1cb3664c2898ecfff06f9d47413fe68caf1fa969ae
+    hash: sha256:2b04f4429715e2e4aae58fcfbc5ab1261b56bcdb12b1bfb0cea277f8b6e48325
     type: data
     size: 279148
   - path: data/learned-patterns.yaml
@@ -3077,7 +3077,7 @@ files:
     type: monitor
     size: 856
   - path: package.json
-    hash: sha256:8214f27804491484e19771b243abd4069dda9f4a84f46fbdac64862e2bd9fd3a
+    hash: sha256:dff580c83cc1554c75162c9cabb711b5cd85e679c9c8f4968ee74499e99de0c0
     type: other
     size: 2401
   - path: product/checklists/accessibility-wcag-checklist.md
