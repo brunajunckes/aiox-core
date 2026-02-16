@@ -17,6 +17,13 @@ const yaml = require('js-yaml');
 const { hashFileAsync, hashFilesMatchAsync } = require('../installer/file-hasher');
 
 /**
+ * Directories excluded from scaffolding (private/internal squads).
+ */
+const SCAFFOLD_EXCLUDES = [
+  'mmos-squad',
+];
+
+/**
  * Items to scaffold from pro package into user project.
  * Each entry defines source (relative to proSourceDir) and dest (relative to targetDir).
  */
@@ -114,6 +121,12 @@ async function scaffoldProContent(targetDir, proSourceDir, options = {}) {
       }
     }
 
+    // Merge pro-config into core-config
+    const merged = await mergeProConfig(targetDir);
+    if (merged && onProgress) {
+      onProgress({ item: 'pro-config', status: 'done', message: 'Pro config merged into core-config.yaml' });
+    }
+
     // Generate pro-version.json (AC4)
     const versionInfo = await generateProVersionJson(targetDir, proSourceDir, result.copiedFiles);
     result.versionInfo = versionInfo;
@@ -162,6 +175,11 @@ async function scaffoldDirectory(sourceDir, destDir, options = {}) {
   const items = await fs.readdir(sourceDir, { withFileTypes: true });
 
   for (const item of items) {
+    // Skip excluded directories (e.g. private squads)
+    if (SCAFFOLD_EXCLUDES.includes(item.name)) {
+      continue;
+    }
+
     const sourcePath = path.join(sourceDir, item.name);
     const destPath = path.join(destDir, item.name);
 
@@ -324,6 +342,36 @@ async function rollbackScaffold(rollbackFiles) {
   return { removed, errors };
 }
 
+/**
+ * Merge pro-config.yaml sections into core-config.yaml.
+ * Deep merges top-level keys (pro, memory, metrics, integrations, squads).
+ *
+ * @param {string} targetDir - Project root directory
+ * @returns {Promise<boolean>} True if merge was performed
+ */
+async function mergeProConfig(targetDir) {
+  const coreConfigPath = path.join(targetDir, '.aios-core', 'core-config.yaml');
+  const proConfigPath = path.join(targetDir, '.aios-core', 'pro-config.yaml');
+
+  if (!await fs.pathExists(proConfigPath) || !await fs.pathExists(coreConfigPath)) {
+    return false;
+  }
+
+  const coreConfig = yaml.load(await fs.readFile(coreConfigPath, 'utf8')) || {};
+  const proConfig = yaml.load(await fs.readFile(proConfigPath, 'utf8')) || {};
+
+  for (const [key, value] of Object.entries(proConfig)) {
+    if (coreConfig[key] && typeof coreConfig[key] === 'object' && typeof value === 'object' && !Array.isArray(value)) {
+      coreConfig[key] = { ...coreConfig[key], ...value };
+    } else {
+      coreConfig[key] = value;
+    }
+  }
+
+  await fs.writeFile(coreConfigPath, yaml.dump(coreConfig, { lineWidth: -1 }), 'utf8');
+  return true;
+}
+
 module.exports = {
   scaffoldProContent,
   scaffoldDirectory,
@@ -331,5 +379,7 @@ module.exports = {
   generateProVersionJson,
   generateInstalledManifest,
   rollbackScaffold,
+  mergeProConfig,
   SCAFFOLD_ITEMS,
+  SCAFFOLD_EXCLUDES,
 };
