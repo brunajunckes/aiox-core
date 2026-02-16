@@ -191,20 +191,24 @@ describe('stepLicenseGate', () => {
     let callCount = 0;
     inquirer.prompt.mockImplementation((questions) => {
       callCount++;
-      // Return a valid format key each time
+      // First call is the method choice menu (email vs key)
+      if (callCount === 1) {
+        return Promise.resolve({ method: 'key' });
+      }
+      // Subsequent calls are license key prompts
       return Promise.resolve({ licenseKey: 'PRO-AAAA-BBBB-CCCC-DDDD' });
     });
 
     const result = await proSetup.stepLicenseGate();
 
-    // Should have been called 3 times (max retries) since API fails
-    expect(callCount).toBe(3);
+    // 1 for method choice + 3 for max retries = 4 total calls
+    expect(callCount).toBe(4);
     expect(result.success).toBe(false);
 
-    // Verify inquirer was called with password type
-    const firstCall = inquirer.prompt.mock.calls[0][0];
-    expect(firstCall[0].type).toBe('password');
-    expect(firstCall[0].mask).toBe('*');
+    // Verify second call (first key prompt) was called with password type
+    const keyPromptCall = inquirer.prompt.mock.calls[1][0];
+    expect(keyPromptCall[0].type).toBe('password');
+    expect(keyPromptCall[0].mask).toBe('*');
   });
 });
 

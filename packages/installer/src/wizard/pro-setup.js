@@ -421,55 +421,120 @@ async function authenticateWithEmail(email, password) {
     };
   }
 
-  // Try login first
-  const spinner = createSpinner('Authenticating...');
-  spinner.start();
-
   let sessionToken;
   let emailVerified;
+  let currentPassword = password;
 
-  try {
-    const loginResult = await client.login(email, password);
-    sessionToken = loginResult.sessionToken;
-    emailVerified = loginResult.emailVerified;
-    spinner.succeed('Authenticated successfully.');
-  } catch (loginError) {
-    // If invalid credentials, offer to create account
-    if (loginError.code === 'INVALID_CREDENTIALS') {
-      spinner.info('No account found for this email.');
+  // Login with retry loop (max 3 attempts for wrong password)
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const spinner = createSpinner('Authenticating...');
+    spinner.start();
 
-      // In CI mode, auto-create without prompting
-      if (isCIEnvironment()) {
-        try {
-          await client.signup(email, password);
-          showSuccess('Account created. Verification email sent!');
-          emailVerified = false;
-          const loginAfterSignup = await client.login(email, password);
-          sessionToken = loginAfterSignup.sessionToken;
-        } catch (signupError) {
-          if (signupError.code === 'EMAIL_ALREADY_REGISTERED') {
-            showError('An account exists with this email but the password is incorrect.');
-            showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+    try {
+      const loginResult = await client.login(email, currentPassword);
+      sessionToken = loginResult.sessionToken;
+      emailVerified = loginResult.emailVerified;
+      spinner.succeed('Authenticated successfully.');
+      break; // Success, exit retry loop
+    } catch (loginError) {
+      if (loginError.code === 'INVALID_CREDENTIALS') {
+        spinner.stop();
+
+        // Try to determine if account exists by attempting signup
+        // If signup fails with EMAIL_ALREADY_REGISTERED, account exists (wrong password)
+        // If signup succeeds or would succeed, account doesn't exist (new user)
+        if (isCIEnvironment()) {
+          // CI mode: try auto-signup
+          try {
+            await client.signup(email, currentPassword);
+            showSuccess('Account created. Verification email sent!');
+            emailVerified = false;
+            const loginAfterSignup = await client.login(email, currentPassword);
+            sessionToken = loginAfterSignup.sessionToken;
+            break;
+          } catch (signupError) {
+            if (signupError.code === 'EMAIL_ALREADY_REGISTERED') {
+              showError('Account exists but the password is incorrect.');
+              showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+              return { success: false, error: signupError.message };
+            }
             return { success: false, error: signupError.message };
           }
-          return { success: false, error: signupError.message };
         }
+
+        // Interactive mode: check if account exists
+        const accountCheckSpinner = createSpinner('Checking account...');
+        accountCheckSpinner.start();
+
+        let accountExists = false;
+        try {
+          // Try a lightweight signup to probe. If EMAIL_ALREADY_REGISTERED, account exists.
+          await client.signup(email, currentPassword);
+          // Signup succeeded — account was just created
+          accountCheckSpinner.succeed('Account created! Verification email sent.');
+          const loginAfterSignup = await client.login(email, currentPassword);
+          sessionToken = loginAfterSignup.sessionToken;
+          emailVerified = false;
+          break;
+        } catch (probeError) {
+          if (probeError.code === 'EMAIL_ALREADY_REGISTERED') {
+            accountExists = true;
+            accountCheckSpinner.stop();
+          } else {
+            accountCheckSpinner.stop();
+            // Unknown error during probe — offer create account flow
+            const signupResult = await promptCreateAccount(client, email);
+            if (!signupResult.success) {
+              return signupResult;
+            }
+            sessionToken = signupResult.sessionToken;
+            emailVerified = false;
+            break;
+          }
+        }
+
+        if (accountExists) {
+          // Account exists but password is wrong — retry
+          const remaining = MAX_RETRIES - attempt;
+          if (remaining > 0) {
+            showError(`Incorrect password. ${remaining} attempt${remaining > 1 ? 's' : ''} remaining.`);
+            showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password');
+
+            const inquirer = require('inquirer');
+            const { retryPassword } = await inquirer.prompt([
+              {
+                type: 'password',
+                name: 'retryPassword',
+                message: colors.primary('Password:'),
+                mask: '*',
+                validate: (input) => {
+                  if (!input || input.length < MIN_PASSWORD_LENGTH) {
+                    return `Password must be at least ${MIN_PASSWORD_LENGTH} characters`;
+                  }
+                  return true;
+                },
+              },
+            ]);
+            currentPassword = retryPassword;
+            continue; // Retry login
+          } else {
+            showError('Maximum login attempts reached.');
+            showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+            return { success: false, error: 'Maximum login attempts reached.' };
+          }
+        }
+      } else if (loginError.code === 'AUTH_RATE_LIMITED') {
+        spinner.fail(loginError.message);
+        return { success: false, error: loginError.message };
       } else {
-        // Interactive: ask user if they want to create account
-        const signupResult = await promptCreateAccount(client, email);
-        if (!signupResult.success) {
-          return signupResult;
-        }
-        sessionToken = signupResult.sessionToken;
-        emailVerified = false;
+        spinner.fail(`Authentication failed: ${loginError.message}`);
+        return { success: false, error: loginError.message };
       }
-    } else if (loginError.code === 'AUTH_RATE_LIMITED') {
-      spinner.fail(loginError.message);
-      return { success: false, error: loginError.message };
-    } else {
-      spinner.fail(`Authentication failed: ${loginError.message}`);
-      return { success: false, error: loginError.message };
     }
+  }
+
+  if (!sessionToken) {
+    return { success: false, error: 'Authentication failed after all attempts.' };
   }
 
   // Wait for email verification if needed
