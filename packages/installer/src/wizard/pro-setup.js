@@ -772,6 +772,11 @@ async function activateProByAuth(client, sessionToken) {
       showInfo('Deactivate another device or upgrade your license.');
       return { success: false, error: error.message };
     }
+    if (error.code === 'ALREADY_ACTIVATED') {
+      // License already exists — treat as success (re-install scenario)
+      spinner.succeed('Pro license already activated for this account.');
+      return { success: true, key: 'existing', activationResult: { reactivation: true } };
+    }
 
     spinner.fail(`Activation failed: ${error.message}`);
     return { success: false, error: error.message };
