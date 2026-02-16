@@ -215,11 +215,11 @@ async function stepLicenseGate(options = {}) {
       message: colors.primary('How would you like to activate Pro?'),
       choices: [
         {
-          name: 'Login with email and password (Recommended)',
+          name: 'Login or create account (Recommended)',
           value: 'email',
         },
         {
-          name: 'Enter license key',
+          name: 'Enter license key (legacy)',
           value: 'key',
         },
       ],
@@ -307,6 +307,88 @@ async function stepLicenseGateWithEmail() {
 }
 
 /**
+ * Prompt user to create a new account interactively.
+ *
+ * Asks for confirmation, then password with confirmation.
+ * Calls signup API and logs in to get session token.
+ *
+ * @param {object} client - LicenseApiClient instance
+ * @param {string} email - User email
+ * @returns {Promise<Object>} Result with { success, sessionToken } or { success: false, error }
+ */
+async function promptCreateAccount(client, email) {
+  const inquirer = require('inquirer');
+
+  console.log('');
+  showInfo(`No account found for ${email}.`);
+
+  const { wantCreate } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'wantCreate',
+      message: colors.primary('Would you like to create an account?'),
+      default: true,
+    },
+  ]);
+
+  if (!wantCreate) {
+    return { success: false, error: 'Account creation cancelled.' };
+  }
+
+  // Ask for password with confirmation
+  const { newPassword } = await inquirer.prompt([
+    {
+      type: 'password',
+      name: 'newPassword',
+      message: colors.primary('Choose a password:'),
+      mask: '*',
+      validate: (input) => {
+        if (!input || input.length < MIN_PASSWORD_LENGTH) {
+          return `Password must be at least ${MIN_PASSWORD_LENGTH} characters`;
+        }
+        return true;
+      },
+    },
+  ]);
+
+  const { confirmPassword } = await inquirer.prompt([
+    {
+      type: 'password',
+      name: 'confirmPassword',
+      message: colors.primary('Confirm password:'),
+      mask: '*',
+      validate: (input) => {
+        if (input !== newPassword) {
+          return 'Passwords do not match';
+        }
+        return true;
+      },
+    },
+  ]);
+
+  // Create account
+  const spinner = createSpinner('Creating account...');
+  spinner.start();
+
+  try {
+    await client.signup(email, confirmPassword);
+    spinner.succeed('Account created! Verification email sent.');
+
+    // Login to get session token
+    const loginResult = await client.login(email, confirmPassword);
+    return { success: true, sessionToken: loginResult.sessionToken };
+  } catch (signupError) {
+    if (signupError.code === 'EMAIL_ALREADY_REGISTERED') {
+      spinner.fail('An account already exists with this email but the password is incorrect.');
+      showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+      return { success: false, error: signupError.message };
+    }
+    spinner.fail(`Account creation failed: ${signupError.message}`);
+    return { success: false, error: signupError.message };
+  }
+}
+
+/**
  * Authenticate with email and password.
  *
  * Tries login first. If user doesn't exist, offers to create account.
@@ -352,25 +434,34 @@ async function authenticateWithEmail(email, password) {
     emailVerified = loginResult.emailVerified;
     spinner.succeed('Authenticated successfully.');
   } catch (loginError) {
-    // If invalid credentials, try signup for new users
+    // If invalid credentials, offer to create account
     if (loginError.code === 'INVALID_CREDENTIALS') {
-      spinner.info('No account found. Creating a new account...');
+      spinner.info('No account found for this email.');
 
-      try {
-        await client.signup(email, password);
-        showSuccess('Account created. Verification email sent!');
-        emailVerified = false;
-
-        // Login after signup to get session token
-        const loginAfterSignup = await client.login(email, password);
-        sessionToken = loginAfterSignup.sessionToken;
-      } catch (signupError) {
-        if (signupError.code === 'EMAIL_ALREADY_REGISTERED') {
-          showError('An account exists with this email but the password is incorrect.');
-          showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+      // In CI mode, auto-create without prompting
+      if (isCIEnvironment()) {
+        try {
+          await client.signup(email, password);
+          showSuccess('Account created. Verification email sent!');
+          emailVerified = false;
+          const loginAfterSignup = await client.login(email, password);
+          sessionToken = loginAfterSignup.sessionToken;
+        } catch (signupError) {
+          if (signupError.code === 'EMAIL_ALREADY_REGISTERED') {
+            showError('An account exists with this email but the password is incorrect.');
+            showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password or contact support@synkra.ai');
+            return { success: false, error: signupError.message };
+          }
           return { success: false, error: signupError.message };
         }
-        return { success: false, error: signupError.message };
+      } else {
+        // Interactive: ask user if they want to create account
+        const signupResult = await promptCreateAccount(client, email);
+        if (!signupResult.success) {
+          return signupResult;
+        }
+        sessionToken = signupResult.sessionToken;
+        emailVerified = false;
       }
     } else if (loginError.code === 'AUTH_RATE_LIMITED') {
       spinner.fail(loginError.message);
@@ -918,6 +1009,7 @@ module.exports = {
     stepLicenseGateWithKey,
     stepLicenseGateWithKeyInteractive,
     stepLicenseGateWithEmail,
+    promptCreateAccount,
     loadLicenseApi,
     loadFeatureGate,
     loadProScaffolder,
