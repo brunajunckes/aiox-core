@@ -1,7 +1,7 @@
 metadata:
   version: 1.0.0
-  lastUpdated: '2026-02-16T01:21:26.585Z'
-  entityCount: 504
+  lastUpdated: '2026-02-16T01:40:14.162Z'
+  entityCount: 505
   checksumAlgorithm: sha256
 entities:
   tasks:
@@ -4764,6 +4764,21 @@ entities:
         extensionPoints: []
       checksum: sha256:e8345404f17977a268b917a4ff86e4f10f80174a6bb572865e5413c8f7dd217a
       lastVerified: '2026-02-15T17:43:13.184Z'
+    statusline-script:
+      path: .aios-core/product/templates/statusline/statusline-script.js
+      type: template
+      purpose: Entity at .aios-core\product\templates\statusline\statusline-script.js
+      keywords:
+        - statusline
+        - script
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.5
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:352b928acd0a477875192ce96fa3aebb278fe9d9b55bc24a144e7aaafa180b45
+      lastVerified: '2026-02-16T01:40:14.160Z'
   scripts:
     agent-assignment-resolver:
       path: .aios-core/development/scripts/agent-assignment-resolver.js
