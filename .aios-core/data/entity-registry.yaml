@@ -1,7 +1,7 @@
 metadata:
   version: 1.0.0
-  lastUpdated: '2026-02-14T16:25:15.484Z'
-  entityCount: 487
+  lastUpdated: '2026-02-15T23:35:00.000Z'
+  entityCount: 498
   checksumAlgorithm: sha256
 entities:
   tasks:
@@ -1641,7 +1641,8 @@ entities:
         - quality
         - gate
         - pre-push-quality-gate.md
-      usedBy: []
+      usedBy:
+        - publish-npm
       dependencies:
         - repository-detector
         - N/A
@@ -2758,7 +2759,8 @@ entities:
         - manage
         - software
         - releases
-      usedBy: []
+      usedBy:
+        - publish-npm
       dependencies:
         - package
         - N/A
@@ -3887,6 +3889,27 @@ entities:
         extensionPoints: []
       checksum: sha256:093a9ee73e79ec5682d9161648f36710d635a0a7b074d45f4036c782bbc72bb2
       lastVerified: '2026-02-10T15:31:01.205Z'
+    publish-npm:
+      path: .aios-core/development/tasks/publish-npm.md
+      type: task
+      purpose: 'Safe, validated npm publishing using a two-phase release strategy:'
+      keywords:
+        - publish
+        - npm
+        - publishing
+        - 'pipeline:'
+        - preview
+        - latest
+      usedBy: []
+      dependencies:
+        - release-management
+        - github-devops-pre-push-quality-gate
+      adaptability:
+        score: 0.8
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:f7a0bb8fed5663c88ad691b8871fdf7a861b6a7c02599f0c2db3eb9393d353c8
+      lastVerified: '2026-02-15T20:39:45.236Z'
   templates:
     activation-instructions-inline-greeting:
       path: .aios-core/product/templates/activation-instructions-inline-greeting.yaml
@@ -5618,8 +5641,8 @@ entities:
         score: 0.7
         constraints: []
         extensionPoints: []
-      checksum: sha256:2a66e09c4f778c223d6a00e85738abe26547bd6034dd6718d5ec352f57c65898
-      lastVerified: '2026-02-14T16:25:15.483Z'
+      checksum: sha256:dd1ad8050ac6ea04ff634434be9b97f67239ee0a7342d669bc5618eb2b7a7f5b
+      lastVerified: '2026-02-15T20:39:45.236Z'
     usage-tracker:
       path: .aios-core/development/scripts/usage-tracker.js
       type: script
@@ -6506,14 +6529,15 @@ entities:
       usedBy: []
       dependencies:
         - context-tracker
+        - context-builder
         - formatter
         - memory-bridge
       adaptability:
         score: 0.4
         constraints: []
         extensionPoints: []
-      checksum: sha256:90572bd719491e1f57bc43cb29179ad8de34db9d752fff54bf8638d9fcf22bc7
-      lastVerified: '2026-02-12T13:07:01.326Z'
+      checksum: sha256:65e9c48d8ba7991fcd32bb1ea0bd087ce6d709ebf7f5bc4fd4b2e947ee5ddf0f
+      lastVerified: '2026-02-15T20:39:45.235Z'
     ideation-engine:
       path: .aios-core/core/ideation/ideation-engine.js
       type: module
@@ -8491,6 +8515,137 @@ entities:
         extensionPoints: []
       checksum: sha256:3b927daec51d0a791f3fe4ef9aafc362773450e7cf50eb4b6d8ae9011d70df9a
       lastVerified: '2026-02-12T12:53:14.532Z'
+    consistency-collector:
+      path: .aios-core/core/synapse/diagnostics/collectors/consistency-collector.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\consistency-collector.js
+      keywords:
+        - consistency
+        - collector
+      usedBy: []
+      dependencies:
+        - safe-read-json
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:65f4255f87c9900400649dc8b9aedaac4851b5939d93e127778bd93cee99db12
+      lastVerified: '2026-02-15T20:39:45.229Z'
+    hook-collector:
+      path: .aios-core/core/synapse/diagnostics/collectors/hook-collector.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\hook-collector.js
+      keywords:
+        - hook
+        - collector
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:9cd342cc0c2253296f931a977b20408370c1e1bebe02a22a757418d4d0630884
+      lastVerified: '2026-02-15T20:39:45.231Z'
+    output-analyzer:
+      path: .aios-core/core/synapse/diagnostics/collectors/output-analyzer.js
+      type: module
+      purpose: string }>}
+      keywords:
+        - output
+        - analyzer
+      usedBy: []
+      dependencies:
+        - safe-read-json
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:e6846b1aba0a6cba17c297a871861d4f8199d7500220bff296a6a3291e32493e
+      lastVerified: '2026-02-15T20:39:45.232Z'
+    quality-collector:
+      path: .aios-core/core/synapse/diagnostics/collectors/quality-collector.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\quality-collector.js
+      keywords:
+        - quality
+        - collector
+      usedBy: []
+      dependencies:
+        - safe-read-json
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:30ae299eab6d569d09afe3530a5b2f1ff35ef75366a1ab56a9e2a57d39d3611c
+      lastVerified: '2026-02-15T20:39:45.232Z'
+    relevance-matrix:
+      path: .aios-core/core/synapse/diagnostics/collectors/relevance-matrix.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\relevance-matrix.js
+      keywords:
+        - relevance
+        - matrix
+      usedBy: []
+      dependencies:
+        - safe-read-json
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:f92c4f7061dc82eed4310a27b69eade33d3015f9beb1bed688601a2dccbad22e
+      lastVerified: '2026-02-15T20:39:45.233Z'
+    safe-read-json:
+      path: .aios-core/core/synapse/diagnostics/collectors/safe-read-json.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\safe-read-json.js
+      keywords:
+        - safe
+        - read
+        - json
+      usedBy:
+        - consistency-collector
+        - output-analyzer
+        - quality-collector
+        - relevance-matrix
+        - timing-collector
+      dependencies: []
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:dc7bcd13779207ad67b1c3929b7e1e0ccfa3563f3458c20cad28cb1922e9a74c
+      lastVerified: '2026-02-15T20:39:45.233Z'
+    timing-collector:
+      path: .aios-core/core/synapse/diagnostics/collectors/timing-collector.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\collectors\timing-collector.js
+      keywords:
+        - timing
+        - collector
+      usedBy: []
+      dependencies:
+        - safe-read-json
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:2523ce93f863a28f798d992c4f2fab041c91a09413b3186fd290e6035b391587
+      lastVerified: '2026-02-15T20:39:45.234Z'
+    report-formatter:
+      path: .aios-core/core/synapse/diagnostics/report-formatter.js
+      type: module
+      purpose: Entity at .aios-core\core\synapse\diagnostics\report-formatter.js
+      keywords:
+        - report
+        - formatter
+      usedBy: []
+      dependencies: []
+      adaptability:
+        score: 0.4
+        constraints: []
+        extensionPoints: []
+      checksum: sha256:33faf5820fbe2559e425707ff6ce19ce20b046d7222814d4040e739317ff998e
+      lastVerified: '2026-02-15T20:39:45.235Z'
   agents:
     aios-master:
       path: .aios-core/development/agents/aios-master.md
@@ -8864,6 +9019,51 @@ entities:
         extensionPoints: []
       checksum: sha256:1a7262912c8c8e264d307f0d38a1109bdb2b9bff9ea7d8855c768835201aa59b
       lastVerified: '2026-02-08T13:33:24.397Z'
+    code-intel-health-check:
+      path: scripts/code-intel-health-check.js
+      type: script
+      purpose: Health check and validation for Code Graph MCP provider. Outputs structured JSON with status, tools availability, and response time.
+      keywords:
+        - code-intelligence
+        - health-check
+        - mcp
+        - code-graph
+        - provider
+        - validation
+      usedBy:
+        - NOG-1
+      dependencies:
+        - code-graph-mcp
+      adaptability:
+        score: 0.8
+        constraints:
+          - Requires code-graph-mcp pip package installed
+        extensionPoints:
+          - Additional provider checks can be added
+      story: NOG-0
+      lastVerified: '2026-02-15T23:30:00.000Z'
+    code-graph-mcp-setup-guide:
+      path: docs/guides/code-graph-mcp-setup.md
+      type: guide
+      purpose: Setup guide for Code Graph MCP installation, configuration, verification and troubleshooting.
+      keywords:
+        - code-graph
+        - mcp
+        - setup
+        - installation
+        - troubleshooting
+        - guide
+      usedBy:
+        - NOG-0
+        - NOG-1
+      dependencies: []
+      adaptability:
+        score: 0.9
+        constraints: []
+        extensionPoints:
+          - Additional provider setup guides can follow same pattern
+      story: NOG-0
+      lastVerified: '2026-02-15T23:30:00.000Z'
 categories:
   - id: tasks
     description: Executable task workflows for agent operations
