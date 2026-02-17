@@ -659,8 +659,8 @@ async function copyClaudeHooksFolder(projectRoot) {
 
   // Only copy JS hooks that work standalone (no Python/shell deps)
   const HOOKS_TO_COPY = [
-    'synapse-engine.js',
-    'precompact-session-digest.js',
+    'synapse-engine.cjs',
+    'precompact-session-digest.cjs',
     'README.md',
   ];
 
@@ -692,7 +692,7 @@ async function copyClaudeHooksFolder(projectRoot) {
  */
 async function createClaudeSettingsLocal(projectRoot) {
   const settingsPath = path.join(projectRoot, '.claude', 'settings.local.json');
-  const hookFile = path.join(projectRoot, '.claude', 'hooks', 'synapse-engine.js');
+  const hookFile = path.join(projectRoot, '.claude', 'hooks', 'synapse-engine.cjs');
 
   // Only create if the hook file was actually copied
   if (!await fs.pathExists(hookFile)) {
@@ -705,7 +705,7 @@ async function createClaudeSettingsLocal(projectRoot) {
     hooks: [
       {
         type: 'command',
-        command: 'node ".claude/hooks/synapse-engine.js"',
+        command: 'node ".claude/hooks/synapse-engine.cjs"',
       },
     ],
   };
@@ -736,10 +736,10 @@ async function createClaudeSettingsLocal(projectRoot) {
   const alreadyRegistered = settings.hooks.UserPromptSubmit.some(entry => {
     // Nested format: entry.hooks[].command
     if (Array.isArray(entry.hooks)) {
-      return entry.hooks.some(h => h.command && h.command.includes('synapse-engine.js'));
+      return entry.hooks.some(h => h.command && h.command.includes('synapse-engine'));
     }
     // Flat format (legacy): entry.command
-    return entry.command && entry.command.includes('synapse-engine.js');
+    return entry.command && entry.command.includes('synapse-engine');
   });
 
   if (!alreadyRegistered) {
