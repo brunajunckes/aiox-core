@@ -14,6 +14,7 @@ Welcome to AIOS! Thank you for your interest in contributing. This guide will he
 - [Contributing Squads](#contributing-squads)
 - [Code Review Process](#code-review-process)
 - [Validation System](#validation-system)
+- [Branch Protection & PR Requirements](#branch-protection--pr-requirements)
 - [Code Standards](#code-standards)
 - [Testing Requirements](#testing-requirements)
 - [Frequently Asked Questions](#frequently-asked-questions)
@@ -334,9 +335,10 @@ When you submit a PR, the following checks run automatically:
 | -------------- | ---------------------- | -------- |
 | **ESLint**     | Code style and quality | Yes      |
 | **TypeScript** | Type checking          | Yes      |
-| **Build**      | Build verification     | Yes      |
-| **Tests**      | Jest test suite        | Yes      |
-| **Coverage**   | Minimum 80% coverage   | Yes      |
+| **Jest Tests** | Test suite (Node 18 & 20) | Yes   |
+| **Validation Summary** | Aggregate gate  | Yes      |
+| **Build**      | Build verification     | No (advisory) |
+| **Coverage**   | Coverage reporting     | No (advisory) |
 
 ### CodeRabbit AI Review
 
@@ -409,6 +411,53 @@ AIOS implements a **Defense in Depth** strategy with 3 validation layers:
 - Coverage reporting
 - Story validation
 - Branch protection rules
+
+---
+
+## Branch Protection & PR Requirements
+
+All changes to `main` must go through a Pull Request. Direct pushes are blocked.
+
+### Required Status Checks
+
+All of these must pass before a PR can be merged:
+
+| Check | Description |
+|-------|-------------|
+| **ESLint** | Code style and quality |
+| **TypeScript Type Checking** | No type errors |
+| **Jest Tests (Node 18)** | Full test suite on Node 18 |
+| **Jest Tests (Node 20)** | Full test suite on Node 20 |
+| **Validation Summary** | Aggregate gate |
+
+### PR Review Rules
+
+- **1 approval required** from a CODEOWNERS reviewer
+- **Stale reviews are dismissed** when new commits are pushed
+- **Conversation resolution required** — all review threads must be resolved
+- **CODEOWNERS review required** — changes to critical paths need the designated owner's approval
+
+### CODEOWNERS
+
+Critical paths require approval from `@Pedrovaleriolopez` or `@oalanicolas` (maintainers):
+
+| Path | Why |
+|------|-----|
+| `.aios-core/core/orchestration/` | Orchestration layer (MasterOrchestrator, GateEvaluator) |
+| `.aios-core/core/execution/` | Execution engine (WaveExecutor, ParallelExecutor) |
+| `packages/` | Installer, CLI, shared libraries |
+| `.github/` | CI/CD workflows, branch protection |
+| `.aios-core/core-config.yaml` | Framework configuration |
+
+All other paths require review from any maintainer (`@Pedrovaleriolopez` or `@oalanicolas`).
+
+See [`.github/CODEOWNERS`](.github/CODEOWNERS) for the full ownership map.
+
+### Force Push & Deletions
+
+- **Force push to main:** Blocked
+- **Branch deletions:** Blocked
+- **Admin bypass:** Disabled (`enforce_admins: true`)
 
 ---
 
