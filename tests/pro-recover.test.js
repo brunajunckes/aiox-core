@@ -15,7 +15,7 @@ const { maskEmail, openBrowser, promptEmail, recoverLicense, RECOVERY_URL, RECOV
 
 describe('Recovery Constants', () => {
   test('RECOVERY_URL is the correct portal URL', () => {
-    expect(RECOVERY_URL).toBe('https://pro.synkra.ai/recover');
+    expect(RECOVERY_URL).toBe('https://aios-license-server.vercel.app/reset-password');
   });
 
   test('RECOVERY_MESSAGE is the anti-enumeration message', () => {
