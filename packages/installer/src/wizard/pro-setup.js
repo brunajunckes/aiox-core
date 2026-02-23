@@ -426,11 +426,11 @@ async function loginWithRetry(client, email) {
         const remaining = MAX_RETRIES - attempt;
         if (remaining > 0) {
           spinner.fail(`Incorrect password. ${remaining} attempt${remaining > 1 ? 's' : ''} remaining.`);
-          showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password');
+          showInfo('Forgot your password? Visit https://aios-license-server.vercel.app/reset-password');
         } else {
           spinner.fail('Maximum login attempts reached.');
-          showInfo('Forgot your password? Visit https://pro.synkra.ai/reset-password');
-          showInfo('Or contact support: support@synkra.ai');
+          showInfo('Forgot your password? Visit https://aios-license-server.vercel.app/reset-password');
+          showInfo('Or open an issue: https://github.com/SynkraAI/aios-core/issues');
           return { success: false, error: 'Maximum login attempts reached.' };
         }
       } else if (loginError.code === 'AUTH_RATE_LIMITED') {
