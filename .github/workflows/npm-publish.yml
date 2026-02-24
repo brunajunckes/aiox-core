@@ -182,7 +182,7 @@ jobs:
       - name: Set publishing tag
         id: publish-tag
         run: |
-          if [ "${{ github.event.inputs.publish_mode }}" = "stable" ] || [ "${{ github.event_name }}" = "release" ]; then
+          if [ "${{ github.event.inputs.publish_mode }}" = "stable" ] || [ "${{ github.event_name }}" = "release" ] || [ "${{ github.event_name }}" = "push" ]; then
             echo "tag=latest" >> $GITHUB_OUTPUT
           elif [ "${{ github.event.inputs.publish_mode }}" = "beta" ]; then
             echo "tag=beta" >> $GITHUB_OUTPUT
