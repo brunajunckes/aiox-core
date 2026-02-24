@@ -253,6 +253,23 @@ async function copyAgentFiles(projectRoot, agentFolder, ideConfig = null) {
         const agentTargetPath = path.join(agentsDir, file);
         await fs.copy(sourcePath, agentTargetPath);
         copiedFiles.push(agentTargetPath);
+      } else if (ideConfig && ideConfig.agentFolder && ideConfig.agentFolder.includes('.github')) {
+        // GitHub Copilot: apply transformer for .agent.md format with YAML frontmatter
+        try {
+          const agentParser = require('../../../../.aios-core/infrastructure/scripts/ide-sync/agent-parser');
+          const copilotTransformer = require('../../../../.aios-core/infrastructure/scripts/ide-sync/transformers/github-copilot');
+          const agentData = agentParser.parseAgentFile(sourcePath);
+          const content = copilotTransformer.transform(agentData);
+          const filename = copilotTransformer.getFilename(agentData);
+          const targetPath = path.join(targetDir, filename);
+          await fs.writeFile(targetPath, content, 'utf8');
+          copiedFiles.push(targetPath);
+        } catch (transformError) {
+          // Fallback: copy raw file with .agent.md extension
+          const targetPath = path.join(targetDir, `${agentName}.agent.md`);
+          await fs.copy(sourcePath, targetPath);
+          copiedFiles.push(targetPath);
+        }
       } else {
         // Normal copy for other IDEs
         const targetPath = path.join(targetDir, file);
@@ -535,7 +552,7 @@ async function generateIDEConfigs(selectedIDEs, wizardState, options = {}) {
           const settingsFile = await createClaudeSettingsLocal(projectRoot);
           if (settingsFile) {
             createdFiles.push(settingsFile);
-            spinner.succeed('Created .claude/settings.local.json with SYNAPSE hook');
+            spinner.succeed('Created .claude/settings.local.json with registered hooks');
           } else {
             spinner.info('Skipped settings.local.json (no hooks to register)');
           }
@@ -692,23 +709,22 @@ async function copyClaudeHooksFolder(projectRoot) {
  */
 async function createClaudeSettingsLocal(projectRoot) {
   const settingsPath = path.join(projectRoot, '.claude', 'settings.local.json');
-  const hookFile = path.join(projectRoot, '.claude', 'hooks', 'synapse-engine.cjs');
+  const hooksDir = path.join(projectRoot, '.claude', 'hooks');
 
-  // Only create if the hook file was actually copied
-  if (!await fs.pathExists(hookFile)) {
+  // Only create if hooks directory exists
+  if (!await fs.pathExists(hooksDir)) {
     return null;
   }
 
-  // QA-C1 fix: Use correct Claude Code nested hook format
-  // Format: { hooks: [{ type, command }] } not flat { type, command }
-  const hookWrapper = {
-    hooks: [
-      {
-        type: 'command',
-        command: 'node ".claude/hooks/synapse-engine.cjs"',
-      },
-    ],
-  };
+  // Find all .cjs hook files dynamically (Story INS-4.3, Gap #13)
+  const allFiles = await fs.readdir(hooksDir);
+  const hookFiles = allFiles.filter(f => f.endsWith('.cjs'));
+
+  if (hookFiles.length === 0) {
+    return null;
+  }
+
+  const isWindows = process.platform === 'win32';
 
   let settings = {};
 
@@ -732,18 +748,36 @@ async function createClaudeSettingsLocal(projectRoot) {
     settings.hooks.UserPromptSubmit = [];
   }
 
-  // Check if synapse hook is already registered (supports both nested and flat formats)
-  const alreadyRegistered = settings.hooks.UserPromptSubmit.some(entry => {
-    // Nested format: entry.hooks[].command
-    if (Array.isArray(entry.hooks)) {
-      return entry.hooks.some(h => h.command && h.command.includes('synapse-engine'));
-    }
-    // Flat format (legacy): entry.command
-    return entry.command && entry.command.includes('synapse-engine');
-  });
+  // Register each .cjs hook file
+  for (const hookFileName of hookFiles) {
+    const hookFilePath = path.join(hooksDir, hookFileName);
 
-  if (!alreadyRegistered) {
-    settings.hooks.UserPromptSubmit.push(hookWrapper);
+    // QA-C1 fix: Use correct Claude Code nested hook format
+    // Windows workaround: $CLAUDE_PROJECT_DIR has known bug on Windows (GH #6023/#5814)
+    const hookCommand = isWindows
+      ? `node "${hookFilePath.replace(/\\/g, '\\\\')}"` // Absolute path with escaped backslashes
+      : `node "$CLAUDE_PROJECT_DIR/.claude/hooks/${hookFileName}"`;
+
+    // Check if this hook is already registered (supports both nested and flat formats)
+    const hookBaseName = hookFileName.replace('.cjs', '');
+    const alreadyRegistered = settings.hooks.UserPromptSubmit.some(entry => {
+      if (Array.isArray(entry.hooks)) {
+        return entry.hooks.some(h => h.command && h.command.includes(hookBaseName));
+      }
+      return entry.command && entry.command.includes(hookBaseName);
+    });
+
+    if (!alreadyRegistered) {
+      settings.hooks.UserPromptSubmit.push({
+        hooks: [
+          {
+            type: 'command',
+            command: hookCommand,
+            timeout: 10,
+          },
+        ],
+      });
+    }
   }
 
   try {
@@ -975,6 +1009,97 @@ async function linkGeminiExtension(projectRoot) {
   return { status: 'skipped', reason: 'link-failed' };
 }
 
+/**
+ * Copy .claude/skills/ directories during installation (Story INS-4.3, Gap #11)
+ * @param {string} projectRoot - Project root directory
+ * @param {string} [_sourceRoot] - Override source root for testing (default: __dirname-relative)
+ * @returns {Promise<{count: number, skipped: boolean}>} Copy result
+ */
+async function copySkillFiles(projectRoot, _sourceRoot) {
+  const sourceDir = _sourceRoot
+    ? path.join(_sourceRoot, '.claude', 'skills')
+    : path.join(__dirname, '..', '..', '..', '..', '.claude', 'skills');
+  const targetDir = path.join(projectRoot, '.claude', 'skills');
+
+  if (!await fs.pathExists(sourceDir)) {
+    return { count: 0, skipped: true };
+  }
+
+  // Guard source === dest (framework-dev mode)
+  if (path.resolve(sourceDir) === path.resolve(targetDir)) {
+    return { count: 0, skipped: true };
+  }
+
+  await fs.ensureDir(targetDir);
+
+  const entries = await fs.readdir(sourceDir, { withFileTypes: true });
+  const skillDirs = entries.filter(d => d.isDirectory());
+  let count = 0;
+
+  for (const dir of skillDirs) {
+    const sourcePath = path.join(sourceDir, dir.name);
+    const targetPath = path.join(targetDir, dir.name);
+    await fs.copy(sourcePath, targetPath, { overwrite: true });
+    count++;
+  }
+
+  return { count, skipped: false };
+}
+
+/**
+ * Copy extra .claude/commands/ files during installation (Story INS-4.3, Gap #12)
+ * Copies all .md files recursively EXCLUDING AIOS/agents/ (already copied by copyAgentFiles)
+ * @param {string} projectRoot - Project root directory
+ * @param {string} [_sourceRoot] - Override source root for testing (default: __dirname-relative)
+ * @returns {Promise<{count: number, skipped: boolean}>} Copy result
+ */
+async function copyExtraCommandFiles(projectRoot, _sourceRoot) {
+  const sourceDir = _sourceRoot
+    ? path.join(_sourceRoot, '.claude', 'commands')
+    : path.join(__dirname, '..', '..', '..', '..', '.claude', 'commands');
+  const targetDir = path.join(projectRoot, '.claude', 'commands');
+
+  if (!await fs.pathExists(sourceDir)) {
+    return { count: 0, skipped: true };
+  }
+
+  // Guard source === dest (framework-dev mode)
+  if (path.resolve(sourceDir) === path.resolve(targetDir)) {
+    return { count: 0, skipped: true };
+  }
+
+  await fs.ensureDir(targetDir);
+
+  let count = 0;
+
+  async function copyRecursive(src, dest, relativePath) {
+    const entries = await fs.readdir(src, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const entryRelative = relativePath ? `${relativePath}/${entry.name}` : entry.name;
+
+      // EXCLUDE AIOS/agents/ — already handled by copyAgentFiles()
+      if (entryRelative === 'AIOS/agents' || entryRelative.startsWith('AIOS/agents/')) {
+        continue;
+      }
+
+      const sourcePath = path.join(src, entry.name);
+      const targetPath = path.join(dest, entry.name);
+
+      if (entry.isDirectory()) {
+        await fs.ensureDir(targetPath);
+        await copyRecursive(sourcePath, targetPath, entryRelative);
+      } else if (entry.name.endsWith('.md')) {
+        await fs.copy(sourcePath, targetPath, { overwrite: true });
+        count++;
+      }
+    }
+  }
+
+  await copyRecursive(sourceDir, targetDir, '');
+  return { count, skipped: false };
+}
+
 module.exports = {
   generateIDEConfigs,
   showSuccessSummary,
@@ -985,6 +1110,8 @@ module.exports = {
   generateTemplateVariables,
   copyClaudeHooksFolder,
   createClaudeSettingsLocal,
+  copySkillFiles,
+  copyExtraCommandFiles,
   copyGeminiHooksFolder,
   createGeminiSettings,
   linkGeminiExtension,
