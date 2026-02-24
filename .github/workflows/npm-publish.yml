@@ -133,8 +133,8 @@ jobs:
 
       - name: Create distribution archive
         run: |
-          mkdir -p dist/@synkra
-          tar -czf dist/@synkra/aios-core-${{ steps.package-version.outputs.version }}.tar.gz \
+          mkdir -p dist
+          tar -czf dist/aios-core-${{ steps.package-version.outputs.version }}.tar.gz \
             --exclude=node_modules \
             --exclude=.git \
             --exclude=dist \
@@ -187,6 +187,9 @@ jobs:
           else
             echo "tag=preview" >> $GITHUB_OUTPUT
           fi
+
+      - name: Publish safety gate (INS-4.10)
+        run: node bin/utils/validate-publish.js
 
       - name: Check if aios-core should be published
         id: should-publish
