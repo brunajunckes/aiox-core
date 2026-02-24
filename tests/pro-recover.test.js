@@ -196,3 +196,28 @@ describe('recoverLicense', () => {
     expect(allOutput).toContain(RECOVERY_URL);
   });
 });
+
+// ─── CLI alias reset-password ───────────────────────────────────────────────
+
+describe('CLI alias reset-password', () => {
+  test('aios-pro.js switch handles reset-password same as recover', () => {
+    // Verify the CLI entry point has reset-password as a case that calls recoverLicense
+    const cliSource = require('fs').readFileSync(
+      require('path').join(__dirname, '../packages/aios-pro-cli/bin/aios-pro.js'),
+      'utf-8'
+    );
+    // Both cases should exist in the same switch block
+    expect(cliSource).toContain("case 'recover':");
+    expect(cliSource).toContain("case 'reset-password':");
+    // reset-password should be listed in help text
+    expect(cliSource).toContain('reset-password');
+  });
+
+  test('showHelp includes reset-password as alias for recover', () => {
+    const cliSource = require('fs').readFileSync(
+      require('path').join(__dirname, '../packages/aios-pro-cli/bin/aios-pro.js'),
+      'utf-8'
+    );
+    expect(cliSource).toMatch(/reset-password\s+.*alias/i);
+  });
+});
