@@ -7,8 +7,8 @@
 # - SHA256 hashes for change detection
 # - File types for categorization
 #
-version: 4.4.2
-generated_at: "2026-02-25T00:37:51.384Z"
+version: 4.4.5
+generated_at: "2026-02-25T02:06:56.890Z"
 generator: scripts/generate-install-manifest.js
 file_count: 1084
 files:
@@ -1467,7 +1467,7 @@ files:
   - path: development/scripts/code-quality-improver.js
     hash: sha256:d0c844089e53dcd6c06755d4cb432a60fbebcedcf5a86ed635650573549a1941
     type: script
-    size: 41873
+    size: 40545
   - path: development/scripts/commit-message-generator.js
     hash: sha256:2e75d22307d0e3823b7762a6aff18c4c3842a632f876069215a221bc053336dc
     type: script
@@ -1567,7 +1567,7 @@ files:
   - path: development/scripts/refactoring-suggester.js
     hash: sha256:d50ea6b609c9cf8385979386fee4b4385d11ebcde15460260f66d04c705f6cd9
     type: script
-    size: 36374
+    size: 35227
   - path: development/scripts/rollback-handler.js
     hash: sha256:b18a9451fa3f8919733251857dbad2bc4b7ecbf782e6c114b88bc867358421a9
     type: script
@@ -2077,9 +2077,9 @@ files:
     type: task
     size: 3595
   - path: development/tasks/health-check.yaml
-    hash: sha256:4aef179167c00df3aa67532727e1c5acd5b084dcd30773f4fff85393c3177578
+    hash: sha256:8ffa5a73284ed2ef3497000ec1b0f0be5762ea84640b6f6e7e371f611a4ea596
     type: task
-    size: 7859
+    size: 8049
   - path: development/tasks/ids-governor.md
     hash: sha256:d1aa11f338f3f943ea7ac3f299d536ae9af0a8bad48394d893c345ab98b452fe
     type: task
