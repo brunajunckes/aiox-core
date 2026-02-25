@@ -588,7 +588,7 @@ describe('health-check.yaml task (INS-4.8)', () => {
       'utf8',
     );
     expect(yaml).toContain('aios doctor --json');
-    expect(yaml).toContain('node bin/aios.js doctor --json');
+    expect(yaml).toContain('npx aios-core doctor --json');
   });
 
   it('should have governance_map with all 15 checks', () => {
