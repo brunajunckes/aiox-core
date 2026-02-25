@@ -152,25 +152,39 @@ function showStep(current, total, label) {
  * 1. Relative path (framework-dev mode: ../../../../pro/license/{name})
  * 2. @aios-fullstack/pro package (brownfield: node_modules/@aios-fullstack/pro/license/{name})
  * 3. Absolute path via aios-core in node_modules (brownfield upgrade)
+ * 4. Absolute path via @aios-fullstack/pro in user project (npx context)
+ *
+ * Path 4 is critical for npx execution: when running `npx aios-core install`,
+ * require() resolves from the npx temp directory, not process.cwd(). After
+ * bootstrap installs @aios-fullstack/pro in the user's project, only an
+ * absolute path to process.cwd()/node_modules/@aios-fullstack/pro/... works.
  *
  * @param {string} moduleName - Module filename without extension (e.g., 'license-api')
  * @returns {Object|null} Loaded module or null
  */
 function loadProModule(moduleName) {
+  const path = require('path');
+
   // 1. Framework-dev mode (cloned repo with pro/ submodule)
   try {
     return require(`../../../../pro/license/${moduleName}`);
   } catch { /* not available */ }
 
-  // 2. @aios-fullstack/pro installed in user project
+  // 2. @aios-fullstack/pro package (works when aios-core is a local dependency)
   try {
     return require(`@aios-fullstack/pro/license/${moduleName}`);
   } catch { /* not available */ }
 
   // 3. aios-core in node_modules (brownfield upgrade from >= v4.2.15)
   try {
-    const path = require('path');
     const absPath = path.join(process.cwd(), 'node_modules', 'aios-core', 'pro', 'license', moduleName);
+    return require(absPath);
+  } catch { /* not available */ }
+
+  // 4. @aios-fullstack/pro in user project (npx context — require resolves from
+  //    temp dir, so we need absolute path to where bootstrap installed the package)
+  try {
+    const absPath = path.join(process.cwd(), 'node_modules', '@aios-fullstack', 'pro', 'license', moduleName);
     return require(absPath);
   } catch { /* not available */ }
 
