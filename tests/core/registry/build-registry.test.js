@@ -15,7 +15,7 @@ jest.mock('glob', () => ({
 
 const fs = require('fs').promises;
 const { glob } = require('glob');
-const { buildRegistry, saveRegistry, REGISTRY_VERSION } = require('../../../.aios-core/core/registry/build-registry');
+const { buildRegistry, saveRegistry, REGISTRY_VERSION } = require('../../../.aiox-core/core/registry/build-registry');
 
 // Mock fs.promises
 jest.spyOn(fs, 'readFile').mockResolvedValue('');

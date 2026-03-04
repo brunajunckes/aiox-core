@@ -5,7 +5,7 @@ const path = require('path');
 
 jest.mock('fs-extra');
 
-const ContextManager = require('../../../.aios-core/core/orchestration/context-manager');
+const ContextManager = require('../../../.aiox-core/core/orchestration/context-manager');
 
 describe('ContextManager', () => {
   let manager;
@@ -42,25 +42,25 @@ describe('ContextManager', () => {
       expect(manager.projectRoot).toBe(PROJECT_ROOT);
     });
 
-    test('calcula stateDir como .aios/workflow-state dentro do projectRoot', () => {
-      expect(manager.stateDir).toBe(path.join(PROJECT_ROOT, '.aios', 'workflow-state'));
+    test('calcula stateDir como .aiox/workflow-state dentro do projectRoot', () => {
+      expect(manager.stateDir).toBe(path.join(PROJECT_ROOT, '.aiox', 'workflow-state'));
     });
 
     test('calcula statePath com o workflowId no nome do arquivo', () => {
       expect(manager.statePath).toBe(
-        path.join(PROJECT_ROOT, '.aios', 'workflow-state', `${WORKFLOW_ID}.json`),
+        path.join(PROJECT_ROOT, '.aiox', 'workflow-state', `${WORKFLOW_ID}.json`),
       );
     });
 
     test('calcula handoffDir dentro do stateDir', () => {
       expect(manager.handoffDir).toBe(
-        path.join(PROJECT_ROOT, '.aios', 'workflow-state', 'handoffs'),
+        path.join(PROJECT_ROOT, '.aiox', 'workflow-state', 'handoffs'),
       );
     });
 
     test('calcula confidenceDir dentro do stateDir', () => {
       expect(manager.confidenceDir).toBe(
-        path.join(PROJECT_ROOT, '.aios', 'workflow-state', 'confidence'),
+        path.join(PROJECT_ROOT, '.aiox', 'workflow-state', 'confidence'),
       );
     });
 
@@ -1139,43 +1139,43 @@ describe('ContextManager', () => {
   // _resolveConfidenceThreshold
   // ─────────────────────────────────────────────
   describe('_resolveConfidenceThreshold', () => {
-    const originalEnv = process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD;
+    const originalEnv = process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD;
 
     afterEach(() => {
       if (originalEnv !== undefined) {
-        process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD = originalEnv;
+        process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD = originalEnv;
       } else {
-        delete process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD;
+        delete process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD;
       }
     });
 
     test('retorna 70 como default quando env não está definida', () => {
-      delete process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD;
+      delete process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD;
 
       expect(manager._resolveConfidenceThreshold()).toBe(70);
     });
 
     test('retorna valor numérico da env quando é um número válido', () => {
-      process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD = '85';
+      process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD = '85';
 
       expect(manager._resolveConfidenceThreshold()).toBe(85);
     });
 
     test('retorna 70 quando env contém valor não numérico', () => {
-      process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD = 'invalid';
+      process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD = 'invalid';
 
       expect(manager._resolveConfidenceThreshold()).toBe(70);
     });
 
     test('retorna 0 quando env é string vazia (Number("") === 0)', () => {
-      process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD = '';
+      process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD = '';
 
       // Number('') === 0, que é Number.isFinite, então retorna 0
       expect(manager._resolveConfidenceThreshold()).toBe(0);
     });
 
     test('aceita valores decimais', () => {
-      process.env.AIOS_DELIVERY_CONFIDENCE_THRESHOLD = '75.5';
+      process.env.AIOX_DELIVERY_CONFIDENCE_THRESHOLD = '75.5';
 
       expect(manager._resolveConfidenceThreshold()).toBe(75.5);
     });

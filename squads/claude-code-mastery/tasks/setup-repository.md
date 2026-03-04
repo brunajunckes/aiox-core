@@ -132,7 +132,7 @@ Create `.claude/settings.json` with:
    - File read/write within project scope
 2. **permissions.deny**: dangerous operations
    - `rm -rf /`, `git push --force`, production database access
-   - Framework-protected paths if using AIOS
+   - Framework-protected paths if using AIOX
 3. **rules**: path-based rule loading configuration
 
 Adapt permissions based on `project_type`:

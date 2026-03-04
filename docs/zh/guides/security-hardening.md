@@ -1,10 +1,10 @@
-# AIOS安全加固指南
+# AIOX安全加固指南
 
 > **EN** | [PT](../pt/guides/security-hardening.md) | [ES](../es/guides/security-hardening.md)
 
 ---
 
-> 完整指南，用于加固Synkra AIOS部署的安全性 - 从开发到生产。
+> 完整指南，用于加固Synkra AIOX部署的安全性 - 从开发到生产。
 
 **版本:** 2.1.0
 **最后更新:** 2026-01-29
@@ -29,7 +29,7 @@
 
 ## 安全概述
 
-Synkra AIOS在AI模型和您的系统之间的特权层运行。本指南涵盖特定于AI编排开发环境的加固策略。
+Synkra AIOX在AI模型和您的系统之间的特权层运行。本指南涵盖特定于AI编排开发环境的加固策略。
 
 ### 安全架构
 
@@ -49,7 +49,7 @@ Synkra AIOS在AI模型和您的系统之间的特权层运行。本指南涵盖�
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### AIOS特定的安全问题
+### AIOX特定的安全问题
 
 | 问题 | 风险级别 | 缓解 |
 |------|---------|------|
@@ -62,7 +62,7 @@ Synkra AIOS在AI模型和您的系统之间的特权层运行。本指南涵盖�
 
 ### 深度防御
 
-AIOS实现了多层保护:
+AIOX实现了多层保护:
 
 1. **权限模式** - 控制代理自主权（探索/询问/自动）
 2. **Claude钩子** - 执行前验证（读取保护、SQL治理）
@@ -74,7 +74,7 @@ AIOS实现了多层保护:
 
 ## API密钥管理
 
-API密钥是AIOS中最关键的机密。受损密钥可能导致未授权使用、数据泄露和重大财务影响。
+API密钥是AIOX中最关键的机密。受损密钥可能导致未授权使用、数据泄露和重大财务影响。
 
 ### 存储层级
 
@@ -124,7 +124,7 @@ JWT_REDACTED
 // 从安全保险库加载机密
 const secrets = await SecretManager.loadSecrets({
   provider: 'aws-secrets-manager', // 或'hashicorp-vault'、'gcp-secrets'
-  secretName: 'aios/production/api-keys',
+  secretName: 'aiox/production/api-keys',
   region: process.env.AWS_REGION,
 });
 
@@ -145,7 +145,7 @@ process.env.OPENAI_API_KEY = secrets.OPENAI_API_KEY;
 ### 启动时的密钥验证
 
 ```javascript
-// .aios-core/core/security/key-validator.js
+// .aiox-core/core/security/key-validator.js
 const requiredKeys = [
   { name: 'ANTHROPIC_API_KEY', pattern: /^sk-ant-[a-zA-Z0-9_-]+$/ },
   { name: 'JWT_SECRET', minLength: 32 },
@@ -185,7 +185,7 @@ function validateApiKeys() {
 
 ```bash
 # ============================================================
-# AIOS环境配置
+# AIOX环境配置
 # ============================================================
 # 安全: 此文件必须永不提交到版本控制
 # 添加到.gitignore: .env, .env.local, .env.*.local
@@ -193,7 +193,7 @@ function validateApiKeys() {
 
 # -------- 环境 --------
 NODE_ENV=development
-AIOS_DEBUG=false
+AIOX_DEBUG=false
 LOG_LEVEL=info
 
 # -------- AI提供商配置 --------
@@ -242,7 +242,7 @@ CSP_ENABLED=true
 
 # -------- 审计和日志 --------
 AUDIT_LOG_ENABLED=true
-AUDIT_LOG_PATH=/var/log/aios/audit.log
+AUDIT_LOG_PATH=/var/log/aiox/audit.log
 AUDIT_LOG_RETENTION_DAYS=90
 ```
 
@@ -250,17 +250,17 @@ AUDIT_LOG_RETENTION_DAYS=90
 
 ```bash
 # 为机密创建安全目录
-mkdir -p ~/.aios/secrets
-chmod 700 ~/.aios/secrets
+mkdir -p ~/.aiox/secrets
+chmod 700 ~/.aiox/secrets
 
 # 创建加密机密文件
 # 永不存储明文机密
 openssl enc -aes-256-cbc -salt -pbkdf2 \
   -in secrets.txt \
-  -out ~/.aios/secrets/encrypted.dat
+  -out ~/.aiox/secrets/encrypted.dat
 
 # 设置正确权限
-chmod 600 ~/.aios/secrets/*
+chmod 600 ~/.aiox/secrets/*
 
 # 验证git历史中没有机密
 git log -p --all -S "API_KEY" -- .
@@ -280,7 +280,7 @@ function validateEnvironment() {
 
   // 确保调试模式在生产环境中关闭
   if (process.env.NODE_ENV === 'production') {
-    if (process.env.AIOS_DEBUG === 'true') {
+    if (process.env.AIOX_DEBUG === 'true') {
       console.warn('警告: 生产环境中启用了调试模式');
     }
   }
@@ -291,7 +291,7 @@ function validateEnvironment() {
 
 ## 文件和目录权限
 
-### AIOS目录结构权限
+### AIOX目录结构权限
 
 ```bash
 # ============================================================
@@ -301,39 +301,39 @@ function validateEnvironment() {
 # 项目根（标准）
 chmod 755 /path/to/project
 
-# AIOS配置目录
-chmod 700 .aios/              # 仅所有者可访问
-chmod 700 .aios-core/         # 框架源
+# AIOX配置目录
+chmod 700 .aiox/              # 仅所有者可访问
+chmod 700 .aiox-core/         # 框架源
 chmod 700 .claude/            # Claude配置
 
 # 敏感配置文件
 chmod 600 .env                # 环境变量
-chmod 600 .aios/config.yaml   # 主配置
-chmod 600 .aios/users.json    # 用户数据库
-chmod 600 .aios/sessions.json # 活跃会话
+chmod 600 .aiox/config.yaml   # 主配置
+chmod 600 .aiox/users.json    # 用户数据库
+chmod 600 .aiox/sessions.json # 活跃会话
 
 # 机密目录
-chmod 700 ~/.aios/secrets/
-chmod 600 ~/.aios/secrets/*
+chmod 700 ~/.aiox/secrets/
+chmod 600 ~/.aiox/secrets/*
 
 # 日志文件
 chmod 640 logs/*.log          # 所有者读/写、组读
 chmod 750 logs/               # 所有者完全、组读/执行
 
 # 临时文件
-chmod 700 .aios/temp/
-chmod 600 .aios/temp/*
+chmod 700 .aiox/temp/
+chmod 600 .aiox/temp/*
 ```
 
 ### 目录访问控制
 
 ```yaml
-# .aios/config.yaml - 允许的目录配置
+# .aiox/config.yaml - 允许的目录配置
 security:
   allowedDirectories:
     read:
       - '${PROJECT_ROOT}'
-      - '${HOME}/.aios'
+      - '${HOME}/.aiox'
     write:
       - '${PROJECT_ROOT}/src'
       - '${PROJECT_ROOT}/docs'
@@ -357,7 +357,7 @@ security:
 
 ### Docker MCP隔离
 
-AIOS使用Docker容器将MCP服务器与主机系统隔离:
+AIOX使用Docker容器将MCP服务器与主机系统隔离:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -433,7 +433,7 @@ networks:
 ### 输入净化器实现
 
 ```javascript
-// .aios-core/core/security/input-sanitizer.js
+// .aiox-core/core/security/input-sanitizer.js
 
 class InputSanitizer {
   /**
@@ -617,7 +617,7 @@ function safeMarkdownInterpolation(template, data) {
 PROTECTED_FILES = [
     '.claude/CLAUDE.md',
     '.claude/rules/*.md',
-    '.aios-core/development/agents/*.md',
+    '.aiox-core/development/agents/*.md',
     'package.json',
     'tsconfig.json'
 ]
@@ -673,7 +673,7 @@ function safeObjectMerge(target, source) {
 ### 审计日志配置
 
 ```yaml
-# .aios/config.yaml - 审计配置
+# .aiox/config.yaml - 审计配置
 audit:
   enabled: true
   level: info # debug, info, warn, error
@@ -693,7 +693,7 @@ audit:
   output:
     file:
       enabled: true
-      path: .aios/logs/audit.log
+      path: .aiox/logs/audit.log
       maxSize: 10M
       maxFiles: 10
       compress: true
@@ -706,7 +706,7 @@ audit:
   # 保留
   retention:
     days: 90
-    archivePath: .aios/logs/archive
+    archivePath: .aiox/logs/archive
 ```
 
 ### 审计日志格式
@@ -781,7 +781,7 @@ function loadSecurityConfig() {
 
 | 设置 | 开发 | 生产 |
 |------|------|------|
-| **AIOS_DEBUG** | `true` | `false` |
+| **AIOX_DEBUG** | `true` | `false` |
 | **LOG_LEVEL** | `debug` | `info` |
 | **权限模式** | `auto` | `ask` |
 | **速率限制** | 宽松 | 严格 |
@@ -795,7 +795,7 @@ function loadSecurityConfig() {
 ### 开发配置
 
 ```yaml
-# .aios/config.development.yaml
+# .aiox/config.development.yaml
 security:
   debug: true
 
@@ -826,7 +826,7 @@ security:
 ### 生产配置
 
 ```yaml
-# .aios/config.production.yaml
+# .aiox/config.production.yaml
 security:
   debug: false
 
@@ -979,7 +979,7 @@ security:
 
 ### 负责披露政策
 
-如果您在Synkra AIOS中发现安全漏洞，请遵循负责任的披露做法：
+如果您在Synkra AIOX中发现安全漏洞，请遵循负责任的披露做法：
 
 ### 报告流程
 
@@ -1002,7 +1002,7 @@ security:
 
 **受影响组件:** [例如，InputSanitizer、AuthSystem、MCP网关]
 
-**AIOS版本:** [例如，2.1.0]
+**AIOX版本:** [例如，2.1.0]
 
 **描述:**
 [漏洞的详细描述]
@@ -1039,7 +1039,7 @@ security:
 
 ### Bug赏金计划
 
-目前，Synkra AIOS没有正式的Bug赏金计划。但是，重大安全贡献会被认可，可能会获得AIOS Pro许可或其他认可。
+目前，Synkra AIOX没有正式的Bug赏金计划。但是，重大安全贡献会被认可，可能会获得AIOX Pro许可或其他认可。
 
 ---
 
@@ -1052,4 +1052,4 @@ security:
 
 ---
 
-_Synkra AIOS安全加固指南 v4.0.4_
+_Synkra AIOX安全加固指南 v4.0.4_
