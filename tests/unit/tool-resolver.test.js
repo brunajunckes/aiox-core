@@ -86,7 +86,7 @@ tool:
   describe('Cache Mechanism', () => {
     test('should cache tool after first resolution', async () => {
       // Mock file system
-      glob.sync.mockReturnValue(['aios-core/tools/test-simple.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/test-simple.yaml']);
       fs.readFile.mockResolvedValue(simpleToolYaml);
 
       // First call - should read from file
@@ -126,7 +126,7 @@ tool:
     });
 
     test('should provide cache stats', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/test-simple.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/test-simple.yaml']);
       fs.readFile.mockResolvedValue(simpleToolYaml);
 
       await resolver.resolveTool('test-simple');
@@ -168,8 +168,8 @@ tool:
         if (pattern.includes('squads')) {
           return [];
         }
-        if (pattern.includes('aios-core/tools')) {
-          return ['aios-core/tools/test-simple.yaml'];
+        if (pattern.includes('aiox-core/tools')) {
+          return ['aiox-core/tools/test-simple.yaml'];
         }
         return [];
       });
@@ -227,7 +227,7 @@ tool:
 
   describe('Schema Validation', () => {
     test('should validate required fields', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/invalid.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/invalid.yaml']);
       fs.readFile.mockResolvedValue(invalidToolYaml);
 
       await expect(resolver.resolveTool('invalid-tool')).rejects.toThrow(
@@ -236,7 +236,7 @@ tool:
     });
 
     test('should validate v1.0 tool schema', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/simple.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/simple.yaml']);
       fs.readFile.mockResolvedValue(simpleToolYaml);
 
       const tool = await resolver.resolveTool('test-simple');
@@ -250,7 +250,7 @@ tool:
     });
 
     test('should validate v2.0 tool schema with executable knowledge', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/complex.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/complex.yaml']);
       fs.readFile.mockResolvedValue(complexToolYaml);
 
       const tool = await resolver.resolveTool('test-complex');
@@ -262,7 +262,7 @@ tool:
     });
 
     test('should reject invalid YAML syntax', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/broken.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/broken.yaml']);
       fs.readFile.mockResolvedValue('invalid: yaml: syntax: [');
 
       await expect(resolver.resolveTool('broken-tool')).rejects.toThrow();
@@ -271,7 +271,7 @@ tool:
 
   describe('Auto-Detection Logic', () => {
     test('should detect v1.0 for simple tools', async () => {
-      glob.sync.mockReturnValue(['aios-core/tools/simple.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/simple.yaml']);
       fs.readFile.mockResolvedValue(simpleToolYaml);
 
       const tool = await resolver.resolveTool('test-simple');
@@ -298,7 +298,7 @@ tool:
     server_command: npx -y test
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/auto.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/auto.yaml']);
       fs.readFile.mockResolvedValue(autoDetectToolYaml);
 
       const tool = await resolver.resolveTool('auto-detect');
@@ -321,7 +321,7 @@ tool:
         description: test quirk
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/api.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/api.yaml']);
       fs.readFile.mockResolvedValue(apiComplexToolYaml);
 
       const tool = await resolver.resolveTool('api-complex');
@@ -341,7 +341,7 @@ tool:
       description: Incorrect usage
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/anti.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/anti.yaml']);
       fs.readFile.mockResolvedValue(antiPatternsToolYaml);
 
       const tool = await resolver.resolveTool('anti-patterns');
@@ -365,7 +365,7 @@ tool:
     timeout: 5000
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/health.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/health.yaml']);
       fs.readFile.mockResolvedValue(healthCheckToolYaml);
 
       const tool = await resolver.resolveTool('health-tool');
@@ -388,7 +388,7 @@ tool:
     expected_status: 200
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/http-health.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/http-health.yaml']);
       fs.readFile.mockResolvedValue(httpHealthToolYaml);
 
       const tool = await resolver.resolveTool('http-health-tool');
@@ -414,7 +414,7 @@ tool:
       }
 `;
 
-      glob.sync.mockReturnValue(['aios-core/tools/function-health.yaml']);
+      glob.sync.mockReturnValue(['aiox-core/tools/function-health.yaml']);
       fs.readFile.mockResolvedValue(functionHealthToolYaml);
 
       const tool = await resolver.resolveTool('function-health-tool');
@@ -428,8 +428,8 @@ tool:
   describe('Additional Methods', () => {
     test('should list all available tools', async () => {
       glob.sync.mockReturnValue([
-        'aios-core/tools/tool1.yaml',
-        'aios-core/tools/tool2.yaml',
+        'aiox-core/tools/tool1.yaml',
+        'aiox-core/tools/tool2.yaml',
         'common/tools/tool3.yaml',
       ]);
 
@@ -443,7 +443,7 @@ tool:
       // Mock implementation that returns results only for 'exists' tool (not 'not-exists')
       glob.sync.mockImplementation((pattern) => {
         if (pattern.includes('/exists.yaml')) {
-          return ['aios-core/tools/exists.yaml'];
+          return ['aiox-core/tools/exists.yaml'];
         }
         return [];
       });

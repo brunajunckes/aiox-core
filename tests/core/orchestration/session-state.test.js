@@ -18,7 +18,7 @@ const {
   SESSION_STATE_VERSION,
   SESSION_STATE_FILENAME,
   CRASH_THRESHOLD_MINUTES,
-} = require('../../../.aios-core/core/orchestration/session-state');
+} = require('../../../.aiox-core/core/orchestration/session-state');
 
 // Test fixtures
 const TEST_PROJECT_ROOT = path.join(__dirname, '../../fixtures/test-project');
@@ -677,7 +677,7 @@ describe('SessionState', () => {
 
 describe('SessionState Migration (ADR-011)', () => {
   const TEST_PROJECT_ROOT = path.join(__dirname, '../../fixtures/test-migration-project');
-  const LEGACY_STATE_PATH = path.join(TEST_PROJECT_ROOT, '.aios/workflow-state');
+  const LEGACY_STATE_PATH = path.join(TEST_PROJECT_ROOT, '.aiox/workflow-state');
 
   beforeEach(async () => {
     await fs.rm(TEST_PROJECT_ROOT, { recursive: true, force: true });
