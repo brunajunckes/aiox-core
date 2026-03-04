@@ -299,20 +299,20 @@ project_types:
         event: PostToolUse
 
   # ---------------------------------------------------------------------------
-  aios-project:
-    display_name: "AIOS-Managed Project"
+  aiox-project:
+    display_name: "AIOX-Managed Project"
     detection_files:
-      - .aios-core/core-config.yaml
-      - .aios-core/constitution.md
+      - .aiox-core/core-config.yaml
+      - .aiox-core/constitution.md
     detection_patterns:
-      - directory: .aios-core/
-        description: "AIOS core framework directory"
-      - directory: .claude/commands/AIOS/
-        description: "AIOS agent commands for Claude"
+      - directory: .aiox-core/
+        description: "AIOX core framework directory"
+      - directory: .claude/commands/AIOX/
+        description: "AIOX agent commands for Claude"
       - file: .claude/settings.json
-        contains: "AIOS"
+        contains: "AIOX"
     recommended_claude_md_template: null
-    note: "AIOS projects already have CLAUDE.md managed by the framework"
+    note: "AIOX projects already have CLAUDE.md managed by the framework"
     recommended_rules:
       - name: framework-boundary
         description: "Enforce L1-L4 layer protection"
