@@ -1,38 +1,34 @@
-import { describe, it } from "node:test";
-import { strict as assert } from "node:assert";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
+const { existsSync } = require("fs");
+const { join } = require("path");
 
-const ROOT = process.env.AIOX_ROOT || "/root";
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe("Onboarding Smoke Test", () => {
   it("quickstart module exists and exports runQuickstart", () => {
     const mod = require(join(ROOT, ".aiox-core/cli/commands/quickstart/index.js"));
-    assert.ok(typeof mod.runQuickstart === "function");
+    expect(typeof mod.runQuickstart).toBe("function");
   });
 
   it("stories directory exists", () => {
-    assert.ok(existsSync(join(ROOT, "docs/stories")));
+    expect(existsSync(join(ROOT, "docs/stories"))).toBe(true);
   });
 
   it("agent definitions exist", () => {
     const agents = ["dev.md", "qa.md", "architect.md", "pm.md", "sm.md", "devops.md"];
     for (const a of agents) {
-      assert.ok(existsSync(join(ROOT, ".aiox-core/development/agents", a)));
+      expect(existsSync(join(ROOT, ".aiox-core/development/agents", a))).toBe(true);
     }
   });
 
   it("constitution exists", () => {
-    assert.ok(existsSync(join(ROOT, ".aiox-core/constitution.md")));
+    expect(existsSync(join(ROOT, ".aiox-core/constitution.md"))).toBe(true);
   });
 
   it("IDE compatibility matrix exists", () => {
-    assert.ok(existsSync(join(ROOT, "docs/guides/ide-compatibility-matrix.md")));
+    expect(existsSync(join(ROOT, "docs/guides/ide-compatibility-matrix.md"))).toBe(true);
   });
 
   it("getting started guide exists", () => {
-    assert.ok(existsSync(join(ROOT, "docs/guides/getting-started.md")) || existsSync(join(ROOT, "docs/getting-started.md")));
+    expect(existsSync(join(ROOT, "docs/guides/getting-started.md")) || existsSync(join(ROOT, "docs/getting-started.md"))).toBe(true);
   });
 });
