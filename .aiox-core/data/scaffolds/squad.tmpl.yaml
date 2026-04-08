@@ -1,0 +1,15 @@
+name: {{name}}
+description: {{description}}
+author: {{author}}
+date: {{date}}
+version: 1.0.0
+
+agents:
+  - role: lead
+    agent: dev
+  - role: reviewer
+    agent: qa
+
+capabilities:
+  - name: {{name}}-core
+    type: module
