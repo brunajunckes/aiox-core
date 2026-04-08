@@ -1,0 +1,11 @@
+name: full-cycle
+description: Run full quality cycle — lint, test, changelog, release check
+steps:
+  - name: lint
+    command: npm run lint
+  - name: test
+    command: npm test
+  - name: changelog
+    command: node bin/aiox.js changelog
+  - name: release-check
+    command: node bin/aiox.js release check
