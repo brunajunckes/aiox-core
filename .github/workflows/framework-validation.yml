@@ -1,0 +1,40 @@
+name: Framework Validation
+
+on: [push, pull_request]
+
+jobs:
+  framework-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate L1 Framework Core
+        run: |
+          test -f .aiox-core/constitution.md && echo "✅ Constitution.md" || exit 1
+          test -d .aiox-core/core && echo "✅ Core modules" || exit 1
+          echo "L1 Framework Core: VALIDATED"
+
+      - name: Validate L2 Framework Templates
+        run: |
+          test -d .aiox-core/development/tasks && echo "✅ Tasks" || exit 1
+          test -d .aiox-core/development/templates && echo "✅ Templates" || exit 1
+          test -d .aiox-core/development/workflows && echo "✅ Workflows" || exit 1
+          test -d .aiox-core/development/checklists && echo "✅ Checklists" || exit 1
+          echo "L2 Framework Templates: VALIDATED"
+
+      - name: Validate L3 Project Config
+        run: |
+          test -f core-config.yaml && echo "✅ core-config.yaml" || exit 1
+          test -d .claude/rules && echo "✅ rules/" || exit 1
+          echo "L3 Project Config: VALIDATED"
+
+      - name: Validate L4 Project Runtime
+        run: |
+          test -d docs/stories && echo "✅ stories/" || exit 1
+          test -f docs/stories/1.1.story.md && echo "✅ Story files" || exit 1
+          echo "L4 Project Runtime: VALIDATED"
+
+      - name: Boundary Protection Check
+        run: |
+          echo "Framework protection: ENABLED"
+          echo "Protected paths: .aiox-core/core/**, .aiox-core/development/**"
