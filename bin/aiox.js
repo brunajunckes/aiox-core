@@ -66,6 +66,10 @@ USAGE:
   npx aiox-core@latest validate     # Validate installation integrity
   npx aiox-core@latest info         # Show system info
   npx aiox-core@latest doctor       # Run diagnostics
+  npx aiox-core@latest status       # Show project & session status
+  npx aiox-core@latest resume       # Resume last session
+  npx aiox-core@latest help         # Context-aware help (adapts to session)
+  npx aiox-core@latest help --raw   # Full static help (same as --help)
   npx aiox-core@latest --version    # Show version
   npx aiox-core@latest --version -d # Show detailed version info
   npx aiox-core@latest --help       # Show this help
@@ -91,10 +95,24 @@ CONFIGURATION:
   aiox config validate                   # Validate config files
   aiox config init-local                 # Create local-config.yaml
 
+<<<<<<< HEAD
 FEEDBACK:
   aiox feedback                          # Interactive NPS + comment prompt
   aiox feedback list                     # Show all local feedback entries
   aiox feedback submit                   # Post feedback to GitHub Discussions
+=======
+AGENTS:
+  aiox agents                            # List all available agents
+  aiox agents --detail <name>            # Show agent details and commands
+  aiox agents --json                     # Output as JSON
+
+COMMAND PALETTE:
+  aiox palette                           # Interactive fuzzy search (TTY)
+  aiox palette --list                    # List all commands
+  aiox palette --search <query>          # Filter commands by query
+  aiox palette --json                    # Output as JSON
+  aiox commands                          # Alias for aiox palette
+>>>>>>> origin/main
 
 SERVICE DISCOVERY:
   aiox workers search <query>            # Search for workers
@@ -839,6 +857,30 @@ async function main() {
       }
       break;
 
+    case 'resume': {
+      // Session resume — Story 3.3
+      try {
+        const { runResume } = require('../.aiox-core/cli/commands/session/index.js');
+        await runResume();
+      } catch (error) {
+        console.error(`Error resuming session: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'status': {
+      // Enhanced status with session info — Story 3.3
+      try {
+        const { runStatus } = require('../.aiox-core/cli/commands/session/index.js');
+        await runStatus();
+      } catch (error) {
+        console.error(`Error showing status: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
     case 'install': {
       // Install in current project with flag support
       const installArgs = args.slice(1);
@@ -958,6 +1000,43 @@ async function main() {
       console.log('AIOX-FullStack Installation\n');
       await runWizard();
       break;
+
+    case 'help': {
+      // Context-Aware Help — Story 3.4
+      try {
+        const { runHelp } = require('../.aiox-core/cli/commands/help/index.js');
+        runHelp(args.slice(1), { showStaticHelp: showHelp });
+      } catch (error) {
+        // Fallback to static help on any error
+        showHelp();
+      }
+      break;
+    }
+
+    case 'agents': {
+      // Agent Discovery & Help Menu - Story 3.1
+      try {
+        const { runAgents } = require('../.aiox-core/cli/commands/agents/index.js');
+        await runAgents(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Agents command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'palette':
+    case 'commands': {
+      // Command Palette with Fuzzy Search - Story 3.2
+      try {
+        const { runPalette } = require('../.aiox-core/cli/commands/palette/index.js');
+        await runPalette(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Palette command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
 
     default:
       console.error(`❌ Unknown command: ${command}`);
