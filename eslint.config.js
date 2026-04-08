@@ -45,6 +45,8 @@ module.exports = [
       // CLI files with legacy issues (TODO: fix)
       '.aiox-core/cli/**',
       '.aiox-core/infrastructure/scripts/**',
+      // Monitoring scripts with ESM syntax
+      '.aiox-core/monitoring/**',
       // Bin files with legacy issues
       'bin/aiox-init*.js',
       'bin/migrate-*.js',
