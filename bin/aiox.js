@@ -1128,6 +1128,54 @@ async function main() {
       break;
     }
 
+    case 'workflow': {
+      // Workflow Automation Engine - Story 7.1
+      try {
+        const { runWorkflow } = require('../.aiox-core/cli/commands/workflow/index.js');
+        runWorkflow(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Workflow command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'stats': {
+      // Code Stats & Complexity Dashboard - Story 7.3
+      try {
+        const { runStats } = require('../.aiox-core/cli/commands/stats/index.js');
+        runStats(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Stats command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'benchmark': {
+      // Agent Performance Benchmarks - Story 7.4
+      try {
+        const { runBenchmark: runBench } = require('../.aiox-core/cli/commands/benchmark/index.js');
+        runBench(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Benchmark command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'audit': {
+      // Dependency Audit & Security Scanner - Story 7.2
+      try {
+        const { runAudit } = require('../.aiox-core/cli/commands/audit/index.js');
+        runAudit(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Audit command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
     default:
       console.error(`❌ Unknown command: ${command}`);
       console.log('\nRun with --help to see available commands');
