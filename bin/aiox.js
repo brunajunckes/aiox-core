@@ -95,12 +95,17 @@ CONFIGURATION:
   aiox config validate                   # Validate config files
   aiox config init-local                 # Create local-config.yaml
 
-<<<<<<< HEAD
 FEEDBACK:
   aiox feedback                          # Interactive NPS + comment prompt
   aiox feedback list                     # Show all local feedback entries
   aiox feedback submit                   # Post feedback to GitHub Discussions
-=======
+
+TELEMETRY:
+  aiox telemetry on                      # Enable opt-in metrics collection
+  aiox telemetry off                     # Disable metrics collection
+  aiox telemetry status                  # Show state and metrics summary
+  aiox telemetry export                  # Export metrics as JSON to stdout
+
 AGENTS:
   aiox agents                            # List all available agents
   aiox agents --detail <name>            # Show agent details and commands
@@ -112,7 +117,6 @@ COMMAND PALETTE:
   aiox palette --search <query>          # Filter commands by query
   aiox palette --json                    # Output as JSON
   aiox commands                          # Alias for aiox palette
->>>>>>> origin/main
 
 SERVICE DISCOVERY:
   aiox workers search <query>            # Search for workers
@@ -995,6 +999,13 @@ async function main() {
       break;
     }
 
+    case 'health': {
+      // Project Health Dashboard — Story 5.3
+      const { runHealth } = require('../.aiox-core/cli/commands/health/index.js');
+      runHealth(args.slice(1));
+      break;
+    }
+
     case undefined:
       // No arguments - run wizard directly (npx default behavior)
       console.log('AIOX-FullStack Installation\n');
@@ -1033,6 +1044,42 @@ async function main() {
         await runPalette(args.slice(1));
       } catch (error) {
         console.error(`❌ Palette command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'docs': {
+      // Multi-language Documentation Generator - Story 5.4
+      try {
+        const { runDocsGen } = require('../.aiox-core/cli/commands/docs-gen/index.js');
+        await runDocsGen(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Docs command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'smoke-test': {
+      // CLI Smoke Test Suite - Story 5.1
+      try {
+        const { runSmokeTest } = require('../.aiox-core/cli/commands/smoke-test/index.js');
+        runSmokeTest(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Smoke test error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'changelog': {
+      // Changelog & Release Notes Generator - Story 5.2
+      try {
+        const { runChangelog } = require('../.aiox-core/cli/commands/changelog/index.js');
+        runChangelog(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Changelog command error: ${error.message}`);
         process.exit(1);
       }
       break;
