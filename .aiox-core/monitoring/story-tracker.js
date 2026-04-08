@@ -5,8 +5,8 @@
  * Visualizes story progress across all active stories.
  */
 
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+const { readFileSync, existsSync, readdirSync } = require('node:fs');
+const { join } = require('node:path');
 
 const ROOT = process.env.AIOX_ROOT || '/root';
 
@@ -27,11 +27,10 @@ function parseStory(filePath) {
   const progress = total > 0 ? Math.round((checked / total) * 100) : 0;
 
   // Extract agent
-  const agent = content.match(/## Agent
-(.+)/)?.[1]?.trim() || 'unassigned';
+  const agent = content.match(/## Agent\n(.+)/)?.[1]?.trim() || 'unassigned';
 
   // Extract story points
-  const points = content.match(/Story Points:** (d+)/)?.[1] || '?';
+  const points = content.match(/Story Points:\*\* (\d+)/)?.[1] || '?';
 
   return { title, status, checked, unchecked, total, progress, agent, points };
 }

@@ -8,7 +8,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execSync: _execSync } = require('child_process');
 
 // Read package.json for version
 const packageJsonPath = path.join(__dirname, '..', 'package.json');
@@ -1024,7 +1024,7 @@ async function main() {
       try {
         const { runHelp } = require('../.aiox-core/cli/commands/help/index.js');
         runHelp(args.slice(1), { showStaticHelp: showHelp });
-      } catch (error) {
+      } catch (_error) {
         // Fallback to static help on any error
         showHelp();
       }
