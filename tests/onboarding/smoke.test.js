@@ -1,7 +1,7 @@
 const { existsSync } = require("fs");
 const { join } = require("path");
 
-const ROOT = process.env.AIOX_ROOT || "/root";
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe("Onboarding Smoke Test", () => {
   it("quickstart module exists and exports runQuickstart", () => {

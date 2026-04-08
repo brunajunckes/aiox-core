@@ -1,7 +1,7 @@
 const { readFileSync, existsSync } = require('fs');
 const { join } = require('path');
 
-const ROOT = process.env.AIOX_ROOT || '/root';
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe('Article I: CLI First (NON-NEGOTIABLE)', () => {
   it('constitution declares CLI First as NON-NEGOTIABLE', () => {
