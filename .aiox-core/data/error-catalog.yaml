@@ -1,0 +1,184 @@
+# AIOX Error Catalog — Story 9.3
+# Standardized error codes with diagnostic messages and recovery suggestions.
+#
+# Categories: config, install, story, git, agent, test, scaffold, profile, workflow, system
+# Severities: error, warning, info
+
+errors:
+  # ─── Config Errors (E001–E005) ──────────────────────────────────────────────
+  - code: "AIOX-E001"
+    message: "Configuration file not found"
+    suggestion: "Run 'aiox doctor' to diagnose or 'npx aiox-core install' to reinstall"
+    severity: "error"
+    category: "config"
+
+  - code: "AIOX-E002"
+    message: "Invalid configuration format"
+    suggestion: "Check your core-config.yaml for YAML syntax errors"
+    severity: "error"
+    category: "config"
+
+  - code: "AIOX-E003"
+    message: "Missing required configuration key"
+    suggestion: "Verify all required keys exist in core-config.yaml — run 'aiox doctor --fix' to restore defaults"
+    severity: "error"
+    category: "config"
+
+  - code: "AIOX-E004"
+    message: "Configuration value out of range"
+    suggestion: "Check the documentation for valid value ranges in core-config.yaml"
+    severity: "warning"
+    category: "config"
+
+  - code: "AIOX-E005"
+    message: "Duplicate configuration key detected"
+    suggestion: "Remove duplicate keys from core-config.yaml — YAML only keeps the last value"
+    severity: "warning"
+    category: "config"
+
+  # ─── Install Errors (E010–E014) ─────────────────────────────────────────────
+  - code: "AIOX-E010"
+    message: "Installation directory not writable"
+    suggestion: "Check filesystem permissions or run with appropriate privileges"
+    severity: "error"
+    category: "install"
+
+  - code: "AIOX-E011"
+    message: "Required dependency not found"
+    suggestion: "Run 'npm install' to install project dependencies"
+    severity: "error"
+    category: "install"
+
+  - code: "AIOX-E012"
+    message: "Incompatible Node.js version"
+    suggestion: "AIOX requires Node.js 18+. Upgrade with 'nvm install 18' or visit nodejs.org"
+    severity: "error"
+    category: "install"
+
+  - code: "AIOX-E013"
+    message: "Package.json not found in project root"
+    suggestion: "Initialize a Node project with 'npm init -y' before installing AIOX"
+    severity: "error"
+    category: "install"
+
+  # ─── Story Errors (E020–E024) ───────────────────────────────────────────────
+  - code: "AIOX-E020"
+    message: "Story file not found"
+    suggestion: "Verify the story ID and check docs/stories/ for available stories"
+    severity: "error"
+    category: "story"
+
+  - code: "AIOX-E021"
+    message: "Story validation failed"
+    suggestion: "Review acceptance criteria and ensure all required fields are present"
+    severity: "error"
+    category: "story"
+
+  - code: "AIOX-E022"
+    message: "Story status transition invalid"
+    suggestion: "Stories must follow: Draft → Ready → InProgress → InReview → Done"
+    severity: "warning"
+    category: "story"
+
+  # ─── Git Errors (E030–E033) ─────────────────────────────────────────────────
+  - code: "AIOX-E030"
+    message: "Git repository not initialized"
+    suggestion: "Run 'git init' in the project root before using git-flow commands"
+    severity: "error"
+    category: "git"
+
+  - code: "AIOX-E031"
+    message: "Uncommitted changes detected"
+    suggestion: "Commit or stash your changes before proceeding"
+    severity: "warning"
+    category: "git"
+
+  - code: "AIOX-E032"
+    message: "Branch does not exist"
+    suggestion: "Check available branches with 'git branch -a'"
+    severity: "error"
+    category: "git"
+
+  - code: "AIOX-E033"
+    message: "Push rejected — only @devops agent has push authority"
+    suggestion: "Delegate push operations to @devops with '*push' command"
+    severity: "error"
+    category: "git"
+
+  # ─── Agent Errors (E040–E043) ───────────────────────────────────────────────
+  - code: "AIOX-E040"
+    message: "Agent not found"
+    suggestion: "Check available agents with 'aiox agents --list'"
+    severity: "error"
+    category: "agent"
+
+  - code: "AIOX-E041"
+    message: "Agent command not recognized"
+    suggestion: "Use '*help' to see available commands for the active agent"
+    severity: "warning"
+    category: "agent"
+
+  - code: "AIOX-E042"
+    message: "Agent authority violation"
+    suggestion: "This operation requires a different agent — check agent-authority rules"
+    severity: "error"
+    category: "agent"
+
+  # ─── Test Errors (E050–E052) ────────────────────────────────────────────────
+  - code: "AIOX-E050"
+    message: "Test suite failed"
+    suggestion: "Run 'npx jest --verbose' for detailed failure output"
+    severity: "error"
+    category: "test"
+
+  - code: "AIOX-E051"
+    message: "Test coverage below threshold"
+    suggestion: "Add tests for uncovered lines — run 'npm run test:coverage' for details"
+    severity: "warning"
+    category: "test"
+
+  # ─── Scaffold Errors (E060–E061) ───────────────────────────────────────────
+  - code: "AIOX-E060"
+    message: "Scaffold template not found"
+    suggestion: "Run 'aiox scaffold --list' to see available templates"
+    severity: "error"
+    category: "scaffold"
+
+  - code: "AIOX-E061"
+    message: "Scaffold output path already exists"
+    suggestion: "Use '--force' flag to overwrite or choose a different output path"
+    severity: "warning"
+    category: "scaffold"
+
+  # ─── Profile Errors (E070–E071) ────────────────────────────────────────────
+  - code: "AIOX-E070"
+    message: "Profile not found"
+    suggestion: "Run 'aiox profile --list' to see available profiles"
+    severity: "error"
+    category: "profile"
+
+  - code: "AIOX-E071"
+    message: "Profile export failed"
+    suggestion: "Check write permissions on the output directory"
+    severity: "error"
+    category: "profile"
+
+  # ─── Workflow Errors (E080) ─────────────────────────────────────────────────
+  - code: "AIOX-E080"
+    message: "Workflow execution failed"
+    suggestion: "Check workflow definition and ensure all dependencies are met"
+    severity: "error"
+    category: "workflow"
+
+  # ─── System Errors (E090–E091) ─────────────────────────────────────────────
+  - code: "AIOX-E090"
+    message: "Unexpected internal error"
+    suggestion: "Run 'aiox doctor' to diagnose. If the issue persists, report it on GitHub"
+    severity: "error"
+    category: "system"
+
+  - code: "AIOX-E091"
+    message: "Operation timed out"
+    suggestion: "Retry the operation. If it persists, check system resources and network"
+    severity: "error"
+    category: "system"
