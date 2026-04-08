@@ -1006,6 +1006,13 @@ async function main() {
       break;
     }
 
+    case 'hooks': {
+      // Plugin Hook System - Story 6.3
+      const { runHooks } = require('../.aiox-core/cli/commands/hooks/index.js');
+      runHooks(args.slice(1));
+      break;
+    }
+
     case undefined:
       // No arguments - run wizard directly (npx default behavior)
       console.log('AIOX-FullStack Installation\n');
@@ -1080,6 +1087,42 @@ async function main() {
         runChangelog(args.slice(1));
       } catch (error) {
         console.error(`❌ Changelog command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'progress': {
+      // Story Progress Tracker & Burndown - Story 6.2
+      try {
+        const { runProgress } = require('../.aiox-core/cli/commands/progress/index.js');
+        runProgress(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Progress command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'completion': {
+      // CLI Auto-Complete & Shell Integration - Story 6.1
+      try {
+        const { runCompletion } = require('../.aiox-core/cli/commands/completion/index.js');
+        runCompletion(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Completion command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'release': {
+      // Release Preparation & Version Bump - Story 6.4
+      try {
+        const { runRelease } = require('../.aiox-core/cli/commands/release/index.js');
+        runRelease(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Release command error: ${error.message}`);
         process.exit(1);
       }
       break;
