@@ -50,6 +50,8 @@ module.exports = [
       'bin/migrate-*.js',
       // Template files with placeholder syntax
       '.aiox-core/product/templates/**',
+      // Scaffold templates with {{}} interpolation syntax
+      '.aiox-core/data/scaffolds/**',
       // Health Dashboard - uses Vite/React with ES modules
       'tools/health-dashboard/**',
       // Core orchestration/execution - legacy code with no-undef errors (TODO: fix)
