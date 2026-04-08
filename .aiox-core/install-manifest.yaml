@@ -8,14 +8,22 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-08T15:33:36.325Z"
+generated_at: "2026-04-08T15:52:40.886Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1110
+file_count: 1116
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
     type: agent
     size: 10741
+  - path: cli/commands/audit/index.js
+    hash: sha256:08db0de4bb839652844a1e35d9f7275b7ea6f11fa2b805cd679fde11fde08bd7
+    type: cli
+    size: 12060
+  - path: cli/commands/benchmark/index.js
+    hash: sha256:d59961e32ec62b5948d151d62aa9d7322561d773f19bff7ed8706c65832f1d6a
+    type: cli
+    size: 8184
   - path: cli/commands/changelog/index.js
     hash: sha256:f46425a2fc54d89c014a3b1a4c1d71fe5f68f5b9a3e3b5fee738daf1f5ecdc71
     type: cli
@@ -180,6 +188,10 @@ files:
     hash: sha256:102327e448a6445a329b09e51693bc6506e9ac5d6062f4d348e32209b120ea97
     type: cli
     size: 18740
+  - path: cli/commands/stats/index.js
+    hash: sha256:944a995684903c11e06811c8f357e8468cd96d983a222090dafa5db01cb1d910
+    type: cli
+    size: 8491
   - path: cli/commands/telemetry/index.js
     hash: sha256:aa97c814add4204b18ff469dcb043d2545296c0c081cd5367d68de63a70ec5aa
     type: cli
@@ -232,6 +244,10 @@ files:
     hash: sha256:9246ec001dea6c249ec05a56c776686bfdc057b80094a0b3e2284d00770aff98
     type: cli
     size: 2439
+  - path: cli/commands/workflow/index.js
+    hash: sha256:b6116be2ece13d77ca6fbbfbec82168998ad69f5886729a7f11411bf22cbc773
+    type: cli
+    size: 13016
   - path: cli/index.js
     hash: sha256:0083a7f3ebdce20329a072cd9509c2193da5f2075cc16c64db48f912de203955
     type: cli
@@ -1376,6 +1392,14 @@ files:
     hash: sha256:d80a645a9c48b8ab8168ddbe36279662d72de4fb5cd8953a6685e5d1bd9968db
     type: data
     size: 5349
+  - path: data/workflows/full-cycle.yaml
+    hash: sha256:e788626138af5ecbcdc636c145466c5aa25a00ee31743164aef34f62585999ba
+    type: workflow
+    size: 307
+  - path: data/workflows/quick-check.yaml
+    hash: sha256:32b40dcfb8d9a89312b32645ab3130930c7ae4f34c99cf422bcb313f9e66cbb9
+    type: workflow
+    size: 141
   - path: development/agent-teams/team-all.yaml
     hash: sha256:3b641ef048b79c0f9c212620d5f09257bab7e4185fc706fe3731ec788f027c01
     type: development
