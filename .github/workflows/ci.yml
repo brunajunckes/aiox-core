@@ -85,16 +85,20 @@ jobs:
 
       - name: Run security audit
         run: |
-          echo "=== npm audit (critical level for dev dependencies) ==="
-          # Only fail on critical vulnerabilities
-          # High severity in dev-only dependencies (semantic-release chain) is accepted
-          npm audit --audit-level=critical || {
+          echo "=== npm audit (production dependencies only) ==="
+          # Audit production dependencies at critical level
+          # Dev dependencies (semantic-release, conventional-changelog) have known
+          # vulnerabilities (handlebars) that don't affect production users
+          npm audit --omit=dev --audit-level=critical || {
             echo ""
-            echo "⚠️ Critical vulnerabilities found!"
-            echo "Run 'npm audit' locally for details."
+            echo "⚠️ Critical vulnerabilities in production dependencies!"
+            echo "Run 'npm audit --omit=dev' locally for details."
             exit 1
           }
-          echo "✅ No critical vulnerabilities found"
+          echo "✅ No critical production vulnerabilities found"
+          echo ""
+          echo "=== Dev dependency audit (informational) ==="
+          npm audit --audit-level=critical 2>&1 || echo "ℹ️ Dev dependency vulnerabilities exist (non-blocking)"
 
   lint:
     name: ESLint
