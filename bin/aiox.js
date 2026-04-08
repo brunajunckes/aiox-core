@@ -1276,6 +1276,54 @@ async function main() {
       break;
     }
 
+    case 'release-notes': {
+      // Version Bump & Release Notes Generator — Story 10.1
+      try {
+        const { runReleaseNotes } = require('../.aiox-core/cli/commands/release-notes/index.js');
+        runReleaseNotes(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Release-notes command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'perf': {
+      // Command Execution Timer & Performance Logging — Story 10.2
+      try {
+        const { runPerf } = require('../.aiox-core/cli/commands/perf/index.js');
+        runPerf(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Perf command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'config-diff': {
+      // Config Diff & Migration Tool — Story 10.3
+      try {
+        const { runConfigDiff } = require('../.aiox-core/cli/commands/config-diff/index.js');
+        runConfigDiff(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Config-diff command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'history': {
+      // CLI Session Replay & History — Story 10.4
+      try {
+        const { runHistory } = require('../.aiox-core/cli/commands/history/index.js');
+        runHistory(args.slice(1));
+      } catch (error) {
+        console.error(`❌ History command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
