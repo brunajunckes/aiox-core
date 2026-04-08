@@ -1,0 +1,7 @@
+name: quick-check
+description: Quick lint and test pass
+steps:
+  - name: lint
+    command: npm run lint
+  - name: test
+    command: npm test
