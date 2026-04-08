@@ -91,6 +91,11 @@ CONFIGURATION:
   aiox config validate                   # Validate config files
   aiox config init-local                 # Create local-config.yaml
 
+FEEDBACK:
+  aiox feedback                          # Interactive NPS + comment prompt
+  aiox feedback list                     # Show all local feedback entries
+  aiox feedback submit                   # Post feedback to GitHub Discussions
+
 SERVICE DISCOVERY:
   aiox workers search <query>            # Search for workers
   aiox workers search "json" --category=data
@@ -919,6 +924,34 @@ async function main() {
     case '-h':
       showHelp();
       break;
+
+    case 'squads': {
+      // Squads Marketplace - Story 4.4
+      const { runSquads } = require('../.aiox-core/cli/commands/squads/index.js');
+      runSquads(args.slice(1));
+      break;
+    }
+
+    case 'feedback': {
+      // Community Feedback Loop - Story 4.3
+      const { runFeedback } = require('../.aiox-core/cli/commands/feedback/index.js');
+      await runFeedback(args.slice(1));
+      break;
+    }
+
+    case 'telemetry': {
+      // Opt-in Usage Metrics - Story 4.1
+      const { runTelemetry } = require('../.aiox-core/cli/commands/telemetry/index.js');
+      await runTelemetry(args.slice(1));
+      break;
+    }
+
+    case 'experiment': {
+      // Onboarding A/B Testing - Story 4.2
+      const { runExperiment } = require('../.aiox-core/cli/commands/experiment/index.js');
+      runExperiment(args.slice(1));
+      break;
+    }
 
     case undefined:
       // No arguments - run wizard directly (npx default behavior)
