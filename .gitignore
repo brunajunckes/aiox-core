@@ -35,6 +35,10 @@ web-bundles/
 Thumbs.db
 nul                           # Windows temporary file
 
+# Local tooling and package manager caches (should never be committed)
+.local/
+.npm/
+
 # Private keys and certificates
 *.key
 *.pem
