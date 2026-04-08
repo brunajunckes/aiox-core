@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-08T21:18:27.483Z"
+generated_at: "2026-04-08T21:29:55.468Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1131
+file_count: 1135
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -36,6 +36,10 @@ files:
     hash: sha256:0b9458ed8935abd893b04841b079eb2c9a622d80d15b6be7a9c21cde813b9479
     type: cli
     size: 9311
+  - path: cli/commands/config-diff/index.js
+    hash: sha256:337e2acbb3ae97af329b747b75e877111f9640d3c9fb9408ddc4b0a1fc1c878b
+    type: cli
+    size: 12257
   - path: cli/commands/config/index.js
     hash: sha256:25c4b9bf4e0241abf7754b55153f49f1a214f1fb5fe904a576675634cb7b3da9
     type: cli
@@ -80,6 +84,10 @@ files:
     hash: sha256:6ea3369f82b44890096295f2d2ee7a7f0b133048974c1a86171bebe9db6dcff9
     type: cli
     size: 8096
+  - path: cli/commands/history/index.js
+    hash: sha256:412c1a3fe79b4c8d06074e7fd6cbb96539e429d24cc600eaaa3d976191bc61f6
+    type: cli
+    size: 6750
   - path: cli/commands/hooks/index.js
     hash: sha256:ef4e90b9e950b5a5eb6a74f63cedcdb7ba0dc94a0f56d47bbff89263531d33f6
     type: cli
@@ -168,6 +176,10 @@ files:
     hash: sha256:3bc5129d64d05acaa29dfeb798c0dd36e42cb469a4c3ee92af32641bb57ea855
     type: cli
     size: 10332
+  - path: cli/commands/perf/index.js
+    hash: sha256:8092c82ab48c5a732bf007e64ed244f2f1bd82e3330ca93b7b126f78e2bfed6b
+    type: cli
+    size: 7598
   - path: cli/commands/pro/index.js
     hash: sha256:3e26f15119719a7be374f3db1935e6bd35fc2c14a66a2a30175979b5731bb29b
     type: cli
@@ -196,6 +208,10 @@ files:
     hash: sha256:04271799b0dc16835b884908421757b7fa42a86a59623d301b218f9fad402b48
     type: cli
     size: 1469
+  - path: cli/commands/release-notes/index.js
+    hash: sha256:b051a7be35ed9d45c118ceb60f06c80d228d810350ba34fd4903e5a7749b1343
+    type: cli
+    size: 8234
   - path: cli/commands/release/index.js
     hash: sha256:b96aa52bfae782b6bc3a5c407ffbef34a1351f62ba922495cba40c5adcd0cfcf
     type: cli
