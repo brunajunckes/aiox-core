@@ -49,7 +49,7 @@ describe('Article III: Story-Driven Development (MUST)', () => {
   });
 
   it('story lifecycle rules file exists', () => {
-    const rulesPath = join(ROOT, 'Aiox/.claude/rules/story-lifecycle.md');
+    const rulesPath = join(ROOT, '.claude/rules/story-lifecycle.md');
     expect(existsSync(rulesPath)).toBe(true);
   });
 });

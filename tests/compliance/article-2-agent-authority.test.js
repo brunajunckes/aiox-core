@@ -35,7 +35,7 @@ describe('Article II: Agent Authority (NON-NEGOTIABLE)', () => {
   });
 
   it('agent authority rules file exists', () => {
-    const rulesPath = join(ROOT, 'Aiox/.claude/rules/agent-authority.md');
+    const rulesPath = join(ROOT, '.claude/rules/agent-authority.md');
     expect(existsSync(rulesPath)).toBe(true);
   });
 });
