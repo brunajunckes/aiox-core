@@ -1,0 +1,18 @@
+name: {{name}}
+description: {{description}}
+author: {{author}}
+date: {{date}}
+version: 1.0.0
+
+steps:
+  - id: step-1
+    name: Initialize
+    action: init
+  - id: step-2
+    name: Execute
+    action: execute
+    depends_on: [step-1]
+  - id: step-3
+    name: Finalize
+    action: finalize
+    depends_on: [step-2]

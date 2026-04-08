@@ -1176,6 +1176,54 @@ async function main() {
       break;
     }
 
+    case 'scaffold': {
+      // Template Scaffold Generator - Story 8.2
+      try {
+        const { runScaffold } = require('../.aiox-core/cli/commands/scaffold/index.js');
+        runScaffold(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Scaffold command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'profile': {
+      // Config Profiles & Environment Switching - Story 8.1
+      try {
+        const { runProfile } = require('../.aiox-core/cli/commands/profile/index.js');
+        runProfile(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Profile command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'flow': {
+      // Git Workflow Automation - Story 8.3
+      try {
+        const { runGitFlow } = require('../.aiox-core/cli/commands/git-flow/index.js');
+        runGitFlow(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Git flow command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'dashboard': {
+      // Interactive CLI Dashboard - Story 8.4
+      try {
+        const { runDashboard } = require('../.aiox-core/cli/commands/dashboard/index.js');
+        runDashboard(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Dashboard command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
     default:
       console.error(`❌ Unknown command: ${command}`);
       console.log('\nRun with --help to see available commands');
