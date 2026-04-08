@@ -1,7 +1,7 @@
 const { readFileSync, readdirSync, existsSync, statSync } = require('fs');
 const { join, extname } = require('path');
 
-const ROOT = process.env.AIOX_ROOT || '/root';
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe('Article VI: Absolute Imports (SHOULD)', () => {
   const constitution = readFileSync(join(ROOT, '.aiox-core/constitution.md'), 'utf-8');

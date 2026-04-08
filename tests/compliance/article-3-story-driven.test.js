@@ -1,7 +1,7 @@
 const { readFileSync, readdirSync, existsSync } = require('fs');
 const { join } = require('path');
 
-const ROOT = process.env.AIOX_ROOT || '/root';
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe('Article III: Story-Driven Development (MUST)', () => {
   const constitution = readFileSync(join(ROOT, '.aiox-core/constitution.md'), 'utf-8');

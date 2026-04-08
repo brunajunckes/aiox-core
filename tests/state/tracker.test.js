@@ -1,7 +1,7 @@
 const { rmSync, existsSync, mkdirSync } = require("fs");
 const { join } = require("path");
 
-const ROOT = process.env.AIOX_ROOT || "/root";
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe("State Tracker", () => {
   const tracker = require(join(ROOT, ".aiox-core/core/state/tracker.js"));

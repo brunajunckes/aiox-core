@@ -1,7 +1,7 @@
 const { readFileSync, existsSync } = require('fs');
 const { join } = require('path');
 
-const ROOT = process.env.AIOX_ROOT || '/root';
+const ROOT = process.env.AIOX_ROOT || process.cwd();
 
 describe('Article II: Agent Authority (NON-NEGOTIABLE)', () => {
   const constitution = readFileSync(join(ROOT, '.aiox-core/constitution.md'), 'utf-8');
