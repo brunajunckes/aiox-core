@@ -940,6 +940,22 @@ async function main() {
         showDoctorHelp();
         break;
       }
+      // Story 9.3: --errors flag lists all error codes
+      if (doctorArgs.includes('--errors')) {
+        try {
+          const { listAllErrors } = require('../.aiox-core/cli/utils/error.js');
+          const errors = listAllErrors();
+          console.log('\nAIOX Error Catalog\n');
+          for (const e of errors) {
+            console.log(`  ${e.code}  [${e.severity}]  ${e.message}`);
+          }
+          console.log(`\n  Total: ${errors.length} error codes`);
+          console.log("  Run 'aiox explain <code>' for details.\n");
+        } catch (err) {
+          console.error(`❌ Failed to load error catalog: ${err.message}`);
+        }
+        break;
+      }
       const doctorOptions = {
         fix: doctorArgs.includes('--fix'),
         json: doctorArgs.includes('--json'),
@@ -1224,10 +1240,72 @@ async function main() {
       break;
     }
 
-    default:
-      console.error(`❌ Unknown command: ${command}`);
-      console.log('\nRun with --help to see available commands');
-      process.exit(1);
+    case 'coverage': {
+      // Test Coverage Reporting & Enforcement - Story 9.2
+      try {
+        const { runCoverage } = require('../.aiox-core/cli/commands/coverage/index.js');
+        runCoverage(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Coverage command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'alias': {
+      // CLI Command Aliases & Shortcuts - Story 9.4
+      try {
+        const { runAlias } = require('../.aiox-core/cli/commands/alias/index.js');
+        runAlias(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Alias command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    case 'explain': {
+      // Error Catalog & Diagnostic Messages — Story 9.3
+      try {
+        const { runExplain } = require('../.aiox-core/cli/commands/explain/index.js');
+        runExplain(args.slice(1));
+      } catch (error) {
+        console.error(`❌ Explain command error: ${error.message}`);
+        process.exit(1);
+      }
+      break;
+    }
+
+    default: {
+      // Check aliases before reporting unknown command — Story 9.4
+      try {
+        const { resolveAlias } = require('../.aiox-core/cli/commands/alias/index.js');
+        const resolved = resolveAlias(command);
+        if (resolved) {
+          // Re-run with resolved command via child process
+          const { execSync: execSyncAlias } = require('child_process');
+          const binPath = path.join(__dirname, 'aiox.js');
+          const extraArgs = args.slice(1).map(a => `"${a}"`).join(' ');
+          try {
+            execSyncAlias(
+              `node "${binPath}" "${resolved}" ${extraArgs}`.trim(),
+              { stdio: 'inherit', env: process.env },
+            );
+          } catch (e) {
+            process.exitCode = e.status || 1;
+          }
+        } else {
+          console.error(`❌ Unknown command: ${command}`);
+          console.log('\nRun with --help to see available commands');
+          process.exit(1);
+        }
+      } catch {
+        console.error(`❌ Unknown command: ${command}`);
+        console.log('\nRun with --help to see available commands');
+        process.exit(1);
+      }
+      break;
+    }
   }
 }
 
