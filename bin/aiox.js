@@ -1744,6 +1744,34 @@ async function main() {
       break;
     }
 
+    case 'web': {
+      // Web Dashboard Server — Story 26.1
+      const { runWeb } = require('../.aiox-core/cli/commands/web/index.js');
+      runWeb(args.slice(1));
+      break;
+    }
+
+    case 'chart': {
+      // ASCII Chart Generator — Story 26.2
+      const { runChart } = require('../.aiox-core/cli/commands/chart/index.js');
+      runChart(args.slice(1));
+      break;
+    }
+
+    case 'status-page': {
+      // Status Page Generator — Story 26.3
+      const { runStatusPage } = require('../.aiox-core/cli/commands/status-page/index.js');
+      runStatusPage(args.slice(1));
+      break;
+    }
+
+    case 'md-report': {
+      // Markdown Report Engine — Story 26.4
+      const { runMdReport } = require('../.aiox-core/cli/commands/md-report/index.js');
+      runMdReport(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
