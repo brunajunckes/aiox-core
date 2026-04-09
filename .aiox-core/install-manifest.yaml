@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T00:46:47.514Z"
+generated_at: "2026-04-09T01:02:35.633Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1151
+file_count: 1155
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -32,6 +32,10 @@ files:
     hash: sha256:8a0cf62796d2c6a8d7cc858218ea50f5bcd9dc59b793ca65fddd4d44b17caa08
     type: cli
     size: 7770
+  - path: cli/commands/batch/index.js
+    hash: sha256:bb516a566c1ebf692793ea736aad1528058854642a4d3fdf61a41a34b13b06d8
+    type: cli
+    size: 14612
   - path: cli/commands/benchmark/index.js
     hash: sha256:d59961e32ec62b5948d151d62aa9d7322561d773f19bff7ed8706c65832f1d6a
     type: cli
@@ -64,6 +68,10 @@ files:
     hash: sha256:e3264c303ad72db117ee29d892aba218bc2fbd87eab6b1d076ac60ed698ef945
     type: cli
     size: 10623
+  - path: cli/commands/cron/index.js
+    hash: sha256:dad2de6302688e439c732ed7b297616b1136de9b2a8e7b1fca86552e8248d358
+    type: cli
+    size: 14694
   - path: cli/commands/dashboard/index.js
     hash: sha256:dc08edd40620d445fa712f2e445ec87ae19bb65895f2f8be2bbe627c95fb9d3d
     type: cli
@@ -296,6 +304,10 @@ files:
     hash: sha256:944a995684903c11e06811c8f357e8468cd96d983a222090dafa5db01cb1d910
     type: cli
     size: 8491
+  - path: cli/commands/tasks/index.js
+    hash: sha256:33543b3c2a0f337bc4172f14bfb702de739346586538657ad11e886b1a30d52a
+    type: task
+    size: 13973
   - path: cli/commands/telemetry/index.js
     hash: sha256:aa97c814add4204b18ff469dcb043d2545296c0c081cd5367d68de63a70ec5aa
     type: cli
@@ -308,6 +320,10 @@ files:
     hash: sha256:b49dcd35424f753f4fedc96c8e1070f716a1f3cb3357baa5b7377d60b5f75cad
     type: cli
     size: 12893
+  - path: cli/commands/watch/index.js
+    hash: sha256:078892d510e7c1b5901d5ef9f48ea158f7920f66faf5ffdba68e7cc33b8f7e7e
+    type: cli
+    size: 8976
   - path: cli/commands/workers/formatters/info-formatter.js
     hash: sha256:11c17e16be0b7d09ba8949497e0887bb20996966d266454aa2bb5dfc9d9d91b8
     type: cli
