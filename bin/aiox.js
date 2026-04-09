@@ -1324,6 +1324,34 @@ async function main() {
       break;
     }
 
+    case 'events': {
+      // System Event Logger — Story 11.1
+      const { runEvents } = require('../.aiox-core/cli/commands/events/index.js');
+      runEvents(args.slice(1));
+      break;
+    }
+
+    case 'plugins': {
+      // Plugin Loader & Registry — Story 11.2
+      const { runPlugins } = require('../.aiox-core/cli/commands/plugins/index.js');
+      runPlugins(args.slice(1));
+      break;
+    }
+
+    case 'notify': {
+      // Notification System — Story 11.3
+      const { runNotify } = require('../.aiox-core/cli/commands/notify/index.js');
+      runNotify(args.slice(1));
+      break;
+    }
+
+    case 'env': {
+      // Environment Info & Diagnostics — Story 11.4
+      const { runEnv } = require('../.aiox-core/cli/commands/env/index.js');
+      runEnv(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
