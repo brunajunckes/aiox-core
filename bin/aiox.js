@@ -1604,6 +1604,34 @@ async function main() {
       break;
     }
 
+    case 'complexity': {
+      // Code Complexity Analyzer — Story 21.1
+      const { runComplexity } = require('../.aiox-core/cli/commands/complexity/index.js');
+      runComplexity(args.slice(1));
+      break;
+    }
+
+    case 'dep-graph': {
+      // Dependency Graph Visualizer — Story 21.2
+      const { runDepGraph } = require('../.aiox-core/cli/commands/dep-graph/index.js');
+      runDepGraph(args.slice(1));
+      break;
+    }
+
+    case 'search': {
+      // Code Search Engine — Story 21.3
+      const { runSearch } = require('../.aiox-core/cli/commands/search/index.js');
+      runSearch(args.slice(1));
+      break;
+    }
+
+    case 'snippets': {
+      // Code Snippet Manager — Story 21.4
+      const { runSnippets } = require('../.aiox-core/cli/commands/snippets/index.js');
+      runSnippets(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
