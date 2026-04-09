@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T01:23:22.283Z"
+generated_at: "2026-04-09T01:34:27.003Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1163
+file_count: 1167
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -116,6 +116,10 @@ files:
     hash: sha256:b0bad594152560402bc817d414a0846d6a6b988ec53f3944c5275bbc77f6d899
     type: cli
     size: 14627
+  - path: cli/commands/flaky/index.js
+    hash: sha256:849ce4b70d06c3315294b99070a2dd3f205b0bc743f14ad0854400eeb5e2ec89
+    type: cli
+    size: 7895
   - path: cli/commands/generate/index.js
     hash: sha256:36f8e38ab767fa5478d8dabac548c66dc2c0fc521c216e954ac33fcea0ba597b
     type: cli
@@ -340,6 +344,18 @@ files:
     hash: sha256:aa97c814add4204b18ff469dcb043d2545296c0c081cd5367d68de63a70ec5aa
     type: cli
     size: 7768
+  - path: cli/commands/test-gen/index.js
+    hash: sha256:4cecd9d1f3b7070d83475eb35965e06c55dbc4cfa5f86b4df7296b3a6a6cbd78
+    type: cli
+    size: 8666
+  - path: cli/commands/test-impact/index.js
+    hash: sha256:37ed84003aaed1ec406cbedc459aa7caa5df2b9f106cc41cb7ce968b0585dbec
+    type: cli
+    size: 10063
+  - path: cli/commands/test-report/index.js
+    hash: sha256:c02f62630cecf9b8230783f0ae6378d65880492e89f1e2310eb24228630b1164
+    type: cli
+    size: 9894
   - path: cli/commands/theme/index.js
     hash: sha256:6e76339dd23263d95c92b5412125f8c49dc3c64de1fc82e4ef446c2bc568926a
     type: cli
