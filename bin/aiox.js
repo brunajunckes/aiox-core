@@ -1464,6 +1464,34 @@ async function main() {
       break;
     }
 
+    case 'serve': {
+      // Local REST API Server — Story 16.1
+      const { runServe } = require('../.aiox-core/cli/commands/serve/index.js');
+      runServe(args.slice(1));
+      break;
+    }
+
+    case 'webhooks': {
+      // Webhook Handler — Story 16.2
+      const { runWebhooks } = require('../.aiox-core/cli/commands/webhooks/index.js');
+      runWebhooks(args.slice(1));
+      break;
+    }
+
+    case 'api-docs': {
+      // API Documentation Generator — Story 16.3
+      const { runApiDocs } = require('../.aiox-core/cli/commands/api-docs/index.js');
+      runApiDocs(args.slice(1));
+      break;
+    }
+
+    case 'healthcheck': {
+      // Health Check Endpoint — Story 16.4
+      const { runHealthcheck } = require('../.aiox-core/cli/commands/healthcheck/index.js');
+      runHealthcheck(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
