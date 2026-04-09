@@ -1716,6 +1716,34 @@ async function main() {
       break;
     }
 
+    case 'notes': {
+      // Team Notes & Knowledge Base — Story 25.1
+      const { runNotes } = require('../.aiox-core/cli/commands/notes/index.js');
+      runNotes(args.slice(1));
+      break;
+    }
+
+    case 'decisions': {
+      // Decision Log — Story 25.2
+      const { runDecisions } = require('../.aiox-core/cli/commands/decisions/index.js');
+      runDecisions(args.slice(1));
+      break;
+    }
+
+    case 'standup': {
+      // Standup Report Generator — Story 25.3
+      const { runStandup } = require('../.aiox-core/cli/commands/standup/index.js');
+      runStandup(args.slice(1));
+      break;
+    }
+
+    case 'reviews': {
+      // Review Request Manager — Story 25.4
+      const { runReviews } = require('../.aiox-core/cli/commands/reviews/index.js');
+      runReviews(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
