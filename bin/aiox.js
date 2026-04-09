@@ -1380,6 +1380,34 @@ async function main() {
       break;
     }
 
+    case 'chain': {
+      // Command Chaining & Pipelines — Story 13.1
+      const { runChain } = require('../.aiox-core/cli/commands/chain/index.js');
+      runChain(args.slice(1));
+      break;
+    }
+
+    case 'init-project': {
+      // Project Init Templates — Story 13.2
+      const { runInitProject } = require('../.aiox-core/cli/commands/init-project/index.js');
+      runInitProject(args.slice(1));
+      break;
+    }
+
+    case 'setup': {
+      // Interactive Config Wizard — Story 13.3
+      const { runSetup } = require('../.aiox-core/cli/commands/setup/index.js');
+      runSetup(args.slice(1));
+      break;
+    }
+
+    case 'theme': {
+      // CLI Output Formatter & Themes — Story 13.4
+      const { runTheme } = require('../.aiox-core/cli/commands/theme/index.js');
+      runTheme(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
