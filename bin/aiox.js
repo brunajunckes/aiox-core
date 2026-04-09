@@ -1828,6 +1828,90 @@ async function main() {
       break;
     }
 
+    case 'tree': {
+      // Directory Tree Viewer — Story 29.1
+      const { runTree } = require('../.aiox-core/cli/commands/tree/index.js');
+      runTree(args.slice(1));
+      break;
+    }
+
+    case 'file-diff': {
+      // File Diff Tool — Story 29.2
+      const { runFileDiff } = require('../.aiox-core/cli/commands/file-diff/index.js');
+      runFileDiff(args.slice(1));
+      break;
+    }
+
+    case 'symlinks': {
+      // Symlink Manager — Story 29.3
+      const { runSymlinks } = require('../.aiox-core/cli/commands/symlinks/index.js');
+      runSymlinks(args.slice(1));
+      break;
+    }
+
+    case 'file-info': {
+      // File Info Inspector — Story 29.4
+      const { runFileInfo } = require('../.aiox-core/cli/commands/file-info/index.js');
+      runFileInfo(args.slice(1));
+      break;
+    }
+
+    case 'ping': {
+      // Ping & Latency — Story 30.1
+      const { runPing } = require('../.aiox-core/cli/commands/ping/index.js');
+      runPing(args.slice(1));
+      break;
+    }
+
+    case 'http-check': {
+      // HTTP Health Checker — Story 30.2
+      const { runHttpCheck } = require('../.aiox-core/cli/commands/http-check/index.js');
+      runHttpCheck(args.slice(1));
+      break;
+    }
+
+    case 'port-scan': {
+      // Port Scanner — Story 30.3
+      const { runPortScan } = require('../.aiox-core/cli/commands/port-scan/index.js');
+      runPortScan(args.slice(1));
+      break;
+    }
+
+    case 'dns-lookup': {
+      // DNS Lookup — Story 30.4
+      const { runDnsLookup } = require('../.aiox-core/cli/commands/dns-lookup/index.js');
+      runDnsLookup(args.slice(1));
+      break;
+    }
+
+    case 'timer': {
+      // Pomodoro Timer — Story 31.1
+      const { runTimer } = require('../.aiox-core/cli/commands/timer/index.js');
+      runTimer(args.slice(1));
+      break;
+    }
+
+    case 'focus': {
+      // Focus Mode — Story 31.2
+      const { runFocus } = require('../.aiox-core/cli/commands/focus/index.js');
+      runFocus(args.slice(1));
+      break;
+    }
+
+    case 'devlog': {
+      // Development Log — Story 31.3
+      const { runDevlog } = require('../.aiox-core/cli/commands/devlog/index.js');
+      runDevlog(args.slice(1));
+      break;
+    }
+
+    case 'journal': {
+      // Daily Journal — Story 31.4
+      const { runJournal } = require('../.aiox-core/cli/commands/journal/index.js');
+      runJournal(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
