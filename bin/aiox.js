@@ -1632,6 +1632,34 @@ async function main() {
       break;
     }
 
+    case 'diff-analyze': {
+      // Git Diff Analyzer — Story 23.1
+      const { runDiffAnalyze } = require('../.aiox-core/cli/commands/diff-analyze/index.js');
+      runDiffAnalyze(args.slice(1));
+      break;
+    }
+
+    case 'pkg-size': {
+      // Package Size Analyzer — Story 23.2
+      const { runPkgSize } = require('../.aiox-core/cli/commands/pkg-size/index.js');
+      runPkgSize(args.slice(1));
+      break;
+    }
+
+    case 'env-vars': {
+      // Environment Variable Manager — Story 23.3
+      const { runEnvVars } = require('../.aiox-core/cli/commands/env-vars/index.js');
+      runEnvVars(args.slice(1));
+      break;
+    }
+
+    case 'scripts': {
+      // Script Runner & Discovery — Story 23.4
+      const { runScripts } = require('../.aiox-core/cli/commands/scripts/index.js');
+      runScripts(args.slice(1));
+      break;
+    }
+
     case 'dead-code': {
       // Dead Code Detector — Story 22.1
       const { runDeadCode } = require('../.aiox-core/cli/commands/dead-code/index.js');
