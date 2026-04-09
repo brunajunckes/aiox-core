@@ -1352,6 +1352,34 @@ async function main() {
       break;
     }
 
+    case 'secrets': {
+      // Secret Scanner — Story 12.1
+      const { runSecrets } = require('../.aiox-core/cli/commands/secrets/index.js');
+      runSecrets(args.slice(1));
+      break;
+    }
+
+    case 'licenses': {
+      // Dependency License Checker — Story 12.2
+      const { runLicenses } = require('../.aiox-core/cli/commands/licenses/index.js');
+      runLicenses(args.slice(1));
+      break;
+    }
+
+    case 'githooks': {
+      // Git Hooks Manager — Story 12.3
+      const { runGithooks } = require('../.aiox-core/cli/commands/githooks/index.js');
+      runGithooks(args.slice(1));
+      break;
+    }
+
+    case 'governance': {
+      // Governance Report Generator — Story 12.4
+      const { runGovernance } = require('../.aiox-core/cli/commands/governance/index.js');
+      runGovernance(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
