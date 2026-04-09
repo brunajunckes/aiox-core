@@ -1492,6 +1492,34 @@ async function main() {
       break;
     }
 
+    case 'kv': {
+      // Key-Value Store — Story 17.1
+      const { runKv } = require('../.aiox-core/cli/commands/kv/index.js');
+      runKv(args.slice(1));
+      break;
+    }
+
+    case 'cache': {
+      // File Cache Manager — Story 17.2
+      const { runCache } = require('../.aiox-core/cli/commands/cache/index.js');
+      runCache(args.slice(1));
+      break;
+    }
+
+    case 'data': {
+      // Data Export/Import — Story 17.3
+      const { runData } = require('../.aiox-core/cli/commands/data/index.js');
+      runData(args.slice(1));
+      break;
+    }
+
+    case 'backup': {
+      // Backup & Restore — Story 17.4
+      const { runBackup } = require('../.aiox-core/cli/commands/backup/index.js');
+      runBackup(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
