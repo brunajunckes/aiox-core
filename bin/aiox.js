@@ -1408,6 +1408,34 @@ async function main() {
       break;
     }
 
+    case 'analytics': {
+      // Project Analytics Dashboard — Story 14.1
+      const { runAnalytics } = require('../.aiox-core/cli/commands/analytics/index.js');
+      runAnalytics(args.slice(1));
+      break;
+    }
+
+    case 'sprint-report': {
+      // Sprint Report Generator — Story 14.2
+      const { runSprintReport } = require('../.aiox-core/cli/commands/sprint-report/index.js');
+      runSprintReport(args.slice(1));
+      break;
+    }
+
+    case 'contributors': {
+      // Contributor Stats — Story 14.3
+      const { runContributors } = require('../.aiox-core/cli/commands/contributors/index.js');
+      runContributors(args.slice(1));
+      break;
+    }
+
+    case 'auto-changelog': {
+      // Changelog Auto-Generator — Story 14.4
+      const { runAutoChangelog } = require('../.aiox-core/cli/commands/auto-changelog/index.js');
+      runAutoChangelog(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
