@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T01:45:33.021Z"
+generated_at: "2026-04-09T01:56:34.628Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1171
+file_count: 1175
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -228,6 +228,10 @@ files:
     hash: sha256:c2c1257ebddacdf6d15dc8b45a9cb3c3d2940a0cd3460fba94ab6fd8eeafd9dc
     type: cli
     size: 7182
+  - path: cli/commands/migrate-guide/index.js
+    hash: sha256:59157d021511a773d28eaed599c8f1d417e22e8fade25becb21f99e053c9dca2
+    type: cli
+    size: 7223
   - path: cli/commands/migrate/analyze.js
     hash: sha256:fad3740d9af0a4e9aa8b41a3ef4c6ff224e60aad810dc1ecf257a604a1c17c39
     type: cli
@@ -304,6 +308,10 @@ files:
     hash: sha256:2a18410a32eca0c0c9168ddffc544dd0e8be8919611602cd76f9d3ef29d23597
     type: cli
     size: 6979
+  - path: cli/commands/release-check/index.js
+    hash: sha256:49829dbc6c202d7a7917d5faaa61cc6c20f206f1a10f3ff64126720cee65471d
+    type: cli
+    size: 9486
   - path: cli/commands/release-notes/index.js
     hash: sha256:b051a7be35ed9d45c118ceb60f06c80d228d810350ba34fd4903e5a7749b1343
     type: cli
@@ -344,6 +352,10 @@ files:
     hash: sha256:102327e448a6445a329b09e51693bc6506e9ac5d6062f4d348e32209b120ea97
     type: cli
     size: 18740
+  - path: cli/commands/stats-summary/index.js
+    hash: sha256:fe27aa0fa7cb703e825bb7023fcdef24eba47617e417459fcf110bfd4a8da292
+    type: cli
+    size: 9050
   - path: cli/commands/stats/index.js
     hash: sha256:944a995684903c11e06811c8f357e8468cd96d983a222090dafa5db01cb1d910
     type: cli
@@ -380,6 +392,10 @@ files:
     hash: sha256:b49dcd35424f753f4fedc96c8e1070f716a1f3cb3357baa5b7377d60b5f75cad
     type: cli
     size: 12893
+  - path: cli/commands/version-mgr/index.js
+    hash: sha256:c40df5c4f2099ca1e9bc0ebfe8d2c8fdaa953d8e8f66c2ba3b234dc2ee9c9a92
+    type: cli
+    size: 6546
   - path: cli/commands/watch/index.js
     hash: sha256:078892d510e7c1b5901d5ef9f48ea158f7920f66faf5ffdba68e7cc33b8f7e7e
     type: cli
@@ -1505,9 +1521,9 @@ files:
     type: data
     size: 9575
   - path: data/entity-registry.yaml
-    hash: sha256:b02e217a40a9d8952649798cde7889813cfe436d5df781d196ed6a782cf62166
+    hash: sha256:401f8f2b20e475fe91eb7d51d68016307a351da5b41b303d70983a3dbeafb6f8
     type: data
-    size: 526999
+    size: 527068
   - path: data/error-catalog.yaml
     hash: sha256:dd9a36d2a475084cd75916f956a400dbb9d1d4ec3970f4615fd6050b2c464ef5
     type: data
