@@ -1548,6 +1548,34 @@ async function main() {
       break;
     }
 
+    case 'man': {
+      // Man Page Generator — Story 19.1
+      const { runMan } = require('../.aiox-core/cli/commands/man/index.js');
+      runMan(args.slice(1));
+      break;
+    }
+
+    case 'tutorial': {
+      // Interactive Tutorial — Story 19.2
+      const { runTutorial } = require('../.aiox-core/cli/commands/tutorial/index.js');
+      runTutorial(args.slice(1));
+      break;
+    }
+
+    case 'ref': {
+      // Command Reference Generator — Story 19.3
+      const { runRef } = require('../.aiox-core/cli/commands/ref/index.js');
+      runRef(args.slice(1));
+      break;
+    }
+
+    case 'changes': {
+      // Changelog Viewer — Story 19.4
+      const { runChanges } = require('../.aiox-core/cli/commands/changes/index.js');
+      runChanges(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
