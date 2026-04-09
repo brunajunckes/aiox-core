@@ -1688,6 +1688,34 @@ async function main() {
       break;
     }
 
+    case 'resources': {
+      // Resource Monitor — Story 24.1
+      const { runResources } = require('../.aiox-core/cli/commands/resources/index.js');
+      runResources(args.slice(1));
+      break;
+    }
+
+    case 'build-time': {
+      // Build Time Tracker — Story 24.2
+      const { runBuildTime } = require('../.aiox-core/cli/commands/build-time/index.js');
+      runBuildTime(args.slice(1));
+      break;
+    }
+
+    case 'error-rate': {
+      // Error Rate Monitor — Story 24.3
+      const { runErrorRate } = require('../.aiox-core/cli/commands/error-rate/index.js');
+      runErrorRate(args.slice(1));
+      break;
+    }
+
+    case 'uptime': {
+      // Uptime Tracker — Story 24.4
+      const { runUptime } = require('../.aiox-core/cli/commands/uptime/index.js');
+      runUptime(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
