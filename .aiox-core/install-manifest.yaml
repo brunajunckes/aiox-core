@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T00:27:14.295Z"
+generated_at: "2026-04-09T00:35:54.367Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1143
+file_count: 1147
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -28,6 +28,10 @@ files:
     hash: sha256:d59961e32ec62b5948d151d62aa9d7322561d773f19bff7ed8706c65832f1d6a
     type: cli
     size: 8184
+  - path: cli/commands/chain/index.js
+    hash: sha256:1662a3b3d70dca3d47726c06cadcc3002f2b1ee4d8b12b76c9f3f6972627c83e
+    type: cli
+    size: 7026
   - path: cli/commands/changelog/index.js
     hash: sha256:f46425a2fc54d89c014a3b1a4c1d71fe5f68f5b9a3e3b5fee738daf1f5ecdc71
     type: cli
@@ -108,6 +112,10 @@ files:
     hash: sha256:ef4e90b9e950b5a5eb6a74f63cedcdb7ba0dc94a0f56d47bbff89263531d33f6
     type: cli
     size: 10401
+  - path: cli/commands/init-project/index.js
+    hash: sha256:6c3261deda0b9b2c140b954f2c82ae63dda7c94780b9b6de2104f799200277f5
+    type: cli
+    size: 11059
   - path: cli/commands/licenses/index.js
     hash: sha256:8b983c866da9b6fbfb86605945386e74af4ead32b3e7a20806183925d5bb482c
     type: cli
@@ -256,6 +264,10 @@ files:
     hash: sha256:631c9de14c2594179d49b2c3b0cb01c928023e5fbd98cb6735a91bc09c9dbad0
     type: cli
     size: 9701
+  - path: cli/commands/setup/index.js
+    hash: sha256:b12664b381938680a639a5de47c6d4ea35af268a9e9e73abd1d1ec3026da226c
+    type: cli
+    size: 8911
   - path: cli/commands/smoke-test/index.js
     hash: sha256:83109fe9636658a3082e897d9c2c05340023358a7805ebd87238d92c15787cde
     type: cli
@@ -272,6 +284,10 @@ files:
     hash: sha256:aa97c814add4204b18ff469dcb043d2545296c0c081cd5367d68de63a70ec5aa
     type: cli
     size: 7768
+  - path: cli/commands/theme/index.js
+    hash: sha256:6e76339dd23263d95c92b5412125f8c49dc3c64de1fc82e4ef446c2bc568926a
+    type: cli
+    size: 7843
   - path: cli/commands/validate/index.js
     hash: sha256:b49dcd35424f753f4fedc96c8e1070f716a1f3cb3357baa5b7377d60b5f75cad
     type: cli
