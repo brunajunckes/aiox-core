@@ -1576,6 +1576,34 @@ async function main() {
       break;
     }
 
+    case 'version': {
+      // Version Manager — Story 20.1
+      const { runVersionMgr } = require('../.aiox-core/cli/commands/version-mgr/index.js');
+      runVersionMgr(args.slice(1));
+      break;
+    }
+
+    case 'migrate-guide': {
+      // Migration Guide Generator — Story 20.2
+      const { runMigrateGuide } = require('../.aiox-core/cli/commands/migrate-guide/index.js');
+      runMigrateGuide(args.slice(1));
+      break;
+    }
+
+    case 'release-check': {
+      // Release Checklist Runner — Story 20.3
+      const { runReleaseCheck } = require('../.aiox-core/cli/commands/release-check/index.js');
+      runReleaseCheck(args.slice(1));
+      break;
+    }
+
+    case 'stats-summary': {
+      // CLI Stats & Summary — Story 20.4
+      const { runStatsSummary } = require('../.aiox-core/cli/commands/stats-summary/index.js');
+      runStatsSummary(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
