@@ -1772,6 +1772,62 @@ async function main() {
       break;
     }
 
+    case 'milestones': {
+      // Milestone Tracker — Story 27.1
+      const { runMilestones } = require('../.aiox-core/cli/commands/milestones/index.js');
+      runMilestones(args.slice(1));
+      break;
+    }
+
+    case 'risks': {
+      // Risk Register — Story 27.2
+      const { runRisks } = require('../.aiox-core/cli/commands/risks/index.js');
+      runRisks(args.slice(1));
+      break;
+    }
+
+    case 'burndown': {
+      // Burndown Chart — Story 27.3
+      const { runBurndown } = require('../.aiox-core/cli/commands/burndown/index.js');
+      runBurndown(args.slice(1));
+      break;
+    }
+
+    case 'capacity': {
+      // Capacity Planner — Story 27.4
+      const { runCapacity } = require('../.aiox-core/cli/commands/capacity/index.js');
+      runCapacity(args.slice(1));
+      break;
+    }
+
+    case 'gen-endpoint': {
+      // API Endpoint Generator — Story 28.1
+      const { runGenEndpoint } = require('../.aiox-core/cli/commands/gen-endpoint/index.js');
+      runGenEndpoint(args.slice(1));
+      break;
+    }
+
+    case 'gen-model': {
+      // Database Model Generator — Story 28.2
+      const { runGenModel } = require('../.aiox-core/cli/commands/gen-model/index.js');
+      runGenModel(args.slice(1));
+      break;
+    }
+
+    case 'gen-middleware': {
+      // Middleware Generator — Story 28.3
+      const { runGenMiddleware } = require('../.aiox-core/cli/commands/gen-middleware/index.js');
+      runGenMiddleware(args.slice(1));
+      break;
+    }
+
+    case 'gen-config': {
+      // Config Schema Generator — Story 28.4
+      const { runGenConfig } = require('../.aiox-core/cli/commands/gen-config/index.js');
+      runGenConfig(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
