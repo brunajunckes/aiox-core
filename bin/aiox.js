@@ -1436,6 +1436,34 @@ async function main() {
       break;
     }
 
+    case 'tasks': {
+      // Task Runner with Dependencies — Story 15.1
+      const { runTasks } = require('../.aiox-core/cli/commands/tasks/index.js');
+      runTasks(args.slice(1));
+      break;
+    }
+
+    case 'watch': {
+      // Watch Mode for File Changes — Story 15.2
+      const { runWatch } = require('../.aiox-core/cli/commands/watch/index.js');
+      runWatch(args.slice(1));
+      break;
+    }
+
+    case 'cron': {
+      // Cron-like Scheduled Tasks — Story 15.3
+      const { runCron } = require('../.aiox-core/cli/commands/cron/index.js');
+      runCron(args.slice(1));
+      break;
+    }
+
+    case 'batch': {
+      // Batch File Operations — Story 15.4
+      const { runBatch } = require('../.aiox-core/cli/commands/batch/index.js');
+      runBatch(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
