@@ -1520,6 +1520,34 @@ async function main() {
       break;
     }
 
+    case 'test-gen': {
+      // Test Generator — Story 18.1
+      const { runTestGen } = require('../.aiox-core/cli/commands/test-gen/index.js');
+      runTestGen(args.slice(1));
+      break;
+    }
+
+    case 'flaky': {
+      // Test Flaky Detector — Story 18.2
+      const { runFlaky } = require('../.aiox-core/cli/commands/flaky/index.js');
+      runFlaky(args.slice(1));
+      break;
+    }
+
+    case 'test-impact': {
+      // Test Impact Analysis — Story 18.3
+      const { runTestImpact } = require('../.aiox-core/cli/commands/test-impact/index.js');
+      runTestImpact(args.slice(1));
+      break;
+    }
+
+    case 'test-report': {
+      // Test Report Dashboard — Story 18.4
+      const { runTestReport } = require('../.aiox-core/cli/commands/test-report/index.js');
+      runTestReport(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
