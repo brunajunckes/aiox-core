@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T01:02:35.633Z"
+generated_at: "2026-04-09T01:13:10.347Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1155
+file_count: 1159
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -24,6 +24,10 @@ files:
     hash: sha256:ef3f7083957f178d7816d1c55e161a3818200ceb4be0d39165abf4ff114d30e4
     type: cli
     size: 10991
+  - path: cli/commands/api-docs/index.js
+    hash: sha256:00350d89595609fa52cd3d931dc5a71554a3fb03923c786c666d7cd120eee421
+    type: cli
+    size: 6812
   - path: cli/commands/audit/index.js
     hash: sha256:08db0de4bb839652844a1e35d9f7275b7ea6f11fa2b805cd679fde11fde08bd7
     type: cli
@@ -120,6 +124,10 @@ files:
     hash: sha256:19470cc0105773336864d42872ecc13a48018c4a8984e3bd3091e1f753b35b11
     type: cli
     size: 13556
+  - path: cli/commands/healthcheck/index.js
+    hash: sha256:2c3b788885aadfd38d6f9d6a39541fb11cfee3c1274c9523f0fb568fd873caab
+    type: cli
+    size: 8594
   - path: cli/commands/help/index.js
     hash: sha256:6ea3369f82b44890096295f2d2ee7a7f0b133048974c1a86171bebe9db6dcff9
     type: cli
@@ -280,6 +288,10 @@ files:
     hash: sha256:d43c7fe5b4d9764480b240a749d7cfd5f27bedc6eaad4778b1c5c25977bc2ef5
     type: cli
     size: 9381
+  - path: cli/commands/serve/index.js
+    hash: sha256:c60617f80ec767e8f721ae8ff0399c6dc5a935af4f6df3c4a3edc3d9a70e5d43
+    type: cli
+    size: 6387
   - path: cli/commands/session/index.js
     hash: sha256:631c9de14c2594179d49b2c3b0cb01c928023e5fbd98cb6735a91bc09c9dbad0
     type: cli
@@ -324,6 +336,10 @@ files:
     hash: sha256:078892d510e7c1b5901d5ef9f48ea158f7920f66faf5ffdba68e7cc33b8f7e7e
     type: cli
     size: 8976
+  - path: cli/commands/webhooks/index.js
+    hash: sha256:2d9011c1be02e18a9d192d0ddd953f9224f5ac258b9939ff812cd96ba6573903
+    type: cli
+    size: 11818
   - path: cli/commands/workers/formatters/info-formatter.js
     hash: sha256:11c17e16be0b7d09ba8949497e0887bb20996966d266454aa2bb5dfc9d9d91b8
     type: cli
