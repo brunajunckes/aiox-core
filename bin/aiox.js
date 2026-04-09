@@ -1632,6 +1632,34 @@ async function main() {
       break;
     }
 
+    case 'dead-code': {
+      // Dead Code Detector — Story 22.1
+      const { runDeadCode } = require('../.aiox-core/cli/commands/dead-code/index.js');
+      runDeadCode(args.slice(1));
+      break;
+    }
+
+    case 'duplicates': {
+      // Code Duplication Finder — Story 22.2
+      const { runDuplicates } = require('../.aiox-core/cli/commands/duplicates/index.js');
+      runDuplicates(args.slice(1));
+      break;
+    }
+
+    case 'todos': {
+      // TODO/FIXME Tracker — Story 22.3
+      const { runTodos } = require('../.aiox-core/cli/commands/todos/index.js');
+      runTodos(args.slice(1));
+      break;
+    }
+
+    case 'imports': {
+      // Import Validator — Story 22.4
+      const { runImports } = require('../.aiox-core/cli/commands/imports/index.js');
+      runImports(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
