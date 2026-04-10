@@ -240,6 +240,7 @@ test-sample-*.md
 # These stay local only — not published to GitHub or npm.
 
 docs/stories/
+!docs/stories/42.*.story.md
 docs/research/
 docs/qa/
 docs/epics/
@@ -372,3 +373,9 @@ build/
 .claude/settings.local.json
 .aiox/install-log.txt
 .claude/settings.local.json
+
+# Igreja Web3 (keep only source, ignore dependencies)
+recovered/igreja-web3/node_modules/
+recovered/igreja-web3/dist/
+recovered/igreja-web3/.next/
+recovered/igreja-web3/coverage/
