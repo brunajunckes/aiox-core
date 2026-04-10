@@ -1,0 +1,9 @@
+{
+  "integrations": {
+    "claude": {
+      "models": [
+        "qwen2:7b-instruct"
+      ]
+    }
+  }
+}

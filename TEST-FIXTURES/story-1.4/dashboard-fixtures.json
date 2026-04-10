@@ -1,0 +1,64 @@
+{
+  "story_id": "1.4",
+  "title": "Dashboard & Monitoring Setup",
+  "owner": "@architect",
+  "description": "aiox graph dashboard and monitoring implementation",
+
+  "dashboard_modes": {
+    "ascii_tree": {
+      "name": "ASCII Dependency Tree",
+      "command": "aiox graph --deps",
+      "use_case": "Default view, terminal-friendly"
+    },
+    "json_format": {
+      "name": "JSON Output",
+      "command": "aiox graph --deps --format=json",
+      "use_case": "Programmatic access, data analysis"
+    },
+    "mermaid_diagram": {
+      "name": "Mermaid Diagram",
+      "command": "aiox graph --deps --format=mermaid",
+      "use_case": "Documentation, presentations"
+    },
+    "graphviz_dot": {
+      "name": "Graphviz DOT",
+      "command": "aiox graph --deps --format=dot",
+      "use_case": "Visual network analysis, tools integration"
+    },
+    "html_interactive": {
+      "name": "Interactive HTML",
+      "command": "aiox graph --deps --format=html",
+      "features": ["Zoom and pan", "Click to expand", "Search and filter"],
+      "use_case": "Exploration, stakeholder presentations"
+    }
+  },
+
+  "live_watch_mode": {
+    "command": "aiox graph --deps --watch --interval=5",
+    "description": "Continuous monitoring with auto-refresh",
+    "refresh_interval_seconds": 5
+  },
+
+  "entity_metrics": {
+    "command": "aiox graph --stats",
+    "description": "Entity statistics and cache metrics",
+    "metrics": ["agent_count", "story_count", "total_dependencies"]
+  },
+
+  "acceptance_criteria": [
+    "aiox graph --deps renders dependency tree",
+    "aiox graph --stats shows entity metrics",
+    "HTML/Mermaid/DOT formats available",
+    "Live watch mode operational",
+    "Agent execution metrics tracked",
+    "Story lifecycle status visible",
+    "Performance dashboard accessible"
+  ],
+
+  "metadata": {
+    "story_status": "PENDING",
+    "phase": 2,
+    "effort_hours": 12,
+    "created": "2026-04-07T00:00:00Z"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "quality_gates": {
+    "lint": {"command": "npm run lint", "expected_exit_code": 0, "timeout_seconds": 30},
+    "test": {"command": "npm test", "expected_exit_code": 0, "minimum_coverage": 80, "timeout_seconds": 120},
+    "typecheck": {"command": "npm run typecheck", "expected_exit_code": 0, "timeout_seconds": 60},
+    "coderabbit": {"command": "coderabbit --prompt-only --base main", "expected_exit_code": 0, "timeout_seconds": 180},
+    "constitution": {"command": "aiox doctor", "expected_exit_code": 0, "timeout_seconds": 30}
+  },
+
+  "npm_scripts": {
+    "test": {"expected_time_seconds": 60, "outputs": ["coverage/lcov-report/index.html"]},
+    "lint": {"expected_time_seconds": 15},
+    "typecheck": {"expected_time_seconds": 20},
+    "build": {"expected_time_seconds": 40}
+  },
+
+  "deployment_readiness": {
+    "pr_checks": ["All tests pass", "Linting passes", "Type checking passes", "CodeRabbit review complete", "Story AC met"],
+    "merge_checks": ["PR approved", "All CI checks passed", "Story marked InReview"],
+    "release_checks": ["All stories marked Done", "Full test suite passes", "Zero lint errors", "Coverage >= 80%"]
+  }
+}

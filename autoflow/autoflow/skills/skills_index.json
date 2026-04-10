@@ -1,0 +1,887 @@
+{
+  "skills": [
+    {
+      "id": "ab-test-setup",
+      "name": "Ab Test Setup",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/ab-test-setup--17692c4c2c/SKILL.md",
+      "description": "When the user wants to plan, design, or implement an A/B test or experiment."
+    },
+    {
+      "id": "ad-creative",
+      "name": "Ad Creative",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/ad-creative--12c82e231e/SKILL.md",
+      "description": "When the user wants to generate, iterate, or scale ad creative — headlines, descriptions, primary text, or full ad variations — for any paid advertising platform."
+    },
+    {
+      "id": "ai-seo",
+      "name": "Ai Seo",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/ai-seo--99624dde51/SKILL.md",
+      "description": "When the user wants to optimize content for AI search engines, get cited by LLMs, or appear in AI-generated answers."
+    },
+    {
+      "id": "alert-manager",
+      "name": "Alert Manager",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/alert-manager--80b4b35a90/SKILL.md",
+      "description": "Configure SEO alerts for ranking drops, traffic changes, technical issues, competitor movements."
+    },
+    {
+      "id": "analytics-tracking",
+      "name": "Analytics Tracking",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/analytics-tracking--3a1eff505a/SKILL.md",
+      "description": "When the user wants to set up, improve, or audit analytics tracking and measurement."
+    },
+    {
+      "id": "backlink-analyzer",
+      "name": "Backlink Analyzer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/backlink-analyzer--257239db5e/SKILL.md",
+      "description": "Analyze backlink profiles: link authority, toxic links, building opportunities, competitor link gaps."
+    },
+    {
+      "id": "brainstorming",
+      "name": "Brainstorming",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/brainstorming--b3aaa70f28/SKILL.md",
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior."
+    },
+    {
+      "id": "churn-prevention",
+      "name": "Churn Prevention",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/churn-prevention--57a700bd09/SKILL.md",
+      "description": "When the user wants to reduce churn, build cancellation flows, set up save offers, recover failed payments, or implement retention strategies."
+    },
+    {
+      "id": "cold-email",
+      "name": "Cold Email",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/cold-email--5262d11363/SKILL.md",
+      "description": "Write B2B cold emails and follow-up sequences that get replies."
+    },
+    {
+      "id": "competitor-alternatives",
+      "name": "Competitor Alternatives",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/competitor-alternatives--0832cd911a/SKILL.md",
+      "description": "When the user wants to create competitor comparison or alternative pages for SEO and sales enablement."
+    },
+    {
+      "id": "competitor-analysis",
+      "name": "Competitor Analysis",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/competitor-analysis--8fd0c95a34/SKILL.md",
+      "description": "Analyze competitor SEO/GEO: keywords, content, backlinks, AI citations, traffic share gaps."
+    },
+    {
+      "id": "content-gap-analysis",
+      "name": "Content Gap Analysis",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/content-gap-analysis--960dcf9608/SKILL.md",
+      "description": "Find content gaps: topics and keywords competitors cover that you don't, with editorial calendar."
+    },
+    {
+      "id": "content-quality-auditor",
+      "name": "Content Quality Auditor",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/content-quality-auditor--b6efb6e705/SKILL.md",
+      "description": "Publish-readiness gate: 80-item CORE-EEAT audit with weighted scoring, veto checks, and fix plan."
+    },
+    {
+      "id": "content-strategy",
+      "name": "Content Strategy",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/content-strategy--bde7416f1a/SKILL.md",
+      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover."
+    },
+    {
+      "id": "contract-comparison",
+      "name": "Contract Comparison",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/contract-comparison--c17dcc50fb/SKILL.md",
+      "description": "Side-by-side comparison of two contract versions or two different contracts with change tracking, favorability analysis, and risk assessment"
+    },
+    {
+      "id": "copy-editing",
+      "name": "Copy Editing",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/copy-editing--d41c229ff0/SKILL.md",
+      "description": "When the user wants to edit, review, or improve existing marketing copy."
+    },
+    {
+      "id": "copywriting",
+      "name": "Copywriting",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/copywriting--26fbc1d16a/SKILL.md",
+      "description": "When the user wants to write, rewrite, or improve marketing copy for any page — including homepage, landing pages, pricing pages, feature pages, about pages, or product pages."
+    },
+    {
+      "id": "counter-proposal-generator",
+      "name": "Counter Proposal Generator",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/counter-proposal-generator--049496c87f/SKILL.md",
+      "description": "Generates specific counter-proposals for every unfavorable clause, with replacement language, negotiation talking points, and a ready-to-send email template"
+    },
+    {
+      "id": "custom-nda-generator",
+      "name": "Custom Nda Generator",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/custom-nda-generator--aac1b2d020/SKILL.md",
+      "description": "Generates a complete, customized Non-Disclosure Agreement with plain English annotations, tailored to the specific parties and situation"
+    },
+    {
+      "id": "customer-research",
+      "name": "Customer Research",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/customer-research--3095ff62f0/SKILL.md",
+      "description": "When the user wants to conduct, analyze, or synthesize customer research."
+    },
+    {
+      "id": "deep-risk-analysis",
+      "name": "Deep Risk Analysis",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/deep-risk-analysis--a8f58dfe85/SKILL.md",
+      "description": "Clause-by-clause contract risk analysis with severity scoring, financial exposure estimates, and prioritized remediation guidance"
+    },
+    {
+      "id": "dispatching-parallel-agents",
+      "name": "Dispatching Parallel Agents",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/dispatching-parallel-agents--9857858fad/SKILL.md",
+      "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies"
+    },
+    {
+      "id": "domain-authority-auditor",
+      "name": "Domain Authority Auditor",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/domain-authority-auditor--5c1484250f/SKILL.md",
+      "description": "40-item CITE domain audit: citation, impact, trust, entity scoring with veto checks."
+    },
+    {
+      "id": "email-sequence",
+      "name": "Email Sequence",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/email-sequence--56a75f4f43/SKILL.md",
+      "description": "When the user wants to create or optimize an email sequence, drip campaign, automated email flow, or lifecycle email program."
+    },
+    {
+      "id": "entity-optimizer",
+      "name": "Entity Optimizer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/entity-optimizer--298461fc54/SKILL.md",
+      "description": "Build entity presence in Knowledge Graph, Wikidata, AI systems for brand recognition and citations."
+    },
+    {
+      "id": "executing-plans",
+      "name": "Executing Plans",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/executing-plans--0b0aa19d46/SKILL.md",
+      "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+    },
+    {
+      "id": "finishing-a-development-branch",
+      "name": "Finishing A Development Branch",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/finishing-a-development-branch--a3beaba8e6/SKILL.md",
+      "description": "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup"
+    },
+    {
+      "id": "form-cro",
+      "name": "Form Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/form-cro--133ddcc89c/SKILL.md",
+      "description": "When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms."
+    },
+    {
+      "id": "free-tool-strategy",
+      "name": "Free Tool Strategy",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/free-tool-strategy--c050e56841/SKILL.md",
+      "description": "When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness."
+    },
+    {
+      "id": "geo",
+      "name": "Geo",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo--effd4f94b9/SKILL.md",
+      "description": "GEO-first SEO analysis tool."
+    },
+    {
+      "id": "geo-audit",
+      "name": "Geo Audit",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-audit--ce63c7201c/SKILL.md",
+      "description": "Full website GEO+SEO audit with parallel subagent delegation."
+    },
+    {
+      "id": "geo-brand-mentions",
+      "name": "Geo Brand Mentions",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-brand-mentions--2762a065fc/SKILL.md",
+      "description": "Brand mention and authority scanner for AI visibility."
+    },
+    {
+      "id": "geo-citability",
+      "name": "Geo Citability",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-citability--59d88f0d4a/SKILL.md",
+      "description": "AI citability scoring and optimization."
+    },
+    {
+      "id": "geo-compare",
+      "name": "Geo Compare",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-compare--39f1258020/SKILL.md",
+      "description": "Monthly delta tracking and progress reporting for GEO clients."
+    },
+    {
+      "id": "geo-content",
+      "name": "Geo Content",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-content--ef3900dd80/SKILL.md",
+      "description": "Content quality and E-E-A-T assessment for AI citability — evaluate experience, expertise, authoritativeness, trustworthiness, and content structure"
+    },
+    {
+      "id": "geo-content-optimizer",
+      "name": "Geo Content Optimizer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-content-optimizer--0f9e0627ae/SKILL.md",
+      "description": "Optimize content for AI citations in ChatGPT, Perplexity, AI Overviews, Gemini, Claude."
+    },
+    {
+      "id": "geo-crawlers",
+      "name": "Geo Crawlers",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-crawlers--47ef2e0b5f/SKILL.md",
+      "description": "AI crawler access analysis."
+    },
+    {
+      "id": "geo-llmstxt",
+      "name": "Geo Llmstxt",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-llmstxt--70d8eb2ebd/SKILL.md",
+      "description": "Analyzes and generates llms.txt files -- the emerging standard for helping AI systems understand website structure and content."
+    },
+    {
+      "id": "geo-platform-optimizer",
+      "name": "Geo Platform Optimizer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-platform-optimizer--11dd054b1a/SKILL.md",
+      "description": "Platform-specific AI search optimization — audit and optimize for Google AI Overviews, ChatGPT, Perplexity, Gemini, and Bing Copilot individually"
+    },
+    {
+      "id": "geo-proposal",
+      "name": "Geo Proposal",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-proposal--cec9d2829b/SKILL.md",
+      "description": "Auto-generate a professional, client-ready GEO service proposal from audit data."
+    },
+    {
+      "id": "geo-prospect",
+      "name": "Geo Prospect",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-prospect--bcb628ae3b/SKILL.md",
+      "description": "CRM-lite for managing GEO agency prospects and clients."
+    },
+    {
+      "id": "geo-report",
+      "name": "Geo Report",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-report--97d8009918/SKILL.md",
+      "description": "Generate a professional, client-facing GEO report combining all audit results into a single deliverable with scores, findings, and prioritized actions"
+    },
+    {
+      "id": "geo-report-pdf",
+      "name": "Geo Report Pdf",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-report-pdf--76b771d7ef/SKILL.md",
+      "description": "Generate a professional PDF report from GEO audit data using ReportLab."
+    },
+    {
+      "id": "geo-schema",
+      "name": "Geo Schema",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-schema--9f6abefd96/SKILL.md",
+      "description": "Schema.org structured data audit and generation optimized for AI discoverability — detect, validate, and generate JSON-LD markup"
+    },
+    {
+      "id": "geo-technical",
+      "name": "Geo Technical",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/geo-technical--134ef16ba9/SKILL.md",
+      "description": "Technical SEO audit with GEO-specific checks — crawlability, indexability, security, performance, SSR, and AI crawler access"
+    },
+    {
+      "id": "internal-linking-optimizer",
+      "name": "Internal Linking Optimizer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/internal-linking-optimizer--61be12edb0/SKILL.md",
+      "description": "Optimize internal links: site architecture, authority distribution, orphan pages, crawl depth analysis."
+    },
+    {
+      "id": "keyword-research",
+      "name": "Keyword Research",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/keyword-research--efa43a9c1c/SKILL.md",
+      "description": "Find high-value SEO keywords: search volume, difficulty, intent classification, topic clusters."
+    },
+    {
+      "id": "launch-strategy",
+      "name": "Launch Strategy",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/launch-strategy--ce821a8c90/SKILL.md",
+      "description": "When the user wants to plan a product launch, feature announcement, or release strategy."
+    },
+    {
+      "id": "lead-magnets",
+      "name": "Lead Magnets",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/lead-magnets--c10e635cf6/SKILL.md",
+      "description": "When the user wants to create, plan, or optimize a lead magnet for email capture or lead generation."
+    },
+    {
+      "id": "legal",
+      "name": "Legal",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal--1aa3da5256/SKILL.md",
+      "description": "You are the AI Legal Assistant, a suite of 14 Claude Code skills that help users review contracts, generate legal documents, check compliance, and produce professional PDF reports."
+    },
+    {
+      "id": "legal-agreement",
+      "name": "Legal Agreement",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-agreement--d638869fc4/SKILL.md",
+      "description": "You are the business agreement generator for `/legal agreement <type>`. You gather details from the user and produce a complete, professional business agreement with annotations explaining each section in plain English."
+    },
+    {
+      "id": "legal-compliance",
+      "name": "Legal Compliance",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-compliance--70ad7e11d5/SKILL.md",
+      "description": "You are the compliance auditor for `/legal compliance <url>`. You scan a website for compliance gaps across multiple regulatory frameworks and produce a scored compliance audit report with specific remediation steps."
+    },
+    {
+      "id": "legal-freelancer",
+      "name": "Legal Freelancer",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-freelancer--bcf6baacdc/SKILL.md",
+      "description": "You are the freelancer contract review specialist for `/legal freelancer <file>`. You analyze contracts specifically from the freelancer/contractor's perspective, flagging common freelancer traps, scoring the contract's fairness, and producing a Free"
+    },
+    {
+      "id": "legal-privacy",
+      "name": "Legal Privacy",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-privacy--5fa46d4691/SKILL.md",
+      "description": "You are the privacy policy generator for `/legal privacy <url>`. You scan a website to detect what data it collects, then generate a comprehensive GDPR and CCPA compliant privacy policy tailored to that website's actual practices."
+    },
+    {
+      "id": "legal-report-pdf",
+      "name": "Legal Report Pdf",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-report-pdf--e34c1db87c/SKILL.md",
+      "description": "You are the PDF report generator for `/legal report-pdf`. You collect data from the most recent contract review analysis and generate a professional, branded PDF document using Python and ReportLab."
+    },
+    {
+      "id": "legal-review",
+      "name": "Legal Review",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/legal-review--0cc8132ec6/SKILL.md",
+      "description": "You are the full contract review engine for `/legal review <file>`. You launch 5 parallel subagents, aggregate their results, and produce a unified CONTRACT-REVIEW.md report with a Contract Safety Score, clause-by-clause analysis, and prioritized act"
+    },
+    {
+      "id": "market",
+      "name": "Market",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market--1dcd2bdaac/SKILL.md",
+      "description": "You are a comprehensive AI marketing analysis and content generation system for Claude Code. You help entrepreneurs, agency builders, and solopreneurs analyze websites, generate marketing content, audit funnels, create client proposals, and build mar"
+    },
+    {
+      "id": "market-ads",
+      "name": "Market Ads",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-ads--9a34d43177/SKILL.md",
+      "description": "You are the advertising engine for `/market ads <url>`. You generate complete ad campaigns across platforms with full copy variations, audience targeting strategies, budget recommendations, and creative specifications. Every ad is ready for productio"
+    },
+    {
+      "id": "market-audit",
+      "name": "Market Audit",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-audit--6cb417bef7/SKILL.md",
+      "description": "You are the full marketing audit engine for `/market audit <url>`. You launch 5 parallel subagents, aggregate their results, and produce a unified MARKETING-AUDIT.md report that is client-ready and revenue-focused."
+    },
+    {
+      "id": "market-brand",
+      "name": "Market Brand",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-brand--6a490fe799/SKILL.md",
+      "description": "Analyze a brand's voice, tone, and messaging across all available channels and generate a comprehensive brand voice guidelines document. This skill examines how a brand communicates, identifies patterns and inconsistencies, and produces actionable gu"
+    },
+    {
+      "id": "market-competitors",
+      "name": "Market Competitors",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-competitors--731e40ca76/SKILL.md",
+      "description": "You are the competitive intelligence engine for `/market competitors <url>`. You identify competitors, analyze their marketing strategies, and produce a comprehensive comparison report that reveals positioning gaps, steal-worthy tactics, and differen"
+    },
+    {
+      "id": "market-copy",
+      "name": "Market Copy",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-copy--9602bdc848/SKILL.md",
+      "description": "You are the copywriting engine for `/market copy <url>`. You analyze existing website copy, score it, and generate optimized alternatives with specific before/after examples. Every recommendation is grounded in proven copywriting frameworks and tailo"
+    },
+    {
+      "id": "market-emails",
+      "name": "Market Emails",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-emails--fe6d2013a9/SKILL.md",
+      "description": "You are the email marketing engine for `/market emails <topic/url>`. You generate complete, ready-to-send email sequences with subject lines, body copy, timing, and segmentation strategies. Every sequence is built on proven email frameworks and calib"
+    },
+    {
+      "id": "market-funnel",
+      "name": "Market Funnel",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-funnel--552bd9799f/SKILL.md",
+      "description": "You are the funnel analysis engine for `/market funnel <url>`. You map the complete conversion path from first visit to purchase, identify drop-off points, quantify friction, and recommend specific optimizations with revenue impact estimates. Every r"
+    },
+    {
+      "id": "market-landing",
+      "name": "Market Landing",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-landing--42e2e94a2d/SKILL.md",
+      "description": "Perform a comprehensive Conversion Rate Optimization (CRO) analysis on any landing page. This skill produces a section-by-section teardown with prioritized, actionable fixes that directly impact conversion rates."
+    },
+    {
+      "id": "market-launch",
+      "name": "Market Launch",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-launch--ef42aa8888/SKILL.md",
+      "description": "Generate a complete, week-by-week launch playbook for any product, service, or feature launch. This skill produces a tactical plan with templates, checklists, email sequences, social posts, and metrics tracking -- everything needed to execute a succe"
+    },
+    {
+      "id": "market-proposal",
+      "name": "Market Proposal",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-proposal--ea360bd35f/SKILL.md",
+      "description": "Generate a professional, client-ready marketing services proposal. This skill produces a complete proposal document that positions the agency/consultant as the clear choice, frames pricing with anchoring and tiered options, and includes ROI projectio"
+    },
+    {
+      "id": "market-report",
+      "name": "Market Report",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-report--90fb9ff675/SKILL.md",
+      "description": "Generate a comprehensive, professionally formatted marketing report in Markdown. This skill compiles data from all previous audit and analysis results into a single, client-ready document with scores, findings, recommendations, and a prioritized acti"
+    },
+    {
+      "id": "market-report-pdf",
+      "name": "Market Report Pdf",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-report-pdf--ebd1546c12/SKILL.md",
+      "description": "Generate a professional, visually polished PDF marketing report using the Python script `scripts/generate_pdf_report.py`. This skill collects all available audit and analysis data, structures it into the expected JSON format, invokes the script, and "
+    },
+    {
+      "id": "market-seo",
+      "name": "Market Seo",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-seo--92bebe845e/SKILL.md",
+      "description": "Perform a comprehensive SEO audit of a webpage or website, covering on-page SEO, content quality (E-E-A-T), keyword analysis, technical SEO, and content strategy. This skill combines automated analysis via `scripts/analyze_page.py` with expert-level "
+    },
+    {
+      "id": "market-social",
+      "name": "Market Social",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/market-social--7c522f01d7/SKILL.md",
+      "description": "You are the social media engine for `/market social <topic/url>`. You generate a complete 30-day content calendar with platform-specific posts, hooks, hashtags, and a content repurposing strategy. Every post is ready to publish or hand to a social me"
+    },
+    {
+      "id": "marketing-ideas",
+      "name": "Marketing Ideas",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/marketing-ideas--7f48f2fbcb/SKILL.md",
+      "description": "When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product."
+    },
+    {
+      "id": "marketing-psychology",
+      "name": "Marketing Psychology",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/marketing-psychology--07d19a66b7/SKILL.md",
+      "description": "When the user wants to apply psychological principles, mental models, or behavioral science to marketing."
+    },
+    {
+      "id": "memory-management",
+      "name": "Memory Management",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/memory-management--42c735e901/SKILL.md",
+      "description": "Persist SEO/GEO campaign context across Claude sessions with automatic hot-list, active work, and archive tiers."
+    },
+    {
+      "id": "meta-tags-optimizer",
+      "name": "Meta Tags Optimizer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/meta-tags-optimizer--2071f0944e/SKILL.md",
+      "description": "Optimize title tags, meta descriptions, Open Graph, Twitter cards for maximum CTR with A/B variations."
+    },
+    {
+      "id": "missing-protections-finder",
+      "name": "Missing Protections Finder",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/missing-protections-finder--108b1b153c/SKILL.md",
+      "description": "Identifies critical clauses and protections that should be in a contract but are missing, with urgency ratings and ready-to-insert language"
+    },
+    {
+      "id": "on-page-seo-auditor",
+      "name": "On Page Seo Auditor",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/on-page-seo-auditor--5b95d12bd8/SKILL.md",
+      "description": "Audit on-page SEO: titles, headers, images, links with scored report and fix priorities."
+    },
+    {
+      "id": "onboarding-cro",
+      "name": "Onboarding Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/onboarding-cro--2412b838ef/SKILL.md",
+      "description": "When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value."
+    },
+    {
+      "id": "page-cro",
+      "name": "Page Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/page-cro--045bd51008/SKILL.md",
+      "description": "When the user wants to optimize, improve, or increase conversions on any marketing page — including homepage, landing pages, pricing pages, feature pages, or blog posts."
+    },
+    {
+      "id": "paid-ads",
+      "name": "Paid Ads",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/paid-ads--d82f2cad28/SKILL.md",
+      "description": "When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms."
+    },
+    {
+      "id": "paywall-upgrade-cro",
+      "name": "Paywall Upgrade Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/paywall-upgrade-cro--9fd0775d44/SKILL.md",
+      "description": "When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates."
+    },
+    {
+      "id": "performance-reporter",
+      "name": "Performance Reporter",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/performance-reporter--c813e2506c/SKILL.md",
+      "description": "Generate SEO/GEO dashboards: rankings, traffic, backlinks, AI visibility for stakeholders."
+    },
+    {
+      "id": "plain-english-translation",
+      "name": "Plain English Translation",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/plain-english-translation--23c76612b7/SKILL.md",
+      "description": "Translates every clause of a contract from legalese into clear, plain English with flags for deliberately confusing or misleading language"
+    },
+    {
+      "id": "popup-cro",
+      "name": "Popup Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/popup-cro--ac7ecc0c8e/SKILL.md",
+      "description": "When the user wants to create or optimize popups, modals, overlays, slide-ins, or banners for conversion purposes."
+    },
+    {
+      "id": "pricing-strategy",
+      "name": "Pricing Strategy",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/pricing-strategy--b18fa03143/SKILL.md",
+      "description": "When the user wants help with pricing decisions, packaging, or monetization strategy."
+    },
+    {
+      "id": "product-marketing-context",
+      "name": "Product Marketing Context",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/product-marketing-context--e12d9f6da4/SKILL.md",
+      "description": "When the user wants to create or update their product marketing context document."
+    },
+    {
+      "id": "programmatic-seo",
+      "name": "Programmatic Seo",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/programmatic-seo--a55192d534/SKILL.md",
+      "description": "When the user wants to create SEO-driven pages at scale using templates and data."
+    },
+    {
+      "id": "rank-tracker",
+      "name": "Rank Tracker",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/rank-tracker--def71e139e/SKILL.md",
+      "description": "Track keyword rankings and SERP feature changes in traditional search and AI responses over time."
+    },
+    {
+      "id": "receiving-code-review",
+      "name": "Receiving Code Review",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/receiving-code-review--75fac7f4fb/SKILL.md",
+      "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation"
+    },
+    {
+      "id": "referral-program",
+      "name": "Referral Program",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/referral-program--c2939a51c2/SKILL.md",
+      "description": "When the user wants to create, optimize, or analyze a referral program, affiliate program, or word-of-mouth strategy."
+    },
+    {
+      "id": "requesting-code-review",
+      "name": "Requesting Code Review",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/requesting-code-review--61525675f7/SKILL.md",
+      "description": "Use when completing tasks, implementing major features, or before merging to verify work meets requirements"
+    },
+    {
+      "id": "revops",
+      "name": "Revops",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/revops--53b7c65daf/SKILL.md",
+      "description": "When the user wants help with revenue operations, lead lifecycle management, or marketing-to-sales handoff processes."
+    },
+    {
+      "id": "sales",
+      "name": "Sales",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales--a6905ddfa6/SKILL.md",
+      "description": "You are a comprehensive AI sales intelligence and outreach system for Claude Code. You help founders, sales teams, agency owners, and solopreneurs research prospects, qualify leads, identify decision makers, generate personalized outreach, prepare fo"
+    },
+    {
+      "id": "sales-competitors",
+      "name": "Sales Competitors",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-competitors--08c33b51a2/SKILL.md",
+      "description": "You analyze what tools, services, and solutions a prospect currently uses and generate actionable battle cards for selling against each detected competitor. This is NOT a general market analysis — it is focused entirely on helping a salesperson WIN a"
+    },
+    {
+      "id": "sales-contacts",
+      "name": "Sales Contacts",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-contacts--5edfdae193/SKILL.md",
+      "description": "You are the decision maker intelligence engine for `/sales contacts <url>`. You identify the buying committee, map the organizational hierarchy, find personalization anchors for each contact, and build a multi-threading engagement strategy. This skil"
+    },
+    {
+      "id": "sales-enablement",
+      "name": "Sales Enablement",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-enablement--b9393067e0/SKILL.md",
+      "description": "When the user wants to create sales collateral, pitch decks, one-pagers, objection handling docs, or demo scripts."
+    },
+    {
+      "id": "sales-followup",
+      "name": "Sales Followup",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-followup--c24da72382/SKILL.md",
+      "description": "You generate strategic follow-up email sequences for prospects after initial contact has been made. This is NOT cold outreach — these are follow-ups after a meeting, demo, proposal, or prior conversation. Every follow-up must add new value, reference"
+    },
+    {
+      "id": "sales-icp",
+      "name": "Sales Icp",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-icp--83d0860275/SKILL.md",
+      "description": "- **Title:** Ideal Customer Profile Builder - **Invocation:** `/sales icp <description>` - **Input:** A description of the user's business, product, or service - **Output:** `IDEAL-CUSTOMER-PROFILE.md` written to the current working directory"
+    },
+    {
+      "id": "sales-objections",
+      "name": "Sales Objections",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-objections--1551e24af3/SKILL.md",
+      "description": "You generate comprehensive objection response scripts that salespeople can use in real-time during calls, meetings, and email exchanges. Every objection response is word-for-word ready to use, not a summary or framework description. This playbook cov"
+    },
+    {
+      "id": "sales-outreach",
+      "name": "Sales Outreach",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-outreach--6e8f89f7a6/SKILL.md",
+      "description": "You are the cold outreach engine for `/sales outreach <prospect>`. You generate complete, personalized, ready-to-send cold email sequences with integrated LinkedIn touchpoints. Every email is built on proven outreach frameworks and calibrated with re"
+    },
+    {
+      "id": "sales-prep",
+      "name": "Sales Prep",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-prep--a111cb2559/SKILL.md",
+      "description": "You generate comprehensive meeting preparation briefs that give salespeople everything they need before walking into a prospect meeting. The brief combines company research, attendee intelligence, competitive context, and tactical preparation into a "
+    },
+    {
+      "id": "sales-proposal",
+      "name": "Sales Proposal",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-proposal--df5098b1a2/SKILL.md",
+      "description": "You generate professional, client-ready sales proposals that persuade, differentiate, and close deals. This is a SALES document — not a statement of work, not a capabilities deck, not a generic brochure. Every section leads with the client's problems"
+    },
+    {
+      "id": "sales-prospect",
+      "name": "Sales Prospect",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-prospect--c3e2462aba/SKILL.md",
+      "description": "You are the full prospect audit engine for `/sales prospect <url>`. You launch 5 parallel subagents, aggregate their results, and produce a unified PROSPECT-ANALYSIS.md report that is ready-to-use and deal-focused."
+    },
+    {
+      "id": "sales-qualify",
+      "name": "Sales Qualify",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-qualify--303ea495fe/SKILL.md",
+      "description": "You are the lead qualification engine for `/sales qualify <url>`. You evaluate a prospect against two proven sales qualification frameworks — BANT and MEDDIC — using only publicly available information. This skill is invoked standalone or as the **sa"
+    },
+    {
+      "id": "sales-report",
+      "name": "Sales Report",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-report--bc1e62aaf5/SKILL.md",
+      "description": "- **Title:** Sales Pipeline Report Generator - **Invocation:** `/sales report` - **Input:** None (scans current directory for prospect analysis files) - **Output:** `SALES-REPORT.md` written to the current working directory"
+    },
+    {
+      "id": "sales-report-pdf",
+      "name": "Sales Report Pdf",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-report-pdf--f8fdcebbf1/SKILL.md",
+      "description": "- **Title:** Professional Sales Report PDF Generator - **Invocation:** `/sales report-pdf` - **Input:** None (reads SALES-REPORT.md and prospect files from current directory) - **Output:** `SALES-REPORT-{YYYY-MM-DD}.pdf` written to the current workin"
+    },
+    {
+      "id": "sales-research",
+      "name": "Sales Research",
+      "category": "sales",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/sales-research--5c3a79de65/SKILL.md",
+      "description": "You are the company research engine for `/sales research <url>`. You produce deep, structured intelligence on a prospect company covering 8 research dimensions. This skill is invoked standalone or as the **sales-company** subagent within `/sales pros"
+    },
+    {
+      "id": "schema-markup",
+      "name": "Schema Markup",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/schema-markup--44108395ae/SKILL.md",
+      "description": "When the user wants to add, fix, or optimize schema markup and structured data on their site."
+    },
+    {
+      "id": "schema-markup-generator",
+      "name": "Schema Markup Generator",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/schema-markup-generator--70cd1bfe87/SKILL.md",
+      "description": "Generate JSON-LD structured data for FAQ, HowTo, Article, Product, LocalBusiness rich results."
+    },
+    {
+      "id": "seo-audit",
+      "name": "Seo Audit",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/seo-audit--4af4d70125/SKILL.md",
+      "description": "When the user wants to audit, review, or diagnose SEO issues on their site."
+    },
+    {
+      "id": "seo-content-writer",
+      "name": "Seo Content Writer",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/seo-content-writer--38d849dbb3/SKILL.md",
+      "description": "Write SEO blog posts, articles, landing pages with keyword integration, header optimization, and snippet targeting."
+    },
+    {
+      "id": "serp-analysis",
+      "name": "Serp Analysis",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/serp-analysis--aed4e79121/SKILL.md",
+      "description": "Analyze SERPs: ranking factors, features, intent patterns, AI overviews, featured snippets."
+    },
+    {
+      "id": "signup-flow-cro",
+      "name": "Signup Flow Cro",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/signup-flow-cro--ecb79cff27/SKILL.md",
+      "description": "When the user wants to optimize signup, registration, account creation, or trial activation flows."
+    },
+    {
+      "id": "site-architecture",
+      "name": "Site Architecture",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/site-architecture--eaa15946e8/SKILL.md",
+      "description": "When the user wants to plan, map, or restructure their website's page hierarchy, navigation, URL structure, or internal linking."
+    },
+    {
+      "id": "social-content",
+      "name": "Social Content",
+      "category": "marketing",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/social-content--cbc0fa0dc5/SKILL.md",
+      "description": "When the user wants help creating, scheduling, or optimizing social media content for LinkedIn, Twitter/X, Instagram, TikTok, Facebook, or other platforms."
+    },
+    {
+      "id": "subagent-driven-development",
+      "name": "Subagent Driven Development",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/subagent-driven-development--d642044758/SKILL.md",
+      "description": "Use when executing implementation plans with independent tasks in the current session"
+    },
+    {
+      "id": "systematic-debugging",
+      "name": "Systematic Debugging",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/systematic-debugging--4f570d732b/SKILL.md",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes"
+    },
+    {
+      "id": "technical-seo-checker",
+      "name": "Technical Seo Checker",
+      "category": "seo",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/technical-seo-checker--70a3f94e90/SKILL.md",
+      "description": "Technical SEO audit: Core Web Vitals, crawl, indexing, mobile, speed, architecture, redirects."
+    },
+    {
+      "id": "terms-of-service-generator",
+      "name": "Terms Of Service Generator",
+      "category": "legal",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/terms-of-service-generator--fc074fc758/SKILL.md",
+      "description": "Generates complete, GDPR/CCPA-compliant Terms of Service for a website or SaaS product, with plain English summaries for each section"
+    },
+    {
+      "id": "test-driven-development",
+      "name": "Test Driven Development",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/test-driven-development--44f86f3667/SKILL.md",
+      "description": "Use when implementing any feature or bugfix, before writing implementation code"
+    },
+    {
+      "id": "using-git-worktrees",
+      "name": "Using Git Worktrees",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/using-git-worktrees--6a8b7e6fd9/SKILL.md",
+      "description": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - creates isolated git worktrees with smart directory selection and safety verification"
+    },
+    {
+      "id": "using-superpowers",
+      "name": "Using Superpowers",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/using-superpowers--f915887017/SKILL.md",
+      "description": "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions"
+    },
+    {
+      "id": "verification-before-completion",
+      "name": "Verification Before Completion",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/verification-before-completion--5bfbbdb7d1/SKILL.md",
+      "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always"
+    },
+    {
+      "id": "writing-plans",
+      "name": "Writing Plans",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/writing-plans--c9c854b48a/SKILL.md",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code"
+    },
+    {
+      "id": "writing-skills",
+      "name": "Writing Skills",
+      "category": "dev",
+      "path": "/root/recovered/vps-antiga/skills/8c2836c2-7514-4c74-ba31-ae7252d10604/__runtime__/writing-skills--895a64891d/SKILL.md",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment"
+    }
+  ],
+  "categories": {
+    "marketing": 38,
+    "seo": 39,
+    "sales": 20,
+    "legal": 14,
+    "dev": 14
+  },
+  "total": 125
+}

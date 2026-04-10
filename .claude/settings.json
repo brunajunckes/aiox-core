@@ -21,6 +21,24 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /root/.claude/hooks/ollama-enforcer.sh",
+            "timeout": 5,
+            "statusMessage": "Cost optimization check"
+          }
+        ]
+      }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "timeout 2 node /root/.claude/hooks/hud-metrics-display.js 2>/dev/null || echo \"AIOX\""
+  },
+  "model": "haiku"
 }
