@@ -1,0 +1,83 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Development
+.env
+.env.local
+.env.*.local
+*.log
+logs/
+.claude/
+
+# Documentation
+docs/stories/
+docs/architecture/
+
+# Testing
+tests/
+test_*.py
+*_test.py
+pytest.ini
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Docker
+docker-compose.override.yml
+Dockerfile.dev
+
+# Kubernetes
+k8s/
+.kustomization
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Large files
+*.tar.gz
+*.zip
+*.rar
+cache/
+ollama/
+
+# Temporary
+tmp/
+temp/
+*.tmp

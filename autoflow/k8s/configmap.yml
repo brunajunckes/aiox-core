@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: autoflow-config
+  namespace: autoflow
+data:
+  API_HOST: "0.0.0.0"
+  API_PORT: "8080"
+  LOG_LEVEL: "INFO"
+  OLLAMA_URL: "http://ollama:11434"
+  POSTGRES_HOST: "postgres"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "autoflow"
+  POSTGRES_USER: "autoflow"
+  PYTHONUNBUFFERED: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: autoflow
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      - job_name: 'autoflow'
+        static_configs:
+          - targets: ['autoflow:8080']
+        metrics_path: '/metrics/prometheus'
+        scrape_interval: 10s
+
+      - job_name: 'ollama'
+        static_configs:
+          - targets: ['ollama:11434']
+        metrics_path: '/metrics'
+        scrape_interval: 30s
+
+      - job_name: 'postgres'
+        static_configs:
+          - targets: ['postgres-exporter:9187']
+        scrape_interval: 30s
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: autoflow
+data:
+  datasources.yml: |
+    apiVersion: 1
+
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus:9090
+        isDefault: true
+        editable: true
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: autoflow
+data:
+  dashboards.yml: |
+    apiVersion: 1
+
+    providers:
+      - name: 'AutoFlow'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 10
+        allowUiUpdates: true
+        options:
+          path: /var/lib/grafana/dashboards
