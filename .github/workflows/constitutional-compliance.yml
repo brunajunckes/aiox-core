@@ -1,0 +1,46 @@
+name: Constitutional Compliance
+
+on:
+  push:
+    branches: [main, 'story/*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  compliance:
+    name: Constitutional Compliance Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Run compliance tests
+        run: node tests/compliance/suite.js
+
+  story-validation:
+    name: Story Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate story association
+        run: |
+          BRANCH="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+          if [[ "$BRANCH" == story/* ]]; then
+            STORY_ID=$(echo "$BRANCH" | sed 's|story/||' | cut -d'-' -f1)
+            STORY_FILE="docs/stories/${STORY_ID}.story.md"
+            if [ ! -f "$STORY_FILE" ]; then
+              echo "::error::No story file found at ${STORY_FILE} for branch ${BRANCH}"
+              exit 1
+            fi
+            echo "Story file found: ${STORY_FILE}"
+            if grep -q "\[x\] Done" "$STORY_FILE" || grep -q "\[x\] InProgress" "$STORY_FILE"; then
+              echo "Story status is valid"
+            else
+              echo "::warning::Story status is not InProgress or Done"
+            fi
+          else
+            echo "Not a story branch, skipping validation"
+          fi

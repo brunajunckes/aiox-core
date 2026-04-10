@@ -1,0 +1,15 @@
+{
+  "agents": [
+    {"id": "dev", "name": "Dex", "role": "Implementation", "exclusive_operations": ["git add", "git commit", "story file updates"]},
+    {"id": "qa", "name": "Quinn", "role": "Quality Assurance", "exclusive_operations": ["qa-gate", "verdict", "7-point quality checks"]},
+    {"id": "architect", "name": "Aria", "role": "Design Authority", "exclusive_operations": ["system architecture", "technology selection", "integration patterns"]},
+    {"id": "pm", "name": "Morgan", "role": "Epic Orchestration", "exclusive_operations": ["*execute-epic", "*create-epic", "requirements gathering"]},
+    {"id": "po", "name": "Pax", "role": "Story Validation", "exclusive_operations": ["*validate-story-draft", "story validation"]},
+    {"id": "sm", "name": "River", "role": "Story Creation", "exclusive_operations": ["*draft", "*create-story"]},
+    {"id": "analyst", "name": "Alex", "role": "Research & Analysis", "exclusive_operations": ["research", "analysis"]},
+    {"id": "data-engineer", "name": "Dara", "role": "Database Design", "exclusive_operations": ["schema design", "query optimization", "RLS policies"]},
+    {"id": "ux-design-expert", "name": "Uma", "role": "UX/UI Design", "exclusive_operations": ["UX/UI design decisions"]},
+    {"id": "devops", "name": "Gage", "role": "CI/CD & Release", "exclusive_operations": ["git push", "gh pr create", "MCP management", "CI/CD pipeline"]}
+  ],
+  "metadata": {"total_agents": 10, "framework_version": "5.0.4", "constitution_articles": 6}
+}

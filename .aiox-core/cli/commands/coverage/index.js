@@ -19,15 +19,17 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  parseCoverageJson,
+  calculateSummary,
+  checkThresholds,
+  getUncoveredFiles,
+  generateTextReport,
+  generateJsonReport,
+  DEFAULT_THRESHOLDS,
+} = require('../../../core/coverage-report');
 
 // ── Constants ────────────────────────────────────────────────────────────────
-
-const DEFAULT_THRESHOLDS = {
-  statements: 70,
-  branches: 60,
-  functions: 70,
-  lines: 70,
-};
 
 const COVERAGE_SUMMARY_PATH = 'coverage/coverage-summary.json';
 const HISTORY_PATH = '.aiox/coverage-history.jsonl';
@@ -50,12 +52,8 @@ function getProjectRoot() {
  */
 function readCoverageSummary() {
   const filePath = path.join(getProjectRoot(), COVERAGE_SUMMARY_PATH);
-  if (!fs.existsSync(filePath)) {
-    return null;
-  }
   try {
-    const raw = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(raw);
+    return parseCoverageJson(filePath);
   } catch (error) {
     console.error(`Error reading coverage summary: ${error.message}`);
     return null;
@@ -237,7 +235,7 @@ function showSummary() {
 /**
  * Check coverage against thresholds.
  */
-function checkThresholds() {
+function checkThresholdsCmd() {
   const data = readCoverageSummary();
   if (!data) {
     console.log('No coverage data found. Run npm run test:coverage first.');
@@ -245,22 +243,8 @@ function checkThresholds() {
     return;
   }
 
-  const totals = data.total;
-  if (!totals) {
-    console.log('No total coverage data found in summary.');
-    process.exitCode = 1;
-    return;
-  }
-
-  const results = [];
-  let passing = true;
-
-  for (const [metric, threshold] of Object.entries(DEFAULT_THRESHOLDS)) {
-    const actual = totals[metric] ? totals[metric].pct : 0;
-    const pass = actual >= threshold;
-    if (!pass) passing = false;
-    results.push({ metric, threshold, actual, pass });
-  }
+  const summary = calculateSummary(data);
+  const result = checkThresholds(summary, DEFAULT_THRESHOLDS);
 
   console.log('\n Coverage Threshold Check');
   console.log('─'.repeat(50));
@@ -272,17 +256,19 @@ function checkThresholds() {
   );
   console.log('─'.repeat(50));
 
-  for (const r of results) {
+  for (const [metric, threshold] of Object.entries(DEFAULT_THRESHOLDS)) {
+    const actual = summary[metric] || 0;
+    const pass = actual >= threshold;
     console.log(
-      r.metric.padEnd(15) +
-      `${r.threshold}%`.padStart(12) +
-      `${r.actual.toFixed(1)}%`.padStart(10) +
-      (r.pass ? '  PASS' : '  FAIL').padStart(10)
+      metric.padEnd(15) +
+      `${threshold}%`.padStart(12) +
+      `${actual.toFixed(1)}%`.padStart(10) +
+      (pass ? '  PASS' : '  FAIL').padStart(10)
     );
   }
   console.log('─'.repeat(50));
 
-  if (passing) {
+  if (result.passed) {
     console.log('\nAll thresholds met.');
   } else {
     console.log('\nCoverage below thresholds.');
@@ -347,7 +333,7 @@ function runCoverage(args) {
 
   if (help) { showHelp(); return; }
   if (trend) { showTrend(); return; }
-  if (check) { checkThresholds(); return; }
+  if (check) { checkThresholdsCmd(); return; }
 
   showSummary();
 }
@@ -359,7 +345,7 @@ module.exports = {
   showHelp,
   showSummary,
   showTrend,
-  checkThresholds,
+  checkThresholds: checkThresholdsCmd,
   readCoverageSummary,
   extractModuleCoverage,
   readHistory,
