@@ -1,0 +1,32 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-igreja
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    networks:
+      - app-network
+    depends_on:
+      - igreja
+
+  igreja:
+    image: node:18-alpine
+    container_name: igreja-nas-casas
+    restart: always
+    working_dir: /app
+    volumes:
+      - /root/recovered/igreja-nas-casas:/app:ro
+    command: node server.js
+    environment:
+      - PORT=3001
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

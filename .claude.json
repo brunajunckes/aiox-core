@@ -32,7 +32,7 @@
     "rename-conversation": 28,
     "custom-commands": 28
   },
-  "promptQueueUseCount": 167,
+  "promptQueueUseCount": 243,
   "btwUseCount": 7,
   "autoConnectIde": true,
   "cachedGrowthBookFeatures": {
@@ -686,7 +686,7 @@
   ],
   "lastPlanModeUse": 1775739844749,
   "feedbackSurveyState": {
-    "lastShownTime": 1775734403555
+    "lastShownTime": 1775782793436
   },
   "aioxLLMRouting": {
     "version": "1.1.0",

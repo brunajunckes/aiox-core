@@ -20,3 +20,4 @@ bash /root/.claude/hooks/self-heal-config.sh 2>/dev/null
 if [ -f "$HOME/.bashrc.claude-startup" ]; then
   source "$HOME/.bashrc.claude-startup"
 fi
+. "/root/.acme.sh/acme.sh.env"
