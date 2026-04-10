@@ -173,22 +173,36 @@ describe("Igreja Smart Contract Suite", function () {
   });
 
   describe("Distribution Edge Cases", function () {
-    it("Should handle distribution with no donors", async function () {
-      // Transfer funds but don't register donors
+    it("Should handle distribution with no donors (Chiesa with empty donors)", async function () {
+      // Add balance for distribution
       await mockUSDC.transfer(chiesa.address, ethers.utils.parseUnits("1000", 6));
 
-      try {
-        // This should fail or handle gracefully with 0 donors
-        await chiesa.distributeYield();
-        throw new Error("Expected revert");
-      } catch (error: any) {
-        // Expected: division by zero or no donors to distribute to
-        expect(
-          error.message.includes("No balance") ||
-          error.message.includes("Division") ||
-          error.message.includes("VM Exception")
-        ).to.be.true;
-      }
+      // With the guard clause in place, distributeYield should succeed
+      // All funds go to owner since there are no donors
+      const ownerBalanceBefore = await mockUSDC.balanceOf(owner.address);
+      await chiesa.distributeYield();
+      const ownerBalanceAfter = await mockUSDC.balanceOf(owner.address);
+
+      // Owner should receive the entire balance
+      expect(ownerBalanceAfter.gt(ownerBalanceBefore)).to.be.true;
+    });
+
+    it("Should handle empty donors array in calculateDistribution", async function () {
+      const distributionLogicFactory = await ethers.getContractFactory("DistributionLogic");
+      const dl = await distributionLogicFactory.deploy();
+      await dl.deployed();
+
+      const totalAmount = ethers.utils.parseUnits("1000", 6);
+      const emptyDonors: string[] = [];
+
+      // Call with empty donors array - should not throw division by zero
+      const [recipients, amounts] = await dl.calculateDistribution(totalAmount, emptyDonors);
+
+      // Guard clause should ensure 100% goes to owner
+      expect(recipients.length).to.equal(1);
+      expect(amounts.length).to.equal(1);
+      expect(recipients[0]).to.equal(owner.address);
+      expect(amounts[0]).to.eql(totalAmount);
     });
 
     it("Should handle distribution with single donor", async function () {

@@ -44,6 +44,15 @@ contract DistributionLogic {
         view
         returns (address[] memory recipients, uint256[] memory amounts)
     {
+        // Guard against empty donors array - prevent division by zero
+        if (donors.length == 0) {
+            recipients = new address[](1);
+            amounts = new uint256[](1);
+            recipients[0] = owner;
+            amounts[0] = totalAmount;
+            return (recipients, amounts);
+        }
+
         // For now, simple distribution: 60% church, 30% donor rewards, 10% reserve
         uint256 churchAmount = (totalAmount * churchPercentage) / 100;
         uint256 donorRewardAmount = (totalAmount * donorRewardPercentage) / 100;
