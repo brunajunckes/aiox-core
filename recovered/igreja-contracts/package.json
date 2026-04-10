@@ -1,0 +1,44 @@
+{
+  "name": "igreja-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for Igreja nas Casas - Web3 Church Platform",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:gas": "REPORT_GAS=true hardhat test",
+    "deploy": "hardhat run scripts/deploy.ts",
+    "deploy:mumbai": "hardhat run scripts/deploy.ts --network mumbai",
+    "verify": "hardhat verify"
+  },
+  "keywords": [
+    "solidity",
+    "hardhat",
+    "contracts",
+    "erc20",
+    "yield"
+  ],
+  "author": "Igreja nas Casas",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@typechain/ethers-v5": "^10.2.1",
+    "@typechain/hardhat": "^6.1.5",
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "hardhat": "^2.14.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.2",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.3.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts-upgradeable": "^4.9.3",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2"
+  }
+}
