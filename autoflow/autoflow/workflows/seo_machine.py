@@ -3,14 +3,16 @@
 
 Expanded SEO pipeline integrating patterns from recovered SEO/GEO skills
 (keyword-research, competitor-analysis, ai-seo, content-strategy).
+Uses task_router for intelligent model selection (Ollama for simple, Opus for complex).
 """
 import json
+import asyncio
 from langgraph.graph import StateGraph, END
 from typing import TypedDict, Annotated
 import operator
 
 from .base import make_validation_node, should_retry, run_workflow
-from ..core.router import call_llm_sync
+from ..core.task_router import route_and_call
 
 
 class SEOMachineState(TypedDict):
@@ -146,7 +148,14 @@ def site_audit_node(state: SEOMachineState) -> dict:
         prompt += f"\nTarget URL: {url}"
     prompt += f"\nNiche/Topic: {topic}"
 
-    raw = call_llm_sync(prompt, system=SITE_AUDIT_SYSTEM)
+    # Use task_router with research category (analysis task)
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=SITE_AUDIT_SYSTEM,
+            category_hint="research",
+        )
+    )
 
     try:
         audit = _parse_json(raw)
@@ -182,7 +191,14 @@ def keyword_research_node(state: SEOMachineState) -> dict:
     if audit.get("opportunities"):
         prompt += f"\n\nSite audit found these opportunities: {', '.join(audit['opportunities'][:5])}"
 
-    raw = call_llm_sync(prompt, system=KEYWORD_RESEARCH_SYSTEM)
+    # Use task_router with seo-analysis category
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=KEYWORD_RESEARCH_SYSTEM,
+            category_hint="seo-analysis",
+        )
+    )
 
     try:
         data = _parse_json(raw)
@@ -215,7 +231,14 @@ def competitor_analysis_node(state: SEOMachineState) -> dict:
     if keywords:
         prompt += f"\nTarget keywords: {', '.join(keywords[:10])}"
 
-    raw = call_llm_sync(prompt, system=COMPETITOR_ANALYSIS_SYSTEM)
+    # Use task_router with research category
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=COMPETITOR_ANALYSIS_SYSTEM,
+            category_hint="research",
+        )
+    )
 
     try:
         competitor_data = _parse_json(raw)
@@ -255,7 +278,15 @@ def content_plan_node(state: SEOMachineState) -> dict:
     if competitor_data.get("strategy_recommendations"):
         prompt += f"\nStrategy notes: {', '.join(competitor_data['strategy_recommendations'][:3])}"
 
-    raw = call_llm_sync(prompt, system=CONTENT_PLAN_SYSTEM, max_tokens=8192)
+    # Use task_router with content-creation category
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=CONTENT_PLAN_SYSTEM,
+            category_hint="content-creation",
+            max_tokens=8192,
+        )
+    )
 
     try:
         data = _parse_json(raw)
@@ -300,7 +331,16 @@ def content_generation_node(state: SEOMachineState) -> dict:
         prompt += f"\n\nPREVIOUS ATTEMPT FAILED. Fix:\n{feedback}"
         prompt += f"\n\nPrevious output:\n{json.dumps(state.get('output', {}), indent=2)}"
 
-    raw = call_llm_sync(prompt, system=CONTENT_GENERATION_SYSTEM, max_tokens=8192)
+    # Use task_router with content-creation category and validation
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=CONTENT_GENERATION_SYSTEM,
+            category_hint="content-creation",
+            output_type="seo",  # Enable automatic validation & retry
+            max_tokens=8192,
+        )
+    )
 
     try:
         output = _parse_json(raw)

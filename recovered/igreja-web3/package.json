@@ -18,7 +18,9 @@
     "ethers": "^6.7.1",
     "@safe-global/safe-core-sdk": "^3.3.5",
     "@safe-global/safe-ethers-lib": "^1.9.2",
-    "axios": "^1.6.0"
+    "axios": "^1.6.0",
+    "@supabase/supabase-js": "^2.38.0",
+    "commander": "^11.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

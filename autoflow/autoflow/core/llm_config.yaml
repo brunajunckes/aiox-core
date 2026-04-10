@@ -1,0 +1,180 @@
+# LLM Configuration — Ollama Enforcement Strategy v2
+# Last updated: 2026-04-10
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PROVIDER ENDPOINTS
+# ─────────────────────────────────────────────────────────────────────────────
+
+providers:
+  ollama_online:
+    url: "http://ollama.ampcast.site"
+    health_check: "/api/tags"
+    timeout_seconds: 5
+    priority: 1  # Always online Ollama (port 80) - PRIMARY PROVIDER
+
+  llm_router:
+    url: "http://127.0.0.1:3000"
+    health_check: "/health"
+    timeout_seconds: 3
+    priority: 0  # Decision maker (consulted first)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MODELS
+# ─────────────────────────────────────────────────────────────────────────────
+
+models:
+  qwen2_5:
+    name: "qwen2.5:7b"
+    provider: "ollama_online"
+    size_gb: 4.7
+    quantization: "Q4_0"
+    context_window: 32768
+    cost_per_1k_tokens: 0.0  # FREE (online Ollama)
+    latency_ms: 300
+    quality_score: 7  # 1-10 (melhor que qwen2:7b)
+    best_for:
+      - "json-formatting"
+      - "yaml-generation"
+      - "markdown"
+      - "commit-messages"
+      - "boilerplate"
+      - "simple-text"
+    tier: "simple"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TASK CATEGORIES → MODEL MAPPING
+# ─────────────────────────────────────────────────────────────────────────────
+
+task_routing:
+  # ALWAYS use qwen2.5 for these (SIMPLE tier) — online Ollama
+  simple_tasks:
+    - "story-update"
+    - "yaml-generation"
+    - "json-formatting"
+    - "boilerplate"
+    - "markdown"
+    - "commit-message"
+    - "text-formatting"
+    - "test-boilerplate"
+    - "documentation-simple"
+    default_model: "qwen2_5"
+
+  # Use qwen2.5 for all tasks (Ollama only, no API key needed)
+  standard_tasks:
+    - "code-generation"
+    - "research"
+    - "seo-analysis"
+    - "content-creation"
+    - "documentation-complex"
+    - "data-analysis"
+    default_model: "qwen2_5"
+    note: "All tasks via Ollama (OAuth only, no Claude API)"
+
+  # Use qwen2.5 for all complex tasks too (Ollama only)
+  complex_tasks:
+    - "architecture"
+    - "security-review"
+    - "code-review"
+    - "schema-design"
+    - "migration"
+    - "integration"
+    default_model: "qwen2_5"
+    note: "All tasks via Ollama (OAuth only, no Claude API)"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ROUTING RULES
+# ─────────────────────────────────────────────────────────────────────────────
+
+routing_rules:
+  # Rule 1: Quality-critical → always Opus
+  - condition: "quality_critical == true"
+    model: "claude_opus"
+    reason: "Quality-critical tasks need best model"
+
+  # Rule 2: Security/auth related → always Opus
+  - condition: "has_keywords(['security', 'auth', 'vulnerability', 'encryption'])"
+    model: "claude_opus"
+    reason: "Security-sensitive code requires expert review"
+
+  # Rule 3: User preference
+  - condition: "user_preference != null"
+    model: "{user_preference}"
+    reason: "User explicitly requested model"
+
+  # Rule 4: System context provided → Opus (better context handling)
+  - condition: "has_system_context == true"
+    model: "claude_opus"
+    reason: "Complex reasoning with system context"
+
+  # Rule 5: Complexity score (from LLM-Router)
+  # All tasks go to Ollama (OAuth only, no API key)
+  - condition: "complexity_score <= 3"
+    model: "qwen2_5"
+    reason: "Simple task (complexity ≤ 3) - Ollama"
+
+  - condition: "4 <= complexity_score <= 8"
+    model: "qwen2_5"
+    reason: "Standard task (complexity 4-8) - Ollama"
+
+  - condition: "complexity_score >= 9"
+    model: "qwen2_5"
+    reason: "Complex task (complexity ≥ 9) - Ollama"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# COST TRACKING & BUDGETING
+# ─────────────────────────────────────────────────────────────────────────────
+
+budgets:
+  daily_usd: 5.00  # Max $5/day for Claude Opus
+  monthly_usd: 50.00  # Max $50/month
+  alert_threshold_pct: 80  # Alert when 80% spent
+
+  cost_saving_target:
+    description: "Route 70% of tasks to Ollama (free), only 30% to Opus"
+    rule: "Simple tasks NEVER use Opus"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LOGGING & MONITORING
+# ─────────────────────────────────────────────────────────────────────────────
+
+logging:
+  level: "INFO"
+  routing_log: "/var/log/autoflow-routing.jsonl"
+  call_log: "/var/log/autoflow-tasks.jsonl"
+  router_log: "/var/log/autoflow-router.jsonl"
+
+monitoring:
+  collect_metrics: true
+  track_latency: true
+  track_quality: true
+  export_interval_seconds: 60
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CIRCUIT BREAKER
+# ─────────────────────────────────────────────────────────────────────────────
+
+circuit_breaker:
+  # After 5 consecutive failures, mark provider as OPEN
+  failure_threshold: 5
+  # After OPEN, retry every 60s
+  reset_timeout_seconds: 60
+  # After 1 success, mark CLOSED
+  success_threshold: 1
+
+# ─────────────────────────────────────────────────────────────────────────────
+# FALLBACK CHAINS
+# ─────────────────────────────────────────────────────────────────────────────
+
+fallback_chains:
+  simple:
+    - "qwen2_5"
+    # No fallback - Ollama only
+
+  standard:
+    - "qwen2_5"
+    # No fallback - Ollama only
+
+  complex:
+    - "qwen2_5"
+    # No fallback - Ollama only
