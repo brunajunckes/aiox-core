@@ -1,2 +1,5 @@
 [credential]
 	helper = store
+[user]
+	name = Gage DevOps
+	email = devops@aiox.local
