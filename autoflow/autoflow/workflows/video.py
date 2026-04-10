@@ -2,14 +2,16 @@
 
 Generates production specs (not actual rendering — GPU is on desktop).
 Each step checkpointed for crash recovery.
+Uses task_router for intelligent model selection (Ollama for simple, Opus for complex).
 """
 import json
+import asyncio
 from langgraph.graph import StateGraph, END
 from typing import TypedDict, Annotated
 import operator
 
 from .base import make_validation_node, should_retry, run_workflow
-from ..core.router import call_llm_sync
+from ..core.task_router import route_and_call
 
 
 class VideoState(TypedDict):
@@ -49,7 +51,15 @@ def script_node(state: VideoState) -> dict:
         prompt += f"\n\nPREVIOUS ATTEMPT FAILED. Fix:\n{feedback}"
         prompt += f"\n\nPrevious output:\n{json.dumps(state.get('output', {}), indent=2)}"
 
-    raw = call_llm_sync(prompt, system=SCRIPT_SYSTEM)
+    # Use task_router with code-generation category and validation
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=SCRIPT_SYSTEM,
+            category_hint="code-generation",
+            output_type="video",  # Enable automatic validation & retry
+        )
+    )
 
     try:
         raw = raw.strip()
