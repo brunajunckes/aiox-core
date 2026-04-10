@@ -241,6 +241,7 @@ test-sample-*.md
 
 docs/stories/
 !docs/stories/42.*.story.md
+!docs/stories/43.*.story.md
 docs/research/
 docs/qa/
 docs/epics/
