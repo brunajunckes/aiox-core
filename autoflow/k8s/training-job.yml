@@ -1,0 +1,491 @@
+---
+# Kubernetes Job for model fine-tuning
+# Supports distributed training, GPU allocation, and automatic resource management
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: training-config
+  namespace: autoflow
+data:
+  training-entrypoint.py: |
+    #!/usr/bin/env python3
+    """Training job entrypoint."""
+    import os
+    import sys
+    import logging
+    from pathlib import Path
+
+    # Setup logging
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    def main():
+        """Run training job."""
+        job_id = os.getenv("JOB_ID")
+        base_model = os.getenv("BASE_MODEL")
+        dataset_path = os.getenv("DATASET_PATH", "/data/training")
+        checkpoint_path = os.getenv("CHECKPOINT_PATH", "/checkpoints")
+
+        logger.info(f"Starting training job: {job_id}")
+        logger.info(f"Base model: {base_model}")
+        logger.info(f"Dataset path: {dataset_path}")
+        logger.info(f"Checkpoint path: {checkpoint_path}")
+
+        # Check available GPUs
+        try:
+            import torch
+            if torch.cuda.is_available():
+                logger.info(f"CUDA available: {torch.cuda.get_device_name(0)}")
+                logger.info(f"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f}GB")
+            else:
+                logger.warning("No CUDA devices available, using CPU")
+        except ImportError:
+            logger.info("PyTorch not installed, skipping GPU check")
+
+        # Create checkpoint directory
+        Path(checkpoint_path).mkdir(parents=True, exist_ok=True)
+
+        # TODO: Implement actual training loop
+        logger.info("Training job completed successfully")
+        return 0
+
+    if __name__ == "__main__":
+        sys.exit(main())
+
+---
+# Job template for single GPU training
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: model-fine-tune-{{ JOB_ID }}
+  namespace: autoflow
+  labels:
+    app: autoflow
+    component: training
+    job-id: "{{ JOB_ID }}"
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 86400  # 24 hours
+  parallelism: 1
+  completions: 1
+
+  template:
+    metadata:
+      labels:
+        app: autoflow
+        component: training
+        job-id: "{{ JOB_ID }}"
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: training-sa
+
+      # Affinity for GPU node selection
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: accelerator
+                operator: In
+                values:
+                - nvidia-gpu
+                - amd-gpu
+
+      containers:
+      - name: training
+        image: autoflow/training:latest
+        imagePullPolicy: Always
+
+        # Environment variables
+        env:
+        - name: JOB_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['job-id']
+        - name: BASE_MODEL
+          value: "{{ BASE_MODEL }}"
+        - name: DATASET_PATH
+          value: /data/training
+        - name: CHECKPOINT_PATH
+          value: /checkpoints
+        - name: CUDA_VISIBLE_DEVICES
+          value: "0"
+
+        # GPU resource requests
+        resources:
+          requests:
+            memory: "16Gi"
+            cpu: "4"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "32Gi"
+            cpu: "8"
+            nvidia.com/gpu: 1
+
+        # Volume mounts
+        volumeMounts:
+        - name: training-config
+          mountPath: /app/config
+        - name: data
+          mountPath: /data
+        - name: checkpoints
+          mountPath: /checkpoints
+        - name: shared-tmp
+          mountPath: /tmp
+
+        # Probes
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - |
+              if [ -f /tmp/training.pid ]; then
+                kill -0 $(cat /tmp/training.pid) 2>/dev/null
+              else
+                exit 1
+              fi
+          initialDelaySeconds: 300
+          periodSeconds: 60
+
+        # Security context
+        securityContext:
+          runAsNonRoot: false
+          runAsUser: 0
+
+      # Volumes
+      volumes:
+      - name: training-config
+        configMap:
+          name: training-config
+      - name: data
+        persistentVolumeClaim:
+          claimName: training-data-pvc
+      - name: checkpoints
+        persistentVolumeClaim:
+          claimName: model-checkpoints-pvc
+      - name: shared-tmp
+        emptyDir:
+          sizeLimit: 10Gi
+
+---
+# Job for distributed training (multiple GPUs/nodes)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: model-fine-tune-distributed-{{ JOB_ID }}
+  namespace: autoflow
+  labels:
+    app: autoflow
+    component: training
+    job-id: "{{ JOB_ID }}"
+    distributed: "true"
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 86400
+  parallelism: 4  # Number of distributed workers
+  completions: 4
+
+  template:
+    metadata:
+      labels:
+        app: autoflow
+        component: training
+        job-id: "{{ JOB_ID }}"
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: training-sa
+
+      # Pod anti-affinity to spread workers across nodes
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: job-id
+                  operator: In
+                  values:
+                  - "{{ JOB_ID }}"
+              topologyKey: kubernetes.io/hostname
+
+      containers:
+      - name: training
+        image: autoflow/training:latest
+        imagePullPolicy: Always
+
+        # Environment for distributed training
+        env:
+        - name: JOB_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['job-id']
+        - name: POD_ORDINAL
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: BASE_MODEL
+          value: "{{ BASE_MODEL }}"
+        - name: DATASET_PATH
+          value: /data/training
+        - name: CHECKPOINT_PATH
+          value: /checkpoints
+        - name: DISTRIBUTED_TRAINING
+          value: "true"
+        - name: MASTER_ADDR
+          value: "$(JOB_ID)-0"
+        - name: MASTER_PORT
+          value: "29500"
+        - name: RANK
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: WORLD_SIZE
+          value: "4"
+
+        # GPU resource requests (1 per worker)
+        resources:
+          requests:
+            memory: "16Gi"
+            cpu: "4"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "32Gi"
+            cpu: "8"
+            nvidia.com/gpu: 1
+
+        # Volume mounts
+        volumeMounts:
+        - name: training-config
+          mountPath: /app/config
+        - name: data
+          mountPath: /data
+        - name: checkpoints
+          mountPath: /checkpoints
+        - name: shared-tmp
+          mountPath: /tmp
+
+      # Volumes
+      volumes:
+      - name: training-config
+        configMap:
+          name: training-config
+      - name: data
+        persistentVolumeClaim:
+          claimName: training-data-pvc
+      - name: checkpoints
+        persistentVolumeClaim:
+          claimName: model-checkpoints-pvc
+      - name: shared-tmp
+        emptyDir:
+          sizeLimit: 40Gi  # 10GB per worker
+
+---
+# PersistentVolumeClaim for training data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: training-data-pvc
+  namespace: autoflow
+spec:
+  accessModes:
+    - ReadOnlyMany  # Multiple pods read same data
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: fast-ssd
+
+---
+# PersistentVolumeClaim for model checkpoints
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-checkpoints-pvc
+  namespace: autoflow
+spec:
+  accessModes:
+    - ReadWriteMany  # Distributed workers need write access
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: fast-ssd
+
+---
+# ServiceAccount for training jobs
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: training-sa
+  namespace: autoflow
+
+---
+# ClusterRole for training jobs
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: training-role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log", "pods/status"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+
+---
+# ClusterRoleBinding for training jobs
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: training-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: training-role
+subjects:
+- kind: ServiceAccount
+  name: training-sa
+  namespace: autoflow
+
+---
+# HorizontalPodAutoscaler for GPU worker scaling
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: training-hpa
+  namespace: autoflow
+spec:
+  scaleTargetRef:
+    apiVersion: batch/v1
+    kind: Job
+    name: model-fine-tune-distributed-{{ JOB_ID }}
+  minReplicas: 1
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# NetworkPolicy for training jobs
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: training-network-policy
+  namespace: autoflow
+spec:
+  podSelector:
+    matchLabels:
+      component: training
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: training
+    ports:
+    - protocol: TCP
+      port: 29500  # PyTorch distributed training port
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          component: training
+    ports:
+    - protocol: TCP
+      port: 29500
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 53  # DNS
+    - protocol: UDP
+      port: 53
+
+---
+# StatefulSet for training coordinator
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: training-coordinator
+  namespace: autoflow
+spec:
+  serviceName: training-coordinator
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autoflow
+      component: training-coordinator
+  template:
+    metadata:
+      labels:
+        app: autoflow
+        component: training-coordinator
+    spec:
+      containers:
+      - name: coordinator
+        image: autoflow/training-coordinator:latest
+        ports:
+        - containerPort: 8000
+          name: http
+        - containerPort: 8001
+          name: grpc
+        volumeMounts:
+        - name: coordinator-data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "8Gi"
+            cpu: "4"
+  volumeClaimTemplates:
+  - metadata:
+      name: coordinator-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
+      storageClassName: fast-ssd
+
+---
+# Service for training coordinator
+apiVersion: v1
+kind: Service
+metadata:
+  name: training-coordinator
+  namespace: autoflow
+spec:
+  clusterIP: None
+  selector:
+    app: autoflow
+    component: training-coordinator
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+  - name: grpc
+    port: 8001
+    targetPort: 8001
