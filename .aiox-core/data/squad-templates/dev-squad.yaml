@@ -1,0 +1,57 @@
+name: Developer Squad
+description: Full-stack development team with implementation focus
+agents:
+  - id: dev
+    name: Dex
+    role: Implementation Specialist
+    capabilities:
+      - code-implementation
+      - unit-testing
+      - debugging
+      - refactoring
+  - id: architect
+    name: Aria
+    role: Technical Architect
+    capabilities:
+      - architecture-design
+      - system-analysis
+      - technology-selection
+      - integration-planning
+
+capabilities:
+  code-implementation:
+    description: Write and refactor production code
+    priority: critical
+  unit-testing:
+    description: Create comprehensive test coverage
+    priority: critical
+  architecture-design:
+    description: Design system architecture
+    priority: high
+  debugging:
+    description: Diagnose and fix issues
+    priority: high
+
+workflows:
+  - name: story-development
+    steps:
+      - task: implement
+        agent: dev
+      - task: review
+        agent: architect
+  - name: refactoring
+    steps:
+      - task: analyze
+        agent: architect
+      - task: implement
+        agent: dev
+
+communication_patterns:
+  - type: sync
+    frequency: per-task
+  - type: async
+    frequency: daily-summary
+
+metadata:
+  created_by: system
+  version: 1.0

@@ -1,0 +1,47 @@
+name: Quality Assurance Squad
+description: Testing and quality verification team
+agents:
+  - id: qa
+    name: Quinn
+    role: QA Engineer
+    capabilities:
+      - test-design
+      - test-execution
+      - quality-gates
+      - issue-tracking
+
+capabilities:
+  test-design:
+    description: Design test scenarios and cases
+    priority: critical
+  test-execution:
+    description: Execute and validate tests
+    priority: critical
+  quality-gates:
+    description: Enforce quality standards
+    priority: high
+  issue-tracking:
+    description: Track and manage defects
+    priority: high
+
+workflows:
+  - name: qa-gate
+    steps:
+      - task: review
+        agent: qa
+      - task: verify
+        agent: qa
+  - name: defect-resolution
+    steps:
+      - task: triage
+        agent: qa
+
+communication_patterns:
+  - type: sync
+    frequency: per-story
+  - type: async
+    frequency: daily-report
+
+metadata:
+  created_by: system
+  version: 1.0

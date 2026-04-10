@@ -1,0 +1,49 @@
+name: Infrastructure Squad
+description: DevOps and infrastructure operations team
+agents:
+  - id: devops
+    name: Gage
+    role: DevOps Engineer
+    capabilities:
+      - ci-cd-pipeline
+      - deployment
+      - git-operations
+      - release-management
+
+capabilities:
+  ci-cd-pipeline:
+    description: Manage CI/CD infrastructure
+    priority: critical
+  deployment:
+    description: Deploy to production
+    priority: critical
+  git-operations:
+    description: Git and version control
+    priority: high
+  release-management:
+    description: Coordinate releases
+    priority: high
+
+workflows:
+  - name: deployment
+    steps:
+      - task: prepare
+        agent: devops
+      - task: deploy
+        agent: devops
+  - name: release
+    steps:
+      - task: tag
+        agent: devops
+      - task: deploy
+        agent: devops
+
+communication_patterns:
+  - type: sync
+    frequency: per-deployment
+  - type: async
+    frequency: daily-status
+
+metadata:
+  created_by: system
+  version: 1.0
