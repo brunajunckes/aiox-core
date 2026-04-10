@@ -380,3 +380,4 @@ recovered/igreja-web3/node_modules/
 recovered/igreja-web3/dist/
 recovered/igreja-web3/.next/
 recovered/igreja-web3/coverage/
+.config/rclone/
