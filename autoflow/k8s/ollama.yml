@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama
+  namespace: autoflow
+spec:
+  ports:
+    - port: 11434
+      targetPort: 11434
+      protocol: TCP
+  clusterIP: None
+  selector:
+    app: ollama
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ollama
+  namespace: autoflow
+spec:
+  serviceName: ollama
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      containers:
+      - name: ollama
+        image: ollama/ollama:latest
+        ports:
+        - containerPort: 11434
+          name: ollama
+        env:
+        - name: OLLAMA_HOST
+          value: "0.0.0.0:11434"
+        volumeMounts:
+        - name: ollama-storage
+          mountPath: /root/.ollama
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /api/tags
+            port: 11434
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/tags
+            port: 11434
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+  volumeClaimTemplates:
+  - metadata:
+      name: ollama-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 50Gi
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ollama-models-init
+  namespace: autoflow
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: ollama-init
+        image: ollama/ollama:latest
+        env:
+        - name: OLLAMA_HOST
+          value: "http://ollama:11434"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          # Wait for Ollama to be ready
+          for i in {1..30}; do
+            curl -s http://ollama:11434/api/tags && break
+            echo "Waiting for Ollama... ($i/30)"
+            sleep 2
+          done
+
+          # Pull models
+          ollama pull qwen2.5:3b
+          ollama pull qwen2.5:7b
+          ollama pull gemma2:7b
+          ollama pull gemma2:9b
+          ollama pull mistral:7b
+
+          echo "All models loaded successfully"
+      initContainers: []
