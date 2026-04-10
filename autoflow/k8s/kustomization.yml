@@ -1,0 +1,78 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: autoflow
+
+resources:
+  - namespace.yml
+  - configmap.yml
+  - secrets.yml
+  - rbac.yml
+  - postgres.yml
+  - ollama.yml
+  - prometheus.yml
+  - grafana.yml
+  - autoflow.yml
+  - ingress.yml
+
+# Namespace for all resources
+namePrefix: autoflow-
+
+# Common labels applied to all resources
+commonLabels:
+  app.kubernetes.io/name: autoflow
+  app.kubernetes.io/version: "0.1.0"
+  app.kubernetes.io/component: platform
+
+# Common annotations
+commonAnnotations:
+  app.kubernetes.io/managed-by: kustomize
+  app.kubernetes.io/description: "AutoFlow Platform — God Mode Super Multi-Agent Platform"
+
+# ConfigMap generator for auto-reloading on changes
+configMapGenerator:
+  - name: prometheus-config
+    files:
+      - prometheus.yml
+    options:
+      disableNameSuffixHash: true
+
+# Image customization
+images:
+  - name: autoflow
+    newName: autoflow
+    newTag: latest
+  - name: postgres
+    newName: postgres
+    newTag: "16-alpine"
+  - name: ollama/ollama
+    newName: ollama/ollama
+    newTag: latest
+  - name: prom/prometheus
+    newName: prom/prometheus
+    newTag: latest
+  - name: grafana/grafana
+    newName: grafana/grafana
+    newTag: latest
+
+# Replicas override
+replicas:
+  - name: autoflow
+    count: 2
+  - name: prometheus
+    count: 1
+  - name: grafana
+    count: 1
+
+# Patches for resource limits and requests
+patches:
+  - target:
+      kind: Deployment
+      name: autoflow
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 512Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 1Gi
