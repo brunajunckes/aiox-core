@@ -33,7 +33,7 @@
     "custom-commands": 28,
     "frontend-design-plugin": 28
   },
-  "promptQueueUseCount": 269,
+  "promptQueueUseCount": 276,
   "btwUseCount": 7,
   "autoConnectIde": true,
   "cachedGrowthBookFeatures": {
@@ -697,11 +697,11 @@
   ],
   "lastPlanModeUse": 1775739844749,
   "feedbackSurveyState": {
-    "lastShownTime": 1775782793436
+    "lastShownTime": 1775838287530
   },
   "aioxLLMRouting": {
     "version": "1.1.0",
-    "installedAt": "2026-04-10T15:34:28.731Z",
+    "installedAt": "2026-04-10T16:30:28.380Z",
     "commands": [
       "claude-max",
       "claude-free",
