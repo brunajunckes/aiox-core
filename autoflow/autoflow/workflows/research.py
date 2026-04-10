@@ -1,11 +1,15 @@
-"""Research Workflow — Topic → Research → Validate → Output"""
+"""Research Workflow — Topic → Research → Validate → Output
+
+Uses task_router for intelligent model selection (Ollama for simple, Opus for complex).
+"""
 import json
+import asyncio
 from langgraph.graph import StateGraph, END
 from typing import TypedDict, Annotated
 import operator
 
 from .base import make_validation_node, should_retry, run_workflow
-from ..core.router import call_llm_sync
+from ..core.task_router import route_and_call
 
 
 class ResearchState(TypedDict):
@@ -37,7 +41,15 @@ def research_node(state: ResearchState) -> dict:
         prompt += f"\n\nPREVIOUS ATTEMPT FAILED. Fix these issues:\n{feedback}"
         prompt += f"\n\nPrevious output was:\n{json.dumps(state.get('output', {}), indent=2)}"
 
-    raw = call_llm_sync(prompt, system=RESEARCH_SYSTEM)
+    # Use task_router with research category and validation
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=RESEARCH_SYSTEM,
+            category_hint="research",
+            output_type="research",  # Enable automatic validation & retry
+        )
+    )
 
     try:
         raw = raw.strip()

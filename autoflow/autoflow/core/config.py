@@ -12,13 +12,12 @@ DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 # LLM Router AIOX (already running on port 3000)
 LLM_ROUTER_URL = os.getenv("LLM_ROUTER_URL", "http://localhost:3000")
 
-# Ollama (local, system service)
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2:7b-instruct")
+# Ollama ONLINE ONLY — ampcast.site (NEVER use local VPS)
+OLLAMA_URL = "http://ollama.ampcast.site"  # HARDCODED — ALWAYS ONLINE (port 80)
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")  # Default: qwen2.5
 
-# Claude API (via Max Plan — fallback)
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
+# Note: No Claude API key - using OAuth/Claude.ai only
+# Claude fallback not available (use Ollama only)
 
 # AutoFlow API
 API_HOST = os.getenv("AUTOFLOW_API_HOST", "0.0.0.0")

@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Cloudflare Tunnel config for the AutoFlow Desktop GPU Worker
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Location on Windows Desktop:
+#   C:\Users\<you>\.cloudflared\config.yml
+#
+# Location of credentials file (created by `cloudflared tunnel create`):
+#   C:\Users\<you>\.cloudflared\<TUNNEL_ID>.json
+#
+# Prereqs (run once on Desktop in an Admin PowerShell):
+#   1. Download cloudflared:  https://github.com/cloudflare/cloudflared/releases
+#      Put cloudflared.exe in C:\Program Files\cloudflared\
+#   2. cloudflared tunnel login            # opens browser, log in to CF account
+#   3. cloudflared tunnel create autoflow-gpu
+#      -> writes credentials to C:\Users\<you>\.cloudflared\<TUNNEL_ID>.json
+#   4. cloudflared tunnel route dns autoflow-gpu gpu.autoflow.example.com
+#      (replace with the hostname you own on Cloudflare)
+#   5. Copy this file to C:\Users\<you>\.cloudflared\config.yml  and edit the
+#      tunnel UUID + credentials-file path below.
+#   6. Install as a Windows service so it survives reboot:
+#        cloudflared service install
+#        Start-Service cloudflared
+#
+# After this, the Desktop GPU worker running on 127.0.0.1:8500 will be reachable
+# from the VPS at https://gpu.autoflow.example.com with Cloudflare mTLS.
+
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: C:\Users\YOURUSER\.cloudflared\REPLACE_WITH_TUNNEL_UUID.json
+
+# Optional: harden against tunnel drops
+retries: 5
+grace-period: 30s
+no-autoupdate: true
+
+# How traffic gets routed. First match wins; default 404s anything else.
+ingress:
+  # Main public hostname -> local FastAPI GPU worker
+  - hostname: gpu.autoflow.example.com
+    service: http://127.0.0.1:8500
+    originRequest:
+      # Big files (video) — bump timeouts
+      connectTimeout: 30s
+      tlsTimeout: 10s
+      noTLSVerify: true
+      httpHostHeader: localhost
+      # disableChunkedEncoding: false (default)
+      # Keep-alives help for streaming downloads
+      keepAliveTimeout: 90s
+      keepAliveConnections: 32
+
+  # Optional: expose Ollama on its own subdomain for debugging
+  - hostname: ollama.autoflow.example.com
+    service: http://127.0.0.1:11434
+    originRequest:
+      connectTimeout: 30s
+
+  # Catch-all (required last rule)
+  - service: http_status:404

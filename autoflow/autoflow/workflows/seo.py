@@ -1,14 +1,16 @@
 """SEO Content Workflow — Keywords → Content → Optimize → Validate → Output
 
 Multi-step content generation with SEO optimization.
+Uses task_router for intelligent model selection (Ollama for simple, Opus for complex).
 """
 import json
+import asyncio
 from langgraph.graph import StateGraph, END
 from typing import TypedDict, Annotated
 import operator
 
 from .base import make_validation_node, should_retry, run_workflow
-from ..core.router import call_llm_sync
+from ..core.task_router import route_and_call
 
 
 class SEOState(TypedDict):
@@ -40,7 +42,14 @@ Write naturally. Include keywords organically. No keyword stuffing."""
 def keyword_node(state: SEOState) -> dict:
     """Research keywords for the topic."""
     topic = state["input"].get("topic", "")
-    raw = call_llm_sync(f"Find SEO keywords for: {topic}", system=KEYWORD_SYSTEM)
+    # Use task_router with category hint for better routing
+    raw = asyncio.run(
+        route_and_call(
+            f"Find SEO keywords for: {topic}",
+            system=KEYWORD_SYSTEM,
+            category_hint="research",
+        )
+    )
 
     try:
         raw = raw.strip()
@@ -72,7 +81,15 @@ def content_node(state: SEOState) -> dict:
         prompt += f"\n\nPREVIOUS ATTEMPT FAILED. Fix:\n{feedback}"
         prompt += f"\n\nPrevious output:\n{json.dumps(state.get('output', {}), indent=2)}"
 
-    raw = call_llm_sync(prompt, system=CONTENT_SYSTEM)
+    # Use task_router with content-creation category and validation
+    raw = asyncio.run(
+        route_and_call(
+            prompt,
+            system=CONTENT_SYSTEM,
+            category_hint="content-creation",
+            output_type="seo",  # Enable automatic validation & retry
+        )
+    )
 
     try:
         raw = raw.strip()

@@ -20,6 +20,8 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 from ..core import config
+from ..core.prometheus_metrics import get_metrics_handler
+from ..core.alerting import get_failure_tracker, should_alert_on_failure
 
 app = FastAPI(
     title="AutoFlow API",
@@ -88,8 +90,20 @@ def _run_workflow_bg(job_id: str, wf_type: str, topic: str, **kwargs):
 
     except Exception as e:
         _jobs[job_id]["status"] = "error"
-        _jobs[job_id]["errors"] = [str(e), traceback.format_exc()[-500:]]
+        error_msg = str(e)
+        _jobs[job_id]["errors"] = [error_msg, traceback.format_exc()[-500:]]
         _jobs[job_id]["completed_at"] = datetime.utcnow().isoformat()
+
+        # Track failure
+        failure_tracker = get_failure_tracker()
+        severity = "ERROR" if should_alert_on_failure(error_msg) else "WARN"
+        failure_tracker.record_failure(
+            job_id=job_id,
+            workflow_type=wf_type,
+            topic=topic,
+            error=error_msg,
+            severity=severity
+        )
 
 
 # ── Endpoints ──
@@ -169,6 +183,104 @@ def metrics():
         return {"error": "No metrics yet"}
     except FileNotFoundError:
         return {"error": "Monitor log not found"}
+
+
+@app.get("/api/metrics/summary")
+def metrics_summary():
+    """Get workflow quality metrics summary."""
+    from datetime import datetime, timedelta
+
+    summary = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "workflows_total": 0,
+        "workflows_today": 0,
+        "workflows_week": 0,
+        "cost_total_usd": 0.0,
+        "cost_today_usd": 0.0,
+        "success_rate_percent": 0.0,
+        "avg_duration_seconds": 0.0,
+        "models_used": {},
+        "recent_workflows": [],
+    }
+
+    # Try to read task router logs
+    task_log = "/var/log/autoflow-tasks.jsonl"
+    if os.path.exists(task_log):
+        try:
+            now = datetime.utcnow()
+            today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+            week_ago = now - timedelta(days=7)
+
+            calls = []
+            with open(task_log, "r") as f:
+                for line in f:
+                    try:
+                        call = json.loads(line)
+                        calls.append(call)
+                    except json.JSONDecodeError:
+                        pass
+
+            summary["workflows_total"] = len(calls)
+
+            # Parse timestamps from call_number or create_at if available
+            for call in calls[-20:]:  # Last 20 calls
+                summary["cost_total_usd"] += call.get("cost_usd", 0)
+                model = call.get("model", "unknown")
+                summary["models_used"][model] = summary["models_used"].get(model, 0) + 1
+                summary["recent_workflows"].append({
+                    "model": model,
+                    "response_chars": call.get("response_chars", 0),
+                    "cost_usd": call.get("cost_usd", 0),
+                })
+
+            summary["models_used"] = dict(sorted(summary["models_used"].items(),
+                                               key=lambda x: x[1], reverse=True))
+
+        except Exception as e:
+            summary["error"] = f"Failed to read task log: {e}"
+
+    # Try to read job status from in-memory tracker
+    if _jobs:
+        completed = [j for j in _jobs.values() if j["status"] in ("completed", "error")]
+        if completed:
+            summary["success_rate_percent"] = round(
+                sum(1 for j in completed if j["status"] == "completed") / len(completed) * 100, 1
+            )
+
+    return summary
+
+
+@app.get("/metrics/prometheus")
+def prometheus_metrics():
+    """Prometheus-format metrics for Grafana scraping."""
+    from fastapi.responses import PlainTextResponse
+    metrics_handler = get_metrics_handler()
+    return PlainTextResponse(metrics_handler.generate_prometheus_output(), media_type="text/plain")
+
+
+@app.get("/api/metrics/detailed")
+def detailed_metrics():
+    """Detailed metrics as JSON (for dashboards)."""
+    metrics_handler = get_metrics_handler()
+    return metrics_handler.get_metrics_dict()
+
+
+@app.get("/api/alerts/summary")
+def alerts_summary():
+    """Get recent failure alerts and summary."""
+    failure_tracker = get_failure_tracker()
+    return failure_tracker.get_failure_summary()
+
+
+@app.get("/api/alerts/recent")
+def recent_alerts(minutes: int = 60):
+    """Get recent alerts from last N minutes."""
+    failure_tracker = get_failure_tracker()
+    return {
+        "timestamp": datetime.utcnow().isoformat(),
+        "window_minutes": minutes,
+        "alerts": failure_tracker.get_recent_failures(minutes=minutes),
+    }
 
 
 @app.get("/", response_class=HTMLResponse)
