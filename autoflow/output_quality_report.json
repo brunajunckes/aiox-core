@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-04-10 19:07:10",
+  "total_tests": 30,
+  "by_workflow_type": {
+    "seo": {
+      "total": 10,
+      "passed": 0,
+      "failed": 8,
+      "errors": 2,
+      "pass_rate_percent": 0.0,
+      "avg_quality_score": 3.2,
+      "avg_duration_seconds": 48.86,
+      "failures": [
+        {
+          "test": "seo_1",
+          "topic": "Python programming tutorials",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_2",
+          "topic": "Machine learning basics",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_3",
+          "topic": "Web development best practices",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_4",
+          "topic": "Cloud computing introduction",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_5",
+          "topic": "Database optimization",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_6",
+          "topic": "API design patterns",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_7",
+          "topic": "DevOps tools and practices",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        },
+        {
+          "test": "seo_8",
+          "topic": "Cybersecurity fundamentals",
+          "score": 4,
+          "feedback": "Missing title; Missing meta_description; Missing body content"
+        }
+      ]
+    },
+    "research": {
+      "total": 10,
+      "passed": 0,
+      "failed": 0,
+      "errors": 10,
+      "pass_rate_percent": 0.0,
+      "avg_quality_score": 0.0,
+      "avg_duration_seconds": 0.21,
+      "failures": []
+    },
+    "video": {
+      "total": 10,
+      "passed": 0,
+      "failed": 0,
+      "errors": 10,
+      "pass_rate_percent": 0.0,
+      "avg_quality_score": 0.0,
+      "avg_duration_seconds": 0.14,
+      "failures": []
+    }
+  },
+  "summary": {
+    "total_passed": 0,
+    "total_failed": 30,
+    "overall_pass_rate_percent": 0.0
+  }
+}
