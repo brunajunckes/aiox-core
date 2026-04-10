@@ -1,0 +1,6 @@
+{"timestamp":"2026-04-10T15:45:04.585Z","type":"notification","sender":"squad-1","recipient":"squad-2","content":"Test message"}
+{"timestamp":"2026-04-10T15:45:04.598Z","type":"data_handoff","sender":"squad-1","recipient":"squad-2","content":{"data":"important"},"priority":"high"}
+{"timestamp":"2026-04-10T15:46:05.525Z","type":"notification","sender":"squad-1","recipient":"squad-2","content":"Test message"}
+{"timestamp":"2026-04-10T15:46:05.544Z","type":"data_handoff","sender":"squad-1","recipient":"squad-2","content":{"data":"important"},"priority":"high"}
+{"timestamp":"2026-04-10T15:46:19.792Z","type":"notification","sender":"squad-1","recipient":"squad-2","content":"Test message"}
+{"timestamp":"2026-04-10T15:46:19.798Z","type":"data_handoff","sender":"squad-1","recipient":"squad-2","content":{"data":"important"},"priority":"high"}
