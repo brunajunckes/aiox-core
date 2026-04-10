@@ -11,6 +11,7 @@ import json
 import os
 import uuid
 import traceback
+import logging
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -22,12 +23,36 @@ from typing import Optional
 from ..core import config
 from ..core.prometheus_metrics import get_metrics_handler
 from ..core.alerting import get_failure_tracker, should_alert_on_failure
+from ..core.tracing import initialize_tracing, instrument_app, create_span
+from ..middleware.tracing_middleware import TracingMiddleware
+from . import experiments
+
+logger = logging.getLogger(__name__)
+
 
 app = FastAPI(
     title="AutoFlow API",
     description="God Mode Super Multi-Agent Platform — Cognitive Operating System",
     version="0.1.0",
 )
+
+# Initialize tracing
+try:
+    initialize_tracing()
+    instrument_app(app)
+    logger.info("OpenTelemetry tracing initialized")
+except Exception as e:
+    logger.warning(f"Failed to initialize tracing: {e}")
+
+# Add tracing middleware
+app.add_middleware(
+    TracingMiddleware,
+    skip_paths=["/health", "/metrics", "/docs", "/openapi.json"],
+)
+
+# Include experiments router
+app.include_router(experiments.router)
+
 
 # In-memory job tracker (workflows are checkpointed in Postgres)
 _jobs: dict = {}
@@ -64,8 +89,15 @@ class JobStatus(BaseModel):
 # ── Background Workflow Runner ──
 
 def _run_workflow_bg(job_id: str, wf_type: str, topic: str, **kwargs):
-    """Run workflow in background thread."""
-    try:
+    """Run workflow in background thread with tracing."""
+    span_attrs = {
+        "job_id": job_id,
+        "workflow_type": wf_type,
+        "topic": topic,
+    }
+
+    with create_span("workflow_execution", span_attrs):
+        try:
         _jobs[job_id]["status"] = "running"
 
         if wf_type == "research":
@@ -88,7 +120,7 @@ def _run_workflow_bg(job_id: str, wf_type: str, topic: str, **kwargs):
         _jobs[job_id]["result"] = result
         _jobs[job_id]["completed_at"] = datetime.utcnow().isoformat()
 
-    except Exception as e:
+        except Exception as e:
         _jobs[job_id]["status"] = "error"
         error_msg = str(e)
         _jobs[job_id]["errors"] = [error_msg, traceback.format_exc()[-500:]]
@@ -110,10 +142,10 @@ def _run_workflow_bg(job_id: str, wf_type: str, topic: str, **kwargs):
 
 @app.get("/health")
 def health():
-    """Health check — returns system status."""
-    import psutil
-    ram = psutil.virtual_memory()
-    return {
+        """Health check — returns system status."""
+        import psutil
+        ram = psutil.virtual_memory()
+        return {
         "status": "ok",
         "service": "autoflow-api",
         "version": "0.1.0",
@@ -121,17 +153,17 @@ def health():
         "ram_available_gb": round(ram.available / 1e9, 2),
         "active_jobs": sum(1 for j in _jobs.values() if j["status"] == "running"),
         "total_jobs": len(_jobs),
-    }
+        }
 
 
 @app.post("/workflow/{wf_type}", response_model=WorkflowResponse)
 def start_workflow(wf_type: str, req: WorkflowRequest):
-    """Start a new workflow. Returns job ID for tracking."""
-    if wf_type not in ("research", "seo", "seo-machine", "video"):
+        """Start a new workflow. Returns job ID for tracking."""
+        if wf_type not in ("research", "seo", "seo-machine", "video"):
         raise HTTPException(400, f"Unknown workflow type: {wf_type}. Use: research, seo, seo-machine, video")
 
-    job_id = str(uuid.uuid4())[:8]
-    _jobs[job_id] = {
+        job_id = str(uuid.uuid4())[:8]
+        _jobs[job_id] = {
         "job_id": job_id,
         "workflow_type": wf_type,
         "topic": req.topic,
@@ -140,57 +172,57 @@ def start_workflow(wf_type: str, req: WorkflowRequest):
         "completed_at": None,
         "result": None,
         "errors": None,
-    }
+        }
 
-    kwargs = {}
-    if wf_type == "seo-machine":
+        kwargs = {}
+        if wf_type == "seo-machine":
         kwargs = {"url": req.url}
-    elif wf_type == "video":
+        elif wf_type == "video":
         kwargs = {"duration": req.duration, "style": req.style, "language": req.language}
 
-    _executor.submit(_run_workflow_bg, job_id, wf_type, req.topic, **kwargs)
+        _executor.submit(_run_workflow_bg, job_id, wf_type, req.topic, **kwargs)
 
-    return WorkflowResponse(
+        return WorkflowResponse(
         job_id=job_id,
         workflow_type=wf_type,
         status="queued",
         message=f"Workflow '{wf_type}' started for topic: {req.topic}",
-    )
+        )
 
 
 @app.get("/workflow/{job_id}", response_model=JobStatus)
 def get_workflow_status(job_id: str):
-    """Get workflow status and result."""
-    if job_id not in _jobs:
+        """Get workflow status and result."""
+        if job_id not in _jobs:
         raise HTTPException(404, f"Job {job_id} not found")
-    return JobStatus(**_jobs[job_id])
+        return JobStatus(**_jobs[job_id])
 
 
 @app.get("/workflows")
 def list_workflows():
-    """List all workflows."""
-    return {"jobs": list(_jobs.values()), "total": len(_jobs)}
+        """List all workflows."""
+        return {"jobs": list(_jobs.values()), "total": len(_jobs)}
 
 
 @app.get("/metrics")
 def metrics():
-    """Get latest resource monitor metrics."""
-    try:
+        """Get latest resource monitor metrics."""
+        try:
         with open(config.MONITOR_LOG, "r") as f:
             lines = f.readlines()
         if lines:
             return json.loads(lines[-1])
         return {"error": "No metrics yet"}
-    except FileNotFoundError:
+        except FileNotFoundError:
         return {"error": "Monitor log not found"}
 
 
 @app.get("/api/metrics/summary")
 def metrics_summary():
-    """Get workflow quality metrics summary."""
-    from datetime import datetime, timedelta
+        """Get workflow quality metrics summary."""
+        from datetime import datetime, timedelta
 
-    summary = {
+        summary = {
         "timestamp": datetime.utcnow().isoformat(),
         "workflows_total": 0,
         "workflows_today": 0,
@@ -201,11 +233,11 @@ def metrics_summary():
         "avg_duration_seconds": 0.0,
         "models_used": {},
         "recent_workflows": [],
-    }
+        }
 
-    # Try to read task router logs
-    task_log = "/var/log/autoflow-tasks.jsonl"
-    if os.path.exists(task_log):
+        # Try to read task router logs
+        task_log = "/var/log/autoflow-tasks.jsonl"
+        if os.path.exists(task_log):
         try:
             now = datetime.utcnow()
             today = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -239,54 +271,54 @@ def metrics_summary():
         except Exception as e:
             summary["error"] = f"Failed to read task log: {e}"
 
-    # Try to read job status from in-memory tracker
-    if _jobs:
+        # Try to read job status from in-memory tracker
+        if _jobs:
         completed = [j for j in _jobs.values() if j["status"] in ("completed", "error")]
         if completed:
             summary["success_rate_percent"] = round(
                 sum(1 for j in completed if j["status"] == "completed") / len(completed) * 100, 1
             )
 
-    return summary
+        return summary
 
 
 @app.get("/metrics/prometheus")
 def prometheus_metrics():
-    """Prometheus-format metrics for Grafana scraping."""
-    from fastapi.responses import PlainTextResponse
-    metrics_handler = get_metrics_handler()
-    return PlainTextResponse(metrics_handler.generate_prometheus_output(), media_type="text/plain")
+        """Prometheus-format metrics for Grafana scraping."""
+        from fastapi.responses import PlainTextResponse
+        metrics_handler = get_metrics_handler()
+        return PlainTextResponse(metrics_handler.generate_prometheus_output(), media_type="text/plain")
 
 
 @app.get("/api/metrics/detailed")
 def detailed_metrics():
-    """Detailed metrics as JSON (for dashboards)."""
-    metrics_handler = get_metrics_handler()
-    return metrics_handler.get_metrics_dict()
+        """Detailed metrics as JSON (for dashboards)."""
+        metrics_handler = get_metrics_handler()
+        return metrics_handler.get_metrics_dict()
 
 
 @app.get("/api/alerts/summary")
 def alerts_summary():
-    """Get recent failure alerts and summary."""
-    failure_tracker = get_failure_tracker()
-    return failure_tracker.get_failure_summary()
+        """Get recent failure alerts and summary."""
+        failure_tracker = get_failure_tracker()
+        return failure_tracker.get_failure_summary()
 
 
 @app.get("/api/alerts/recent")
 def recent_alerts(minutes: int = 60):
-    """Get recent alerts from last N minutes."""
-    failure_tracker = get_failure_tracker()
-    return {
+        """Get recent alerts from last N minutes."""
+        failure_tracker = get_failure_tracker()
+        return {
         "timestamp": datetime.utcnow().isoformat(),
         "window_minutes": minutes,
         "alerts": failure_tracker.get_recent_failures(minutes=minutes),
-    }
+        }
 
 
 @app.get("/", response_class=HTMLResponse)
 def dashboard():
-    """Simple dashboard page."""
-    return """<!DOCTYPE html>
+        """Simple dashboard page."""
+        return """<!DOCTYPE html>
 <html><head><title>AutoFlow Dashboard</title>
 <style>
 body{font-family:monospace;background:#1a1a2e;color:#e0e0e0;padding:20px;max-width:900px;margin:0 auto}
@@ -331,9 +363,9 @@ PAPERCLIP_DSN = "postgresql://autoflow:autoflow_secure_2026@localhost:5432/paper
 
 
 def _paperclip_query(sql: str, params: tuple = ()):
-    """Execute a read-only query against paperclip_restored and return rows as dicts."""
-    import psycopg
-    with psycopg.connect(PAPERCLIP_DSN) as conn:
+        """Execute a read-only query against paperclip_restored and return rows as dicts."""
+        import psycopg
+        with psycopg.connect(PAPERCLIP_DSN) as conn:
         with conn.cursor() as cur:
             cur.execute(sql, params)
             cols = [d[0] for d in cur.description]
@@ -342,36 +374,36 @@ def _paperclip_query(sql: str, params: tuple = ()):
 
 @app.get("/paperclip/agents")
 def list_paperclip_agents():
-    """List all 48 agents from restored Paperclip DB."""
-    try:
+        """List all 48 agents from restored Paperclip DB."""
+        try:
         rows = _paperclip_query(
             "SELECT id, name, role, title, status, adapter_type, "
             "budget_monthly_cents, spent_monthly_cents, created_at::text "
             "FROM agents ORDER BY name"
         )
         return {"agents": rows, "total": len(rows)}
-    except Exception as e:
+        except Exception as e:
         raise HTTPException(500, f"Paperclip DB error: {e}")
 
 
 @app.get("/paperclip/skills")
 def list_paperclip_skills():
-    """List all 130 company skills."""
-    try:
+        """List all 130 company skills."""
+        try:
         rows = _paperclip_query(
             "SELECT id, name, slug, key, description, source_type, "
             "trust_level, compatibility, created_at::text "
             "FROM company_skills ORDER BY name"
         )
         return {"skills": rows, "total": len(rows)}
-    except Exception as e:
+        except Exception as e:
         raise HTTPException(500, f"Paperclip DB error: {e}")
 
 
 @app.get("/paperclip/issues")
 def list_paperclip_issues():
-    """List all 194 issues with status."""
-    try:
+        """List all 194 issues with status."""
+        try:
         rows = _paperclip_query(
             "SELECT i.id, i.title, i.status, i.priority, i.identifier, "
             "i.issue_number, a.name as assignee, "
@@ -381,14 +413,14 @@ def list_paperclip_issues():
             "ORDER BY i.created_at DESC"
         )
         return {"issues": rows, "total": len(rows)}
-    except Exception as e:
+        except Exception as e:
         raise HTTPException(500, f"Paperclip DB error: {e}")
 
 
 @app.get("/paperclip/stats")
 def paperclip_stats():
-    """Summary stats: agents, skills, issues, runs, costs."""
-    try:
+        """Summary stats: agents, skills, issues, runs, costs."""
+        try:
         rows = _paperclip_query("""
             SELECT
                 (SELECT count(*) FROM agents) as agents,
@@ -405,15 +437,15 @@ def paperclip_stats():
         )
         stats["issue_breakdown"] = {r["status"]: r["count"] for r in status_rows}
         return stats
-    except Exception as e:
+        except Exception as e:
         raise HTTPException(500, f"Paperclip DB error: {e}")
 
 
 def start_server():
-    """Start the API server."""
-    import uvicorn
-    uvicorn.run(app, host=config.API_HOST, port=config.API_PORT)
+        """Start the API server."""
+        import uvicorn
+        uvicorn.run(app, host=config.API_HOST, port=config.API_PORT)
 
 
 if __name__ == "__main__":
-    start_server()
+        start_server()
