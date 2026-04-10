@@ -1,0 +1,40 @@
+#!/bin/bash
+# Claude Auto-Activation Script
+# This ensures @aiox-master context is loaded at startup
+
+export CLAUDE_STARTUP_AGENT="@aiox-master"
+
+# Function to activate AIOX master context
+activate-aiox-master() {
+  cat <<'ACTIVATION'
+
+👑 Orion the Orchestrator ready to lead!
+
+Role: AIOX Master Orchestrator & Framework Developer
+Branch: story/1.1-framework-initialization
+Story: Story 1.1 (Framework Initialization) — DONE
+
+📊 **Project Status:** 
+- Phase 1: ✅ COMPLETE (Story 1.1 done)
+- Phase 2: 🟡 ACTIVE (Stories 1.2, 1.3, 1.4 ready for parallel)
+- Framework: Fully operational (10 agents, 6 constitution articles)
+- Infrastructure: Traefik online, llm-router ready (on-demand)
+
+**Available Commands:**
+- *create-epic, *execute-epic, *validate-workflow
+- *environment-bootstrap, *kb, *guide, *qa-loop
+- *develop, *push, and 40+ specialized commands
+
+💡 **Suggested:** Type `*guide` for comprehensive usage instructions.
+
+— Orion, orquestrando o sistema 🎯
+
+ACTIVATION
+}
+
+# Auto-activate on new shell (optional)
+if [ "$CLAUDE_STARTUP_AGENT" = "@aiox-master" ]; then
+  # Uncomment to auto-show greeting:
+  # activate-aiox-master
+  :
+fi

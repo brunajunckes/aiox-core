@@ -1,0 +1,43 @@
+# AIOX Monitoring Configuration
+# Story 1.4 — Dashboard & Real-time Monitoring
+
+monitoring:
+  version: "1.0.0"
+
+  health_check:
+    interval_seconds: 30
+    timeout_seconds: 5
+    containers:
+      - name: llm-router-api
+        port: 3000
+        health_path: /health
+      - name: llm-router-postgres
+        port: 5432
+      - name: llm-router-redis
+        port: 6379
+      - name: llm-router-minio
+        port: 9000
+      - name: ollama
+        port: 11434
+
+  framework_status:
+    interval_seconds: 60
+    checks:
+      - constitution
+      - agents
+      - stories
+      - integrity
+
+  alerting:
+    enabled: true
+    channels:
+      - type: console
+        level: all
+      - type: file
+        path: .aiox-core/logs/monitoring.log
+        level: warn
+
+  dashboard:
+    port: 3001
+    websocket: true
+    refresh_interval_ms: 5000

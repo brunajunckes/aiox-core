@@ -1,5 +1,21 @@
 # CLAUDE.md - Synkra AIOX
 
+## LLM COST OPTIMIZATION — NON-NEGOTIABLE
+
+**NEVER use Opus for simple tasks.** Fallback chain: Ollama Remote → Ollama Local → Haiku.
+
+| Simple (Ollama/Haiku) | Complex (Opus) |
+|----------------------|----------------|
+| Story updates, checkboxes | Multi-module architecture |
+| YAML/JSON generation | Complex debugging |
+| Boilerplate, barrel exports | Security-sensitive code |
+| Text formatting, manifests | Integration logic |
+
+**Sub-agents:** Launch with `model: "haiku"` for simple tasks. Default Opus for complex only.
+**Ollama endpoints:** 1) `ollama.ampcast.site` 2) `127.0.0.1:11434`
+**User lost 30min of Opus credits to boilerplate. NEVER AGAIN.**
+
+
 Este arquivo configura o comportamento do Claude Code ao trabalhar neste repositório.
 
 ---

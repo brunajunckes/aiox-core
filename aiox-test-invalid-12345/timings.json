@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-04-09T17:12:42.637Z",
+  "timings": [
+    {
+      "label": "test",
+      "startTime": "187612592440989",
+      "endTime": "187612592443969",
+      "durationNano": "2980",
+      "durationMs": 0.00298,
+      "timestamp": "2026-04-09T17:12:42.637Z"
+    }
+  ],
+  "summary": {
+    "count": 1,
+    "totalMs": 0.00298,
+    "averageMs": 0.00298,
+    "minMs": 0.00298,
+    "maxMs": 0.00298
+  }
+}

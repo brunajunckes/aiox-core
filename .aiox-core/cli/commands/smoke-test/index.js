@@ -22,6 +22,16 @@ const COMMANDS = [
   { name: 'doctor', args: [] },
 ];
 
+const ONBOARDING_COMMANDS = [
+  { name: 'quickstart', args: [], label: 'Quickstart runs' },
+  { name: 'ide-matrix', args: [], label: 'IDE matrix loads' },
+  { name: 'ide-matrix', args: ['--json'], label: 'IDE matrix JSON output' },
+  { name: 'getting-started', args: ['--step', '1'], label: 'Getting started renders step' },
+  { name: 'getting-started', args: ['--export'], label: 'Getting started exports markdown' },
+  { name: 'help', args: ['--raw'], label: 'Help works' },
+  { name: 'agents', args: ['--help'], label: 'Agent list works' },
+];
+
 const BIN_PATH = path.resolve(__dirname, '..', '..', '..', '..', 'bin', 'aiox.js');
 
 /**
@@ -96,13 +106,17 @@ function formatSummary(counts) {
  * @returns {{ results: Array, passed: number, failed: number, total: number, allPassed: boolean }}
  */
 function runSmokeTest(argv = [], options = {}) {
-  const commands = options.commands || COMMANDS;
+  const isOnboarding = Array.isArray(argv) && argv.includes('--onboarding');
+  const isJSON = Array.isArray(argv) && argv.includes('--json');
+  const commands = options.commands || (isOnboarding ? ONBOARDING_COMMANDS : COMMANDS);
   const silent = options.silent || false;
   const results = [];
 
-  if (!silent) {
-    console.log('AIOX CLI Smoke Test Suite');
-    console.log('========================\n');
+  const suiteTitle = isOnboarding ? 'AIOX Onboarding Smoke Test' : 'AIOX CLI Smoke Test Suite';
+
+  if (!silent && !isJSON) {
+    console.log(suiteTitle);
+    console.log('='.repeat(suiteTitle.length) + '\n');
   }
 
   for (const cmd of commands) {
@@ -110,9 +124,13 @@ function runSmokeTest(argv = [], options = {}) {
       binPath: options.binPath,
       timeout: options.timeout,
     });
+    // Carry forward label if present (onboarding commands)
+    if (cmd.label) {
+      result.label = cmd.label;
+    }
     results.push(result);
 
-    if (!silent) {
+    if (!silent && !isJSON) {
       console.log(formatResultLine(result));
     }
   }
@@ -122,15 +140,18 @@ function runSmokeTest(argv = [], options = {}) {
   const total = results.length;
   const allPassed = failed === 0;
 
-  const summary = { results, passed, failed, total, allPassed };
+  const summary = { results, passed, failed, total, allPassed, suite: isOnboarding ? 'onboarding' : 'default' };
 
-  if (!silent) {
+  if (isJSON && !silent) {
+    console.log(JSON.stringify(summary, null, 2));
+  } else if (!silent) {
     console.log(formatSummary({ passed, total }));
 
     if (!allPassed) {
       console.log('\nFailed commands:');
       for (const r of results.filter((r) => !r.passed)) {
-        console.log(`  - aiox ${r.name}: exit code ${r.exitCode}`);
+        const label = r.label ? ` (${r.label})` : '';
+        console.log(`  - aiox ${r.name}${label}: exit code ${r.exitCode}`);
         if (r.stderr) {
           const firstLine = r.stderr.split('\n')[0];
           console.log(`    ${firstLine}`);
@@ -146,4 +167,4 @@ function runSmokeTest(argv = [], options = {}) {
   return summary;
 }
 
-module.exports = { runSmokeTest, executeCommand, formatResultLine, formatSummary, COMMANDS };
+module.exports = { runSmokeTest, executeCommand, formatResultLine, formatSummary, COMMANDS, ONBOARDING_COMMANDS };
