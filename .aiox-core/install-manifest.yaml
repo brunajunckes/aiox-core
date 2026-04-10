@@ -8,9 +8,9 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-09T12:08:33.178Z"
+generated_at: "2026-04-10T05:19:37.005Z"
 generator: scripts/generate-install-manifest.js
-file_count: 1219
+file_count: 1232
 files:
   - path: cli/commands/agents/index.js
     hash: sha256:6298bf6f85e06e9c8152c75f336fdcafd17d1f15018cebaeeea413a184a83542
@@ -101,9 +101,9 @@ files:
     type: cli
     size: 4973
   - path: cli/commands/coverage/index.js
-    hash: sha256:e3264c303ad72db117ee29d892aba218bc2fbd87eab6b1d076ac60ed698ef945
+    hash: sha256:9f1662364e0e855cb662fe3147c502584a417dd0fef9e07a0548b19c3f4a41e6
     type: cli
-    size: 10623
+    size: 10428
   - path: cli/commands/cron/index.js
     hash: sha256:dad2de6302688e439c732ed7b297616b1136de9b2a8e7b1fca86552e8248d358
     type: cli
@@ -172,6 +172,10 @@ files:
     hash: sha256:34f8c85e35d9af299a9e1afd960607e7a8d364878fc0f930360c4b24bce959ba
     type: cli
     size: 3146
+  - path: cli/commands/feature-flags/index.js
+    hash: sha256:201a04b28821181d7a78ef434ef8f2770d5a1aa40d005b5ff671eef3f36cbb46
+    type: cli
+    size: 5187
   - path: cli/commands/feedback/index.js
     hash: sha256:b0bad594152560402bc817d414a0846d6a6b988ec53f3944c5275bbc77f6d899
     type: cli
@@ -212,6 +216,10 @@ files:
     hash: sha256:36f8e38ab767fa5478d8dabac548c66dc2c0fc521c216e954ac33fcea0ba597b
     type: cli
     size: 6720
+  - path: cli/commands/getting-started/index.js
+    hash: sha256:a5a412124b043b689d9b2b27ad61f3f052f572f7a9c0c66bb0e8beade281599a
+    type: cli
+    size: 7462
   - path: cli/commands/git-flow/index.js
     hash: sha256:e406ec9f1b94537848968cd2b61800856e8ec96b5af69d6afe8b9c395e361593
     type: cli
@@ -248,6 +256,10 @@ files:
     hash: sha256:e321fdd5e5850f70ee3c9a55bc202f74cb824a002a3bd957a47b08c57e4bab21
     type: cli
     size: 5496
+  - path: cli/commands/ide-matrix/index.js
+    hash: sha256:e9fae4f2a154866bc2a618c4344be4e9f58e554182d7ec1c11a2a45ebc292b1c
+    type: cli
+    size: 8726
   - path: cli/commands/imports/index.js
     hash: sha256:e720bc0a56ffe5757358f6cb0f111723361380f9ffa5cfc6546e999935878d6a
     type: cli
@@ -268,6 +280,10 @@ files:
     hash: sha256:8b983c866da9b6fbfb86605945386e74af4ead32b3e7a20806183925d5bb482c
     type: cli
     size: 7607
+  - path: cli/commands/logger/index.js
+    hash: sha256:a15f0340c17eb5b82d7c7a7cdc3e8c120f369a1cafa1ae4702ca698952f9635e
+    type: cli
+    size: 5506
   - path: cli/commands/man/index.js
     hash: sha256:ddc4ff9c974d3d1797bbb89e1b5cf3f6c9ab251305f6030a33e978bb1ab36517
     type: cli
@@ -421,9 +437,9 @@ files:
     type: cli
     size: 5320
   - path: cli/commands/quickstart/index.js
-    hash: sha256:04271799b0dc16835b884908421757b7fa42a86a59623d301b218f9fad402b48
+    hash: sha256:6bc98d776103280a8420bab3a01817469bb917e3f6eef10cf6e5c5c72b194f40
     type: cli
-    size: 1469
+    size: 11219
   - path: cli/commands/ref/index.js
     hash: sha256:2a18410a32eca0c0c9168ddffc544dd0e8be8919611602cd76f9d3ef29d23597
     type: cli
@@ -481,9 +497,9 @@ files:
     type: cli
     size: 8911
   - path: cli/commands/smoke-test/index.js
-    hash: sha256:83109fe9636658a3082e897d9c2c05340023358a7805ebd87238d92c15787cde
+    hash: sha256:ddba213962e239d751a065f202f4e3f72f419fe9db475794220931cb15a3c619
     type: cli
-    size: 4225
+    size: 5399
   - path: cli/commands/snippets/index.js
     hash: sha256:e4221f3cd9733f7a9547119ca7db9fa0cc45c8413d2d1ddc6529b0276c86f7a5
     type: cli
@@ -573,9 +589,9 @@ files:
     type: cli
     size: 8976
   - path: cli/commands/web/index.js
-    hash: sha256:acfc8c6b9c0c77c2facc637e971d2da8eca52d74451ff5b99b28fc0d074b21e5
+    hash: sha256:7fb34285e413260536d6c62a4b50fd4f7c5cfb409c40cfcd7a7812e08f39eaae
     type: cli
-    size: 9531
+    size: 9522
   - path: cli/commands/webhooks/index.js
     hash: sha256:2d9011c1be02e18a9d192d0ddd953f9224f5ac258b9939ff812cd96ba6573903
     type: cli
@@ -645,9 +661,9 @@ files:
     type: cli
     size: 5907
   - path: core-config.yaml
-    hash: sha256:d1d90d2cc22e4c870a8a90446d6b98dfd1918829cd5c5f31809bece6ddcfc1cf
+    hash: sha256:0d401916637886ffa1eb421ff5d4133cc3b2953bc56748faa60d5e9c4b184c19
     type: config
-    size: 10999
+    size: 104
   - path: core/code-intel/code-intel-client.js
     hash: sha256:6c9a08a37775acf90397aa079a4ad2c5edcc47f2cfd592b26ae9f3d154d1deb8
     type: core
@@ -752,6 +768,18 @@ files:
     hash: sha256:3505471b0adff9bfcea08f46cca3aeeda46a283bbe7ee711dd566e5974c3257f
     type: template
     size: 721
+  - path: core/coverage-report/__tests__/coverage-report.test.js
+    hash: sha256:6338fbc55e02570ac3db03c821b16083ba052ad419df07f40b9d4a08d71a1af2
+    type: core
+    size: 20495
+  - path: core/coverage-report/coverage-analyzer.js
+    hash: sha256:4497382b4c80f0eca0dc83abf2717e41973d2b62c693e66e57baf36c1b131688
+    type: core
+    size: 8746
+  - path: core/coverage-report/index.js
+    hash: sha256:b8f4537c61a75466a5f3e7e537e6de96176330ed6d6f1c2a0be57bb7a7462b87
+    type: core
+    size: 552
   - path: core/doctor/checks/agent-memory.js
     hash: sha256:08d5d685e4fdaaedf081020229844f4a58c9fd00244e4c37eb5b3fd78f4feb61
     type: core
@@ -908,6 +936,18 @@ files:
     hash: sha256:4e2324edb37ae0729062b5ac029f2891e050e7efd3a48d0f4a1dc4f227a6716b
     type: core
     size: 11060
+  - path: core/feature-flags/__tests__/feature-flags.test.js
+    hash: sha256:11b1c33b915bf62141d2793d70313e099316af6e99d02485a7289d2b3517ed19
+    type: core
+    size: 12980
+  - path: core/feature-flags/flags.js
+    hash: sha256:2f19ba3b0497c867bc1e2929659e45c3349843d994df39a3edf72bfeeea22a74
+    type: core
+    size: 5929
+  - path: core/feature-flags/index.js
+    hash: sha256:322914336fe16052826d8e15d6be19daeaf308e94798d03751a4cb5fb8375710
+    type: core
+    size: 178
   - path: core/graph-dashboard/cli.js
     hash: sha256:1f2fd6c6b5ace42f3bddc89695fe32d01949321d96057bbf50e2e48892f2c8f5
     type: core
@@ -1224,6 +1264,18 @@ files:
     hash: sha256:970b617b0e723e8248065f698eca2298a5a0b72e3e43ee820ea85294555736e2
     type: core
     size: 2585
+  - path: core/logger/__tests__/logger.test.js
+    hash: sha256:a052d1ffa53affe2196f84751b151d231942f56dcbbad8733ab2d8ed7bc2113e
+    type: core
+    size: 10555
+  - path: core/logger/index.js
+    hash: sha256:b3e25c30b3ffdf7e263246f50aeafeaa84e5421750e9450044dfa139f67fc7cf
+    type: core
+    size: 247
+  - path: core/logger/logger.js
+    hash: sha256:b7e07fd3abb6910db67c8e1f69dc537eb57ccc53aee1550a195959facb4978b7
+    type: core
+    size: 5275
   - path: core/manifest/manifest-generator.js
     hash: sha256:81b796990dd747bbb9785d205dbe5f6d5556754fc51745fb84b7ce4675acbdbf
     type: core
@@ -1697,9 +1749,9 @@ files:
     type: data
     size: 9575
   - path: data/entity-registry.yaml
-    hash: sha256:401f8f2b20e475fe91eb7d51d68016307a351da5b41b303d70983a3dbeafb6f8
+    hash: sha256:44aca825eb1c8a986d2d98f9956fbbc7eda3194b6a0ed2608bb4d56d216acbc8
     type: data
-    size: 527068
+    size: 527901
   - path: data/error-catalog.yaml
     hash: sha256:dd9a36d2a475084cd75916f956a400dbb9d1d4ec3970f4615fd6050b2c464ef5
     type: data
@@ -1833,9 +1885,9 @@ files:
     type: development
     size: 5012
   - path: development/agents/aiox-master.md
-    hash: sha256:17cd10f6c2ac4fcd96d944283f239c760e2829d2de4e68098f618783ec5ae351
+    hash: sha256:b973c82da52d41aad12b4c3f980e25829617e4946aa211d06257ccc1706133c0
     type: agent
-    size: 19408
+    size: 28216
   - path: development/agents/analyst.md
     hash: sha256:35150d764c6dc74bc02b61a4d613c9278e87ffb209403db23991339fdda4f8e2
     type: agent
