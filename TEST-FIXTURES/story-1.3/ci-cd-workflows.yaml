@@ -1,0 +1,66 @@
+ci_cd_configuration:
+  story_id: "1.3"
+  title: "CI/CD Pipeline Setup (GitHub Actions)"
+  owner: "@devops"
+
+workflows:
+  pr_workflow:
+    name: "Pull Request Validation"
+    trigger: "pull_request"
+    steps:
+      - "Lint check (npm run lint)"
+      - "Test execution (npm test)"
+      - "Type checking (npm run typecheck)"
+      - "CodeRabbit review"
+      - "Upload coverage"
+
+  merge_workflow:
+    name: "Merge Workflow"
+    trigger: "pull_request when merged"
+    steps:
+      - "Validate story completion"
+      - "Update epic metrics"
+      - "Close associated issues"
+
+  release_workflow:
+    name: "Release & Deploy"
+    trigger: "tag created"
+    steps:
+      - "Run full test suite"
+      - "Build artifacts"
+      - "Create GitHub release"
+      - "Deploy to production"
+
+quality_gates:
+  linting:
+    command: "npm run lint"
+    failure_policy: "BLOCK_MERGE"
+
+  testing:
+    command: "npm test"
+    minimum_coverage: 80
+    failure_policy: "BLOCK_MERGE"
+
+  type_checking:
+    command: "npm run typecheck"
+    failure_policy: "BLOCK_MERGE"
+
+  coderabbit:
+    command: "coderabbit --prompt-only"
+    auto_fix_enabled: true
+    failure_policy: "REQUEST_REVIEW"
+
+acceptance_criteria:
+  - "PR workflow: lint → test → typecheck → coderabbit"
+  - "Merge workflow: validate story, auto-close on merge"
+  - "Release workflow: tag → build → deploy"
+  - "Performance benchmarks tracked"
+  - "Coverage reports generated"
+  - "DevOps can execute *push and *pr operations"
+  - "All quality gates automated"
+
+metadata:
+  story_status: "PENDING"
+  phase: 2
+  effort_hours: 16
+  created: "2026-04-07T00:00:00Z"

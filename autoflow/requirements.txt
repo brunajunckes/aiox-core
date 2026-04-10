@@ -1,0 +1,9 @@
+langgraph>=1.1.0
+langgraph-checkpoint-postgres>=3.0.0
+psycopg[binary]>=3.3.0
+psutil>=7.0.0
+pydantic>=2.10.0
+fastapi>=0.135.0
+uvicorn>=0.44.0
+httpx>=0.28.0
+tenacity>=9.0.0

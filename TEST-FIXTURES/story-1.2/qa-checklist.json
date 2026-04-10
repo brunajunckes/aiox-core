@@ -1,0 +1,50 @@
+{
+  "story_id": "1.2",
+  "title": "Constitution Validation & Agent Testing",
+  "owner": "@qa",
+  "quality_gate_checks": [
+    {
+      "check_id": 1,
+      "name": "Code Review",
+      "severity": "HIGH",
+      "acceptance_criteria": ["Code follows framework patterns", "Readable without comments", "Maintainable structure", "No anti-patterns"]
+    },
+    {
+      "check_id": 2,
+      "name": "Unit Tests",
+      "severity": "HIGH",
+      "acceptance_criteria": ["Coverage >= 80%", "All tests passing", "Edge cases covered", "No flaky tests"]
+    },
+    {
+      "check_id": 3,
+      "name": "Acceptance Criteria",
+      "severity": "CRITICAL",
+      "acceptance_criteria": ["Article I enforced", "Article II boundaries tested", "Article III workflow validated", "Article IV gate functional", "Article V gates working", "All 10 agents operational", "Escalation paths functional"]
+    },
+    {
+      "check_id": 4,
+      "name": "No Regressions",
+      "severity": "HIGH"
+    },
+    {
+      "check_id": 5,
+      "name": "Performance",
+      "severity": "MEDIUM"
+    },
+    {
+      "check_id": 6,
+      "name": "Security",
+      "severity": "MEDIUM"
+    },
+    {
+      "check_id": 7,
+      "name": "Documentation",
+      "severity": "LOW"
+    }
+  ],
+  "metadata": {
+    "story_status": "PENDING",
+    "phase": 2,
+    "created": "2026-04-07T00:00:00Z"
+  }
+}

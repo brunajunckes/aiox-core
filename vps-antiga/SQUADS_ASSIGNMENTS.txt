@@ -1,0 +1,16 @@
+SQUAD TRAINING ASSIGNMENTS (Auto-generated)
+
+All 46 squads must:
+1. Read: /tmp/vps-knowledge/SQUAD_TRAINING_BOOTCAMP.md (30 min)
+2. Know: New /vps-root/ structure (paths, env vars)
+3. Understand: Auto-evolution system (3 feedback loops)
+4. Prepare: God mode activation checklist
+
+Distribution:
+- super-architect: Review KNOWLEDGE_MAP.md (deep dive)
+- super-execution: Review AUTO_EVOLUTION_SYSTEM.md (implementation)
+- super-data: Review FEEDBACK_LOOPS.md (metrics)
+- super-cognitive: Review GODMODE_CHECKLIST.md (optimization)
+- All others: Standard bootcamp
+
+Timeline: 30 min reading + 7 days evolution = GOD MODE

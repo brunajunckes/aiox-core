@@ -1912,6 +1912,27 @@ async function main() {
       break;
     }
 
+    case 'quickstart': {
+      // Enhanced Quickstart — Story 32.1
+      const { runQuickstart } = require('../.aiox-core/cli/commands/quickstart/index.js');
+      runQuickstart(args.slice(1));
+      break;
+    }
+
+    case 'ide-matrix': {
+      // IDE Compatibility Matrix — Story 32.2
+      const { runIDEMatrix } = require('../.aiox-core/cli/commands/ide-matrix/index.js');
+      runIDEMatrix(args.slice(1));
+      break;
+    }
+
+    case 'getting-started': {
+      // Getting Started Guide — Story 32.3
+      const { runGettingStarted } = require('../.aiox-core/cli/commands/getting-started/index.js');
+      runGettingStarted(args.slice(1));
+      break;
+    }
+
     default: {
       // Check aliases before reporting unknown command — Story 9.4
       try {
