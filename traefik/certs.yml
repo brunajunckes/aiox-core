@@ -1,0 +1,9 @@
+tls:
+  certificates:
+    - certFile: /certs/igreja.crt
+      keyFile: /certs/igreja.key
+      stores:
+        default: {}
+  options:
+    default:
+      minVersion: VersionTLS12
