@@ -16,8 +16,8 @@ LLM_ROUTER_URL = os.getenv("LLM_ROUTER_URL", "http://localhost:3000")
 OLLAMA_URL = "http://ollama.ampcast.site"  # HARDCODED — ALWAYS ONLINE (port 80)
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")  # Default: qwen2.5
 
-# Note: No Claude API key - using OAuth/Claude.ai only
-# Claude fallback not available (use Ollama only)
+# Claude API key (optional, for fallback)
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
 # AutoFlow API
 API_HOST = os.getenv("AUTOFLOW_API_HOST", "0.0.0.0")
