@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * AIOX HUD — 2-line adaptive statusline
- * Reads Claude Code stdin JSON for model/tokens/rate-limits
+ * AIOX HUD — 2-line adaptive statusline with task velocity
+ * LINE 1: Branch | CPU | Model | Context | 5h Tokens | 7d Tokens | Cost | Duration
+ * LINE 2: Stories | Tasks/Dia | Tasks/Hr | Tasks/min | Squads | Agents | AIOX
  */
 
 const fs = require('fs');
@@ -47,14 +48,6 @@ function git() {
     const short = branch.replace(/^story\/(\d+\.\d+).*/, 's/$1').replace(/^feature\//, 'f/');
     return short;
   } catch { return '?'; }
-}
-
-function docker() {
-  try {
-    const r = parseInt(execSync("docker ps -q 2>/dev/null | wc -l", { encoding: 'utf8' }).trim());
-    const t = parseInt(execSync("docker ps -a -q 2>/dev/null | wc -l", { encoding: 'utf8' }).trim());
-    return { r, t };
-  } catch { return { r: 0, t: 0 }; }
 }
 
 function stories() {
@@ -151,6 +144,10 @@ function cost(stdin) {
 }
 
 // ── Session duration ──
+function durationMs(stdin) {
+  return stdin?.cost?.total_duration_ms ?? 0;
+}
+
 function duration(stdin) {
   const ms = stdin?.cost?.total_duration_ms;
   if (!ms) return null;
@@ -160,14 +157,37 @@ function duration(stdin) {
   return `${Math.floor(s / 3600)}h${Math.floor((s % 3600) / 60)}m`;
 }
 
+// ── Task velocity (per day, hour, minute) ──
+function taskVelocity(doneCount, durationMs) {
+  if (!durationMs || doneCount === 0) {
+    return { perDay: 0, perHour: 0, perMin: 0 };
+  }
+  const mins = durationMs / 60000;
+  return {
+    perDay: Math.round((doneCount / mins) * 60 * 24 * 10) / 10,
+    perHour: Math.round((doneCount / mins) * 60 * 10) / 10,
+    perMin: Math.round((doneCount / mins) * 100) / 100,
+  };
+}
+
+// ── Strip ANSI colors to calculate real string length ──
+function stripAnsi(str) {
+  return str.replace(/\x1b\[[0-9;]*m/g, '');
+}
+
+// ── Pad string to fixed width (accounting for ANSI codes) ──
+function padRight(str, width) {
+  const clean = stripAnsi(str);
+  const padding = Math.max(0, width - clean.length);
+  return str + ' '.repeat(padding);
+}
+
 // ── Main ──
 function main() {
   const stdin = readStdin();
-  const cols = parseInt(process.env.COLUMNS || '80');
 
   const cpuPct = cpu();
   const branch = git();
-  const dk = docker();
   const st = stories();
   const sa = squadsAndAgents();
   const ts = taskStats();
@@ -176,64 +196,79 @@ function main() {
   const model = shortModel(stdin);
   const usd = cost(stdin);
   const dur = duration(stdin);
+  const durMs = durationMs(stdin);
+  const vel = taskVelocity(ts.done, durMs);
 
   const taskPct = ts.total > 0 ? Math.round((ts.done / ts.total) * 100) : 0;
 
-  // ── LINE 1: System + Model + Tokens ──
+  // ── LINE 1: Branch | CPU | Model | Context | 5h Tokens | 7d Tokens | Cost | Duration ──
   const l1parts = [];
+
+  // Branch
+  l1parts.push(padRight(`🔀${B}${branch}${R}`, 10));
 
   // CPU
   const cpuColor = cpuPct >= 80 ? RD : cpuPct >= 50 ? Y : G;
-  l1parts.push(`🖥${cpuColor}${cpuPct}%${R}`);
+  l1parts.push(padRight(`🖥${cpuColor}${cpuPct.toString().padStart(3)}%${R}`, 8));
 
   // Model
-  l1parts.push(`🧠${C}${model}${R}`);
+  l1parts.push(padRight(`🧠${C}${model}${R}`, 14));
 
   // Context window
-  if (ctx != null) l1parts.push(`📐${bar(ctx, 6)}${ctx}%`);
-
-  // 5h rate limit
-  if (rl.h5 != null) l1parts.push(`⏱${bar(rl.h5, 5)}${rl.h5}%`);
-
-  // 7d rate limit
-  if (rl.d7 != null) l1parts.push(`📅${bar(rl.d7, 5)}${rl.d7}%`);
-
-  // Cost
-  if (usd != null) l1parts.push(`💰${Y}$${usd.toFixed(2)}${R}`);
-
-  // Duration
-  if (dur) l1parts.push(`⏳${D}${dur}${R}`);
-
-  // ── LINE 2: Project + Infra ──
-  const l2parts = [];
-
-  // Branch
-  l2parts.push(`🔀${B}${branch}${R}`);
-
-  // Docker
-  if (dk.t > 0) {
-    const dkColor = dk.r === dk.t ? G : dk.r > 0 ? Y : RD;
-    l2parts.push(`🐳${dkColor}${dk.r}/${dk.t}${R}`);
+  if (ctx != null) {
+    l1parts.push(padRight(`📐${bar(ctx, 5)}${ctx.toString().padStart(3)}%${R}`, 16));
   }
 
-  // Stories
-  l2parts.push(`📋${G}${st.done}✓${R}${st.wip > 0 ? Y + st.wip + '⟳' + R : ''}${D}/${st.total}${R}`);
+  // 5h token rate limit
+  if (rl.h5 != null) {
+    l1parts.push(padRight(`⏱5h${bar(rl.h5, 4)}${rl.h5.toString().padStart(3)}%${R}`, 14));
+  }
 
-  // Tasks progress
-  l2parts.push(`✅${bar(taskPct, 5)}${ts.done}/${ts.total}`);
+  // 7d token rate limit
+  if (rl.d7 != null) {
+    l1parts.push(padRight(`📅7d${bar(rl.d7, 4)}${rl.d7.toString().padStart(3)}%${R}`, 14));
+  }
+
+  // Cost
+  if (usd != null) {
+    l1parts.push(padRight(`💰${Y}$${usd.toFixed(2)}${R}`, 11));
+  }
+
+  // Duration
+  if (dur) {
+    l1parts.push(padRight(`⏳${D}${dur}${R}`, 10));
+  }
+
+  // ── LINE 2: Stories | Tasks/Dia | Tasks/Hr | Tasks/min | Squads | Agents | AIOX ──
+  const l2parts = [];
+
+  // Stories
+  l2parts.push(padRight(`📋${G}${st.done}✓${R}${st.wip > 0 ? Y + st.wip + '⟳' + R : ''}${D}/${st.total}${R}`, 13));
+
+  // Tasks/Dia
+  const perDayStr = vel.perDay.toString().padStart(5);
+  l2parts.push(padRight(`📊${G}${perDayStr}/d${R}`, 12));
+
+  // Tasks/Hr
+  const perHrStr = vel.perHour.toString().padStart(5);
+  l2parts.push(padRight(`⚡${Y}${perHrStr}/h${R}`, 12));
+
+  // Tasks/min
+  const perMinStr = vel.perMin.toFixed(2);
+  l2parts.push(padRight(`🎯${C}${perMinStr}/m${R}`, 12));
 
   // Squads
-  if (sa.squads > 0) l2parts.push(`🏢${C}${sa.squads}${R}`);
+  if (sa.squads > 0) l2parts.push(padRight(`🏢${C}${sa.squads}${R}`, 7));
 
   // Agents
-  l2parts.push(`🤖${G}${sa.agents}${R}`);
+  l2parts.push(padRight(`🤖${G}${sa.agents}${R}`, 7));
 
   // AIOX Master
-  l2parts.push(`👑${G}aiox${R}`);
+  l2parts.push(padRight(`👑${G}aiox${R}`, 8));
 
-  // Output 2 lines
-  console.log(l1parts.join(' '));
-  console.log(l2parts.join(' '));
+  // Output 2 lines (with spacing between columns)
+  console.log(l1parts.join('  ').trimEnd());
+  console.log(l2parts.join('  ').trimEnd());
 }
 
 main();
