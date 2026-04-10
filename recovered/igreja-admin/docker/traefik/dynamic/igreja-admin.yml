@@ -1,0 +1,95 @@
+# Traefik Dynamic Configuration - Igreja Admin Dashboard
+# TLS configuration with Let's Encrypt and rate limiting
+
+http:
+  routers:
+    igreja-admin:
+      entryPoints:
+        - websecure
+      rule: "Host(`admin.aigrejanascasas.com.br`) || Host(`admin.igreja.hubme.tech`)"
+      service: igreja-admin-service
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: aigrejanascasas.com.br
+            sans:
+              - admin.aigrejanascasas.com.br
+          - main: hubme.tech
+            sans:
+              - admin.igreja.hubme.tech
+      middlewares:
+        - https-redirect
+        - rate-limit
+        - security-headers
+
+    # HTTP to HTTPS redirect
+    igreja-admin-http:
+      entryPoints:
+        - web
+      rule: "Host(`admin.aigrejanascasas.com.br`) || Host(`admin.igreja.hubme.tech`)"
+      service: dummy
+      middlewares:
+        - https-redirect
+
+  services:
+    igreja-admin-service:
+      loadBalancer:
+        servers:
+          - url: "http://igreja-admin:3000"
+        healthCheck:
+          path: "/health"
+          interval: "30s"
+          timeout: "5s"
+
+    # Dummy service for HTTP redirect
+    dummy:
+      loadBalancer:
+        servers:
+          - url: "http://localhost"
+
+  middlewares:
+    # HTTPS redirect
+    https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    # Rate limiting: 100 requests per minute
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 200
+        period: "1m"
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Security headers
+    security-headers:
+      headers:
+        sslRedirect: true
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        forceSTSHeader: true
+        frameDeny: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "no-referrer"
+        permissionsPolicy: "geolocation=(), microphone=(), camera=()"
+        customHeaders:
+          X-Custom-Response-Header: "Igreja Admin"
+
+# TLS Configuration
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+      sideEffects: true
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+
+  # Certificate resolver (defined in static config)
+  certResolver: letsencrypt

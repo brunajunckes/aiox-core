@@ -1,0 +1,137 @@
+# Traefik Dynamic Configuration - Webhook Middleware & Error Handling
+# Health checks, error page redirects, and security middleware
+
+http:
+  middlewares:
+    # Health check middleware
+    health-check:
+      addPrefix:
+        prefix: "/health"
+
+    # Custom error pages
+    error-404:
+      errors:
+        query: /{status}.html
+        status:
+          - "400"
+          - "403"
+          - "404"
+          - "405"
+          - "408"
+          - "429"
+          - "500"
+          - "502"
+          - "503"
+          - "504"
+        service: error-service
+
+    # API error handling
+    api-error-handler:
+      errors:
+        status:
+          - "500"
+          - "502"
+          - "503"
+          - "504"
+        service: fallback-service
+        query: "/error"
+
+    # CORS middleware for cadastro API
+    cors-headers:
+      headers:
+        accessControlAllowOriginList:
+          - "https://aigrejanascasas.com.br"
+          - "https://admin.aigrejanascasas.com.br"
+          - "https://hubme.tech"
+          - "https://admin.igreja.hubme.tech"
+        accessControlAllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        accessControlAllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Requested-With
+        accessControlExposeHeaders:
+          - Content-Length
+          - Content-Range
+        accessControlMaxAge: 86400
+        accessControlAllowCredentials: true
+
+    # Content security policy
+    csp-headers:
+      headers:
+        customHeaders:
+          Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:"
+
+    # Authentication middleware (basic auth for admin panel)
+    admin-auth:
+      basicAuth:
+        users:
+          # Replace with actual credentials via environment variables
+          - "admin:hashed_password_here"
+        realm: "Igreja Admin"
+
+    # Rate limiting for cadastro endpoints
+    cadastro-rate-limit:
+      rateLimit:
+        average: 10
+        burst: 20
+        period: "1m"
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Compression middleware
+    gzip-compression:
+      compress:
+        minResponseBodyBytes: 1024
+
+    # Request timeout
+    request-timeout:
+      forwardAuth:
+        address: "http://localhost:8081"
+        trustForwardHeader: true
+        authResponseHeaders:
+          - X-Auth-User
+
+  services:
+    # Error page service
+    error-service:
+      loadBalancer:
+        servers:
+          - url: "http://error-pages:3001"
+
+    # Fallback service for API errors
+    fallback-service:
+      loadBalancer:
+        servers:
+          - url: "http://igreja-admin:3000"
+
+# TCP Configuration for secure connections
+tcp:
+  routers:
+    # TCP router for secure connections
+    secure-tcp:
+      entryPoints:
+        - tcpSecure
+      rule: "HostSNI(`admin.aigrejanascasas.com.br`, `admin.igreja.hubme.tech`)"
+      service: tcp-service
+      tls:
+        passthrough: false
+
+  services:
+    tcp-service:
+      loadBalancer:
+        servers:
+          - address: "igreja-admin:3000"
+
+# UDP Configuration (if needed for real-time features)
+udp:
+  services:
+    udp-service:
+      loadBalancer:
+        servers:
+          - address: "igreja-admin:3000"
