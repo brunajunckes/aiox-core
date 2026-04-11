@@ -1,0 +1,56 @@
+[Unit]
+Description=AutoFlow Desktop GPU Worker Bridge
+After=network-online.target
+Wants=network-online.target
+Documentation=https://autoflow.example.com/docs/gpu-worker
+
+[Service]
+Type=simple
+User=autoflow
+Group=autoflow
+WorkingDirectory=/opt/autoflow
+
+# Python environment + GPU bridge service
+ExecStart=/opt/autoflow/venv/bin/python -m autoflow.workers.gpu_bridge \
+    --config=/opt/autoflow/config/gpu-worker.yaml \
+    --log-level=INFO
+
+# Auto-restart on failure: wait 10s, max 3 retries in 60s
+Restart=on-failure
+RestartSec=10s
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Environment variables for GPU worker
+Environment="PATH=/opt/autoflow/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+Environment="GPU_WORKER_HOST=0.0.0.0"
+Environment="GPU_WORKER_PORT=9000"
+Environment="CLOUDFLARE_TUNNEL_URL=https://gpu.autoflow.internal"
+Environment="POLLING_INTERVAL_SECONDS=5"
+
+# Optional: Load from .env file (if exists)
+EnvironmentFile=-/opt/autoflow/.env.gpu-worker
+
+# Logging to systemd journal (JSON format)
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoflow-gpu
+StandardOutputFormat=json
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/opt/autoflow/cache /opt/autoflow/logs
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Performance tuning
+Nice=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,104 @@
+# Docker Compose Additions for Phase 3 (GPU Worker Bridge + Job Queue)
+#
+# Instructions:
+# 1. Copy this section into /root/autoflow/docker-compose.yml after the "grafana" service
+# 2. Add "redis" and "job_queue" to the "volumes:" and "networks:" sections
+# 3. Run: docker-compose up -d redis job-queue
+#
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PHASE 3 SERVICES: Redis + BullMQ Job Queue
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Redis Cache (Checkpoint recovery, job queue, caching)
+redis:
+  image: redis:7-alpine
+  container_name: autoflow-redis
+  ports:
+    - "6379:6379"
+  command:
+    - redis-server
+    - "--appendonly"
+    - "yes"
+    - "--appendfsync"
+    - "everysec"
+    - "--maxmemory"
+    - "512mb"
+    - "--maxmemory-policy"
+    - "allkeys-lru"
+  volumes:
+    - redis_data:/data
+    - ./redis.conf:/usr/local/etc/redis/redis.conf
+  healthcheck:
+    test: ["CMD", "redis-cli", "ping"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+  networks:
+    - autoflow-network
+  restart: unless-stopped
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+# BullMQ + RQ Job Queue (Checkpoint recovery, job persistence)
+job-queue:
+  build:
+    context: .
+    dockerfile: Dockerfile.job-queue
+  container_name: autoflow-job-queue
+  ports:
+    - "3000:3000"
+  working_dir: /app
+  environment:
+    REDIS_URL: redis://redis:6379
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_NAME: autoflow
+    DB_USER: autoflow
+    DB_PASS: ${AUTOFLOW_DB_PASS:-autoflow_secure_dev_only}
+    NODE_ENV: production
+    LOG_LEVEL: info
+  volumes:
+    - ./job_queue:/app
+    - ./logs:/var/log/autoflow
+    - job_queue_cache:/app/.cache
+  depends_on:
+    redis:
+      condition: service_healthy
+    postgres:
+      condition: service_started
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 10s
+  networks:
+    - autoflow-network
+  restart: unless-stopped
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Update volumes section:
+# ─────────────────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+  ollama_data:
+  prometheus_data:
+  grafana_data:
+  redis_data:              # Add this
+  job_queue_cache:         # Add this
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Networks already defined, no changes needed:
+# ─────────────────────────────────────────────────────────────────────────────
+# networks:
+#   autoflow-network:
+#     driver: bridge

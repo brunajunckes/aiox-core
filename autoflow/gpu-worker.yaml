@@ -1,0 +1,272 @@
+# GPU Worker Bridge Configuration (Phase 3)
+# Location: /opt/autoflow/config/gpu-worker.yaml
+# Purpose: Bridge between VPS job queue and Desktop GPU worker via Cloudflare Tunnel
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Service Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+service:
+  name: autoflow-gpu-worker
+  version: "1.0.0"
+  port: 9000
+  host: 0.0.0.0
+  health_check_port: 9001
+  description: "Bridge between VPS job queue and Desktop GPU worker"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Cloudflare Tunnel Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+cloudflare:
+  # Public HTTPS endpoint for Desktop GPU worker
+  tunnel_url: "https://gpu.autoflow.internal"
+
+  # Health check settings
+  health_endpoint: "/health"
+  health_check_interval_seconds: 60
+
+  # Timeouts for job submission / artifact download
+  timeout_seconds: 30
+
+  # Retry logic for failed requests
+  retry_attempts: 3
+  retry_backoff_ms: 5000
+
+  # Optional: Cloudflare mTLS cert path
+  # mtls_cert_path: "/opt/autoflow/certs/client.crt"
+  # mtls_key_path: "/opt/autoflow/certs/client.key"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Job Polling Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+# Periodically checks VPS job queue for new work to submit to Desktop.
+polling:
+  # How often to check for new jobs (seconds)
+  interval_seconds: 5
+
+  # How many jobs to fetch per poll
+  batch_size: 10
+
+  # Max GPU jobs in-flight (Desktop processing capacity)
+  max_concurrent_jobs: 5
+
+  # Backoff on error (exponential: backoff * 1.5 ^ attempt)
+  error_backoff_seconds: 30
+  max_backoff_seconds: 300
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Logging Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "json"  # json or text
+  file: "/opt/autoflow/logs/gpu-worker.log"
+  max_size_mb: 100
+  retention_days: 7
+
+  # Structured logging fields
+  include_timestamp: true
+  include_request_id: true
+  include_hostname: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Database Configuration (PostgreSQL)
+# ─────────────────────────────────────────────────────────────────────────────
+# GPU worker writes job metrics to PostgreSQL
+database:
+  host: "localhost"
+  port: 5434
+  name: "autoflow"
+  user: "autoflow_gpu_worker"
+  password: "${GPU_WORKER_DB_PASSWORD}"  # Set via environment variable
+
+  # Connection pooling
+  pool_size: 10
+  pool_timeout_seconds: 30
+  pool_recycle_seconds: 3600  # Recycle connections hourly
+
+  # SSL/TLS
+  ssl_mode: "prefer"  # disable, allow, prefer, require, verify-ca, verify-full
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Cache Configuration (Redis)
+# ─────────────────────────────────────────────────────────────────────────────
+# GPU worker uses Redis for:
+# - Job queue lookups (fast check-in)
+# - Metadata caching (reduce DB queries)
+# - Distributed locking (prevent duplicate submissions)
+cache:
+  backend: "redis"
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: "${REDIS_PASSWORD}"  # Optional
+
+  # Cache TTL (seconds)
+  ttl_seconds: 300
+
+  # Namespace to avoid collisions (redis prefix)
+  namespace: "gpu_worker"
+
+  # Connection settings
+  socket_timeout_seconds: 5
+  socket_connect_timeout_seconds: 5
+  socket_keepalive: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Monitoring & Observability
+# ─────────────────────────────────────────────────────────────────────────────
+monitoring:
+  # Prometheus metrics export
+  metrics_port: 9002
+  metrics_enabled: true
+  metrics_path: "/metrics"
+
+  # Third-party integrations
+  prometheus_enabled: true
+  datadog_enabled: false
+  sentry_enabled: false
+  sentry_dsn: "${SENTRY_DSN}"
+
+  # Custom metrics to track
+  metrics:
+    - name: "gpu_jobs_submitted_total"
+      type: "counter"
+      description: "Total jobs submitted to Desktop worker"
+
+    - name: "gpu_jobs_completed_total"
+      type: "counter"
+      description: "Total jobs completed (success + failed)"
+
+    - name: "gpu_job_latency_seconds"
+      type: "histogram"
+      description: "E2E latency from submission to artifact download"
+      buckets: [1, 5, 10, 30, 60, 120]
+
+    - name: "gpu_worker_uptime_percent"
+      type: "gauge"
+      description: "Desktop GPU worker uptime (0-100%)"
+
+    - name: "gpu_tunnel_latency_ms"
+      type: "histogram"
+      description: "Cloudflare Tunnel latency"
+      buckets: [10, 50, 100, 500, 1000]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Job Submission Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+jobs:
+  # Task types the Desktop can handle
+  supported_tasks:
+    - avatar
+    - voice
+    - matting
+    - image
+    - rendering
+
+  # Timeout for long-running jobs (seconds)
+  max_duration_seconds: 3600  # 1 hour
+
+  # Retry policy on failure
+  max_retries: 3
+  retry_delay_seconds: 60
+
+  # Artifact handling
+  artifact_ttl_seconds: 86400  # 24h: delete artifact after download
+  artifact_cleanup_enabled: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Desktop GPU Worker Endpoints
+# ─────────────────────────────────────────────────────────────────────────────
+# Paths to Desktop GPU worker API (accessed via Cloudflare Tunnel)
+endpoints:
+  health: "/health"
+  avatar_generate: "/api/avatar/generate"
+  voice_synthesize: "/api/voice/synthesize"
+  video_matting: "/api/video/matting"
+  video_render: "/api/video/render"
+  image_generate: "/api/image/generate"
+  job_status: "/api/jobs/{job_id}"
+  job_artifact: "/api/jobs/{job_id}/artifact"
+  job_delete: "/api/jobs/{job_id}"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Performance Tuning
+# ─────────────────────────────────────────────────────────────────────────────
+performance:
+  # Connection pooling (avoid connection storm)
+  max_connections: 50
+  connection_timeout_ms: 5000
+
+  # HTTP settings
+  http_version: "2"  # HTTP/2 for multiplexing
+  keep_alive_seconds: 60
+
+  # Batch processing
+  batch_processing_enabled: true
+  batch_timeout_ms: 1000  # Max wait before flushing batch
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Error Handling & Resilience
+# ─────────────────────────────────────────────────────────────────────────────
+resilience:
+  # Circuit breaker: stop requesting if Desktop is down
+  circuit_breaker_enabled: true
+  circuit_breaker_threshold: 5  # Fail after 5 errors
+  circuit_breaker_timeout_seconds: 60  # Re-check after 60s
+
+  # Graceful degradation
+  fallback_enabled: true
+  fallback_queue_enabled: true  # Queue jobs locally if Desktop offline
+
+  # Deadletter handling (jobs that fail after all retries)
+  deadletter_enabled: true
+  deadletter_path: "/opt/autoflow/queue/deadletter"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Security Settings
+# ─────────────────────────────────────────────────────────────────────────────
+security:
+  # API authentication (if Desktop requires it)
+  auth_enabled: false
+  auth_type: "bearer"  # bearer, basic, apikey
+
+  # Optional: API key for Desktop requests
+  # api_key: "${DESKTOP_API_KEY}"
+
+  # HTTPS validation
+  verify_ssl: true
+  ssl_cert_path: "/etc/ssl/certs/ca-certificates.crt"
+
+  # Rate limiting (to avoid overwhelming Desktop)
+  rate_limit_enabled: true
+  rate_limit_per_second: 100
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Feature Flags (Phase 3+)
+# ─────────────────────────────────────────────────────────────────────────────
+features:
+  # Phase 3: Checkpoint recovery
+  checkpoint_recovery_enabled: true
+
+  # Phase 3: Cost tracking
+  cost_tracking_enabled: true
+
+  # Phase 4: Distributed tracing
+  distributed_tracing_enabled: false
+
+  # Phase 4: Multi-tenancy
+  multi_tenancy_enabled: false
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Development / Testing
+# ─────────────────────────────────────────────────────────────────────────────
+development:
+  # Enable debug logging
+  debug_enabled: false
+
+  # Mock Desktop GPU worker (no real requests)
+  mock_gpu_worker: false
+
+  # Record all requests/responses for analysis
+  record_requests: false
+  record_path: "/opt/autoflow/logs/requests"

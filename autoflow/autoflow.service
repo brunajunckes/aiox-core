@@ -1,0 +1,42 @@
+[Unit]
+Description=AutoFlow GPU Orchestration Platform
+Documentation=https://autoflow.local/docs
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/autoflow
+
+# Load environment variables from secure file
+EnvironmentFile=/root/autoflow/.env.production
+
+# Start command
+ExecStart=/usr/bin/docker compose -f docker-compose-production.yml up --no-color
+
+# Restart policy
+Restart=on-failure
+RestartSec=10s
+StartLimitInterval=600
+StartLimitBurst=5
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/root/autoflow
+
+# Resource limits
+LimitNOFILE=65535
+LimitNPROC=65535
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoflow
+
+[Install]
+WantedBy=multi-user.target
