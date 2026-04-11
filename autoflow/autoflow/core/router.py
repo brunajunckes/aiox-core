@@ -23,26 +23,55 @@ from typing import Any, Optional
 import httpx
 
 from . import config
+from . import cost_logger
 
 
 # ---------------------------------------------------------------------------
-# Cost tracking log
+# Cost tracking log (using cost_logger module)
 # ---------------------------------------------------------------------------
-
-COST_LOG_PATH = os.getenv("AUTOFLOW_ROUTER_LOG", "/var/log/autoflow-router.jsonl")
-_log_lock = threading.Lock()
 
 
 def _log_event(event: dict[str, Any]) -> None:
-    """Append a JSONL event to the cost log. Silent on I/O failure."""
-    event.setdefault("ts", datetime.now(timezone.utc).isoformat())
+    """Log event via cost_logger module (PostgreSQL + fallback to file)."""
+    # Build CostEvent from generic dict
+    event.setdefault("timestamp", datetime.now(timezone.utc).isoformat())
     event.setdefault("service", "autoflow-router")
-    try:
-        with _log_lock:
-            with open(COST_LOG_PATH, "a", encoding="utf-8") as fh:
-                fh.write(json.dumps(event, default=str) + "\n")
-    except Exception as exc:  # pragma: no cover - never block a real request
-        print(f"[Router] cost-log write failed: {exc}", file=sys.stderr)
+
+    # Create typed event
+    if event.get("type") == "llm_call":
+        cost_logger.log_llm_call(
+            status=event.get("status", "unknown"),
+            provider=event.get("provider", "unknown"),
+            model=event.get("model"),
+            preferred=event.get("preferred"),
+            fallback_used=event.get("fallback_used", False),
+            complexity_score=event.get("complexity_score"),
+            complexity_level=event.get("complexity_level"),
+            estimated_cost_usd=event.get("estimated_cost_usd", 0.0),
+            actual_cost_usd=event.get("actual_cost_usd", 0.0),
+            input_tokens=event.get("input_tokens"),
+            output_tokens=event.get("output_tokens"),
+            prompt_chars=event.get("prompt_chars", 0),
+            response_chars=event.get("response_chars", 0),
+            latency_ms=event.get("latency_ms", 0),
+            total_ms=event.get("total_ms", 0),
+            circuit_state=event.get("circuit_state"),
+            routing_reason=event.get("routing_reason"),
+            error=event.get("error"),
+            workflow_type=event.get("workflow_type"),
+            request_id=event.get("request_id"),
+        )
+    elif event.get("type") == "routing_decision":
+        cost_logger.log_routing_decision(
+            decision=event,
+            circuit_state=event.get("circuit_state"),
+            error=event.get("error"),
+        )
+    else:
+        # Generic event
+        ce = cost_logger.CostEvent(**{k: v for k, v in event.items() if k in
+                                       cost_logger.CostEvent.__dataclass_fields__})
+        cost_logger.log_cost_event(ce)
 
 
 # ---------------------------------------------------------------------------
@@ -373,6 +402,6 @@ def router_health() -> dict[str, Any]:
         "ollama_url": config.OLLAMA_URL,
         "ollama_default_model": config.OLLAMA_MODEL,
         "claude_configured": bool(config.ANTHROPIC_API_KEY),
-        "cost_log_path": COST_LOG_PATH,
+        "cost_log_path": cost_logger.COST_LOG_PATH,
         "circuit_state": _llm_router_breaker.state,
     }
