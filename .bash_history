@@ -5,3 +5,11 @@ ssh-keygen -t ed25519 -f ~/.ssh/github -N ""
 como faco meu mac nao pedir mais senha pra vps?
 claude
 claude
+claude
+claude /resume
+claude
+claude /resume
+claude
+claude
+claude /resume
+claude

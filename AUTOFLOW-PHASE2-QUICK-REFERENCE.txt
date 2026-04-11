@@ -1,0 +1,382 @@
+================================================================================
+                    AUTOFLOW PHASE 2 — QUICK REFERENCE
+================================================================================
+
+TIMELINE: April 14 - June 8, 2026 (8 weeks / 320 hours / 5-6 people)
+
+================================================================================
+EPIC 1: BULLMQ PIPELINE INTEGRATION
+================================================================================
+Duration:       2 weeks (Weeks 1-2)
+Effort:         75 hours
+Team:           1 dev + 1 data-engineer
+Dependencies:   None (critical path start)
+Success:        JobQueue operational, checkpoint persistence working
+
+Sprint 1.1 (Week 1): Job Queue Foundation — 40 hours
+  Story 1.1.1: JobQueue abstraction + 5-stage schema (34h)
+    - Install BullMQ, design job lifecycle
+    - Implement enqueue(), status(), retry()
+    - Retry logic: exponential backoff
+    - 15+ unit tests
+  Story 1.1.2: PostgreSQL checkpoints (8h)
+    - job_checkpoints table design
+    - save_checkpoint(), load_checkpoint()
+    - TTL cleanup (30 days)
+  Story 1.1.3: Integrate into video.py (10h parallel)
+    - Create video_pipeline_orchestrator()
+    - POST /api/video, GET /api/video/{id}/status
+    - 8+ integration tests
+
+Sprint 1.2 (Week 2): Persistence & Observability — 35 hours
+  Story 1.2.1: Artifact storage (15h)
+    - S3/Supabase/Docker volume support
+    - upload(), download(), delete()
+    - GC: delete after 7 days
+  Story 1.2.2: Job monitoring (15h)
+    - Monitor service (queue depth, latency)
+    - Prometheus metrics export
+    - Admin dashboard: /api/admin/jobs
+  Story 1.2.3: Queue health & recovery (10h)
+    - /queue/health endpoint
+    - Stuck-job detection (> 60 min)
+    - Auto-escalation to dead-letter
+
+KEY DELIVERABLES:
+  ✓ JobQueue class (production)
+  ✓ Checkpoint schema + store
+  ✓ Artifact manager
+  ✓ Job monitoring + metrics
+  ✓ 25+ tests
+  ✓ Docs: job-queue-design.md
+
+KEY METRICS:
+  ✓ Resume latency: < 5 sec
+  ✓ Job completion: > 95%
+  ✓ Queue health: 99.9% availability
+
+================================================================================
+EPIC 2: DESKTOP GPU WORKER BRIDGE
+================================================================================
+Duration:       3 weeks (Weeks 2-4)
+Effort:         125 hours
+Team:           2-3 devs + 1 DevOps
+Dependencies:   Sprint 1.1 (for job schema), Epic 2.1 (client library)
+Success:        GPU worker running, all 5 components integrated, video E2E working
+
+Sprint 2.1 (Week 2): GPU Worker API & Tunnel — 35 hours
+  Story 2.1.1: FastAPI GPU worker on Desktop (20h)
+    - Windows service executable
+    - 5 endpoints: /api/avatar/generate, /api/voice/synthesize,
+                   /api/matting, /api/image/generate, /api/video/render
+    - /api/health endpoint (GPU temp, VRAM%, uptime)
+    - Request validation (Pydantic)
+  Story 2.1.2: Cloudflare Tunnel (10h)
+    - Desktop GPU worker ↔ VPS tunnel
+    - VPS nginx reverse proxy
+    - Token authentication (X-GPU-Token header)
+    - Latency < 500ms, 24h stability
+  Story 2.1.3: GPU worker client (15h)
+    - AutoFlow library: core/gpu_worker_client.py
+    - Async methods: avatar_generate(), voice_synthesize(), etc.
+    - Retry logic (3x), timeout (30s per task, 5min video)
+    - Circuit breaker (skip if offline > 5 min)
+
+Sprint 2.2 (Week 3-4): GPU Components — 50 hours
+  Story 2.2.1: Duix-Avatar (12h)
+    - Model setup + testing
+    - Bridge: /api/avatar/generate
+    - Caching layer (hash-based)
+    - Latency: < 2 min per avatar
+  Story 2.2.2: VibeVoice (10h)
+    - Model setup (multiple speakers)
+    - Bridge: /api/voice/synthesize
+    - Multi-speaker support (3+)
+    - Latency: < 30s per minute of speech
+  Story 2.2.3: RobustVideoMatting (12h)
+    - Model setup
+    - Bridge: /api/matting
+    - Batch processing (parallel frames)
+    - Latency: < 5 min for 30s video
+  Story 2.2.4: Image & Video rendering (16h)
+    - imaginAIry model for images
+    - Pixelle-Video for rendering
+    - Resolution: 1080p 30fps
+    - Latency: < 1 min images, < 5 min video
+
+Sprint 2.3 (Week 4-5): Pipeline Integration — 40 hours
+  Story 2.3.1: GPU tasks into video.py (18h)
+    - Stage 1: Script → Audio (VibeVoice)
+    - Stage 3: Video → Matting (RVM)
+    - Stage 4: Matting → Avatar (Duix)
+    - Stage 5: Render (Pixelle)
+    - E2E test: script → final video (< 15 min)
+  Story 2.3.2: Failover & metrics (12h)
+    - GPU task retry (3x)
+    - Fallback: skip GPU, use CPU/text
+    - Graceful degradation when offline
+    - Availability tracking (%)
+  Story 2.3.3: E2E + stress tests (10h)
+    - E2E test suite
+    - GPU offline simulation
+    - Concurrent stress: 10 parallel jobs
+    - Resource monitoring (GPU temp, VRAM, network)
+
+KEY DELIVERABLES:
+  ✓ FastAPI GPU worker (Windows)
+  ✓ Cloudflare Tunnel + VPS integration
+  ✓ GPU worker client library
+  ✓ 5 GPU component bridges
+  ✓ Video workflow GPU-integrated
+  ✓ 25+ tests + stress tests
+  ✓ Docs: gpu-worker-setup.md, gpu-components.md
+
+KEY METRICS:
+  ✓ Avatar: 2 min (vs 5 min CPU)
+  ✓ Voice: 30 sec per minute
+  ✓ Video render: 5 min for 30s
+  ✓ E2E video: < 15 min (5-stage)
+  ✓ GPU uptime: > 95%
+  ✓ 10 concurrent: < 60 min total
+
+================================================================================
+EPIC 3: LLM-ROUTER-AIOX ALIGNMENT
+================================================================================
+Duration:       2 weeks (Weeks 4-5, parallel with Epic 2.3)
+Effort:         55 hours
+Team:           1 dev + 1 architect + 1 QA
+Dependencies:   Phase 1 (router.py exists)
+Success:        LLM-Router integrated, cost accurate, 100 concurrent routing
+
+Sprint 3.1 (Week 4-5): Router Integration & Optimization — 30 hours
+  Story 3.1.1: LLM-Router API analysis (7h)
+    - Document /route endpoint API
+    - Map 20+ AutoFlow tasks → complexity scores (1-15)
+    - Write: /docs/complexity-mapping.md
+  Story 3.1.2: Replace router.py (12h)
+    - Remove direct Ollama/Claude calls
+    - Call LLM-Router for routing decisions
+    - Circuit breaker (if LLM-Router fails)
+    - Cost logging per request
+  Story 3.1.3: Cost tracking & budgeting (10h)
+    - core/cost_tracker.py module
+    - Per-model costs (Ollama=$0, Claude=$0.03/1K)
+    - Budget ceiling (daily/monthly)
+    - Budget alert at 80%
+    - /api/admin/cost-report endpoint
+    - Paperclip integration (register, track, enforce)
+  Story 3.1.4: Complexity-aware retries (5h)
+    - Retry strategy based on complexity:
+      * Low (1-5): no retry
+      * Medium (6-10): 1 retry
+      * High (11-15): 2 retries + Opus escalation
+  Story 3.1.5: Testing & validation (16h)
+    - Unit tests (router, circuit breaker, cost, retry)
+    - Integration tests (LLM-Router → execute)
+    - Load test: 100 concurrent requests
+    - Fallback test (LLM-Router offline)
+    - Cost accuracy: ±$0.01
+
+KEY DELIVERABLES:
+  ✓ LLM-Router-AIOX integration
+  ✓ Cost tracking + budgeting
+  ✓ Paperclip governance
+  ✓ Complexity-aware retry logic
+  ✓ 25+ tests (unit + integration + load)
+  ✓ Docs: complexity-mapping.md, routing-strategy.md
+
+KEY METRICS:
+  ✓ Cost reduction: 30-50% (Ollama for low-complexity)
+  ✓ Cost accuracy: ±$0.01
+  ✓ Router latency: < 100ms
+  ✓ Load test: 100 concurrent, 0 errors
+
+================================================================================
+INTEGRATION & TESTING (Weeks 5-7, 40 hours)
+================================================================================
+- E2E testing: script → video (all 3 epics together)
+- Performance benchmarks: latency, throughput, cost per job
+- Regression testing: Phase 1 not broken
+- Chaos testing: GPU offline, Router down, DB failure
+- Load testing: 10 concurrent, sustained 24h
+- Production readiness: monitoring, alerting, runbooks
+
+================================================================================
+WEEKLY SNAPSHOT
+================================================================================
+
+Week 1 (Apr 14-20): Epic 1.1 Foundation
+  Focus:        JobQueue + checkpoint schema
+  Team:         2 (dev, data-engineer)
+  Hours:        40
+  Deliverable:  JobQueue class, 15+ tests
+
+Week 2 (Apr 21-27): Epic 1.1→1.2 + Epic 2.1 Start
+  Focus:        Persistence + GPU worker API
+  Team:         3-4 (dev, data-eng, devops)
+  Hours:        63
+  Deliverable:  Artifact store, GPU worker, tunnel
+
+Week 3 (Apr 28-May 4): Epic 1.2 + Epic 2.2 Start
+  Focus:        Monitoring + GPU components
+  Team:         3-4 (dev, qa, devops)
+  Hours:        62
+  Deliverable:  Job monitoring, avatar/voice/matting
+
+Week 4 (May 5-11): Epic 2.2 + Epic 2.3 + Epic 3.1
+  Focus:        GPU integration + routing
+  Team:         4 (dev×2, devops, architect)
+  Hours:        63
+  Deliverable:  GPU pipeline, LLM-Router integration
+
+Week 5 (May 12-18): Epic 2.3 + Epic 3.1 Complete
+  Focus:        E2E video + cost tracking
+  Team:         4 (dev, qa, devops, architect)
+  Hours:        56
+  Deliverable:  Full GPU workflow, cost tracking
+
+Week 6 (May 19-25): Integration + Perf Testing
+  Focus:        Performance baselines + documentation
+  Team:         3 (qa, architect, analyst)
+  Hours:        39
+  Deliverable:  Baselines, architecture guide
+
+Week 7 (May 26-Jun 1): Load + Chaos Testing
+  Focus:        Stress + reliability testing
+  Team:         2 (qa, devops)
+  Hours:        32
+  Deliverable:  Stress test results, runbooks
+
+Week 8 (Jun 2-8): Sign-off + Knowledge Transfer
+  Focus:        Final testing + team training
+  Team:         2 (qa, pm)
+  Hours:        23
+  Deliverable:  Team trained, staging ready
+
+================================================================================
+GO/NO-GO GATES
+================================================================================
+
+EOW Sprint 1.1 (Apr 20):
+  GO if:    JobQueue working, 15+ tests, schema merged
+  NO-GO if: Core JobQueue broken, retry logic fails
+
+EOW Sprint 1.2 (Apr 27):
+  GO if:    Checkpoint resume working, metrics accurate
+  NO-GO if: Checkpoint restore fails, GC broken
+
+EOW Sprint 2.1 (May 4):
+  GO if:    GPU worker running, tunnel stable, client library complete
+  NO-GO if: Tunnel latency > 1s, worker crashes
+
+EOW Sprint 2.3 (May 18):
+  GO if:    Video E2E working, 10 concurrent jobs, GPU offline graceful
+  NO-GO if: E2E hangs, any component integration fails
+
+EOW Sprint 3.1 (May 18):
+  GO if:    LLM-Router integrated, cost accurate, 100 concurrent pass
+  NO-GO if: Router returns 404/500, cost > $0.10 error
+
+Phase 2 Complete (Jun 8):
+  GO if:    All epics merged, E2E pass, perf met, team trained
+  NO-GO if: Any critical bugs, docs incomplete, perf below target
+
+================================================================================
+KEY RISK MITIGATIONS
+================================================================================
+
+BullMQ vs Celery choice      → POC both on Day 1 Sprint 1.1
+Desktop GPU offline          → Health checks + auto-fallback (Story 2.1.3)
+Postgres contention          → Connection pooling (10 connections)
+Tunnel latency on large vids → Benchmark with 1GB videos (Day 2 Sprint 2.1)
+Component version conflicts  → Lock versions + Windows service isolation
+Cost tracking accuracy       → Daily reconciliation + audit trail
+LLM-Router API changes       → Monitor releases, version pin
+
+================================================================================
+TEAM ROLES & RESPONSIBILITIES
+================================================================================
+
+@dev (2x):
+  - JobQueue abstraction
+  - GPU client library + component bridges
+  - Video workflow integration
+  - Router.py refactor
+  - Tests: unit, integration, E2E
+
+@data-engineer:
+  - Checkpoint schema design
+  - Artifact store + migration
+  - Postgres tuning
+
+@devops (Gage):
+  - GPU worker service (Windows)
+  - Cloudflare Tunnel setup + maintenance
+  - Monitoring (Prometheus, dashboards)
+  - Runbooks + operational docs
+
+@qa:
+  - Unit + integration test writing
+  - E2E test framework
+  - Stress testing (10 concurrent)
+  - Chaos testing (failure scenarios)
+
+@architect (Aria):
+  - Design reviews
+  - Complexity mapping
+  - Technology decisions
+  - Production readiness checklist
+
+@analyst:
+  - Documentation writing
+  - Cost analysis
+  - Research (if needed)
+
+@pm (Morgan):
+  - Roadmap management
+  - Weekly reviews
+  - Knowledge transfer
+  - Stakeholder updates
+
+================================================================================
+RESOURCES & LINKS
+================================================================================
+
+Phase 2 Documents:
+  1. AUTOFLOW-PHASE2-ROADMAP.md (main doc)
+  2. AUTOFLOW-PHASE2-EFFORT-MATRIX.md (effort breakdown)
+  3. AUTOFLOW-PHASE2-SPRINT-CARDS.md (sprint planning)
+  4. AUTOFLOW-PHASE2-EXECUTIVE-SUMMARY.md (summary for execs)
+
+Phase 1 Status:
+  - /root/.claude/projects/-root/memory/autoflow_execution_status.md
+
+Infrastructure References:
+  - Paperclip: port 3100
+  - LLM-Router-AIOX: port 3200
+  - Ollama: ollama.ampcast.site
+  - AutoFlow API: port 8000
+
+Code Locations:
+  - AutoFlow: /root/autoflow/
+  - LLM-Router: /root/llm-router-aiox/
+  - Paperclip: /root/paperclip/
+
+Git:
+  - Main branch: origin/main
+  - Phase 2 feature branch: feat/phase2-pipeline
+  - Review before push: coderabbit
+
+================================================================================
+                           READY TO EXECUTE
+================================================================================
+Start Date:    April 14, 2026 (Monday)
+End Date:      June 8, 2026 (Friday)
+Status:        ✅ Approved
+Investment:    320 person-hours / 5-6 people / $48K
+Success Rate:  Moderate Risk, High Confidence
+Expected ROI:  25-month payback, $1.9K annual savings + 10x throughput
+
+Next Step: Team onboarding + Epic 1.1 kickoff (Monday, April 14)
+
+================================================================================
