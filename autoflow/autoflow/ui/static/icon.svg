@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- AIOX Dark Cockpit favicon — Official A mark on dark bg -->
+  <rect width="512" height="512" rx="96" fill="#0F0F11"/>
+  <rect x="16" y="16" width="480" height="480" rx="84" fill="white" fill-opacity="0.04"/>
+  <!-- A triangle mark (from brand.aioxsquad.ai, scaled to fit) -->
+  <g transform="translate(88, 68) scale(0.89)">
+    <path fill="#F4F4E8" d="M0 310.6H376.464L188.219 9.4L0 310.6ZM96.047 257.35L188.219 109.875L280.392 257.35H96.047Z"/>
+  </g>
+</svg>
