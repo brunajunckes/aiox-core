@@ -3,3 +3,5 @@
 [user]
 	name = Gage DevOps
 	email = devops@aiox.local
+[safe]
+	directory = /root/paperclip

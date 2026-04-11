@@ -1,0 +1,269 @@
+{
+  "analysis_metadata": {
+    "timestamp": "2026-04-11T00:00:00Z",
+    "scope": "AutoFlow Phase 2-3 Gaps",
+    "author": "Architect (via Ollama)",
+    "model_used": "qwen2.5:3b (local inference)"
+  },
+  "executive_summary": {
+    "total_gaps": 3,
+    "critical_blockers": 0,
+    "sequencing_critical": true,
+    "immediate_action_required": "Gap 1 (BullMQ) must be resolved before GPU integration can handle long-running jobs"
+  },
+  "gaps": [
+    {
+      "gap_id": 1,
+      "title": "BullMQ Job Queue for Video Pipeline Checkpointing",
+      "category": "Resilience & Error Handling (E4)",
+      "current_state": "Video workflow (5 stages) has no job persistence. If any stage fails after 10 minutes, entire pipeline restarts from scratch.",
+      "impact_analysis": {
+        "severity": "HIGH",
+        "blast_radius": "All video rendering workflows",
+        "cost_impact": "2-hour video job + failure = wasted 2h of GPU time, zero output",
+        "user_experience": "No recovery from transient failures; users lose work",
+        "technical_debt": "Error handling taxonomy shows E4 is missing (Stage failure checkpoint)"
+      },
+      "root_cause": "AutoFlow workflows use LangGraph StateGraph (graph persistence in PostgreSQL) but lack job-level queuing. If a worker process dies mid-execution, in-flight jobs are lost.",
+      "gap_components": [
+        {
+          "component": "Job Queue Library",
+          "requirement": "Python library for distributed job queuing (e.g., rq, huey, or RabbitMQ replacement for BullMQ)",
+          "current": "None",
+          "missing": "pip install rq redis (or equivalent)",
+          "complexity": 3
+        },
+        {
+          "component": "5-Stage Job Definitions",
+          "requirement": "Job classes for each video stage (script->audio, audio->segments, etc.) with retry logic",
+          "current": "Workflow nodes exist but no separate job model",
+          "missing": "Job class definitions + checkpoint resume logic",
+          "complexity": 3
+        },
+        {
+          "component": "Checkpoint/Resume Handler",
+          "requirement": "Logic to resume job from last successful stage if worker crashes",
+          "current": "StateGraph checkpoints everything, but job queue doesn't use them",
+          "missing": "Integration between job queue and StateGraph checkpoints",
+          "complexity": 4
+        },
+        {
+          "component": "Artifact Storage Strategy",
+          "requirement": "Persistent storage for intermediate stage outputs (script.json, audio.wav, segments.json, etc.)",
+          "current": "In-memory + ephemeral Docker volumes",
+          "missing": "Supabase Storage / R2 bucket configuration for artifacts",
+          "complexity": 2
+        }
+      ],
+      "acceptance_criteria": [
+        "[ ] Job queue library installed and tested with Redis",
+        "[ ] 5 job classes created (one per video stage) with retry defaults (3 retries, 60s backoff)",
+        "[ ] Checkpoint resume logic: if stage 3 fails, stage 3 restarts with stage 2 outputs as input",
+        "[ ] Intermediate artifacts stored to Supabase Storage with lifecycle cleanup (24h TTL)",
+        "[ ] E2E test: simulate GPU worker crash during stage 3, verify automatic resume",
+        "[ ] Cost tracking: log each stage execution time + model used to /var/log/autoflow-jobs.jsonl"
+      ],
+      "dependencies": [],
+      "blocks": [
+        "Gap 2 (GPU Worker integration) — can't handle long-running jobs without checkpoints",
+        "Gap 3 (LLM-Router alignment) — depends on stable job execution"
+      ],
+      "effort_estimate": {
+        "hours": 8,
+        "breakdown": "3h setup (queue + lib), 3h job classes, 2h testing"
+      },
+      "sequence_order": 1,
+      "implementation_notes": "Use RQ (simpler than Celery/Airflow) with Redis backend already running on VPS. Each job class extends rq.job.Job and defines stage-specific command. StateGraph node outputs become job results for next stage."
+    },
+    {
+      "gap_id": 2,
+      "title": "Desktop GPU Worker Integration for Avatar/Matting/Voice/Rendering",
+      "category": "Distributed Architecture & Hardware Utilization",
+      "current_state": "gpu_worker_api.py exists (FastAPI server for Desktop) but is NOT integrated into AutoFlow workflows. Workflows can only execute CPU-bound tasks (LLM inference, script generation). GPU tasks (avatar generation, video matting, voice synthesis) are blocked on disconnected Desktop.",
+      "impact_analysis": {
+        "severity": "CRITICAL",
+        "blast_radius": "Avatar, video matting, voice synthesis, image generation workflows",
+        "cost_impact": "GPU resources on Desktop sit idle; video pipeline can't complete",
+        "user_experience": "Video workflows fail with 'GPU task not supported' error",
+        "technical_debt": "AutoFlow-AIOX topology is incomplete: VPS handles LLM, Desktop handles GPU, but no bridge"
+      },
+      "root_cause": "Split-brain topology (VPS + Desktop) requires explicit job submission to Desktop. AutoFlow workflows were designed for VPS-only execution; they have no mechanism to delegate to remote GPU worker. Cloudflare Tunnel is not configured; WireGuard not set up.",
+      "gap_components": [
+        {
+          "component": "Network Bridge (Cloudflare Tunnel / WireGuard)",
+          "requirement": "Desktop GPU worker must be reachable from VPS over secure tunnel",
+          "current": "Desktop is on local network; VPS is on VPS provider network",
+          "missing": "Cloudflare Tunnel daemon on Desktop OR WireGuard peer config",
+          "complexity": 2
+        },
+        {
+          "component": "GPU Worker Client Library",
+          "requirement": "Python library to submit jobs to Desktop GPU worker, poll status, download artifacts",
+          "current": "gpu_worker_api.py exists, but no client library",
+          "missing": "GpuWorkerClient class wrapping HTTP calls to /api/avatar/generate, /api/video/matting, etc.",
+          "complexity": 2
+        },
+        {
+          "component": "Workflow Integration Points",
+          "requirement": "Nodes in video_workflow.py that delegate GPU tasks to Desktop instead of failing",
+          "current": "Workflows only call call_llm_sync()",
+          "missing": "New workflow nodes: await_gpu_task(task_type, payload), with circuit breaker for offline Desktop",
+          "complexity": 3
+        },
+        {
+          "component": "Graceful Degradation",
+          "requirement": "If Desktop is offline, GPU tasks fail gracefully with clear error message, workflows continue with fallback (e.g., text-only video, static image)",
+          "current": "No fallback defined",
+          "missing": "Circuit breaker + fallback handler in gpu_router.py or new gpu_fallback.py",
+          "complexity": 2
+        },
+        {
+          "component": "Desktop Health Check",
+          "requirement": "Automatic detection of Desktop availability; Paperclip ticket if Desktop offline for >5 minutes",
+          "current": "Desktop API is unmonitored",
+          "missing": "Health check task in autoflow-monitor.service or separate systemd service",
+          "complexity": 2
+        }
+      ],
+      "acceptance_criteria": [
+        "[ ] Cloudflare Tunnel setup on Desktop (or WireGuard peer config) with stable tunnel name",
+        "[ ] GpuWorkerClient class created with timeout=30s, retry logic (3 retries, exponential backoff)",
+        "[ ] Video workflow node accepts GPU task delegation: await_gpu_task('avatar', {script: ..., avatar_id: ...})",
+        "[ ] Circuit breaker: if Desktop offline, GPU task fails with clear error, workflow logs to Paperclip ticket",
+        "[ ] Health check: every 60s, verify /health endpoint; if down 5+ min, create Paperclip ticket 'Desktop GPU Worker Offline'",
+        "[ ] E2E test: submit avatar generation job from VPS → Desktop, verify job execution + artifact download",
+        "[ ] Cost tracking: log GPU job (model, latency, artifact size) to /var/log/autoflow-gpu.jsonl"
+      ],
+      "dependencies": [
+        "Gap 1 (BullMQ) — GPU jobs need checkpointing for long-running tasks"
+      ],
+      "blocks": [
+        "Gap 3 (LLM-Router alignment) — GPU task decision-making depends on stable architecture"
+      ],
+      "effort_estimate": {
+        "hours": 12,
+        "breakdown": "2h tunnel setup, 3h client library, 4h workflow integration, 2h testing, 1h documentation"
+      },
+      "sequence_order": 2,
+      "implementation_notes": "Defer avatar/matting/voice features until Desktop tunnel is stable. Start with health check + graceful fallback. GPU task requests go: VPS workflow -> GpuWorkerClient -> POST /api/{task_type} -> Desktop queues job -> VPS polls /api/jobs/{id} -> VPS downloads artifact from /api/jobs/{id}/artifact."
+    },
+    {
+      "gap_id": 3,
+      "title": "LLM-Router-AIOX Integration for Complexity-Based Model Selection",
+      "category": "Architecture Alignment & Cost Optimization",
+      "current_state": "router.py has LLM-Router-AIOX client stub (_fetch_routing_decision) but doesn't use it for actual routing. Workflows use direct Ollama→Claude fallback chain, bypassing complexity scoring. LLM-Router-AIOX (located in /root/llm-router-aiox) exists with full feature set (complexity 1-15, circuit breaker, cost tracking, cache) but AutoFlow doesn't leverage it.",
+      "impact_analysis": {
+        "severity": "MEDIUM",
+        "blast_radius": "All LLM calls from AutoFlow workflows",
+        "cost_impact": "Wrong model selection: simple queries hitting Claude (expensive) instead of Ollama (free). No cost tracking across AutoFlow.",
+        "user_experience": "No visibility into model selection logic; unpredictable latency",
+        "technical_debt": "Two separate routing systems: LLM-Router-AIOX (sophisticated) + AutoFlow router (simple). Inconsistent decisions."
+      },
+      "root_cause": "Architecture decision at Gap 1 of autoflow_execution_status.md: 'LLM-Router-AIOX is available but skipped for now (its API needs alignment).' The router.py code has a comment: 'Replace direct router with LLM-Router-AIOX API calls' but this was deferred. Root cause unclear — likely API signature mismatch or missing documentation.",
+      "gap_components": [
+        {
+          "component": "API Alignment Documentation",
+          "requirement": "Document exact LLM-Router-AIOX API contract: request format, response format, error codes",
+          "current": "Code exists but no clear interface spec",
+          "missing": ".md file explaining /route endpoint: input (prompt, context, system), output (model, complexity_score, cost_estimate)",
+          "complexity": 1
+        },
+        {
+          "component": "Request/Response Contract",
+          "requirement": "Ensure AutoFlow prompts match LLM-Router-AIOX complexity scorer expectations",
+          "current": "router.py _fetch_routing_decision() is stubbed but never called",
+          "missing": "Test calls to LLM-Router-AIOX /route endpoint with sample AutoFlow prompts",
+          "complexity": 2
+        },
+        {
+          "component": "Fallback Chain Update",
+          "requirement": "Replace Ollama→Claude direct fallback with LLM-Router-AIOX decision",
+          "current": "def call_llm_sync(prompt, system, ...) uses: try ollama -> except: claude",
+          "missing": "Sequence: LLM-Router /route decision -> execute on chosen model -> log cost",
+          "complexity": 2
+        },
+        {
+          "component": "Cost Tracking Integration",
+          "requirement": "Every LLM call logs: model, complexity_score, latency, cost to /var/log/autoflow-router.jsonl",
+          "current": "Logging infrastructure exists but not connected to LLM-Router outputs",
+          "missing": "Structured log format: {timestamp, workflow, prompt_hash, model, score, latency_ms, cost_usd}",
+          "complexity": 1
+        },
+        {
+          "component": "Circuit Breaker Sync",
+          "requirement": "If LLM-Router-AIOX is down, fall back to direct Ollama→Claude, but don't call LLM-Router again for 5 min",
+          "current": "CircuitBreaker class exists in router.py but _fetch_routing_decision is never triggered",
+          "missing": "Wire CircuitBreaker into call_llm_sync's control flow",
+          "complexity": 2
+        }
+      ],
+      "acceptance_criteria": [
+        "[ ] Document LLM-Router-AIOX /route API endpoint (input/output contract) in /root/llm-router-aiox/API.md",
+        "[ ] Test _fetch_routing_decision() with sample AutoFlow prompts; verify response contains {model, complexity_score, cost_estimate}",
+        "[ ] Update call_llm_sync() to: (1) call LLM-Router /route, (2) execute on chosen model, (3) log result",
+        "[ ] Structured logging: every call writes {workflow, complexity_score, model, latency, cost} to /var/log/autoflow-router.jsonl",
+        "[ ] Circuit breaker: when /route fails, set 5min backoff; direct fallback without repeated calls",
+        "[ ] Dashboard query: SELECT SUM(cost_usd) FROM autoflow_router_logs WHERE workflow='video' — should show total cost per workflow",
+        "[ ] E2E test: trace a video workflow call through LLM-Router decision → model execution → cost log"
+      ],
+      "dependencies": [
+        "Gap 1 (BullMQ) — Job queue provides structured context for complexity scoring"
+      ],
+      "blocks": [],
+      "effort_estimate": {
+        "hours": 6,
+        "breakdown": "1h API documentation, 2h integration work, 2h testing, 1h dashboarding"
+      },
+      "sequence_order": 3,
+      "implementation_notes": "This is a refactoring, not new code. The pieces exist but are disconnected. Start by running a traced call: log_entry = trace_llm_call(prompt) -> fetch_routing_decision(prompt) -> call_model(model) -> log cost. Verify CircuitBreaker handles LLM-Router downtime gracefully."
+    }
+  ],
+  "dependency_matrix": {
+    "gap_1": {
+      "blocks": ["gap_2", "gap_3"],
+      "blocked_by": [],
+      "reason": "Long-running video jobs need checkpointing before GPU integration; stable job execution enables complexity scoring"
+    },
+    "gap_2": {
+      "blocks": [],
+      "blocked_by": ["gap_1"],
+      "reason": "Desktop GPU worker can't handle job failures without checkpoint/resume from Gap 1"
+    },
+    "gap_3": {
+      "blocks": [],
+      "blocked_by": ["gap_1"],
+      "reason": "LLM-Router decision-making needs reliable job execution context from Gap 1"
+    }
+  },
+  "sequencing_recommendation": {
+    "phase_1_critical": "Gap 1 (BullMQ) — Foundation for both GPU and LLM-Router",
+    "phase_2_parallel": ["Gap 2 (GPU Worker)", "Gap 3 (LLM-Router)"],
+    "rationale": "Gap 1 unblocks Gap 2 and Gap 3 independently. Once Gap 1 is complete, Gap 2 and Gap 3 can proceed in parallel (GPU handles infrastructure, LLM-Router handles control flow)."
+  },
+  "rollout_timeline": {
+    "sprint_1_days_1_3": "Gap 1 — BullMQ job queue + checkpointing (8 hours, 1 sprint)",
+    "sprint_1_days_4_5": "Gap 3 — LLM-Router alignment + cost tracking (6 hours, 0.75 sprint)",
+    "sprint_2_days_1_5": "Gap 2 — GPU Worker integration + tunnel setup (12 hours, 1.5 sprints)",
+    "total_effort": "26 hours (3.25 sprints, ~5-6 working days for full team)"
+  },
+  "blockers": [],
+  "risks": {
+    "gap_2_risk": {
+      "title": "Desktop availability variance",
+      "likelihood": "HIGH",
+      "impact": "GPU tasks fail silently if Desktop offline during business hours",
+      "mitigation": "Health check + Paperclip alerting (part of acceptance criteria). Consider fallback rendering on VPS (CPU, slower)."
+    },
+    "gap_3_risk": {
+      "title": "LLM-Router API signature drift",
+      "likelihood": "MEDIUM",
+      "impact": "Integration breaks if LLM-Router changes /route response format",
+      "mitigation": "Document API contract in LLM-Router repo. Add integration tests. Version API (/v1/route, /v2/route)."
+    }
+  },
+  "success_metrics": {
+    "gap_1": "Video pipeline survives 5+ random worker crashes with <30s recovery time per crash",
+    "gap_2": "Avatar generation requests succeed 99% of time (1% fail = Desktop offline); fallback graceful",
+    "gap_3": "Cost tracking dashboard shows ±5% of actual API spend; complexity score distribution makes sense (simple=ollama, complex=claude)"
+  }
+}
