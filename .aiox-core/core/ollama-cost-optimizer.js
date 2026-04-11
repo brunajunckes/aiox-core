@@ -1,6 +1,8 @@
 /**
- * Ollama Cost Optimizer
- * Routes simple tasks to Ollama instead of Opus to save credits
+ * Ollama Cost Optimizer — Dual Model Routing
+ * Routes tasks strategically to maximize quality/speed
+ * - qwen2.5:7b: Fast, structured output (YAML, JSON, code)
+ * - gemma4:e4b: Deep reasoning, complex analysis
  * Endpoint: http://ollama.ampcast.site:11434/api/generate
  */
 
@@ -8,7 +10,26 @@ const https = require('https');
 const http = require('http');
 
 const OLLAMA_URL = 'http://ollama.ampcast.site:11434';
-const OLLAMA_MODEL = 'qwen2.5:3b';
+const MODELS = {
+  PRIMARY: 'qwen2.5:7b',      // Fast, structured (default)
+  REASONING: 'gemma4:e4b',    // Complex reasoning
+};
+
+function selectModel(taskType) {
+  const reasoningTasks = [
+    'architecture-analysis',
+    'complex-reasoning',
+    'pattern-analysis',
+    'code-review',
+    'multi-step-logic',
+    'deep-analysis',
+  ];
+
+  if (reasoningTasks.includes(taskType)) {
+    return MODELS.REASONING;
+  }
+  return MODELS.PRIMARY;
+}
 
 async function callOllama(prompt, options = {}) {
   return new Promise((resolve, reject) => {
@@ -26,8 +47,9 @@ async function callOllama(prompt, options = {}) {
       },
     };
 
+    const model = options.model || MODELS.PRIMARY;
     const body = JSON.stringify({
-      model: OLLAMA_MODEL,
+      model,
       prompt,
       stream: false,
       temperature: options.temperature || 0.7,
@@ -78,7 +100,8 @@ async function optimizeTask(taskType, prompt, options = {}) {
   }
 
   try {
-    const response = await callOllama(prompt, { ...options, timeout: 30000 });
+    const model = selectModel(taskType);
+    const response = await callOllama(prompt, { ...options, model, timeout: 30000 });
     return response;
   } catch (error) {
     console.warn(`⚠️  Ollama failed, falling back to Haiku: ${error.message}`);
@@ -90,6 +113,7 @@ module.exports = {
   callOllama,
   optimizeTask,
   isSimpleTask,
+  selectModel,
   OLLAMA_URL,
-  OLLAMA_MODEL,
+  MODELS,
 };

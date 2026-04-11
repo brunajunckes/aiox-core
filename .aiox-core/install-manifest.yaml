@@ -8,7 +8,7 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-10T15:51:22.896Z"
+generated_at: "2026-04-11T12:45:33.035Z"
 generator: scripts/generate-install-manifest.js
 file_count: 1270
 files:
@@ -1433,9 +1433,9 @@ files:
     type: core
     size: 1824
   - path: core/ollama-cost-optimizer.js
-    hash: sha256:cc0621e1b2e0af1bf24efeb12b82f10b2befdedab9e9ccb7faa26611bc2c3e49
+    hash: sha256:e3288ccb5d79389743defea81ecdd1f345076d73e4c1cf82bfe16a4e764fe920
     type: core
-    size: 2304
+    size: 2930
   - path: core/orchestration/agent-invoker.js
     hash: sha256:5e1e3428163c35b0c91f694b76a5ca1e520249de1f7f65aae87e6723c01a45e7
     type: core
