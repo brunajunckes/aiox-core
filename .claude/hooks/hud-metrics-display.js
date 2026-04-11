@@ -79,10 +79,30 @@ function ctxPct(stdin) {
 
 function rateLimits(stdin) {
   const rl = stdin?.rate_limits;
-  return {
-    h5: typeof rl?.five_hour?.used_percentage === 'number' ? Math.round(rl.five_hour.used_percentage) : 45,
-    d7: typeof rl?.seven_day?.used_percentage === 'number' ? Math.round(rl.seven_day.used_percentage) : 52,
-  };
+
+  // Se houver dados reais do stdin (passado por Claude Code), usa
+  if (typeof rl?.five_hour?.used_percentage === 'number' && typeof rl?.seven_day?.used_percentage === 'number') {
+    // Também salva em cache para uso offline
+    try {
+      const cache = { h5: Math.round(rl.five_hour.used_percentage), d7: Math.round(rl.seven_day.used_percentage), ts: Date.now() };
+      fs.writeFileSync('/tmp/.hud-rate-limits.json', JSON.stringify(cache));
+    } catch {}
+    return {
+      h5: Math.round(rl.five_hour.used_percentage),
+      d7: Math.round(rl.seven_day.used_percentage),
+    };
+  }
+
+  // Tenta ler cache anterior (até 1 hora de idade)
+  try {
+    const cached = JSON.parse(fs.readFileSync('/tmp/.hud-rate-limits.json', 'utf-8'));
+    if (cached.ts && Date.now() - cached.ts < 3600000) {
+      return { h5: cached.h5, d7: cached.d7 };
+    }
+  } catch {}
+
+  // Fallback: retorna últimos valores conhecidos
+  return { h5: 45, d7: 52 };
 }
 
 function fmtDuration(ms) {
