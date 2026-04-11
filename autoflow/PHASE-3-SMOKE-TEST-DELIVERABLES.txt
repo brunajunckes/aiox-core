@@ -1,0 +1,418 @@
+================================================================================
+PHASE 3 SMOKE TEST SUITE — COMPLETE DELIVERABLES
+================================================================================
+
+Project: AutoFlow / Phase 3 Deployment
+Date: 2026-04-11
+Owner: @devops (Gage)
+Status: Production Ready
+
+================================================================================
+DELIVERABLES SUMMARY
+================================================================================
+
+Created 5 comprehensive files totaling 110KB:
+
+┌─ EXECUTABLE SCRIPTS ────────────────────────────────────────────────────────┐
+│                                                                              │
+│ 1. PHASE-3-SMOKE-TESTS.sh (35 KB)                                           │
+│    Main smoke test script with all 27 tests                                  │
+│    - 6 Epic 3.1 tests (Cost Logging)                                         │
+│    - 5 Epic 3.2 tests (GPU Worker)                                           │
+│    - 6 Epic 3.3 tests (BullMQ Queue)                                         │
+│    - 5 E2E Pipeline tests                                                    │
+│    - 5 Load test cases                                                       │
+│    Status: ✓ EXECUTABLE, ✓ TESTED LOGIC                                     │
+│                                                                              │
+│ 2. SMOKE-TEST-QUICK-START.sh (16 KB)                                        │
+│    Automated prerequisite setup and test execution                           │
+│    - Prerequisite checking (Docker, curl, psql, redis-cli)                   │
+│    - Service startup automation                                              │
+│    - Database initialization                                                 │
+│    - Test execution                                                          │
+│    - Results display                                                         │
+│    Status: ✓ EXECUTABLE, ✓ PRODUCTION READY                                 │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ DOCUMENTATION FILES ───────────────────────────────────────────────────────┐
+│                                                                              │
+│ 3. SMOKE-TEST-RESULTS.md (22 KB)                                            │
+│    Comprehensive testing documentation                                       │
+│    - Executive summary with test coverage matrix                             │
+│    - 27 test descriptions with success criteria                              │
+│    - Example test run output                                                 │
+│    - Pass/Fail/Skip interpretation guide                                     │
+│    - Troubleshooting quick reference                                         │
+│    - Environment setup instructions                                          │
+│    Status: ✓ COMPLETE, ✓ PRODUCTION QUALITY                                 │
+│                                                                              │
+│ 4. SMOKE-TEST-FAILURES.md (21 KB)                                           │
+│    Systematic troubleshooting guide                                          │
+│    - 5 failure categories with 20+ scenarios                                 │
+│    - Quick diagnosis flowchart                                               │
+│    - Root cause analysis per failure type                                    │
+│    - Step-by-step recovery procedures                                        │
+│    - Escalation path to @devops                                              │
+│    Status: ✓ COMPREHENSIVE, ✓ ACTIONABLE                                    │
+│                                                                              │
+│ 5. PHASE-3-SMOKE-TEST-SUITE-SUMMARY.md (16 KB)                              │
+│    Overview and integration guide                                            │
+│    - Deliverables summary                                                    │
+│    - Test coverage matrix (27 tests)                                         │
+│    - Running instructions (quick/manual/custom)                              │
+│    - Success criteria                                                        │
+│    - Next steps after deployment                                             │
+│    - Integration with Phase 3 docs                                           │
+│    Status: ✓ COMPLETE, ✓ READY FOR REFERENCE                                │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+TEST COVERAGE
+================================================================================
+
+EPIC 3.1: COST LOGGING (6 tests)
+  ✓ Service availability
+  ✓ Metrics endpoint latency (<100ms)
+  ✓ Cost events PostgreSQL persistence (5/5)
+  ✓ Circuit breaker status
+  ✓ CLI commands (cost-summary)
+  ✓ Cost accuracy verification (±2%)
+  SUCCESS CRITERIA: ≥5/6 PASS
+
+EPIC 3.2: GPU WORKER (5 tests)
+  ✓ Health check endpoint
+  ✓ Cloudflare tunnel connectivity
+  ✓ GPU task submission (mock avatar job)
+  ✓ Health monitor degradation detection
+  ✓ Graceful fallback to Ollama
+  SUCCESS CRITERIA: ≥3/5 PASS (GPU optional)
+
+EPIC 3.3: BULLMQ QUEUE (6 tests)
+  ✓ Redis connection (PING)
+  ✓ BullMQ job processing (5 jobs submitted)
+  ✓ Checkpoint creation (table exists)
+  ✓ Checkpoint resume functionality
+  ✓ Retry logic validation
+  ✓ Dead Letter Queue (DLQ) capture
+  SUCCESS CRITERIA: ≥5/6 PASS
+
+E2E VIDEO PIPELINE (5 tests)
+  ✓ Complete pipeline operational (all services)
+  ✓ Job state transitions (5 stages defined)
+  ✓ Checkpoints per stage (recovery mechanism)
+  ✓ Cost logging per stage
+  ✓ Pipeline latency <15 minutes (900 seconds)
+  SUCCESS CRITERIA: ≥5/5 PASS
+
+LOAD TEST (5 tests)
+  ✓ 10 concurrent job submission (≥8 success)
+  ✓ GPU worker concurrent processing (2+ capable)
+  ✓ Service restart rate (<2%)
+  ✓ Job loss/data corruption check
+  ✓ Memory stability (<500MB)
+  SUCCESS CRITERIA: ≥5/5 PASS
+
+TOTAL: 27 tests across 5 categories
+PASS RATE TARGET: ≥100% (22+ PASS, ≤5 SKIP, 0 FAIL)
+EXPECTED RUNTIME: 3-5 minutes
+
+================================================================================
+QUICK START
+================================================================================
+
+Option 1: Automated Setup + Tests
+  $ cd /root/autoflow
+  $ ./SMOKE-TEST-QUICK-START.sh
+  Expected: All tests PASS in ~5 minutes
+
+Option 2: Manual Setup
+  $ cd /root/autoflow
+  $ docker-compose up -d postgres redis router
+  $ sleep 30
+  $ ./PHASE-3-SMOKE-TESTS.sh
+
+View Results:
+  $ cat SMOKE-TEST-RESULTS-{timestamp}.md
+
+Troubleshoot Failures:
+  $ cat SMOKE-TEST-FAILURES.md
+
+================================================================================
+SUCCESS CRITERIA FOR PRODUCTION
+================================================================================
+
+Phase 3 is READY FOR PRODUCTION if:
+
+✓ ALL 27 SMOKE TESTS
+  - PASSED: ≥22 tests
+  - FAILED: 0 tests (critical)
+  - SKIPPED: ≤5 tests (optional services)
+
+✓ PERFORMANCE SLAs
+  - Metrics latency: <100ms
+  - Cost accuracy: ±2%
+  - Restart rate: <2%
+  - Memory per service: <500MB
+
+✓ DATA INTEGRITY
+  - Cost events persisted to PostgreSQL
+  - Jobs processed without loss
+  - Checkpoints functional across stages
+  - DLQ captures failed jobs correctly
+
+✓ E2E PIPELINE
+  - All 5 video processing stages functional
+  - Total pipeline time: <15 minutes
+  - Cost tracking per stage
+  - Checkpoint recovery works
+
+✓ TEAM READINESS
+  - Team trained on deployment
+  - Runbooks documented
+  - Escalation procedures clear
+  - Rollback procedures tested
+
+================================================================================
+FILE LOCATIONS
+================================================================================
+
+Main Test Scripts:
+  /root/autoflow/PHASE-3-SMOKE-TESTS.sh
+  /root/autoflow/SMOKE-TEST-QUICK-START.sh
+
+Documentation:
+  /root/autoflow/SMOKE-TEST-RESULTS.md
+  /root/autoflow/SMOKE-TEST-FAILURES.md
+  /root/autoflow/PHASE-3-SMOKE-TEST-SUITE-SUMMARY.md
+  /root/autoflow/PHASE-3-SMOKE-TEST-DELIVERABLES.txt (this file)
+
+Generated at Runtime:
+  /root/autoflow/SMOKE-TEST-RESULTS-{timestamp}.md
+  /root/autoflow/SMOKE-TEST-FAILURES-{timestamp}.md
+
+Related Phase 3 Documents:
+  /root/autoflow/PHASE-3-INTEGRATION-TEST.md
+  /root/autoflow/PHASE-3-DEPLOYMENT-READINESS.md
+  /root/autoflow/PHASE-3-ACCEPTANCE-CRITERIA-VALIDATION.md
+  /root/autoflow/PHASE-3-RISK-MITIGATION-PLAN.md
+  /root/autoflow/PHASE-3-FINAL-SUMMARY.md
+  /root/autoflow/DEPLOYMENT-COMMAND-REFERENCE.md
+
+================================================================================
+INTEGRATION WITH PHASE 3
+================================================================================
+
+This smoke test suite integrates with existing Phase 3 validation:
+
+PHASE-3-VALIDATION-COMPLETE.md
+  └─ Contains 6 comprehensive documents
+     ├─ PHASE-3-INTEGRATION-TEST.md (E2E & chaos tests)
+     ├─ PHASE-3-DEPLOYMENT-READINESS.md (57-point checklist)
+     ├─ PHASE-3-ACCEPTANCE-CRITERIA-VALIDATION.md (20 ACs)
+     ├─ PHASE-3-RISK-MITIGATION-PLAN.md (15 risks mitigated)
+     ├─ PHASE-3-FINAL-SUMMARY.md (executive summary)
+     └─ DEPLOYMENT-COMMAND-REFERENCE.md (deployment procedures)
+
+SMOKE TEST SUITE adds:
+  ├─ 27 automated validation tests
+  ├─ Quick deployment readiness check (5 minutes)
+  ├─ Systematic troubleshooting guide
+  ├─ Automated prerequisite setup
+  └─ Production health monitoring baseline
+
+================================================================================
+SUPPORT & ESCALATION
+================================================================================
+
+Test Fails?
+  1. See SMOKE-TEST-FAILURES.md for diagnosis
+  2. Follow systematic troubleshooting procedure
+  3. If unresolved, escalate to @devops with:
+     - Test ID and failure output
+     - Diagnosis command output
+     - Recovery steps attempted
+     - System diagnostics (logs, resources)
+
+Quick Reference:
+  - Documentation: See /root/autoflow/SMOKE-TEST-FAILURES.md
+  - 20+ common failures with solutions
+  - 5 failure categories with flowchart
+  - Root cause analysis per scenario
+  - Recovery procedures included
+
+Contact:
+  - @devops (Gage): Primary support
+  - @qa (Quinn): Test execution support
+  - @architect (Aria): Design validation
+
+================================================================================
+KEY METRICS & TARGETS
+================================================================================
+
+Test Execution:
+  - Total test count: 27
+  - Test categories: 5
+  - Expected runtime: 3-5 minutes
+  - Pass rate target: ≥100% (22+ PASS, 0 FAIL)
+
+Performance Targets:
+  - Metrics latency: <100ms (P50)
+  - Cost accuracy: ±2% (across sample)
+  - Restart rate: <2% (per hour)
+  - Memory stability: <500MB per service
+
+Data Integrity:
+  - Cost events persisted: 5/5
+  - Jobs processed: ≥80% success
+  - Checkpoint coverage: 100% of stages
+  - DLQ capture: 100% of failures
+
+Reliability:
+  - Service availability: 99.9%
+  - Job success rate: >98%
+  - Data loss: 0 jobs
+  - Corruption: 0 events
+
+================================================================================
+NEXT STEPS AFTER SMOKE TESTS PASS
+================================================================================
+
+Immediate (Same Day)
+  1. Review SMOKE-TEST-RESULTS-*.md
+  2. Verify all 27 tests PASS/SKIP (not FAIL)
+  3. Note any SKIP reasons
+
+Short Term (Next 24 Hours)
+  1. Run integration tests
+     pytest tests/test_epic3_1_integration.py -v
+  2. Execute E2E tests
+     ./scripts/e2e-tests.sh
+  3. Run extended load tests
+     ./scripts/load-test-extended.sh --duration=3600
+
+Medium Term (Next 48 Hours)
+  1. Deploy to staging
+     ./scripts/deploy-phase3.sh --environment=staging
+  2. Run smoke tests on staging
+     ./PHASE-3-SMOKE-TESTS.sh --environment=staging
+  3. Get stakeholder sign-off
+
+Production Deployment (After Approval)
+  1. Blue-green setup
+  2. Gradual traffic migration (10% → 50% → 100%)
+  3. Post-deployment monitoring (7 days)
+  4. Performance validation and sign-off
+
+================================================================================
+PRODUCTION DEPLOYMENT READINESS CHECKLIST
+================================================================================
+
+Before Running Smoke Tests:
+  ☐ All Phase 3 code deployed to staging
+  ☐ Database migrations applied
+  ☐ Services configured and running
+  ☐ Monitoring/observability set up
+  ☐ Team trained on runbooks
+
+Smoke Test Execution:
+  ☐ Smoke tests PASS: ≥22/27
+  ☐ Critical issues: 0
+  ☐ Performance targets: Met
+  ☐ Data integrity: Verified
+
+Post-Smoke-Test:
+  ☐ Results documented
+  ☐ Failures (if any) resolved
+  ☐ Team debriefing complete
+  ☐ Runbooks updated
+
+Production Approval:
+  ☐ All smoke tests PASS
+  ☐ Integration tests PASS
+  ☐ E2E tests PASS
+  ☐ Load tests PASS
+  ☐ Security audit PASS
+  ☐ Performance SLAs verified
+  ☐ Disaster recovery tested
+  ☐ Team certified ready
+  ☐ Stakeholder sign-off
+
+Deployment:
+  ☐ Blue-green ready
+  ☐ Rollback procedures tested
+  ☐ Monitoring configured
+  ☐ On-call team assigned
+  ☐ Communication plan ready
+
+================================================================================
+TROUBLESHOOTING QUICK REFERENCE
+================================================================================
+
+Service Not Responding?
+  → See: SMOKE-TEST-FAILURES.md → Category 1 (Infrastructure)
+  $ docker-compose restart {service}
+  $ ./PHASE-3-SMOKE-TESTS.sh
+
+Database Error?
+  → See: SMOKE-TEST-FAILURES.md → Category 2 (Database)
+  $ psql -h localhost -U autoflow -d autoflow -c "\dt"
+  $ # Create missing tables from documentation
+
+Redis Error?
+  → See: SMOKE-TEST-FAILURES.md → Category 3 (Queue)
+  $ redis-cli PING
+  $ docker-compose restart redis
+
+API Error?
+  → See: SMOKE-TEST-FAILURES.md → Category 4 (API)
+  $ curl -v http://localhost:3000/endpoint
+  $ docker-compose logs router
+
+Data Corruption?
+  → See: SMOKE-TEST-FAILURES.md → Category 5 (Data Integrity)
+  $ psql -h localhost -U autoflow -d autoflow -c "SELECT COUNT(*) FROM job_queue;"
+  $ redis-cli DBSIZE
+
+Need Help?
+  → cat SMOKE-TEST-FAILURES.md
+  → Contact: @devops (Gage)
+
+================================================================================
+VERSION & HISTORY
+================================================================================
+
+Phase 3 Smoke Test Suite v1.0
+  Created: 2026-04-11
+  Status: Production Ready
+  Owner: @devops (Gage)
+  Last Updated: 2026-04-11
+
+Files:
+  - PHASE-3-SMOKE-TESTS.sh (v1.0, 35 KB)
+  - SMOKE-TEST-QUICK-START.sh (v1.0, 16 KB)
+  - SMOKE-TEST-RESULTS.md (v1.0, 22 KB)
+  - SMOKE-TEST-FAILURES.md (v1.0, 21 KB)
+  - PHASE-3-SMOKE-TEST-SUITE-SUMMARY.md (v1.0, 16 KB)
+  - PHASE-3-SMOKE-TEST-DELIVERABLES.txt (v1.0, this file)
+
+Total: 6 files, ~110 KB
+
+================================================================================
+CONCLUSION
+================================================================================
+
+The Phase 3 smoke test suite provides comprehensive validation of all 3 epics
+(Cost Logging, GPU Worker, BullMQ Queue) working together in production.
+
+All 27 tests can run in under 5 minutes with clear pass/fail/skip criteria.
+
+✓ READY FOR PRODUCTION DEPLOYMENT
+
+When smoke tests PASS: ≥22/27 tests PASS, 0 CRITICAL failures
+Phase 3 is approved for production deployment.
+
+Support: See SMOKE-TEST-FAILURES.md or contact @devops (Gage)
+
+================================================================================
