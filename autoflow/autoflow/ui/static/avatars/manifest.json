@@ -1,0 +1,569 @@
+{
+  "architect": {
+    "codename": "ARIA",
+    "squad": "aios-core",
+    "title": "Holistic System Architect",
+    "tier": 1,
+    "file": "architect.png"
+  },
+  "analyst": {
+    "codename": "ATLAS",
+    "squad": "aios-core",
+    "title": "Business Analyst & Strategic Ideation",
+    "tier": 2,
+    "file": "analyst.png"
+  },
+  "squad-creator": {
+    "codename": "CRAFT",
+    "squad": "aios-core",
+    "title": "Squad Architect & Builder",
+    "tier": 2,
+    "file": "squad-creator.png"
+  },
+  "data-engineer": {
+    "codename": "DARA",
+    "squad": "aios-core",
+    "title": "Database Architect & Operations Engineer",
+    "tier": 1,
+    "file": "data-engineer.png"
+  },
+  "dev": {
+    "codename": "DEX",
+    "squad": "aios-core",
+    "title": "Full Stack Developer",
+    "tier": 0,
+    "file": "dev.png"
+  },
+  "devops": {
+    "codename": "GAGE",
+    "squad": "aios-core",
+    "title": "GitHub Repository Manager & DevOps",
+    "tier": 1,
+    "file": "devops.png"
+  },
+  "pm": {
+    "codename": "MORGAN",
+    "squad": "aios-core",
+    "title": "Investigative Product Strategist",
+    "tier": 1,
+    "file": "pm.png"
+  },
+  "aios-master": {
+    "codename": "ORION",
+    "squad": "aios-core",
+    "title": "AIOS Master Orchestrator",
+    "tier": 0,
+    "file": "aios-master.png"
+  },
+  "po": {
+    "codename": "PAX",
+    "squad": "aios-core",
+    "title": "Technical Product Owner",
+    "tier": 1,
+    "file": "po.png"
+  },
+  "qa": {
+    "codename": "QUINN",
+    "squad": "aios-core",
+    "title": "Test Architect & Quality Advisor",
+    "tier": 1,
+    "file": "qa.png"
+  },
+  "sm": {
+    "codename": "RIVER",
+    "squad": "aios-core",
+    "title": "Scrum Master & Story Specialist",
+    "tier": 1,
+    "file": "sm.png"
+  },
+  "ux-design-expert": {
+    "codename": "UMA",
+    "squad": "aios-core",
+    "title": "UX/UI Designer & Design System Architect",
+    "tier": 1,
+    "file": "ux-design-expert.png"
+  },
+  "alan-nicolas": {
+    "codename": "ALAN NICOLAS",
+    "squad": "clone",
+    "title": "AI Business Strategist & Founder",
+    "tier": 0,
+    "file": "alan-nicolas.png"
+  },
+  "pedro-valerio": {
+    "codename": "PEDRO VALERIO",
+    "squad": "clone",
+    "title": "Growth Marketing Expert",
+    "tier": 0,
+    "file": "pedro-valerio.png"
+  },
+  "thiago-finch": {
+    "codename": "THIAGO FINCH",
+    "squad": "clone",
+    "title": "Digital Marketing Entrepreneur",
+    "tier": 0,
+    "file": "thiago-finch.png"
+  },
+  "frank-kern": {
+    "codename": "FRANK KERN",
+    "squad": "clone",
+    "title": "Direct Response Marketing Strategist",
+    "tier": 0,
+    "file": "frank-kern.png"
+  },
+  "david-ogilvy": {
+    "codename": "DAVID OGILVY",
+    "squad": "copywriting",
+    "title": "The Father of Advertising",
+    "tier": 1,
+    "file": "david-ogilvy.png"
+  },
+  "gary-halbert": {
+    "codename": "GARY HALBERT",
+    "squad": "copywriting",
+    "title": "The Prince of Print",
+    "tier": 1,
+    "file": "gary-halbert.png"
+  },
+  "eugene-schwartz": {
+    "codename": "EUGENE SCHWARTZ",
+    "squad": "copywriting",
+    "title": "The Copywriter's Copywriter",
+    "tier": 1,
+    "file": "eugene-schwartz.png"
+  },
+  "dan-kennedy": {
+    "codename": "DAN KENNEDY",
+    "squad": "copywriting",
+    "title": "The Godfather of Direct Response",
+    "tier": 1,
+    "file": "dan-kennedy.png"
+  },
+  "claude-hopkins": {
+    "codename": "CLAUDE HOPKINS",
+    "squad": "copywriting",
+    "title": "Scientific Advertising Pioneer",
+    "tier": 1,
+    "file": "claude-hopkins.png"
+  },
+  "clayton-makepeace": {
+    "codename": "CLAYTON MAKEPEACE",
+    "squad": "copywriting",
+    "title": "The Emotional DR King",
+    "tier": 1,
+    "file": "clayton-makepeace.png"
+  },
+  "gary-bencivenga": {
+    "codename": "GARY BENCIVENGA",
+    "squad": "copywriting",
+    "title": "The World's Greatest Copywriter",
+    "tier": 1,
+    "file": "gary-bencivenga.png"
+  },
+  "joe-sugarman": {
+    "codename": "JOE SUGARMAN",
+    "squad": "copywriting",
+    "title": "The Triggers Master",
+    "tier": 1,
+    "file": "joe-sugarman.png"
+  },
+  "john-carlton": {
+    "codename": "JOHN CARLTON",
+    "squad": "copywriting",
+    "title": "The Most Ripped-Off Copywriter",
+    "tier": 1,
+    "file": "john-carlton.png"
+  },
+  "john-caples": {
+    "codename": "JOHN CAPLES",
+    "squad": "copywriting",
+    "title": "The Headline Scientist",
+    "tier": 1,
+    "file": "john-caples.png"
+  },
+  "victor-schwab": {
+    "codename": "VICTOR SCHWAB",
+    "squad": "copywriting",
+    "title": "The Headline Master",
+    "tier": 1,
+    "file": "victor-schwab.png"
+  },
+  "jason-fladlien": {
+    "codename": "JASON FLADLIEN",
+    "squad": "copywriting",
+    "title": "The Webinar King",
+    "tier": 1,
+    "file": "jason-fladlien.png"
+  },
+  "jon-benson": {
+    "codename": "JON BENSON",
+    "squad": "copywriting",
+    "title": "VSL Pioneer & Email Specialist",
+    "tier": 1,
+    "file": "jon-benson.png"
+  },
+  "robert-bly": {
+    "codename": "ROBERT BLY",
+    "squad": "copywriting",
+    "title": "The B2B Copywriting Master",
+    "tier": 1,
+    "file": "robert-bly.png"
+  },
+  "stefan-georgi": {
+    "codename": "STEFAN GEORGI",
+    "squad": "copywriting",
+    "title": "RMBC Method Creator",
+    "tier": 1,
+    "file": "stefan-georgi.png"
+  },
+  "todd-brown": {
+    "codename": "TODD BROWN",
+    "squad": "copywriting",
+    "title": "E5 Method Creator & Big Idea Architect",
+    "tier": 1,
+    "file": "todd-brown.png"
+  },
+  "copywriter": {
+    "codename": "COPYWRITER",
+    "squad": "copywriting",
+    "title": "Copywriter",
+    "tier": 2,
+    "file": "copywriter.png"
+  },
+  "copywriting-chief": {
+    "codename": "COPY CHIEF",
+    "squad": "copywriting",
+    "title": "Copy Chief - Orquestrador",
+    "tier": 2,
+    "file": "copywriting-chief.png"
+  },
+  "brad-frost": {
+    "codename": "BRAD FROST",
+    "squad": "design",
+    "title": "Atomic Design Creator",
+    "tier": 1,
+    "file": "brad-frost.png"
+  },
+  "dan-mall": {
+    "codename": "DAN MALL",
+    "squad": "design",
+    "title": "Design Systems Consultant",
+    "tier": 1,
+    "file": "dan-mall.png"
+  },
+  "dave-malouf": {
+    "codename": "DAVE MALOUF",
+    "squad": "design",
+    "title": "DesignOps Pioneer",
+    "tier": 1,
+    "file": "dave-malouf.png"
+  },
+  "design-chief": {
+    "codename": "DESIGN CHIEF",
+    "squad": "design",
+    "title": "Design Squad Orchestrator",
+    "tier": 0,
+    "file": "design-chief.png"
+  },
+  "ds-token-architect": {
+    "codename": "TOKEN ARCHITECT",
+    "squad": "design",
+    "title": "Design Token Specialist",
+    "tier": 2,
+    "file": "ds-token-architect.png"
+  },
+  "ds-foundations-lead": {
+    "codename": "FOUNDATIONS LEAD",
+    "squad": "design",
+    "title": "DS Foundations Engineer",
+    "tier": 2,
+    "file": "ds-foundations-lead.png"
+  },
+  "storybook-expert": {
+    "codename": "STORYBOOK EXPERT",
+    "squad": "design",
+    "title": "Storybook & Component Documentation",
+    "tier": 2,
+    "file": "storybook-expert.png"
+  },
+  "nano-banana-generator": {
+    "codename": "NANO BANANA",
+    "squad": "design",
+    "title": "AI Image Generator",
+    "tier": 2,
+    "file": "nano-banana-generator.png"
+  },
+  "squad-chief": {
+    "codename": "SQUAD CHIEF",
+    "squad": "squad-creator-pro",
+    "title": "Squad Creation Orchestrator",
+    "tier": 0,
+    "file": "squad-chief.png"
+  },
+  "aios-helper": {
+    "codename": "GUIDE",
+    "squad": "aios-development",
+    "title": "AIOS Usage Consultant",
+    "tier": 2,
+    "file": "aios-helper.png"
+  },
+  "briefing-backlog": {
+    "codename": "BRIEFING",
+    "squad": "aios-development",
+    "title": "Backlog & Briefing Manager",
+    "tier": 2,
+    "file": "briefing-backlog.png"
+  },
+  "funnelytics-expert": {
+    "codename": "FUNNELYTICS",
+    "squad": "aios-development",
+    "title": "Funnel Analytics Expert",
+    "tier": 2,
+    "file": "funnelytics-expert.png"
+  },
+  "hotmart-expert": {
+    "codename": "HOTMART",
+    "squad": "aios-development",
+    "title": "Hotmart Platform Expert",
+    "tier": 2,
+    "file": "hotmart-expert.png"
+  },
+  "knowledge-creator": {
+    "codename": "KNOWLEDGE",
+    "squad": "aios-development",
+    "title": "Knowledge Base Creator",
+    "tier": 2,
+    "file": "knowledge-creator.png"
+  },
+  "n8n-expert": {
+    "codename": "N8N",
+    "squad": "aios-development",
+    "title": "n8n Workflow Automation Expert",
+    "tier": 2,
+    "file": "n8n-expert.png"
+  },
+  "orquestrador-global": {
+    "codename": "GLOBAL",
+    "squad": "aios-development",
+    "title": "Global Orchestrator",
+    "tier": 0,
+    "file": "orquestrador-global.png"
+  },
+  "sendflow-expert": {
+    "codename": "SENDFLOW",
+    "squad": "aios-development",
+    "title": "SendFlow Email Marketing Expert",
+    "tier": 2,
+    "file": "sendflow-expert.png"
+  },
+  "tag-manager-expert": {
+    "codename": "TAG MANAGER",
+    "squad": "aios-development",
+    "title": "Tag Manager & Tracking Expert",
+    "tier": 2,
+    "file": "tag-manager-expert.png"
+  },
+  "waha-expert": {
+    "codename": "WAHA",
+    "squad": "aios-development",
+    "title": "WhatsApp WAHA Messaging Expert",
+    "tier": 2,
+    "file": "waha-expert.png"
+  },
+  "academic-research": {
+    "codename": "PROFESSOR",
+    "squad": "academic-research",
+    "title": "Academic Research Lead",
+    "tier": 0,
+    "file": "academic-research.png"
+  },
+  "academic-writer": {
+    "codename": "WRITER",
+    "squad": "academic-research",
+    "title": "Academic Writer",
+    "tier": 1,
+    "file": "academic-writer.png"
+  },
+  "citation-manager": {
+    "codename": "CITATION",
+    "squad": "academic-research",
+    "title": "Citation & Bibliography Manager",
+    "tier": 2,
+    "file": "citation-manager.png"
+  },
+  "literature-reviewer": {
+    "codename": "REVIEWER",
+    "squad": "academic-research",
+    "title": "Literature Reviewer",
+    "tier": 1,
+    "file": "literature-reviewer.png"
+  },
+  "peer-reviewer": {
+    "codename": "PEER",
+    "squad": "academic-research",
+    "title": "Peer Reviewer & Quality Gate",
+    "tier": 1,
+    "file": "peer-reviewer.png"
+  },
+  "research-chief": {
+    "codename": "RESEARCH CHIEF",
+    "squad": "academic-research",
+    "title": "Research Pipeline Orchestrator",
+    "tier": 0,
+    "file": "research-chief.png"
+  },
+  "agora-chief": {
+    "codename": "AGORA CHIEF",
+    "squad": "agora-direct-response",
+    "title": "Direct Response Marketing Chief",
+    "tier": 0,
+    "file": "agora-chief.png"
+  },
+  "agora-growth-advisor": {
+    "codename": "GROWTH",
+    "squad": "agora-direct-response",
+    "title": "Growth Advisor",
+    "tier": 1,
+    "file": "agora-growth-advisor.png"
+  },
+  "agora-idea-architect": {
+    "codename": "IDEA",
+    "squad": "agora-direct-response",
+    "title": "Big Idea Architect",
+    "tier": 1,
+    "file": "agora-idea-architect.png"
+  },
+  "agora-launch-master": {
+    "codename": "LAUNCH",
+    "squad": "agora-direct-response",
+    "title": "Launch Master",
+    "tier": 1,
+    "file": "agora-launch-master.png"
+  },
+  "agora-offer-designer": {
+    "codename": "OFFER",
+    "squad": "agora-direct-response",
+    "title": "Offer Designer",
+    "tier": 1,
+    "file": "agora-offer-designer.png"
+  },
+  "agora-sales-engineer": {
+    "codename": "SALES",
+    "squad": "agora-direct-response",
+    "title": "Sales Engineer",
+    "tier": 1,
+    "file": "agora-sales-engineer.png"
+  },
+  "agora-strategist": {
+    "codename": "STRATEGIST",
+    "squad": "agora-direct-response",
+    "title": "Marketing Strategist",
+    "tier": 1,
+    "file": "agora-strategist.png"
+  },
+  "aios-core-chief": {
+    "codename": "CORE CHIEF",
+    "squad": "aios-core-dev",
+    "title": "Core Development Chief",
+    "tier": 0,
+    "file": "aios-core-chief.png"
+  },
+  "api-architect": {
+    "codename": "API",
+    "squad": "aios-core-dev",
+    "title": "API Architect",
+    "tier": 1,
+    "file": "api-architect.png"
+  },
+  "dev-planner": {
+    "codename": "PLANNER",
+    "squad": "aios-core-dev",
+    "title": "Development Planner",
+    "tier": 1,
+    "file": "dev-planner.png"
+  },
+  "integration-specialist": {
+    "codename": "INTEGRATOR",
+    "squad": "aios-core-dev",
+    "title": "Integration Specialist",
+    "tier": 1,
+    "file": "integration-specialist.png"
+  },
+  "orchestration-expert": {
+    "codename": "ORCHESTRATOR",
+    "squad": "aios-core-dev",
+    "title": "Orchestration Expert",
+    "tier": 1,
+    "file": "orchestration-expert.png"
+  },
+  "ai-producer": {
+    "codename": "PRODUCER",
+    "squad": "asmr-shorts",
+    "title": "AI Video Producer",
+    "tier": 1,
+    "file": "ai-producer.png"
+  },
+  "algorithm-decoder": {
+    "codename": "DECODER",
+    "squad": "asmr-shorts",
+    "title": "Algorithm Decoder",
+    "tier": 1,
+    "file": "algorithm-decoder.png"
+  },
+  "analytics-pulse": {
+    "codename": "PULSE",
+    "squad": "asmr-shorts",
+    "title": "Analytics Pulse Monitor",
+    "tier": 1,
+    "file": "analytics-pulse.png"
+  },
+  "asmr-scriptwriter": {
+    "codename": "SCRIPTWRITER",
+    "squad": "asmr-shorts",
+    "title": "ASMR Scriptwriter",
+    "tier": 1,
+    "file": "asmr-scriptwriter.png"
+  },
+  "growth-engine": {
+    "codename": "ENGINE",
+    "squad": "asmr-shorts",
+    "title": "Growth Engine Specialist",
+    "tier": 1,
+    "file": "growth-engine.png"
+  },
+  "metadata-pro": {
+    "codename": "META",
+    "squad": "asmr-shorts",
+    "title": "Metadata Specialist",
+    "tier": 2,
+    "file": "metadata-pro.png"
+  },
+  "scheduler": {
+    "codename": "SCHEDULER",
+    "squad": "asmr-shorts",
+    "title": "Content Scheduler",
+    "tier": 2,
+    "file": "scheduler.png"
+  },
+  "shorts-chief": {
+    "codename": "SHORTS CHIEF",
+    "squad": "asmr-shorts",
+    "title": "Shorts Video Chief",
+    "tier": 0,
+    "file": "shorts-chief.png"
+  },
+  "thumb-creator": {
+    "codename": "THUMB",
+    "squad": "asmr-shorts",
+    "title": "Thumbnail Creator",
+    "tier": 2,
+    "file": "thumb-creator.png"
+  },
+  "trend-hunter": {
+    "codename": "HUNTER",
+    "squad": "asmr-shorts",
+    "title": "Trend Hunter",
+    "tier": 1,
+    "file": "trend-hunter.png"
+  }
+}
