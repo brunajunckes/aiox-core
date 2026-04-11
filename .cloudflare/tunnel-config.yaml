@@ -1,0 +1,138 @@
+# Cloudflare Tunnel Configuration for AutoFlow GPU Worker Integration
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# This tunnel bridges VPS ↔ Desktop for GPU-accelerated task submission.
+# Hostname: desktop.autoflow.internal
+# Service: Desktop GPU Worker API (port 8500)
+#
+# Setup (VPS):
+#   1. cloudflared tunnel create autoflow-gpu-tunnel
+#   2. cloudflared tunnel route dns autoflow-gpu-tunnel desktop.autoflow.internal
+#   3. Copy credentials to ~/.cloudflare/autoflow-gpu-tunnel.json
+#   4. Run: cloudflared tunnel run autoflow-gpu-tunnel
+#
+# Setup (Desktop):
+#   1. Install cloudflared (Windows)
+#   2. Log in: cloudflared login
+#   3. Create tunnel: cloudflared tunnel create autoflow-gpu-tunnel
+#   4. Run: cloudflared tunnel run autoflow-gpu-tunnel
+#
+# Verification:
+#   curl -k https://desktop.autoflow.internal/health
+
+tunnel: autoflow-gpu-tunnel
+credentials-file: /root/.cloudflare/autoflow-gpu-tunnel.json
+
+# Account ID and Tunnel Token (filled by cloudflared login)
+# DO NOT commit these to git — use environment variables or secure storage
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Ingress Rules
+# ─────────────────────────────────────────────────────────────────────────────
+
+ingress:
+  # Desktop GPU Worker API
+  # Routes HTTPS requests to local HTTP service on port 8500
+  - hostname: desktop.autoflow.internal
+    service: http://localhost:8500
+    originRequest:
+      # Connection timeouts
+      connectTimeout: 30s        # How long to wait for connection
+      tlsTimeout: 30s            # How long to wait for TLS handshake
+      tcpKeepAlive: 30s          # Keep-alive for long-running jobs (avatar: 2min+)
+
+      # Headers and certificates
+      httpHostHeader: localhost  # Override Host header if needed
+
+      # No client certificate required (can add later if needed)
+      noTLSVerify: false         # Verify SSL certificate on Desktop
+
+      # Security headers
+      access:
+        required: false          # Set to true if using Cloudflare Access (optional)
+
+    # Path-based routing within Desktop service
+    # All /api/* and /health go to Desktop:8500
+
+  # Fallback: catch-all (return 404)
+  - service: http_status:404
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Global Origin Request Settings
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Uncomment to apply globally to all routes
+# originRequest:
+#   connectTimeout: 30s
+#   tcpKeepAlive: 30s
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tunnel Management
+# ─────────────────────────────────────────────────────────────────────────────
+
+# These are automatically managed by cloudflared:
+# - Heartbeat interval: 5s (keep tunnel alive)
+# - Auto-reconnect on disconnect (enabled by default)
+# - Load balancing across multiple connections (if applicable)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Logging
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Log level: trace, debug, info, warn, error
+loglevel: info
+
+# Log file (optional)
+logfile: /var/log/cloudflared/tunnel.log
+
+# ─────────────────────────────────────────────────────────────────────────────
+# systemd Service File (Linux)
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# File: /etc/systemd/system/cloudflared-tunnel.service
+#
+# [Unit]
+# Description=Cloudflare Tunnel for AutoFlow GPU Worker
+# After=network.target
+#
+# [Service]
+# Type=simple
+# User=root
+# WorkingDirectory=/root/.cloudflare
+# ExecStart=/usr/local/bin/cloudflared tunnel --config tunnel-config.yaml run autoflow-gpu-tunnel
+# Restart=always
+# RestartSec=5
+#
+# [Install]
+# WantedBy=multi-user.target
+#
+# Enable & start:
+#   systemctl enable cloudflared-tunnel
+#   systemctl start cloudflared-tunnel
+#   systemctl status cloudflared-tunnel
+#
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Environment Variables (for credentials)
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Set these before running cloudflared:
+#
+# export CLOUDFLARE_ACCOUNT_ID=your-account-id
+# export CLOUDFLARE_TUNNEL_ID=your-tunnel-id
+# export CLOUDFLARE_TUNNEL_TOKEN=your-tunnel-token
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Monitoring & Alerts
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Check tunnel status:
+#   cloudflared tunnel info autoflow-gpu-tunnel
+#
+# View tunnel metrics:
+#   curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/cfd_tunnel/{TUNNEL_ID}/connections \
+#     -H "Authorization: Bearer {TOKEN}"
+#
+# Alert rules (Cloudflare Dashboard):
+#   - Tunnel disconnected for > 5 minutes → page on-call
+#   - Connection errors > 5% in last hour → alert @devops
