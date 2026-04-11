@@ -383,4 +383,15 @@ recovered/igreja-web3/coverage/
 .config/rclone/
 .git-credentials
 .config/gh/hosts.yml
-.git-credentials
+.config/
+.aws/
+.gcloud/
+*.oauth*
+oauth.json
+auth.json
+token.json
+refresh_token
+API_KEY
+api_key.txt
+docker-compose.override.yml
+.env.production.local
