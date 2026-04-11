@@ -28,13 +28,16 @@ function readStdin() {
 
 function cpuPct() {
   try {
-    const cpus = os.cpus();
-    let idle = 0, total = 0;
-    for (const c of cpus) {
-      for (const t of Object.values(c.times)) total += t;
-      idle += c.times.idle;
+    // Usa top para pegar CPU usage real e instantâneo
+    const top = execSync('top -bn1 2>/dev/null | grep "Cpu(s)"', { encoding: 'utf8', timeout: 1000 });
+    // Extrai user e system: %Cpu(s): 28.0 us, 12.0 sy, ...
+    const userMatch = top.match(/(\d+(?:\.\d+)?)\s+us/);
+    const sysMatch = top.match(/(\d+(?:\.\d+)?)\s+sy/);
+    if (userMatch && sysMatch) {
+      const cpu = Math.round(parseFloat(userMatch[1]) + parseFloat(sysMatch[1]));
+      return Math.min(100, cpu);
     }
-    return Math.round(((total - idle) / total) * 100);
+    return 0;
   } catch { return 0; }
 }
 
