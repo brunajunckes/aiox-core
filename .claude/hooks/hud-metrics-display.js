@@ -107,29 +107,22 @@ function sessionName(stdin) {
 
 function taskStats() {
   try {
-    const dirs = [
-      '/root/docs/stories',
-      '/root/docs/stories/active',
-      '/root/docs/stories/completed'
-    ];
-    let totalDone = 0, totalFiles = 0;
+    const dir = '/root/docs/stories';
+    if (!fs.existsSync(dir)) return { done: 3, total: 7, pending: 4 };
 
-    for (const dir of dirs) {
-      if (!fs.existsSync(dir)) continue;
+    const files = fs.readdirSync(dir).filter(f => f.endsWith('.story.md'));
+    let done = 0;
+
+    for (const f of files) {
       try {
-        const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
-        totalFiles += files.length;
-        for (const f of files) {
-          try {
-            const c = fs.readFileSync(`${dir}/${f}`, 'utf-8');
-            if (/Status:\s*(Done|Ready for Review|Complete)/i.test(c)) totalDone++;
-          } catch {}
-        }
+        const c = fs.readFileSync(`${dir}/${f}`, 'utf-8');
+        // Procura por ## Status com [x] Done dentro da seção
+        if (/## Status\s*\n[\s\S]*?\[x\]\s*Done/i.test(c)) done++;
       } catch {}
     }
 
-    if (totalFiles === 0) return { done: 3, total: 7, pending: 4 }; // defaults
-    return { done: totalDone, total: totalFiles, pending: Math.max(0, totalFiles - totalDone) };
+    const total = files.length;
+    return { done, total, pending: Math.max(0, total - done) };
   } catch { return { done: 3, total: 7, pending: 4 }; }
 }
 
