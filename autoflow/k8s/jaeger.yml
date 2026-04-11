@@ -1,0 +1,350 @@
+# Jaeger Distributed Tracing Platform — All-in-One Deployment
+# Includes collector, query UI, and storage (in-memory for dev, configurable for prod)
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
+  labels:
+    name: observability
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jaeger-collector-config
+  namespace: observability
+data:
+  collector.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+      jaeger:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:14250
+          thrift_http:
+            endpoint: 0.0.0.0:14268
+    exporters:
+      logging:
+        loglevel: debug
+      jaeger:
+        endpoint: localhost:6831
+    processors:
+      batch:
+        timeout: 10s
+        send_batch_size: 1024
+      memory_limiter:
+        check_interval: 1s
+        limit_mib: 512
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp, jaeger]
+          processors: [memory_limiter, batch]
+          exporters: [logging, jaeger]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+  namespace: observability
+  labels:
+    app: jaeger
+    component: all-in-one
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+        component: all-in-one
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "14269"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: jaeger
+      containers:
+      - name: jaeger
+        image: jaegertracing/all-in-one:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        # OTLP Receivers
+        - name: otlp-grpc
+          containerPort: 4317
+          protocol: TCP
+        - name: otlp-http
+          containerPort: 4318
+          protocol: TCP
+        # Jaeger Receivers
+        - name: jaeger-compact
+          containerPort: 6831
+          protocol: UDP
+        - name: jaeger-binary
+          containerPort: 6832
+          protocol: UDP
+        - name: jaeger-grpc
+          containerPort: 14250
+          protocol: TCP
+        - name: jaeger-http
+          containerPort: 14268
+          protocol: TCP
+        # UI
+        - name: jaeger-ui
+          containerPort: 16686
+          protocol: TCP
+        # Metrics
+        - name: metrics
+          containerPort: 14269
+          protocol: TCP
+
+        env:
+        - name: COLLECTOR_OTLP_ENABLED
+          value: "true"
+        - name: COLLECTOR_ZIPKIN_HTTP_PORT
+          value: "9411"
+        - name: MEMORY_MAX_TRACES
+          value: "10000"
+        - name: BADGER_EPHEMERAL
+          value: "false"
+        - name: BADGER_DIRECTORY_VALUE
+          value: "/badger/data"
+        - name: BADGER_DIRECTORY_KEY
+          value: "/badger/key"
+        - name: SAMPLING_STRATEGIES_FILE
+          value: /etc/jaeger/sampling.json
+        - name: SPAN_STORAGE_TYPE
+          value: "badger"
+
+        volumeMounts:
+        - name: badger-storage
+          mountPath: /badger
+        - name: sampling-config
+          mountPath: /etc/jaeger
+
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 16686
+          initialDelaySeconds: 5
+          periodSeconds: 15
+
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 16686
+          initialDelaySeconds: 5
+          periodSeconds: 15
+
+      volumes:
+      - name: badger-storage
+        emptyDir: {}
+      - name: sampling-config
+        configMap:
+          name: jaeger-sampling-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jaeger-sampling-config
+  namespace: observability
+data:
+  sampling.json: |
+    {
+      "default_strategy": {
+        "type": "probabilistic",
+        "param": 0.1
+      },
+      "service_strategies": [
+        {
+          "service": "autoflow-api",
+          "type": "probabilistic",
+          "param": 0.1
+        },
+        {
+          "service": "llm-router",
+          "type": "probabilistic",
+          "param": 0.2
+        },
+        {
+          "service": "paperclip",
+          "type": "probabilistic",
+          "param": 0.15
+        }
+      ]
+    }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-collector
+  namespace: observability
+  labels:
+    app: jaeger
+    component: collector
+spec:
+  ports:
+  - name: otlp-grpc
+    port: 4317
+    targetPort: 4317
+    protocol: TCP
+  - name: otlp-http
+    port: 4318
+    targetPort: 4318
+    protocol: TCP
+  - name: jaeger-grpc
+    port: 14250
+    targetPort: 14250
+    protocol: TCP
+  - name: jaeger-http
+    port: 14268
+    targetPort: 14268
+    protocol: TCP
+  - name: jaeger-compact
+    port: 6831
+    targetPort: 6831
+    protocol: UDP
+  selector:
+    app: jaeger
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-ui
+  namespace: observability
+  labels:
+    app: jaeger
+    component: ui
+spec:
+  type: ClusterIP
+  ports:
+  - name: ui
+    port: 16686
+    targetPort: 16686
+    protocol: TCP
+  selector:
+    app: jaeger
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jaeger
+  namespace: observability
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jaeger
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jaeger
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: jaeger
+subjects:
+- kind: ServiceAccount
+  name: jaeger
+  namespace: observability
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: jaeger-network-policy
+  namespace: observability
+spec:
+  podSelector:
+    matchLabels:
+      app: jaeger
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: autoflow
+    - namespaceSelector:
+        matchLabels:
+          name: observability
+    ports:
+    - protocol: TCP
+      port: 4317
+    - protocol: TCP
+      port: 4318
+    - protocol: TCP
+      port: 14250
+    - protocol: TCP
+      port: 14268
+    - protocol: UDP
+      port: 6831
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 16686
+  egress:
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: jaeger-hpa
+  namespace: observability
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: jaeger
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
