@@ -382,3 +382,5 @@ recovered/igreja-web3/.next/
 recovered/igreja-web3/coverage/
 .config/rclone/
 .git-credentials
+.config/gh/hosts.yml
+.git-credentials
