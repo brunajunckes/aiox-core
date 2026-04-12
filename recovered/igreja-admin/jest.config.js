@@ -6,6 +6,8 @@ module.exports = {
     '**/__tests__/auth/**/*.test.ts',
     '**/__tests__/sprint45-schema.test.ts',
     '**/__tests__/comunidade-db.test.ts',
+    '**/__tests__/semear-db.test.ts',
+    '**/__tests__/admin-db.test.ts',
   ],
   transform: {
     '^.+\\.(ts|tsx)$': [
