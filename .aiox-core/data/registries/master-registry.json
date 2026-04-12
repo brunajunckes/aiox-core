@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T$(date +%s)",
+  "ecosystem": {
+    "projects": {
+      "count": 5,
+      "local": ["autoflow", "paperclip", "llm-router", "aiox-dashboard", "aiox-core"],
+      "location": "/root/aiox-unified/projects/"
+    },
+    "agents": {
+      "count": 207,
+      "local": 12,
+      "vps_backup": 195,
+      "location": "/root/aiox-unified/agents/",
+      "vps_location": "gdrive:vps/extracted_backup/"
+    },
+    "squads": {
+      "count": 33,
+      "location": "/root/aiox-unified/squads/",
+      "vps_location": "gdrive:vps/extracted_backup/"
+    },
+    "tools": {
+      "count": 374,
+      "categories": ["AIOX", "AutoFlow", "Workflows", "Other"],
+      "location": "/root/aiox-unified/tools-skills/"
+    },
+    "workflows": {
+      "count": 57,
+      "core": 15,
+      "squad_specific": 42,
+      "location": "/root/aiox-unified/workflows/"
+    },
+    "infrastructure": {
+      "count": 18,
+      "services": ["Ollama", "PostgreSQL", "Docker", "GitHub", "Paperclip", "AutoFlow", "LLM-Router"],
+      "location": "/root/aiox-unified/infrastructure/"
+    },
+    "mcp_servers": {
+      "count": 14,
+      "location": "/root/aiox-unified/mcp-servers/"
+    }
+  }
+}

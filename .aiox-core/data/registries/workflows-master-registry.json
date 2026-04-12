@@ -1,0 +1,73 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "total_workflows": 57,
+  "summary": {
+    "core_workflows": 15,
+    "squad_workflows": 42
+  },
+  "core_workflows": {
+    "count": 15,
+    "description": "Core AIOX system workflows",
+    "categories": [
+      "story-development-cycle",
+      "qa-gate",
+      "qa-loop",
+      "spec-pipeline",
+      "brownfield-discovery",
+      "deployment",
+      "monitoring",
+      "agent-coordination",
+      "squad-orchestration"
+    ],
+    "locations": [
+      ".aiox-core/development/workflows/",
+      ".aiox-core/development/tasks/",
+      "workflows/core-workflows/"
+    ],
+    "access": "Via workflow engine or AIOX CLI"
+  },
+  "squad_workflows": {
+    "count": 42,
+    "description": "Squad-specific specialized workflows",
+    "locations": [
+      "squads/*/workflows/",
+      "workflows/squad-workflows/"
+    ],
+    "structure": {
+      "trigger": "Workflow activation condition",
+      "stages": ["preparation", "execution", "validation", "completion"],
+      "dependencies": ["other_workflows", "external_services"],
+      "outputs": ["artifacts", "reports", "metrics"]
+    }
+  },
+  "workflow_types": {
+    "development": {
+      "description": "Code development and implementation",
+      "examples": ["story-development-cycle", "code-review", "testing"]
+    },
+    "operational": {
+      "description": "System operations and maintenance",
+      "examples": ["deployment", "monitoring", "backup"]
+    },
+    "analytical": {
+      "description": "Research and analysis workflows",
+      "examples": ["web-research", "competitive-analysis", "trend-analysis"]
+    },
+    "creative": {
+      "description": "Content and creative generation",
+      "examples": ["content-generation", "design-workflow", "video-production"]
+    }
+  },
+  "execution_patterns": {
+    "cli": "aiox-core workflow run {workflow-id}",
+    "api": "POST /workflow/{workflow-id}",
+    "scheduled": "Cron-based triggers",
+    "event_driven": "Webhook/event triggers"
+  },
+  "metadata": {
+    "last_updated": "2026-04-12",
+    "phase": "CONSOLIDATION_PHASE_2",
+    "status": "IN_PROGRESS"
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "phase": "PHASE 1 - Active Squads",
+    "timestamp": "2026-04-12T00:00:00Z",
+    "total_squads": 15,
+    "status": "complete"
+  },
+  "squads": [
+    {
+      "id": "squad-apex",
+      "name": "apex",
+      "location": "/root/Aiox/squads/apex",
+      "type": "specialized",
+      "purpose": "Peak performance and optimization",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-brand",
+      "name": "brand",
+      "location": "/root/Aiox/squads/brand",
+      "type": "specialized",
+      "purpose": "Brand identity and messaging",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-curator",
+      "name": "curator",
+      "location": "/root/Aiox/squads/curator",
+      "type": "specialized",
+      "purpose": "Content curation and management",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-deep-research",
+      "name": "deep-research",
+      "location": "/root/Aiox/squads/deep-research",
+      "type": "specialized",
+      "purpose": "Deep research and analysis",
+      "status": "active",
+      "has_config": true,
+      "agents": ["analyst", "architect"]
+    },
+    {
+      "id": "squad-dispatch",
+      "name": "dispatch",
+      "location": "/root/Aiox/squads/dispatch",
+      "type": "specialized",
+      "purpose": "Task dispatch and scheduling",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-education",
+      "name": "education",
+      "location": "/root/Aiox/squads/education",
+      "type": "specialized",
+      "purpose": "Educational content and training",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-kaizen",
+      "name": "kaizen",
+      "location": "/root/Aiox/squads/kaizen",
+      "type": "specialized",
+      "purpose": "Continuous improvement",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-kaizen-v2",
+      "name": "kaizen-v2",
+      "location": "/root/Aiox/squads/kaizen-v2",
+      "type": "specialized",
+      "purpose": "Continuous improvement v2",
+      "status": "active",
+      "has_config": true,
+      "note": "Enhanced version of kaizen squad"
+    },
+    {
+      "id": "squad-legal-analyst",
+      "name": "legal-analyst",
+      "location": "/root/Aiox/squads/legal-analyst",
+      "type": "specialized",
+      "purpose": "Legal analysis and compliance",
+      "status": "active",
+      "has_config": true,
+      "has_deployment": true,
+      "deployment_type": "docker-compose",
+      "webapp_location": "/root/Aiox/squads/legal-analyst/webapp"
+    },
+    {
+      "id": "squad-minimal-web-agent",
+      "name": "minimal-web-agent",
+      "location": "/root/Aiox/squads/minimal-web-agent",
+      "type": "specialized",
+      "purpose": "Minimal web agent implementation",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-seo",
+      "name": "seo",
+      "location": "/root/Aiox/squads/seo",
+      "type": "specialized",
+      "purpose": "SEO optimization and analysis",
+      "status": "active",
+      "has_config": true,
+      "agents": ["analyst"]
+    },
+    {
+      "id": "squad-squad-creator",
+      "name": "squad-creator",
+      "location": "/root/Aiox/squads/squad-creator",
+      "type": "meta",
+      "purpose": "Create and manage squads",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-squad-creator-pro",
+      "name": "squad-creator-pro",
+      "location": "/root/Aiox/squads/squad-creator-pro",
+      "type": "meta",
+      "purpose": "Pro version of squad creator",
+      "status": "active",
+      "has_config": true,
+      "note": "Enhanced features over squad-creator"
+    },
+    {
+      "id": "squad-claude-code-mastery",
+      "name": "claude-code-mastery",
+      "location": "/root/squads/claude-code-mastery",
+      "type": "training",
+      "purpose": "Claude Code mastery and best practices",
+      "status": "active",
+      "has_config": true
+    },
+    {
+      "id": "squad-example",
+      "name": "_example",
+      "location": "/root/squads/_example",
+      "type": "template",
+      "purpose": "Example/template squad for reference",
+      "status": "inactive",
+      "has_config": true,
+      "note": "Template for new squad creation"
+    }
+  ],
+  "squad_categories": {
+    "meta_squads": [
+      "squad-creator",
+      "squad-creator-pro"
+    ],
+    "specialized_squads": [
+      "apex",
+      "brand",
+      "curator",
+      "deep-research",
+      "dispatch",
+      "education",
+      "kaizen",
+      "kaizen-v2",
+      "legal-analyst",
+      "minimal-web-agent",
+      "seo"
+    ],
+    "training_squads": [
+      "claude-code-mastery"
+    ],
+    "template_squads": [
+      "_example"
+    ]
+  },
+  "squad_capabilities": {
+    "deep-research": {
+      "agents": ["analyst", "architect"],
+      "tools": ["WebSearch", "WebFetch", "Grep", "exa"],
+      "workflows": ["research", "analysis"]
+    },
+    "legal-analyst": {
+      "deployment": "docker-compose",
+      "webapp": true,
+      "location": "/root/Aiox/squads/legal-analyst/webapp"
+    },
+    "seo": {
+      "agents": ["analyst"],
+      "tools": ["WebSearch", "exa"],
+      "workflows": ["seo-analysis"]
+    },
+    "squad-creator": {
+      "meta": true,
+      "purpose": "Create new squads dynamically"
+    }
+  },
+  "squad_summary": {
+    "total_active": 14,
+    "total_inactive": 1,
+    "with_deployment": 1,
+    "with_special_agents": 2,
+    "meta_squads_count": 2,
+    "specialized_squads_count": 11,
+    "training_squads_count": 1,
+    "template_squads_count": 1
+  }
+}
