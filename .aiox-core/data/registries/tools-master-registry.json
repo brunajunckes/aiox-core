@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "total_tools": 374,
+  "summary": {
+    "aiox_tools": 205,
+    "autoflow_tools": 125,
+    "workflow_tools": 14,
+    "other_tools": 30
+  },
+  "categories": {
+    "aiox_tools": {
+      "count": 205,
+      "description": "Native AIOX skills and tools",
+      "locations": [
+        "tools-skills/aiox-tools/",
+        ".claude/skills/",
+        ".aiox-core/infrastructure/tools/"
+      ],
+      "access": "Via skill name (@skill) or /AIOX:skills:skill-name"
+    },
+    "autoflow_tools": {
+      "count": 125,
+      "description": "AutoFlow-specific automation tools",
+      "locations": [
+        "projects/autoflow/autoflow/skills/",
+        "tools-skills/autoflow-tools/"
+      ],
+      "access": "Via AutoFlow CLI or API endpoints"
+    },
+    "workflow_tools": {
+      "count": 14,
+      "description": "Workflow orchestration utilities",
+      "locations": [
+        ".aiox-core/development/workflows/",
+        "tools-skills/workflow-tools/"
+      ],
+      "access": "Via workflow engine or AIOX CLI"
+    },
+    "other_tools": {
+      "count": 30,
+      "description": "Miscellaneous integrations and utilities",
+      "locations": [
+        "tools-skills/other-tools/",
+        "packages/",
+        "infrastructure/"
+      ]
+    }
+  },
+  "tool_types": {
+    "development": ["linting", "testing", "formatting", "building"],
+    "automation": ["scheduling", "orchestration", "triggering"],
+    "integration": ["api-clients", "webhooks", "data-sync"],
+    "research": ["web-search", "documentation", "analysis"],
+    "devops": ["deployment", "monitoring", "logging"],
+    "ai": ["model-selection", "prompt-engineering", "evaluation"]
+  },
+  "access_patterns": {
+    "skill_activation": "@skill-name",
+    "skill_command": "/AIOX:skills:skill-name",
+    "autoflow_api": "http://localhost:8081/{tool-endpoint}",
+    "cli_access": "aiox-core skill {skill-name}"
+  },
+  "metadata": {
+    "last_updated": "2026-04-12",
+    "phase": "CONSOLIDATION_PHASE_2",
+    "status": "IN_PROGRESS",
+    "note": "Many tools are dynamically discovered; check individual locations for complete inventory"
+  }
+}

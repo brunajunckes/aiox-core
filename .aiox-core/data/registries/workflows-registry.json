@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "total_workflows": 100,
+  "categories": [
+    "Squad orchestration",
+    "Agent routing",
+    "Story development cycle",
+    "Deployment",
+    "Monitoring",
+    "Custom workflows"
+  ]
+}

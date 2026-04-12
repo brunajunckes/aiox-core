@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "total_squads": 33,
+  "summary": {
+    "active_squads": 16,
+    "sprint_squads": 9,
+    "legacy_squads": 8
+  },
+  "active_squads": [
+    {"id": "apex", "name": "Apex", "path": "squads/active-squads/apex", "status": "active"},
+    {"id": "brand", "name": "Brand", "path": "squads/active-squads/brand", "status": "active"},
+    {"id": "curator", "name": "Curator", "path": "squads/active-squads/curator", "status": "active"},
+    {"id": "deep-research", "name": "Deep Research", "path": "squads/active-squads/deep-research", "status": "active"},
+    {"id": "dispatch", "name": "Dispatch", "path": "squads/active-squads/dispatch", "status": "active"},
+    {"id": "education", "name": "Education", "path": "squads/active-squads/education", "status": "active"},
+    {"id": "kaizen-v2", "name": "Kaizen V2", "path": "squads/active-squads/kaizen-v2", "status": "active"},
+    {"id": "kaizen", "name": "Kaizen", "path": "squads/active-squads/kaizen", "status": "active"},
+    {"id": "legal-analyst", "name": "Legal Analyst", "path": "squads/active-squads/legal-analyst", "status": "active"},
+    {"id": "minimal-web-agent", "name": "Minimal Web Agent", "path": "squads/active-squads/minimal-web-agent", "status": "active"},
+    {"id": "seo", "name": "SEO", "path": "squads/active-squads/seo", "status": "active"},
+    {"id": "squad-creator-pro", "name": "Squad Creator Pro", "path": "squads/active-squads/squad-creator-pro", "status": "active"},
+    {"id": "squad-creator", "name": "Squad Creator", "path": "squads/active-squads/squad-creator", "status": "active"},
+    {"id": "claude-code-mastery", "name": "Claude Code Mastery", "path": "squads/active-squads/claude-code-mastery", "status": "active"},
+    {"id": "_example", "name": "Example Squad Template", "path": "squads/active-squads/_example", "status": "template"}
+  ],
+  "sprint_squads": {
+    "status": "Sprint-specific squads",
+    "count": 9,
+    "note": "Typically ephemeral, created per sprint cycle"
+  },
+  "legacy_squads": {
+    "status": "Archived/legacy squads",
+    "count": 8,
+    "note": "Available for reference, not actively maintained"
+  },
+  "squad_structure": {
+    "standard_components": [
+      "agents/",
+      "workflows/",
+      "data/",
+      "tools/",
+      "webapp/",
+      "README.md"
+    ],
+    "access_pattern": "Navigate to squads/{squad-id}/ or use squad commands"
+  },
+  "access_patterns": {
+    "list_squads": "ls squads/active-squads/",
+    "access_squad": "cd squads/active-squads/{squad-id}/",
+    "squad_agents": "ls squads/active-squads/{squad-id}/agents/",
+    "squad_workflows": "ls squads/active-squads/{squad-id}/workflows/"
+  },
+  "metadata": {
+    "last_updated": "2026-04-12",
+    "phase": "CONSOLIDATION_PHASE_2",
+    "status": "IN_PROGRESS"
+  }
+}
