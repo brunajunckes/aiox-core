@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "total_skills": 400,
+  "categories": {
+    "NLP": "~50 skills",
+    "Automation": "~60 skills",
+    "Scraping": "~40 skills",
+    "ML": "~50 skills",
+    "Shared": "~80 skills",
+    "Integration": "~50 skills",
+    "DevOps": "~30 skills",
+    "Other": "~50 skills"
+  },
+  "note": "Skills indexed in VPS backup at gdrive:vps/extracted_backup/skills/"
+}

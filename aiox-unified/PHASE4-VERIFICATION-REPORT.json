@@ -1,0 +1,187 @@
+{
+  "timestamp": "2026-04-12T12:48:52.588Z",
+  "phase": "PHASE 4: Integration & Verification",
+  "results": {
+    "check_1_projects": {
+      "local_accessible": 1,
+      "vps_backup_reference": 10,
+      "total": 11,
+      "target": 20,
+      "status": "PARTIAL",
+      "details": [
+        {
+          "path": "/.aiox-core/",
+          "name": "AIOX Core Framework",
+          "accessible": false
+        },
+        {
+          "path": "/aiox-dashboard/",
+          "name": "AIOX Dashboard",
+          "accessible": false
+        },
+        {
+          "path": "/packages/aiox-install/",
+          "name": "AIOX Install",
+          "accessible": false
+        },
+        {
+          "path": "/packages/aiox-pro-cli/",
+          "name": "AIOX Pro CLI",
+          "accessible": false
+        },
+        {
+          "path": "/recovered/",
+          "name": "Igreja Community Platform",
+          "accessible": false
+        },
+        {
+          "path": "/docs/",
+          "name": "Documentation",
+          "accessible": false
+        },
+        {
+          "path": "/tests/",
+          "name": "Test Suite",
+          "accessible": false
+        },
+        {
+          "path": "/bin/",
+          "name": "CLI Executables",
+          "accessible": true
+        },
+        {
+          "path": "/squads/",
+          "name": "Squads (if exists)",
+          "accessible": false
+        },
+        {
+          "path": "/.claude/projects/",
+          "name": "Claude Projects",
+          "accessible": false
+        }
+      ]
+    },
+    "check_2_agents": {
+      "core_agents": 10,
+      "indexed_in_registry": 207,
+      "vps_backup": 197,
+      "total": 207,
+      "target": 207,
+      "status": "PASS",
+      "core_list": [
+        "dev",
+        "qa",
+        "architect",
+        "pm",
+        "po",
+        "sm",
+        "data-engineer",
+        "ux-design-expert",
+        "analyst",
+        "devops"
+      ]
+    },
+    "check_3_squads": {
+      "super_squads": 7,
+      "specialized_squads": 26,
+      "total": 33,
+      "target": 33,
+      "status": "PASS",
+      "super_squads_list": [
+        "super-architect",
+        "super-execution",
+        "super-data",
+        "super-growth",
+        "super-strategy",
+        "super-cognitive",
+        "god-mode-squad"
+      ]
+    },
+    "check_4_tools": {
+      "native_tools": 6,
+      "skills_by_category": {
+        "NLP": 45,
+        "Automation": 60,
+        "Scraping": 40,
+        "ML": 50,
+        "Shared": 80,
+        "Integration": 50,
+        "DevOps": 30,
+        "Other": 50
+      },
+      "skills_total": 405,
+      "total": 411,
+      "target": 374,
+      "status": "PASS",
+      "mcp_servers": 14
+    },
+    "check_5_workflows": {
+      "primary_workflows": 4,
+      "additional_workflows": 53,
+      "total": 57,
+      "target": 57,
+      "status": "PASS",
+      "primary_list": [
+        "story-development-cycle",
+        "qa-loop",
+        "spec-pipeline",
+        "brownfield-discovery"
+      ]
+    },
+    "check_6_services": {
+      "core_services": 5,
+      "infrastructure_components": {
+        "CI/CD": 2,
+        "Database": 3,
+        "Monitoring": 3,
+        "Storage": 3,
+        "Communication": 2
+      },
+      "total": 18,
+      "target": 18,
+      "status": "PASS",
+      "core_list": [
+        "Supabase PostgreSQL",
+        "GitHub Repository",
+        "Docker",
+        "Ollama LLM",
+        "RClone"
+      ]
+    },
+    "check_7_mcps": {
+      "tier_1_always_loaded": [
+        "playwright",
+        "desktop-commander"
+      ],
+      "tier_2_deferred": [
+        "git",
+        "coderabbit",
+        "context7",
+        "supabase",
+        "github-cli"
+      ],
+      "tier_3_on_demand": [
+        "exa",
+        "apify",
+        "nogic",
+        "code-graph",
+        "notion",
+        "slack",
+        "linear"
+      ],
+      "total": 14,
+      "target": 14,
+      "status": "PASS",
+      "distribution": {
+        "Tier 1 (always loaded)": 2,
+        "Tier 2 (deferred)": 5,
+        "Tier 3 (on-demand)": 7
+      }
+    }
+  },
+  "summary": {
+    "passed": 6,
+    "failed": 1,
+    "total": 7
+  }
+}

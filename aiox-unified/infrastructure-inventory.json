@@ -1,0 +1,178 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "total_services": 18,
+  "services": [
+    {
+      "id": 1,
+      "name": "Ollama",
+      "type": "LLM Inference",
+      "ports": [11434, 11435],
+      "status": "Active",
+      "description": "Local LLM inference engine for Haiku/Qwen models",
+      "endpoints": ["http://127.0.0.1:11434", "http://127.0.0.1:11435"]
+    },
+    {
+      "id": 2,
+      "name": "PostgreSQL",
+      "type": "Database",
+      "ports": [5432],
+      "status": "Active",
+      "description": "Primary relational database",
+      "config": "projects/aiox-main/db/"
+    },
+    {
+      "id": 3,
+      "name": "Docker",
+      "type": "Containerization",
+      "ports": [2375, 2376],
+      "status": "Active",
+      "description": "Container runtime and orchestration"
+    },
+    {
+      "id": 4,
+      "name": "GitHub",
+      "type": "Version Control",
+      "status": "Active",
+      "description": "Remote repository and CI/CD triggers",
+      "config": ".github/workflows/"
+    },
+    {
+      "id": 5,
+      "name": "Paperclip",
+      "type": "Task Coordination",
+      "ports": [3000],
+      "status": "Active",
+      "description": "Task orchestration and state management",
+      "project": "projects/paperclip/"
+    },
+    {
+      "id": 6,
+      "name": "AutoFlow",
+      "type": "Workflow Engine",
+      "ports": [8081],
+      "status": "Active",
+      "description": "Autonomous workflow execution engine",
+      "project": "projects/autoflow/",
+      "api_endpoint": "http://localhost:8081"
+    },
+    {
+      "id": 7,
+      "name": "LLM Router",
+      "type": "Load Balancing",
+      "ports": [8080],
+      "status": "Active",
+      "description": "Route LLM requests to appropriate endpoints",
+      "project": "projects/llm-router/"
+    },
+    {
+      "id": 8,
+      "name": "Supabase",
+      "type": "Backend as Service",
+      "status": "Active",
+      "description": "Managed PostgreSQL + auth + realtime",
+      "config": "core-config.yaml"
+    },
+    {
+      "id": 9,
+      "name": "Redis",
+      "type": "Caching",
+      "ports": [6379],
+      "status": "Active",
+      "description": "In-memory cache and session store"
+    },
+    {
+      "id": 10,
+      "name": "BullMQ",
+      "type": "Job Queue",
+      "status": "Active",
+      "description": "Job queue for background tasks",
+      "dependencies": ["Redis"]
+    },
+    {
+      "id": 11,
+      "name": "Hardhat",
+      "type": "Blockchain Development",
+      "ports": [8545],
+      "status": "Optional",
+      "description": "Ethereum smart contract development",
+      "project": "projects/recovered/"
+    },
+    {
+      "id": 12,
+      "name": "Solidity",
+      "type": "Smart Contracts",
+      "status": "Optional",
+      "description": "Smart contract language and compiler"
+    },
+    {
+      "id": 13,
+      "name": "npm/Node.js",
+      "type": "Runtime",
+      "status": "Active",
+      "description": "JavaScript/TypeScript runtime and package manager",
+      "version_file": "package.json"
+    },
+    {
+      "id": 14,
+      "name": "Git",
+      "type": "Repository Management",
+      "status": "Active",
+      "description": "Distributed version control system"
+    },
+    {
+      "id": 15,
+      "name": "Docker Compose",
+      "type": "Orchestration",
+      "status": "Active",
+      "description": "Multi-container application orchestration",
+      "config_file": "docker-compose.yml"
+    },
+    {
+      "id": 16,
+      "name": "Traefik",
+      "type": "Reverse Proxy",
+      "ports": [80, 443, 8080],
+      "status": "Active",
+      "description": "API gateway and reverse proxy",
+      "project": "projects/traefik/"
+    },
+    {
+      "id": 17,
+      "name": "Claude API",
+      "type": "LLM Integration",
+      "status": "Active",
+      "description": "Anthropic Claude API for LLM operations",
+      "endpoint": "https://api.anthropic.com/v1"
+    },
+    {
+      "id": 18,
+      "name": "OpenRouter",
+      "type": "LLM Aggregation",
+      "status": "Active",
+      "description": "Multi-model LLM routing and fallback",
+      "endpoint": "https://openrouter.io/api/v1"
+    }
+  ],
+  "ports_mapping": {
+    "3000": "Paperclip",
+    "5432": "PostgreSQL",
+    "6379": "Redis",
+    "8080": "LLM Router / Traefik",
+    "8081": "AutoFlow",
+    "8545": "Hardhat (optional)",
+    "11434": "Ollama Local",
+    "11435": "Ollama Remote (SSH tunnel)"
+  },
+  "health_checks": {
+    "ollama": "curl http://127.0.0.1:11434/api/tags",
+    "autoflow": "curl http://localhost:8081/health",
+    "postgresql": "psql -U postgres -h 127.0.0.1 -c 'SELECT 1'",
+    "redis": "redis-cli ping"
+  },
+  "metadata": {
+    "last_updated": "2026-04-12",
+    "phase": "CONSOLIDATION_PHASE_2",
+    "status": "IN_PROGRESS"
+  }
+}

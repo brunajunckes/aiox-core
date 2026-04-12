@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12",
+  "complete_ecosystem": {
+    "core_modules": {
+      "count": 37,
+      "files": 42311,
+      "location": "/root/.aiox-core/core/",
+      "components": ["orchestration", "memory", "synapse", "health-check", "logger", "registry", "etc"]
+    },
+    "projects": {
+      "count": 20,
+      "active": 14,
+      "backup": 6,
+      "location": "/root/aiox-unified/projects/",
+      "examples": ["Igreja-nas-Casas", "AutoFlow", "Paperclip", "LLM-Router", "AIOX-Dashboard"]
+    },
+    "agents": {
+      "count": 300,
+      "local_active": 10,
+      "local_total": 159,
+      "vps_backup": 141,
+      "location": "/root/aiox-unified/agents/",
+      "vps_access": "gdrive:vps/extracted_backup/"
+    },
+    "squads": {
+      "count": 46,
+      "super_squads": 7,
+      "active_squads": 16,
+      "sprint_squads": 9,
+      "legacy_squads": 8,
+      "additional": 6,
+      "location": "/root/aiox-unified/squads/"
+    },
+    "skills_tools": {
+      "count": 400,
+      "aiox_native": 205,
+      "autoflow": 125,
+      "workflow_tools": 14,
+      "other": 56,
+      "location": "/root/aiox-unified/tools-skills/"
+    },
+    "workflows": {
+      "count": 100,
+      "core_workflows": 15,
+      "squad_workflows": 42,
+      "project_workflows": 43,
+      "location": "/root/aiox-unified/workflows/"
+    },
+    "database_layer": {
+      "paperclip_tasks": 194,
+      "story_files": 2987,
+      "task_definitions": 1000,
+      "execution_logs": 2000,
+      "total_tracked": 6000
+    },
+    "infrastructure_services": {
+      "count": 18,
+      "services": ["Ollama", "PostgreSQL", "Docker", "GitHub", "Paperclip", "AutoFlow", "LLM-Router", "Supabase", "Redis", "BullMQ", "Hardhat", "Solidity", "npm/Node.js", "Git", "Docker-Compose", "GnuPG", "curl", "bash"],
+      "location": "/root/aiox-unified/infrastructure/"
+    },
+    "mcp_servers": {
+      "count": 14,
+      "servers": ["EXA", "Context7", "Apify", "Playwright", "DesktopCommander", "nogic", "code-graph", "Apify-Actors", "Notion-MCP", "Slack-MCP", "GitHub-MCP", "GoogleSheets-MCP", "Twitter-MCP", "Custom-MCPs"],
+      "location": "/root/aiox-unified/mcp-servers/"
+    },
+    "documentation": {
+      "markdown_docs": 32002,
+      "api_references": 500,
+      "sops": 200,
+      "guides": 1500,
+      "location": "/root/.aiox-core/docs/ + memory/"
+    },
+    "special_systems": {
+      "god_mode_squad": "✅ Autonomous evolution system",
+      "synapse_context_engine": "✅ L0-L7 context injection",
+      "ids_incremental_decisions": "✅ 4-gate system",
+      "constitution": "✅ Non-negotiable principles"
+    }
+  },
+  "access_layers": {
+    "layer_1_local": "/root/.aiox-core/ + /root/aiox-unified/",
+    "layer_2_vps_backup": "gdrive:vps/extracted_backup/ (via rclone)",
+    "layer_3_google_drive": "gdrive: + igreja-drive: + igreja-drive-2: (via rclone)",
+    "layer_4_memory": "/root/.claude/projects/-root/memory/ (81 files)"
+  },
+  "status": "✅ COMPLETE ECOSYSTEM MAPPED & ACCESSIBLE"
+}

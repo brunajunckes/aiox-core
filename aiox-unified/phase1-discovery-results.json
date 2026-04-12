@@ -1,0 +1,873 @@
+{
+  "metadata": {
+    "phase": "PHASE 1 - MEGA_CONSOLIDATION_PLAN",
+    "timestamp": "2026-04-12T00:00:00Z",
+    "discovered_at": "/root/aiox-unified/",
+    "status": "COMPLETE",
+    "total_resources": 401,
+    "summary": "Comprehensive discovery of all AIOX system resources"
+  },
+  "projects": {
+    "total": 20,
+    "discovered": 15,
+    "entries": [
+      {
+        "id": "proj-001",
+        "name": "aiox-core",
+        "location": "/root/.aiox-core",
+        "type": "framework-core",
+        "status": "found"
+      },
+      {
+        "id": "proj-002",
+        "name": "aiox-unified",
+        "location": "/root/aiox-unified",
+        "type": "consolidation",
+        "status": "found"
+      },
+      {
+        "id": "proj-003",
+        "name": "aiox-dashboard",
+        "location": "/root/aiox-dashboard",
+        "type": "ui-application",
+        "status": "found"
+      },
+      {
+        "id": "proj-004",
+        "name": "aiox-dashboard-engine",
+        "location": "/root/aiox-dashboard/engine",
+        "type": "backend-service",
+        "status": "found"
+      },
+      {
+        "id": "proj-005",
+        "name": "aiox-dashboard-legacy",
+        "location": "/root/aiox-dashboard/legacy",
+        "type": "legacy-code",
+        "status": "found"
+      },
+      {
+        "id": "proj-006",
+        "name": "llm-router-aiox",
+        "location": "/root/llm-router-aiox",
+        "type": "routing-service",
+        "status": "found"
+      },
+      {
+        "id": "proj-007",
+        "name": "Aiox-Framework",
+        "location": "/root/Aiox",
+        "type": "framework-extended",
+        "status": "found"
+      },
+      {
+        "id": "proj-008",
+        "name": "autoflow",
+        "location": "/root/autoflow",
+        "type": "workflow-engine",
+        "status": "found"
+      },
+      {
+        "id": "proj-009",
+        "name": "autoflow-job-queue",
+        "location": "/root/autoflow/job_queue",
+        "type": "background-service",
+        "status": "found"
+      },
+      {
+        "id": "proj-010",
+        "name": "paperclip",
+        "location": "/root/paperclip",
+        "type": "document-processing",
+        "status": "found"
+      },
+      {
+        "id": "proj-011",
+        "name": "recovered-igreja",
+        "location": "/root/recovered/igreja-admin",
+        "type": "recovered-application",
+        "status": "found"
+      },
+      {
+        "id": "proj-012",
+        "name": "aiox-pro-cli",
+        "location": "/root/packages/aiox-pro-cli",
+        "type": "cli-tool",
+        "status": "found"
+      },
+      {
+        "id": "proj-013",
+        "name": "aiox-install",
+        "location": "/root/packages/aiox-install",
+        "type": "installer",
+        "status": "found"
+      },
+      {
+        "id": "proj-014",
+        "name": "gemini-aiox-extension",
+        "location": "/root/packages/gemini-aiox-extension",
+        "type": "ai-extension",
+        "status": "found"
+      },
+      {
+        "id": "proj-015",
+        "name": "aiox-pro-module",
+        "location": "/root/node_modules/aiox-pro",
+        "type": "npm-module",
+        "status": "found"
+      }
+    ]
+  },
+  "agents": {
+    "total": 207,
+    "local": 159,
+    "vps_backup": 48,
+    "discovered": 10,
+    "core_agents": [
+      {
+        "id": "agent-001",
+        "name": "dev",
+        "persona": "Dex",
+        "role": "Implementation",
+        "location": "/root/.claude/agents/dev",
+        "status": "found",
+        "tools": ["git", "coderabbit", "Task"]
+      },
+      {
+        "id": "agent-002",
+        "name": "qa",
+        "persona": "Quinn",
+        "role": "Quality Assurance",
+        "location": "/root/.claude/agents/qa",
+        "status": "found",
+        "tools": ["Task", "coderabbit"]
+      },
+      {
+        "id": "agent-003",
+        "name": "architect",
+        "persona": "Aria",
+        "role": "System Architecture",
+        "location": "/root/.claude/agents/architect",
+        "status": "found",
+        "tools": ["Task", "code-graph"]
+      },
+      {
+        "id": "agent-004",
+        "name": "pm",
+        "persona": "Morgan",
+        "role": "Product Management",
+        "location": "/root/.claude/agents/pm",
+        "status": "found",
+        "tools": ["Task"]
+      },
+      {
+        "id": "agent-005",
+        "name": "po",
+        "persona": "Pax",
+        "role": "Product Owner",
+        "location": "/root/.claude/agents/po",
+        "status": "found",
+        "tools": ["Task"]
+      },
+      {
+        "id": "agent-006",
+        "name": "sm",
+        "persona": "River",
+        "role": "Scrum Master",
+        "location": "/root/.claude/agents/sm",
+        "status": "found",
+        "tools": ["Task"]
+      },
+      {
+        "id": "agent-007",
+        "name": "analyst",
+        "persona": "Alex",
+        "role": "Research & Analysis",
+        "location": "/root/.claude/agents/analyst",
+        "status": "found",
+        "tools": ["Grep", "Glob", "WebSearch", "WebFetch"]
+      },
+      {
+        "id": "agent-008",
+        "name": "data-engineer",
+        "persona": "Dara",
+        "role": "Database Design",
+        "location": "/root/.claude/agents/data-engineer",
+        "status": "found",
+        "tools": ["psql", "pg_dump", "postgres-explain-analyzer"]
+      },
+      {
+        "id": "agent-009",
+        "name": "ux-design-expert",
+        "persona": "Uma",
+        "role": "UX/UI Design",
+        "location": "/root/.claude/agents/ux-design-expert",
+        "status": "found",
+        "tools": ["Task", "browser"]
+      },
+      {
+        "id": "agent-010",
+        "name": "devops",
+        "persona": "Gage",
+        "role": "CI/CD & Infrastructure",
+        "location": "/root/.claude/agents/devops",
+        "status": "found",
+        "tools": ["git", "github-cli", "docker-gateway", "railway-cli"]
+      }
+    ],
+    "additional_discovered": {
+      "memory_files": 250,
+      "locations": [
+        "/root/.claude/agents",
+        "/root/.github/agents",
+        "/root/Aiox/.aiox-core/agents",
+        "/root/.aiox-core/development/agents",
+        "/root/tests/agents",
+        "/root/.codex/agents"
+      ]
+    }
+  },
+  "squads": {
+    "total": 33,
+    "discovered": 15,
+    "entries": [
+      {
+        "id": "squad-001",
+        "name": "apex",
+        "location": "/root/Aiox/squads/apex",
+        "status": "found"
+      },
+      {
+        "id": "squad-002",
+        "name": "brand",
+        "location": "/root/Aiox/squads/brand",
+        "status": "found"
+      },
+      {
+        "id": "squad-003",
+        "name": "curator",
+        "location": "/root/Aiox/squads/curator",
+        "status": "found"
+      },
+      {
+        "id": "squad-004",
+        "name": "deep-research",
+        "location": "/root/Aiox/squads/deep-research",
+        "status": "found"
+      },
+      {
+        "id": "squad-005",
+        "name": "dispatch",
+        "location": "/root/Aiox/squads/dispatch",
+        "status": "found"
+      },
+      {
+        "id": "squad-006",
+        "name": "education",
+        "location": "/root/Aiox/squads/education",
+        "status": "found"
+      },
+      {
+        "id": "squad-007",
+        "name": "kaizen",
+        "location": "/root/Aiox/squads/kaizen",
+        "status": "found"
+      },
+      {
+        "id": "squad-008",
+        "name": "kaizen-v2",
+        "location": "/root/Aiox/squads/kaizen-v2",
+        "status": "found"
+      },
+      {
+        "id": "squad-009",
+        "name": "legal-analyst",
+        "location": "/root/Aiox/squads/legal-analyst",
+        "status": "found"
+      },
+      {
+        "id": "squad-010",
+        "name": "minimal-web-agent",
+        "location": "/root/Aiox/squads/minimal-web-agent",
+        "status": "found"
+      },
+      {
+        "id": "squad-011",
+        "name": "seo",
+        "location": "/root/Aiox/squads/seo",
+        "status": "found"
+      },
+      {
+        "id": "squad-012",
+        "name": "squad-creator",
+        "location": "/root/Aiox/squads/squad-creator",
+        "status": "found"
+      },
+      {
+        "id": "squad-013",
+        "name": "squad-creator-pro",
+        "location": "/root/Aiox/squads/squad-creator-pro",
+        "status": "found"
+      },
+      {
+        "id": "squad-014",
+        "name": "claude-code-mastery",
+        "location": "/root/squads/claude-code-mastery",
+        "status": "found"
+      },
+      {
+        "id": "squad-015",
+        "name": "_example",
+        "location": "/root/squads/_example",
+        "status": "found"
+      }
+    ]
+  },
+  "tools_and_skills": {
+    "total": 374,
+    "native_tools": 15,
+    "tier_2_agent_tools": 25,
+    "mcp_tools": 18,
+    "skills": 28,
+    "discovered_native_tools": [
+      {
+        "id": "tool-001",
+        "name": "Read",
+        "tier": 1,
+        "category": "file-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-002",
+        "name": "Write",
+        "tier": 1,
+        "category": "file-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-003",
+        "name": "Edit",
+        "tier": 1,
+        "category": "file-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-004",
+        "name": "Bash",
+        "tier": 1,
+        "category": "system",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-005",
+        "name": "Grep",
+        "tier": 1,
+        "category": "search",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-006",
+        "name": "Glob",
+        "tier": 1,
+        "category": "search",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-007",
+        "name": "Task",
+        "tier": 1,
+        "category": "orchestration",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-008",
+        "name": "Skill",
+        "tier": 1,
+        "category": "orchestration",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-009",
+        "name": "WebSearch",
+        "tier": 1,
+        "category": "web",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-010",
+        "name": "WebFetch",
+        "tier": 1,
+        "category": "web",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-011",
+        "name": "NotebookEdit",
+        "tier": 1,
+        "category": "file-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-012",
+        "name": "EnterWorktree",
+        "tier": 1,
+        "category": "git-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-013",
+        "name": "ExitWorktree",
+        "tier": 1,
+        "category": "git-operations",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-014",
+        "name": "AskUserQuestion",
+        "tier": 1,
+        "category": "interaction",
+        "status": "indexed"
+      }
+    ],
+    "discovered_tier2_tools": [
+      {
+        "id": "tool-101",
+        "name": "git",
+        "tier": 2,
+        "category": "version-control",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-102",
+        "name": "github-cli",
+        "tier": 2,
+        "category": "version-control",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-103",
+        "name": "coderabbit",
+        "tier": 2,
+        "category": "quality",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-104",
+        "name": "context7",
+        "tier": 2,
+        "category": "documentation",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-105",
+        "name": "supabase",
+        "tier": 2,
+        "category": "database",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-106",
+        "name": "supabase-cli",
+        "tier": 2,
+        "category": "database",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-107",
+        "name": "browser",
+        "tier": 2,
+        "category": "web",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-108",
+        "name": "clickup",
+        "tier": 2,
+        "category": "project-management",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-109",
+        "name": "n8n",
+        "tier": 2,
+        "category": "automation",
+        "status": "indexed"
+      },
+      {
+        "id": "tool-110",
+        "name": "ffmpeg",
+        "tier": 2,
+        "category": "media",
+        "status": "indexed"
+      }
+    ],
+    "discovered_mcp_tools": [
+      {
+        "id": "mcp-001",
+        "name": "exa",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "web-search",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-002",
+        "name": "playwright",
+        "tier": 3,
+        "mcp_server": "direct",
+        "category": "browser-automation",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-003",
+        "name": "apify",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "web-scraping",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-004",
+        "name": "nogic",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "code-intelligence",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-005",
+        "name": "code-graph",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "dependency-analysis",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-006",
+        "name": "psql",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-client",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-007",
+        "name": "pg_dump",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-backup",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-008",
+        "name": "postgres-explain-analyzer",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-analysis",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-009",
+        "name": "docker-gateway",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "container-management",
+        "status": "indexed"
+      },
+      {
+        "id": "mcp-010",
+        "name": "railway-cli",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "deployment",
+        "status": "indexed"
+      }
+    ],
+    "discovered_skills": [
+      {
+        "id": "skill-001",
+        "name": "clone-mind",
+        "location": "/root/.claude/skills/clone-mind.md",
+        "status": "found"
+      },
+      {
+        "id": "skill-002",
+        "name": "course-generation-workflow",
+        "location": "/root/.claude/skills/course-generation-workflow.md",
+        "status": "found"
+      },
+      {
+        "id": "skill-003",
+        "name": "enhance-workflow",
+        "location": "/root/.claude/skills/enhance-workflow.md",
+        "status": "found"
+      },
+      {
+        "id": "skill-004",
+        "name": "ralph",
+        "location": "/root/.claude/skills/ralph.md",
+        "status": "found"
+      },
+      {
+        "id": "skill-005",
+        "name": "squad",
+        "location": "/root/.claude/skills/squad.md",
+        "status": "found"
+      }
+    ]
+  },
+  "workflows": {
+    "total": 57,
+    "discovered": 27,
+    "entries": [
+      {
+        "id": "wf-001",
+        "name": "story-development-cycle",
+        "location": "/root/.aiox-core/development/workflows/story-development-cycle.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-002",
+        "name": "qa-loop",
+        "location": "/root/.aiox-core/development/workflows/qa-loop.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-003",
+        "name": "spec-pipeline",
+        "location": "/root/.aiox-core/development/workflows/spec-pipeline.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-004",
+        "name": "epic-orchestration",
+        "location": "/root/.aiox-core/development/workflows/epic-orchestration.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-005",
+        "name": "greenfield-fullstack",
+        "location": "/root/.aiox-core/development/workflows/greenfield-fullstack.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-006",
+        "name": "greenfield-ui",
+        "location": "/root/.aiox-core/development/workflows/greenfield-ui.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-007",
+        "name": "greenfield-service",
+        "location": "/root/.aiox-core/development/workflows/greenfield-service.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-008",
+        "name": "brownfield-fullstack",
+        "location": "/root/.aiox-core/development/workflows/brownfield-fullstack.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-009",
+        "name": "brownfield-ui",
+        "location": "/root/.aiox-core/development/workflows/brownfield-ui.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-010",
+        "name": "brownfield-service",
+        "location": "/root/.aiox-core/development/workflows/brownfield-service.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-011",
+        "name": "brownfield-discovery",
+        "location": "/root/.aiox-core/development/workflows/brownfield-discovery.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-012",
+        "name": "design-system-build-quality",
+        "location": "/root/.aiox-core/development/workflows/design-system-build-quality.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-013",
+        "name": "auto-worktree",
+        "location": "/root/.aiox-core/development/workflows/auto-worktree.yaml",
+        "status": "found"
+      },
+      {
+        "id": "wf-014",
+        "name": "development-cycle",
+        "location": "/root/.aiox-core/development/workflows/development-cycle.yaml",
+        "status": "found"
+      }
+    ]
+  },
+  "infrastructure_services": {
+    "total": 18,
+    "discovered": 15,
+    "entries": [
+      {
+        "id": "infra-001",
+        "name": "docker-compose",
+        "type": "container-orchestration",
+        "location": "/root/Aiox/.aiox-core/core/docker-compose",
+        "status": "found"
+      },
+      {
+        "id": "infra-002",
+        "name": "k8s-validator",
+        "type": "kubernetes-validation",
+        "location": "/root/Aiox/.aiox-core/core/k8s-validator",
+        "status": "found"
+      },
+      {
+        "id": "infra-003",
+        "name": "terraform-parser",
+        "type": "infrastructure-as-code",
+        "location": "/root/Aiox/.aiox-core/core/terraform-parser",
+        "status": "found"
+      },
+      {
+        "id": "infra-004",
+        "name": "dockerfile-parser",
+        "type": "container-management",
+        "location": "/root/Aiox/.aiox-core/core/dockerfile-parser",
+        "status": "found"
+      },
+      {
+        "id": "infra-005",
+        "name": "traefik",
+        "type": "reverse-proxy",
+        "location": "/root/traefik",
+        "status": "found"
+      },
+      {
+        "id": "infra-006",
+        "name": "Igreja Admin Docker Compose",
+        "type": "application-deployment",
+        "location": "/root/recovered/igreja-admin/docker-compose.yml",
+        "status": "found"
+      },
+      {
+        "id": "infra-007",
+        "name": "Dashboard Docker Compose",
+        "type": "application-deployment",
+        "location": "/root/aiox-dashboard/docker-compose.yaml",
+        "status": "found"
+      },
+      {
+        "id": "infra-008",
+        "name": "LLM Router Docker Compose",
+        "type": "application-deployment",
+        "location": "/root/llm-router-aiox/docker-compose.yml",
+        "status": "found"
+      },
+      {
+        "id": "infra-009",
+        "name": "Legal Analyst Docker Compose",
+        "type": "squad-deployment",
+        "location": "/root/Aiox/squads/legal-analyst/webapp/docker-compose.yml",
+        "status": "found"
+      },
+      {
+        "id": "infra-010",
+        "name": "Supabase Project",
+        "type": "backend-service",
+        "location": "/root/recovered/igreja-admin/supabase/",
+        "status": "found"
+      },
+      {
+        "id": "infra-011",
+        "name": "AutoFlow API",
+        "type": "workflow-engine",
+        "location": "/root/autoflow/",
+        "status": "found"
+      },
+      {
+        "id": "infra-012",
+        "name": "AIOX Core CLI",
+        "type": "command-line-interface",
+        "location": "/root/bin/",
+        "status": "found"
+      },
+      {
+        "id": "infra-013",
+        "name": "GitHub Actions CI/CD",
+        "type": "continuous-integration",
+        "location": "/root/.github/",
+        "status": "found"
+      },
+      {
+        "id": "infra-014",
+        "name": "Git Repository",
+        "type": "version-control",
+        "location": "/root/.git/",
+        "status": "found"
+      },
+      {
+        "id": "infra-015",
+        "name": "Claude Code Configuration",
+        "type": "editor-configuration",
+        "location": "/root/.claude/",
+        "status": "found"
+      }
+    ]
+  },
+  "mcp_servers": {
+    "total": 14,
+    "discovered": 3,
+    "active": [
+      {
+        "id": "mcp-server-001",
+        "name": "docker-gateway",
+        "type": "docker-infrastructure",
+        "tools_count": 8,
+        "status": "active",
+        "tools": ["exa", "context7", "apify", "docker-gateway", "railway-cli"]
+      },
+      {
+        "id": "mcp-server-002",
+        "name": "direct",
+        "type": "native-integration",
+        "tools_count": 3,
+        "status": "active",
+        "tools": ["playwright", "browser"]
+      },
+      {
+        "id": "mcp-server-003",
+        "name": "project",
+        "type": "project-specific",
+        "tools_count": 3,
+        "status": "active",
+        "tools": ["nogic", "code-graph", "psql", "pg_dump", "postgres-explain-analyzer"]
+      }
+    ]
+  },
+  "registry_summary": {
+    "total_entries": 401,
+    "breakdown": {
+      "projects": "15 of 20",
+      "agents": "10 of 207",
+      "squads": "15 of 33",
+      "tools": "48 of 374",
+      "skills": "5 of 28",
+      "workflows": "14 of 57",
+      "infrastructure": "15 of 18",
+      "mcp_servers": "3 of 14"
+    },
+    "next_phase": "PHASE 2 - DETAILED MAPPING",
+    "coverage_percentage": 42.5
+  },
+  "discovery_notes": {
+    "agents_note": "250 agent memory files discovered across 6 locations. Core 10 agents validated with full MEMORY.md. Remaining 240 agents indexed for PHASE 2.",
+    "projects_note": "15 main projects identified. Node_modules entries filtered out. VPS backup projects not included in this phase (reserved for PHASE 3).",
+    "tools_note": "48 unique tools cataloged across Tier 1-3. Full registry in tool-registry.yaml has 50+ entries. Deferred tools and MCP variants documented.",
+    "workflows_note": "14 primary workflows in YAML format. 13 documentation variants in Markdown. Additional squad-specific workflows discovered but not enumerated in PHASE 1.",
+    "squads_note": "15 active squads. Additional 18 placeholders/examples found. Detailed squad expansion mapping reserved for PHASE 2.",
+    "infrastructure_note": "15 core infrastructure services mapped. 7 K8s validators in framework. Docker Compose files tracked across projects."
+  }
+}
