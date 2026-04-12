@@ -1,0 +1,102 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "name": "AIOX Unified Ecosystem Registry",
+  "description": "Master index for entire AIOX ecosystem — 7 layers, 600+ components",
+  "phase": "CONSOLIDATION_PHASE_2",
+  "status": "IN_PROGRESS",
+  "layers": {
+    "projects": {
+      "total": 20,
+      "path": "projects/",
+      "registry": "Not yet generated (see COMPLETE-CONSOLIDATED-MAP.md)",
+      "includes": [
+        "aiox-main",
+        "autoflow",
+        "paperclip",
+        "llm-router",
+        "aiox-dashboard",
+        "recovered",
+        "aiox-core-framework",
+        "packages",
+        "squads",
+        "pro",
+        "and 10 more"
+      ],
+      "status": "CONSOLIDATED"
+    },
+    "agents": {
+      "total": 207,
+      "path": "agents/",
+      "registry": "agents-master-registry.json",
+      "summary": {
+        "local_agents": 10,
+        "vps_backup_agents": 48,
+        "other_agents": 149
+      },
+      "access": "@agent-name or /AIOX:agents:agent-name",
+      "status": "CONSOLIDATED"
+    },
+    "squads": {
+      "total": 33,
+      "path": "squads/",
+      "registry": "squads-master-registry.json",
+      "summary": {
+        "active_squads": 16,
+        "sprint_squads": 9,
+        "legacy_squads": 8
+      },
+      "status": "CONSOLIDATED"
+    },
+    "tools": {
+      "total": 374,
+      "path": "tools-skills/",
+      "registry": "tools-master-registry.json",
+      "summary": {
+        "aiox_tools": 205,
+        "autoflow_tools": 125,
+        "workflow_tools": 14,
+        "other_tools": 30
+      },
+      "status": "CONSOLIDATED"
+    },
+    "workflows": {
+      "total": 57,
+      "path": "workflows/",
+      "registry": "workflows-master-registry.json",
+      "summary": {
+        "core_workflows": 15,
+        "squad_workflows": 42
+      },
+      "status": "CONSOLIDATED"
+    },
+    "infrastructure": {
+      "total": 18,
+      "path": "infrastructure/",
+      "registry": "infrastructure-inventory.json",
+      "status": "DOCUMENTED"
+    },
+    "mcp_servers": {
+      "total": 14,
+      "path": "mcp-servers/",
+      "registry": "mcp-servers-guide.md",
+      "status": "DOCUMENTED"
+    }
+  },
+  "consolidated_components": {
+    "total_count": 723,
+    "breakdown": "20 projects + 207 agents + 33 squads + 374 tools + 57 workflows + 18 services + 14 MCPs"
+  },
+  "next_steps": {
+    "phase_2": "CONSOLIDATION ← YOU ARE HERE",
+    "phase_3": "Integration (create COMPLETE-CONSOLIDATED-MAP.md, test all paths)",
+    "phase_4": "Verification (verify 600+ components accessible)",
+    "phase_5": "Launch Sprint 45 with full ecosystem context"
+  },
+  "metadata": {
+    "creator": "@devops",
+    "created": "2026-04-12T00:00:00Z",
+    "last_updated": "2026-04-12T00:00:00Z",
+    "phase": "CONSOLIDATION_PHASE_2"
+  }
+}

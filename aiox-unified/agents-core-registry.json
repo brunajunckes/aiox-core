@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "phase": "PHASE 1 - Core Agents",
+    "timestamp": "2026-04-12T00:00:00Z",
+    "total_agents": 10,
+    "status": "complete"
+  },
+  "core_agents": [
+    {
+      "id": "agent-dev",
+      "name": "dev",
+      "persona": "Dex",
+      "full_name": "Development Agent",
+      "role": "Code Implementation",
+      "description": "Responsible for implementing features, bug fixes, and code changes from stories",
+      "tier": "L4",
+      "authority": [
+        "git add",
+        "git commit",
+        "git branch",
+        "git checkout",
+        "story file updates (File List, checkboxes)"
+      ],
+      "blocked_authority": [
+        "git push",
+        "gh pr create",
+        "gh pr merge",
+        "MCP management",
+        "story AC changes"
+      ],
+      "primary_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Bash",
+        "Grep",
+        "Glob",
+        "git",
+        "coderabbit",
+        "Task"
+      ],
+      "optional_tools": [
+        "WebFetch",
+        "context7",
+        "playwright",
+        "nogic",
+        "code-graph"
+      ],
+      "workflows": [
+        "story-development-cycle",
+        "development-cycle"
+      ],
+      "location": "/root/.claude/agents/dev",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-qa",
+      "name": "qa",
+      "persona": "Quinn",
+      "full_name": "Quality Assurance Agent",
+      "role": "Testing & Quality Gates",
+      "description": "Responsible for QA gates, test execution, and quality verification before merge",
+      "tier": "L4",
+      "authority": [
+        "QA gate verdicts (PASS/FAIL/CONCERNS/WAIVED)",
+        "test execution",
+        "quality assessment"
+      ],
+      "blocked_authority": [
+        "git push",
+        "gh pr merge",
+        "implementation changes"
+      ],
+      "primary_tools": [
+        "Read",
+        "Edit",
+        "Bash",
+        "Task",
+        "coderabbit"
+      ],
+      "optional_tools": [
+        "Grep",
+        "playwright",
+        "browser"
+      ],
+      "workflows": [
+        "qa-loop-workflow"
+      ],
+      "location": "/root/.claude/agents/qa",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-architect",
+      "name": "architect",
+      "persona": "Aria",
+      "full_name": "Architecture Agent",
+      "role": "System Design & Architecture",
+      "description": "Responsible for system architecture, technology selection, and design decisions",
+      "tier": "L3",
+      "authority": [
+        "architecture decisions",
+        "technology selection",
+        "integration patterns",
+        "complexity assessment"
+      ],
+      "blocked_authority": [
+        "git push",
+        "implementation execution",
+        "detailed DDL (delegates to @data-engineer)"
+      ],
+      "primary_tools": [
+        "Read",
+        "Grep",
+        "Task",
+        "code-graph"
+      ],
+      "optional_tools": [
+        "WebFetch",
+        "context7",
+        "nogic"
+      ],
+      "workflows": [
+        "spec-pipeline",
+        "brownfield-discovery"
+      ],
+      "location": "/root/.claude/agents/architect",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-pm",
+      "name": "pm",
+      "persona": "Morgan",
+      "full_name": "Product Manager",
+      "role": "Product Management & Epics",
+      "description": "Responsible for epic orchestration, requirements gathering, and spec writing",
+      "tier": "L3",
+      "authority": [
+        "*create-epic",
+        "*execute-epic",
+        "EPIC-{ID}-EXECUTION.yaml management",
+        "requirements gathering",
+        "spec writing"
+      ],
+      "blocked_authority": [
+        "git push",
+        "story creation (delegates to @sm)",
+        "story validation (delegates to @po)"
+      ],
+      "primary_tools": [
+        "Read",
+        "Write",
+        "Task"
+      ],
+      "optional_tools": [
+        "WebFetch",
+        "WebSearch"
+      ],
+      "workflows": [
+        "epic-orchestration",
+        "spec-pipeline"
+      ],
+      "location": "/root/.claude/agents/pm",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-po",
+      "name": "po",
+      "persona": "Pax",
+      "full_name": "Product Owner",
+      "role": "Story Validation",
+      "description": "Responsible for story validation, acceptance criteria review, and backlog prioritization",
+      "tier": "L3",
+      "authority": [
+        "*validate-story-draft",
+        "story context tracking in epics",
+        "epic context management",
+        "backlog prioritization"
+      ],
+      "blocked_authority": [
+        "git push",
+        "story creation (delegates to @sm)",
+        "story AC changes"
+      ],
+      "primary_tools": [
+        "Read",
+        "Edit",
+        "Task"
+      ],
+      "optional_tools": [
+        "Grep"
+      ],
+      "workflows": [
+        "story-development-cycle"
+      ],
+      "location": "/root/.claude/agents/po",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-sm",
+      "name": "sm",
+      "persona": "River",
+      "full_name": "Scrum Master",
+      "role": "Story Creation & Planning",
+      "description": "Responsible for story creation from epics and PRDs, sprint planning",
+      "tier": "L3",
+      "authority": [
+        "*draft",
+        "*create-story",
+        "story template selection"
+      ],
+      "blocked_authority": [
+        "git push",
+        "story validation (delegates to @po)",
+        "story AC changes"
+      ],
+      "primary_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Task"
+      ],
+      "optional_tools": [
+        "Grep"
+      ],
+      "workflows": [
+        "story-development-cycle",
+        "epic-orchestration"
+      ],
+      "location": "/root/.claude/agents/sm",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-analyst",
+      "name": "analyst",
+      "persona": "Alex",
+      "full_name": "Research & Analysis Agent",
+      "role": "Research, Analysis, Discovery",
+      "description": "Responsible for research, analysis, discovery, and information synthesis",
+      "tier": "L4",
+      "authority": [
+        "research execution",
+        "analysis and synthesis",
+        "discovery and exploration"
+      ],
+      "blocked_authority": [
+        "git push",
+        "implementation"
+      ],
+      "primary_tools": [
+        "Read",
+        "Grep",
+        "Glob",
+        "WebSearch",
+        "WebFetch",
+        "Task"
+      ],
+      "optional_tools": [
+        "exa",
+        "apify",
+        "browser",
+        "context7"
+      ],
+      "workflows": [
+        "spec-pipeline",
+        "brownfield-discovery"
+      ],
+      "location": "/root/.claude/agents/analyst",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-data-engineer",
+      "name": "data-engineer",
+      "persona": "Dara",
+      "full_name": "Data Engineer",
+      "role": "Database Design & Optimization",
+      "description": "Responsible for schema design, query optimization, RLS policies, migrations",
+      "tier": "L4",
+      "authority": [
+        "schema design (detailed DDL)",
+        "query optimization",
+        "RLS policies implementation",
+        "index strategy execution",
+        "migration planning & execution"
+      ],
+      "blocked_authority": [
+        "git push",
+        "system architecture (delegates to @architect)",
+        "application code"
+      ],
+      "primary_tools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Bash",
+        "psql",
+        "pg_dump",
+        "postgres-explain-analyzer",
+        "Task"
+      ],
+      "optional_tools": [
+        "supabase",
+        "supabase-cli"
+      ],
+      "workflows": [
+        "story-development-cycle"
+      ],
+      "location": "/root/.claude/agents/data-engineer",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-ux-design-expert",
+      "name": "ux-design-expert",
+      "persona": "Uma",
+      "full_name": "UX/UI Design Expert",
+      "role": "User Experience & UI Design",
+      "description": "Responsible for UX/UI design, component design, interaction patterns",
+      "tier": "L4",
+      "authority": [
+        "UX/UI design decisions",
+        "component design",
+        "interaction patterns",
+        "design system contribution"
+      ],
+      "blocked_authority": [
+        "git push",
+        "implementation (delegates to @dev)"
+      ],
+      "primary_tools": [
+        "Read",
+        "Task",
+        "browser"
+      ],
+      "optional_tools": [
+        "playwright",
+        "WebFetch"
+      ],
+      "workflows": [
+        "design-system-build-quality",
+        "brownfield-discovery"
+      ],
+      "location": "/root/.claude/agents/ux-design-expert",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational"
+    },
+    {
+      "id": "agent-devops",
+      "name": "devops",
+      "persona": "Gage",
+      "full_name": "DevOps Engineer",
+      "role": "CI/CD, Infrastructure, Git Operations",
+      "description": "Responsible for git push, PR management, MCP management, CI/CD pipelines, releases",
+      "tier": "L2",
+      "authority": [
+        "git push",
+        "git push --force",
+        "gh pr create",
+        "gh pr merge",
+        "MCP add/remove/configure",
+        "CI/CD pipeline management",
+        "release management"
+      ],
+      "blocked_authority": [
+        "implementation changes",
+        "architecture decisions"
+      ],
+      "primary_tools": [
+        "Read",
+        "Bash",
+        "git",
+        "github-cli",
+        "docker-gateway",
+        "railway-cli",
+        "Task"
+      ],
+      "optional_tools": [
+        "terraform-parser",
+        "k8s-validator"
+      ],
+      "workflows": [
+        "story-development-cycle",
+        "epic-orchestration"
+      ],
+      "location": "/root/.claude/agents/devops",
+      "memory_file": "/root/.claude/projects/-root/memory/MEMORY.md",
+      "status": "operational",
+      "note": "EXCLUSIVE push authority across entire system"
+    }
+  ],
+  "agent_matrix": {
+    "by_tier": {
+      "L2": ["devops"],
+      "L3": ["pm", "po", "sm", "architect"],
+      "L4": ["dev", "qa", "analyst", "data-engineer", "ux-design-expert"]
+    },
+    "by_workflow": {
+      "story-development-cycle": ["dev", "qa", "sm", "po", "devops", "data-engineer"],
+      "epic-orchestration": ["pm", "devops", "sm"],
+      "spec-pipeline": ["architect", "analyst", "pm"],
+      "brownfield-discovery": ["architect", "analyst", "ux-design-expert"],
+      "qa-loop": ["qa"],
+      "design-system": ["ux-design-expert"]
+    },
+    "by_authority": {
+      "git_push": ["devops"],
+      "pr_management": ["devops"],
+      "mcp_management": ["devops"],
+      "story_creation": ["sm"],
+      "story_validation": ["po"],
+      "epic_creation": ["pm"],
+      "architecture_decision": ["architect"],
+      "qa_gate": ["qa"],
+      "implementation": ["dev"]
+    }
+  },
+  "agent_dependencies": {
+    "dev": {
+      "depends_on": ["sm", "po", "architect", "data-engineer"],
+      "feeds_to": ["qa", "devops"]
+    },
+    "qa": {
+      "depends_on": ["dev"],
+      "feeds_to": ["devops"]
+    },
+    "devops": {
+      "depends_on": ["dev", "qa"],
+      "feeds_to": []
+    },
+    "architect": {
+      "depends_on": ["pm"],
+      "feeds_to": ["dev", "data-engineer"]
+    },
+    "data-engineer": {
+      "depends_on": ["architect"],
+      "feeds_to": ["dev"]
+    },
+    "pm": {
+      "depends_on": [],
+      "feeds_to": ["sm", "architect"]
+    },
+    "sm": {
+      "depends_on": ["pm"],
+      "feeds_to": ["po", "dev"]
+    },
+    "po": {
+      "depends_on": ["sm"],
+      "feeds_to": ["dev"]
+    },
+    "analyst": {
+      "depends_on": ["architect", "pm"],
+      "feeds_to": []
+    },
+    "ux-design-expert": {
+      "depends_on": ["architect"],
+      "feeds_to": ["dev"]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "total_agents": 10,
+  "agents": [
+    {"id": "dev", "name": "Developer (Dex)", "role": "Implementation"},
+    {"id": "qa", "name": "QA/Tester (Quinn)", "role": "Quality assurance"},
+    {"id": "architect", "name": "Architect (Aria)", "role": "System design"},
+    {"id": "pm", "name": "Product Manager (Morgan)", "role": "Product strategy"},
+    {"id": "po", "name": "Product Owner (Pax)", "role": "Story validation"},
+    {"id": "sm", "name": "Scrum Master (River)", "role": "Story creation"},
+    {"id": "data-engineer", "name": "Data Engineer (Dara)", "role": "Database design"},
+    {"id": "ux", "name": "UX Designer (Uma)", "role": "UI/UX"},
+    {"id": "analyst", "name": "Analyst (Alex)", "role": "Research"},
+    {"id": "devops", "name": "DevOps (Gage)", "role": "CI/CD + Git authority"}
+  ],
+  "access_via": "@agent-name or /AIOX:agents:agent-name"
+}

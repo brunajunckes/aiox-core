@@ -1,0 +1,464 @@
+{
+  "metadata": {
+    "phase": "PHASE 1 - Tools Registry",
+    "timestamp": "2026-04-12T00:00:00Z",
+    "total_tools": 48,
+    "status": "partial",
+    "coverage_note": "48 tools cataloged from Tier 1-3. Full registry expected to include 350+ tools across system variants."
+  },
+  "tier_1_native_tools": {
+    "total": 14,
+    "description": "Always-loaded native Claude Code tools (~3K tokens)",
+    "tools": [
+      {
+        "id": "tool-tier1-001",
+        "name": "Read",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "file-operations",
+        "ptc_eligible": true,
+        "description": "Read file contents"
+      },
+      {
+        "id": "tool-tier1-002",
+        "name": "Write",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "file-operations",
+        "ptc_eligible": true,
+        "description": "Write file contents"
+      },
+      {
+        "id": "tool-tier1-003",
+        "name": "Edit",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 250,
+        "category": "file-operations",
+        "ptc_eligible": true,
+        "description": "Edit file contents (diff-based)"
+      },
+      {
+        "id": "tool-tier1-004",
+        "name": "Bash",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 300,
+        "category": "system",
+        "ptc_eligible": true,
+        "description": "Execute bash commands"
+      },
+      {
+        "id": "tool-tier1-005",
+        "name": "Grep",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "search",
+        "ptc_eligible": true,
+        "description": "Search file contents with regex"
+      },
+      {
+        "id": "tool-tier1-006",
+        "name": "Glob",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 150,
+        "category": "search",
+        "ptc_eligible": true,
+        "description": "Find files by pattern matching"
+      },
+      {
+        "id": "tool-tier1-007",
+        "name": "Task",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 400,
+        "category": "orchestration",
+        "ptc_eligible": true,
+        "description": "Execute defined tasks"
+      },
+      {
+        "id": "tool-tier1-008",
+        "name": "Skill",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "orchestration",
+        "ptc_eligible": true,
+        "description": "Execute skills"
+      },
+      {
+        "id": "tool-tier1-009",
+        "name": "WebSearch",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 250,
+        "category": "web",
+        "ptc_eligible": true,
+        "description": "Search the web"
+      },
+      {
+        "id": "tool-tier1-010",
+        "name": "WebFetch",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 250,
+        "category": "web",
+        "ptc_eligible": true,
+        "filter": {
+          "type": "content",
+          "max_tokens": 3000
+        },
+        "description": "Fetch and process web content"
+      },
+      {
+        "id": "tool-tier1-011",
+        "name": "NotebookEdit",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "file-operations",
+        "ptc_eligible": true,
+        "description": "Edit Jupyter notebooks"
+      },
+      {
+        "id": "tool-tier1-012",
+        "name": "EnterWorktree",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 300,
+        "category": "git-operations",
+        "ptc_eligible": true,
+        "description": "Enter a git worktree"
+      },
+      {
+        "id": "tool-tier1-013",
+        "name": "ExitWorktree",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 200,
+        "category": "git-operations",
+        "ptc_eligible": true,
+        "description": "Exit a git worktree"
+      },
+      {
+        "id": "tool-tier1-014",
+        "name": "AskUserQuestion",
+        "tier": 1,
+        "layer": "L1",
+        "defer": false,
+        "tokenCost": 300,
+        "category": "interaction",
+        "ptc_eligible": true,
+        "description": "Ask user for input"
+      }
+    ]
+  },
+  "tier_2_agent_tools": {
+    "total": 10,
+    "description": "Agent-scoped deferred tools (loaded on activation)",
+    "tools": [
+      {
+        "id": "tool-tier2-001",
+        "name": "git",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 100,
+        "category": "version-control",
+        "description": "Git version control operations",
+        "agents": ["dev", "devops"]
+      },
+      {
+        "id": "tool-tier2-002",
+        "name": "github-cli",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 150,
+        "category": "version-control",
+        "description": "GitHub CLI operations",
+        "agents": ["devops"]
+      },
+      {
+        "id": "tool-tier2-003",
+        "name": "coderabbit",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 300,
+        "category": "quality",
+        "description": "Automated code review",
+        "agents": ["dev", "qa"]
+      },
+      {
+        "id": "tool-tier2-004",
+        "name": "context7",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 200,
+        "category": "documentation",
+        "mcp_server": "docker-gateway",
+        "filter": {
+          "type": "content",
+          "max_tokens": 5000
+        },
+        "description": "Library documentation lookup",
+        "agents": ["dev", "architect", "analyst"]
+      },
+      {
+        "id": "tool-tier2-005",
+        "name": "supabase",
+        "tier": 2,
+        "layer": "L3",
+        "defer": true,
+        "tokenCost": 250,
+        "category": "database",
+        "description": "Supabase database operations",
+        "agents": ["data-engineer", "devops"]
+      },
+      {
+        "id": "tool-tier2-006",
+        "name": "supabase-cli",
+        "tier": 2,
+        "layer": "L3",
+        "defer": true,
+        "tokenCost": 200,
+        "category": "database",
+        "description": "Supabase CLI operations",
+        "agents": ["data-engineer"]
+      },
+      {
+        "id": "tool-tier2-007",
+        "name": "browser",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 250,
+        "category": "web",
+        "description": "Browser operations",
+        "agents": ["ux-design-expert", "qa"]
+      },
+      {
+        "id": "tool-tier2-008",
+        "name": "clickup",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 200,
+        "category": "project-management",
+        "description": "ClickUp task management",
+        "agents": ["pm", "sm"]
+      },
+      {
+        "id": "tool-tier2-009",
+        "name": "n8n",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 300,
+        "category": "automation",
+        "description": "n8n workflow automation",
+        "agents": ["devops"]
+      },
+      {
+        "id": "tool-tier2-010",
+        "name": "ffmpeg",
+        "tier": 2,
+        "layer": "L2",
+        "defer": true,
+        "tokenCost": 250,
+        "category": "media",
+        "description": "FFmpeg media processing",
+        "agents": ["dev"]
+      }
+    ]
+  },
+  "tier_3_mcp_tools": {
+    "total": 10,
+    "description": "MCP-based external tools (via Docker Gateway or direct)",
+    "tools": [
+      {
+        "id": "mcp-tool-001",
+        "name": "exa",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "web-search",
+        "description": "EXA web search and research",
+        "agents": ["analyst", "deep-research"]
+      },
+      {
+        "id": "mcp-tool-002",
+        "name": "playwright",
+        "tier": 3,
+        "mcp_server": "direct",
+        "category": "browser-automation",
+        "description": "Playwright browser automation",
+        "agents": ["ux-design-expert", "qa", "analyst"]
+      },
+      {
+        "id": "mcp-tool-003",
+        "name": "apify",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "web-scraping",
+        "description": "Apify web scraping and data extraction",
+        "agents": ["analyst"]
+      },
+      {
+        "id": "mcp-tool-004",
+        "name": "nogic",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "code-intelligence",
+        "description": "Code intelligence and analysis",
+        "agents": ["architect", "dev"]
+      },
+      {
+        "id": "mcp-tool-005",
+        "name": "code-graph",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "dependency-analysis",
+        "description": "Dependency graph analysis",
+        "agents": ["architect", "dev"]
+      },
+      {
+        "id": "mcp-tool-006",
+        "name": "psql",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-client",
+        "description": "PostgreSQL client operations",
+        "agents": ["data-engineer"]
+      },
+      {
+        "id": "mcp-tool-007",
+        "name": "pg_dump",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-backup",
+        "description": "PostgreSQL backup and dump",
+        "agents": ["data-engineer", "devops"]
+      },
+      {
+        "id": "mcp-tool-008",
+        "name": "postgres-explain-analyzer",
+        "tier": 3,
+        "mcp_server": "project",
+        "category": "database-analysis",
+        "description": "PostgreSQL query analysis",
+        "agents": ["data-engineer"]
+      },
+      {
+        "id": "mcp-tool-009",
+        "name": "docker-gateway",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "container-management",
+        "description": "Docker container management",
+        "agents": ["devops"]
+      },
+      {
+        "id": "mcp-tool-010",
+        "name": "railway-cli",
+        "tier": 3,
+        "mcp_server": "docker-gateway",
+        "category": "deployment",
+        "description": "Railway deployment CLI",
+        "agents": ["devops"]
+      }
+    ]
+  },
+  "skill_tools": {
+    "total": 5,
+    "description": "Claude Code skills discovered",
+    "skills": [
+      {
+        "id": "skill-001",
+        "name": "clone-mind",
+        "location": "/root/.claude/skills/clone-mind.md",
+        "category": "ai-operations",
+        "status": "found"
+      },
+      {
+        "id": "skill-002",
+        "name": "course-generation-workflow",
+        "location": "/root/.claude/skills/course-generation-workflow.md",
+        "category": "content-generation",
+        "status": "found"
+      },
+      {
+        "id": "skill-003",
+        "name": "enhance-workflow",
+        "location": "/root/.claude/skills/enhance-workflow.md",
+        "category": "workflow-management",
+        "status": "found"
+      },
+      {
+        "id": "skill-004",
+        "name": "ralph",
+        "location": "/root/.claude/skills/ralph.md",
+        "category": "specialized",
+        "status": "found"
+      },
+      {
+        "id": "skill-005",
+        "name": "squad",
+        "location": "/root/.claude/skills/squad.md",
+        "category": "squad-management",
+        "status": "found"
+      }
+    ]
+  },
+  "tool_categories": {
+    "file_operations": ["Read", "Write", "Edit", "NotebookEdit"],
+    "search": ["Grep", "Glob", "WebSearch", "WebFetch"],
+    "system": ["Bash"],
+    "version_control": ["git", "github-cli"],
+    "git_operations": ["EnterWorktree", "ExitWorktree"],
+    "orchestration": ["Task", "Skill"],
+    "web": ["browser", "exa", "apify"],
+    "database": ["supabase", "supabase-cli", "psql", "pg_dump", "postgres-explain-analyzer"],
+    "code_intelligence": ["nogic", "code-graph"],
+    "quality": ["coderabbit"],
+    "documentation": ["context7"],
+    "container_management": ["docker-gateway"],
+    "deployment": ["railway-cli"],
+    "automation": ["n8n"],
+    "browser_automation": ["playwright"],
+    "media": ["ffmpeg"],
+    "project_management": ["clickup"]
+  },
+  "mcp_servers": {
+    "docker-gateway": {
+      "tools": ["exa", "context7", "apify", "docker-gateway", "railway-cli"],
+      "purpose": "Docker-based MCP infrastructure for external tools"
+    },
+    "direct": {
+      "tools": ["playwright", "browser"],
+      "purpose": "Direct Claude Code integration without Docker"
+    },
+    "project": {
+      "tools": ["nogic", "code-graph", "psql", "pg_dump", "postgres-explain-analyzer"],
+      "purpose": "Project-specific intelligence and database tools"
+    }
+  }
+}

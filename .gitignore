@@ -395,3 +395,18 @@ API_KEY
 api_key.txt
 docker-compose.override.yml
 .env.production.local
+
+# ============================================
+# AIOX UNIFIED CONSOLIDATION (Metadata only)
+# ============================================
+aiox-unified/projects/
+aiox-unified/agents/
+aiox-unified/squads/
+aiox-unified/tools-skills/
+aiox-unified/workflows/
+aiox-unified/infrastructure/
+aiox-unified/mcp-servers/
+# Keep only registries and navigation guides
+!aiox-unified/*.json
+!aiox-unified/*.md
+!aiox-unified/QUICK-REFERENCE.md

@@ -8,7 +8,7 @@
 # - File types for categorization
 #
 version: 5.0.3
-generated_at: "2026-04-11T12:45:33.035Z"
+generated_at: "2026-04-12T13:05:46.358Z"
 generator: scripts/generate-install-manifest.js
 file_count: 1270
 files:
@@ -753,9 +753,9 @@ files:
     type: cli
     size: 13016
   - path: cli/data/squad-communications.jsonl
-    hash: sha256:372028409b8fcc47f1aee0ba26a7871596ae6802a7d9d6b3ec9df43d67e6fb32
+    hash: sha256:e3a905a371a6fe208d640d347437538098d471a6752e78858181ebf91f79699e
     type: data
-    size: 846
+    size: 1128
   - path: cli/index.js
     hash: sha256:0083a7f3ebdce20329a072cd9509c2193da5f2075cc16c64db48f912de203955
     type: cli
@@ -1889,9 +1889,9 @@ files:
     type: data
     size: 9575
   - path: data/entity-registry.yaml
-    hash: sha256:8213696601ae0bd932edb4e219b52808bc582ebe2e1ed2d1feff2f41a42c4d22
+    hash: sha256:f98756c36dbdf65493ca0607a2359da46d0b61cb7cd0233ea4c9b5a90dfed538
     type: data
-    size: 532507
+    size: 536983
   - path: data/error-catalog.yaml
     hash: sha256:dd9a36d2a475084cd75916f956a400dbb9d1d4ec3970f4615fd6050b2c464ef5
     type: data

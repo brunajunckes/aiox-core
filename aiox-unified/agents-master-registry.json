@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "consolidated_at": "2026-04-12T00:00:00Z",
+  "total_agents": 207,
+  "summary": {
+    "local_agents": 10,
+    "vps_backup_agents": 48,
+    "other_agents": 149
+  },
+  "local_agents": [
+    {"id": "dev", "name": "Developer (Dex)", "role": "Implementation", "path": "agents/local-agents/dev"},
+    {"id": "qa", "name": "QA/Tester (Quinn)", "role": "Quality assurance", "path": "agents/local-agents/qa"},
+    {"id": "architect", "name": "Architect (Aria)", "role": "System design", "path": "agents/local-agents/architect"},
+    {"id": "pm", "name": "Product Manager (Morgan)", "role": "Product strategy", "path": "agents/local-agents/pm"},
+    {"id": "po", "name": "Product Owner (Pax)", "role": "Story validation", "path": "agents/local-agents/po"},
+    {"id": "sm", "name": "Scrum Master (River)", "role": "Story creation", "path": "agents/local-agents/sm"},
+    {"id": "data-engineer", "name": "Data Engineer (Dara)", "role": "Database design", "path": "agents/local-agents/data-engineer"},
+    {"id": "ux", "name": "UX Designer (Uma)", "role": "UI/UX", "path": "agents/local-agents/ux"},
+    {"id": "analyst", "name": "Analyst (Alex)", "role": "Research", "path": "agents/local-agents/analyst"},
+    {"id": "devops", "name": "DevOps (Gage)", "role": "CI/CD + Git authority", "path": "agents/local-agents/devops"}
+  ],
+  "vps_backup_agents": {
+    "status": "Available via rclone",
+    "location": "gdrive:vps/extracted_backup/agents/",
+    "count": 48,
+    "note": "Access with: rclone lsf gdrive:vps/extracted_backup/agents/ && rclone cat gdrive:vps/extracted_backup/agents/{agent-id}/manifest.json"
+  },
+  "other_agents": {
+    "status": "Distributed across squads and services",
+    "count": 149,
+    "sources": [
+      "squads/*/agents/",
+      ".aiox-core/development/agents/",
+      "autoflow/agents/",
+      "paperclip/agents/"
+    ]
+  },
+  "access_patterns": {
+    "local": "@agent-name or /AIOX:agents:agent-name",
+    "vps_backup": "rclone lsf gdrive:vps/extracted_backup/agents/",
+    "squad_agents": "Navigate to squads/{squad-name}/agents/"
+  },
+  "metadata": {
+    "last_updated": "2026-04-12",
+    "phase": "CONSOLIDATION_PHASE_2",
+    "status": "IN_PROGRESS"
+  }
+}
