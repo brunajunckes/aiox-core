@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIOX Central Monitor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #e0e0e0; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { font-size: 28px; margin-bottom: 30px; color: #00ff00; }
+    .systems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .system-card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 20px; }
+    .system-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .system-name { font-size: 18px; font-weight: 600; }
+    .status-badge { padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .status-up { background: #00aa00; color: #fff; }
+    .status-down { background: #aa0000; color: #fff; }
+    .status-warning { background: #ffaa00; color: #000; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .metric { background: #252525; padding: 10px; border-radius: 4px; font-size: 12px; }
+    .metric-label { color: #888; margin-bottom: 3px; }
+    .metric-value { font-size: 16px; font-weight: 600; color: #00ff00; }
+    .last-update { color: #666; font-size: 11px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 AIOX Central Monitor</h1>
+    <p style="margin-bottom: 20px; color: #888;">Real-time status of 6 systems — Updates every 5 minutes</p>
+    
+    <div class="systems-grid" id="systems-grid">
+      <!-- Systems will be populated here -->
+    </div>
+  </div>
+
+  <script>
+    const systems = [
+      { name: 'Paperclip', endpoint: '/api/health/paperclip', color: '#ff6b6b' },
+      { name: 'OpenClaw', endpoint: '/api/health/openclaw', color: '#4ecdc4' },
+      { name: 'Claude', endpoint: '/api/health/claude', color: '#a8dadc' },
+      { name: 'AIOX', endpoint: '/api/health/aiox', color: '#457b9d' },
+      { name: 'AutoFlow', endpoint: '/api/health/autoflow', color: '#e63946' },
+      { name: 'Multica', endpoint: '/api/health/multica', color: '#f77f00' }
+    ];
+
+    const renderSystemCard = (system, data) => `
+      <div class="system-card">
+        <div class="system-header">
+          <span class="system-name">${system.name}</span>
+          <span class="status-badge ${data?.status === 'UP' ? 'status-up' : (data?.status === 'DOWN' ? 'status-down' : 'status-warning')}">
+            ${data?.status || 'UNKNOWN'}
+          </span>
+        </div>
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-label">CPU</div>
+            <div class="metric-value">${data?.cpu || '—'}%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Memory</div>
+            <div class="metric-value">${data?.memory || '—'}%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Uptime</div>
+            <div class="metric-value">${data?.uptime || '—'}</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Latency</div>
+            <div class="metric-value">${data?.latency || '—'}ms</div>
+          </div>
+        </div>
+        <div class="last-update">Last update: ${new Date(data?.timestamp).toLocaleTimeString() || 'Never'}</div>
+      </div>
+    `;
+
+    const fetchAndRender = async () => {
+      const grid = document.getElementById('systems-grid');
+      grid.innerHTML = '';
+
+      for (const system of systems) {
+        try {
+          const response = await fetch(system.endpoint);
+          const data = await response.json();
+          grid.innerHTML += renderSystemCard(system, data);
+        } catch (error) {
+          grid.innerHTML += renderSystemCard(system, { status: 'DOWN' });
+        }
+      }
+    };
+
+    // Initial render
+    fetchAndRender();
+
+    // Refresh every 5 minutes
+    setInterval(fetchAndRender, 5 * 60 * 1000);
+  </script>
+</body>
+</html>
